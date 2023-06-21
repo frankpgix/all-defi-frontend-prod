@@ -1,0 +1,79 @@
+.web-fund-detail {
+  &-header {
+    @extend .web;
+    font-family: 'Didot';font-weight: 800;
+    font-size: 32px;line-height: 1;margin-bottom: 20px;
+  }
+  &-dashboard {
+    @extend .web;margin-bottom: 40px;position: relative;
+    display: flex;justify-content: space-between;
+    &-base {
+      width: 590px;height: 430px;padding: 30px;border-radius: 8px;position: relative;
+      // @include jb(#82B6FF, #207DFF, 135);color: $white;
+      background: #FFFFFF;
+      box-shadow: 0px 2px 20px rgba(225, 225, 225, 0.25);
+      border-radius: 8px;
+      & > article {
+        padding-left: 114px;min-height: 110px;position: relative;padding-bottom: 20px;
+        border-bottom: 1px solid #E7E7E7;margin-bottom: 20px;
+        .c-fund-icon {
+          position: absolute;left: 0;top: 0;
+        }
+        h4 {
+          font-size: 24px;line-height: 32px;margin-bottom: 4px;
+        }
+        p {
+          font-size: 14px;line-height: 18px;word-break: break-all;
+        }
+      }
+      & > section {
+        padding-bottom: 20px;border-bottom: 1px solid #E7E7E7;
+        h5 {
+          font-size: 14px;line-height: 16px;letter-spacing: .5px;text-transform: capitalize;margin-bottom: 10px;
+        }
+        main {
+          display: flex;align-items: center;
+          img {
+            display: block;width: 56px;height: 56px;
+            &:not(:last-child) {
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+      & > footer {
+        display: grid;grid-template-columns: 1fr 1fr .8fr;grid-gap: 20px 20px;padding-top: 24px;
+        dl {
+          dt {
+            font-size: 14px;line-height: 1;text-transform: capitalize;
+            display: flex;align-items: center;color: #737373;
+            .c-popper {
+              margin-left: 5px;
+            }
+          }
+          dd {
+            font-size: 18px;line-height: 32px;font-weight: 800;
+          }
+        }
+      }
+    }
+    &-chart {
+      height: 430px;width: 590px;overflow: hidden;border-radius: 8px;background: $white;position: relative;
+      box-shadow: 0px 2px 20px rgba(225, 225, 225, 0.25);
+      header {
+        // height: 130px;
+        position: relative;padding: 30px 24px 24px;
+        display: flex;align-items: flex-start;justify-content: space-between;
+        h3 {
+          font-size: 24px;color: $blue;font-weight: 800;
+        }
+        aside {
+          // position: absolute;right: 24px;top: 36px;
+        }
+      }
+      section {
+        height: 345px;
+      }
+    }
+  }
+}

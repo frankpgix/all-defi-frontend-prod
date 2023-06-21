@@ -1,0 +1,18 @@
+.web-manage-fund-staker {
+  &-input {
+    display: flex;justify-content: space-between;margin-bottom: 40px;margin-top: 24px;
+    .web-c-data-item {
+      width: 280px;margin-top: -24px;
+    }
+    .web-form-input {
+      width: 400px;
+    }
+  }
+
+  footer {
+    display: flex;justify-content: flex-end;margin-top: 40px;
+    .web-button {
+      // width: 280px;
+    }
+  }
+}

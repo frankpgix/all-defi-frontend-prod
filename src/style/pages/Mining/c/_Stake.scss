@@ -1,0 +1,84 @@
+.web-mining-stake {
+  width: 692px;
+
+  &-layout {
+    @extend .web;display: flex;justify-content: space-between;
+  }
+
+
+
+  & > main {
+    border-top: 4px solid $blue;background: $cff;padding: 30px;
+    & > header {
+      display: flex;justify-content: space-between;align-items: center;
+
+      h3 {
+        color: $blue;font-size: 24px;font-weight: 800;
+      }
+      button {
+        height: 24px;
+      }
+    }
+
+    &:first-child {
+      margin-bottom: 30px;
+    }
+  }
+  &.unstake {
+    main {
+      margin-bottom: 0;
+      height: 100%;
+    }
+  }
+  &-fund, &-sall {
+    padding: 40px 0 10px;display: flex;justify-content: space-between;align-items: flex-start;
+
+    .web-form-input {
+      width: 350px;
+      &-base {
+        width: 280px;
+      }
+      &-suffix {
+        width: 70px;
+      }
+    }
+  }
+  &-fund {
+    .web-mining-fund-select {
+      height: 56px;
+    }
+  }
+  &-sall {
+    h4 {
+      height: 56px;display: flex;align-items: center;
+      img {
+        display: block;width: 48px;height: 48px;
+      }
+      strong {
+        display: block;margin: 0 10px;
+      }
+    }
+  }
+  &-plus {
+    padding-left: 325px;display: flex;justify-content: center;
+    &:before {
+      content: '+';width: 48px;height: 48px;border-radius: 50%;background: $blue;color: $cff;padding-top: 3px;
+      display: flex;justify-content: center;align-items: center;font-size: 28px;font-weight: bold;
+      box-sizing: border-box;
+    }
+  }
+  &-footer {
+    display: flex;justify-content: flex-end;padding-top: 40px;
+    section {
+      width: 200px;display: grid;grid-template-columns: 1fr;grid-gap: 10px;
+    }
+  }
+
+  &-bar {
+    border-top: 4px solid $blue;background: $cff;width: 556px;padding: 40px 40px 20px;min-height: 595px;
+    // &-layout {
+    //   margin-top: -302px;
+    // }
+  }
+
+}

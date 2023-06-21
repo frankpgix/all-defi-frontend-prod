@@ -1,0 +1,38 @@
+.web-manage-create-step-line {
+  @extend .web_;position: relative;margin-bottom: 64px;
+  &:after {
+    content: '';display: block;position: absolute;left: 0;right: 0;top: 45px;
+    height: 0;border-bottom: 1px dashed $gray;
+  }
+  ul {
+    @extend .web;position: relative;z-index: 1;
+    display: flex;justify-content: space-around;
+
+    li {
+      display: flex;flex-flow: column;align-items: center;color: $dGray;width: 210px;
+      &:before {
+        content: '';display: block;width: 77px;height: 84px;
+        background: center/contain no-repeat #F7FAFF;
+      }
+
+      em {
+        display: block;margin: 24px 0 8px;letter-spacing: 4px;font-weight: 800;
+        font-size: 12px;line-height: 16px;text-transform: uppercase;
+      }
+
+      strong {
+        font-family: 'Didot';font-size: 24px;line-height: 40px;
+      }
+
+      @for $index from 1 through 4 {
+        &:nth-child(#{$index}):before {
+          background-image: url($res + 'asset/box-' + $index + '.png');
+        }
+      }
+
+      &.active {
+        color: $blue;
+      }
+    }
+  }
+}

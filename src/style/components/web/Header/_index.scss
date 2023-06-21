@@ -1,0 +1,39 @@
+.web-header {
+  z-index: 21;
+  border-bottom: 1px solid rgba($gray, .5);
+  &, &-bg {
+    position: fixed;top: 0;left: 0;width: 100%;@extend .web_;height: 95px;
+  }
+  &-bg {
+    // @include mh(20px);
+    z-index: 20;background: $white;
+  }
+  &-inner {
+    @extend .web;height: 95px;position: relative;
+    display: flex;align-items: center;
+  }
+  &-logo {
+    width: 155px;height: 42px;margin-right: 30px;
+    text-indent: -9999px;cursor: pointer;
+    background: url($res + 'logo.svg') center/contain no-repeat;font-weight: normal;
+  }
+  &-nav {
+    display: flex;align-items: center;
+    a {
+      display: block;margin: 0 18px;font-size: 12px;font-weight: 800;letter-spacing: 4px;text-transform: uppercase;
+      &.active {
+        color: $blue;
+      }
+    }
+  }
+  &-tools {
+    position: absolute;right: 0;
+    display: flex;align-items: center;
+    & > .web-button, & > img {
+      margin-left: 16px;cursor: pointer;
+    }
+  }
+  &-blank {
+    @extend .web_;height: 96px;margin-bottom: 40px;
+  }
+}

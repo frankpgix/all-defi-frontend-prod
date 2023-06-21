@@ -1,0 +1,22 @@
+.web-mining-rewards {
+  border-bottom: 1px solid #D1E0FE;padding-bottom: 12px;
+  & > header {
+    font-size: 24px;line-height: 32px;color: $blue;font-weight: 800;margin-bottom: 20px;
+  }
+  & > dl {
+    display: flex;justify-content: space-between;align-items: center;
+    margin-bottom: 16px;height: 32px;
+
+    dt {
+      display: flex;align-items: center;
+
+      label {
+        display: block;margin-right: 24px;
+      }
+    }
+
+    dd {
+      font-size: 20px;font-weight: bold;
+    }
+  }
+}

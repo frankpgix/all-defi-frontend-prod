@@ -1,0 +1,40 @@
+.web-buy-bench {
+  display: flex;justify-content: space-between;
+  &-input {
+    width: 480px;
+  }
+  &-pre {
+    width: 550px;display: flex;flex-flow: column;align-items: flex-end;
+    dl {
+      display: flex;align-items: center;margin-bottom: 16px;justify-content: flex-end;
+      dt {
+        font-size: 18px;color: $lBlue;font-weight: bold;margin-right: 16px;
+      }
+      dd {
+        height: 56px;border-radius: 8px;background: $bgBlue;width: 400px;padding: 0 20px;
+        display: flex;align-items: center;font-size: 18px;font-weight: bold;color: $text;
+      }
+    }
+    .web-button {
+      // width: 280px;
+      margin-top: 24px;
+    }
+    // &:before {
+    //   content: '';display: block;width: 40px;height: 40px;position: absolute;left: -40px;top: 12px;
+    //   background: url($res + 'icon/to-arrow.svg') center/contain no-repeat;
+    // }
+  }
+  &-arrow {
+    width: 32px;height: 32px;top: 12px;position: relative;
+    background: url($res + 'icon/arrow-right-blue-full.svg') center/contain no-repeat;
+  }
+  &.select &-input {
+    width: 350px;
+  }
+  &.select &-pre {
+    width: 500px;
+    dl dd {
+      width: 350px;
+    }
+  }
+}
