@@ -1,8 +1,0 @@
-node_modules
-dist
-build
-src/**/*.test.tsx
-src/style/build.js
-src/config/abi
-src/assets
-public
