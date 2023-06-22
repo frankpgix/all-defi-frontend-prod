@@ -7,9 +7,9 @@
   },
   "extends": [
     "react-app",
-    "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
   ],
   "overrides": [
   ],
@@ -19,9 +19,11 @@
   },
   "plugins": [
     "react",
-    "react-hooks"
+    "react-hooks",
+    "prettier"
   ],
   "rules": {
+    "prettier/prettier": 1,
     "no-console": "off",
     "no-debugger": "warn",
     "no-alert": "warn",

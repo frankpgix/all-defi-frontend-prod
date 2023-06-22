@@ -6,12 +6,14 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { publicProvider } from 'wagmi/providers/public'
 
-const walletConnectProjectId = '90c1c8a3dd769315f8c0e10b2ae4bd16'
+const walletConnectProjectId = '6d7824fb7038a3d6d7b1ee3916f5953b'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [arbitrum],
   [publicProvider()]
 )
+
+// console.log('chains', chains)
 
 export const config = createConfig({
   autoConnect: true,
@@ -20,13 +22,14 @@ export const config = createConfig({
     new CoinbaseWalletConnector({
       chains,
       options: {
-        appName: 'wagmi'
+        appName: 'All DeFi'
       }
     }),
     new WalletConnectConnector({
       chains,
       options: {
-        projectId: walletConnectProjectId
+        projectId: walletConnectProjectId,
+        themeMode: 'light'
       }
     }),
     new InjectedConnector({

@@ -1,9 +1,11 @@
 import * as React from 'react'
 import { createRoot } from 'react-dom/client'
-import { WagmiConfig } from 'wagmi'
+import { BrowserRouter } from 'react-router-dom'
 
-import { App } from './App'
-import { config } from './wagmi'
+import WagmiClient from '@/providers/WagmiClient'
+
+import App from './App'
+
 const container = document.getElementById('all-defi')
 
 // @ts-ignore
@@ -11,8 +13,10 @@ const root = createRoot(container)
 
 root.render(
   <React.StrictMode>
-    <WagmiConfig config={config}>
-      <App />
-    </WagmiConfig>
+    <BrowserRouter>
+      <WagmiClient>
+        <App />
+      </WagmiClient>
+    </BrowserRouter>
   </React.StrictMode>
 )
