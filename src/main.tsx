@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 
 import WagmiClient from '@/providers/WagmiClient'
+import ApolloClient from '@/providers/ApolloClient'
 
 import App from './App'
 
@@ -15,7 +16,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <WagmiClient>
-        <App />
+        <ApolloClient>
+          <App />
+        </ApolloClient>
       </WagmiClient>
     </BrowserRouter>
   </React.StrictMode>
