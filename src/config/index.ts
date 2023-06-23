@@ -4,7 +4,6 @@ import { ChainId } from '@/config/types'
 const API_PREFIX_URLS_SCHEMA: Record<string, string> = {
   prod: 'https://api.derify.exchange/bsc/',
   dev: 'https://api.derify.exchange/bsc/'
-  // dev: 'https://dev-bsctestnet-api.derify.exchange/'
 }
 
 const ETH_SCAN_URLS_SCHEMA: Record<string, string> = {
