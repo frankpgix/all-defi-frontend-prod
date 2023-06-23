@@ -13,7 +13,7 @@ interface Props {
 
 const DialogWrap: FC<Props> = ({ title, width, show, onClose, children }) => {
   const closeIcon = <span />
-  console.log('show', show)
+  // console.log('show', show)
   return (
     <Dialog
       destroyOnClose={true}

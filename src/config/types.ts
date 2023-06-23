@@ -20,3 +20,13 @@ export interface Token {
 }
 
 export type MultiCallResponse<T> = T | null
+
+export type ContractKeys =
+  | 'multicall'
+  | 'bep20'
+  | 'FundPool'
+  | 'ACProtocol'
+  | 'AllProtocol'
+  | 'FundReader'
+  | 'Reward'
+  | 'UniV3ACL'

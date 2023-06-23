@@ -15,6 +15,7 @@ import { baseTokenOptions, tokenss } from '@/config/tokens'
 // import { getUserStakesAsync } from '@/store/investor'
 // import { formatNumber } from '@/utils/tools'
 // import { sleep } from '@/utils/tools'
+// import { useProfile } from '@/store/useProfile'
 
 import { Input, Select } from '@@/form'
 import Button from '@@/common/Button'

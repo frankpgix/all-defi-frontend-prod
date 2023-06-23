@@ -5,6 +5,7 @@ import 'rc-table/assets/index.css'
 import '@/style/style.scss'
 import Header from '@@/web/Header'
 import Footer from '@@/web/Footer'
+import Global from '@/pages/Updaters/Global'
 
 const Test = lazy(() => import('@/pages/Test'))
 const Buy = lazy(() => import('@/pages/Buy'))
@@ -15,6 +16,7 @@ function App() {
     <>
       <div className="web-main">
         <Header />
+        <Global />
         <Suspense fallback={null}>
           <Routes>
             <Route path="/test" element={<Test />} />

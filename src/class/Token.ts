@@ -19,6 +19,7 @@ export function addressCheck(address: string, key?: string) {
     }
 
     const check = getAddress(address)
+    // console.log('check', address, check)
 
     warning(address === check, `${key} ▶ valid checksum address: ${address}`)
 
@@ -31,7 +32,7 @@ export function addressCheck(address: string, key?: string) {
 export interface TokenBuildProps {
   name: string
   symbol: string
-  address: ChainIdRec
+  address: string
   decimals: number
   precision: number
   projectLink: string
@@ -41,7 +42,7 @@ export interface TokenBuildProps {
 class Token {
   readonly name: string
   readonly symbol: string
-  readonly address: ChainIdRec
+  readonly address: string
   readonly decimals: number
   readonly precision: number
   readonly projectLink: string
@@ -58,16 +59,16 @@ class Token {
   }: TokenBuildProps) {
     this.name = name
     this.symbol = symbol
-    this.address = this.checkAddress(address)
+    this.address = _getAddress(address)
     this.decimals = decimals
     this.precision = precision
     this.projectLink = projectLink
     this.icon = icon
   }
 
-  get tokenAddress() {
-    return _getAddress(this.address)
-  }
+  // get tokenAddress() {
+  //   return _getAddress(this.address)
+  // }
 
   checkAddress<T>(address: T): T {
     let obj = Object.create(null)
