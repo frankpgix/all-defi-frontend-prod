@@ -1,0 +1,18 @@
+.web-c-copytext {
+  width: 20px;height: 20px;cursor: pointer;position: relative;opacity: .8;
+  background: url($res + 'icon/copy-mini.svg') center/contain no-repeat;
+  @include dz();
+
+  &:hover {
+    opacity: 1;
+  }
+
+  span { display: none; }
+
+  &.show span {
+    position: absolute;font-size: 12px;height: 20px;padding: 0 8px;
+    top: 2px;left: 100%;
+    display: flex;align-items: center;justify-content: center;border-radius: 4px;
+    background: rgba($black, .7);color: $white;
+  }
+}

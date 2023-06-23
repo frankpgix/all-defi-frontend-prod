@@ -1,0 +1,111 @@
+.web-home-feature {
+  width: 626px;height: 626px;position: relative;
+
+  &-layout {
+    @extend .web_;
+    background: $bg;margin-top: -65px;padding-top: 65px;height: 850px;
+    position: relative;display: flex;justify-content: center;align-items: center;
+  }
+
+  header {
+    border-radius: 50%;position: absolute;left: 0;top: 0;right: 0;bottom: 0;
+    &:after {
+      content: '';display: block;position: absolute;left: 0;top: 0;right: 0;bottom: 0;
+      background: url($res + 'asset/home-feature-ring-active.svg') center/100% 100% no-repeat;
+      @include dz();
+    }
+    span {
+      position: absolute;width: 34px;height: 34px;background: rgba($cff, .3);border-radius: 50%;
+      display: flex;justify-content: center;align-items: center;z-index: 2;cursor: pointer;
+      border: 1px solid rgba($cff, .7);
+      @include ns();
+      strong {
+        position: absolute;font-family: 'Didot';font-size: 40px;white-space: nowrap;
+      }
+      &:before {
+        content: '';display: block;
+        width: 17px;height: 17px;border-radius: 50%;background: $orange;
+      }
+      &:nth-child(1) {
+        top: 115px;left: 115px;
+        strong {
+          right: calc(100% + 30px);
+        }
+      }
+      &:nth-child(2) {
+        top: 115px;right: 115px;
+        strong {
+          left: calc(100% + 30px);
+        }
+      }
+      &:nth-child(3) {
+        bottom: 115px;right: 115px;
+        strong {
+          left: calc(100% + 30px);
+        }
+      }
+      &:nth-child(4) {
+        bottom: 115px;left: 115px;
+        strong {
+          right: calc(100% + 30px);
+        }
+      }
+
+      &.active {
+        color: $blue;
+        &:before {
+          background: $blue;
+        }
+      }
+    }
+    &.active-0:after {
+      transform: rotate(0deg);
+    }
+    &.active-1:after {
+      transform: rotate(90deg);
+    }
+    &.active-2:after {
+      transform: rotate(180deg);
+    }
+    &.active-3:after {
+      transform: rotate(270deg);
+    }
+  }
+
+  ul {
+    position: absolute;top: 55px;left: 55px;bottom: 55px;right: 55px;
+    background: url($res + 'asset/home-feature-ring.svg') center/100% 100% no-repeat;
+    li {
+      position: absolute;z-index: -1;top: 70px;left: 70px;bottom: 70px;right: 70px;
+      @include dz();opacity: 0;
+      display: flex;flex-flow: column;justify-content: center;align-items: center;
+      &.active {
+        opacity: 1;z-index: 2;
+      }
+
+      strong {
+        font-size: 16px;text-transform: uppercase;font-weight: bold;letter-spacing: 4px;
+        text-align: center;line-height: 1.4;
+        // white-space: nowrap;
+      }
+      h3 {
+        margin: 16px auto;font-family: 'Didot';font-size: 48px;height: 56px;letter-spacing: -1px;
+      }
+      p {
+        font-size: 18px;line-height: 24px;text-align: center;
+      }
+    }
+  }
+
+  &-ball {
+    position: absolute;top: 50px;left: 50px;bottom: 50px;right: 50px;
+    &:before {
+      content: '';display: block;
+      position: absolute;top: 0;left: 0;bottom: 0;right: 0;border-radius: 50%;
+      background: linear-gradient(278.42deg, #FFE7D9 -4.98%, #F9830B 68.19%);
+      filter: blur(40px);
+      animation:rotation 5s linear infinite;
+      // transform: rotate(31.07deg);
+    }
+  }
+}

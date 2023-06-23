@@ -1,0 +1,14 @@
+.web-header-error-alert {
+  @extend .web_;
+  margin-top: -40px;margin-bottom: 50px;height: 40px;
+  display: flex;justify-content: center;align-items: center;
+  background: #FFE8CE;color: #FF7701;font-size: 14px;
+
+  &:before {
+    content: '';display: block;width: 24px;height: 20px;margin-right: 10px;
+    background: url($res + 'icon/error.svg') center/contain no-repeat;
+  }
+  .web-button {
+    margin-left: 10px;
+  }
+}

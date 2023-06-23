@@ -1,0 +1,13 @@
+.web-mining {
+  &-header {
+    @extend .web;
+    font-family: 'Didot';font-size: 32px;font-weight: bold;margin-bottom: 20px;
+  }
+  &-body {
+    @extend .web;margin-top: 30px;padding-bottom: 60px;
+  }
+
+  &-main {
+    width: 785px;
+  }
+}

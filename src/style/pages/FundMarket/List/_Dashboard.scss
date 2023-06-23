@@ -1,0 +1,51 @@
+.web-fund-dashboard {
+  @extend .web;
+  // padding-bottom: 64px;
+  &-layout {
+    @extend .web_;height: 240px;
+    background: #FFFCFC;
+    margin-top: -40px;padding-top: 54px;
+    box-shadow: 0px 0px 32px rgba(49, 48, 48, 0.16);
+    // overflow: hidden;
+    position: relative;margin-bottom: 90px;
+  }
+  &-ball {
+    width: 380px;height: 380px;border-radius: 50%;
+    position: absolute;left: -110px;top: -150px;
+    background: linear-gradient(278.42deg, #FFE7D9 -4.98%, #F9830B 68.19%);
+    filter: blur(40px);
+    transform: rotate(31.07deg);
+  }
+  h3 {
+    text-align: center;font-size: 12px;line-height: 22px;
+    text-transform: uppercase;letter-spacing: 4px;font-weight: 800;
+  }
+  h2 {
+    text-align: center;font-family: 'Didot';line-height: 1.25;
+    font-weight: bold;font-size: 40px;margin-top: 10px;margin-bottom: 20px;
+  }
+  ul {
+    display: grid;grid-template-columns: 1fr 1fr 1fr; grid-gap: 20px;
+    position: relative;z-index: 1;
+    li {
+      // height: 112px;
+      padding: 20px;position: relative;top: 0;
+      color: $white;display: flex;flex-flow: column;
+      background: linear-gradient(134.54deg, #207DFF 17.91%, #82B6FF 100%);
+      box-shadow: 0px 16px 32px rgba(49, 48, 48, 0.16);
+      border-radius: 10px;line-height: 1.2;
+      @include dz();
+
+      label {
+        font-size: 14px;display: block;margin-bottom: 8px;
+      }
+      em {
+        font-size: 32px;font-weight: 800;display: block;
+      }
+      &:hover {
+        top: -5px;
+        box-shadow: 0px 16px 32px rgba(49, 48, 48, 0.3);
+      }
+    }
+  }
+}

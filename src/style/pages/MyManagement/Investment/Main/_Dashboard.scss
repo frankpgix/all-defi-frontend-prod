@@ -1,0 +1,44 @@
+.web-manage-investment-dashboard {
+  background: $white;border-radius: 8px;overflow: hidden;position: relative;height: 456px;
+  header {
+    padding: 32px 40px;background: $bgBlue;
+    h4 {
+      font-size: 12px;text-transform: uppercase;letter-spacing: 4px;color: $text;
+      margin-bottom: 8px;
+    }
+    em {
+      font-size: 48px;line-height: 56px;font-weight: 800;
+    }
+  }
+  &-chart {
+    height: 340px;position: relative;
+  }
+  &-pie {
+    width: 640px;height: 340px;position: relative;
+
+    &-layout {
+      display: flex;align-items: center;
+    }
+    &-detail {
+      height: 340px;flex: 1;
+      h4 {
+        padding: 48px 0 24px;font-size: 24px;line-height: 32px;
+      }
+      section {
+        display: grid;grid-template-columns: 1fr 1fr;grid-template-rows: 88px 88px;
+        grid-gap: 20px;
+      }
+    }
+
+    path, text {
+      cursor: pointer;
+      @include dz();
+    }
+    path:hover {
+      opacity: .8;
+    }
+  }
+  .web-c-time-select {
+    position: absolute;right: 40px;top: 40px;
+  }
+}

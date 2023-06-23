@@ -1,0 +1,47 @@
+.web-mining-preview {
+  width: 485px;background: $cff;border-top: 4px solid $blue;
+  padding: 30px;
+  display: flex;flex-flow: column;
+  & > header {
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 1.25;
+    color: $blue;
+  }
+  &-stake {
+    padding: 10px 0;flex:1;
+    &-fund, &-sall {
+      display: flex;align-items: center;justify-content: space-between;height: 50px;
+      font-size: 16px;
+      & > strong {
+        flex: 1;padding: 0 10px;
+      }
+      & > em {
+        padding: 0 5px;font-weight: bold;
+      }
+      & > u {
+        font-size: 14px;color: $dGray;
+      }
+      & > del {
+        width: 16px;height: 16px;display: block;cursor: pointer;margin-left: 10px;
+        background: url($res + 'icon/close.svg') center/contain no-repeat;
+      }
+    }
+    &-sall {
+      img {
+        display: block;width: 32px;height: 32px;
+      }
+    }
+
+    section {
+      height: 500px;padding:7px 10px;margin: -1px -10px;overflow-y: auto;
+    }
+    &.unstake section {
+      height: 240px;
+    }
+  }
+
+  & > footer {
+    display: flex;justify-content: flex-end;
+  }
+}

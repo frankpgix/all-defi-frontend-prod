@@ -1,0 +1,916 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "contract IFactory",
+        "name": "_factory",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "activeFundList",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "funds",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "allProtocol",
+    "outputs": [
+      {
+        "internalType": "contract IAllProtocol",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "fund",
+        "type": "address"
+      }
+    ],
+    "name": "assetComposition",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FundReader.Asset[]",
+        "name": "_assets",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "factory",
+    "outputs": [
+      {
+        "internalType": "contract IFactory",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "fund",
+        "type": "address"
+      }
+    ],
+    "name": "fundBreachDetail",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "fundId",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "latestFrozenALL",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "latestConfiscatedALL",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "continuousBreachTimes",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "isManagerFrozen",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct FundReader.FundBreachDetail",
+        "name": "detail",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "fund",
+        "type": "address"
+      }
+    ],
+    "name": "fundDetail",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "fundId",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "baseToken",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "createTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "epochIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "epochStartTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[4]",
+            "name": "stageEndTime",
+            "type": "uint256[4]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "status",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "settleAUMLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "realtimeAUMLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nav",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "costPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "baseTokenPriceInUSD",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unusedAsset",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "subscribingACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "redeemingShares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "miningShares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "roe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "lastRoe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historyReturn",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "managerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "platFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastManagerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "historyManagerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastRedemptionRatio",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FundReader.FundDetail",
+        "name": "detail",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "indexFrom",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "indexTo",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "activeOnly",
+        "type": "bool"
+      }
+    ],
+    "name": "fundDetailList",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "fundId",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "baseToken",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "createTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "epochIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "epochStartTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[4]",
+            "name": "stageEndTime",
+            "type": "uint256[4]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "status",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "settleAUMLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "realtimeAUMLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nav",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "costPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "baseTokenPriceInUSD",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unusedAsset",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "subscribingACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "redeemingShares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "miningShares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "roe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "lastRoe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historyReturn",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "managerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "platFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastManagerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "historyManagerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastRedemptionRatio",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FundReader.FundDetail[]",
+        "name": "_details",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "fundList",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "funds",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "globalAssetStatistic",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "aum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "assetInFunds",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historyReturn",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct FundReader.GlobalAssetStatistic",
+        "name": "info",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "fund",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "miningShareOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newFactory",
+        "type": "address"
+      }
+    ],
+    "name": "setFactory",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "fund",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "shareCompositionOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "redeeming",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "mining",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "fund",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "userDetail",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "fundId",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "baseToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "status",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nav",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "shares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "baseTokenPriceInUSD",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "subscribingACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "redeemingShares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unclaimedACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unclaimedALL",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "roe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historyReturn",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct FundReader.UserDetail",
+        "name": "detail",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "indexFrom",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "indexTo",
+        "type": "uint256"
+      }
+    ],
+    "name": "userDetailList",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "baseToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "acToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "createTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "desc",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "managerName",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "managerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "platFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[2]",
+            "name": "subscriptionLimit",
+            "type": "uint256[2]"
+          },
+          {
+            "internalType": "address[]",
+            "name": "supportedAssets",
+            "type": "address[]"
+          },
+          {
+            "internalType": "bytes32[]",
+            "name": "supportedDerivatives",
+            "type": "bytes32[]"
+          },
+          {
+            "internalType": "uint256[4]",
+            "name": "stageEndTime",
+            "type": "uint256[4]"
+          },
+          {
+            "internalType": "address",
+            "name": "factory",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IFund.BaseInfo[]",
+        "name": "_funds",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "fundId",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "baseToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "status",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nav",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "shares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "baseTokenPriceInUSD",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "subscribingACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "redeemingShares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unclaimedACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unclaimedALL",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "roe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historyReturn",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct FundReader.UserDetail[]",
+        "name": "_users",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

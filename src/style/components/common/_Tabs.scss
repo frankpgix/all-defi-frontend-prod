@@ -1,0 +1,27 @@
+.react-tabs {
+  &__tab {
+    height: 40px;display: flex;align-items: center;padding: 4px 48px 0;
+    background: #EDF0FB;border-radius: 12px 12px 0 0;font-size: 14px;letter-spacing: .5px;
+    // text-transform: uppercase;
+    font-weight: 800;margin-right: 10px;cursor: pointer;
+    text-transform: capitalize;
+    &-list {
+      display: flex;align-items: center;
+      border-bottom: 4px solid #1557F4;
+    }
+    &--selected {
+      background: $blue;color: $white;
+      box-shadow: 4px 0px 16px #A7C0FF;
+    }
+    &:focus-visible {
+      outline: none;
+    }
+    &-panel {
+      display: none;
+      &--selected {
+        display: block;
+        padding: 35px 40px;background: $white;
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+.web-manage-fund-stake-feature {
+  padding: 30px 40px;background: $white;margin-bottom: 40px;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  h3 {
+    color: $lGreen;font-family: 'Didot';font-size: 32px;
+  }
+
+  ul {
+    display: flex;justify-content: space-between;
+
+    li {
+      width: 200px;text-align: center;font-size: 14px;line-height: 18px;color: $black;
+
+      span {
+        text-transform: capitalize;
+      }
+
+      &:before {
+        content: '';display: block;width: 80px;height: 80px;
+        background: center/contain no-repeat;margin: 24px auto 16px;
+      }
+
+      @for $index from 1 through 5 {
+        &:nth-child(#{$index}):before {
+          background-image: url($res + 'icon/aum-' + $index + '.png');
+        }
+      }
+    }
+  }
+}
