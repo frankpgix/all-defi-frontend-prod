@@ -234,11 +234,11 @@ export const useUserACBuyData = (userAddress: string) => {
   // getTokenByAddress
   const data = (sData?.acbuys ?? []).map((item: ACBuyDataProps) => {
     const token = getTokenByAddress(item.baseToken)
-    // console.log(111, token, sData)
+    console.log(111, token, item)
     return {
       amount: Number(safeInterceptionValues(item.amount, token.precision, token.decimals)),
       tokenName: token.name,
-      sallAmount: Number(safeInterceptionValues(item.sallAmount, 2, 18)),
+      sallAmount: Number(safeInterceptionValues(item.sallAmount, 4, 18)),
       hash: item.id.split('-')[0],
       investor: item.investor,
       timestamp: item.timestamp * 1000
