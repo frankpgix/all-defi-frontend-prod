@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import 'rc-dialog/assets/index.css'
 import '@/style/style.scss'
 import Header from '@@/web/Header'
+import Footer from '@@/web/Footer'
 
 const Test = lazy(() => import('@/pages/Test'))
 const Home = lazy(() => import('@/pages/Home'))
@@ -19,6 +20,7 @@ function App() {
           </Routes>
         </Suspense>
       </div>
+      <Footer />
     </>
   )
 }
