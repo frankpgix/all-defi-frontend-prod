@@ -2,12 +2,8 @@ import React, { FC, useEffect } from 'react'
 import Table from 'rc-table'
 import { useNavigate } from 'react-router-dom'
 
-// import { FundDetailProps } from '@/class/help'
+import { useStoreFundList } from '@/store/useFunds'
 import { useFundListData } from '@/graphql/useFundData'
-// import { formatNumber } from '@/utils/tools'
-
-// import { useAppDispatch } from '@/store'
-// import { updateFundsList } from '@/store/funds'
 
 import RoeShow from '@@/common/RoeShow'
 import { FundName } from '@@/common/FundIcon'
@@ -16,15 +12,15 @@ import TokenValue from '@@/common/TokenValue'
 
 const FundList: FC = () => {
   const navigate = useNavigate()
-  // const dispatch = useAppDispatch()
   const { loading, data } = useFundListData()
+  const update = useStoreFundList((state) => state.update)
   // // console.log(data, 2233)
-  // useEffect(() => {
-  //   if (data.length) {
-  //     dispatch(updateFundsList(data))
-  //     console.log(data)
-  //   }
-  // }, [data]) // eslint-disable-line
+  useEffect(() => {
+    if (data.length) {
+      update(data)
+    }
+  }, [data, update])
+
   const webColumns = [
     {
       title: 'Name',
