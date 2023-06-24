@@ -1,12 +1,12 @@
 import React, { FC, useState, useMemo } from 'react'
 // import { useSigner } from 'wagmi'
 // import BN from 'bignumber.js'
-// import { isNumber } from 'lodash'
+import { isNumber } from 'lodash'
 // import { useRequest } from 'ahooks'
 
 import { AllTokenUnit, AcUSDCUnit } from '@@/common/TokenUnit'
 
-import { baseTokenOptions, tokenss } from '@/config/tokens'
+import { baseTokenOptions, tokens } from '@/config/tokens'
 // import ACProtocol from '@/class/ACProtocol'
 // import AllProtocol from '@/class/AllProtocol'
 // import { useTokensData } from '@/store/tokens/hooks'
@@ -15,7 +15,7 @@ import { baseTokenOptions, tokenss } from '@/config/tokens'
 // import { getUserStakesAsync } from '@/store/investor'
 // import { formatNumber } from '@/utils/tools'
 // import { sleep } from '@/utils/tools'
-// import { useProfile } from '@/store/useProfile'
+import { useStoreBalances } from '@/store/useProfile'
 
 import { Input, Select } from '@@/form'
 import Button from '@@/common/Button'
@@ -24,14 +24,15 @@ import InfoDialog from '@@/common/Dialog/Info'
 import Popper from '@@/common/Popper'
 // import { notify } from '@@/common/Toast'
 
-const usdcAddress = tokenss.USDC.tokenAddress
-const ethAddress = tokenss.ETH.tokenAddress
+const usdcAddress = tokens.USDC.address
+const ethAddress = tokens.ETH.address
 
 const Bench: FC = () => {
   // const { buyAllToken } = ACProtocol
   // const { allTokenPrice } = AllProtocol
   // const dispatch = useAppDispatch()
-  // const { balance } = useTokensData()
+  const { balances } = useStoreBalances()
+  // console.log(baseTokenOptions)
   // const { data: signer } = useSigner()
   //
   const [amount, setAmount] = useState<string | number>('')
@@ -97,7 +98,6 @@ const Bench: FC = () => {
   }, [baseTokenAddress])
   const maxNumber = 10
   const preAllValue = 10
-  const balance = {}
   return (
     <>
       <BlueLineSection title="Buy AC Token" className="web-buy-bench select">
@@ -113,18 +113,18 @@ const Bench: FC = () => {
         >
           {baseTokenAddress === usdcAddress && (
             <>
-              <p>USDC Balance: {balance.USDC}</p>
-              <p>acUSDC Balance: {balance.acUSDC}</p>
+              <p>USDC Balance: {balances.USDC}</p>
+              <p>acUSDC Balance: {balances.acUSDC}</p>
             </>
           )}
           {baseTokenAddress === ethAddress && (
             <>
-              <p>ETH Balance: {balance.ETH}</p>
-              <p>acETH Balance: {balance.acETH}</p>
+              <p>ETH Balance: {balances.ETH}</p>
+              <p>acETH Balance: {balances.acETH}</p>
             </>
           )}
 
-          <p>sALL Balance: {balance.sALL}</p>
+          <p>sALL Balance: {balances.sALLTOKEN}</p>
         </Input>
         <Select
           value={baseTokenAddress}

@@ -2,7 +2,7 @@ import { ChainId } from '@/config/types'
 import Token from '@/class/Token'
 import { toLower } from 'lodash'
 
-export const tokenss: { [key: string]: Token } = {
+export const tokens: { [key: string]: Token } = {
   USDC: new Token({
     name: 'USDC',
     symbol: 'USDC',
@@ -84,9 +84,9 @@ export const tokenss: { [key: string]: Token } = {
 
 export const BASE_TOKEN_SYMBOL = 'USDC'
 
-export default tokenss
+export default tokens
 
-export const baseTokens = [tokenss.USDC, tokenss.ETH]
+export const baseTokens = [tokens.USDC, tokens.ETH]
 
 const UNKNOWN = {
   decimals: 18,
@@ -98,18 +98,18 @@ const UNKNOWN = {
 }
 
 export const getTokenByAddress = (address: string) => {
-  if (address === '0x0000000000000000000000000000000000000000') return tokenss.ETH
-  const token = Object.keys(tokenss)
-    .map((key: string) => tokenss[key])
-    .find((item) => toLower(item.tokenAddress) === toLower(address))
+  if (address === '0x0000000000000000000000000000000000000000') return tokens.ETH
+  const token = Object.keys(tokens)
+    .map((key: string) => tokens[key])
+    .find((item) => toLower(item.address) === toLower(address))
   if (token) return token
   return UNKNOWN
 }
 
 export const getDecimalsByAddress = (address: string) => getTokenByAddress(address).decimals
 
-export const baseTokenOptions = baseTokens.map(({ name, tokenAddress, icon }) => ({
+export const baseTokenOptions = baseTokens.map(({ name, address, icon }) => ({
   label: name,
-  value: tokenAddress,
+  value: address,
   icon
 }))
