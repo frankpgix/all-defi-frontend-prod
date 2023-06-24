@@ -2,6 +2,8 @@ import { ChainId } from '@/config/types'
 import Token from '@/class/Token'
 import { toLower } from 'lodash'
 
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+
 export const tokens: { [key: string]: Token } = {
   USDC: new Token({
     name: 'USDC',
@@ -41,7 +43,7 @@ export const tokens: { [key: string]: Token } = {
     symbol: 'ETH',
     address: {
       [ChainId.MAINNET]: '',
-      [ChainId.ARBITRUM]: '0x0000000000000000000000000000000000000000'
+      [ChainId.ARBITRUM]: ZERO_ADDRESS
     },
     decimals: 18,
     precision: 4,
@@ -84,8 +86,6 @@ export const tokens: { [key: string]: Token } = {
 
 export const BASE_TOKEN_SYMBOL = 'USDC'
 
-export default tokens
-
 export const baseTokens = [tokens.USDC, tokens.ETH]
 
 const UNKNOWN = {
@@ -98,7 +98,7 @@ const UNKNOWN = {
 }
 
 export const getTokenByAddress = (address: string) => {
-  if (address === '0x0000000000000000000000000000000000000000') return tokens.ETH
+  if (address === ZERO_ADDRESS) return tokens.ETH
   const token = Object.keys(tokens)
     .map((key: string) => tokens[key])
     .find((item) => toLower(item.address) === toLower(address))
@@ -113,3 +113,5 @@ export const baseTokenOptions = baseTokens.map(({ name, address, icon }) => ({
   value: address,
   icon
 }))
+
+export default tokens

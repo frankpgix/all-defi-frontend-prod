@@ -1,7 +1,10 @@
 import React, { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import 'rc-dialog/assets/index.css'
 import 'rc-table/assets/index.css'
+import 'animate.css'
 import '@/style/style.scss'
 import Header from '@@/web/Header'
 import Footer from '@@/web/Footer'
@@ -26,6 +29,7 @@ function App() {
         </Suspense>
       </div>
       <Footer />
+      <ToastContainer pauseOnFocusLoss={true} pauseOnHover={true} />
     </>
   )
 }

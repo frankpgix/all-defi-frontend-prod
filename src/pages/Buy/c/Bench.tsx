@@ -1,50 +1,40 @@
 import React, { FC, useState, useMemo } from 'react'
-// import { useSigner } from 'wagmi'
+import { useAccount } from 'wagmi'
 import BN from 'bignumber.js'
 import { isNumber } from 'lodash'
-// import { useRequest } from 'ahooks'
 
 import { AllTokenUnit, AcUSDCUnit } from '@@/common/TokenUnit'
 
-import { baseTokenOptions, tokens } from '@/config/tokens'
-// import ACProtocol from '@/class/ACProtocol'
-// import AllProtocol from '@/class/AllProtocol'
-// import { useTokensData } from '@/store/tokens/hooks'
-// import { useAppDispatch } from '@/store'
-// import { getTokensBalanceAsync } from '@/store/tokens'
-// import { getUserStakesAsync } from '@/store/investor'
-import { formatNumber } from '@/utils/tools'
-// import { sleep } from '@/utils/tools'
+import { baseTokenOptions, tokens, ZERO_ADDRESS } from '@/config/tokens'
+
+import { formatNumber, sleep } from '@/utils/tools'
 import { useAllTokenPrice } from '@/hooks/useAllProtocol'
+import { useNotify } from '@/hooks/useNotify'
+import { useBuyAcToken, useEthBuyAcToken } from '@/hooks/useACProtocol'
 import { useStoreBalances } from '@/store/useProfile'
+import { useUserACBuyData } from '@/graphql/useFundData'
 
 import { Input, Select } from '@@/form'
 import Button from '@@/common/Button'
 import BlueLineSection from '@@/web/BlueLineSection'
 import InfoDialog from '@@/common/Dialog/Info'
 import Popper from '@@/common/Popper'
-// import { notify } from '@@/common/Toast'
 
 const usdcAddress = tokens.USDC.address
 const ethAddress = tokens.ETH.address
 
 const Bench: FC = () => {
-  // const { buyAllToken } = ACProtocol
-  // const { allTokenPrice } = AllProtocol
-  // const dispatch = useAppDispatch()
+  const { address: account, isConnected } = useAccount()
+  const { refetch } = useUserACBuyData(account ?? '')
+
   const { balances } = useStoreBalances()
-  // console.log(baseTokenOptions)
-  // const { data: signer } = useSigner()
+  const { notifyLoading, notifySuccess, notifyError } = useNotify()
   //
   const [amount, setAmount] = useState<string | number>('')
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const [baseTokenAddress, setBaseTokenAddress] = useState(baseTokenOptions[0].value)
   const { data: allTPrice = 1 } = useAllTokenPrice(baseTokenAddress)
-  // console.log('allTPrice', allTPrice)
-  // useRequest(async () => await allTokenPrice(baseTokenAddress), {
-  //   refreshDeps: [baseTokenAddress]
-  // })
-  // // console.log(baseTokenAddress)
+
   const preAllValue = useMemo(
     () =>
       Number(
@@ -59,28 +49,36 @@ const Bench: FC = () => {
       ),
     [amount, allTPrice]
   )
-  //
-  const buyAndStakeFunc = async () => {
-    // if (signer) {
-    //   const notifyId = notify.loading()
-    //   // 执行购买和质押
-    //   const { status, msg } = await buyAllToken(baseTokenAddress, Number(amount), signer)
-    //   if (status) {
-    //     // 重新获取余额信息
-    //     await dispatch(getTokensBalanceAsync(signer))
-    //     // 重新拉取质押信息
-    //     await dispatch(getUserStakesAsync(signer))
-    //     setAmount(0)
-    //     notify.update(notifyId, 'success')
-    //   } else {
-    //     notify.update(notifyId, 'error', msg)
-    //   }
-    // }
+
+  const onSettled = async (data, error) => {
+    if (error) {
+      notifyError(error)
+    } else {
+      notifySuccess()
+      await sleep(10000)
+      setAmount('')
+      refetch()
+    }
   }
+
+  const { onBuyAcToken, isLoading } = useBuyAcToken(onSettled)
+  const { onEthBuyAcToken, isLoading: ethIsLoading } = useEthBuyAcToken(onSettled)
+
+  const buyAndStakeFunc = async () => {
+    if (isConnected) {
+      notifyLoading()
+      if (baseTokenAddress === ZERO_ADDRESS) {
+        await onEthBuyAcToken(amount)
+      } else {
+        await onBuyAcToken(baseTokenAddress, amount)
+      }
+    }
+  }
+
   //
   const isDisabled = useMemo(
-    () => !amount || !isNumber(Number(amount) || Number(amount) === 0),
-    [amount]
+    () => !amount || !isNumber(Number(amount) || Number(amount) === 0) || isLoading || ethIsLoading,
+    [amount, ethIsLoading, isLoading]
   )
   //
   const maxNumber = useMemo(() => {
@@ -99,8 +97,7 @@ const Bench: FC = () => {
     if (baseTokenAddress === ethAddress) return 'ETH'
     return ''
   }, [baseTokenAddress])
-  // const maxNumber = 10
-  // const preAllValue = 10
+
   return (
     <>
       <BlueLineSection title="Buy AC Token" className="web-buy-bench select">

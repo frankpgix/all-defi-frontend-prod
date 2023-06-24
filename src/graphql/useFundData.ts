@@ -230,13 +230,21 @@ export const useUserFundHistoryData = (userAddress: string, fundAddress?: string
 }
 
 export const useUserACBuyData = (userAddress: string) => {
-  const { loading, error, data: sData } = useQuery(calcUserACBuyGQL(userAddress))
+  const {
+    loading,
+    error,
+    data: sData,
+    refetch
+  } = useQuery(calcUserACBuyGQL(userAddress), {
+    // 忽略缓存，总是从网络获取数据
+    fetchPolicy: 'no-cache'
+  })
   // getTokenByAddress
   const data = (sData?.acbuys ?? []).map((item: ACBuyDataProps) => {
     const token = getTokenByAddress(item.baseToken)
     // console.log(111, token, item)
     return {
-      amount: Number(safeInterceptionValues(item.amount, token.precision, token.decimals)),
+      amount: Number(safeInterceptionValues(item.amount, token.decimals, token.decimals)),
       tokenName: token.name,
       sallAmount: Number(safeInterceptionValues(item.sallAmount, 4, 18)),
       hash: item.id.split('-')[0],
@@ -244,7 +252,7 @@ export const useUserACBuyData = (userAddress: string) => {
       timestamp: item.timestamp * 1000
     }
   })
-  return { loading, error, data }
+  return { loading, error, data, refetch }
 }
 
 export const useMiningData = (type: string) => {

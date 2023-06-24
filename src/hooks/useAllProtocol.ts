@@ -5,9 +5,11 @@ import tokens from '@/config/tokens'
 import { bigInt2Number } from '@/utils/tools'
 // import { getAllProtocolContracts } from '@/utils/contractHelpers'
 
+const AllProtocol = contracts.AllProtocol
+
 export const useIsManager = (address = '') => {
   const { data, isLoading, refetch } = useContractRead({
-    ...contracts.AllProtocol,
+    ...AllProtocol,
     functionName: 'isManagerAuthorized',
     args: [address]
   })
@@ -19,7 +21,7 @@ export const useAllTokenPrice = (baseTokenAddress = '') => {
   let address = baseTokenAddress || tokens.USDC.address
   if (address === tokens.ETH.address) address = tokens.WETH.address
   const { data, isLoading, refetch } = useContractRead({
-    ...contracts.AllProtocol,
+    ...AllProtocol,
     functionName: 'allTokenPrice',
     args: [address]
   })
