@@ -14,7 +14,6 @@ import UniV3ACLAbi from '@/config/abi/UniV3ACL.json'
 export const contracts: { [key in ContractKeys]: Contract } = {
   bep20: (address: string) =>
     new Contract({
-      name: 'bep20',
       address: {
         [ChainId.MAINNET]: address,
         [ChainId.ARBITRUM]: address
@@ -23,7 +22,6 @@ export const contracts: { [key in ContractKeys]: Contract } = {
     }),
   FundPool: (address: string) =>
     new Contract({
-      name: 'FundPool',
       address: {
         [ChainId.MAINNET]: address,
         [ChainId.ARBITRUM]: address
@@ -31,7 +29,6 @@ export const contracts: { [key in ContractKeys]: Contract } = {
       abi: FundPoolAbi
     }),
   multiCall: new Contract({
-    name: 'multicall',
     address: {
       [ChainId.MAINNET]: '0xcA11bde05977b3631167028862bE2a173976CA11',
       [ChainId.ARBITRUM]: '0xcA11bde05977b3631167028862bE2a173976CA11'
@@ -39,7 +36,6 @@ export const contracts: { [key in ContractKeys]: Contract } = {
     abi: MultiCallAbi
   }),
   ACProtocol: new Contract({
-    name: 'ACProtocol',
     address: {
       [ChainId.MAINNET]: '0x4CF45D37b6E1EfAeD80D8B405B9Fb71fE6C5BBb5',
       [ChainId.ARBITRUM]: '0x4CF45D37b6E1EfAeD80D8B405B9Fb71fE6C5BBb5'
@@ -47,7 +43,6 @@ export const contracts: { [key in ContractKeys]: Contract } = {
     abi: ACProtocolAbi
   }),
   AllProtocol: new Contract({
-    name: 'AllProtocol',
     address: {
       [ChainId.MAINNET]: '0x0E84681E1EB1b93ebc97999a4D826c6c000c2901',
       [ChainId.ARBITRUM]: '0x0E84681E1EB1b93ebc97999a4D826c6c000c2901'
@@ -55,7 +50,6 @@ export const contracts: { [key in ContractKeys]: Contract } = {
     abi: AllProtocolAbi
   }),
   FundReader: new Contract({
-    name: 'FundReader',
     address: {
       [ChainId.MAINNET]: '0xd26C491B881A9dD410EAFB10f77b9dD813641F83',
       [ChainId.ARBITRUM]: '0xd26C491B881A9dD410EAFB10f77b9dD813641F83'
@@ -63,7 +57,6 @@ export const contracts: { [key in ContractKeys]: Contract } = {
     abi: FundReaderAbi
   }),
   Reward: new Contract({
-    name: 'Reward',
     address: {
       [ChainId.MAINNET]: '0x50ac1194CfC059fE7FFc869e2b2610d8b3e1211F',
       [ChainId.ARBITRUM]: '0x50ac1194CfC059fE7FFc869e2b2610d8b3e1211F'
@@ -71,7 +64,6 @@ export const contracts: { [key in ContractKeys]: Contract } = {
     abi: RewardAbi
   }),
   UniV3ACL: new Contract({
-    name: 'UniV3ACL',
     address: {
       [ChainId.MAINNET]: '0x9c9896b084415D9280fF4e5d8818291547e3280F',
       [ChainId.ARBITRUM]: '0x9c9896b084415D9280fF4e5d8818291547e3280F'

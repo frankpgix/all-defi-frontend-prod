@@ -9,5 +9,6 @@ export const useIsManager = (address = '') => {
     functionName: 'isManagerAuthorized',
     args: [address]
   })
+  // console.log({ ...contracts.AllProtocol })
   return { isManager: Boolean(data), isLoading, refetch }
 }

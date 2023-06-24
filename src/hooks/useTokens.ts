@@ -1,10 +1,8 @@
 import { useContractReads, useBalance } from 'wagmi'
 import { useAccount } from 'wagmi'
 
-// import contracts from '@/config/contracts'
 import tokens from '@/config/tokens'
 import bep20Abi from '@/config/abi/erc20.json'
-// import { getAllProtocolContracts } from '@/utils/contractHelpers'
 import { bigInt2Number } from '@/utils/tools'
 
 export const useBalances = () => {

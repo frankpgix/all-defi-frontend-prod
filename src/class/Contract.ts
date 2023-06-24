@@ -2,17 +2,14 @@ import { _getAddress, addressCheck } from '@/class/Token'
 import { ChainIdRec } from '@/config/types'
 
 interface ContractProps {
-  name: string
   address: ChainIdRec
   abi: any
 }
 
 class Contract {
-  readonly name: string
   readonly address: ChainIdRec
 
-  constructor({ name, address, abi }: ContractProps) {
-    this.name = name
+  constructor({ address, abi }: ContractProps) {
     this.abi = abi
     this.address = _getAddress(this.checkAddress(address))
   }
