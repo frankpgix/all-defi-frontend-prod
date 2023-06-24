@@ -1,4 +1,5 @@
 import { useContractRead } from 'wagmi'
+import { hexToString } from 'viem'
 
 import contracts from '@/config/contracts'
 import tokens from '@/config/tokens'
@@ -26,4 +27,17 @@ export const useAllTokenPrice = (baseTokenAddress = '') => {
     args: [address]
   })
   return { data: bigInt2Number(data ?? 1, 18, 4), isLoading, refetch }
+}
+
+export const useDerivativeList = () => {
+  const {
+    data: sData,
+    isLoading,
+    refetch
+  } = useContractRead({
+    ...AllProtocol,
+    functionName: 'derivativeList'
+  })
+  const data = sData.map((item: string) => ({ name: hexToString(item, { size: 32 }), value: item }))
+  return { data, isLoading, refetch }
 }

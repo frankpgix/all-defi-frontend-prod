@@ -4,7 +4,7 @@ import BN from 'bignumber.js'
 // import { floor } from 'lodash'
 import { getTokenByAddress } from '@/config/tokens'
 
-import { FundBaseProps, FundDetailProps } from '@/class/help'
+import { FundBaseProps, FundDetailProps } from '@/hooks/help'
 
 import { useFundDetailChartData } from '@/graphql/useFundData'
 import { createArrayByNumber } from '@/utils/tools'
@@ -32,14 +32,31 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
   const currEpochIndex = useMemo(() => {
     if (timeType === 'current epoch') return [data.epochIndex]
     if (timeType === '3 Epochs')
-      return Array.from(new Set([Math.max(data.epochIndex - 2, 0), Math.max(data.epochIndex - 1, 0), data.epochIndex]))
+      return Array.from(
+        new Set([
+          Math.max(data.epochIndex - 2, 0),
+          Math.max(data.epochIndex - 1, 0),
+          data.epochIndex
+        ])
+      )
     return createArrayByNumber(data.epochIndex)
   }, [data.epochIndex, timeType])
   const baseToken = useMemo(() => getTokenByAddress(base.baseToken), [base.baseToken])
-  console.log('realtimeAUMLimit', data.realtimeAUMLimit, 'aum', data.aum, 'subscribingACToken', data.subscribingACToken)
 
-  const { loading: chartLoading, data: chartData } = useFundDetailChartData(fundAddress ?? '', currEpochIndex)
+  // console.log(
+  //   'realtimeAUMLimit',
+  //   data.realtimeAUMLimit,
+  //   'aum',
+  //   data.aum,
+  //   'subscribingACToken',
+  //   data.subscribingACToken
+  // )
 
+  const { loading: chartLoading, data: chartData } = useFundDetailChartData(
+    fundAddress ?? '',
+    currEpochIndex
+  )
+  // console.log(chartData)
   return (
     <>
       <header className="web-fund-detail-header">Fund Overview</header>
@@ -82,7 +99,10 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
               <dd>
                 <TokenValue
                   value={Math.max(
-                    BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(),
+                    BN(data.realtimeAUMLimit)
+                      .minus(data.aum)
+                      .minus(data.subscribingACToken)
+                      .toNumber(),
                     0
                   )}
                   token={baseToken}
@@ -108,7 +128,11 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
             <dl>
               <dt>
                 Historical return
-                <Popper size="mini" white content="Cumulated profit and loss since the inception of this fund" />
+                <Popper
+                  size="mini"
+                  white
+                  content="Cumulated profit and loss since the inception of this fund"
+                />
               </dt>
               <dd>
                 <TokenValue value={data.historyReturn} token={baseToken} size="mini" />
@@ -124,7 +148,11 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
           <header>
             <h3>Share Price</h3>
             <aside>
-              <TimeSelect value={timeType} options={timeOptions} onChange={(val) => setTimeType(val)} />
+              <TimeSelect
+                value={timeType}
+                options={timeOptions}
+                onChange={(val) => setTimeType(val)}
+              />
             </aside>
           </header>
           <section>

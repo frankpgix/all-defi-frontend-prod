@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 import { useAccount } from 'wagmi'
-import { useIsManager } from '@/hooks/useAllProtocol'
+import { useIsManager, useDerivativeList } from '@/hooks/useAllProtocol'
 import { useBalances } from '@/hooks/useTokens'
 import { useStoreProfile, useStoreBalances } from '@/store/useProfile'
+import { useStoreDerivativeList } from '@/store/useFunds'
 
 export default function Global(): null {
   // update profile info
@@ -21,6 +22,14 @@ export default function Global(): null {
   useEffect(() => {
     updateBalances(balances)
   }, [address, balances, updateBalances])
+
+  // update derivativeList
+  const { data: derivativeList } = useDerivativeList()
+  const updateDerivativeList = useStoreDerivativeList((state) => state.update)
+
+  useEffect(() => {
+    updateDerivativeList(derivativeList)
+  }, [derivativeList, updateDerivativeList])
 
   return null
 }

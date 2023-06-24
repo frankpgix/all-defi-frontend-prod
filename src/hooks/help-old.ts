@@ -323,21 +323,6 @@ export const calcFundUserDetail = (item: any): FundUserDataProps => {
   }
 }
 
-// uint256 fundId; //基金id/地址
-// address baseToken; //底层金库token
-// Status status;//当前基金状态
-// uint256 aum; //基金本轮启动时的价值
-// uint256 nav;//本期实时投资净值
-// uint256 navInUSD;//USD本位计价的nav，decimals 18
-// uint256 shares; //持有share的数量，包含余额、赎回中、挖矿中
-// uint256 sharePrice; //share价格
-// uint256 subscribingACToken;//申购中的acToken数量
-// uint256 redeemingShares;//赎回中的share数量
-// uint256 unclaimedACToken;//未领取的赎回资产
-// uint256 unclaimedALL;//未领取的赔偿ALL
-// int256 historyReturn;//历史累计收益
-// int256 roe;//收益率
-
 export interface FundUserDataProps {
   address: string
   baseToken: string
