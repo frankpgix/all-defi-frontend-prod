@@ -1,6 +1,6 @@
 import React, { FC, useState, useMemo } from 'react'
 // import { useSigner } from 'wagmi'
-// import BN from 'bignumber.js'
+import BN from 'bignumber.js'
 import { isNumber } from 'lodash'
 // import { useRequest } from 'ahooks'
 
@@ -13,8 +13,9 @@ import { baseTokenOptions, tokens } from '@/config/tokens'
 // import { useAppDispatch } from '@/store'
 // import { getTokensBalanceAsync } from '@/store/tokens'
 // import { getUserStakesAsync } from '@/store/investor'
-// import { formatNumber } from '@/utils/tools'
+import { formatNumber } from '@/utils/tools'
 // import { sleep } from '@/utils/tools'
+import { useAllTokenPrice } from '@/hooks/useAllProtocol'
 import { useStoreBalances } from '@/store/useProfile'
 
 import { Input, Select } from '@@/form'
@@ -38,24 +39,26 @@ const Bench: FC = () => {
   const [amount, setAmount] = useState<string | number>('')
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const [baseTokenAddress, setBaseTokenAddress] = useState(baseTokenOptions[0].value)
-  // const { data: allTPrice = 1 } = useRequest(async () => await allTokenPrice(baseTokenAddress), {
+  const { data: allTPrice = 1 } = useAllTokenPrice(baseTokenAddress)
+  // console.log('allTPrice', allTPrice)
+  // useRequest(async () => await allTokenPrice(baseTokenAddress), {
   //   refreshDeps: [baseTokenAddress]
   // })
   // // console.log(baseTokenAddress)
-  // const preAllValue = useMemo(
-  //   () =>
-  //     Number(
-  //       formatNumber(
-  //         BN(Number(amount) || 0)
-  //           .multipliedBy(0.1)
-  //           .div(allTPrice)
-  //           .toString(),
-  //         4,
-  //         '0.0000'
-  //       )
-  //     ),
-  //   [amount, allTPrice]
-  // )
+  const preAllValue = useMemo(
+    () =>
+      Number(
+        formatNumber(
+          BN(Number(amount) || 0)
+            .multipliedBy(0.1)
+            .div(allTPrice)
+            .toString(),
+          4,
+          '0.0000'
+        )
+      ),
+    [amount, allTPrice]
+  )
   //
   const buyAndStakeFunc = async () => {
     // if (signer) {
@@ -80,11 +83,11 @@ const Bench: FC = () => {
     [amount]
   )
   //
-  // const maxNumber = useMemo(() => {
-  //   if (baseTokenAddress === usdcAddress) return Number(balance.USDC)
-  //   if (baseTokenAddress === ethAddress) return Number(balance.ETH)
-  //   return 0
-  // }, [balance.USDC, balance.ETH, baseTokenAddress])
+  const maxNumber = useMemo(() => {
+    if (baseTokenAddress === usdcAddress) return Number(balances.USDC)
+    if (baseTokenAddress === ethAddress) return Number(balances.ETH)
+    return 0
+  }, [balances.USDC, balances.ETH, baseTokenAddress])
   //
   const onChangeBaseToken = (address: any) => {
     setBaseTokenAddress(String(address))
@@ -96,8 +99,8 @@ const Bench: FC = () => {
     if (baseTokenAddress === ethAddress) return 'ETH'
     return ''
   }, [baseTokenAddress])
-  const maxNumber = 10
-  const preAllValue = 10
+  // const maxNumber = 10
+  // const preAllValue = 10
   return (
     <>
       <BlueLineSection title="Buy AC Token" className="web-buy-bench select">
