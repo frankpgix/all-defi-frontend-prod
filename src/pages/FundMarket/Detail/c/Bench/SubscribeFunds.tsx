@@ -60,7 +60,7 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
   const onSliderChange = (val: number) => {
     if (maxValue > 0) {
       const currValue = BN(maxValue).div(100).multipliedBy(val).toNumber()
-      setValue(currValue)
+      setValue(currValue ? currValue : '')
       setSliderValue(val)
     }
   }
@@ -122,7 +122,11 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
           </Input>
         </div>
         <div className="web-fund-detail-bench-slider">
-          <Slider value={sliderValue} onChange={(val) => onSliderChange(val)} />
+          <Slider
+            value={sliderValue}
+            disabled={!isInSubscribe}
+            onChange={(val) => onSliderChange(val)}
+          />
         </div>
         <div className="web-fund-detail-bench-action">
           <footer>

@@ -1,18 +1,22 @@
 import React, { FC, useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { useSigner } from 'wagmi'
+// import { useSigner } from 'wagmi'
 // import BN from 'bignumber.js'
 
-import FundPool from '@/class/FundPool'
-import { FundUserDataProps } from '@/class/help'
+// import FundPool from '@/class/FundPool'
+import { FundUserDataProps } from '@/hooks/help'
+import { useStoreProfile } from '@/store/useProfile'
+import { useFundClaim } from '@/hooks/useFundPool'
+import { useNotify } from '@/hooks/useNotify'
+
 import tokens, { getTokenByAddress } from '@/config/tokens'
 
-import { Input } from '@@/common/Form'
+import { Input } from '@@/Form'
 import Button from '@@/common/Button'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
 import InfoDialog from '@@/common/Dialog/Info'
 
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
 
 interface Props {
   userData: FundUserDataProps
@@ -20,29 +24,51 @@ interface Props {
 }
 
 const Claim: FC<Props> = ({ userData, getData }) => {
-  const { claim } = FundPool
+  // const { claim } = FundPool
   const { fundAddress } = useParams()
-  const { data: signer } = useSigner()
+  const { address: account } = useStoreProfile()
+  const { notifyLoading, notifySuccess, notifyError } = useNotify()
+  // const { data: signer } = useSigner()
 
   const value = userData.unclaimedACToken
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const baseToken = useMemo(() => getTokenByAddress(userData.baseToken), [userData.baseToken])
-  const acToken = useMemo(() => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}`]), [baseToken])
+  const acToken = useMemo(
+    () => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}`]),
+    [baseToken]
+  )
 
-  console.log(userData.baseToken, acToken, 33333)
-  const onRedeem = async () => {
-    if (signer && fundAddress) {
-      const notifyId = notify.loading()
-      // 执行购买和质押
-      const { status, msg } = await claim(fundAddress, signer)
-      if (status) {
-        await getData()
-        notify.update(notifyId, 'success')
-      } else {
-        notify.update(notifyId, 'error', msg)
-      }
+  const onSettled = async (data, error) => {
+    if (error) {
+      notifyError(error)
+    } else {
+      notifySuccess()
+      await getData()
     }
   }
+
+  const { onClaim } = useFundClaim(fundAddress, account, onSettled)
+
+  const claimFund = async () => {
+    if (account && fundAddress) {
+      notifyLoading()
+      await onClaim()
+    }
+  }
+
+  // const onRedeem = async () => {
+  //   if (signer && fundAddress) {
+  //     const notifyId = notify.loading()
+  //     // 执行购买和质押
+  //     const { status, msg } = await claim(fundAddress, signer)
+  //     if (status) {
+  //       await getData()
+  //       notify.update(notifyId, 'success')
+  //     } else {
+  //       notify.update(notifyId, 'error', msg)
+  //     }
+  //   }
+  // }
 
   return (
     <>
@@ -68,7 +94,7 @@ const Claim: FC<Props> = ({ userData, getData }) => {
       </section>
       <InfoDialog
         show={infoStatus}
-        onConfirm={onRedeem}
+        onConfirm={claimFund}
         onClose={() => setInfoStatus(false)}
         title="Claim AC Token"
         msg={`${userData.unclaimedACToken} acUSDC will be claimed`}

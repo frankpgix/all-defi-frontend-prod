@@ -27,7 +27,10 @@ const Bench: FC<Props> = ({ userData, data, getData, share }) => {
         <TabPanel>
           <SubscribeFunds data={data} getData={getData} />
         </TabPanel>
-        <TabPanel>2</TabPanel>
+        <TabPanel>
+          <RedeemFunds userData={userData} data={data} share={share} getData={getData} />
+          <Claim userData={userData} getData={getData} />
+        </TabPanel>
       </Tabs>
     </section>
   )
@@ -41,4 +44,3 @@ export default Bench
 // </TabPanel>
 
 // <RedeemFunds userData={userData} data={data} share={share} getData={getData} />
-// <Claim userData={userData} getData={getData} />
