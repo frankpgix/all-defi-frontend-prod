@@ -1,14 +1,14 @@
 import { useContractRead, useContractWrite } from 'wagmi'
 // import { parseEther } from 'viem'
-import contracts from '@/config/contracts'
+import { FundPoolContract } from '@/config/contracts'
 import Token from '@/class/Token'
 import { getUnitAmount } from '@/utils/tools'
 
 import { calcFundBaseInfo } from './help'
-import { FundBaseInfoProps, FundBaseInfoDefault } from './help'
+import { FundBaseInfoProps, FundBaseInfoDefault, AddressType } from './help'
 
 export const useFundBaseInfo = (fundAddress: string) => {
-  const FundPool = contracts.FundPool(fundAddress)
+  const FundPool = FundPoolContract(fundAddress)
   const {
     data: sData,
     isLoading,
@@ -21,8 +21,12 @@ export const useFundBaseInfo = (fundAddress: string) => {
   return { data, isLoading, refetch }
 }
 
-export const useFundSubscribe = (fundAddress: string, account: string, onSettled) => {
-  const FundPool = contracts.FundPool(fundAddress)
+export const useFundSubscribe = (
+  fundAddress: string,
+  account: AddressType,
+  onSettled: (data: any, error: any) => void
+) => {
+  const FundPool = FundPoolContract(fundAddress)
   const { writeAsync } = useContractWrite({
     ...FundPool,
     functionName: 'subscribe',
@@ -38,8 +42,12 @@ export const useFundSubscribe = (fundAddress: string, account: string, onSettled
   return { onSubscribe }
 }
 
-export const useFundRedeem = (fundAddress: string, account: string, onSettled) => {
-  const FundPool = contracts.FundPool(fundAddress)
+export const useFundRedeem = (
+  fundAddress: string,
+  account: AddressType,
+  onSettled: (data: any, error: any) => void
+) => {
+  const FundPool = FundPoolContract(fundAddress)
   const { writeAsync } = useContractWrite({
     ...FundPool,
     functionName: 'redeem',
@@ -56,8 +64,12 @@ export const useFundRedeem = (fundAddress: string, account: string, onSettled) =
   return { onRedeem }
 }
 
-export const useFundClaim = (fundAddress: string, account: string, onSettled) => {
-  const FundPool = contracts.FundPool(fundAddress)
+export const useFundClaim = (
+  fundAddress: string,
+  account: AddressType,
+  onSettled: (data: any, error: any) => void
+) => {
+  const FundPool = FundPoolContract(fundAddress)
   const { writeAsync: onClaim } = useContractWrite({
     ...FundPool,
     functionName: 'claim',
@@ -68,8 +80,13 @@ export const useFundClaim = (fundAddress: string, account: string, onSettled) =>
   return { onClaim }
 }
 
-export const useFundCancelRedeem = (fundAddress: string, account: string, onSettled, onMutate) => {
-  const FundPool = contracts.FundPool(fundAddress)
+export const useFundCancelRedeem = (
+  fundAddress: string,
+  account: AddressType,
+  onSettled: (data: any, error: any) => void,
+  onMutate: () => void
+) => {
+  const FundPool = FundPoolContract(fundAddress)
   const { writeAsync: onCancelRedeem } = useContractWrite({
     ...FundPool,
     functionName: 'cancelRedeem',
@@ -83,11 +100,11 @@ export const useFundCancelRedeem = (fundAddress: string, account: string, onSett
 
 export const useFundCancelSubscribe = (
   fundAddress: string,
-  account: string,
-  onSettled,
-  onMutate
+  account: AddressType,
+  onSettled: (data: any, error: any) => void,
+  onMutate: () => void
 ) => {
-  const FundPool = contracts.FundPool(fundAddress)
+  const FundPool = FundPoolContract(fundAddress)
   const { writeAsync: onCancelSubscribe } = useContractWrite({
     ...FundPool,
     functionName: 'cancelSubscribe',
@@ -101,11 +118,11 @@ export const useFundCancelSubscribe = (
 
 export const useFundClaimCompensation = (
   fundAddress: string,
-  account: string,
-  onSettled,
-  onMutate
+  account: AddressType,
+  onSettled: (data: any, error: any) => void,
+  onMutate: () => void
 ) => {
-  const FundPool = contracts.FundPool(fundAddress)
+  const FundPool = FundPoolContract(fundAddress)
   const { writeAsync: onClaimCompensation } = useContractWrite({
     ...FundPool,
     functionName: 'claimCompensation',

@@ -56,19 +56,27 @@ const Input: FC<InputProps> = ({
   }
   useEffect(() => {
     if (type === 'number' && maxNumber != null && onChange) {
-      if (value > maxNumber) {
+      if (Number(value) > maxNumber) {
         onChange(maxNumber)
       }
     }
   }, [maxNumber, value, onChange, type])
 
-  const style = classNames('web-form-input', className, { disabled, right, 'has-max-btn': maxNumber != null, error })
+  const style = classNames('web-form-input', className, {
+    disabled,
+    right,
+    'has-max-btn': maxNumber != null,
+    error
+  })
   return (
     <div className={style}>
       <div className="web-form-input-base">
         {label && <label className="web-form-input-base-label">{label}</label>}
         <label
-          className={classNames('web-form-input-base-inner', type === 'textarea' ? 'textarea-inner' : 'input-inner')}
+          className={classNames(
+            'web-form-input-base-inner',
+            type === 'textarea' ? 'textarea-inner' : 'input-inner'
+          )}
         >
           {type === 'textarea' ? (
             <textarea

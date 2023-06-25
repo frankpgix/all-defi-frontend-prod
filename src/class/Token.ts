@@ -2,23 +2,25 @@ import warning from 'tiny-warning'
 import invariant from 'tiny-invariant'
 import { getAddress } from '@ethersproject/address'
 
-import { ChainId, ChainIdRec } from '@/config/types'
+import { ChainId, ChainIdRec, AddressType } from '@/config/types'
 import { VITE_APP_CHAIN_ID } from '@/config'
 
-export const _getAddress = (address: ChainIdRec): string => {
+export const _getAddress = (address: ChainIdRec): AddressType => {
   const chainId = VITE_APP_CHAIN_ID ?? ChainId.ARBITRUM
+  // console.log('chainId', chainId)
+  // @ts-ignore
   const _address = address[chainId] ?? address[ChainId.ARBITRUM]
   return _address.toLowerCase()
 }
 
-export function addressCheck(address: string, key?: string) {
+export function addressCheck(address: AddressType, key?: string) {
   try {
     if (!address) {
       warning(false, `${key} ▶ contract address not set`)
       return ''
     }
 
-    const check = getAddress(address)
+    const check = getAddress(String(address))
     // console.log('check', address, check)
 
     // warning(address === check, `${key} ▶ valid checksum address: ${address}`)
@@ -32,17 +34,17 @@ export function addressCheck(address: string, key?: string) {
 export interface TokenBuildProps {
   name: string
   symbol: string
-  address: string
+  address: ChainIdRec
   decimals: number
   precision: number
-  projectLink: string
-  icon: string
+  projectLink?: string
+  icon?: string
 }
 
 class Token {
   readonly name: string
   readonly symbol: string
-  readonly address: string
+  readonly address: AddressType
   readonly decimals: number
   readonly precision: number
   readonly projectLink: string
@@ -70,14 +72,14 @@ class Token {
   //   return _getAddress(this.address)
   // }
 
-  checkAddress<T>(address: T): T {
-    let obj = Object.create(null)
-    for (const key in address) {
-      const check = addressCheck(String(address[key]), `${this.name}-${key}`)
-      obj = { ...obj, [key]: check }
-    }
-    return obj as T
-  }
+  // checkAddress<T>(address: T): T {
+  //   let obj = Object.create(null)
+  //   for (const key in address) {
+  //     const check = addressCheck(String(address[key]), `${this.name}-${key}`)
+  //     obj = { ...obj, [key]: check }
+  //   }
+  //   return obj as T
+  // }
 }
 
 export default Token
@@ -87,5 +89,5 @@ export interface TokenProps {
   symbol: string
   decimals: number
   precision: number
-  tokenAddress: string
+  address: AddressType
 }

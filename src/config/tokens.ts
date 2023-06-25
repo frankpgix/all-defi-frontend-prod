@@ -1,6 +1,7 @@
 import { ChainId } from '@/config/types'
 import Token from '@/class/Token'
 import { toLower } from 'lodash'
+// import { AddressType } from './types'
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -101,7 +102,7 @@ export const getTokenByAddress = (address: string) => {
   if (address === ZERO_ADDRESS) return tokens.ETH
   const token = Object.keys(tokens)
     .map((key: string) => tokens[key])
-    .find((item) => toLower(item.address) === toLower(address))
+    .find((item) => toLower(String(item.address)) === toLower(address))
   if (token) return token
   return UNKNOWN
 }
@@ -110,7 +111,7 @@ export const getDecimalsByAddress = (address: string) => getTokenByAddress(addre
 
 export const baseTokenOptions = baseTokens.map(({ name, address, icon }) => ({
   label: name,
-  value: address,
+  value: String(address),
   icon
 }))
 

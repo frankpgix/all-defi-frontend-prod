@@ -8,13 +8,11 @@ const API_PREFIX_URLS_SCHEMA: Record<string, string> = {
 
 const ETH_SCAN_URLS_SCHEMA: Record<string, string> = {
   [ChainId.MAINNET]: 'https://etherscan.io',
-  [ChainId.GOERLINET]: 'https://goerli.etherscan.io',
   [ChainId.ARBITRUM]: 'https://arbiscan.io'
 }
 
 const GRAPHQL_API_PREFIX_SCHEMA: Record<string, string> = {
   [ChainId.MAINNET]: '',
-  [ChainId.GOERLINET]: 'https://api.thegraph.com/subgraphs/name/',
   [ChainId.ARBITRUM]: 'https://api.thegraph.com/subgraphs/name/'
 }
 

@@ -5,6 +5,7 @@ import contracts from '@/config/contracts'
 import tokens from '@/config/tokens'
 import { bigInt2Number } from '@/utils/tools'
 // import { getAllProtocolContracts } from '@/utils/contractHelpers'
+import { ReadContProps } from './types'
 
 const AllProtocol = contracts.AllProtocol
 
@@ -29,6 +30,10 @@ export const useAllTokenPrice = (baseTokenAddress = '') => {
   return { data: bigInt2Number(data ?? 1, 18, 4), isLoading, refetch }
 }
 
+interface DerivativeListSDataProps extends ReadContProps {
+  data: `0x${string}`[]
+}
+
 export const useDerivativeList = () => {
   const {
     data: sData,
@@ -37,7 +42,10 @@ export const useDerivativeList = () => {
   } = useContractRead({
     ...AllProtocol,
     functionName: 'derivativeList'
-  })
-  const data = sData.map((item: string) => ({ name: hexToString(item, { size: 32 }), value: item }))
+  }) as DerivativeListSDataProps
+  const data = (sData ?? []).map((item) => ({
+    name: hexToString(item, { size: 32 }),
+    value: item
+  }))
   return { data, isLoading, refetch }
 }

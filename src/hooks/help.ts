@@ -1,7 +1,9 @@
 import BN from 'bignumber.js'
-
+import { Account } from 'viem'
 import { bigInt2Number } from '@/utils/tools'
 import { getTokenByAddress } from '@/config/tokens'
+
+export type AddressType = `0x${string}` | Account | undefined
 // 全局统计信息三件套
 
 export interface GlobalAssetStatisticProps {

@@ -13,12 +13,15 @@ import {
   AssetCompositionProps
 } from './help'
 import {
+  AddressType,
   FundUserListDataProps,
   FundProps,
   FundDetailDefault,
   FundUserDataDefault,
   ShareCompositionDefault
 } from './help'
+
+import { ReadContProps } from './types'
 
 const FundReader = contracts.FundReader
 
@@ -84,6 +87,10 @@ export const useShareComposition = (fundAddress: string, userAddress: string) =>
   return { data, isLoading, refetch }
 }
 
+interface AssetCompositionSDataProps extends ReadContProps {
+  data: any[]
+}
+
 export const useAssetComposition = (fundAddress: string, baseTokenAddress: string) => {
   const {
     data: sData,
@@ -93,9 +100,9 @@ export const useAssetComposition = (fundAddress: string, baseTokenAddress: strin
     ...FundReader,
     functionName: 'assetComposition',
     args: [fundAddress]
-  })
+  }) as AssetCompositionSDataProps
   const res = (sData ?? [])
-    .map((item) => calcAssetComposition(item, baseTokenAddress))
+    .map((item: any) => calcAssetComposition(item, baseTokenAddress))
     .filter((item: AssetCompositionProps) => item.value > 0)
   const sumValue = sum(res.map((item: AssetCompositionProps) => item.value))
   const data = res.map((item: AssetCompositionProps) => {
@@ -106,22 +113,23 @@ export const useAssetComposition = (fundAddress: string, baseTokenAddress: strin
   return { data, isLoading, refetch }
 }
 
-export const useUserDetailList = (userAddress: string) => {
+export const useUserDetailList = (userAddress: AddressType) => {
   const {
-    data: [fundList, detailList],
+    data: sData,
     isLoading,
     refetch
   } = useContractRead({
     ...FundReader,
     functionName: 'userDetailList',
-    account: userAddress,
-    args: [0, 999]
+    args: [0, 999],
+    account: userAddress
   })
-  // const [fundList, detailList] = sData
+  // @ts-ignore
+  const [fundList, detailList] = sData
   const data = (fundList ?? [])
     .map((item: any, index: number) => {
       const fund: FundProps = calcFundBaseInfo(item)
-      fund.data = calcFundUserDetail(detailList[index])
+      fund.data = calcFundUserDetail((detailList ?? [])[index])
       fund.address = fund.data.address
       return fund
     })

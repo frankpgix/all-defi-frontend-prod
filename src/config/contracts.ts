@@ -2,8 +2,8 @@ import Contract from '@/class/Contract'
 // import { Address } from '@/config/types'
 import { ChainId, ContractKeys } from '@/config/types'
 
-import bep20Abi from '@/config/abi/erc20.json'
-import MultiCallAbi from '@/config/abi/Multicall.json'
+// import bep20Abi from '@/config/abi/erc20.json'
+// import MultiCallAbi from '@/config/abi/Multicall.json'
 import ACProtocolAbi from '@/config/abi/ACProtocol.json'
 import AllProtocolAbi from '@/config/abi/AllProtocol.json'
 import FundPoolAbi from '@/config/abi/FundPool.json'
@@ -11,30 +11,9 @@ import FundReaderAbi from '@/config/abi/FundReader.json'
 import RewardAbi from '@/config/abi/Reward.json'
 import UniV3ACLAbi from '@/config/abi/UniV3ACL.json'
 
+// type C = Contract | ((address: string) => Contract)
+
 export const contracts: { [key in ContractKeys]: Contract } = {
-  bep20: (address: string) =>
-    new Contract({
-      address: {
-        [ChainId.MAINNET]: address,
-        [ChainId.ARBITRUM]: address
-      },
-      abi: bep20Abi
-    }),
-  FundPool: (address: string) =>
-    new Contract({
-      address: {
-        [ChainId.MAINNET]: address,
-        [ChainId.ARBITRUM]: address
-      },
-      abi: FundPoolAbi
-    }),
-  multiCall: new Contract({
-    address: {
-      [ChainId.MAINNET]: '0xcA11bde05977b3631167028862bE2a173976CA11',
-      [ChainId.ARBITRUM]: '0xcA11bde05977b3631167028862bE2a173976CA11'
-    },
-    abi: MultiCallAbi
-  }),
   ACProtocol: new Contract({
     address: {
       [ChainId.MAINNET]: '0x4CF45D37b6E1EfAeD80D8B405B9Fb71fE6C5BBb5',
@@ -71,5 +50,14 @@ export const contracts: { [key in ContractKeys]: Contract } = {
     abi: UniV3ACLAbi
   })
 }
+
+export const FundPoolContract = (address: string) =>
+  new Contract({
+    address: {
+      [ChainId.MAINNET]: address,
+      [ChainId.ARBITRUM]: address
+    },
+    abi: FundPoolAbi
+  })
 
 export default contracts

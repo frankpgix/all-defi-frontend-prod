@@ -1,27 +1,29 @@
-import { useContractWrite, useAccount } from 'wagmi'
+import { useContractWrite } from 'wagmi'
 import { parseEther } from 'viem'
 
 import contracts from '@/config/contracts'
 import { getTokenByAddress } from '@/config/tokens'
 import { getUnitAmount } from '@/utils/tools'
+import { AccountType } from '@/config/types'
+import { WriteContProps } from '@/hooks/types'
 
 const ACProtocol = contracts.ACProtocol
 
-export const useBuyAcToken = (onSettled) => {
-  const { address } = useAccount()
+export const useBuyAcToken = (account: AccountType, onSettled: (data: any, error: any) => void) => {
   const { isLoading, isSuccess, writeAsync } = useContractWrite({
     ...ACProtocol,
     functionName: 'buy',
-    account: address,
+    account,
     onSettled
-  })
+  }) as WriteContProps
 
   const onBuyAcToken = async (baseTokenAddress: string, amount: number | string) => {
     const baseToken = getTokenByAddress(baseTokenAddress)
     const _amount = getUnitAmount(String(amount), baseToken.decimals)
-    await writeAsync({
-      args: [baseTokenAddress, _amount]
-    })
+    writeAsync &&
+      (await writeAsync({
+        args: [baseTokenAddress, _amount]
+      }))
   }
 
   return {
@@ -31,19 +33,22 @@ export const useBuyAcToken = (onSettled) => {
   }
 }
 
-export const useEthBuyAcToken = (onSettled) => {
-  const { address } = useAccount()
+export const useEthBuyAcToken = (
+  account: AccountType,
+  onSettled: (data: any, error: any) => void
+) => {
   const { isLoading, isSuccess, writeAsync } = useContractWrite({
     ...ACProtocol,
     functionName: 'ethBuy',
-    account: address,
+    account,
     onSettled
-  })
+  }) as WriteContProps
 
   const onEthBuyAcToken = async (amount: number | string) => {
-    await writeAsync({
-      value: parseEther(String(amount))
-    })
+    writeAsync &&
+      (await writeAsync({
+        value: parseEther(String(amount))
+      }))
   }
   return {
     onEthBuyAcToken,

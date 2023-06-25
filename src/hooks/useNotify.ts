@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { notify } from '@@/common/Toast'
 
 export const useNotify = () => {
-  const [id, setId] = useState('')
+  const [id, setId] = useState<number | string>('')
 
   const notifyLoading = () => {
     const tempId = notify.loading()
@@ -13,7 +13,7 @@ export const useNotify = () => {
     notify.update(id, 'success')
   }
 
-  const notifyError = (error: unknown) => {
+  const notifyError = (error: any) => {
     notify.update(id, 'error', error?.shortMessage ?? error)
   }
 

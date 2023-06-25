@@ -1,3 +1,4 @@
+import { Account } from 'viem'
 export enum ChainId {
   MAINNET = 1,
   ARBITRUM = 42161
@@ -21,12 +22,7 @@ export interface Token {
 
 export type MultiCallResponse<T> = T | null
 
-export type ContractKeys =
-  | 'multicall'
-  | 'bep20'
-  | 'FundPool'
-  | 'ACProtocol'
-  | 'AllProtocol'
-  | 'FundReader'
-  | 'Reward'
-  | 'UniV3ACL'
+export type ContractKeys = 'ACProtocol' | 'AllProtocol' | 'FundReader' | 'Reward' | 'UniV3ACL'
+
+export type AddressType = `0x${string}` | undefined
+export type AccountType = `0x${string}` | undefined

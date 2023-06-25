@@ -30,7 +30,7 @@ const Connect: FC<Props> = ({ simple, children, as = 'div' }) => {
     const connector = connectors[connectorsIndex]
 
     if (connector === undefined) {
-      window.toast.error('Wallet Connector is undefined. Please refresh and try again.')
+      // window.toast.error('Wallet Connector is undefined. Please refresh and try again.')
       return
     }
 
@@ -42,7 +42,7 @@ const Connect: FC<Props> = ({ simple, children, as = 'div' }) => {
     const connectRes = await connectAsync({ connector })
 
     if (!connectRes) {
-      window.toast.error('Wallet Connector could not connect. Please refresh and try again.')
+      // window.toast.error('Wallet Connector could not connect. Please refresh and try again.')
       return
     }
 

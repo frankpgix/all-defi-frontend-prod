@@ -11,7 +11,7 @@ import { formatNumber, sleep } from '@/utils/tools'
 import { useAllTokenPrice } from '@/hooks/useAllProtocol'
 import { useNotify } from '@/hooks/useNotify'
 import { useBuyAcToken, useEthBuyAcToken } from '@/hooks/useACProtocol'
-import { useStoreBalances } from '@/store/useProfile'
+import { useStoreBalances, useStoreProfile } from '@/store/useProfile'
 import { useUserACBuyData } from '@/graphql/useFundData'
 
 import { Input, Select } from '@@/form'
@@ -24,11 +24,12 @@ const usdcAddress = tokens.USDC.address
 const ethAddress = tokens.ETH.address
 
 const Bench: FC = () => {
-  const { address: account, isConnected } = useAccount()
-  const { refetch } = useUserACBuyData(account ?? '')
-
+  const { isConnected } = useAccount()
+  const account = useStoreProfile((state: any) => state.address)
   const balances = useStoreBalances((state: any) => state.balances)
   const { notifyLoading, notifySuccess, notifyError } = useNotify()
+
+  const { refetch } = useUserACBuyData(account)
   //
   const [amount, setAmount] = useState<string | number>('')
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
@@ -61,8 +62,8 @@ const Bench: FC = () => {
     }
   }
 
-  const { onBuyAcToken, isLoading } = useBuyAcToken(onSettled)
-  const { onEthBuyAcToken, isLoading: ethIsLoading } = useEthBuyAcToken(onSettled)
+  const { onBuyAcToken, isLoading } = useBuyAcToken(account, onSettled)
+  const { onEthBuyAcToken, isLoading: ethIsLoading } = useEthBuyAcToken(account, onSettled)
 
   const buyAndStakeFunc = async () => {
     if (isConnected) {

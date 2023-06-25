@@ -19,6 +19,7 @@ export const useBalances = () => {
   }))
 
   const { data: sData } = useContractReads({
+    // @ts-ignore
     contracts: tokensContractArray,
     watch: true
   })
@@ -28,7 +29,7 @@ export const useBalances = () => {
     watch: true
   })
   // console.log(ethBalance)
-  const data: { name: string; value: number } = (sData ?? []).map(({ result, status }, index) => {
+  const data: { name: string; value: number }[] = (sData ?? []).map(({ result, status }, index) => {
     const token = tokensArray[index]
     if (status === 'success') {
       return { name: token.name, value: bigInt2Number(result, token.decimals, token.precision) }
