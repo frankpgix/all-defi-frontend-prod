@@ -126,7 +126,9 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
         </div>
         <div className="web-fund-detail-bench-action">
           <footer>
-            <Button onClick={subscribeFund}>confirm</Button>
+            <Button onClick={subscribeFund} disabled={value <= 0 || !isInSubscribe}>
+              confirm
+            </Button>
             {!isInSubscribe && <Tip>Non-Subscription Period</Tip>}
           </footer>
         </div>
