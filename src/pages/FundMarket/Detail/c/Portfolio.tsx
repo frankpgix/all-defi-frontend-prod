@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react'
 import Table from 'rc-table'
 
-import { FundBaseProps } from '@/hooks/help'
+import { FundBaseInfoProps } from '@/hooks/help'
 import { getTokenByAddress } from '@/config/tokens'
 import { useAssetComposition } from '@/hooks/useFundReader'
 
@@ -11,11 +11,11 @@ import TokenValue from '@@/common/TokenValue'
 
 interface Props {
   fundAddress: string | undefined
-  base: FundBaseProps
+  base: FundBaseInfoProps
 }
 
 const Portfolio: FC<Props> = ({ fundAddress, base }) => {
-  const { data, isLoading: loading } = useAssetComposition(fundAddress, base.baseToken ?? '')
+  const { data, isLoading: loading } = useAssetComposition(fundAddress ?? '', base.baseToken ?? '')
 
   const baseToken = useMemo(() => getTokenByAddress(base.baseToken), [base.baseToken])
   const webColumns = [

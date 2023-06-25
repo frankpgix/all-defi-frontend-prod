@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
@@ -15,15 +16,7 @@
     "strict": true,
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "baseUrl": ".",
-    "paths": {
-       "@/*": [
-         "src/*"
-       ],
-       "@@/*": [
-         "src/components/*"
-       ],
-    }
+    "baseUrl": "."
   },
   "include": ["./src"]
 }

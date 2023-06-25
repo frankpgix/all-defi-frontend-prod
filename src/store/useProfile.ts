@@ -16,5 +16,5 @@ export const useStoreProfile = create((set) => {
 
 export const useStoreBalances = create((set) => ({
   balances: resetObjectValues(tokens),
-  update: (balances) => set({ balances })
+  update: (balances: any) => set({ balances })
 }))

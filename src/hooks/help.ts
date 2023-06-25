@@ -40,7 +40,7 @@ export interface FundBaseInfoProps {
   subscriptionMaxLimit: number
 }
 
-export const calcFundBaseInfo = (item: any): FundBaseProps => {
+export const calcFundBaseInfo = (item: any): FundBaseInfoProps => {
   // console.log(1234, item)
   const baseTokenObj = getTokenByAddress(item.baseToken)
   const decimals = baseTokenObj.decimals
@@ -255,7 +255,7 @@ export interface FundUserDataProps {
   roe: number
 }
 
-export interface FundProps extends FundBaseProps {
+export interface FundProps extends FundBaseInfoProps {
   data?: FundUserDataProps | null
   detail?: FundDetailProps | null
 }

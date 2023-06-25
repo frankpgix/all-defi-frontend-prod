@@ -14,7 +14,7 @@ interface Props {
 }
 
 const FundDetails: FC<Props> = ({ data, callback }) => {
-  const { derivativeList } = useStoreDerivativeList()
+  const derivativeList = useStoreDerivativeList((state: any) => state.derivativeList)
   const [activeIndex, setActiveIndex] = useState<number>(0)
   const [isInit, setisInit] = useState<boolean>(true)
 

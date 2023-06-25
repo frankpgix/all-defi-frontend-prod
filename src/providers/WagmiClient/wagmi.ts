@@ -28,8 +28,8 @@ export const config = createConfig({
     new WalletConnectConnector({
       chains,
       options: {
-        projectId: walletConnectProjectId,
-        themeMode: 'light'
+        projectId: walletConnectProjectId
+        // themeMode: 'light'
       }
     }),
     new InjectedConnector({

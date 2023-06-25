@@ -3,7 +3,7 @@ import BN from 'bignumber.js'
 import { useParams } from 'react-router-dom'
 import { isNaN } from 'lodash'
 
-import { FundDetailProps } from '@/class/help'
+import { FundDetailProps } from '@/hooks/help'
 import tokens, { getTokenByAddress } from '@/config/tokens'
 import { useStoreBalances, useStoreProfile } from '@/store/useProfile'
 import { useFundSubscribe } from '@/hooks/useFundPool'
@@ -11,7 +11,7 @@ import { useNotify } from '@/hooks/useNotify'
 
 import { formatNumber } from '@/utils/tools'
 
-import { Input, Slider } from '@@/Form'
+import { Input, Slider } from '@@/form'
 import Button from '@@/common/Button'
 import Tip from '@@/common/Tip'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
@@ -23,8 +23,8 @@ interface Props {
 
 const SubscribeFunds: FC<Props> = ({ getData, data }) => {
   const { fundAddress } = useParams()
-  const { balances } = useStoreBalances()
-  const { address: account } = useStoreProfile()
+  const balances = useStoreBalances((state: any) => state.balances)
+  const account = useStoreProfile((state: any) => state.address)
   const { notifyLoading, notifySuccess, notifyError } = useNotify()
 
   const baseToken = useMemo(() => getTokenByAddress(data.baseToken), [data.baseToken])
@@ -66,6 +66,7 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
   }
 
   const onInputChange = (val: number | string) => {
+    val = Number(val)
     if (isNaN(Number(val))) val = 0
     if (val > maxValue) val = maxValue
     if (val < 0) val = 0
@@ -79,7 +80,7 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
       setSliderValue(currSliderValue)
     }
   }
-  const onSettled = async (data, error) => {
+  const onSettled = async (data: any, error: any) => {
     if (error) {
       notifyError(error)
     } else {
@@ -90,7 +91,7 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
     }
   }
 
-  const { onSubscribe } = useFundSubscribe(fundAddress, account, onSettled)
+  const { onSubscribe } = useFundSubscribe(fundAddress ?? '', account, onSettled)
 
   const subscribeFund = async () => {
     if (account && fundAddress) {
@@ -130,7 +131,7 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
         </div>
         <div className="web-fund-detail-bench-action">
           <footer>
-            <Button onClick={subscribeFund} disabled={value <= 0 || !isInSubscribe}>
+            <Button onClick={subscribeFund} disabled={Number(value) <= 0 || !isInSubscribe}>
               confirm
             </Button>
             {!isInSubscribe && <Tip>Non-Subscription Period</Tip>}

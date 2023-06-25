@@ -6,7 +6,7 @@ import { useStoreProfile } from '@/store/useProfile'
 import { useFundClaimCompensation } from '@/hooks/useFundPool'
 import { useNotify } from '@/hooks/useNotify'
 
-import { Input } from '@@/Form'
+import { Input } from '@@/form'
 import Button from '@@/common/Button'
 import { AllTokenUnit } from '@@/common/TokenUnit'
 import InfoDialog from '@@/common/Dialog/Info'
@@ -15,18 +15,18 @@ import Popper from '@@/common/Popper'
 interface Props {
   unclaimedALL: number
   fundAddress: string
-  callback: (update: boolean) => void
+  callback: () => void
 }
 
 const Claim: FC<Props> = ({ unclaimedALL, callback, fundAddress }) => {
-  const { address: account } = useStoreProfile()
+  const account = useStoreProfile((state: any) => state.address)
   const { notifyLoading, notifySuccess, notifyError } = useNotify()
 
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
 
   const onMutate = () => notifyLoading()
 
-  const onSettled = async (data, error) => {
+  const onSettled = async (data: any, error: any) => {
     if (error) {
       notifyError(error)
     } else {

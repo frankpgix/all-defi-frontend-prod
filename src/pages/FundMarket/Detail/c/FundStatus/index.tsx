@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react'
 import dayjs from 'dayjs'
 
-import { FundBaseProps, FundDetailProps } from '@/hooks/help'
+import { FundBaseInfoProps, FundDetailProps } from '@/hooks/help'
 
 import BlueLineSection from '@@/web/BlueLineSection'
 import Loading from '@@/common/Loading'
@@ -9,7 +9,7 @@ import Loading from '@@/common/Loading'
 import StepLine from './StepLine'
 
 interface Props {
-  base: FundBaseProps
+  base: FundBaseInfoProps
   data: FundDetailProps
   loading: boolean
 }

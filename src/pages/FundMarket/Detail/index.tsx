@@ -31,8 +31,8 @@ import Bench from './c/Bench'
 
 const Detail: FC = () => {
   // const { data: signer } = useSigner()
-  const address = useStoreProfile((state) => state.address)
-  const allDerivatives = useStoreDerivativeList((state) => state.derivativeList)
+  const address = useStoreProfile((state: any) => state.address)
+  const allDerivatives = useStoreDerivativeList((state: any) => state.derivativeList)
   const { fundAddress = '' } = useParams()
   const { data: fundBase, isLoading: fundBaseLoading } = useFundBaseInfo(fundAddress)
   const {
@@ -76,7 +76,7 @@ const Detail: FC = () => {
 
   const derivatives = useMemo(() => {
     return base.derivatives.map((item: string) => {
-      const derivative = allDerivatives.find(({ value }) => item === value)
+      const derivative = allDerivatives.find(({ value }: { value: string }) => item === value)
       return derivative ? derivative.name : ''
     })
   }, [allDerivatives, base.derivatives])

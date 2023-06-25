@@ -11,7 +11,7 @@ import { useNotify } from '@/hooks/useNotify'
 
 import tokens, { getTokenByAddress } from '@/config/tokens'
 
-import { Input } from '@@/Form'
+import { Input } from '@@/form'
 import Button from '@@/common/Button'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
 import InfoDialog from '@@/common/Dialog/Info'
@@ -26,7 +26,7 @@ interface Props {
 const Claim: FC<Props> = ({ userData, getData }) => {
   // const { claim } = FundPool
   const { fundAddress } = useParams()
-  const { address: account } = useStoreProfile()
+  const account = useStoreProfile((state: any) => state.address)
   const { notifyLoading, notifySuccess, notifyError } = useNotify()
   // const { data: signer } = useSigner()
 
@@ -38,7 +38,7 @@ const Claim: FC<Props> = ({ userData, getData }) => {
     [baseToken]
   )
 
-  const onSettled = async (data, error) => {
+  const onSettled = async (data: any, error: any) => {
     if (error) {
       notifyError(error)
     } else {
@@ -47,7 +47,7 @@ const Claim: FC<Props> = ({ userData, getData }) => {
     }
   }
 
-  const { onClaim } = useFundClaim(fundAddress, account, onSettled)
+  const { onClaim } = useFundClaim(fundAddress ?? '', account, onSettled)
 
   const claimFund = async () => {
     if (account && fundAddress) {

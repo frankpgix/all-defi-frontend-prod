@@ -6,7 +6,10 @@ import { useStoreProfile } from '@/store/useProfile'
 import ConnectButton from '@@/common/Wallet/ConnectButton'
 
 const Home: FC = () => {
-  const { address, isManager } = useStoreProfile()
+  const { address, isManager } = useStoreProfile((state: any) => ({
+    address: state.address,
+    isManager: state.isManager
+  }))
   const navigate = useNavigate()
   const noAddress = useMemo(() => !Boolean(address), [address])
 

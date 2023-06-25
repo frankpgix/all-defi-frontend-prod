@@ -34,7 +34,7 @@ interface Props {
 }
 
 const FundItem: FC<Props> = ({ active, isInit, onChange, fund, callback, derivativeList }) => {
-  const { address: account } = useStoreProfile()
+  const account = useStoreProfile((state: any) => state.address)
   const { notifyLoading, notifySuccess, notifyError } = useNotify()
 
   // console.log(fund, 22222)
@@ -73,7 +73,7 @@ const FundItem: FC<Props> = ({ active, isInit, onChange, fund, callback, derivat
 
   const onMutate = () => notifyLoading()
 
-  const onSettled = async (data, error) => {
+  const onSettled = async (data: any, error: any) => {
     if (error) {
       notifyError(error)
     } else {
@@ -81,6 +81,7 @@ const FundItem: FC<Props> = ({ active, isInit, onChange, fund, callback, derivat
       callback()
     }
   }
+  console.log('fund', fund)
   const { onCancelRedeem } = useFundCancelRedeem(fund.address, account, onSettled, onMutate)
   const { onCancelSubscribe } = useFundCancelSubscribe(fund.address, account, onSettled, onMutate)
 

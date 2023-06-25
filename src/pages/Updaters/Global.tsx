@@ -9,7 +9,7 @@ export default function Global(): null {
   // update profile info
   const { address } = useAccount()
   const { isManager } = useIsManager(address)
-  const updateProfile = useStoreProfile((state) => state.update)
+  const updateProfile = useStoreProfile((state: any) => state.update)
 
   useEffect(() => {
     updateProfile(address, isManager)
@@ -17,7 +17,7 @@ export default function Global(): null {
 
   // update balance info
   const balances = useBalances()
-  const updateBalances = useStoreBalances((state) => state.update)
+  const updateBalances = useStoreBalances((state: any) => state.update)
 
   useEffect(() => {
     updateBalances(balances)
@@ -25,7 +25,7 @@ export default function Global(): null {
 
   // update derivativeList
   const { data: derivativeList } = useDerivativeList()
-  const updateDerivativeList = useStoreDerivativeList((state) => state.update)
+  const updateDerivativeList = useStoreDerivativeList((state: any) => state.update)
 
   useEffect(() => {
     updateDerivativeList(derivativeList)

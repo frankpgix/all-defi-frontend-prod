@@ -24,7 +24,7 @@ const AmountShow: FC<AmountShowProps> = ({ value, action, row }) => {
 }
 
 const History: FC = () => {
-  const { address: account } = useStoreProfile()
+  const account = useStoreProfile((state: any) => state.address)
   // const { address: userAddress } = useAccount()
   const { loading, data } = useUserFundHistoryData(account)
   // useEffect(() => void refetch(), [refetch])

@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
 import dayjs from 'dayjs'
 import classNames from 'classnames'
-import { FundBaseProps, FundDetailProps } from '@/class/help'
+import { FundBaseInfoProps, FundDetailProps } from '@/hooks/help'
 import Popper from '@@/common/Popper'
 
 interface Props {
-  base: FundBaseProps
+  base: FundBaseInfoProps
   data: FundDetailProps
 }
 
@@ -45,7 +45,10 @@ const StepLine: FC<Props> = ({ data }) => {
     <section className="web-fund-detail-status-setpline">
       <ul className={classNames({ zero: data.epochIndex === 0 })}>
         {steps.map(({ label, time, status, popper }, index) => (
-          <li key={index} className={classNames({ finish: status < activeIndex, active: status === activeIndex })}>
+          <li
+            key={index}
+            className={classNames({ finish: status < activeIndex, active: status === activeIndex })}
+          >
             <time>{dayjs(time).format('MMM DD, YYYY HH:mm:ss')}</time>
             {label && (
               <label>

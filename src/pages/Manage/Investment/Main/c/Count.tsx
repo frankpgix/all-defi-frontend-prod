@@ -1,7 +1,7 @@
 import React, { FC, useState, useMemo } from 'react'
 import BN from 'bignumber.js'
 import classNames from 'classnames'
-import { FundUserListDataProps } from '@/class/help'
+import { FundUserListDataProps } from '@/hooks/help'
 import { formatNumber } from '@/utils/tools'
 import { PieChart, Pie, Cell, Sector } from 'recharts'
 import NoData from '@@/common/NoData'

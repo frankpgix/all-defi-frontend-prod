@@ -27,7 +27,7 @@ const Bench: FC = () => {
   const { address: account, isConnected } = useAccount()
   const { refetch } = useUserACBuyData(account ?? '')
 
-  const { balances } = useStoreBalances()
+  const balances = useStoreBalances((state: any) => state.balances)
   const { notifyLoading, notifySuccess, notifyError } = useNotify()
   //
   const [amount, setAmount] = useState<string | number>('')
@@ -50,7 +50,7 @@ const Bench: FC = () => {
     [amount, allTPrice]
   )
 
-  const onSettled = async (data, error) => {
+  const onSettled = async (data: any, error: any) => {
     if (error) {
       notifyError(error)
     } else {

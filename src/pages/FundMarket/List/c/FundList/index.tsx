@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useStoreFundList } from '@/store/useFunds'
 import { useFundListData } from '@/graphql/useFundData'
+import { FundDetailProps } from '@/hooks/help'
 
 import RoeShow from '@@/common/RoeShow'
 import { FundName } from '@@/common/FundIcon'
@@ -13,7 +14,7 @@ import TokenValue from '@@/common/TokenValue'
 const FundList: FC = () => {
   const navigate = useNavigate()
   const { loading, data } = useFundListData()
-  const update = useStoreFundList((state) => state.update)
+  const update = useStoreFundList((state: any) => state.update)
   // // console.log(data, 2233)
   useEffect(() => {
     if (data.length) {

@@ -12,7 +12,7 @@ import { useNotify } from '@/hooks/useNotify'
 import { useStoreProfile } from '@/store/useProfile'
 import { useFundRedeem } from '@/hooks/useFundPool'
 
-import { Input, Slider } from '@@/Form'
+import { Input, Slider } from '@@/form'
 import Button from '@@/common/Button'
 import Tip from '@@/common/Tip'
 
@@ -29,7 +29,7 @@ interface Props {
 
 const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
   const { notifyLoading, notifySuccess, notifyError } = useNotify()
-  const { address: account } = useStoreProfile()
+  const account = useStoreProfile((state: any) => state.address)
   const { fundAddress } = useParams()
 
   const [value, setValue] = useState<number | string>('')
@@ -53,7 +53,8 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
   }
 
   const onInputChange = (val: number | string) => {
-    if (isNaN(Number(val))) val = 0
+    val = Number(val)
+    if (isNaN(val)) val = 0
     if (val > maxValue) val = maxValue
     if (val < 0) val = 0
     if (maxValue > 0) {
@@ -67,7 +68,7 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
     }
   }
 
-  const onSettled = async (data, error) => {
+  const onSettled = async (data: any, error: any) => {
     if (error) {
       notifyError(error)
     } else {
@@ -78,7 +79,7 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
     }
   }
 
-  const { onRedeem } = useFundRedeem(fundAddress, account, onSettled)
+  const { onRedeem } = useFundRedeem(fundAddress ?? '', account, onSettled)
 
   const redeemeFund = async () => {
     if (account && fundAddress) {
@@ -118,7 +119,10 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
         </div>
         <div className="web-fund-detail-bench-action">
           <footer>
-            <Button onClick={() => setInfoStatus(true)} disabled={value <= 0 || !isInRedeem}>
+            <Button
+              onClick={() => setInfoStatus(true)}
+              disabled={Number(value) <= 0 || !isInRedeem}
+            >
               confirm
             </Button>
             {!isInRedeem && <Tip>Non-Redemption Period</Tip>}

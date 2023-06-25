@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import { FundUserListDataProps } from '@/class/help'
+import { FundUserListDataProps } from '@/hooks/help'
 
 import Loading from '@@/common/Loading'
 
@@ -11,7 +11,7 @@ import FundDetails from './c/FundDetails'
 
 interface Props {
   loading: boolean
-  getData: (update: boolean) => void
+  getData: () => void
   data: FundUserListDataProps[]
 }
 

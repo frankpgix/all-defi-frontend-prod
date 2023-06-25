@@ -7,7 +7,7 @@ interface ContractProps {
 }
 
 class Contract {
-  readonly address: ChainIdRec
+  readonly address: string
 
   constructor({ address, abi }: ContractProps) {
     this.abi = abi

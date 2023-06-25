@@ -4,7 +4,7 @@ import BN from 'bignumber.js'
 // import { floor } from 'lodash'
 import { getTokenByAddress } from '@/config/tokens'
 
-import { FundBaseProps, FundDetailProps } from '@/hooks/help'
+import { FundBaseInfoProps, FundDetailProps } from '@/hooks/help'
 
 import { useFundDetailChartData } from '@/graphql/useFundData'
 import { createArrayByNumber } from '@/utils/tools'
@@ -19,7 +19,7 @@ import FundIcon from '@@/common/FundIcon'
 import TokenValue from '@@/common/TokenValue'
 
 interface Props {
-  base: FundBaseProps
+  base: FundBaseInfoProps
   data: FundDetailProps
   derivatives?: string[]
   loading: boolean

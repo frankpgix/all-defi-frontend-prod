@@ -46,7 +46,7 @@ export const useFundRedeem = (fundAddress: string, account: string, onSettled) =
     account,
     onSettled
   })
-  const onRedeem = async (amount: number, baseToken: Token) => {
+  const onRedeem = async (amount: number, baseToken: any) => {
     const _amount = getUnitAmount(String(amount), baseToken.decimals)
     console.log(11, _amount, amount, baseToken.decimals)
     await writeAsync({

@@ -16,8 +16,8 @@ interface Props {
 }
 
 const AccountDialog: FC<Props> = ({ show, onClose }) => {
-  const { balances } = useStoreBalances()
-  const { address } = useStoreProfile()
+  const balances = useStoreBalances((state: any) => state.balances)
+  const address = useStoreProfile((state: any) => state.address)
 
   const shortAddress = useMemo(() => calcShortHash(address ?? '', 12, 12), [address])
   const { disconnect } = useDisconnect()

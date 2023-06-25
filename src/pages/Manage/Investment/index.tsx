@@ -9,7 +9,7 @@ import NoInvest from './NoInvest'
 import Main from './Main'
 
 const Investment: FC = () => {
-  const { address } = useStoreProfile()
+  const address = useStoreProfile((state: any) => state.address)
   const { data: userFundList, isLoading: loading, refetch: getData } = useUserDetailList(address)
 
   const isInvest = useMemo(() => userFundList.length > 0, [userFundList])
