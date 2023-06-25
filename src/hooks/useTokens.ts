@@ -27,8 +27,8 @@ export const useBalances = () => {
     address,
     watch: true
   })
-
-  const data: { name: string; value: number } = sData.map(({ result, status }, index) => {
+  // console.log(ethBalance)
+  const data: { name: string; value: number } = (sData ?? []).map(({ result, status }, index) => {
     const token = tokensArray[index]
     if (status === 'success') {
       return { name: token.name, value: bigInt2Number(result, token.decimals, token.precision) }
@@ -37,7 +37,7 @@ export const useBalances = () => {
   })
 
   const res: Record<string, number> = {
-    ETH: bigInt2Number(ethBalance.value, ethBalance.decimals, 4)
+    ETH: ethBalance ? bigInt2Number(ethBalance.value, ethBalance.decimals, 4) : 0
   }
   for (const { name, value } of data) {
     res[name] = value

@@ -67,3 +67,52 @@ export const useFundClaim = (fundAddress: string, account: string, onSettled) =>
 
   return { onClaim }
 }
+
+export const useFundCancelRedeem = (fundAddress: string, account: string, onSettled, onMutate) => {
+  const FundPool = contracts.FundPool(fundAddress)
+  const { writeAsync: onCancelRedeem } = useContractWrite({
+    ...FundPool,
+    functionName: 'cancelRedeem',
+    account,
+    onSettled,
+    onMutate
+  })
+
+  return { onCancelRedeem }
+}
+
+export const useFundCancelSubscribe = (
+  fundAddress: string,
+  account: string,
+  onSettled,
+  onMutate
+) => {
+  const FundPool = contracts.FundPool(fundAddress)
+  const { writeAsync: onCancelSubscribe } = useContractWrite({
+    ...FundPool,
+    functionName: 'cancelSubscribe',
+    account,
+    onSettled,
+    onMutate
+  })
+
+  return { onCancelSubscribe }
+}
+
+export const useFundClaimCompensation = (
+  fundAddress: string,
+  account: string,
+  onSettled,
+  onMutate
+) => {
+  const FundPool = contracts.FundPool(fundAddress)
+  const { writeAsync: onClaimCompensation } = useContractWrite({
+    ...FundPool,
+    functionName: 'claimCompensation',
+    account,
+    onSettled,
+    onMutate
+  })
+
+  return { onClaimCompensation }
+}

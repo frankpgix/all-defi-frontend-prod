@@ -5,6 +5,7 @@ import BN from 'bignumber.js'
 import contracts from '@/config/contracts'
 import {
   calcGlobalAssetStatistic,
+  calcFundBaseInfo,
   calcFundDetail,
   calcFundUserDetail,
   calcShareComposition,
@@ -12,8 +13,8 @@ import {
   AssetCompositionProps
 } from './help'
 import {
-  // FundBaseInfoProps,
-  // FundBaseInfoDefault,
+  FundUserListDataProps,
+  FundProps,
   FundDetailDefault,
   FundUserDataDefault,
   ShareCompositionDefault
@@ -102,5 +103,33 @@ export const useAssetComposition = (fundAddress: string, baseTokenAddress: strin
     item.percentage = isNaN(percentage) ? 0 : percentage
     return item
   })
+  return { data, isLoading, refetch }
+}
+
+export const useUserDetailList = (userAddress: string) => {
+  const {
+    data: [fundList, detailList],
+    isLoading,
+    refetch
+  } = useContractRead({
+    ...FundReader,
+    functionName: 'userDetailList',
+    account: userAddress,
+    args: [0, 999]
+  })
+  // const [fundList, detailList] = sData
+  const data = (fundList ?? [])
+    .map((item: any, index: number) => {
+      const fund: FundProps = calcFundBaseInfo(item)
+      fund.data = calcFundUserDetail(detailList[index])
+      fund.address = fund.data.address
+      return fund
+    })
+    .filter(
+      (item: FundUserListDataProps) =>
+        item.data.subscribingACToken + item.data.unclaimedACToken + item.data.shares !== 0
+    )
+  // console.log(list)
+  // const data = []
   return { data, isLoading, refetch }
 }

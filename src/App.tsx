@@ -13,6 +13,7 @@ import Global from '@/pages/Updaters/Global'
 const Test = lazy(() => import('@/pages/Test'))
 const Buy = lazy(() => import('@/pages/Buy'))
 const Home = lazy(() => import('@/pages/Home'))
+const Manage = lazy(() => import('@/pages/Manage'))
 const FundMarket = lazy(() => import('@/pages/FundMarket'))
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Routes>
             <Route path="/test" element={<Test />} />
             <Route path="/buy" element={<Buy />} />
+            <Route path="/manage/*" element={<Manage />} />
             <Route path="/fund-market/*" element={<FundMarket />} />
             <Route path="/" element={<Home />} />
           </Routes>
