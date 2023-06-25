@@ -41,7 +41,7 @@ export interface FundBaseInfoProps {
 }
 
 export const calcFundBaseInfo = (item: any): FundBaseProps => {
-  console.log(1234, item)
+  // console.log(1234, item)
   const baseTokenObj = getTokenByAddress(item.baseToken)
   const decimals = baseTokenObj.decimals
   const precision = baseTokenObj.precision

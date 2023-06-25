@@ -21,7 +21,7 @@ export function addressCheck(address: string, key?: string) {
     const check = getAddress(address)
     // console.log('check', address, check)
 
-    warning(address === check, `${key} ▶ valid checksum address: ${address}`)
+    // warning(address === check, `${key} ▶ valid checksum address: ${address}`)
 
     return check
   } catch (error) {
