@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 
-import { FundDetailProps, FundUserDataProps, ShareCompositionProps } from '@/class/help'
+import { FundDetailProps, FundUserDataProps, ShareCompositionProps } from '@/hooks/help'
 
 import SubscribeFunds from './SubscribeFunds'
 import RedeemFunds from './RedeemFunds'
@@ -27,10 +27,7 @@ const Bench: FC<Props> = ({ userData, data, getData, share }) => {
         <TabPanel>
           <SubscribeFunds data={data} getData={getData} />
         </TabPanel>
-        <TabPanel>
-          <RedeemFunds userData={userData} data={data} share={share} getData={getData} />
-          <Claim userData={userData} getData={getData} />
-        </TabPanel>
+        <TabPanel>2</TabPanel>
       </Tabs>
     </section>
   )
@@ -42,3 +39,6 @@ export default Bench
 // <TabPanel>
 //   <DrawShares getData={getData} share={share} />
 // </TabPanel>
+
+// <RedeemFunds userData={userData} data={data} share={share} getData={getData} />
+// <Claim userData={userData} getData={getData} />

@@ -92,12 +92,11 @@ const Detail: FC = () => {
         loading={loading}
         derivatives={derivatives ? derivatives : []}
       />
+      <FundStatus base={base} data={data} loading={loading} />
+      <Portfolio base={base} fundAddress={fundAddress} />
+      <Bench userData={userData} data={data} share={share} loading={loading} getData={getData} />
     </>
   )
 }
 
 export default Detail
-
-// <FundStatus base={base} data={data} loading={loading} />
-// <Portfolio base={base} fundAddress={fundAddress} />
-// <Bench userData={userData} data={data} share={share} loading={loading} getData={getData} />

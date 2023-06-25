@@ -110,7 +110,7 @@ export const formatNumber = (value: string | number, decimals = 8, format: strin
 
 export const bigInt2Number = (value: bigint, decimals = 18, precision = 4) => {
   // 将 BigInt 转换成 BigNumber 对象
-  const big = new BN(value.toString())
+  const big = new BN(String(value ?? 0))
   // 将 BigNumber 对象转换成带有小数点的字符串，并向下取整到指定的精度
   const decimal = big.shiftedBy(-decimals).decimalPlaces(precision, BN.ROUND_DOWN).toString()
   // 将字符串转换成数字

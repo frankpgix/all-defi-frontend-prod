@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react'
 import dayjs from 'dayjs'
 
-import { FundBaseProps, FundDetailProps } from '@/class/help'
+import { FundBaseProps, FundDetailProps } from '@/hooks/help'
 
 import BlueLineSection from '@@/web/BlueLineSection'
 import Loading from '@@/common/Loading'
@@ -43,7 +43,11 @@ const FundStatus: FC<Props> = ({ base, data, loading }) => {
         <dl>
           <dt>
             Redeeming Funds:
-            {data.status === 1 ? <em className="rise">Allowed</em> : <em className="fall">Not Allowed</em>}
+            {data.status === 1 ? (
+              <em className="rise">Allowed</em>
+            ) : (
+              <em className="fall">Not Allowed</em>
+            )}
           </dt>
           {/*<dd>{currEpoch}</dd>*/}
         </dl>

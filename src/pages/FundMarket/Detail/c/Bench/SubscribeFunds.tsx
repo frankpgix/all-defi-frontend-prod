@@ -1,25 +1,20 @@
 import React, { FC, useState, useMemo } from 'react'
 import BN from 'bignumber.js'
 import { useParams } from 'react-router-dom'
-import { useSigner } from 'wagmi'
 import { isNaN } from 'lodash'
 
-import FundPool from '@/class/FundPool'
 import { FundDetailProps } from '@/class/help'
 import tokens, { getTokenByAddress } from '@/config/tokens'
+import { useStoreBalances, useStoreProfile } from '@/store/useProfile'
+import { useFundSubscribe } from '@/hooks/useFundPool'
+import { useNotify } from '@/hooks/useNotify'
 
-import { useAppDispatch } from '@/store'
-import { getTokensBalanceAsync } from '@/store/tokens'
-import { useTokensData } from '@/store/tokens/hooks'
 import { formatNumber } from '@/utils/tools'
 
-import { Input, Slider } from '@@/common/Form'
+import { Input, Slider } from '@@/Form'
 import Button from '@@/common/Button'
 import Tip from '@@/common/Tip'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
-
-import { notify } from '@@/common/Toast'
-// import InfoDialog from '@@/common/Dialog/Info'
 
 interface Props {
   getData: () => void
@@ -27,26 +22,30 @@ interface Props {
 }
 
 const SubscribeFunds: FC<Props> = ({ getData, data }) => {
-  const { subscribe } = FundPool
   const { fundAddress } = useParams()
-  const { data: signer } = useSigner()
-  const { balance } = useTokensData()
-  const dispatch = useAppDispatch()
+  const { balances } = useStoreBalances()
+  const { address: account } = useStoreProfile()
+  const { notifyLoading, notifySuccess, notifyError } = useNotify()
 
   const baseToken = useMemo(() => getTokenByAddress(data.baseToken), [data.baseToken])
-  // const decimals = useMemo(() => baseToken.decimals, [baseToken])
-  const acToken = useMemo(() => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}`]), [baseToken])
+
+  const acToken = useMemo(
+    () => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}`]),
+    [baseToken]
+  )
   // @ts-ignore
-  const acTokenBalance = useMemo(() => balance[acToken?.name], [balance, acToken?.name])
+  const acTokenBalance = useMemo(() => balances[acToken?.name], [balances, acToken?.name])
   const [value, setValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
 
-  // console.log(baseToken, acToken, data, 222)
   const maxAum = useMemo(
     () =>
       Number(
         formatNumber(
-          Math.max(BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(), 0),
+          Math.max(
+            BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(),
+            0
+          ),
           4,
           '0.0000'
         )
@@ -59,7 +58,6 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
   const isInSubscribe = useMemo(() => [0, 1, 2].includes(data.status), [data.status])
 
   const onSliderChange = (val: number) => {
-    // console.log()
     if (maxValue > 0) {
       const currValue = BN(maxValue).div(100).multipliedBy(val).toNumber()
       setValue(currValue)
@@ -72,29 +70,35 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
     if (val > maxValue) val = maxValue
     if (val < 0) val = 0
     if (maxValue > 0) {
-      const currSliderValue = BN(Number(val)).div(maxValue).multipliedBy(100).integerValue().toNumber()
+      const currSliderValue = BN(Number(val))
+        .div(maxValue)
+        .multipliedBy(100)
+        .integerValue()
+        .toNumber()
       setValue(Number(val))
       setSliderValue(currSliderValue)
     }
   }
-
-  const onSubscribe = async () => {
-    if (signer && fundAddress) {
-      const notifyId = notify.loading()
-      // 执行购买和质押
-      const { status, msg } = await subscribe(Number(value), fundAddress, acToken, signer)
-      if (status) {
-        // 重新获取余额信息
-        await dispatch(getTokensBalanceAsync(signer))
-        await getData()
-        setValue(0)
-        setSliderValue(0)
-        notify.update(notifyId, 'success')
-      } else {
-        notify.update(notifyId, 'error', msg)
-      }
+  const onSettled = async (data, error) => {
+    if (error) {
+      notifyError(error)
+    } else {
+      notifySuccess()
+      await getData()
+      setValue('')
+      setSliderValue(0)
     }
   }
+
+  const { onSubscribe } = useFundSubscribe(fundAddress, account, onSettled)
+
+  const subscribeFund = async () => {
+    if (account && fundAddress) {
+      notifyLoading()
+      await onSubscribe(Number(value), acToken)
+    }
+  }
+
   return (
     <>
       <section className="web-fund-detail-bench">
@@ -122,9 +126,7 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
         </div>
         <div className="web-fund-detail-bench-action">
           <footer>
-            <Button onClick={onSubscribe} disabled={value <= 0 || !isInSubscribe}>
-              confirm
-            </Button>
+            <Button onClick={subscribeFund}>confirm</Button>
             {!isInSubscribe && <Tip>Non-Subscription Period</Tip>}
           </footer>
         </div>

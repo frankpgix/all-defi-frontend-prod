@@ -41,7 +41,7 @@ export interface FundBaseInfoProps {
 }
 
 export const calcFundBaseInfo = (item: any): FundBaseProps => {
-  // console.log(1234, item)
+  console.log(1234, item)
   const baseTokenObj = getTokenByAddress(item.baseToken)
   const decimals = baseTokenObj.decimals
   const precision = baseTokenObj.precision
@@ -299,5 +299,31 @@ export const calcShareComposition = (item: any) => {
     balance: bigInt2Number(item[0], 18, 4),
     redeeming: bigInt2Number(item[1], 18, 4),
     mining: bigInt2Number(item[2], 18, 4)
+  }
+}
+
+// 基金资产分布情况三件套
+export interface AssetCompositionProps {
+  token: string //token地址
+  symbol: string //token符号
+  decimals: number //精度
+  amount: number //数量
+  value: number //价值
+  percentage: number //价值百分比
+}
+
+export const calcAssetComposition = (item: any, baseTokenAddress: string) => {
+  const decimals = bigInt2Number(item.decimals, 0, 0)
+  const token = getTokenByAddress(item.token)
+  const baseToken = getTokenByAddress(baseTokenAddress)
+  // console.log(token, item, 222222)
+  return {
+    token: item.token,
+    symbol: item.symbol,
+    decimals,
+    precision: token.precision,
+    amount: bigInt2Number(item.amountv, token.precision),
+    value: bigInt2Number(item.value, baseToken.decimals, baseToken.precision),
+    percentage: 0
   }
 }
