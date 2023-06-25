@@ -9,7 +9,7 @@ export default defineConfig(({ mode, command, ssrBuild }) => {
   console.log('env', env)
   return {
     define: {
-      global: 'globalThis'
+      globalThis: 'window'
     },
     resolve: {
       alias: {
