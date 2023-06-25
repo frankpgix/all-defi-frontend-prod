@@ -1,8 +1,9 @@
 import React, { FC } from 'react'
 import Table from 'rc-table'
-import { useAccount } from 'wagmi'
+// import { useAccount } from 'wagmi'
 import dayjs from 'dayjs'
 
+import { useStoreProfile } from '@/store/useProfile'
 import { useUserFundHistoryData } from '@/graphql/useFundData'
 import { UserFundHistoryDataProps } from '@/graphql/help'
 import { formatNumber } from '@/utils/tools'
@@ -23,8 +24,9 @@ const AmountShow: FC<AmountShowProps> = ({ value, action, row }) => {
 }
 
 const History: FC = () => {
-  const { address: userAddress } = useAccount()
-  const { loading, data } = useUserFundHistoryData(userAddress ?? '')
+  const { address: account } = useStoreProfile()
+  // const { address: userAddress } = useAccount()
+  const { loading, data } = useUserFundHistoryData(account)
   // useEffect(() => void refetch(), [refetch])
   const webColumns = [
     {

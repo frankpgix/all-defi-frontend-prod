@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 
 const Home = lazy(() => import('./Home'))
 const Investment = lazy(() => import('./Investment'))
-// const InvestmentHistory = lazy(() => import('./Investment/History'))
+const InvestmentHistory = lazy(() => import('./Investment/History'))
 //
 // const Manager = lazy(() => import('./Manager'))
 // const CreateFund = lazy(() => import('./Manager/CreateFund'))
@@ -17,13 +17,13 @@ const MyManagement: FC = () => {
     <Routes>
       <Route path="" element={<Home />} />
       <Route path="investment" element={<Investment />} />
+      <Route path="investment/history" element={<InvestmentHistory />} />
     </Routes>
   )
 }
 
 export default MyManagement
 
-// <Route path="investment/history" element={<InvestmentHistory />} />
 // <Route path="manager" element={<Manager />} />
 // <Route path="manager/create" element={<CreateFund />} />
 // <Route path="manager/fund/:fundAddress" element={<FundDetail />} />
