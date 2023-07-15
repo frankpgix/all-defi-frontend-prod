@@ -42,7 +42,11 @@ const WalletDialog: FC<Props> = ({ show, onClose, onClick }) => {
           {wallets
             .filter((w) => !w.hidden)
             .map((w, index) => (
-              <div className="web-account-dialog-list-item" key={w.title} onClick={() => onClick(w.id)}>
+              <div
+                className="web-account-dialog-list-item"
+                key={w.title}
+                onClick={() => onClick(w.id)}
+              >
                 <Image src={`icon/${w.icon}`} />
                 <p>{w.title}</p>
               </div>
