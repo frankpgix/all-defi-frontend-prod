@@ -1,17 +1,24 @@
 .rc-table {
-  font-size: 16px;color: $black;
+  font-size: 16px;
+  color: $black;
   background: $white;
   $self: &;
   &-content {
-    border: none;border-radius: 0;
+    border: none;
+    border-radius: 0;
   }
-  th, td {
+  th,
+  td {
     border: none;
   }
   thead {
     th {
-      background: #F2F0FD;padding: 20px 12px;text-align: left;
-      border-top: 4px solid #1557F4;font-size: 12px;color: #737373;
+      background: #f2f0fd;
+      padding: 20px 12px;
+      text-align: left;
+      border-top: 4px solid #1557f4;
+      font-size: 12px;
+      color: #737373;
       &:first-child {
         padding-left: 40px;
       }
@@ -23,8 +30,12 @@
   tbody {
     tr {
       border-bottom: 2px solid $line;
-      th, td {
-        background: none;padding: 12px;font-size: 14px;font-weight: bold;
+      th,
+      td {
+        background: none;
+        padding: 12px;
+        font-size: 14px;
+        font-weight: bold;
         &:first-child {
           padding-left: 40px;
         }
@@ -37,7 +48,14 @@
         position: relative;
         box-shadow: 0px 0px 16px rgba(203, 202, 202, 0.25);
         &:before {
-          content: '';display: block;top: 0;bottom: 0;width: 4px;background: $blue;left: 0;position: absolute;
+          content: '';
+          display: block;
+          top: 0;
+          bottom: 0;
+          width: 4px;
+          background: $blue;
+          left: 0;
+          position: absolute;
         }
         &.rc-table-placeholder {
           &:before {
@@ -54,13 +72,16 @@
     tr {
       td {
         &:first-child {
-          display: flex;align-items: center;
+          display: flex;
+          align-items: center;
           &:before {
-            content: '';display: block;width: 0;height: 47px;
+            content: '';
+            display: block;
+            width: 0;
+            height: 47px;
           }
         }
       }
-
     }
     // tr {
     //   border-radius: 36px;
@@ -75,7 +96,11 @@
     //   }
     // }
     .rc-table-placeholder:first-child td {
-      background: $cff !important;height: 160px;font-size: 12px;color: $text;padding-bottom: 36px;
+      background: $cff !important;
+      height: 160px;
+      font-size: 12px;
+      color: $text;
+      padding-bottom: 36px;
       display: table-cell;
     }
 

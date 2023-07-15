@@ -1,5 +1,6 @@
 .web-c-percentage-line {
-  width: 100%;background: $bgBlue;
+  width: 100%;
+  background: $bgBlue;
   overflow: hidden;
   &-inner {
     height: 10px;
@@ -7,13 +8,15 @@
     @include dz();
   }
   &.mini {
-    height: 10px;border-radius: 5px;
+    height: 10px;
+    border-radius: 5px;
     .web-c-percentage-line-inner {
       height: 10px;
     }
   }
   &.large {
-    height: 16px;border-radius: 8px;
+    height: 16px;
+    border-radius: 8px;
     .web-c-percentage-line-inner {
       height: 16px;
     }

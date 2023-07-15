@@ -1,20 +1,27 @@
 .web-c-row-show {
-  display: flex;align-items: center;
+  display: flex;
+  align-items: center;
 
-  &.pre-arrow:before, &.sub-arrow:after {
-    content: '';display: block;width: 20px;height: 20px;
+  &.pre-arrow:before,
+  &.sub-arrow:after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
     background: center/contain no-repeat;
   }
 
   &.rise {
     color: $rise;
-    &:before, &:after {
+    &:before,
+    &:after {
       background-image: url($res + 'icon/arrow-up.svg');
     }
   }
   &.fall {
     color: $fall;
-    &:before, &:after {
+    &:before,
+    &:after {
       background-image: url($res + 'icon/arrow-down.svg');
     }
   }

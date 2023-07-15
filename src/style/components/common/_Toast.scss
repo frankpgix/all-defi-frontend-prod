@@ -1,11 +1,17 @@
-
 .Toastify {
   &__toast {
-    padding: 0;min-height: 52px;border-radius: 10px;
-    font-family: "Proxima Nova", "PingFang SC", "Heiti SC", "Droidsansfallback", Helvetica, "Droid Sans";
+    padding: 0;
+    min-height: 52px;
+    border-radius: 10px;
+    font-family: 'Proxima Nova', 'PingFang SC', 'Heiti SC', 'Droidsansfallback', Helvetica,
+      'Droid Sans';
     &-icon {
-      width: 52px;position: absolute;left: 0;top: 0;bottom: 0;
-      background:  center/24px no-repeat;
+      width: 52px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      background: center/24px no-repeat;
       border-radius: 10px 0 0 10px;
       svg {
         display: none;
@@ -17,21 +23,23 @@
     }
     &--success &-icon {
       background-image: url($res + 'icon/toast-success.svg');
-      background-color: #13BC8B;
+      background-color: #13bc8b;
     }
     &--warning &-icon {
       background-image: url($res + 'icon/toast-error.svg');
       // background-image: url($res + 'icon/toast-wait.svg');
-      background-color: #FF7701;
+      background-color: #ff7701;
     }
     &--error &-icon {
       background-image: url($res + 'icon/toast-error.svg');
-      background-color: #FD3D60;
+      background-color: #fd3d60;
     }
     &--default &-icon {
-      display: flex;justify-content: center;align-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       // background-image: url($res + 'icon/toast-wait.svg');
-      background-color: #FF7701;
+      background-color: #ff7701;
       .Toastify__spinner {
         border: none;
         background: url($res + 'icon/toast-wait.svg') center/24px no-repeat;
@@ -39,8 +47,12 @@
     }
     &-body {
       padding-left: 62px;
-      font-size: 13px;line-height: 22px;color: $black;
-      span, strong, em {
+      font-size: 13px;
+      line-height: 22px;
+      color: $black;
+      span,
+      strong,
+      em {
         color: $black;
       }
     }
@@ -59,26 +71,31 @@
     }
   }
   &__progress-bar {
-    height: 1px;left: 10px;
+    height: 1px;
+    left: 10px;
     &--info {
       background: $blue;
     }
     &--success {
-      background: #13BC8B;
+      background: #13bc8b;
     }
     &--warning {
-      background: #FF7701;
+      background: #ff7701;
     }
     &--error {
-      background: #FD3D60;
+      background: #fd3d60;
     }
   }
 }
 
 .c-notify {
   &-content {
-    font-size: 13px;line-height: 22px;color: $black;
-    span, strong, em {
+    font-size: 13px;
+    line-height: 22px;
+    color: $black;
+    span,
+    strong,
+    em {
       color: $black;
     }
   }
@@ -91,11 +108,23 @@
     text-transform: capitalize;
     // background: $black;
     .Toastify__close-button {
-      position: absolute;width: 20px;height: 20px;border-radius: 50%;background: $line;
-      right: -10px;top: -10px;display: flex;justify-content: center;align-items: center;
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: $line;
+      right: -10px;
+      top: -10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .Toastify__progress-bar {
-      border-radius: 0 0 0 0;height: 1px;left: 52px;right: 2px;width: auto;
+      border-radius: 0 0 0 0;
+      height: 1px;
+      left: 52px;
+      right: 2px;
+      width: auto;
     }
   }
 }

@@ -1,9 +1,15 @@
 .c-tip {
-  display: flex;align-items: flex-start;
+  display: flex;
+  align-items: flex-start;
   img {
-    display: block;width: 14px;height: 14px;margin-right: 5px;
+    display: block;
+    width: 14px;
+    height: 14px;
+    margin-right: 5px;
   }
   p {
-    font-size: 10px;line-height: 14px;color: $dGray;
+    font-size: 10px;
+    line-height: 14px;
+    color: $dGray;
   }
 }

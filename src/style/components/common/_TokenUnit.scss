@@ -1,7 +1,11 @@
 .web-c-token-unit {
-  display: flex;align-items: center;
+  display: flex;
+  align-items: center;
   img {
-    display: block;width: 40px;height: 40px;margin-right: 10px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
   }
   em {
     margin-right: 5px;
@@ -14,12 +18,15 @@
 .c-token-icon {
   display: block;
   &-default {
-    width: 40px;height: 40px;
+    width: 40px;
+    height: 40px;
   }
   &-small {
-    width: 32px;height: 32px;
+    width: 32px;
+    height: 32px;
   }
   &-mini {
-    width: 18px;height: 18px;
+    width: 18px;
+    height: 18px;
   }
 }

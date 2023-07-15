@@ -1,10 +1,17 @@
 .c-table-empty {
-  display: flex;align-items: center;flex-flow: column;padding: 50px 0;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  padding: 50px 0;
   img {
-    display: block;width: 50px;margin-bottom: 10px;
+    display: block;
+    width: 50px;
+    margin-bottom: 10px;
   }
   p {
-    font-size: 16px;line-height: 1.4;color: $gray;
+    font-size: 16px;
+    line-height: 1.4;
+    color: $gray;
   }
   .web-loading-type-section {
     min-height: 80px;
