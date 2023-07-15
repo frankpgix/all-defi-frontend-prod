@@ -10,10 +10,13 @@ const urlTable: Record<string, { web: string }> = {
   }
 }
 
-const { NODE_ENV } = process.env
+const { NODE_ENV } = import.meta.env
 export const getEnv = (): string => {
   if (NODE_ENV === 'development') return 'dev'
-  return Object.keys(urlTable).find((i) => JSON.stringify(urlTable[i]).includes(window.location.host)) ?? 'prod'
+  return (
+    Object.keys(urlTable).find((i) => JSON.stringify(urlTable[i]).includes(window.location.host)) ??
+    'prod'
+  )
 }
 
 export default getEnv

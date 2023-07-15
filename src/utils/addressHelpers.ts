@@ -1,10 +1,13 @@
 import tokens, { tokenss } from '@/config/tokens'
 import contracts from '@/config/contracts'
 import { Address, ChainId } from '@/config/types'
+import { VITE_APP_CHAIN_ID } from '@/config'
 
 export const getAddress = (address: Address): string => {
-  const chainId = process.env.REACT_APP_CHAIN_ID ?? '5'
-  return address[chainId] ? (address[chainId] ?? '').toLowerCase() : address[ChainId.MAINNET].toLowerCase()
+  const chainId = VITE_APP_CHAIN_ID
+  return address[chainId]
+    ? (address[chainId] ?? '').toLowerCase()
+    : address[ChainId.MAINNET].toLowerCase()
 }
 
 // export const getSymbol = (address: string): string => {

@@ -3,9 +3,11 @@ import invariant from 'tiny-invariant'
 import { getAddress } from '@ethersproject/address'
 
 import { ChainId, ChainIdRec } from '@/config/types'
+import { VITE_APP_CHAIN_ID } from '@/config'
 
 export const _getAddress = (address: ChainIdRec): string => {
-  const chainId = process.env.REACT_APP_CHAIN_ID ?? ChainId.ARBITRUM
+  const chainId = VITE_APP_CHAIN_ID ?? ChainId.ARBITRUM
+  // @ts-ignore
   const _address = address[chainId] ?? address[ChainId.ARBITRUM]
   return _address.toLowerCase()
 }

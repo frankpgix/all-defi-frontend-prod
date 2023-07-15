@@ -11,11 +11,11 @@ import store, { persistor } from '@/store'
 
 import ThemeProvider from '@/context/Theme'
 import MobileProvider from '@/context/Mobile'
-import WagamiClient from '@/context/WagamiClient'
+import WagamiClient from '@/providers/WagmiClient'
 
 import App from '@/App'
 import { client as ApolloClient } from '@/lib/apollo'
-import '@/lang'
+// import '@/lang'
 
 const PersistGate = _PersistGate as any
 const container = document.getElementById('all-defi')

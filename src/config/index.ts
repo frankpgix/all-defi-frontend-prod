@@ -19,11 +19,11 @@ const GRAPHQL_API_PREFIX_SCHEMA: Record<string, string> = {
   [ChainId.ARBITRUM]: 'https://api.thegraph.com/subgraphs/name/'
 }
 
-export const { REACT_APP_CHAIN_ID } = process.env
+export const { VITE_APP_CHAIN_ID } = import.meta.env
 
 export const API_PREFIX_URL = API_PREFIX_URLS_SCHEMA[getEnvKey()]
-export const ETH_SCAN_URL = ETH_SCAN_URLS_SCHEMA[REACT_APP_CHAIN_ID]
-export const GRAPHQL_API_PREFIX = GRAPHQL_API_PREFIX_SCHEMA[REACT_APP_CHAIN_ID]
+export const ETH_SCAN_URL = ETH_SCAN_URLS_SCHEMA[VITE_APP_CHAIN_ID]
+export const GRAPHQL_API_PREFIX = GRAPHQL_API_PREFIX_SCHEMA[VITE_APP_CHAIN_ID]
 export const RESOURCES_URL = 'https://all-defi-static.pages.dev/'
 export const STATIC_RESOURCES_URL = RESOURCES_URL + 'image/'
 export const VIDEO_RESOURCES_URL = RESOURCES_URL + 'video/'

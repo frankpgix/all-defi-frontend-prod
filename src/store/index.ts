@@ -8,7 +8,7 @@ import tokensReducer from './tokens'
 import investorReducer from './investor'
 import fundsReducer from './funds'
 
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = import.meta.env.NODE_ENV === 'production'
 
 const persistConfig = {
   key: isProduction ? 'ALLTOKEN-STORE' : 'ALLTOKEN-STORE-TEST',
