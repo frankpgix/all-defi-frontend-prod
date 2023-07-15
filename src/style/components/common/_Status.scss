@@ -1,18 +1,33 @@
 .web-status {
-  &-fail, &-wait, &-success, &-info {
-    display: flex;flex-flow: column;align-items: center;
+  &-fail,
+  &-wait,
+  &-success,
+  &-info {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
     img {
       display: block;
     }
     h4 {
-      font-family: 'Didot';font-size: 24px;line-height: 40px;color: $blue;font-weight: bold;
+      font-family: 'Didot';
+      font-size: 24px;
+      line-height: 40px;
+      color: $blue;
+      font-weight: bold;
       margin-top: 32px;
     }
     p {
-      font-size: 14px;line-height: 1.6;width: 440px;text-align: center;margin-top: 12px;color: $black;
+      font-size: 14px;
+      line-height: 1.6;
+      width: 440px;
+      text-align: center;
+      margin-top: 12px;
+      color: $black;
     }
     .web-button {
-      margin-top: 32px;width: 180px;
+      margin-top: 32px;
+      width: 180px;
     }
   }
   &-wait {
@@ -20,13 +35,22 @@
       // width: 208px;height: 136px;
     }
     &-icon {
-      width: 180px;height: 180px;display: flex;justify-content: center;align-items: center;
+      width: 180px;
+      height: 180px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       p {
-        display: block;width: 130px;height: 130px;
+        display: block;
+        width: 130px;
+        height: 130px;
         animation: zoom-in-mini 2s linear infinite alternate;
         i {
-          display: block;width: 130px;height: 130px;border-radius: 50%;
-          background: linear-gradient(134.54deg, #FFE7D9 0%, #FD7A01 100%);
+          display: block;
+          width: 130px;
+          height: 130px;
+          border-radius: 50%;
+          background: linear-gradient(134.54deg, #ffe7d9 0%, #fd7a01 100%);
           filter: blur(10px);
           transform: rotate(31.07deg);
           animation: rotation 3s linear infinite alternate;
@@ -51,12 +75,23 @@
       margin-bottom: 32px;
     }
     span {
-      display: block;position: relative;height: 10px;border-radius: 5px;background: $bgBlue;width: 440px;overflow: hidden;
+      display: block;
+      position: relative;
+      height: 10px;
+      border-radius: 5px;
+      background: $bgBlue;
+      width: 440px;
+      overflow: hidden;
       &:after {
-        content: '';display: block;position: absolute;height: 10px;border-radius: 5px;
-        left: 0;bottom: 0;
+        content: '';
+        display: block;
+        position: absolute;
+        height: 10px;
+        border-radius: 5px;
+        left: 0;
+        bottom: 0;
         @include jb($blue, $lBlue, -135);
-        animation:wait-modal 2s infinite;
+        animation: wait-modal 2s infinite;
       }
     }
   }
@@ -74,6 +109,66 @@
     footer {
       .web-button {
         margin: 32px 10px 0;
+      }
+    }
+  }
+
+  &-coming-soon {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    &-icon {
+      width: 300px;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p {
+        display: block;
+        width: 300px;
+        height: 300px;
+        animation: zoom-in-mini 2s linear infinite alternate;
+        i {
+          display: block;
+          width: 300px;
+          height: 300px;
+          border-radius: 50%;
+          background: linear-gradient(134.54deg, #ffe7d9 0%, #fd7a01 100%);
+          filter: blur(30px);
+          transform: rotate(31.07deg);
+          animation: rotation 3s linear infinite alternate;
+        }
+      }
+    }
+    article {
+      position: absolute;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      small {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 22px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+      }
+      h4 {
+        font-size: 56px;
+        font-family: Didot;
+        font-weight: 700;
+        line-height: 56px;
+        letter-spacing: -1px;
+        margin: 16px 0 25px;
+      }
+      p {
+        width: 340px;
+        height: 101px;
+        font-size: 18px;
+        line-height: 24px;
       }
     }
   }

@@ -1,16 +1,16 @@
 import React, { FC } from 'react'
-import { useAccount } from 'wagmi'
 import Table from 'rc-table'
 import dayjs from 'dayjs'
 
 import { useUserACBuyData } from '@/graphql/useFundData'
 import { formatNumber } from '@/utils/tools'
+import { useProfile } from '@/hooks/useProfile'
 
 import HashLink from '@@/common/HashLink'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 
 const ContributionManagement: FC = () => {
-  const { address } = useAccount()
+  const { account: address } = useProfile()
   const { data, loading } = useUserACBuyData(address ?? '')
 
   const webColumns = [

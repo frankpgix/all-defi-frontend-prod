@@ -12,9 +12,10 @@ interface Props {
   size?: 'default' | 'mini' | 'small'
   white?: boolean
   blue?: boolean
+  width?: string
 }
 
-const Popper: FC<Props> = ({ children, content, className, size = 'default', white }) => {
+const Popper: FC<Props> = ({ children, content, className, size = 'default', white, width }) => {
   // const [show, { setLeft: clsePopper, setRight: openPopper }] = useToggle(false)
   //
   // const ref = useRef<HTMLDivElement>(null)
@@ -22,9 +23,9 @@ const Popper: FC<Props> = ({ children, content, className, size = 'default', whi
 
   return (
     <div className={classNames('c-popper', `c-popper-size-${size}`, className, { white })}>
-      {children ? children : <Image src="icon/popper.svg" className="c-popper-icon" />}
+      {children ? children : <Image src={`icon/popper${white ? '-white' : ''}.svg`} className="c-popper-icon" />}
       {content && (
-        <div className="c-popper-content">
+        <div className="c-popper-content" style={{ minWidth: width || 'auto' }}>
           <p>{content}</p>
         </div>
       )}

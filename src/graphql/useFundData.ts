@@ -27,7 +27,13 @@ import {
 import { calcUserFundHistoryData, ActionType, calcActionData, RecordProps } from './help'
 
 export const useFundListData = () => {
-  const { loading, error, data: sData } = useQuery(calcFundListGQL())
+  const {
+    loading,
+    error,
+    data: sData
+  } = useQuery(calcFundListGQL(), {
+    fetchPolicy: 'no-cache'
+  })
   const data = (sData?.funds ?? []).map((item: any) => {
     const baseToken = getTokenByAddress(item.baseToken)
     return {
@@ -36,16 +42,12 @@ export const useFundListData = () => {
       epoch: item.epochIndex,
       address: item.id,
       aum: safeInterceptionValues(item.aum, baseToken.precision, baseToken.decimals),
-      capacityAvailable: safeInterceptionValues(
-        item.capacityAvailable,
-        baseToken.precision,
-        baseToken.decimals
-      ),
-      apr: safeInterceptionValues(item.currentAPR.split('.')[0], 2, 18),
-      dayReturn: safeInterceptionValues(item.dayReturn, 2, 18),
-      weekReturn: safeInterceptionValues(item.weekReturn, 2, 18),
-      monthReturn: safeInterceptionValues(item.monthReturn, 2, 18),
-      yearReturn: safeInterceptionValues(item.yearReturn, 2, 18),
+      capacityAvailable: safeInterceptionValues(item.capacityAvailable, baseToken.precision, baseToken.decimals),
+      apr: safeInterceptionValues(item.currentAPR.split('.')[0], 4, 18),
+      dayReturn: safeInterceptionValues(item.dayReturn, 4, 18),
+      weekReturn: safeInterceptionValues(item.weekReturn, 4, 18),
+      monthReturn: safeInterceptionValues(item.monthReturn, 4, 18),
+      yearReturn: safeInterceptionValues(item.yearReturn, 4, 18),
       baseToken
     }
   })
@@ -54,28 +56,28 @@ export const useFundListData = () => {
 
 export const useFundDetail = (address: string) => {
   const { loading, error, data: sData } = useQuery(calcFundDetailGQL(address))
-  const data = (sData?.funds ?? []).map((item: any) => ({
-    name: item.name,
-    epoch: item.epochIndex,
-    address: item.id,
-    aum: safeInterceptionValues(item.aum, 2, 18),
-    capacityAvailable: safeInterceptionValues(item.capacityAvailable, 2, 18),
-    apr: safeInterceptionValues(item.currentAPR.split('.')[0], 2, 18),
-    dayReturn: safeInterceptionValues(item.dayReturn, 2, 18),
-    weekReturn: safeInterceptionValues(item.weekReturn, 2, 18),
-    monthReturn: safeInterceptionValues(item.monthReturn, 2, 18),
-    yearReturn: safeInterceptionValues(item.yearReturn, 2, 18)
-  }))[0]
+  const data = (sData?.funds ?? []).map((item: any) => {
+    const baseToken = getTokenByAddress(item.baseToken)
+    return {
+      name: item.name,
+      epoch: item.epochIndex,
+      address: item.id,
+      // aum: safeInterceptionValues(item.aum, 4, 18),
+      aum: safeInterceptionValues(item.aum, baseToken.precision, baseToken.decimals),
+      capacityAvailable: safeInterceptionValues(item.capacityAvailable, 4, 18),
+      apr: safeInterceptionValues(item.currentAPR.split('.')[0], 4, 18),
+      dayReturn: safeInterceptionValues(item.dayReturn, 4, 18),
+      weekReturn: safeInterceptionValues(item.weekReturn, 4, 18),
+      monthReturn: safeInterceptionValues(item.monthReturn, 4, 18),
+      yearReturn: safeInterceptionValues(item.yearReturn, 4, 18)
+    }
+  })[0]
   return { loading, data: data ?? {}, error }
 }
 
 export const useManagerFundData = (managerAddress: string, type: string) => {
   // 获取基金经理所属基金
-  const {
-    loading: fundLoading,
-    error: fundError,
-    data: fundData
-  } = useQuery(calcManageFundsData(managerAddress))
+  const { loading: fundLoading, error: fundError, data: fundData } = useQuery(calcManageFundsData(managerAddress))
   // console.log(11222, fundData)
   const funds = (fundData?.funds ?? []).map((item: any) => item.id)
   // 获取基金经理全部数据
@@ -88,9 +90,7 @@ export const useManagerFundData = (managerAddress: string, type: string) => {
   // 把各个基金的数据进行拆分
   const o: Record<string, any> = {}
   funds.forEach((fundName: string) => {
-    o[fundName] = (detailData?.fundHourlyDatas ?? []).filter(
-      (item: any) => item.fundId === fundName
-    )
+    o[fundName] = (detailData?.fundHourlyDatas ?? []).filter((item: any) => item.fundId === fundName)
   })
 
   // 找到长度最长的基金数据
@@ -111,9 +111,7 @@ export const useManagerFundData = (managerAddress: string, type: string) => {
         .map((fund: any) => {
           const baseToken = getTokenByAddress(fund.baseToken)
           const priceUSD = Number(safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18))
-          const nav = Number(
-            safeInterceptionValues(fund.nav, baseToken.precision, baseToken.decimals)
-          )
+          const nav = Number(safeInterceptionValues(fund.nav, baseToken.precision, baseToken.decimals))
           const result = BN(priceUSD).times(nav).toNumber()
           // console.log(1111, )
           return result
@@ -134,11 +132,7 @@ export const useManagerFundData = (managerAddress: string, type: string) => {
 
 export const useFundHourData = (fundAddress: string, type: string, decimals: number) => {
   // const baseToken = getTokenByAddress(fundAddress)
-  const {
-    loading,
-    error,
-    data: sData
-  } = useQuery(calcFundHourlyDatasGQL(fundAddress, getTypeUnix(type)))
+  const { loading, error, data: sData } = useQuery(calcFundHourlyDatasGQL(fundAddress, getTypeUnix(type)))
   // console.log(11111, baseToken, sData?.fundHourlyDatas)
   const data = (sData?.fundHourlyDatas ?? [])
     .map((item: FundDataProps) => ({
@@ -170,41 +164,14 @@ export const useFundDetailChartData = (fundAddress: string, epochs: number[]) =>
   return { loading, error, data }
 }
 
-// export const useFundUniSwapRecrodData = (fundAddress: string) => {
-//   const {
-//     loading,
-//     error,
-//     data: sData
-//   } = useQuery(calcUniSwapRecordGQL(fundAddress), {
-//     client: uniSwapClient
-//   })
-//   const data = (sData?.swaps ?? []).map((item: UniSwapRecordDataProps, index: number): FundRecordOutProps => {
-//     const inv = BN(item.amount0).gt(item.amount1) ? item.amount1 : item.amount0
-//     const inAmount = Math.abs(Number(BN(-0.00000001).gt(inv) ? Number(inv) : 0))
-//     const inToken = inv === item.amount0 ? item.token0.symbol : item.token1.symbol
-//     const out = BN(item.amount0).gt(item.amount1) ? item.amount0 : item.amount1
-//     const outAmount = Number(`-${String(BN(out).gt(0.00000001) ? Number(out) : 0)}`)
-//     const outToken = out === item.amount0 ? item.token0.symbol : item.token1.symbol
-//
-//     return {
-//       timestamp: Number(item.timestamp) * 1000,
-//       outAmount,
-//       outToken,
-//       inAmount,
-//       inToken,
-//       index
-//     }
-//   })
-//   return { loading, error, data }
-// }
-
 export const useFundSubscribesData = (fundAddress: string) => {
   const {
     loading,
     error,
     data: sData
-  } = useQuery(calcFundSubscribesOrRedeemsGQL(fundAddress, ActionType['Subscribe']))
+  } = useQuery(calcFundSubscribesOrRedeemsGQL(fundAddress, [ActionType['Subscribe'], ActionType['Cancel Subscribe']]))
   const data = (sData?.fundUserActions ?? []).map((item: RecordProps) => calcActionData(item))
+  // console.log(data, sData?.fundUserActions)
   return { loading, error, data }
 }
 
@@ -213,18 +180,14 @@ export const useFundRedeemsData = (fundAddress: string) => {
     loading,
     error,
     data: sData
-  } = useQuery(calcFundSubscribesOrRedeemsGQL(fundAddress, ActionType['Redeem']))
+  } = useQuery(calcFundSubscribesOrRedeemsGQL(fundAddress, [ActionType['Redeem'], ActionType['Cancel Redeem']]))
   const data = (sData?.fundUserActions ?? []).map((item: RecordProps) => calcActionData(item))
+  // console.log(data, sData?.fundUserActions)
   return { loading, error, data }
 }
 
 export const useUserFundHistoryData = (userAddress: string, fundAddress?: string) => {
-  const {
-    loading,
-    error,
-    data: sData,
-    refetch
-  } = useQuery(calcUserFundHistoryGQL(userAddress, fundAddress))
+  const { loading, error, data: sData, refetch } = useQuery(calcUserFundHistoryGQL(userAddress, fundAddress))
   const data = calcUserFundHistoryData(sData)
   return { loading, error, data, refetch }
 }
@@ -256,16 +219,18 @@ export const useUserACBuyData = (userAddress: string) => {
 }
 
 export const useMiningData = (type: string) => {
+  // console.log(type)
   const { loading: fundLoading, error: fundError, data: fundData } = useQuery(calcFundListGQL())
   const funds = (fundData?.funds ?? []).map((item: any) => item.id)
   const fundsName = (fundData?.funds ?? []).map((item: any) => item.name)
+  const cTime = Math.min(...(fundData?.funds ?? []).map((item: any) => item.createTime))
   const {
     loading: listLoading,
     error: listError,
     data: listData
-  } = useQuery(calcMiningData(JSON.stringify(funds), getTypeUnix(type)))
+  } = useQuery(calcMiningData(JSON.stringify(funds), getTypeUnix(type, cTime)))
 
-  const sData = listData?.fundHourlyDatas ?? []
+  const sData = listData?.fund10MinutelyDatas ?? []
   const timeArr = uniq(sData.map((item: any) => item.periodStartUnix))
   const data = timeArr.map((time) => {
     const o: Record<string, any> = {
@@ -278,9 +243,7 @@ export const useMiningData = (type: string) => {
       const amount = fund ? safeInterceptionValues(fund.miningAmount, 2, 18) : 0
       // todo ,这里需要USD价格
       const price = fund ? safeInterceptionValues(fund.sharePrice, 2, 18) : 0
-      const baseTokenPriceInUSD = fund
-        ? safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18)
-        : 0
+      const baseTokenPriceInUSD = fund ? safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18) : 0
       o[name] = BN(amount).times(price).times(baseTokenPriceInUSD).toNumber()
     })
     return o
@@ -300,22 +263,14 @@ export const useFundActionAssetData = (fundAddress: string) => {
         const token = getTokenByAddress(tokenAddress)
         return {
           token,
-          value: Number(
-            safeInterceptionValues(
-              item.incomingAssetsAmmounts[index],
-              token.precision,
-              token.decimals
-            )
-          )
+          value: Number(safeInterceptionValues(item.incomingAssetsAmmounts[index], token.precision, token.decimals))
         }
       }),
       out: item.spendAssets.map((tokenAddress: string, index: number) => {
         const token = getTokenByAddress(tokenAddress)
         return {
           token,
-          value: Number(
-            safeInterceptionValues(item.spendAssetsAmmounts[index], token.precision, token.decimals)
-          )
+          value: Number(safeInterceptionValues(item.spendAssetsAmmounts[index], token.precision, token.decimals))
         }
       }),
       timestamp: item.timestamp * 1000

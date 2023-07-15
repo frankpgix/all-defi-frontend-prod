@@ -57,12 +57,13 @@ export const calcManageFundDetailData = (fundAddress: string, unix: string | nul
 
 export const calcMiningData = (fundAddress: string, unix: string | null) => gql`
   query {
-    fundHourlyDatas(
+    fund10MinutelyDatas(
       orderBy: periodStartUnix
       orderDirection: asc
       where: {
         fundId_in: ${fundAddress.toLowerCase()}
-        ${unix ? `periodStartUnix_in: ${unix}` : ''}
+        periodStartUnix_gt: 1688720774
+        periodStartUnix_lte: 1688724281
       }
     ) {
       fundId
@@ -110,6 +111,7 @@ export const calcFundListGQL = () => gql`
       yearReturn
       currentAPR
       epochIndex
+      createTime
     }
   }
 `
@@ -135,7 +137,7 @@ export const calcFundDetailGQL = (fundAddress: string) => gql`
 `
 // fundId: "${'0xb8874ad74192ce798391ca316d47ad97e168128b'.toLowerCase()}"
 
-export const calcFundSubscribesOrRedeemsGQL = (fundAddress: string, type: number) => {
+export const calcFundSubscribesOrRedeemsGQL = (fundAddress: string, type: number[]) => {
   return gql`
     query {
       fundUserActions(
@@ -143,7 +145,7 @@ export const calcFundSubscribesOrRedeemsGQL = (fundAddress: string, type: number
         orderDirection: desc
         where: {
           fundId: "${fundAddress.toLowerCase()}"
-          actionType: ${type}
+          actionType_in: ${JSON.stringify(type)}
         }
       ) {
         id

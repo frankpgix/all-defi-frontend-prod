@@ -10,7 +10,7 @@ const features = [
     subName: "We don't need to be",
     intro: (
       <>
-        ALLDeFi is fully decentralized.
+        AllDeFi is fully decentralized.
         <br /> All asset is kept in smart contracts that allow
         <br /> people to invest without centralized <br />
         counter-party risk.
@@ -19,7 +19,7 @@ const features = [
   },
   {
     name: 'Professional',
-    subName: 'our team is',
+    subName: 'our managers are',
     intro: (
       <>
         We bring the top-tiered hedge fund <br />
@@ -36,7 +36,7 @@ const features = [
   },
   {
     name: 'Transparent',
-    subName: <>PERFORMACES ARE</>,
+    subName: 'our PERFORMACES ARE',
     intro: (
       <>
         Fund managers' transactions and <br />

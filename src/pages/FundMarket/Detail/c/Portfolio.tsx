@@ -1,9 +1,11 @@
 import React, { FC, useMemo } from 'react'
 import Table from 'rc-table'
+import { useRequest } from 'ahooks'
 
-import { FundBaseInfoProps } from '@/hooks/help'
+import FundReader from '@/class/FundReader'
+// import { formatNumber } from '@/utils/tools'
+import { FundBaseProps } from '@/class/help'
 import { getTokenByAddress } from '@/config/tokens'
-import { useAssetComposition } from '@/hooks/useFundReader'
 
 import PercentageLine from '@@/common/PercentageLine'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
@@ -11,13 +13,17 @@ import TokenValue from '@@/common/TokenValue'
 
 interface Props {
   fundAddress: string | undefined
-  base: FundBaseInfoProps
+  base: FundBaseProps
 }
 
 const Portfolio: FC<Props> = ({ fundAddress, base }) => {
-  const { data, isLoading: loading } = useAssetComposition(fundAddress ?? '', base.baseToken ?? '')
+  const { getAssetComposition } = FundReader
 
+  const { data, loading } = useRequest(() => getAssetComposition(fundAddress ?? '', base.baseToken ?? ''), {
+    refreshDeps: [fundAddress, base.baseToken]
+  })
   const baseToken = useMemo(() => getTokenByAddress(base.baseToken), [base.baseToken])
+  // console.log(11122222, data)
   const webColumns = [
     {
       title: 'Asset Name',
@@ -46,9 +52,7 @@ const Portfolio: FC<Props> = ({ fundAddress, base }) => {
       title: 'Value',
       dataIndex: 'value',
       width: 240,
-      render: (value: number) => (
-        <TokenValue value={value} token={baseToken} size="mini" format="0,0.00" />
-      )
+      render: (value: number) => <TokenValue value={value} token={baseToken} size="mini" format="0,0.00" />
     }
   ]
 

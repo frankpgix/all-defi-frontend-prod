@@ -30,7 +30,7 @@ const Connect: FC<Props> = ({ simple, children, as = 'div' }) => {
     const connector = connectors[connectorsIndex]
 
     if (connector === undefined) {
-      // window.toast.error('Wallet Connector is undefined. Please refresh and try again.')
+      window.toast.error('Wallet Connector is undefined. Please refresh and try again.')
       return
     }
 
@@ -42,7 +42,7 @@ const Connect: FC<Props> = ({ simple, children, as = 'div' }) => {
     const connectRes = await connectAsync({ connector })
 
     if (!connectRes) {
-      // window.toast.error('Wallet Connector could not connect. Please refresh and try again.')
+      window.toast.error('Wallet Connector could not connect. Please refresh and try again.')
       return
     }
 
@@ -90,11 +90,7 @@ const Connect: FC<Props> = ({ simple, children, as = 'div' }) => {
         ) : (
           <Button onClick={onClickWalletCb}>Connect Wallet</Button>
         )}
-        <WalletDialog
-          show={dialogStatus === 'connect'}
-          onClose={onCloseDialogEv}
-          onClick={todoWalletLogin}
-        />
+        <WalletDialog show={dialogStatus === 'connect'} onClose={onCloseDialogEv} onClick={todoWalletLogin} />
       </>
     )
   }
@@ -107,11 +103,7 @@ const Connect: FC<Props> = ({ simple, children, as = 'div' }) => {
       ) : (
         <Image src="icon/wallet-btn.svg" onClick={onClickWalletCb} />
       )}
-      <WalletDialog
-        show={dialogStatus === 'connect'}
-        onClose={onCloseDialogEv}
-        onClick={todoWalletLogin}
-      />
+      <WalletDialog show={dialogStatus === 'connect'} onClose={onCloseDialogEv} onClick={todoWalletLogin} />
       <AccountDialog show={dialogStatus === 'account'} onClose={onCloseDialogEv} />
     </>
   )

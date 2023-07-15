@@ -1,10 +1,10 @@
 // import React, { FC, useState, useMemo } from 'react'
 // import { useParams } from 'react-router-dom'
-// import { useSigner } from 'wagmi'
 //
 // import Fund from '@/class/Fund'
 // import { ShareCompositionProps } from '@/class/tool'
 // import { sleep } from '@/utils/tools'
+// import { useProfile } from '@/hooks/useProfile'
 //
 // import { Input } from '@@/common/Form'
 // import Button from '@@/common/Button'
@@ -20,7 +20,7 @@
 //
 // const DrawShares: FC<Props> = ({ getData, share }) => {
 //   const { drawShareToken } = Fund
-//   const { data: signer } = useSigner()
+//   const { signer } = useProfile()
 //   const { fundAddress } = useParams()
 //   const [status, setStatus] = useState<string>('')
 //   const [infoStatus, setInfoStatus] = useState<boolean>(false)

@@ -1,51 +1,88 @@
 .web-home-feature {
-  width: 626px;height: 626px;position: relative;
+  width: 626px;
+  height: 626px;
+  position: relative;
 
   &-layout {
     @extend .web_;
-    background: $bg;margin-top: -65px;padding-top: 65px;height: 850px;
-    position: relative;display: flex;justify-content: center;align-items: center;
+    background: $bg;
+    margin-top: -65px;
+    padding-top: 65px;
+    height: 850px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   header {
-    border-radius: 50%;position: absolute;left: 0;top: 0;right: 0;bottom: 0;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
     &:after {
-      content: '';display: block;position: absolute;left: 0;top: 0;right: 0;bottom: 0;
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
       background: url($res + 'asset/home-feature-ring-active.svg') center/100% 100% no-repeat;
       @include dz();
     }
     span {
-      position: absolute;width: 34px;height: 34px;background: rgba($cff, .3);border-radius: 50%;
-      display: flex;justify-content: center;align-items: center;z-index: 2;cursor: pointer;
-      border: 1px solid rgba($cff, .7);
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      background: rgba($cff, 0.3);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+      border: 1px solid rgba($cff, 0.7);
       @include ns();
       strong {
-        position: absolute;font-family: 'Didot';font-size: 40px;white-space: nowrap;
+        position: absolute;
+        font-family: 'Didot';
+        font-size: 40px;
+        white-space: nowrap;
       }
       &:before {
-        content: '';display: block;
-        width: 17px;height: 17px;border-radius: 50%;background: $orange;
+        content: '';
+        display: block;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        background: $orange;
       }
       &:nth-child(1) {
-        top: 115px;left: 115px;
+        top: 115px;
+        left: 115px;
         strong {
           right: calc(100% + 30px);
         }
       }
       &:nth-child(2) {
-        top: 115px;right: 115px;
+        top: 115px;
+        right: 115px;
         strong {
           left: calc(100% + 30px);
         }
       }
       &:nth-child(3) {
-        bottom: 115px;right: 115px;
+        bottom: 115px;
+        right: 115px;
         strong {
           left: calc(100% + 30px);
         }
       }
       &:nth-child(4) {
-        bottom: 115px;left: 115px;
+        bottom: 115px;
+        left: 115px;
         strong {
           right: calc(100% + 30px);
         }
@@ -73,38 +110,72 @@
   }
 
   ul {
-    position: absolute;top: 55px;left: 55px;bottom: 55px;right: 55px;
+    position: absolute;
+    top: 55px;
+    left: 55px;
+    bottom: 55px;
+    right: 55px;
     background: url($res + 'asset/home-feature-ring.svg') center/100% 100% no-repeat;
     li {
-      position: absolute;z-index: -1;top: 70px;left: 70px;bottom: 70px;right: 70px;
-      @include dz();opacity: 0;
-      display: flex;flex-flow: column;justify-content: center;align-items: center;
+      position: absolute;
+      z-index: -1;
+      top: 70px;
+      left: 70px;
+      bottom: 70px;
+      right: 70px;
+      @include dz();
+      opacity: 0;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
       &.active {
-        opacity: 1;z-index: 2;
+        opacity: 1;
+        z-index: 2;
       }
 
       strong {
-        font-size: 16px;text-transform: uppercase;font-weight: bold;letter-spacing: 4px;
-        text-align: center;line-height: 1.4;
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 4px;
+        text-align: center;
+        line-height: 1.4;
         // white-space: nowrap;
       }
       h3 {
-        margin: 16px auto;font-family: 'Didot';font-size: 48px;height: 56px;letter-spacing: -1px;
+        margin: 16px auto;
+        font-family: 'Didot';
+        font-size: 48px;
+        height: 56px;
+        letter-spacing: -1px;
       }
       p {
-        font-size: 18px;line-height: 24px;text-align: center;
+        font-size: 18px;
+        line-height: 24px;
+        text-align: center;
       }
     }
   }
 
   &-ball {
-    position: absolute;top: 50px;left: 50px;bottom: 50px;right: 50px;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    bottom: 50px;
+    right: 50px;
     &:before {
-      content: '';display: block;
-      position: absolute;top: 0;left: 0;bottom: 0;right: 0;border-radius: 50%;
-      background: linear-gradient(278.42deg, #FFE7D9 -4.98%, #F9830B 68.19%);
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: 50%;
+      background: linear-gradient(278.42deg, #ffe7d9 -4.98%, #f9830b 68.19%);
       filter: blur(40px);
-      animation:rotation 5s linear infinite;
+      animation: rotation 5s linear infinite;
       // transform: rotate(31.07deg);
     }
   }

@@ -1,87 +1,78 @@
 import React, { FC, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-// import { useAccount } from 'wagmi'
-// import { useRequest } from 'ahooks'
-//
-// import FundPool from '@/class/FundPool'
-// import FundReader from '@/class/FundReader'
+import { useRequest } from 'ahooks'
 
-import { useFundBaseInfo } from '@/hooks/useFundPool'
-import { useFundDetail, useFundUserDetail, useShareComposition } from '@/hooks/useFundReader'
-// import { useDerivativeList } from '@/hooks/useAllProtocol'
+import { useProfile } from '@/hooks/useProfile'
 
-import { useStoreDerivativeList } from '@/store/useFunds'
-import { useStoreProfile } from '@/store/useProfile'
+import FundPool from '@/class/FundPool'
+import FundReader from '@/class/FundReader'
 
 import {
-  FundBaseInfoProps,
-  FundBaseInfoDefault,
+  FundBaseProps,
+  FundBaseDefault,
   FundDetailProps,
   FundDetailDefault,
   FundUserDataProps,
   FundUserDataDefault,
   ShareCompositionProps,
   ShareCompositionDefault
-} from '@/hooks/help'
-//
+} from '@/class/help'
+
 import Dashboard from './c/Dashboard'
 import FundStatus from './c/FundStatus'
 import Portfolio from './c/Portfolio'
 import Bench from './c/Bench'
 
 const Detail: FC = () => {
-  // const { data: signer } = useSigner()
-  const address = useStoreProfile((state: any) => state.address)
-  const allDerivatives = useStoreDerivativeList((state: any) => state.derivativeList)
+  const { signer, account: address } = useProfile()
   const { fundAddress = '' } = useParams()
-  const { data: fundBase, isLoading: fundBaseLoading } = useFundBaseInfo(fundAddress)
+
+  const { getFundBase, getSupportedDerivatives } = FundPool
+  const { getFundDetail, getFundUserDetail, getShareComposition } = FundReader
+
+  const { data: fundBase, loading: fundBaseLoading } = useRequest(() => getFundBase(fundAddress), {
+    refreshDeps: [fundAddress]
+  })
+
+  const { data: derivatives } = useRequest(() => getSupportedDerivatives(fundAddress), {
+    refreshDeps: [fundAddress]
+  })
+
   const {
     data: fundDetail,
-    isLoading: fundDetailLoading,
-    refetch: reGetFundDetail
-  } = useFundDetail(fundAddress)
+    loading: fundDetailLoading,
+    run: reGetFundDetail
+  } = useRequest(() => getFundDetail(fundAddress), { refreshDeps: [fundAddress] })
+
   const {
     data: fundUserDetail,
-    isLoading: fundUserDetailLoading,
-    refetch: reGetFundUserDetail
-  } = useFundUserDetail(fundAddress, address)
+    loading: fundUserDetailLoading,
+    run: reGetFundUserDetail
+  } = useRequest(() => getFundUserDetail(fundAddress, address, signer), { refreshDeps: [fundAddress, address, signer] })
+
   const {
     data: shareData,
-    isLoading: shareDataLoading,
-    refetch: reGetshareData
-  } = useShareComposition(fundAddress, address)
-
-  const loading = useMemo(
-    () => fundBaseLoading || fundDetailLoading || fundUserDetailLoading || shareDataLoading,
-    [fundBaseLoading, fundDetailLoading, fundUserDetailLoading, shareDataLoading]
-  )
-  //
-  const base: FundBaseInfoProps = useMemo(() => fundBase ?? FundBaseInfoDefault, [fundBase])
-  const data: FundDetailProps = useMemo(() => fundDetail ?? FundDetailDefault, [fundDetail])
-  const userData: FundUserDataProps = useMemo(
-    () => fundUserDetail ?? FundUserDataDefault,
-    [fundUserDetail]
-  )
-  const share: ShareCompositionProps = useMemo(
-    () => shareData ?? ShareCompositionDefault,
-    [shareData]
-  )
+    loading: shareDataLoading,
+    run: reGetshareData
+  } = useRequest(() => getShareComposition(fundAddress, address, signer), {
+    refreshDeps: [fundAddress, address, signer]
+  })
 
   const getData = async () => {
     await reGetFundDetail()
     await reGetFundUserDetail()
     await reGetshareData()
   }
-  // console.log(base)
 
-  const derivatives = useMemo(() => {
-    return base.derivatives.map((item: string) => {
-      const derivative = allDerivatives.find(({ value }: { value: string }) => item === value)
-      return derivative ? derivative.name : ''
-    })
-  }, [allDerivatives, base.derivatives])
-  //
+  const loading = useMemo(
+    () => fundBaseLoading || fundDetailLoading || fundUserDetailLoading || shareDataLoading,
+    [fundBaseLoading, fundDetailLoading, fundUserDetailLoading, shareDataLoading]
+  )
 
+  const base: FundBaseProps = useMemo(() => fundBase ?? FundBaseDefault, [fundBase])
+  const data: FundDetailProps = useMemo(() => fundDetail ?? FundDetailDefault, [fundDetail])
+  const userData: FundUserDataProps = useMemo(() => fundUserDetail ?? FundUserDataDefault, [fundUserDetail])
+  const share: ShareCompositionProps = useMemo(() => shareData ?? ShareCompositionDefault, [shareData])
   // console.log(base, 'base')
   return (
     <>

@@ -1,41 +1,46 @@
 import React, { FC, useState, useMemo } from 'react'
-import { useAccount } from 'wagmi'
 import BN from 'bignumber.js'
 import { isNumber } from 'lodash'
+import { useRequest } from 'ahooks'
 
 import { AllTokenUnit, AcUSDCUnit } from '@@/common/TokenUnit'
 
-import { baseTokenOptions, tokens, ZERO_ADDRESS } from '@/config/tokens'
+import { baseTokenOptions, tokenss } from '@/config/tokens'
+import ACProtocol from '@/class/ACProtocol'
+import AllProtocol from '@/class/AllProtocol'
+import { useTokensData } from '@/store/tokens/hooks'
+import { useAppDispatch } from '@/store'
+import { getTokensBalanceAsync } from '@/store/tokens'
+import { getUserStakesAsync } from '@/store/investor'
+import { formatNumber } from '@/utils/tools'
+import { useProfile } from '@/hooks/useProfile'
 
-import { formatNumber, sleep } from '@/utils/tools'
-import { useAllTokenPrice } from '@/hooks/useAllProtocol'
-import { useNotify } from '@/hooks/useNotify'
-import { useBuyAcToken, useEthBuyAcToken } from '@/hooks/useACProtocol'
-import { useStoreBalances, useStoreProfile } from '@/store/useProfile'
-import { useUserACBuyData } from '@/graphql/useFundData'
+// import { sleep } from '@/utils/tools'
 
-import { Input, Select } from '@@/form'
+import { Input, Select } from '@@/common/Form'
 import Button from '@@/common/Button'
 import BlueLineSection from '@@/web/BlueLineSection'
 import InfoDialog from '@@/common/Dialog/Info'
 import Popper from '@@/common/Popper'
+import { notify } from '@@/common/Toast'
 
-const usdcAddress = tokens.USDC.address
-const ethAddress = tokens.ETH.address
+const usdcAddress = tokenss.USDC.tokenAddress
+const ethAddress = tokenss.ETH.tokenAddress
 
 const Bench: FC = () => {
-  const { isConnected } = useAccount()
-  const account = useStoreProfile((state: any) => state.address)
-  const balances = useStoreBalances((state: any) => state.balances)
-  const { notifyLoading, notifySuccess, notifyError } = useNotify()
+  const { buyAllToken } = ACProtocol
+  const { allTokenPrice } = AllProtocol
+  const dispatch = useAppDispatch()
+  const { balance } = useTokensData()
+  const { signer } = useProfile()
 
-  const { refetch } = useUserACBuyData(account)
-  //
   const [amount, setAmount] = useState<string | number>('')
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const [baseTokenAddress, setBaseTokenAddress] = useState(baseTokenOptions[0].value)
-  const { data: allTPrice = 1 } = useAllTokenPrice(baseTokenAddress)
-
+  const { data: allTPrice = 1 } = useRequest(async () => await allTokenPrice(baseTokenAddress), {
+    refreshDeps: [baseTokenAddress]
+  })
+  // console.log(baseTokenAddress)
   const preAllValue = useMemo(
     () =>
       Number(
@@ -51,57 +56,46 @@ const Bench: FC = () => {
     [amount, allTPrice]
   )
 
-  const onSettled = async (data: any, error: any) => {
-    if (error) {
-      notifyError(error)
-    } else {
-      notifySuccess()
-      await sleep(10000)
-      setAmount('')
-      refetch()
-    }
-  }
-
-  const { onBuyAcToken, isLoading } = useBuyAcToken(account, onSettled)
-  const { onEthBuyAcToken, isLoading: ethIsLoading } = useEthBuyAcToken(account, onSettled)
-
   const buyAndStakeFunc = async () => {
-    if (isConnected) {
-      notifyLoading()
-      if (baseTokenAddress === ZERO_ADDRESS) {
-        await onEthBuyAcToken(amount)
+    if (signer) {
+      const notifyId = notify.loading()
+      // 执行购买和质押
+      const { status, msg } = await buyAllToken(baseTokenAddress, Number(amount), signer)
+      if (status) {
+        // 重新获取余额信息
+        await dispatch(getTokensBalanceAsync(signer))
+        // 重新拉取质押信息
+        await dispatch(getUserStakesAsync(signer))
+        setAmount(0)
+        notify.update(notifyId, 'success')
       } else {
-        await onBuyAcToken(baseTokenAddress, amount)
+        notify.update(notifyId, 'error', msg)
       }
     }
   }
 
-  //
-  const isDisabled = useMemo(
-    () => !amount || !isNumber(Number(amount) || Number(amount) === 0) || isLoading || ethIsLoading,
-    [amount, ethIsLoading, isLoading]
-  )
-  //
+  const isDisabled = useMemo(() => !amount || !isNumber(Number(amount) || Number(amount) === 0), [amount])
+
   const maxNumber = useMemo(() => {
-    if (baseTokenAddress === usdcAddress) return Number(balances.USDC)
-    if (baseTokenAddress === ethAddress) return Number(balances.ETH)
+    if (baseTokenAddress === usdcAddress) return Number(balance.USDC)
+    if (baseTokenAddress === ethAddress) return Number(balance.ETH)
     return 0
-  }, [balances.USDC, balances.ETH, baseTokenAddress])
-  //
+  }, [balance.USDC, balance.ETH, baseTokenAddress])
+
   const onChangeBaseToken = (address: any) => {
     setBaseTokenAddress(String(address))
     setAmount('')
   }
-  //
+
   const currBaseTokenName = useMemo(() => {
     if (baseTokenAddress === usdcAddress) return 'USDC'
     if (baseTokenAddress === ethAddress) return 'ETH'
     return ''
-  }, [baseTokenAddress])
+  }, [balance.USDC, balance.ETH, baseTokenAddress])
 
   return (
     <>
-      <BlueLineSection title="Buy AC Token" className="web-buy-bench select">
+      <BlueLineSection title="Buy AC token" className="web-buy-bench select">
         <Input
           className="web-buy-bench-input"
           type="number"
@@ -114,30 +108,26 @@ const Bench: FC = () => {
         >
           {baseTokenAddress === usdcAddress && (
             <>
-              <p>USDC Balance: {balances.USDC}</p>
-              <p>acUSDC Balance: {balances.acUSDC}</p>
+              <p>USDC Balance: {balance.USDC}</p>
+              <p>acUSDC Balance: {balance.acUSDC}</p>
             </>
           )}
           {baseTokenAddress === ethAddress && (
             <>
-              <p>ETH Balance: {balances.ETH}</p>
-              <p>acETH Balance: {balances.acETH}</p>
+              <p>ETH Balance: {balance.ETH}</p>
+              <p>acETH Balance: {balance.acETH}</p>
             </>
           )}
 
-          <p>sALL Balance: {balances.sALLTOKEN}</p>
+          <p>sALL Balance: {balance.sALL}</p>
         </Input>
-        <Select
-          value={baseTokenAddress}
-          onChange={onChangeBaseToken}
-          objOptions={baseTokenOptions}
-        />
+        <Select value={baseTokenAddress} onChange={onChangeBaseToken} objOptions={baseTokenOptions} />
         <div className="web-buy-bench-arrow"></div>
         <div className="web-buy-bench-pre">
           <dl>
             <dt>You will receive</dt>
             <dd>
-              <AcUSDCUnit name={currBaseTokenName} value={Number(amount) || 0}>
+              <AcUSDCUnit name={`ac${currBaseTokenName}`} value={Number(amount) || 0}>
                 ac{currBaseTokenName}
               </AcUSDCUnit>
             </dd>
@@ -163,7 +153,7 @@ const Bench: FC = () => {
         show={infoStatus}
         onConfirm={buyAndStakeFunc}
         onClose={() => setInfoStatus(false)}
-        title="Confirm Buy AC Token"
+        title="Confirm Buy AC token"
         msg={`You will purchase ${amount} ac${currBaseTokenName}, meanwhile you will recieve ${preAllValue} sALL, total cost of ${amount} ${currBaseTokenName}`}
       />
     </>

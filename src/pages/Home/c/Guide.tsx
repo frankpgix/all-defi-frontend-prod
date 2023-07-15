@@ -8,12 +8,13 @@ const Guide: FC = () => {
       <main>
         <h2>Make an Investment.</h2>
         <p>
-          AC tokens are the native tokens that work as currency in the AllDefi asset management platform. They can be
-          obtained through making a contribution to AC DAO or directly purchased from the open market at market price.
+          AC tokens are the native tokens that work as currency in the AllDeFi asset management platform. They can be
+          obtained through making a contribution to AllDeFi Investment DAO or directly purchased from the open market at
+          market price.
         </p>
         <aside>
           <Button to="/buy" outline>
-            Buy AC Token
+            Buy AC token
           </Button>
           <Button to="/fund-market">Make an Investment</Button>
         </aside>

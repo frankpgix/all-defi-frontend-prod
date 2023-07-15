@@ -52,6 +52,9 @@ export const calcActionData = (item: RecordProps, funds?: FundsProps[]): UserFun
   } else {
     amount = Number(safeInterceptionValues(item.amount, token.precision, token.decimals))
   }
+  if (action.includes('Cancel')) {
+    amount = -amount
+  }
   return {
     name: (funds ? funds.find((fund) => fund.id === item.fundId)?.name : '') ?? '',
     amount,

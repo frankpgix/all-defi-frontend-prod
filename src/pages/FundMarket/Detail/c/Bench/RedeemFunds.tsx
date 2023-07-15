@@ -1,22 +1,19 @@
 import React, { FC, useState, useMemo } from 'react'
 import BN from 'bignumber.js'
 import { useParams } from 'react-router-dom'
-// import { useSigner } from 'wagmi'
 import { isNaN } from 'lodash'
 
-// import FundPool from '@/class/FundPool'
-import { FundDetailProps, FundUserDataProps, ShareCompositionProps } from '@/hooks/help'
-import { getTokenByAddress } from '@/config/tokens'
-// import { useFundRedeem } from '@/hooks/useFundPool'
-import { useNotify } from '@/hooks/useNotify'
-import { useStoreProfile } from '@/store/useProfile'
-import { useFundRedeem } from '@/hooks/useFundPool'
+import FundPool from '@/class/FundPool'
+import { FundDetailProps, FundUserDataProps, ShareCompositionProps } from '@/class/help'
+import { getDecimalsByAddress } from '@/config/tokens'
+import { useProfile } from '@/hooks/useProfile'
 
-import { Input, Slider } from '@@/form'
+import { Input, Slider } from '@@/common/Form'
 import Button from '@@/common/Button'
 import Tip from '@@/common/Tip'
+import Popper from '@@/common/Popper'
 
-// import { notify } from '@@/common/Toast'
+import { notify } from '@@/common/Toast'
 
 import InfoDialog from '@@/common/Dialog/Info'
 
@@ -28,26 +25,26 @@ interface Props {
 }
 
 const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
-  const { notifyLoading, notifySuccess, notifyError } = useNotify()
-  const account = useStoreProfile((state: any) => state.address)
+  const { redeem } = FundPool
   const { fundAddress } = useParams()
+  const { signer } = useProfile()
 
   const [value, setValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
 
-  const baseToken = useMemo(() => getTokenByAddress(data.baseToken), [data.baseToken])
+  const decimals = useMemo(() => getDecimalsByAddress(data.baseToken), [data.baseToken])
 
   const isInRedeem = useMemo(() => data.status === 1, [data.status])
   const maxValue = useMemo(() => {
-    // console.log(userData.shares, userData.redeemingShares, share.mining, baseToken.decimals)
+    // console.log(userData.shares, userData.redeemingShares, share.mining)
     return BN(userData.shares).minus(userData.redeemingShares).minus(share.mining).toNumber()
   }, [userData.shares, userData.redeemingShares, share.mining])
 
   const onSliderChange = (val: number) => {
     if (maxValue > 0) {
       const currValue = BN(maxValue).div(100).multipliedBy(val).toNumber()
-      setValue(currValue ? currValue : '')
+      setValue(currValue)
       setSliderValue(val)
     }
   }
@@ -58,40 +55,34 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
     if (val > maxValue) val = maxValue
     if (val < 0) val = 0
     if (maxValue > 0) {
-      const currSliderValue = BN(Number(val))
-        .div(maxValue)
-        .multipliedBy(100)
-        .integerValue()
-        .toNumber()
+      const currSliderValue = BN(Number(val)).div(maxValue).multipliedBy(100).integerValue().toNumber()
       setValue(Number(val))
       setSliderValue(currSliderValue)
     }
   }
 
-  const onSettled = async (data: any, error: any) => {
-    if (error) {
-      notifyError(error)
-    } else {
-      notifySuccess()
-      await getData()
-      setValue('')
-      setSliderValue(0)
-    }
-  }
-
-  const { onRedeem } = useFundRedeem(fundAddress ?? '', account, onSettled)
-
-  const redeemeFund = async () => {
-    if (account && fundAddress) {
-      notifyLoading()
-      await onRedeem(Number(value), baseToken)
+  const onRedeem = async () => {
+    if (signer && fundAddress) {
+      const notifyId = notify.loading()
+      // 执行购买和质押
+      const { status, msg } = await redeem(Number(value), fundAddress, decimals, signer)
+      if (status) {
+        await getData()
+        notify.update(notifyId, 'success')
+        setValue(0)
+        setSliderValue(0)
+      } else {
+        notify.update(notifyId, 'error', msg)
+      }
     }
   }
 
   return (
     <>
       <section className="web-fund-detail-bench">
-        <h4>Redeem Funds</h4>
+        <h4>
+          Redeem Funds <Popper content="Fund is open for redemption only during Open Period" />
+        </h4>
         <div className="web-fund-detail-bench-input">
           <Input
             value={value}
@@ -111,18 +102,11 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
           </Input>
         </div>
         <div className="web-fund-detail-bench-slider">
-          <Slider
-            value={sliderValue}
-            onChange={(val) => onSliderChange(val)}
-            disabled={!isInRedeem}
-          />
+          <Slider value={sliderValue} onChange={(val) => onSliderChange(val)} />
         </div>
         <div className="web-fund-detail-bench-action">
           <footer>
-            <Button
-              onClick={() => setInfoStatus(true)}
-              disabled={Number(value) <= 0 || !isInRedeem}
-            >
+            <Button onClick={() => setInfoStatus(true)} disabled={value <= 0 || !isInRedeem}>
               confirm
             </Button>
             {!isInRedeem && <Tip>Non-Redemption Period</Tip>}
@@ -131,7 +115,7 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
       </section>
       <InfoDialog
         show={infoStatus}
-        onConfirm={redeemeFund}
+        onConfirm={onRedeem}
         onClose={() => setInfoStatus(false)}
         title="Redeem Funds"
         msg={`Will redeem ${value} Fund Share, you can claim your AC tokens anytime after final settlement of current epoch`}

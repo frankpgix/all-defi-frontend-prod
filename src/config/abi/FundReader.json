@@ -746,6 +746,11 @@
         "internalType": "uint256",
         "name": "indexTo",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "activeOnly",
+        "type": "bool"
       }
     ],
     "name": "userDetailList",
@@ -825,6 +830,11 @@
           {
             "internalType": "address",
             "name": "factory",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "weth",
             "type": "address"
           }
         ],

@@ -4,11 +4,14 @@ import { NavLink, useNavigate } from 'react-router-dom'
 // import Button from '@/components/common/Button'
 import ConnectButton from '@/components/common/Wallet/ConnectButton'
 // import SelectNetworkButton from '@/components/common/Wallet/SelectNetworkButton'
+import { useToPageTop } from '@/hooks/useToPageTop'
 
 import ErrorNetworkAlert from './ErrorNetworkAlert'
 
 const Header: FC = () => {
   const navigate = useNavigate()
+  useToPageTop()
+
   // const { pathname } = useLocation()
   //
   // const LaunchAppBtn = useMemo(() => {

@@ -15,6 +15,7 @@ interface Props {
   yLabel: string
   timeFormatStr?: string
   valueFormatStr?: string
+  valueDecimal?: number
   valueSuffix?: string
   className?: string
   loading?: boolean
@@ -27,6 +28,7 @@ const AreaC: FC<Props> = ({
   yKey,
   yLabel,
   timeFormatStr = 'MMM DD, YYYY HH:mm:ss',
+  valueDecimal = 2,
   valueFormatStr = 'a0,0.00',
   valueSuffix,
   className,
@@ -40,7 +42,7 @@ const AreaC: FC<Props> = ({
   // const formatValue = (value: number) => numeral(value).format(valueFormatStr).toLocaleUpperCase()
   // const formatTip = (value: number): [number, string] => [value, yLabel]
   const formatTip = (value: number) => [
-    `${formatNumber(value, 18, valueFormatStr)} ${valueSuffix ? valueSuffix : ''}`,
+    `${formatNumber(value, valueDecimal, valueFormatStr)} ${valueSuffix ? valueSuffix : ''}`,
     yLabel
   ]
   // [value, yLabel]
@@ -53,8 +55,8 @@ const AreaC: FC<Props> = ({
     boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)',
     fontSize: '14px'
   }
-  // const isZeroData = useMemo(() => !Boolean(data.find((item: any) => item[yKey] !== 0)), [data, yKey])
-  const isLoading = useMemo(() => loading || data.length < 2, [loading, data.length])
+  const isZeroData = useMemo(() => !Boolean(data.find((item: any) => item[yKey] !== 0)), [data, yKey])
+  const isLoading = useMemo(() => loading || data.length < 2 || isZeroData, [loading, data.length, isZeroData])
   // if (loading || data.length < 2) return <ChartLoading show />
   const initData = JSON.parse(
     `[{"${xKey}": 0, "${yKey}": 0.5}, {"${xKey}": 0, "${yKey}": 0.9}, {"${xKey}": 0, "${yKey}": 0.1}, {"${xKey}": 0, "${yKey}": 0.5}]`
@@ -79,7 +81,7 @@ const AreaC: FC<Props> = ({
           </linearGradient>
         </defs>
         <XAxis dataKey={xKey} hide />
-        <YAxis dataKey={yKey} hide domain={['auto', 'auto']} />
+        <YAxis dataKey={yKey} hide domain={[(dataMin) => dataMin * 0.9, (dataMax) => dataMax * 1.1]} />
         {!isLoading && (
           <Tooltip
             formatter={formatTip}

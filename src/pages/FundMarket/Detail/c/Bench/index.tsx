@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 
-import { FundDetailProps, FundUserDataProps, ShareCompositionProps } from '@/hooks/help'
+import { FundDetailProps, FundUserDataProps, ShareCompositionProps } from '@/class/help'
 
 import SubscribeFunds from './SubscribeFunds'
 import RedeemFunds from './RedeemFunds'
@@ -42,5 +42,3 @@ export default Bench
 // <TabPanel>
 //   <DrawShares getData={getData} share={share} />
 // </TabPanel>
-
-// <RedeemFunds userData={userData} data={data} share={share} getData={getData} />

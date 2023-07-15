@@ -34,7 +34,7 @@ const OnceYouBuy: FC = () => {
           <div className="web-buy-once-process-item-ball animate__animated animate__backInDown animate__delay-1s" />
           <em>STEP 2</em>
           <h3>fund investment</h3>
-          <p>Invest acUSDC into any fund to receive Share Token</p>
+          <p>Invest AC tokens into any fund to receive Share Token</p>
           <div className="web-buy-once-process-item-detail">
             <div className="web-buy-once-process-item-detail-icons">
               <i>

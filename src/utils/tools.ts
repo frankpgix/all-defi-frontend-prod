@@ -74,11 +74,7 @@ export const calcDateDuration = (date: string) => {
 }
 
 // split number
-export const safeInterceptionValues = (
-  value: BigNumberish,
-  decimal = 8,
-  precision = 18
-): string => {
+export const safeInterceptionValues = (value: BigNumberish, decimal = 8, precision = 18): string => {
   const isDecimal = toType(value) === 'object' && String(value).includes('.')
   const regexp = /(?:\.0*|(\.\d+?)0+)$/
   const _value = isDecimal ? (value as string) : formatUnits(value, precision)
@@ -106,17 +102,6 @@ export const calcDecimalsFloor = (value: string | number, decimal = 2): string =
 
 export const formatNumber = (value: string | number, decimals = 8, format: string): string => {
   return numeral(calcDecimalsFloor(value, decimals)).format(format).toUpperCase()
-}
-
-export const bigInt2Number = (value: any, decimals = 18, precision = 4) => {
-  // 将 BigInt 转换成 BigNumber 对象
-  const big = new BN(String(value ?? 0))
-  // 将 BigNumber 对象转换成带有小数点的字符串，并向下取整到指定的精度
-  const decimal = big.shiftedBy(-decimals).decimalPlaces(precision, BN.ROUND_DOWN).toString()
-  // 将字符串转换成数字
-  const num = Number(decimal)
-  // 返回数字
-  return num
 }
 
 // 1 --> 1000000000000000000
@@ -151,6 +136,14 @@ export const createArrayByNumber = (length: number) => {
   return arr
 }
 
+export const arrayObjectUniq = (Arr: any[], id: string): any[] => {
+  const obj: Record<string, any> = {}
+  return Arr.reduce((setArr, item) => {
+    obj[item[id]] ? '' : (obj[item[id]] = true && setArr.push(item))
+    return setArr
+  }, [])
+}
+
 // 定义一个泛型函数，接受一个对象作为参数，返回一个 Record 类型的对象
 export function resetObjectValues<T extends object>(obj: T): Record<keyof T, number> {
   // 定义一个空对象，用来存储结果
@@ -162,12 +155,4 @@ export function resetObjectValues<T extends object>(obj: T): Record<keyof T, num
   }
   // 返回对象
   return result
-}
-
-export const arrayObjectUniq = (Arr: any[], id: string): any[] => {
-  const obj: Record<string, any> = {}
-  return Arr.reduce((setArr, item) => {
-    obj[item[id]] ? '' : (obj[item[id]] = true && setArr.push(item))
-    return setArr
-  }, [])
 }

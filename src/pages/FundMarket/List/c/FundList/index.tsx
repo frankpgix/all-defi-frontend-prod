@@ -2,9 +2,12 @@ import React, { FC, useEffect } from 'react'
 import Table from 'rc-table'
 import { useNavigate } from 'react-router-dom'
 
-import { useStoreFundList } from '@/store/useFunds'
+import { FundDetailProps } from '@/class/help'
 import { useFundListData } from '@/graphql/useFundData'
-import { FundDetailProps } from '@/hooks/help'
+// import { formatNumber } from '@/utils/tools'
+
+import { useAppDispatch } from '@/store'
+import { updateFundsList } from '@/store/funds'
 
 import RoeShow from '@@/common/RoeShow'
 import { FundName } from '@@/common/FundIcon'
@@ -13,27 +16,21 @@ import TokenValue from '@@/common/TokenValue'
 
 const FundList: FC = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const { loading, data } = useFundListData()
-  const update = useStoreFundList((state: any) => state.update)
-  // // console.log(data, 2233)
+  // console.log(data, 2233)
   useEffect(() => {
     if (data.length) {
-      update(data)
+      dispatch(updateFundsList(data))
+      console.log(data)
     }
-  }, [data, update])
-
+  }, [data]) // eslint-disable-line
   const webColumns = [
     {
       title: 'Name',
       dataIndex: 'name',
       render: (name: string, row: any) => (
-        <FundName
-          name={name}
-          managerName={row.managerName}
-          address={row.address}
-          round
-          size="mini"
-        />
+        <FundName name={name} managerName={row.managerName} address={row.address} round size="mini" />
       )
     },
     {

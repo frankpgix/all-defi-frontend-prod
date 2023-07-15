@@ -1,5 +1,5 @@
 import React, { FC, useMemo } from 'react'
-// import { TokenProps } from '@/class/Token'
+import { TokenProps } from '@/class/Token'
 // import classNames from 'classnames'
 import { TokenIcon } from '@@/common/TokenUnit'
 import { formatNumber } from '@/utils/tools'
@@ -8,17 +8,14 @@ interface Props {
   size?: string
   format?: string
   value: number
-  token?: any
+  token?: TokenProps
   decimal?: number
 }
 
 const TokenValue: FC<Props> = ({ value, size = 'default', token, format, decimal }) => {
   const { precision, name } = token || {}
   const precisionNumber = useMemo(() => decimal ?? precision ?? 2, [decimal, precision])
-  const formatString = useMemo(
-    () => formatTokenValueString(format, precisionNumber),
-    [format, precisionNumber]
-  )
+  const formatString = useMemo(() => formatTokenValueString(format, precisionNumber), [format, precisionNumber])
   const valueShow = useMemo(() => {
     if (formatString) {
       return formatNumber(value, precisionNumber, formatString)

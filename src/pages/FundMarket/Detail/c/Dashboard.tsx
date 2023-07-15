@@ -4,10 +4,9 @@ import BN from 'bignumber.js'
 // import { floor } from 'lodash'
 import { getTokenByAddress } from '@/config/tokens'
 
-import { FundBaseInfoProps, FundDetailProps } from '@/hooks/help'
+import { FundBaseProps, FundDetailProps } from '@/class/help'
 
-import { useFundDetailChartData } from '@/graphql/useFundData'
-import { createArrayByNumber } from '@/utils/tools'
+import { useFundDetailChartData } from '@/graphql/useData'
 
 import Image from '@@/common/Image'
 import RoeShow from '@@/common/RoeShow'
@@ -19,44 +18,22 @@ import FundIcon from '@@/common/FundIcon'
 import TokenValue from '@@/common/TokenValue'
 
 interface Props {
-  base: FundBaseInfoProps
+  base: FundBaseProps
   data: FundDetailProps
   derivatives?: string[]
   loading: boolean
   fundAddress: string
 }
 
+type optionProps = 'current epoch' | '3 Epochs' | 'all'
 const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddress }) => {
-  const [timeType, setTimeType] = useState<string>('all')
-  const timeOptions = ['current epoch', '3 Epochs', 'all']
-  const currEpochIndex = useMemo(() => {
-    if (timeType === 'current epoch') return [data.epochIndex]
-    if (timeType === '3 Epochs')
-      return Array.from(
-        new Set([
-          Math.max(data.epochIndex - 2, 0),
-          Math.max(data.epochIndex - 1, 0),
-          data.epochIndex
-        ])
-      )
-    return createArrayByNumber(data.epochIndex)
-  }, [data.epochIndex, timeType])
+  const [timeType, setTimeType] = useState<optionProps>('all')
+  const timeOptions: optionProps[] = ['current epoch', '3 Epochs', 'all']
   const baseToken = useMemo(() => getTokenByAddress(base.baseToken), [base.baseToken])
+  // console.log('realtimeAUMLimit', data.realtimeAUMLimit, 'aum', data.aum, 'subscribingACToken', data.subscribingACToken)
+  // console.log(data)
+  const { loading: chartLoading, data: chartData } = useFundDetailChartData(fundAddress ?? '', timeType, data)
 
-  // console.log(
-  //   'realtimeAUMLimit',
-  //   data.realtimeAUMLimit,
-  //   'aum',
-  //   data.aum,
-  //   'subscribingACToken',
-  //   data.subscribingACToken
-  // )
-
-  const { loading: chartLoading, data: chartData } = useFundDetailChartData(
-    fundAddress ?? '',
-    currEpochIndex
-  )
-  // console.log(chartData)
   return (
     <>
       <header className="web-fund-detail-header">Fund Overview</header>
@@ -92,17 +69,13 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
                 Capacity Available
                 <Popper
                   size="mini"
-                  white
                   content="Fund's max AUM minus current AUM, which shows the available capacity of this fund from this data."
                 />
               </dt>
               <dd>
                 <TokenValue
                   value={Math.max(
-                    BN(data.realtimeAUMLimit)
-                      .minus(data.aum)
-                      .minus(data.subscribingACToken)
-                      .toNumber(),
+                    BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(),
                     0
                   )}
                   token={baseToken}
@@ -117,7 +90,6 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
                 Current Epoch return %
                 <Popper
                   size="mini"
-                  white
                   content="The fund's profit and loss on real-time basis, which will be reset to zero after the end of each epoch"
                 />
               </dt>
@@ -128,18 +100,17 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
             <dl>
               <dt>
                 Historical return
-                <Popper
-                  size="mini"
-                  white
-                  content="Cumulated profit and loss since the inception of this fund"
-                />
+                <Popper size="mini" content="Cumulated profit and loss since the inception of this fund" />
               </dt>
               <dd>
                 <TokenValue value={data.historyReturn} token={baseToken} size="mini" />
               </dd>
             </dl>
             <dl>
-              <dt>Incentive Rate</dt>
+              <dt>
+                Incentive Rate
+                <Popper size="mini" content="Highest incentive fee ratio managers can get" />
+              </dt>
               <dd>20%</dd>
             </dl>
           </footer>
@@ -148,11 +119,8 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
           <header>
             <h3>Share Price</h3>
             <aside>
-              <TimeSelect
-                value={timeType}
-                options={timeOptions}
-                onChange={(val) => setTimeType(val)}
-              />
+              {/* @ts-ignore */}
+              <TimeSelect value={timeType} options={timeOptions} onChange={(val) => setTimeType(val)} />
             </aside>
           </header>
           <section>
