@@ -14,6 +14,11 @@ export const calcFundDatasGql = (fundAddress: string, type: string, createTime: 
   }
   if (type === 'DAY') {
     startTime = String(typeStartTime(type))
+    if (diffType === 'hour') {
+      tableName = 'fund10MinutelyDatas'
+    } else {
+      tableName = 'fundHourlyDatas'
+    }
   } else if (type === 'WEEK' || type === 'MONTH' || type === 'YEAR') {
     // tableName = 'fundDailyDatas'
     startTime = String(typeStartTime(type))
@@ -135,7 +140,11 @@ export const calcManageFundsData = (fundAddress: string) => gql`
   }
 `
 
-export const calcManageFundDetailData = (fundAddress: string, type: string, startTime: number | string) => {
+export const calcManageFundDetailData = (
+  fundAddress: string,
+  type: string,
+  startTime: number | string
+) => {
   const diffType = timeDiffType(Number(startTime))
   let tableName = 'fundHourlyDatas'
   startTime = String(startTime)
@@ -146,6 +155,11 @@ export const calcManageFundDetailData = (fundAddress: string, type: string, star
   }
   if (type === 'DAY') {
     startTime = String(typeStartTime(type))
+    if (diffType === 'hour') {
+      tableName = 'fund10MinutelyDatas'
+    } else {
+      tableName = 'fundHourlyDatas'
+    }
   } else if (type === 'WEEK' || type === 'MONTH' || type === 'YEAR') {
     // tableName = 'fundDailyDatas'
     startTime = String(typeStartTime(type))
