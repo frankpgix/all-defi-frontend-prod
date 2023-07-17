@@ -101,7 +101,10 @@ class FundPool {
     }
   }
   // 取消赎回
-  cancelRedeem = async (fundAddress: string | undefined, signer: Signer | undefined | null): Promise<OutComeProps> => {
+  cancelRedeem = async (
+    fundAddress: string | undefined,
+    signer: Signer | undefined | null
+  ): Promise<OutComeProps> => {
     if (!fundAddress || !signer) return outcome(4010)
     const contract = getFundPoolContract(fundAddress, signer)
     try {
@@ -118,7 +121,10 @@ class FundPool {
   }
 
   // 执行赎回
-  claim = async (fundAddress: string | undefined, signer: Signer | undefined | null): Promise<OutComeProps> => {
+  claim = async (
+    fundAddress: string | undefined,
+    signer: Signer | undefined | null
+  ): Promise<OutComeProps> => {
     if (!fundAddress || !signer) return outcome(4010)
     const contract = getFundPoolContract(fundAddress, signer)
     try {
@@ -158,24 +164,31 @@ class FundPool {
   }
 
   // 基金经理结算基金
-  settleAccount = async (fundAddress: string, signer: Signer | undefined | null): Promise<OutComeProps> => {
+  settleAccount = async (
+    fundAddress: string,
+    signer: Signer | undefined | null
+  ): Promise<OutComeProps> => {
     if (!fundAddress || !signer) return outcome(4010)
-    try {
-      const contract = getFundPoolContract(fundAddress, signer)
-      const gasLimit = await estimateGas(contract, 'settleAccount', [])
-      const response = await contract.settleAccount({ gasLimit })
-      const receipt = await response.wait()
-      // 返回结果
-      if (receipt.status) return outcome(0)
-      return outcome(500)
-    } catch (error: any) {
-      console.info(error)
-      return outcome(500, error.reason)
-    }
+    // try {
+    const contract = getFundPoolContract(fundAddress, signer)
+    const gasLimit = await estimateGas(contract, 'settleAccount', [])
+    console.log(gasLimit, contract)
+    const response = await contract.settleAccount({ gasLimit })
+    const receipt = await response.wait()
+    // 返回结果
+    if (receipt.status) return outcome(0)
+    return outcome(500)
+    // } catch (error: any) {
+    //   console.info(error)
+    //   return outcome(500, error.reason)
+    // }
   }
 
   // 领取赔偿的ALL
-  claimCompensation = async (fundAddress: string, signer: Signer | undefined | null): Promise<OutComeProps> => {
+  claimCompensation = async (
+    fundAddress: string,
+    signer: Signer | undefined | null
+  ): Promise<OutComeProps> => {
     if (!fundAddress || !signer) return outcome(4010)
     try {
       const contract = getFundPoolContract(fundAddress, signer)

@@ -32,7 +32,11 @@ export const getJsonRpcProvider = (): StaticJsonRpcProvider => {
   // return new StaticJsonRpcProvider(rpc)
 }
 
-export const getContract = (abi: ContractInterface, address: string, signer?: Signer | Provider | null): Contract => {
+export const getContract = (
+  abi: ContractInterface,
+  address: string,
+  signer?: Signer | Provider | null
+): Contract => {
   const signerOrProvider = signer ?? simpleRpcProvider
   return new ethers.Contract(address, abi, signerOrProvider)
 }

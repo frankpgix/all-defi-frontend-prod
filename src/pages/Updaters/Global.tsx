@@ -1,13 +1,13 @@
 import { useEffect, useCallback } from 'react'
 import { useAccount } from 'wagmi'
 import type { Signer } from '@ethersproject/abstract-signer'
-// import { providers } from 'ethers'
+import { providers } from 'ethers'
 // import { useIsManager, useDerivativeList } from '@/hooks/useAllProtocol'
 // import { useBalances } from '@/hooks/useTokens'
 // import { useStoreProfile, useStoreBalances } from '@/stores/useStoreProfile'
 // import { useStoreDerivativeList } from '@/stores/useStoreFunds'
 import AllProtocol from '@/class/AllProtocol'
-import { getJsonRpcProvider } from '@/utils/contractHelpers'
+// import { getJsonRpcProvider } from '@/utils/contractHelpers'
 import { useProfile } from '@/hooks/useProfile'
 export default function Global(): null {
   const { checkAuthorizedManager } = AllProtocol
@@ -18,7 +18,8 @@ export default function Global(): null {
     if (address) {
       updateProfile(address, false, null, true)
       const isManager = await checkAuthorizedManager(address)
-      const provider = getJsonRpcProvider()
+      // const provider = getJsonRpcProvider()
+      const provider = new providers.Web3Provider(window.ethereum)
       const signer: Signer = provider.getSigner(address)
       updateProfile(address, isManager, signer, false)
       // console.log(isManager)
