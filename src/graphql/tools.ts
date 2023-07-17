@@ -3,8 +3,8 @@ import { sum } from 'lodash'
 
 export const timeDiffType = (startTime: number) => {
   const diff = dayjs().unix() - startTime
-  if (diff <= 60 * 60 * 4) return 'hour'
-  if (diff <= 60 * 60 * 48) return 'day'
+  if (diff <= 60 * 60 * 24) return 'hour'
+  if (diff <= 60 * 60 * 24 * 7) return 'day'
   return 'longTime'
 }
 
