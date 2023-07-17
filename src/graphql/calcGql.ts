@@ -3,26 +3,34 @@ import { gql } from '@apollo/client'
 
 import { timeDiffType, typeStartTime } from './tools'
 
-export const calcFundDatasGql = (fundAddress: string, type: string, createTime: number) => {
-  const diffType = timeDiffType(createTime)
-  let tableName = 'fundHourlyDatas'
-  let startTime = String(createTime)
+const calcTableAndStartTime = (type: string, startTime: number) => {
+  const diffType = timeDiffType(startTime)
+  const o = {
+    tableName: 'fundHourlyDatas',
+    startTime: String(startTime)
+  }
+
   if (diffType === 'hour') {
-    tableName = 'fund10MinutelyDatas'
+    o.tableName = 'fund10MinutelyDatas'
   } else if (diffType === 'longTime') {
-    tableName = 'fundDailyDatas'
+    o.tableName = 'fundDailyDatas'
   }
   if (type === 'DAY') {
-    startTime = String(typeStartTime(type))
+    o.startTime = String(typeStartTime(type))
     if (diffType === 'hour') {
-      tableName = 'fund10MinutelyDatas'
+      o.tableName = 'fund10MinutelyDatas'
     } else {
-      tableName = 'fundHourlyDatas'
+      o.tableName = 'fundHourlyDatas'
     }
   } else if (type === 'WEEK' || type === 'MONTH' || type === 'YEAR') {
     // tableName = 'fundDailyDatas'
-    startTime = String(typeStartTime(type))
+    o.startTime = String(typeStartTime(type))
   }
+  return o
+}
+
+export const calcFundDatasGql = (fundAddress: string, type: string, createTime: number) => {
+  const { tableName, startTime } = calcTableAndStartTime(type, createTime)
 
   return gql`query {
     ${tableName}(
@@ -46,17 +54,7 @@ export const calcFundDatasGql = (fundAddress: string, type: string, createTime: 
 }
 
 export const calcMiningData = (fundAddress: string, type: string, createTime: number) => {
-  let startTime = createTime
-  let tableName = 'fundDailyDatas'
-  // console.log(type)
-  if (type !== 'ALL') {
-    startTime = typeStartTime(type)
-  }
-
-  if (type === 'DAY') {
-    tableName = 'fundHourlyDatas'
-  }
-
+  const { tableName, startTime } = calcTableAndStartTime(type, createTime)
   return gql`
     query {
       ${tableName}(
@@ -143,27 +141,9 @@ export const calcManageFundsData = (fundAddress: string) => gql`
 export const calcManageFundDetailData = (
   fundAddress: string,
   type: string,
-  startTime: number | string
+  createTime: number | string
 ) => {
-  const diffType = timeDiffType(Number(startTime))
-  let tableName = 'fundHourlyDatas'
-  startTime = String(startTime)
-  if (diffType === 'hour') {
-    tableName = 'fund10MinutelyDatas'
-  } else if (diffType === 'longTime') {
-    tableName = 'fundDailyDatas'
-  }
-  if (type === 'DAY') {
-    startTime = String(typeStartTime(type))
-    if (diffType === 'hour') {
-      tableName = 'fund10MinutelyDatas'
-    } else {
-      tableName = 'fundHourlyDatas'
-    }
-  } else if (type === 'WEEK' || type === 'MONTH' || type === 'YEAR') {
-    // tableName = 'fundDailyDatas'
-    startTime = String(typeStartTime(type))
-  }
+  const { tableName, startTime } = calcTableAndStartTime(type, Number(createTime))
 
   return gql`
     query {
