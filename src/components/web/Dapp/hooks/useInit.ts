@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { createSignClient } from '../utils/WalletConnectUtil'
 import dappStore from '@/stores/dappStore'
+import { notify } from '@@/common/Toast'
 
 export const useInit = () => {
   const [initialized, setInitialized] = useState(false)
@@ -11,7 +12,8 @@ export const useInit = () => {
       setInitialized(true)
       dappStore.setLoading(false)
     } catch (err: unknown) {
-      alert(err)
+      notify.error('Something Error, try late')
+      // alert(err)
     }
   }, [])
 

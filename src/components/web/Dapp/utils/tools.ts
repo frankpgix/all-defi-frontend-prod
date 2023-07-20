@@ -32,7 +32,13 @@ export const goConnect = async (proposal: any, fundAddress?: string) => {
       supportedNamespaces: {
         eip155: {
           chains: supportChains,
-          methods: ['eth_sendTransaction', 'personal_sign', 'eth_signTypedData', 'eth_signTypedData_v4', 'eth_sign'],
+          methods: [
+            'eth_sendTransaction',
+            'personal_sign',
+            'eth_signTypedData',
+            'eth_signTypedData_v4',
+            'eth_sign'
+          ],
           events: ['accountsChanged', 'chainChanged'],
           accounts: [`eip155:1:${fundAddress}`, `eip155:42161:${fundAddress}`]
         }
@@ -70,9 +76,14 @@ export const onTransaction = async (
       transaction.data,
       transaction?.value || 0
     ])
-    const response = await contract.executeTransaction(transaction.to, transaction.data, transaction?.value || 0, {
-      gasLimit
-    })
+    const response = await contract.executeTransaction(
+      transaction.to,
+      transaction.data,
+      transaction?.value || 0,
+      {
+        gasLimit
+      }
+    )
 
     const { transactionHash } = await response.wait()
 
@@ -105,7 +116,12 @@ export const onSign = async (
   console.log('domain', domain, message, JSON.stringify(message))
 
   const encodeData = [
-    [message.details.token, message.details.amount, message.details.expiration, message.details.nonce],
+    [
+      message.details.token,
+      message.details.amount,
+      message.details.expiration,
+      message.details.nonce
+    ],
     message.spender,
     message.sigDeadline
   ]

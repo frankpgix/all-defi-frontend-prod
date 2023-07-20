@@ -6,7 +6,11 @@ import { useCallback, useEffect } from 'react'
 
 import { goConnect, onTransaction, onSign } from '../utils/tools'
 
-export function useWalletConnectEventsManager(initialized: boolean, fundAddress?: string, signer?: any) {
+export function useWalletConnectEventsManager(
+  initialized: boolean,
+  fundAddress?: string,
+  signer?: any
+) {
   /******************************************************************************
    * 1. Open session proposal modal for confirmation / rejection
    *****************************************************************************/
