@@ -5,7 +5,8 @@ export async function createSignClient() {
   signClient = await SignClient.init({
     logger: 'debug',
     projectId: '90c1c8a3dd769315f8c0e10b2ae4bd16',
-    relayUrl: 'wss://relay.walletconnect.com',
+    // relayUrl: 'wss://relay.walletconnect.com',
+    relayUrl: 'wss://ap-southeast-1.relay.walletconnect.com',
     metadata: {
       name: 'AllDeFi Fund',
       description: 'AllDeFi Fund for WalletConnect',
