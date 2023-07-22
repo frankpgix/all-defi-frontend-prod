@@ -71,11 +71,22 @@ const Dapp: FC<Props> = ({ base, data }) => {
   const onDisconnect = async () => {
     if (signClient) {
       dappStore.setLoading(true)
-      await signClient.disconnect({ topic, reason: getSdkError('USER_DISCONNECTED') })
       dappStore.setAppName('')
       dappStore.setIsConnect(false)
-      dappStore.setLoading(false)
       setUri('')
+      try {
+        await signClient.disconnect({ topic, reason: getSdkError('USER_DISCONNECTED') })
+      } catch (error) {
+        console.log(error)
+      } finally {
+        localStorage.removeItem('wc@2:core:0.3//subscription')
+        localStorage.removeItem('wc@2:client:0.3//proposal')
+        localStorage.removeItem('wc@2:core:0.3//pairing')
+        localStorage.removeItem('wc@2:core:0.3//expirer')
+        localStorage.removeItem('wc@2:core:0.3//history')
+        localStorage.removeItem('wc@2:client:0.3//session')
+        dappStore.setLoading(false)
+      }
     }
   }
 
