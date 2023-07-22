@@ -85,6 +85,8 @@ const Dapp: FC<Props> = ({ base, data }) => {
         localStorage.removeItem('wc@2:core:0.3//expirer')
         localStorage.removeItem('wc@2:core:0.3//history')
         localStorage.removeItem('wc@2:client:0.3//session')
+        localStorage.removeItem('wc@2:core:0.3//keychain')
+        localStorage.removeItem('wc@2:core:0.3//messages')
         dappStore.setLoading(false)
       }
     }
