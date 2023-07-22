@@ -10,6 +10,8 @@ import ALink from '@@/common/ALink'
 import { Input } from '@@/common/Form'
 import Button from '@@/common/Button'
 import Loading from '@@/common/Loading'
+import { notify } from '@@/common/Toast'
+
 // import { notify } from '@@/common/Toast'
 // import { sleep } from '@/utils/tools'
 import { signClient } from './utils/WalletConnectUtil'
@@ -51,8 +53,15 @@ const Dapp: FC<Props> = ({ base, data }) => {
   )
 
   const onConnect = async () => {
-    dappStore.setLoading(true)
-    await signClient.pair({ uri })
+    try {
+      dappStore.setLoading(true)
+      await signClient.pair({ uri })
+    } catch (err: unknown) {
+      notify.error('Something Error, try late')
+    } finally {
+      setUri('')
+      dappStore.setLoading(true)
+    }
   }
 
   const isInit = useInit()
@@ -87,13 +96,24 @@ const Dapp: FC<Props> = ({ base, data }) => {
         <section className="web-manage-dapp-wc">
           {isConnect ? (
             <main>
-              <Input value={''} placeholder={`Already linked with ${appName}`} disabled onChange={setUri} />
+              <Input
+                value={''}
+                placeholder={`Already linked with ${appName}`}
+                disabled
+                onChange={setUri}
+              />
               <Button onClick={onDisconnect}>disconnect</Button>
             </main>
           ) : (
             <main>
-              <Input value={uri} placeholder="Please enter the wallet connect info of the Dapp" onChange={setUri} />
-              <Button onClick={onConnect}>Connect</Button>
+              <Input
+                value={uri}
+                placeholder="Please enter the wallet connect info of the Dapp"
+                onChange={setUri}
+              />
+              <Button onClick={onConnect} disabled={uri === ''}>
+                Connect
+              </Button>
             </main>
           )}
           <Help value={show} onChange={setShow} fundAddress={fundAddress} />
@@ -138,7 +158,10 @@ const HelpDetail: FC<{ show: boolean; onClose: (val: boolean) => void }> = ({ sh
         <aside></aside>
         <dl>
           <dt>Step 1</dt>
-          <dd>Go to the Dapp website that you have authorised, and choose to coinnect with WalletConnect</dd>
+          <dd>
+            Go to the Dapp website that you have authorised, and choose to coinnect with
+            WalletConnect
+          </dd>
         </dl>
       </article>
       <article>
@@ -160,8 +183,8 @@ const HelpDetail: FC<{ show: boolean; onClose: (val: boolean) => void }> = ({ sh
         <dl>
           <dt>Step 4</dt>
           <dd>
-            Only one Dapp can be connected at same time, if you want to connect to another Dapp, please disconnect
-            WalletConnect first.
+            Only one Dapp can be connected at same time, if you want to connect to another Dapp,
+            please disconnect WalletConnect first.
           </dd>
         </dl>
       </article>
