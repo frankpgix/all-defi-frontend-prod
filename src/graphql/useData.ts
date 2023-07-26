@@ -1,20 +1,22 @@
 import { useQuery } from '@apollo/client'
 import { safeInterceptionValues, createArrayByNumber } from '@/utils/tools'
 import { getTokenByAddress } from '@/config/tokens'
-import { uniq, last, sum } from 'lodash'
+import { uniq, last } from 'lodash'
 import BN from 'bignumber.js'
+import { sum } from '@/utils/tools'
 
 import {
   calcFundDatasGql,
   calcMiningData,
   calcFundDetailChartGQL,
   calcManageFundsData,
-  calcManageFundDetailData
+  calcManageFundDetailData,
+  calcMiningTotalDataGQL
 } from './calcGql'
 import { FundDataProps } from './types'
 import { removeZeroKeys } from './tools'
 import { calcFundListGQL } from './gqls'
-import { FundBaseProps, FundDetailProps } from '@/class/help'
+import { FundDetailProps } from '@/class/help'
 
 export const useFundData = (
   fundAddress: string,
@@ -83,6 +85,24 @@ export const useMiningData = (type: string) => {
   }
   // return {}
 }
+
+// export const useMiningTotalData = () => {
+//   const { loading, error, data: sData } = useQuery(calcMiningTotalDataGQL())
+//   console.log(sData)
+//   const arr = (sData?.fund10MinutelyDatas ?? []).map((fund: any) => {
+//     const amount = safeInterceptionValues(fund.miningAmount, 18, 18)
+//     const price = safeInterceptionValues(fund.sharePrice, 18, 18)
+//     const baseTokenPriceInUSD = safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18)
+//     const value = BN(amount).times(price).times(baseTokenPriceInUSD).toNumber()
+//     console.log(amount, price, baseTokenPriceInUSD)
+
+//     return value
+//   })
+
+//   const total = sum(arr)
+//   console.log(arr, total)
+//   return { data: 0, loading }
+// }
 
 export const useFundDetailChartData = (
   fundAddress: string,

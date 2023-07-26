@@ -50,3 +50,11 @@ export const removeZeroKeys = (array: any[]) => {
   // 返回修改后的数组
   return array
 }
+
+export const get10MinutelyUnix = () => {
+  const now = dayjs().format('MMM DD, YYYY HH:mm:00')
+  const temp = now.slice(0, now.length - 4) + '0:00'
+  return dayjs(temp).unix()
+  // console.log(now)
+  // return dayjs(dayjs().format('MMM DD, YYYY HH:m0:00')).unix() - 3000
+}

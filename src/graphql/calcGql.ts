@@ -1,7 +1,7 @@
 // import dayjs from 'dayjs'
 import { gql } from '@apollo/client'
 
-import { timeDiffType, typeStartTime } from './tools'
+import { timeDiffType, typeStartTime, get10MinutelyUnix } from './tools'
 
 const calcTableAndStartTime = (type: string, startTime: number) => {
   const diffType = timeDiffType(startTime)
@@ -60,6 +60,28 @@ export const calcMiningData = (fundAddress: string, type: string, createTime: nu
         where: {
           fundId_in: ${fundAddress.toLowerCase()}
           periodStartUnix_gt: ${startTime}
+        }
+      ) {
+        fundId
+        name
+        periodStartUnix
+        sharePrice
+        baseTokenPriceInUSD
+        miningAmount
+      }
+    }
+  `
+}
+
+export const calcMiningTotalDataGQL = () => {
+  // console.log(get10MinutelyUnix())
+  return gql`
+    query {
+      fund10MinutelyDatas(
+        orderBy: periodStartUnix
+        orderDirection: asc
+        where: {
+          periodStartUnix_gte: ${get10MinutelyUnix()}
         }
       ) {
         fundId

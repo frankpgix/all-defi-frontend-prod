@@ -10,21 +10,24 @@ import Chart from './Chart'
 import Counts from './Counts'
 
 const Banner: FC = () => {
-  const [timeType, setTimeType] = useState<string>('ALL')
+  const [timeType, setTimeType] = useState<string>('DAY')
   const [total, setTotal] = useState(0)
   const { data: chartData = [], loading: chartLoading } = useMiningData(timeType)
+  // const { data } = useMiningTotalData()
   useEffect(() => {
-    const o = last(chartData)
-    if (o) {
-      const totalSum = sum(
-        Object.keys(o).map((key: string) => {
-          if (key !== 'time') return o[key]
-          return 0
-        })
-      )
-      setTotal(totalSum)
+    if (timeType === 'DAY') {
+      const o = last(chartData)
+      if (o) {
+        const totalSum = sum(
+          Object.keys(o).map((key: string) => {
+            if (key !== 'time') return o[key]
+            return 0
+          })
+        )
+        setTotal(totalSum)
+      }
     }
-  }, [chartData])
+  }, [timeType])
   return (
     <section className="web-mining-banner-layout">
       <div className="web-mining-banner-chart">
