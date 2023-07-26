@@ -7,10 +7,10 @@ const Help: FC = () => {
       <h3>how to mining</h3>
       <article>
         <p>
-          Subscribe to various funds offered by AllDeFi to get shares credentials, participate in mining and earn ALL
-          rewards.
+          Subscribe to various funds offered by AllDeFi to get shares credentials, participate in
+          mining and earn ALL rewards.
         </p>
-        <Button to="/fund-market" text>
+        <Button text to="https://pythagoras-group.gitbook.io/alldefi-whitepaper/">
           read more
         </Button>
       </article>

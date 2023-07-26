@@ -46,7 +46,10 @@ const Count: FC<Props> = ({ data }) => {
     [data]
   )
 
-  const totalAsset = useMemo(() => rawData.map(({ nav }) => nav).reduce((a, b) => a + b, 0), [rawData])
+  const totalAsset = useMemo(
+    () => rawData.map(({ nav }) => nav).reduce((a, b) => a + b, 0),
+    [rawData]
+  )
   const activeData = useMemo(() => data[activeIndex].data, [data, activeIndex])
   const baseToken = useMemo(() => getTokenByAddress(activeData.baseToken), [activeData])
 
@@ -65,7 +68,16 @@ const Count: FC<Props> = ({ data }) => {
     setActiveIndex(index)
   }
 
-  const COLORS = ['#BF99FF', '#4ADCB3', '#FFB663', '#A7BFFF', '#985EFF', '#13BC8B', '#FEA036', '#467AFF']
+  const COLORS = [
+    '#BF99FF',
+    '#4ADCB3',
+    '#FFB663',
+    '#A7BFFF',
+    '#985EFF',
+    '#13BC8B',
+    '#FEA036',
+    '#467AFF'
+  ]
 
   if (data.length === 0) {
     return (
@@ -139,7 +151,12 @@ const Count: FC<Props> = ({ data }) => {
             {/*{formatNumber(data[activeIndex].data.nav, 2, '$0,0.00')}*/}
           </SectionItem>
           <SectionItem label="Current Share Price">
-            <TokenValue value={activeData.sharePrice} token={baseToken} size="mini" format="0,0.00" />
+            <TokenValue
+              value={activeData.sharePrice}
+              token={baseToken}
+              size="mini"
+              format="0,0.00"
+            />
             {/*{formatNumber(activeData.sharePrice, 2, '$0,0.00')}*/}
           </SectionItem>
           <SectionItem
@@ -156,7 +173,15 @@ const Count: FC<Props> = ({ data }) => {
             label="Shares Holding"
             popper="Shares Holding includes a total of Fund Shares in your wallet, redeemable from AllDeFi, and staked in the mining pool"
           >
-            {formatNumber(activeData.shares, 2, '0,0.00')}
+            <TokenValue
+              value={activeData.shares}
+              token={baseToken}
+              shares
+              noUnit
+              size="mini"
+              format="0,0.00"
+            />
+            {/* {formatNumber(activeData.shares, 2, '0,0.00')} */}
           </SectionItem>
         </section>
       </div>

@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 // import FundManager, { FundDetailProps } from '@/class/FundManager'
 import FundReader from '@/class/FundReader'
 import { FundDetailProps } from '@/class/help'
-import { formatNumber } from '@/utils/tools'
+// import { formatNumber } from '@/utils/tools'
 import { useProfile } from '@/hooks/useProfile'
 
 import FundSettleButton from '@/pages/MyManagement/Manager/FundDetail/c/FundSettleButton'
@@ -69,7 +69,10 @@ const FundList: FC = () => {
       title: 'Assets To Be Redeemed',
       dataIndex: 'redeemingShares',
       width: 180,
-      render: (value: number) => `${formatNumber(value, 2, '0,0.00 a')} Shares`
+      render: (value: number, row: any) => (
+        <TokenValue value={value} token={row.baseTokenObj} shares size="mini" format="0,0.00" />
+      )
+      // render: (value: number) => `${formatNumber(value, 2, '0,0.00 a')} Shares`
       // align: 'right'
     },
     {

@@ -92,6 +92,10 @@ const Dapp: FC<Props> = ({ base, data }) => {
     }
   }
 
+  const isDisabled = useMemo(() => {
+    return !/^wc:[0-9a-f]{64}@\d+\?relay-protocol=irn&symKey=[0-9a-f]{64}$/.test(uri)
+  }, [uri])
+
   return (
     <div className="web-manage-dapp">
       <div className="web-manage-dapp-section">
@@ -124,7 +128,7 @@ const Dapp: FC<Props> = ({ base, data }) => {
                 placeholder="Please enter the wallet connect info of the Dapp"
                 onChange={setUri}
               />
-              <Button onClick={onConnect} disabled={uri === ''}>
+              <Button onClick={onConnect} disabled={isDisabled}>
                 Connect
               </Button>
             </main>

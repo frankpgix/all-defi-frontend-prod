@@ -96,10 +96,14 @@ export const calcFundDetail = (item: any) => {
     epochStartTime,
     status: Number(safeInterceptionValues(item.status, 0, 0)) + 1,
 
-    subscribeRedeemEndTime: epochStartTime + Number(safeInterceptionValues(item.stageEndTime[0], 0, 0)) * 1000,
-    subscribeEndTime: epochStartTime + Number(safeInterceptionValues(item.stageEndTime[1], 0, 0)) * 1000,
-    preSettleEndTime: epochStartTime + Number(safeInterceptionValues(item.stageEndTime[2], 0, 0)) * 1000,
-    settleEndTime: epochStartTime + Number(safeInterceptionValues(item.stageEndTime[3], 0, 0)) * 1000,
+    subscribeRedeemEndTime:
+      epochStartTime + Number(safeInterceptionValues(item.stageEndTime[0], 0, 0)) * 1000,
+    subscribeEndTime:
+      epochStartTime + Number(safeInterceptionValues(item.stageEndTime[1], 0, 0)) * 1000,
+    preSettleEndTime:
+      epochStartTime + Number(safeInterceptionValues(item.stageEndTime[2], 0, 0)) * 1000,
+    settleEndTime:
+      epochStartTime + Number(safeInterceptionValues(item.stageEndTime[3], 0, 0)) * 1000,
 
     settleAUMLimit: Number(safeInterceptionValues(item.settleAUMLimit, precision, decimals)),
     realtimeAUMLimit: Number(safeInterceptionValues(item.realtimeAUMLimit, precision, decimals)),
@@ -110,7 +114,9 @@ export const calcFundDetail = (item: any) => {
     baseTokenPriceInUSD: Number(safeInterceptionValues(item.baseTokenPriceInUSD, 4, 18)),
     costPrice: Number(safeInterceptionValues(item.costPrice, 4, 18)),
     unusedAsset: Number(safeInterceptionValues(item.unusedAsset, precision, decimals)),
-    subscribingACToken: Number(safeInterceptionValues(item.subscribingACToken, precision, decimals)),
+    subscribingACToken: Number(
+      safeInterceptionValues(item.subscribingACToken, precision, decimals)
+    ),
     redeemingShares: Number(safeInterceptionValues(item.redeemingShares)),
     miningShares: Number(safeInterceptionValues(item.miningShares)),
 
@@ -221,8 +227,12 @@ export const calcFundBase = (item: any): FundBaseProps => {
     managerFeePercent: Number(safeInterceptionValues(item.managerFee, 2, 2)),
     platFeePercent: Number(safeInterceptionValues(item.platFee, 2, 2)),
     derivatives: item.supportedDerivatives,
-    subscriptionMinLimit: Number(safeInterceptionValues(item.subscriptionLimit[0], precision, decimals)),
-    subscriptionMaxLimit: Number(safeInterceptionValues(item.subscriptionLimit[1], precision, decimals))
+    subscriptionMinLimit: Number(
+      safeInterceptionValues(item.subscriptionLimit[0], precision, decimals)
+    ),
+    subscriptionMaxLimit: Number(
+      safeInterceptionValues(item.subscriptionLimit[1], precision, decimals)
+    )
   }
 }
 
@@ -256,7 +266,7 @@ export const FundStakeDefault = {
 }
 export const calcFundStake = (address: string, item: any): FundStakeProps => {
   // const decimals = getDecimalsByAddress(address)
-  // console.log(decimals, 2222333)
+  console.log(item, 2222333)
   return {
     stakeAmount: Number(safeInterceptionValues(item.stakeAmount)),
     valueInUSD: Number(safeInterceptionValues(item.valueInUSD))
@@ -302,7 +312,9 @@ export const calcFundUserDetail = (item: any): FundUserDataProps => {
     baseTokenPriceInUSD,
     shares: Number(safeInterceptionValues(item.shares, 4, 18)),
     sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
-    subscribingACToken: Number(safeInterceptionValues(item.subscribingACToken, precision, decimals)),
+    subscribingACToken: Number(
+      safeInterceptionValues(item.subscribingACToken, precision, decimals)
+    ),
     redeemingShares: Number(safeInterceptionValues(item.redeemingShares, 4, 18)),
     unclaimedACToken: Number(safeInterceptionValues(item.unclaimedACToken, precision, decimals)),
     unclaimedALL: Number(safeInterceptionValues(item.unclaimedALL, 4, 18)),

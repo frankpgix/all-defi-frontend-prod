@@ -10,12 +10,25 @@ interface Props {
   value: number
   token?: TokenProps
   decimal?: number
+  shares?: boolean
+  noUnit?: boolean
 }
 
-const TokenValue: FC<Props> = ({ value, size = 'default', token, format, decimal }) => {
+const TokenValue: FC<Props> = ({
+  value,
+  size = 'default',
+  token,
+  format,
+  decimal,
+  shares,
+  noUnit
+}) => {
   const { precision, name } = token || {}
   const precisionNumber = useMemo(() => decimal ?? precision ?? 2, [decimal, precision])
-  const formatString = useMemo(() => formatTokenValueString(format, precisionNumber), [format, precisionNumber])
+  const formatString = useMemo(
+    () => formatTokenValueString(format, precisionNumber),
+    [format, precisionNumber]
+  )
   const valueShow = useMemo(() => {
     if (formatString) {
       return formatNumber(value, precisionNumber, formatString)
@@ -26,7 +39,7 @@ const TokenValue: FC<Props> = ({ value, size = 'default', token, format, decimal
   return (
     <span className="c-token-value" title={`${valueShow} ${name}`}>
       {valueShow}
-      <TokenIcon size={size} name={name} />
+      {!noUnit && (shares ? ' Shares' : <TokenIcon size={size} name={name} />)}
     </span>
   )
 }

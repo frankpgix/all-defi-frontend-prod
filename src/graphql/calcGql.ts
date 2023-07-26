@@ -17,11 +17,7 @@ const calcTableAndStartTime = (type: string, startTime: number) => {
   }
   if (type === 'DAY') {
     o.startTime = String(typeStartTime(type))
-    if (diffType === 'hour') {
-      o.tableName = 'fund10MinutelyDatas'
-    } else {
-      o.tableName = 'fundHourlyDatas'
-    }
+    o.tableName = 'fund10MinutelyDatas'
   } else if (type === 'WEEK' || type === 'MONTH' || type === 'YEAR') {
     // tableName = 'fundDailyDatas'
     o.startTime = String(typeStartTime(type))
@@ -64,7 +60,6 @@ export const calcMiningData = (fundAddress: string, type: string, createTime: nu
         where: {
           fundId_in: ${fundAddress.toLowerCase()}
           periodStartUnix_gt: ${startTime}
-          miningAmount_not: 0
         }
       ) {
         fundId
@@ -77,6 +72,7 @@ export const calcMiningData = (fundAddress: string, type: string, createTime: nu
     }
   `
 }
+// miningAmount_not: 0
 
 export const calcFundDetailChartGQL = (
   fundAddress: string,

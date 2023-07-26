@@ -2,6 +2,7 @@ import React, { FC, useMemo } from 'react'
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
+import { formatNumber } from '@/utils/tools'
 dayjs.extend(utc)
 
 const toPercent = (decimal: number, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`
@@ -18,7 +19,7 @@ const renderTooltipContent = (o: any) => {
               <i style={{ background: entry.color }} />
               {entry.name}
             </label>
-            <strong>{entry.value}</strong>
+            <strong>{formatNumber(entry.value, 2, '$0.00')}</strong>
           </li>
         ))}
       </ul>
@@ -41,7 +42,9 @@ const Chart: FC<Props> = ({ data, loading }) => {
 
   loading = loading || areaKeys.length === 0
   // console.log(data, areaKeys)
-  const initData = JSON.parse(`[{"time": 1, "x": 0.5}, {"time": 2, "x": 1}, {"time": 3, "x": 0.5}, {"time": 4, "x":1}]`)
+  const initData = JSON.parse(
+    `[{"time": 1, "x": 0.5}, {"time": 2, "x": 1}, {"time": 3, "x": 0.5}, {"time": 4, "x":1}]`
+  )
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
@@ -88,7 +91,14 @@ const Chart: FC<Props> = ({ data, loading }) => {
           )
         })}
         {loading && (
-          <Area type="monotone" stroke={'#c4c4c4'} dataKey="x" stackId="1" strokeWidth={2} fill={`url(#gray)`} />
+          <Area
+            type="monotone"
+            stroke={'#c4c4c4'}
+            dataKey="x"
+            stackId="1"
+            strokeWidth={2}
+            fill={`url(#gray)`}
+          />
         )}
       </AreaChart>
     </ResponsiveContainer>

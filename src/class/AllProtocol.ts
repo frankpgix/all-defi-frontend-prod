@@ -18,7 +18,16 @@ class AllProtocol {
   createFund = async (params: CreateFundProps, signer: Signer): Promise<OutComeProps> => {
     if (!signer) return outcome(4010)
     try {
-      const { name, symbol, desc, managerName, derivatives, stakeAmount: amount, minAmount, maxAmount } = params
+      const {
+        name,
+        symbol,
+        desc,
+        managerName,
+        derivatives,
+        stakeAmount: amount,
+        minAmount,
+        maxAmount
+      } = params
       let baseTokenAddress = params.baseTokenAddress
       if (baseTokenAddress === '0x0000000000000000000000000000000000000000') {
         baseTokenAddress = tokens.WETH.tokenAddress
@@ -26,10 +35,18 @@ class AllProtocol {
       const decimals = getDecimalsByAddress(baseTokenAddress)
 
       const stakeAmount = getUnitAmount(String(amount), 18)
-      const subscriptionLimit = [getUnitAmount(String(minAmount), decimals), getUnitAmount(String(maxAmount), decimals)]
+      const subscriptionLimit = [
+        getUnitAmount(String(minAmount), decimals),
+        getUnitAmount(String(maxAmount), decimals)
+      ]
       const contract = getAllProtocolContract(signer)
       // console.log({ name, symbol, desc, managerName, derivatives, stakeAmount, subscriptionLimit })
-      const approve = await setAllowance(signer, getAllProtocolAddress(), getALLTOKENAddress(), stakeAmount)
+      const approve = await setAllowance(
+        signer,
+        getAllProtocolAddress(),
+        getALLTOKENAddress(),
+        stakeAmount
+      )
       if (!approve) return approve
       const gasLimit = await estimateGas(contract, 'createFund', [
         name,
@@ -105,7 +122,11 @@ class AllProtocol {
   }
 
   // 基金经理质押 ALL token 到某只基金
-  manageStakeAllTokenToFund = async (amount: number, fundAddress: string, signer: Signer): Promise<OutComeProps> => {
+  manageStakeAllTokenToFund = async (
+    amount: number,
+    fundAddress: string,
+    signer: Signer
+  ): Promise<OutComeProps> => {
     const _amount = getUnitAmount(amount, 18)
     const contract = getAllProtocolContract(signer)
     try {
@@ -121,7 +142,11 @@ class AllProtocol {
     }
   }
   // 基金经理质押 ALL token 到某只基金
-  manageUnStakeAllTokenToFund = async (amount: number, fundAddress: string, signer: Signer): Promise<OutComeProps> => {
+  manageUnStakeAllTokenToFund = async (
+    amount: number,
+    fundAddress: string,
+    signer: Signer
+  ): Promise<OutComeProps> => {
     const _amount = getUnitAmount(amount, 18)
     const contract = getAllProtocolContract(signer)
     try {

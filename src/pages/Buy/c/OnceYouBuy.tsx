@@ -7,7 +7,7 @@ const OnceYouBuy: FC = () => {
     <section className="web-buy-once">
       <header>
         <h2>Once you buy...</h2>
-        <Button text to="/">
+        <Button text to="https://pythagoras-group.gitbook.io/alldefi-whitepaper/">
           read more
         </Button>
       </header>
