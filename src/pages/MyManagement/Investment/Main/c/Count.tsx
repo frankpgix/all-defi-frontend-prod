@@ -12,6 +12,7 @@ import Popper from '@@/common/Popper'
 import { SectionItem } from '@/pages/MyManagement/Manager/FundDetail/c/ManageDetail/C'
 interface Props {
   data: FundUserListDataProps[]
+  loading: boolean
 }
 
 const renderActiveShape = (props: any) => {
@@ -32,7 +33,7 @@ const renderActiveShape = (props: any) => {
   )
 }
 
-const Count: FC<Props> = ({ data }) => {
+const Count: FC<Props> = ({ data, loading }) => {
   // console.log(1122233, data)
   const [activeIndex, setActiveIndex] = useState(0)
   const rawData = useMemo(

@@ -42,7 +42,7 @@ const FundItem: FC<Props> = ({
   callback,
   derivativeList
 }) => {
-  console.log(fund, 22222)
+  // console.log(fund, 22222)
   // const subscribedAmount = useMemo(() => BN(fund.data.subscribingACUSD ?? 0).toNumber(), [fund.data.subscribingACUSD])
   const ref = useRef<HTMLDivElement>(null)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
@@ -53,7 +53,10 @@ const FundItem: FC<Props> = ({
   )
 
   const derivatives = useMemo(
-    () => fund.derivatives.map((address: string) => derivativeList.find((item) => item.value === address)),
+    () =>
+      fund.derivatives.map((address: string) =>
+        derivativeList.find((item) => item.value === address)
+      ),
     [fund.derivatives, derivativeList]
   )
 
@@ -104,10 +107,17 @@ const FundItem: FC<Props> = ({
                     current subscription <Popper content="Fund's value under subscription" />
                   </label>
                   <em>
-                    <TokenValue value={fund.data.subscribingACToken} token={acToken} size="mini" format="0,0.00" />
+                    <TokenValue
+                      value={fund.data.subscribingACToken}
+                      token={acToken}
+                      size="mini"
+                      format="0,0.00"
+                    />
                   </em>
                   <Button
-                    disabled={!(fund.data.subscribingACToken > 0 && [0, 1, 2].includes(fund.data.status))}
+                    disabled={
+                      !(fund.data.subscribingACToken > 0 && [0, 1, 2].includes(fund.data.status))
+                    }
                     onClick={() => setInfoStatus(true)}
                     size="mini"
                     text
@@ -149,20 +159,32 @@ const FundItem: FC<Props> = ({
                 <SectionItem
                   label={
                     <>
-                      Cumulated Investment Profit <Popper content="Historic cumulative profit and loss" />
+                      Cumulated Investment Profit{' '}
+                      <Popper content="Historic cumulative profit and loss" />
                     </>
                   }
                 >
-                  <TokenValue value={fund.data.historyReturn} token={acToken} size="mini" format="0,0.00" />
+                  <TokenValue
+                    value={fund.data.historyReturn}
+                    token={acToken}
+                    size="mini"
+                    format="0,0.00"
+                  />
                 </SectionItem>
                 <SectionItem
                   label={
                     <>
-                      Claimable AC token <Popper content="Please use redemption function to claim your AC token" />
+                      Claimable AC token{' '}
+                      <Popper content="Please use redemption function to claim your AC token" />
                     </>
                   }
                 >
-                  <TokenValue value={fund.data.unclaimedACToken} token={acToken} size="mini" format="0,0.00" />
+                  <TokenValue
+                    value={fund.data.unclaimedACToken}
+                    token={acToken}
+                    size="mini"
+                    format="0,0.00"
+                  />
                   {/*{formatNumber(fund.data.unclaimedACToken, 2, '$0,0.00')}*/}
                 </SectionItem>
                 <SectionItem label="Current Epoch return %">
@@ -180,7 +202,11 @@ const FundItem: FC<Props> = ({
               </footer>
             </div>
           </main>
-          <Claim unclaimedALL={fund.data.unclaimedALL} fundAddress={fund.address} callback={callback} />
+          <Claim
+            unclaimedALL={fund.data.unclaimedALL}
+            fundAddress={fund.address}
+            callback={callback}
+          />
         </div>
       </section>
       <InfoDialog
@@ -188,16 +214,22 @@ const FundItem: FC<Props> = ({
         onConfirm={() => onCancelSubscribe(fund.address)}
         onClose={() => setInfoStatus(false)}
         title="Cancel Subscription"
-        msg={`Cancel Subscription Request of ${formatNumber(fund.data.subscribingACToken, 2, '0,0.00')} ${
-          acToken.name
-        }`}
+        msg={`Cancel Subscription Request of ${formatNumber(
+          fund.data.subscribingACToken,
+          2,
+          '0,0.00'
+        )} ${acToken.name}`}
       />
       <InfoDialog
         show={infoStatus2}
         onConfirm={() => onCancelRedeem(fund.address)}
         onClose={() => setInfoStatus2(false)}
         title="Claim Shares"
-        msg={` Cancel Redemption Request of ${formatNumber(fund.data.redeemingShares, 4, '0,0.0000')} Fund Shares`}
+        msg={` Cancel Redemption Request of ${formatNumber(
+          fund.data.redeemingShares,
+          4,
+          '0,0.0000'
+        )} Fund Shares`}
       />
     </>
   )

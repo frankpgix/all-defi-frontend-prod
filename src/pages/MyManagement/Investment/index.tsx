@@ -5,7 +5,7 @@ import { FundUserListDataProps } from '@/class/help'
 import { useProfile } from '@/hooks/useProfile'
 
 // import Button from '@@/common/Button'
-import Loading from '@@/common/Loading'
+// import Loading from '@@/common/Loading'
 import NoInvest from './NoInvest'
 import Main from './Main'
 
@@ -32,12 +32,11 @@ const Investment: FC = () => {
 
   useEffect(() => void getData(false), [getData])
 
-  const isInvest = useMemo(() => userFundList.length > 0, [userFundList])
+  const isInvest = useMemo(() => userFundList.length > 0 || loading, [userFundList, loading])
   return (
     <div className="web-manage">
       <h2>Investment Management</h2>
-      <Loading type="section" show={loading} height="400px" />
-      {!loading && (!isInvest ? <NoInvest /> : <Main loading={loading} getData={getData} data={userFundList} />)}
+      {!isInvest ? <NoInvest /> : <Main loading={loading} getData={getData} data={userFundList} />}
     </div>
   )
 }
