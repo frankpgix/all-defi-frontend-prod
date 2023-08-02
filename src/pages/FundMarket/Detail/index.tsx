@@ -48,7 +48,9 @@ const Detail: FC = () => {
     data: fundUserDetail,
     loading: fundUserDetailLoading,
     run: reGetFundUserDetail
-  } = useRequest(() => getFundUserDetail(fundAddress, address, signer), { refreshDeps: [fundAddress, address, signer] })
+  } = useRequest(() => getFundUserDetail(fundAddress, address, signer), {
+    refreshDeps: [fundAddress, address, signer]
+  })
 
   const {
     data: shareData,
@@ -71,8 +73,14 @@ const Detail: FC = () => {
 
   const base: FundBaseProps = useMemo(() => fundBase ?? FundBaseDefault, [fundBase])
   const data: FundDetailProps = useMemo(() => fundDetail ?? FundDetailDefault, [fundDetail])
-  const userData: FundUserDataProps = useMemo(() => fundUserDetail ?? FundUserDataDefault, [fundUserDetail])
-  const share: ShareCompositionProps = useMemo(() => shareData ?? ShareCompositionDefault, [shareData])
+  const userData: FundUserDataProps = useMemo(
+    () => fundUserDetail ?? FundUserDataDefault,
+    [fundUserDetail]
+  )
+  const share: ShareCompositionProps = useMemo(
+    () => shareData ?? ShareCompositionDefault,
+    [shareData]
+  )
   // console.log(base, 'base')
   return (
     <>

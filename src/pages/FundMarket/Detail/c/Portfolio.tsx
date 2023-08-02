@@ -19,9 +19,12 @@ interface Props {
 const Portfolio: FC<Props> = ({ fundAddress, base }) => {
   const { getAssetComposition } = FundReader
 
-  const { data, loading } = useRequest(() => getAssetComposition(fundAddress ?? '', base.baseToken ?? ''), {
-    refreshDeps: [fundAddress, base.baseToken]
-  })
+  const { data, loading = true } = useRequest(
+    () => getAssetComposition(fundAddress ?? '', base.baseToken ?? ''),
+    {
+      refreshDeps: [fundAddress, base.baseToken]
+    }
+  )
   const baseToken = useMemo(() => getTokenByAddress(base.baseToken), [base.baseToken])
   // console.log(11122222, data)
   const webColumns = [
@@ -52,20 +55,25 @@ const Portfolio: FC<Props> = ({ fundAddress, base }) => {
       title: 'Value',
       dataIndex: 'value',
       width: 240,
-      render: (value: number) => <TokenValue value={value} token={baseToken} size="mini" format="0,0.00" />
+      render: (value: number) => (
+        <TokenValue value={value} token={baseToken} size="mini" format="0,0.00" />
+      )
     }
   ]
-
   return (
     <section className="web-fund-detail-portfolio">
       <h2>Portfolio</h2>
-      <Table
-        className="web-fund-detail-portfolio-table"
-        columns={webColumns}
-        emptyText={loading ? <TableLoading /> : <TableNoData />}
-        data={data ?? []}
-        rowKey="token"
-      />
+      {loading ? (
+        <TableLoading />
+      ) : (
+        <Table
+          className="web-fund-detail-portfolio-table"
+          columns={webColumns}
+          emptyText={<TableNoData />}
+          data={data ?? []}
+          rowKey="token"
+        />
+      )}
     </section>
   )
 }

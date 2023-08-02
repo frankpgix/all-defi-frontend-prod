@@ -23,8 +23,20 @@ const Charts: FC = () => {
     <section className="web-fund-charts">
       <h2>On-chain Index</h2>
       <div className="web-fund-charts-group">
-        <Item name="BTC Index" subName="Return (1D)" icon="icon/btc.svg" data={btc} yLabel="Price" />
-        <Item name="ETH Index" subName="Return (1D)" icon="icon/eth-index.svg" data={eth} yLabel="Price" />
+        <Item
+          name="BTC Index"
+          subName="Return (1D)"
+          icon="icon/btc.svg"
+          data={btc}
+          yLabel="Price"
+        />
+        <Item
+          name="ETH Index"
+          subName="Return (1D)"
+          icon="icon/eth-index.svg"
+          data={eth}
+          yLabel="Price"
+        />
         <Item name="DeFi TVL" subName="TVL (1D)" icon="icon/defi-tvl.svg" data={defiTvl} />
       </div>
     </section>

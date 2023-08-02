@@ -19,6 +19,10 @@ export default defineConfig(({ mode, command, ssrBuild }) => {
         '@@': path.resolve(__dirname, 'src/components')
       }
     },
-    plugins: [react()]
+    plugins: [react()],
+    server: {
+      port: 5555,
+      host: '0.0.0.0'
+    }
   }
 })

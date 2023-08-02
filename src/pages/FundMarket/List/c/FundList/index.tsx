@@ -30,7 +30,13 @@ const FundList: FC = () => {
       title: 'Name',
       dataIndex: 'name',
       render: (name: string, row: any) => (
-        <FundName name={name} managerName={row.managerName} address={row.address} round size="mini" />
+        <FundName
+          name={name}
+          managerName={row.managerName}
+          address={row.address}
+          round
+          size="mini"
+        />
       )
     },
     {
@@ -92,15 +98,19 @@ const FundList: FC = () => {
   return (
     <div className="web-fund-list-layout">
       <h2>Fund Market</h2>
-      <Table
-        // @ts-ignore
-        columns={webColumns}
-        emptyText={loading ? <TableLoading /> : <TableNoData />}
-        data={data}
-        rowKey="address"
-        rowClassName="cup"
-        onRow={onRow}
-      />
+      {loading ? (
+        <TableLoading />
+      ) : (
+        <Table
+          // @ts-ignore
+          columns={webColumns}
+          emptyText={<TableNoData />}
+          data={data}
+          rowKey="address"
+          rowClassName="cup"
+          onRow={onRow}
+        />
+      )}
     </div>
   )
 }

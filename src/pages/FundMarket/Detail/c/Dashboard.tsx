@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import BN from 'bignumber.js'
 // import { floor } from 'lodash'
 import { getTokenByAddress } from '@/config/tokens'
+import ContentLoader from 'react-content-loader'
 
 import { FundBaseProps, FundDetailProps } from '@/class/help'
 
@@ -32,7 +33,13 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
   const baseToken = useMemo(() => getTokenByAddress(base.baseToken), [base.baseToken])
   // console.log('realtimeAUMLimit', data.realtimeAUMLimit, 'aum', data.aum, 'subscribingACToken', data.subscribingACToken)
   // console.log(data)
-  const { loading: chartLoading, data: chartData } = useFundDetailChartData(fundAddress ?? '', timeType, data)
+  const { loading: chartLoading, data: chartData } = useFundDetailChartData(
+    fundAddress ?? '',
+    timeType,
+    data
+  )
+
+  if (loading) return <DashboardLoading />
 
   return (
     <>
@@ -75,7 +82,10 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
               <dd>
                 <TokenValue
                   value={Math.max(
-                    BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(),
+                    BN(data.realtimeAUMLimit)
+                      .minus(data.aum)
+                      .minus(data.subscribingACToken)
+                      .toNumber(),
                     0
                   )}
                   token={baseToken}
@@ -100,7 +110,10 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
             <dl>
               <dt>
                 Historical return
-                <Popper size="mini" content="Cumulated profit and loss since the inception of this fund" />
+                <Popper
+                  size="mini"
+                  content="Cumulated profit and loss since the inception of this fund"
+                />
               </dt>
               <dd>
                 <TokenValue value={data.historyReturn} token={baseToken} size="mini" />
@@ -119,8 +132,12 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
           <header>
             <h3>Share Price</h3>
             <aside>
-              {/* @ts-ignore */}
-              <TimeSelect value={timeType} options={timeOptions} onChange={(val) => setTimeType(val)} />
+              <TimeSelect
+                value={timeType}
+                options={timeOptions}
+                // @ts-ignore
+                onChange={(val) => setTimeType(val)}
+              />
             </aside>
           </header>
           <section>
@@ -148,3 +165,22 @@ export default Dashboard
 //     <RoeShow value={data.lastRoe} subArrow />
 //   </dd>
 // </dl>
+
+const DashboardLoading = () => {
+  return (
+    <div className="web">
+      <ContentLoader
+        width={1200}
+        height={482}
+        viewBox="0 0 1200 482"
+        backgroundColor="#eaeced"
+        foregroundColor="#ffffff"
+      >
+        <rect x="0" y="0" rx="4" ry="4" width="300" height="30" />
+
+        <rect x="0" y="52" rx="4" ry="4" width="590" height="430" />
+        <rect x="610" y="52" rx="4" ry="4" width="590" height="430" />
+      </ContentLoader>
+    </div>
+  )
+}
