@@ -14,6 +14,7 @@ import FundSettleButton from '@/pages/MyManagement/Manager/FundDetail/c/FundSett
 import RoeShow from '@@/common/RoeShow'
 import { FundName } from '@@/common/FundIcon'
 import TokenValue from '@@/common/TokenValue'
+import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 
 const FundList: FC = () => {
   const { account: address } = useProfile()
@@ -27,7 +28,7 @@ const FundList: FC = () => {
     if (address) {
       setLoading(true)
       const res = await getManagerFundList(address)
-      console.log(2222, res)
+      // console.log(2222, res)
       if (res) setList(res)
       setLoading(false)
     }
@@ -116,16 +117,20 @@ const FundList: FC = () => {
     <>
       <div className="web-buy-table-layout">
         <h2>Fund List</h2>
-        <Table
-          className="web-buy-table"
-          // @ts-ignore
-          columns={webColumns}
-          emptyText={!loading ? 'Loading' : 'No Data'}
-          data={list}
-          rowKey="address"
-          onRow={onRow}
-          rowClassName={'cup'}
-        />
+        {loading ? (
+          <TableLoading />
+        ) : (
+          <Table
+            className="web-buy-table"
+            // @ts-ignore
+            columns={webColumns}
+            emptyText={<TableNoData />}
+            data={list}
+            rowKey="address"
+            rowClassName="cup"
+            onRow={onRow}
+          />
+        )}
       </div>
     </>
   )
