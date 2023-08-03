@@ -6,6 +6,9 @@ const derivativesConfig: derivativesType = {
   UNIV3: {
     url: 'https://app.uniswap.org/'
   },
+  UNIV3LP: {
+    url: 'https://app.uniswap.org/#/pools'
+  },
   AAVEV3: {
     url: 'https://app.aave.com/'
   },

@@ -25,7 +25,9 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
   const { manageStakeAllTokenToFund, manageUnStakeAllTokenToFund, fundUnstakingLimit } = AllProtocol
   const { balance } = useTokensData()
   const { signer } = useProfile()
-  const { data: maxReduceAmount = 0 } = useRequest(async () => await fundUnstakingLimit(fundAddress))
+  const { data: maxReduceAmount = 0 } = useRequest(
+    async () => await fundUnstakingLimit(fundAddress)
+  )
   // console.log(test)
   const [amount, setAmount] = useState<string | number>('')
   const [sliderValue, setSliderValue] = useState(0)
@@ -63,7 +65,11 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
     // if (val > maxValue) val = maxValue
     // if (val < 0) val = 0
     if (maxValue > 0) {
-      const currSliderValue = BN(Number(val)).div(maxValue).multipliedBy(100).integerValue().toNumber()
+      const currSliderValue = BN(Number(val))
+        .div(maxValue)
+        .multipliedBy(100)
+        .integerValue()
+        .toNumber()
       setAmount(Number(val))
       setSliderValue(currSliderValue)
     }
@@ -90,8 +96,8 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
       {fundData.aum > fundData.realtimeAUMLimit && (
         <>
           <Alert show type="error">
-            Your current fund AUM has exceeded the fund max AUM limited, please increase the fund max AUM limit before
-            settlement.
+            Your current fund AUM has exceeded the fund max AUM limited, please increase the fund
+            max AUM limit before settlement.
           </Alert>
           <Blank />
         </>
@@ -99,8 +105,9 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
       {fundData.nav > fundData.realtimeAUMLimit && (
         <>
           <Alert show type="error">
-            When the Staking Ratio of the Current Epoch is less than 100%, please stake more ALL Token before end of
-            current Epoch to sure to receive 100% of the incentive fee during settlement.
+            When the Staking Ratio of the Current Epoch is less than 100%, please stake more ALL
+            Token before end of current Epoch to sure to receive 100% of the incentive fee during
+            settlement.
           </Alert>
           <Blank />
         </>
@@ -121,7 +128,11 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
             placeholder="0"
             error={Number(amount) === 0 && amount !== ''}
           >
-            {isIncrease ? <p>ALL Token Balance: {balance.ALL}</p> : <p>Staked ALL Token: {maxReduceAmount}</p>}
+            {isIncrease ? (
+              <p>ALL Token Balance: {balance.ALL}</p>
+            ) : (
+              <p>Staked ALL Token: {maxReduceAmount}</p>
+            )}
           </Input>
           <div className="web-manage-create-step-stake-equal"></div>
           <DataItem label="estimated fund max aum limit" gray>

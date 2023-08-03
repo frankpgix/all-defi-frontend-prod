@@ -421,7 +421,15 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           <SectionLayout col="3">
             <SectionItem
               label="ALL Token Staking Value"
-              value={formatNumber(stake.valueInUSD, 4, '$0,0.0000')}
+              // value={formatNumber(stake.valueInUSD, 4, '$0,0.0000')}
+              value={
+                <TokenValue
+                  value={stake.valueInUSD}
+                  token={baseToken}
+                  size="mini"
+                  format="0,0.00"
+                />
+              }
             />
             <SectionItem
               label="ALL Token Staking Amount"
