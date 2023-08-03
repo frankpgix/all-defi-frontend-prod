@@ -157,7 +157,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
       <Tabs defaultIndex={activeIndex}>
         <TabList>
           <Tab>Basic</Tab>
-          <Tab>Revenue</Tab>
+          {/* <Tab>Revenue</Tab> */}
           <Tab>Fees</Tab>
           <Tab>Fund</Tab>
           <Tab>Risk Control</Tab>
@@ -230,7 +230,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           </SectionButtons>
         </TabPanel>
         {/* Revenue TabPanel */}
-        <TabPanel>
+        {/* <TabPanel>
           <SectionHeader name="Real-Time Returns" />
           <SectionLayout col="2">
             <SectionItem
@@ -276,8 +276,8 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
               label="Yearly Yield"
               value={<RoeShow value={currFund?.yearReturn * 100} />}
             />
-          </SectionLayout>
-          {/* <SectionHeader name="Historical Returns" />
+          </SectionLayout> */}
+        {/* <SectionHeader name="Historical Returns" />
           <SectionLayout col="3">
             <SectionItem label="Mothly Yield" value="No Data" />
             <SectionItem label="Seasonal Yield" value="No Data" />
@@ -299,11 +299,11 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             <SectionItem label="Fund Volatility" value="No Data" />
             <SectionItem label="Sharpe Ratio" value="No Data" />
           </SectionLayout> */}
-        </TabPanel>
+        {/* </TabPanel> */}
         {/* Fees TabPanel */}
         <TabPanel>
           <SectionHeader name="Fund Manager" />
-          <SectionLayout col="3">
+          <SectionLayout col="2">
             <SectionItem
               label="Current Epoch Manager Fee"
               value={
@@ -317,6 +317,9 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
                 <TokenValue value={data.managerFee} token={baseToken} size="mini" format="0,0.00" />
               }
             />
+          </SectionLayout>
+
+          <SectionLayout col="2">
             <SectionItem
               label="Previous Epoch Settled Manager Fee"
               value={
@@ -326,6 +329,12 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
                   size="mini"
                   format="0,0.00"
                 />
+              }
+            />
+            <SectionItem
+              label="Average Price"
+              value={
+                <TokenValue value={data.costPrice} token={baseToken} size="mini" format="0,0.00" />
               }
             />
           </SectionLayout>
