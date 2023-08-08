@@ -55,8 +55,14 @@ const AreaC: FC<Props> = ({
     boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)',
     fontSize: '14px'
   }
-  const isZeroData = useMemo(() => !Boolean(data.find((item: any) => item[yKey] !== 0)), [data, yKey])
-  const isLoading = useMemo(() => loading || data.length < 2 || isZeroData, [loading, data.length, isZeroData])
+  const isZeroData = useMemo(
+    () => !Boolean(data.find((item: any) => item[yKey] !== 0)),
+    [data, yKey]
+  )
+  const isLoading = useMemo(
+    () => loading || data.length < 2 || isZeroData,
+    [loading, data.length, isZeroData]
+  )
   // if (loading || data.length < 2) return <ChartLoading show />
   const initData = JSON.parse(
     `[{"${xKey}": 0, "${yKey}": 0.5}, {"${xKey}": 0, "${yKey}": 0.9}, {"${xKey}": 0, "${yKey}": 0.1}, {"${xKey}": 0, "${yKey}": 0.5}]`
@@ -81,7 +87,11 @@ const AreaC: FC<Props> = ({
           </linearGradient>
         </defs>
         <XAxis dataKey={xKey} hide />
-        <YAxis dataKey={yKey} hide domain={[(dataMin) => dataMin * 0.9, (dataMax) => dataMax * 1.1]} />
+        <YAxis
+          dataKey={yKey}
+          hide
+          domain={[(dataMin) => dataMin * 0.9, (dataMax) => dataMax * 1.1]}
+        />
         {!isLoading && (
           <Tooltip
             formatter={formatTip}

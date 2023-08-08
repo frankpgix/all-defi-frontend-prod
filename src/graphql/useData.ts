@@ -1,41 +1,36 @@
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { safeInterceptionValues, createArrayByNumber } from '@/utils/tools'
 import { getTokenByAddress } from '@/config/tokens'
 import { uniq, last } from 'lodash'
-import { useMemo } from 'react'
+// import { useMemo } from 'react'
 import BN from 'bignumber.js'
 import { sum } from '@/utils/tools'
 // import { useEffect } from 'react'
-import { useDebounceEffect, useMount } from 'ahooks'
+// import { useDebounceEffect, useMount } from 'ahooks'
 import { toLower } from 'lodash'
 import {
   calcFundDatasGql,
   calcMiningData,
-  calcFundDetailChartGQL,
-  calcManageFundsData,
-  calcManageFundDetailData,
-  calcMiningTotalDataGQL
+  calcFundDetailChartGQL
+  // calcManageFundsData,
+  // calcManageFundDetailData,
+  // calcMiningTotalDataGQL
 } from './calcGql'
 import { FundDataProps } from './types'
 import { removeZeroKeys } from './tools'
 import { calcFundListGQL } from './gqls'
 import { FundDetailProps } from '@/class/help'
 
-export const useFundData = (
-  fundAddress: string,
-  type: string,
-  decimals: number,
-  createTime: number
-) => {
+export const useFundData = (gql: any, decimals: number, precision: number) => {
   // const gql = calcFundDatasGql(fundAddress, type, createTime)
   // console.log(gql)
   // const baseToken = getTokenByAddress(fundAddress)
-  const { loading, error, data: sData } = useQuery(calcFundDatasGql(fundAddress, type, createTime))
+  const { loading, error, data: sData } = useQuery(gql)
   // console.log(11111, baseToken, sData?.fundHourlyDatas)
   const data = (sData?.fund10MinutelyDatas ?? sData?.fundHourlyDatas ?? sData?.fundDailyDatas ?? [])
     .map((item: FundDataProps) => ({
       time: item.periodStartUnix * 1000,
-      value: Number(safeInterceptionValues(item.nav, decimals, decimals))
+      value: Number(safeInterceptionValues(item.nav, precision, decimals))
     }))
     .reverse()
   return { loading, error, data }
