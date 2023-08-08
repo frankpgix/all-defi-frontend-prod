@@ -173,4 +173,6 @@ class FundReader {
   }
 }
 
-export default new FundReader()
+const ExportFundReader = new FundReader()
+
+export default ExportFundReader

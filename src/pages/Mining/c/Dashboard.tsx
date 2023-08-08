@@ -57,7 +57,9 @@ const Dashboard: FC<Props> = ({ stakeSharesValue }) => {
     <>
       <section className="web-mining-dashboard">
         <main>
-          <DataItem label="You Staked Value">{formatNumber(stakeSharesValue, 2, '$0,0.00')}</DataItem>
+          <DataItem label="You Staked Value">
+            {formatNumber(stakeSharesValue, 2, '$0,0.00')}
+          </DataItem>
           <DataItem label="You Staked sALL" normalFont>
             {formatNumber(rewardDashboard.sALL, 2, '0,0.00')}
           </DataItem>
@@ -77,7 +79,11 @@ const Dashboard: FC<Props> = ({ stakeSharesValue }) => {
         onConfirm={onHarvestAll}
         onClose={() => setInfoStatus(false)}
         title="Claim ALL Token"
-        msg={`${formatNumber(rewardDashboard.pendingReward, 8, '0,0.00000000')} ALL will be claimed`}
+        msg={`${formatNumber(
+          rewardDashboard.pendingReward,
+          8,
+          '0,0.00000000'
+        )} ALL will be claimed`}
       />
     </>
   )

@@ -13,6 +13,7 @@ const Banner: FC = () => {
   const [timeType, setTimeType] = useState<string>('DAY')
   const [total, setTotal] = useState(0)
   const { data: chartData = [], loading: chartLoading } = useMiningData(timeType)
+  console.log(chartData)
   // const { data } = useMiningTotalData()
   useEffect(() => {
     if (timeType === 'DAY') {
@@ -27,7 +28,7 @@ const Banner: FC = () => {
         setTotal(totalSum)
       }
     }
-  }, [timeType])
+  }, [timeType, chartData])
   return (
     <section className="web-mining-banner-layout">
       <div className="web-mining-banner-chart">

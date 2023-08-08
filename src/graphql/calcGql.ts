@@ -4,22 +4,25 @@ import { gql } from '@apollo/client'
 import { timeDiffType, typeStartTime, get10MinutelyUnix } from './tools'
 
 const calcTableAndStartTime = (type: string, startTime: number) => {
-  const diffType = timeDiffType(startTime)
+  // const diffType = timeDiffType(startTime)
   const o = {
     tableName: 'fundHourlyDatas',
     startTime: String(startTime)
   }
-
-  if (diffType === 'hour') {
-    o.tableName = 'fund10MinutelyDatas'
-  } else if (diffType === 'longTime') {
-    o.tableName = 'fundDailyDatas'
-  }
+  // console.log(1111, diffType)
+  // if (diffType === 'hour') {
+  //   o.tableName = 'fund10MinutelyDatas'
+  // } else if (diffType === 'longTime') {
+  //   o.tableName = 'fundDailyDatas'
+  // }
   if (type === 'DAY') {
     o.startTime = String(typeStartTime(type))
     o.tableName = 'fund10MinutelyDatas'
-  } else if (type === 'WEEK' || type === 'MONTH' || type === 'YEAR') {
-    // tableName = 'fundDailyDatas'
+  } else if (type === 'WEEK') {
+    o.tableName = 'fundHourlyDatas'
+    o.startTime = String(typeStartTime(type))
+  } else if (type === 'MONTH' || type === 'YEAR') {
+    o.tableName = 'fundDailyDatas'
     o.startTime = String(typeStartTime(type))
   }
   return o
@@ -162,7 +165,7 @@ export const calcManageFundDetailData = (
   createTime: number | string
 ) => {
   const { tableName, startTime } = calcTableAndStartTime(type, Number(createTime))
-
+  console.log(11111)
   return gql`
     query {
       ${tableName}(

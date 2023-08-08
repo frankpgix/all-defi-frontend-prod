@@ -1,13 +1,14 @@
-import React, { FC, useState, useEffect, useCallback } from 'react'
+import React, { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Table from 'rc-table'
 import dayjs from 'dayjs'
 
 // import FundManager, { FundDetailProps } from '@/class/FundManager'
-import FundReader from '@/class/FundReader'
+// import FundReader from '@/class/FundReader'
 import { FundDetailProps } from '@/class/help'
 // import { formatNumber } from '@/utils/tools'
-import { useProfile } from '@/hooks/useProfile'
+// import { useProfile } from '@/hooks/useProfile'
+import { useManageFundList } from '@/hooks/useFund'
 
 import FundSettleButton from '@/pages/MyManagement/Manager/FundDetail/c/FundSettleButton'
 
@@ -17,25 +18,26 @@ import TokenValue from '@@/common/TokenValue'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 
 const FundList: FC = () => {
-  const { account: address } = useProfile()
+  // const { account: address } = useProfile()
   const navigate = useNavigate()
-  const { getManagerFundList } = FundReader
+  const { manageFundFist, loading, getData } = useManageFundList()
+  // const { getData } = useGetManageFundList()
+  // const { getManagerFundList } = FundReader
+  // const [list, setList] = useState<FundDetailProps[]>([])
+  // const [loading, setLoading] = useState<boolean>(false)
 
-  const [list, setList] = useState<FundDetailProps[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
+  // const getData = useCallback(async () => {
+  //   if (address) {
+  //     setLoading(true)
+  //     const res = await getManagerFundList(address)
+  //     // console.log(2222, res)
+  //     if (res) setList(res)
+  //     setLoading(false)
+  //   }
+  // }, [address, getManagerFundList])
 
-  const getData = useCallback(async () => {
-    if (address) {
-      setLoading(true)
-      const res = await getManagerFundList(address)
-      // console.log(2222, res)
-      if (res) setList(res)
-      setLoading(false)
-    }
-  }, [address, getManagerFundList])
-
-  useEffect(() => void getData(), [getData])
-
+  // useEffect(() => void getData(), [getData])
+  // const getData = () => {}
   const webColumns = [
     {
       title: 'Name',
@@ -125,7 +127,7 @@ const FundList: FC = () => {
             // @ts-ignore
             columns={webColumns}
             emptyText={<TableNoData />}
-            data={list}
+            data={manageFundFist}
             rowKey="address"
             rowClassName="cup"
             onRow={onRow}

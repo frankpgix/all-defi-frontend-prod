@@ -47,7 +47,7 @@ const Portfolio: FC<Props> = ({ fundAddress, base }) => {
         return row.value > 0 && value === 0 ? (
           '-'
         ) : (
-          <TokenValue value={value} token={token} size="mini" format="0,0.00" />
+          <TokenValue value={value} token={token} size="mini" format="0,0.00" noUnit />
         )
       }
     },

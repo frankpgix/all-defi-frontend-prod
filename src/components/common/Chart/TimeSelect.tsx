@@ -7,12 +7,20 @@ interface Props {
   options?: string[]
 }
 
-const TimeSelect: FC<Props> = ({ value, onChange, options = ['ALL', 'DAY', 'WEEK', 'MONTH', 'YEAR'] }) => {
+const TimeSelect: FC<Props> = ({
+  value,
+  onChange,
+  options = ['ALL', 'DAY', 'WEEK', 'MONTH', 'YEAR']
+}) => {
   // const options: string[] = ['ALL', 'DAY', 'WEEK', 'MONTH', 'YEAR']
   return (
     <div className="web-c-time-select">
       {options.map((item, index) => (
-        <span key={index} onClick={() => onChange(item)} className={classNames({ active: item === value })}>
+        <span
+          key={index}
+          onClick={() => onChange(item)}
+          className={classNames({ active: item === value })}
+        >
           {item}
         </span>
       ))}

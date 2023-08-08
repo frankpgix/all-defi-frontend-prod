@@ -1,10 +1,13 @@
-import { useQuery } from '@apollo/client'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import { safeInterceptionValues, createArrayByNumber } from '@/utils/tools'
 import { getTokenByAddress } from '@/config/tokens'
 import { uniq, last } from 'lodash'
+import { useMemo } from 'react'
 import BN from 'bignumber.js'
 import { sum } from '@/utils/tools'
-
+// import { useEffect } from 'react'
+import { useDebounceEffect, useMount } from 'ahooks'
+import { toLower } from 'lodash'
 import {
   calcFundDatasGql,
   calcMiningData,
@@ -65,10 +68,11 @@ export const useMiningData = (type: string) => {
     const ss = sData.filter((item: any) => item.periodStartUnix === time)
     fundsName.forEach((name: string) => {
       const fund = ss.find((item: any) => item.name === name)
-      // console.log(1234, fund)
+      console.log(1234, fund)
       const amount = fund ? safeInterceptionValues(fund.miningAmount, 2, 18) : 0
       // todo ,这里需要USD价格
       const price = fund ? safeInterceptionValues(fund.sharePrice, 2, 18) : 0
+      // console.log(safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18))
       const baseTokenPriceInUSD = fund
         ? safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18)
         : 0
@@ -148,26 +152,17 @@ export const useFundDetailChartData = (
   return { loading, error, data }
 }
 
-export const useManagerFundData = (managerAddress: string, type: string) => {
+export const useManagerFundData = (gql: any, fundData: any[], startTime: number, type: string) => {
   // 获取基金经理所属基金
-  const {
-    loading: fundLoading,
-    error: fundError,
-    data: fundData
-  } = useQuery(calcManageFundsData(managerAddress))
-  // console.log(11222, fundData)
+  const funds = (fundData ?? []).map((item: any) => toLower(item.address))
 
-  const funds = (fundData?.funds ?? []).map((item: any) => item.id)
-  const startTime = Math.max(...(fundData?.funds ?? []).map((item: any) => item.createTime), 0)
-  // console.log(333, startTime)
-  // createTime
-  // 获取基金经理全部数据
   const {
-    loading: detailLoading,
-    error: detailError,
+    loading,
+    error,
     data: detailData
-  } = useQuery(calcManageFundDetailData(JSON.stringify(funds), type, startTime))
-  // console.log(11222, detailData)
+  } = useQuery(gql, {
+    fetchPolicy: 'cache-first'
+  })
   // 把各个基金的数据进行拆分
   const o: Record<string, any> = {}
   const sData =
@@ -175,6 +170,7 @@ export const useManagerFundData = (managerAddress: string, type: string) => {
     detailData?.fundDailyDatas ??
     detailData?.fund10MinutelyDatas ??
     []
+
   funds.forEach((fundName: string) => {
     o[fundName] = sData.filter((item: any) => item.fundId === fundName)
   })
@@ -215,5 +211,7 @@ export const useManagerFundData = (managerAddress: string, type: string) => {
   // console.log(123456, data)
   const count = (last(data) as any)?.value ?? 0
   // const count = data.findLast()?.value ?? 0
-  return { loading: fundLoading || detailLoading, error: fundError || detailError, data, count }
+  return { loading, error, data, count }
+
+  // return { loading: true, error: null, data: [], count: 0 }
 }

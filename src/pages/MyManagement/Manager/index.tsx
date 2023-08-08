@@ -1,9 +1,10 @@
-import React, { FC, useEffect, useCallback, useState } from 'react'
+import React, { FC, useMemo } from 'react'
 import ContentLoader from 'react-content-loader'
 
 // import { useTokensData } from '@/store/tokens/hooks'
-import FundReader from '@/class/FundReader'
-import { useProfile } from '@/hooks/useProfile'
+// import FundReader from '@/class/FundReader'
+// import { useProfile } from '@/hooks/useProfile'
+import { useManageFundList, useGetManageFundList } from '@/hooks/useFund'
 // import { FundDetailProps } from '@/class/tool'
 // import Loading from '@@/common/Loading'
 import NoInvest from './NoInvest'
@@ -12,24 +13,12 @@ import Button from '@@/common/Button'
 import { TableLoading } from '@@/common/TableEmpty'
 
 const Manager: FC = () => {
-  const { getManagerFundList } = FundReader
-  const { account: address } = useProfile()
+  // const { account: address } = useProfile()
+  useGetManageFundList()
+  const { loading, manageFundFist } = useManageFundList()
+  // const [isInvest, setIsInvest] = useState<boolean>(false)
 
-  const [loading, setLoading] = useState<boolean>(false)
-  const [isInvest, setIsInvest] = useState<boolean>(false)
-
-  const getData = useCallback(async () => {
-    if (address) {
-      setLoading(true)
-      const res = await getManagerFundList(address)
-      // console.log(res, 222)
-      if (res && res.length) setIsInvest(true)
-      setLoading(false)
-    }
-  }, [address]) // eslint-disable-line
-
-  useEffect(() => void getData(), [getData])
-
+  const isInvest = useMemo(() => manageFundFist?.length === 0, [manageFundFist])
   return (
     <div className="web-manage">
       <h2>
@@ -40,7 +29,7 @@ const Manager: FC = () => {
           </Button>
         )}
       </h2>
-      {loading ? <ManagerLoading /> : !isInvest ? <NoInvest /> : <Main />}
+      {loading ? <ManagerLoading /> : isInvest ? <NoInvest /> : <Main />}
     </div>
   )
 }
