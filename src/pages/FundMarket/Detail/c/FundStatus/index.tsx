@@ -21,21 +21,31 @@ const FundStatus: FC<Props> = ({ base, data, loading }) => {
     [data.epochStartTime, data.epochIndex]
   )
 
-  if (loading) return <FundStatusLoading />
+  // if (loading) return <FundStatusLoading />
   // console.log(1111222, data.epochStartTime)
   return (
     <BlueLineSection
       className="web-fund-detail-status"
-      title={`Current Epoch: ${currEpoch}`}
+      title={`Current Epoch: ${loading ? '-' : currEpoch}`}
       // headerRight={`Next Epoch: ${dayjs(data.settleEndTime).format('MMM DD, YYYY')} #${data.epochIndex + 1}`}
     >
-      <Loading show={loading} type="float" />
-      <StepLine base={base} data={data} />
+      {/* <Loading show={loading} type="float" /> */}
+      <StepLine base={base} data={data} loading={loading} />
       <footer className="web-fund-detail-status-footer">
         <dl>
           <dt>
             Subscribing Funds:
-            {[0, 1, 2].includes(data.status) ? (
+            {loading ? (
+              <ContentLoader
+                width={120}
+                height={18}
+                viewBox="0 0 120 18"
+                backgroundColor="#eaeced"
+                foregroundColor="#ffffff"
+              >
+                <rect x="12" y="0" rx="4" ry="4" width="100" height="18" />
+              </ContentLoader>
+            ) : [0, 1, 2].includes(data.status) ? (
               <em className="rise">Allowed</em>
             ) : (
               <em className="fall">Not Allowed</em>
@@ -46,7 +56,17 @@ const FundStatus: FC<Props> = ({ base, data, loading }) => {
         <dl>
           <dt>
             Redeeming Funds:
-            {data.status === 1 ? (
+            {loading ? (
+              <ContentLoader
+                width={120}
+                height={18}
+                viewBox="0 0 120 18"
+                backgroundColor="#eaeced"
+                foregroundColor="#ffffff"
+              >
+                <rect x="12" y="0" rx="4" ry="4" width="100" height="18" />
+              </ContentLoader>
+            ) : data.status === 1 ? (
               <em className="rise">Allowed</em>
             ) : (
               <em className="fall">Not Allowed</em>
@@ -60,24 +80,3 @@ const FundStatus: FC<Props> = ({ base, data, loading }) => {
 }
 
 export default FundStatus
-
-const FundStatusLoading = () => {
-  return (
-    <div className="web">
-      <ContentLoader
-        width={1200}
-        height={345}
-        viewBox="0 0 1200 305"
-        backgroundColor="#eaeced"
-        foregroundColor="#ffffff"
-      >
-        <rect x="0" y="40" rx="4" ry="4" width="1200" height="4" />
-        <rect x="40" y="80" rx="4" ry="4" width="400" height="30" />
-        <rect x="40" y="140" rx="4" ry="4" width="1120" height="30" />
-        <rect x="40" y="190" rx="4" ry="4" width="1120" height="10" />
-        <rect x="40" y="220" rx="4" ry="4" width="250" height="30" />
-        <rect x="40" y="260" rx="4" ry="4" width="250" height="30" />
-      </ContentLoader>
-    </div>
-  )
-}

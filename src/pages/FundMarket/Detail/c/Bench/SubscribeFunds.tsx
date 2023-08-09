@@ -36,7 +36,10 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
 
   const baseToken = useMemo(() => getTokenByAddress(data.baseToken), [data.baseToken])
   // const decimals = useMemo(() => baseToken.decimals, [baseToken])
-  const acToken = useMemo(() => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}`]), [baseToken])
+  const acToken = useMemo(
+    () => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}`]),
+    [baseToken]
+  )
   // @ts-ignore
   const acTokenBalance = useMemo(() => balance[acToken?.name], [balance, acToken?.name])
   const [value, setValue] = useState<number | string>('')
@@ -47,7 +50,10 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
     () =>
       Number(
         formatNumber(
-          Math.max(BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(), 0),
+          Math.max(
+            BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(),
+            0
+          ),
           4,
           '0.0000'
         )
@@ -74,7 +80,11 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
     if (val > maxValue) val = maxValue
     if (val < 0) val = 0
     if (maxValue > 0) {
-      const currSliderValue = BN(Number(val)).div(maxValue).multipliedBy(100).integerValue().toNumber()
+      const currSliderValue = BN(Number(val))
+        .div(maxValue)
+        .multipliedBy(100)
+        .integerValue()
+        .toNumber()
       setValue(Number(val))
       setSliderValue(currSliderValue)
     }
@@ -101,7 +111,8 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
     <>
       <section className="web-fund-detail-bench">
         <h4>
-          Subscribe Funds <Popper content="Fund is open for subscription during Open Period or Semi-Open Period" />
+          Subscribe Funds{' '}
+          <Popper content="Fund is open for subscription during Open Period or Semi-Open Period" />
         </h4>
         <div className="web-fund-detail-bench-input">
           <Input

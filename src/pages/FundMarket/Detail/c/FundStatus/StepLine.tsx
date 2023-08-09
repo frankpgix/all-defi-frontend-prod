@@ -3,13 +3,15 @@ import dayjs from 'dayjs'
 import classNames from 'classnames'
 import { FundBaseProps, FundDetailProps } from '@/class/help'
 import Popper from '@@/common/Popper'
+import ContentLoader from 'react-content-loader'
 
 interface Props {
   base: FundBaseProps
   data: FundDetailProps
+  loading?: boolean
 }
 
-const StepLine: FC<Props> = ({ data }) => {
+const StepLine: FC<Props> = ({ data, loading }) => {
   const activeIndex = data.status === 0 ? 1 : data.status
   const steps = [
     {
@@ -45,8 +47,25 @@ const StepLine: FC<Props> = ({ data }) => {
     <section className="web-fund-detail-status-setpline">
       <ul className={classNames({ zero: data.epochIndex === 0 })}>
         {steps.map(({ label, time, status, popper }, index) => (
-          <li key={index} className={classNames({ finish: status < activeIndex, active: status === activeIndex })}>
-            <time>{dayjs(time).format('MMM DD, YYYY HH:mm:ss')}</time>
+          <li
+            key={index}
+            className={classNames({ finish: status < activeIndex, active: status === activeIndex })}
+          >
+            <time>
+              {loading ? (
+                <ContentLoader
+                  width={120}
+                  height={15}
+                  viewBox="0 0 120 15"
+                  backgroundColor="#eaeced"
+                  foregroundColor="#ffffff"
+                >
+                  <rect x="0" y="0" rx="4" ry="4" width="120" height="15" />
+                </ContentLoader>
+              ) : (
+                dayjs(time).format('MMM DD, YYYY HH:mm:ss')
+              )}
+            </time>
             {label && (
               <label>
                 {label} {popper && <Popper size="mini" blue content={popper} />}

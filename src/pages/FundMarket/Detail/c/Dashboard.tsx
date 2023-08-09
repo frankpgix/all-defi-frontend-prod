@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo } from 'react'
+import React, { FC, useState, useMemo, ReactNode } from 'react'
 import dayjs from 'dayjs'
 import BN from 'bignumber.js'
 // import { floor } from 'lodash'
@@ -39,93 +39,103 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
     data
   )
 
-  if (loading) return <DashboardLoading />
+  // if (loading) return <DashboardLoading />
 
   return (
     <>
       <header className="web-fund-detail-header">Fund Overview</header>
       <section className="web-fund-detail-dashboard">
         <section className="web-fund-detail-dashboard-base">
-          <Loading type="float" show={loading} />
-          <article>
-            <FundIcon name={base.name} size="large" />
-            <h4>{base.name}</h4>
-            <p>{base.desc}</p>
-          </article>
+          {loading ? (
+            <ContentLoader
+              width={530}
+              height={130}
+              viewBox="0 0 530 130"
+              backgroundColor="#eaeced"
+              foregroundColor="#ffffff"
+            >
+              <rect x="0" y="0" rx="12" ry="12" width="90" height="90" />
+              <rect x="110" y="5" rx="4" ry="4" width="100" height="30" />
+              <rect x="110" y="45" rx="4" ry="4" width="420" height="15" />
+              <rect x="110" y="70" rx="4" ry="4" width="200" height="15" />
+            </ContentLoader>
+          ) : (
+            <article>
+              <FundIcon name={base.name} size="large" />
+              <h4>{base.name}</h4>
+              <p>{base.desc}</p>
+            </article>
+          )}
           <section>
             <h5>protocol allowed</h5>
-            <main>
-              {derivatives.map((item: string, index: number) => (
-                <Image key={index} src={`/products/${item}.png`} alt={item} />
-              ))}
-            </main>
+            {loading ? (
+              <ContentLoader
+                width={530}
+                height={56}
+                viewBox="0 0 530 56"
+                backgroundColor="#eaeced"
+                foregroundColor="#ffffff"
+              >
+                <rect x="0" y="0" rx="8" ry="8" width="56" height="56" />
+                <rect x="66" y="0" rx="8" ry="8" width="56" height="56" />
+                <rect x="132" y="0" rx="8" ry="8" width="56" height="56" />
+                <rect x="198" y="0" rx="8" ry="8" width="56" height="56" />
+              </ContentLoader>
+            ) : (
+              <main>
+                {derivatives.map((item: string, index: number) => (
+                  <Image key={index} src={`/products/${item}.png`} alt={item} />
+                ))}
+              </main>
+            )}
           </section>
           <footer>
-            <dl>
-              <dt>Fund NAV</dt>
-              <dd>
-                <TokenValue value={data.nav} token={baseToken} size="mini" format="0,0.00" />
-              </dd>
-            </dl>
-            <dl>
-              <dt>Fund Inception Date</dt>
-              <dd>{dayjs(data.createTime).format('MMM DD, YYYY')}</dd>
-            </dl>
-            <dl>
-              <dt>
-                Capacity Available
-                <Popper
-                  size="mini"
-                  content="Fund's max AUM minus current AUM, which shows the available capacity of this fund from this data."
-                />
-              </dt>
-              <dd>
-                <TokenValue
-                  value={Math.max(
-                    BN(data.realtimeAUMLimit)
-                      .minus(data.aum)
-                      .minus(data.subscribingACToken)
-                      .toNumber(),
-                    0
-                  )}
-                  token={baseToken}
-                  size="mini"
-                  format="0,0.00"
-                />
-              </dd>
-            </dl>
+            <DashboardItem label="Fund NAV" loading={loading}>
+              <TokenValue value={data.nav} token={baseToken} size="mini" format="0,0.00" />
+            </DashboardItem>
+            <DashboardItem label="Fund Inception Date" loading={loading}>
+              {dayjs(data.createTime).format('MMM DD, YYYY')}
+            </DashboardItem>
+            <DashboardItem
+              label="Capacity Available"
+              popper="Fund's max AUM minus current AUM, which shows the available capacity of this fund from this data."
+              loading={loading}
+            >
+              <TokenValue
+                value={Math.max(
+                  BN(data.realtimeAUMLimit)
+                    .minus(data.aum)
+                    .minus(data.subscribingACToken)
+                    .toNumber(),
+                  0
+                )}
+                token={baseToken}
+                size="mini"
+                format="0,0.00"
+              />
+            </DashboardItem>
+            <DashboardItem
+              label="Current Epoch return %"
+              popper="The fund's profit and loss on real-time basis, which will be reset to zero after the end of each epoch"
+              loading={loading}
+            >
+              <RoeShow value={data.roe} subArrow />
+            </DashboardItem>
+            <DashboardItem
+              label="Historical return"
+              popper="Cumulated profit and loss since the inception of this fund"
+              loading={loading}
+            >
+              <TokenValue value={data.historyReturn} token={baseToken} size="mini" />
+            </DashboardItem>
 
-            <dl>
-              <dt>
-                Current Epoch return %
-                <Popper
-                  size="mini"
-                  content="The fund's profit and loss on real-time basis, which will be reset to zero after the end of each epoch"
-                />
-              </dt>
-              <dd>
-                <RoeShow value={data.roe} subArrow />
-              </dd>
-            </dl>
-            <dl>
-              <dt>
-                Historical return
-                <Popper
-                  size="mini"
-                  content="Cumulated profit and loss since the inception of this fund"
-                />
-              </dt>
-              <dd>
-                <TokenValue value={data.historyReturn} token={baseToken} size="mini" />
-              </dd>
-            </dl>
-            <dl>
-              <dt>
-                Incentive Rate
-                <Popper size="mini" content="Highest incentive fee ratio managers can get" />
-              </dt>
-              <dd>20%</dd>
-            </dl>
+            <DashboardItem
+              label="Incentive Rate"
+              popper="Highest incentive fee ratio managers can get"
+              loading={loading}
+            >
+              20%
+            </DashboardItem>
           </footer>
         </section>
         <section className="web-fund-detail-dashboard-chart">
@@ -159,28 +169,34 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
 }
 
 export default Dashboard
-// <dl>
-//   <dt>Last Epoch return %</dt>
-//   <dd>
-//     <RoeShow value={data.lastRoe} subArrow />
-//   </dd>
-// </dl>
 
-const DashboardLoading = () => {
+const DashboardItem: FC<{
+  label: string
+  popper?: string
+  children: ReactNode
+  loading?: boolean
+}> = ({ label, popper, children, loading }) => {
   return (
-    <div className="web">
-      <ContentLoader
-        width={1200}
-        height={482}
-        viewBox="0 0 1200 482"
-        backgroundColor="#eaeced"
-        foregroundColor="#ffffff"
-      >
-        <rect x="0" y="0" rx="4" ry="4" width="300" height="30" />
-
-        <rect x="0" y="52" rx="4" ry="4" width="590" height="430" />
-        <rect x="610" y="52" rx="4" ry="4" width="590" height="430" />
-      </ContentLoader>
-    </div>
+    <dl>
+      <dt>
+        {label}
+        {popper && <Popper size="mini" content={popper} />}
+      </dt>
+      <dd>
+        {loading ? (
+          <ContentLoader
+            width={100}
+            height={32}
+            viewBox="0 0 100 32"
+            backgroundColor="#eaeced"
+            foregroundColor="#ffffff"
+          >
+            <rect x="0" y="5" rx="4" ry="4" width="100" height="20" />
+          </ContentLoader>
+        ) : (
+          children
+        )}
+      </dd>
+    </dl>
   )
 }
