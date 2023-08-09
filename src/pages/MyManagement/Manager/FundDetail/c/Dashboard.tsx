@@ -34,7 +34,12 @@ const Dashboard: FC<Props> = ({ fundAddress, data, base }) => {
     () => calcFundDatasGql(fundAddress, timeType, ~~(base.createTime / 1000)),
     [fundAddress, timeType, base.createTime]
   )
-  const { loading, data: chartData } = useFundData(gql, baseToken.decimals, baseToken.precision)
+  const { loading, data: chartData } = useFundData(
+    gql,
+    timeType,
+    baseToken.decimals,
+    baseToken.precision
+  )
 
   // console.log(chartData)
   return (

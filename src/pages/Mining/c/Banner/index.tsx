@@ -43,7 +43,7 @@ const Banner: FC = () => {
       }
     }
   }, [timeType, chartDataStr])
-  console.log(1111)
+  console.log(chartData)
   // const { data } = useMiningTotalData()
   useEffect(() => {
     void setTotalFunc()

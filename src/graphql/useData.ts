@@ -21,18 +21,22 @@ import { FundDataProps } from './types'
 import { removeZeroKeys } from './tools'
 import { FundDetailProps } from '@/class/help'
 
-export const useFundData = (gql: any, decimals: number, precision: number) => {
-  // const gql = calcFundDatasGql(fundAddress, type, createTime)
-  // console.log(gql)
-  // const baseToken = getTokenByAddress(fundAddress)
+export const useFundData = (gql: any, timeType: string, decimals: number, precision: number) => {
   const { loading, error, data: sData } = useQuery(gql)
-  // console.log(11111, baseToken, sData?.fundHourlyDatas)
   const data = (sData?.fund10MinutelyDatas ?? sData?.fundHourlyDatas ?? sData?.fundDailyDatas ?? [])
     .map((item: FundDataProps) => ({
       time: item.periodStartUnix * 1000,
       value: Number(safeInterceptionValues(item.nav, precision, decimals))
     }))
     .reverse()
+
+  if (timeType === 'MONTH') {
+    const mData = data
+      .map((item: FundDataProps, index: number) => (index % 6 === 0 ? item : null))
+      .filter((item: FundDataProps) => item)
+    return { loading, error, data: mData }
+  }
+
   return { loading, error, data }
 }
 
