@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react'
 import Table from 'rc-table'
 import { useNavigate } from 'react-router-dom'
+import ContentLoader from 'react-content-loader'
 
 import { FundDetailProps } from '@/class/help'
 import { useFundListData } from '@/graphql/useFundData'
@@ -11,7 +12,7 @@ import { updateFundsList } from '@/store/funds'
 
 import RoeShow from '@@/common/RoeShow'
 import { FundName } from '@@/common/FundIcon'
-import { TableLoading, TableNoData } from '@@/common/TableEmpty'
+import { TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
 
 const FundList: FC = () => {
@@ -98,20 +99,50 @@ const FundList: FC = () => {
   return (
     <div className="web-fund-list-layout">
       <h2>Fund Market</h2>
-      {loading ? (
-        <TableLoading />
-      ) : (
-        <Table
-          // @ts-ignore
-          columns={webColumns}
-          emptyText={<TableNoData />}
-          data={data}
-          rowKey="address"
-          rowClassName="cup"
-          onRow={onRow}
-        />
-      )}
+      <Table
+        // @ts-ignore
+        columns={webColumns}
+        emptyText={loading ? <TableLoading /> : <TableNoData />}
+        data={data}
+        rowKey="address"
+        rowClassName="cup"
+        onRow={onRow}
+      />
     </div>
   )
 }
 export default FundList
+
+const TableLoading = () => {
+  return (
+    <ContentLoader
+      width={1120}
+      height={120}
+      viewBox="0 0 1120 120"
+      backgroundColor="#eaeced"
+      foregroundColor="#ffffff"
+    >
+      <circle cx="16" cy="16" r="16" />
+      <rect x="40" y="4" rx="4" ry="4" width="100" height="24" />
+      <rect x="240" y="4" rx="4" ry="4" width="80" height="24" />
+      <rect x="360" y="4" rx="4" ry="4" width="80" height="24" />
+      <rect x="500" y="4" rx="4" ry="4" width="80" height="24" />
+      <rect x="620" y="4" rx="4" ry="4" width="80" height="24" />
+      <rect x="740" y="4" rx="4" ry="4" width="80" height="24" />
+      <rect x="860" y="4" rx="4" ry="4" width="80" height="24" />
+      <rect x="980" y="4" rx="4" ry="4" width="30" height="24" />
+      <rect x="1060" y="4" rx="4" ry="4" width="50" height="24" />
+
+      <circle cx="16" cy="76" r="16" />
+      <rect x="40" y="64" rx="4" ry="4" width="100" height="24" />
+      <rect x="240" y="64" rx="4" ry="4" width="80" height="24" />
+      <rect x="360" y="64" rx="4" ry="4" width="80" height="24" />
+      <rect x="500" y="64" rx="4" ry="4" width="80" height="24" />
+      <rect x="620" y="64" rx="4" ry="4" width="80" height="24" />
+      <rect x="740" y="64" rx="4" ry="4" width="80" height="24" />
+      <rect x="860" y="64" rx="4" ry="4" width="80" height="24" />
+      <rect x="980" y="64" rx="4" ry="4" width="30" height="24" />
+      <rect x="1060" y="64" rx="4" ry="4" width="50" height="24" />
+    </ContentLoader>
+  )
+}
