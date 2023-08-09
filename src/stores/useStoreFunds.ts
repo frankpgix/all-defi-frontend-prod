@@ -2,8 +2,11 @@ import { create } from 'zustand'
 import { FundDetailProps } from '@/class/help'
 
 export const useStoreFundList = create((set) => ({
-  fundFist: [],
-  update: (fundFist: any[]) => set({ fundFist })
+  fundList: [],
+  loading: true,
+  getData: () => {},
+  update: (fundList: FundDetailProps[], loading: boolean) => set({ fundList, loading }),
+  setGetDataFunc: (func: () => void) => set({ getData: func })
 }))
 
 export const useStoreDerivativeList = create((set) => ({
@@ -12,9 +15,9 @@ export const useStoreDerivativeList = create((set) => ({
 }))
 
 export const useStoreManageFundList = create((set) => ({
-  manageFundFist: [],
+  manageFundList: [],
   loading: true,
   getData: () => {},
-  update: (manageFundFist: FundDetailProps[], loading: boolean) => set({ manageFundFist, loading }),
+  update: (manageFundList: FundDetailProps[], loading: boolean) => set({ manageFundList, loading }),
   setGetDataFunc: (func: () => void) => set({ getData: func })
 }))

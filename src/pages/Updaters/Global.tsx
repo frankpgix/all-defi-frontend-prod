@@ -9,6 +9,7 @@ import { providers } from 'ethers'
 import AllProtocol from '@/class/AllProtocol'
 // import { getJsonRpcProvider } from '@/utils/contractHelpers'
 import { useProfile } from '@/hooks/useProfile'
+import { useGetFundList } from '@/hooks/useFund'
 export default function Global(): null {
   const { checkAuthorizedManager } = AllProtocol
   // update profile info
@@ -32,6 +33,7 @@ export default function Global(): null {
     void getProfileData()
   }, [getProfileData])
 
+  useGetFundList()
   // update balance info
   // const balances = useBalances()
   // const updateBalances = useStoreBalances((state: any) => state.update)

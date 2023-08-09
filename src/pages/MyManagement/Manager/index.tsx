@@ -15,10 +15,10 @@ import { TableLoading } from '@@/common/TableEmpty'
 const Manager: FC = () => {
   // const { account: address } = useProfile()
   useGetManageFundList()
-  const { loading, manageFundFist } = useManageFundList()
+  const { loading, manageFundList } = useManageFundList()
   // const [isInvest, setIsInvest] = useState<boolean>(false)
 
-  const isInvest = useMemo(() => manageFundFist?.length === 0, [manageFundFist])
+  const isInvest = useMemo(() => manageFundList?.length === 0, [manageFundList])
   return (
     <div className="web-manage">
       <h2>

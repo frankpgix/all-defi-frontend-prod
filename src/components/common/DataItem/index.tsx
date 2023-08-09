@@ -20,7 +20,7 @@ const DataItem: FC<Props> = ({ className, label, children, gray, large, popper, 
         <label>{label}</label>
         {popper && <Popper size="mini" content={popper}></Popper>}
       </div>
-      <p>{children}</p>
+      <div className="web-c-data-item-content">{children}</div>
     </div>
   )
 }

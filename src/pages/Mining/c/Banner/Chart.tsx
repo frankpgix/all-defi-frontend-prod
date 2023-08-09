@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC, useMemo, memo } from 'react'
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -105,4 +105,4 @@ const Chart: FC<Props> = ({ data, loading }) => {
   )
 }
 
-export default Chart
+export default memo(Chart)

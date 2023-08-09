@@ -14,21 +14,21 @@ import { calcManageFundDetailData } from '@/graphql/calcGql'
 const Chart: FC = () => {
   const [timeType, setTimeType] = useState<string>('DAY')
   // const time = useMemo(() => timeType, [timeType])
-  const { manageFundFist = [] } = useManageFundList()
-  const funds = useMemo(() => manageFundFist.map((item) => item.address), [manageFundFist])
+  const { manageFundList = [] } = useManageFundList()
+  const funds = useMemo(() => manageFundList.map((item) => item.address), [manageFundList])
   const startTime = useMemo(
-    () => min(manageFundFist.map((item) => item.createTime)),
-    [manageFundFist]
+    () => min(manageFundList.map((item) => item.createTime)),
+    [manageFundList]
   )
   const gql = useMemo(
     () => calcManageFundDetailData(JSON.stringify(funds), timeType, startTime ?? 0),
     [funds, timeType, startTime]
   )
   console.log(gql)
-  // const fundsAddress = useMemo(() => manageFundFist.map((item) => item.address), [manageFundFist])
-  // console.log(manageFundFist, startTime)
+  // const fundsAddress = useMemo(() => manageFundList.map((item) => item.address), [manageFundList])
+  // console.log(manageFundList, startTime)
 
-  const { loading, data, count } = useManagerFundData(gql, manageFundFist, startTime ?? 0, timeType)
+  const { loading, data, count } = useManagerFundData(gql, manageFundList, startTime ?? 0, timeType)
   // const { loading, data, count } = { loading: true, data: [], count: 0 }
   return (
     <section className="web-manage-manager-chart">

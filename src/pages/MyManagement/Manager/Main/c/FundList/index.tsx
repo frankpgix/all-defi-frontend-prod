@@ -20,7 +20,7 @@ import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 const FundList: FC = () => {
   // const { account: address } = useProfile()
   const navigate = useNavigate()
-  const { manageFundFist, loading, getData } = useManageFundList()
+  const { manageFundList, loading, getData } = useManageFundList()
   // const { getData } = useGetManageFundList()
   // const { getManagerFundList } = FundReader
   // const [list, setList] = useState<FundDetailProps[]>([])
@@ -127,7 +127,7 @@ const FundList: FC = () => {
             // @ts-ignore
             columns={webColumns}
             emptyText={<TableNoData />}
-            data={manageFundFist}
+            data={manageFundList}
             rowKey="address"
             rowClassName="cup"
             onRow={onRow}
