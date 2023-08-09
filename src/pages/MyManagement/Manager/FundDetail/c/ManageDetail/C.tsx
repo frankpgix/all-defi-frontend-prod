@@ -1,30 +1,46 @@
 import React, { FC, ReactNode } from 'react'
+import ContentLoader from 'react-content-loader'
+
 import PercentageLine from '@@/common/PercentageLine'
 import Popper from '@@/common/Popper'
 
-export const CountLayout: FC<{ children: ReactNode }> = ({ children }) => (
-  <div className="web-manage-fund-count">{children}</div>
+export const CountLayout: FC<{ children: ReactNode; col?: string }> = ({ children, col = '4' }) => (
+  <div className={`web-manage-fund-count col-${col}`}>{children}</div>
 )
 
-export const CountItem: FC<{ label: string; value: string | ReactNode; popper?: string; popperWidth?: string }> = ({
-  label,
-  value,
-  popper,
-  popperWidth
-}) => {
+export const CountItem: FC<{
+  label: string
+  value: string | ReactNode
+  popper?: string
+  popperWidth?: string
+  loading?: boolean
+}> = ({ label, value, popper, popperWidth, loading }) => {
   return (
     <div className="web-manage-fund-count-item">
       <label>
         {label} {popper && <Popper content={popper} white width={popperWidth} />}
       </label>
-      <span>{value}</span>
+      {loading ? (
+        <ContentLoader
+          width={100}
+          height={40}
+          viewBox="0 0 100 40"
+          backgroundColor="#82b6ff"
+          foregroundColor="#ffffff"
+        >
+          <rect x="0" y="5" rx="4" ry="4" width="100" height="30" />
+        </ContentLoader>
+      ) : (
+        <span>{value}</span>
+      )}
     </div>
   )
 }
 
-export const SectionHeader: FC<{ name?: string | ReactNode; children?: ReactNode }> = ({ name, children }) => (
-  <header className="web-manage-fund-section-header">{children || name}</header>
-)
+export const SectionHeader: FC<{ name?: string | ReactNode; children?: ReactNode }> = ({
+  name,
+  children
+}) => <header className="web-manage-fund-section-header">{children || name}</header>
 export const SectionLayout: FC<{ children: ReactNode; col: string }> = ({ children, col }) => (
   <section className={`web-manage-fund-section col-${col}`}>{children}</section>
 )
