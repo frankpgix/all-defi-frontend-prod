@@ -1,19 +1,17 @@
 import React, { FC, useState, useMemo } from 'react'
 import BN from 'bignumber.js'
 import classNames from 'classnames'
-import { FundUserListDataProps } from '@/class/help'
+import ContentLoader from 'react-content-loader'
+// import { FundUserListDataProps } from '@/class/help'
 import { formatNumber } from '@/utils/tools'
 import { PieChart, Pie, Cell, Sector } from 'recharts'
 import NoData from '@@/common/NoData'
 import TokenValue from '@@/common/TokenValue'
 import { getTokenByAddress } from '@/config/tokens'
 import Popper from '@@/common/Popper'
+import { useUserFundList } from '@/hooks/useFund'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/FundDetail/c/ManageDetail/C'
-interface Props {
-  data: FundUserListDataProps[]
-  loading: boolean
-}
 
 const renderActiveShape = (props: any) => {
   const { cx, cy, outerRadius, innerRadius, startAngle, endAngle, fill } = props
@@ -33,8 +31,103 @@ const renderActiveShape = (props: any) => {
   )
 }
 
-const Count: FC<Props> = ({ data, loading }) => {
+const CountLoading: FC = () => {
+  return (
+    <div className="web-manage-investment-count">
+      <div className="web-manage-investment-count-chart">
+        <div className="web-manage-investment-count-chart-layout">
+          <div className="recharts-wrapper">
+            <ContentLoader
+              width={290}
+              height={290}
+              viewBox="0 0 290 290"
+              backgroundColor="#4ADCB3"
+              foregroundColor="#ffffff"
+            >
+              <path d="M0 145C0 65.9211 63.3037 1.62758 142 0.0303955V15.0339C71.5887 16.6283 15 74.2057 15 145C15 216.797 73.203 275 145 275C216.129 275 273.916 217.875 274.985 147H289.986C288.916 226.159 224.414 290 145 290C64.9187 290 0 225.081 0 145ZM289.946 141C287.854 63.7639 225.365 1.60056 148 0.0303955V15.0339C217.08 16.5982 272.856 72.049 274.94 141H289.946Z" />
+            </ContentLoader>
+          </div>
+          <section>
+            <ContentLoader
+              width={120}
+              height={60}
+              viewBox="0 0 120 60"
+              backgroundColor="#ddd"
+              foregroundColor="#ffffff"
+            >
+              <rect x="0" y="0" rx="4" ry="4" width="120" height="30" />
+              <rect x="30" y="45" rx="4" ry="4" width="60" height="15" />
+            </ContentLoader>
+          </section>
+        </div>
+        <div className="web-manage-investment-count-chart-labels">
+          <ContentLoader
+            width={600}
+            height={14}
+            viewBox="0 0 600 14"
+            backgroundColor="#ddd"
+            foregroundColor="#ffffff"
+          >
+            <rect x="0" y="0" rx="4" ry="4" width="120" height="14" />
+            <rect x="260" y="0" rx="4" ry="4" width="120" height="14" />
+          </ContentLoader>
+        </div>
+      </div>
+      <div className="web-manage-investment-count-detail">
+        <article>
+          <label>Total Fund NAV</label>
+          <ContentLoader
+            width={200}
+            height={40}
+            viewBox="0 0 200 40"
+            backgroundColor="#eaeced"
+            foregroundColor="#ffffff"
+          >
+            <rect x="0" y="5" rx="4" ry="4" width="200" height="30" />
+          </ContentLoader>
+        </article>
+        <ContentLoader
+          width={200}
+          height={45}
+          viewBox="0 0 200 45"
+          backgroundColor="#eaeced"
+          foregroundColor="#ffffff"
+        >
+          <rect x="0" y="0" rx="4" ry="4" width="150" height="30" />
+        </ContentLoader>
+        <section>
+          <SectionItem label="Fund NAV" popper="Fund's NAV, update in real time" loading={true} />
+          <SectionItem label="Current Share Price" loading={true} />
+          <SectionItem
+            label="Fund AUM"
+            popper="Fund's AUM, update after settlement"
+            loading={true}
+          />
+
+          <SectionItem
+            label="Shares Holding"
+            popper="Shares Holding includes a total of Fund Shares in your wallet, redeemable from AllDeFi, and staked in the mining pool"
+            loading={true}
+          />
+        </section>
+      </div>
+    </div>
+  )
+}
+
+const Count: FC = () => {
+  const { loading, fundList } = useUserFundList()
+  if (loading || fundList.length === 0) return <CountLoading />
+  return (
+    <>
+      <CountDetail />
+    </>
+  )
+}
+const CountDetail: FC = () => {
   // console.log(1122233, data)
+  const { loading, fundList: data } = useUserFundList()
+
   const [activeIndex, setActiveIndex] = useState(0)
   const rawData = useMemo(
     () =>
@@ -51,8 +144,8 @@ const Count: FC<Props> = ({ data, loading }) => {
     () => rawData.map(({ nav }) => nav).reduce((a, b) => a + b, 0),
     [rawData]
   )
-  const activeData = useMemo(() => data[activeIndex].data, [data, activeIndex])
-  const baseToken = useMemo(() => getTokenByAddress(activeData.baseToken), [activeData])
+  const activeData = useMemo(() => data[activeIndex]?.data, [data, activeIndex])
+  const baseToken = useMemo(() => getTokenByAddress(activeData?.baseToken), [activeData])
 
   const pieData = useMemo(
     () =>
@@ -79,14 +172,6 @@ const Count: FC<Props> = ({ data, loading }) => {
     '#FEA036',
     '#467AFF'
   ]
-
-  if (data.length === 0) {
-    return (
-      <div className="web-manage-investment-dashboard">
-        <NoData show />
-      </div>
-    )
-  }
 
   return (
     <div className="web-manage-investment-count">
@@ -141,13 +226,7 @@ const Count: FC<Props> = ({ data, loading }) => {
         </article>
         <h3>{data[activeIndex].name}</h3>
         <section>
-          <SectionItem
-            label={
-              <>
-                Fund NAV <Popper content="Fund's NAV, update in real time" />
-              </>
-            }
-          >
+          <SectionItem label="Fund NAV" popper="Fund's NAV, update in real time" loading={loading}>
             <TokenValue value={activeData.nav} token={baseToken} size="mini" format="0,0.00" />
             {/*{formatNumber(data[activeIndex].data.nav, 2, '$0,0.00')}*/}
           </SectionItem>

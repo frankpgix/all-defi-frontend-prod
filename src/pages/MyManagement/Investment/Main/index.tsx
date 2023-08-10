@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import ContentLoader from 'react-content-loader'
 
 import { FundUserListDataProps } from '@/class/help'
+import Button from '@@/common/Button'
 
 // import Loading from '@@/common/Loading'
 
@@ -17,12 +18,13 @@ interface Props {
 }
 
 const Main: FC<Props> = ({ loading, getData, data }) => {
-  if (loading) return <CountLoading />
+  // if (loading) return <CountLoading />
   // console.log(data, 2222)
   return (
     <div className="web-manage">
-      <Count data={data} loading={loading} />
-      <FundDetails data={data} callback={getData} />
+      <Count />
+
+      {loading ? <CountLoading /> : <FundDetails data={data} callback={getData} />}
     </div>
   )
 }
@@ -32,26 +34,22 @@ export default Main
 
 const CountLoading = () => {
   return (
-    <div className="web">
+    <div className="web-manage-investment-fund">
+      <h2>
+        Fund Details
+        <Button text to="/manage/investment/history">
+          view transaction history
+        </Button>
+      </h2>
       <ContentLoader
         width={1200}
-        height={800}
-        viewBox="0 0 1200 800"
+        height={200}
+        viewBox="0 0 1200 200"
         backgroundColor="#eaeced"
         foregroundColor="#ffffff"
       >
-        <rect x="0" y="0" rx="4" ry="4" width="600" height="430" />
-        <rect x="640" y="0" rx="4" ry="4" width="200" height="50" />
-        <rect x="640" y="80" rx="4" ry="4" width="520" height="2" />
-        <rect x="640" y="100" rx="4" ry="4" width="200" height="40" />
-        <rect x="640" y="180" rx="4" ry="4" width="260" height="110" />
-        <rect x="640" y="320" rx="4" ry="4" width="260" height="110" />
-        <rect x="940" y="180" rx="4" ry="4" width="260" height="110" />
-        <rect x="940" y="320" rx="4" ry="4" width="260" height="110" />
-        <rect x="0" y="480" rx="4" ry="4" width="260" height="40" />
-        <rect x="0" y="540" rx="4" ry="4" width="1200" height="40" />
-        <rect x="0" y="600" rx="4" ry="4" width="1200" height="40" />
-        <rect x="0" y="660" rx="4" ry="4" width="1200" height="40" />
+        <rect x="0" y="0" rx="4" ry="4" width="1200" height="40" />
+        <rect x="0" y="60" rx="4" ry="4" width="1200" height="40" />
       </ContentLoader>
     </div>
   )

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { FundDetailProps } from '@/class/help'
+import { FundDetailProps, FundUserListDataProps } from '@/class/help'
 
 export const useStoreFundList = create((set) => ({
   fundList: [],
@@ -19,5 +19,13 @@ export const useStoreManageFundList = create((set) => ({
   loading: true,
   getData: () => {},
   update: (manageFundList: FundDetailProps[], loading: boolean) => set({ manageFundList, loading }),
+  setGetDataFunc: (func: () => void) => set({ getData: func })
+}))
+
+export const useStoreUserFundList = create((set) => ({
+  fundList: [],
+  loading: true,
+  getData: () => {},
+  update: (fundList: FundUserListDataProps[], loading: boolean) => set({ fundList, loading }),
   setGetDataFunc: (func: () => void) => set({ getData: func })
 }))

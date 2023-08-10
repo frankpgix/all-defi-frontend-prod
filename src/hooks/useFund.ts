@@ -1,5 +1,9 @@
-import { useStoreManageFundList, useStoreFundList } from '@/stores/useStoreFunds'
-import { FundDetailProps } from '@/class/help'
+import {
+  useStoreManageFundList,
+  useStoreFundList,
+  useStoreUserFundList
+} from '@/stores/useStoreFunds'
+import { FundDetailProps, FundUserListDataProps } from '@/class/help'
 import { useProfile } from '@/hooks/useProfile'
 import FundReader from '@/class/FundReader'
 import { useRequest } from 'ahooks'
@@ -41,7 +45,11 @@ export const useGetManageFundList = () => {
   })
 
   useEffect(() => {
-    update(data || [], loading)
+    if (data) {
+      update(data, loading)
+    } else {
+      update([], true)
+    }
   }, [data, loading, update])
 
   useEffect(() => {
@@ -84,8 +92,64 @@ export const useGetFundList = () => {
   })
 
   useEffect(() => {
-    update(data || [], loading)
+    if (data) {
+      update(data, loading)
+    } else {
+      update([], true)
+    }
   }, [data, loading, update])
+
+  useEffect(() => {
+    setGetDataFunc(run)
+  }, [setGetDataFunc, run])
+}
+
+interface UserFundListType {
+  fundList: FundUserListDataProps[]
+  loading: boolean
+  update: (manageFundList: FundUserListDataProps[], loading: boolean) => void
+  getData: () => void
+}
+
+export const useUserFundList = (): UserFundListType => {
+  const { fundList, loading, update, getData } = useStoreUserFundList((state: any) => ({
+    fundList: state.fundList,
+    loading: state.loading,
+    update: state.update,
+    getData: state.getData
+  }))
+
+  return {
+    fundList,
+    loading,
+    update,
+    getData
+  }
+}
+
+export const useGetUserFundList = () => {
+  const { signer } = useProfile()
+  const { getUserFundList } = FundReader
+  const { update, setGetDataFunc } = useStoreUserFundList((state: any) => ({
+    update: state.update,
+    setGetDataFunc: state.setGetDataFunc
+  }))
+
+  const { data, loading, run } = useRequest(
+    async () => {
+      if (signer) return await getUserFundList(signer)
+    },
+    {
+      refreshDeps: [signer]
+    }
+  )
+  useEffect(() => {
+    if (data) {
+      update(data, loading)
+    } else {
+      update([], true)
+    }
+  }, [data, loading, update, signer])
 
   useEffect(() => {
     setGetDataFunc(run)

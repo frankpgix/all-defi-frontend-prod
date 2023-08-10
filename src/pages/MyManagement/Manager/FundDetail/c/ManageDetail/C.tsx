@@ -52,14 +52,27 @@ export const SectionItem: FC<{
   children?: ReactNode
   popper?: string
   popperWidth?: string
-}> = ({ label, value, children, popper, popperWidth }) => {
+  loading?: boolean
+}> = ({ label, value, children, popper, popperWidth, loading }) => {
   return (
     <div className="web-manage-fund-section-item">
       <label>
         {label}
         {popper && <Popper size="mini" content={popper} width={popperWidth}></Popper>}
       </label>
-      <span>{children || value}</span>
+      {loading ? (
+        <ContentLoader
+          width={100}
+          height={40}
+          viewBox="0 0 100 40"
+          backgroundColor="#eaeced"
+          foregroundColor="#ffffff"
+        >
+          <rect x="0" y="5" rx="4" ry="4" width="100" height="30" />
+        </ContentLoader>
+      ) : (
+        <span>{children || value}</span>
+      )}
     </div>
   )
 }
