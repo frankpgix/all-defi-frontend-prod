@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Table from 'rc-table'
 import dayjs from 'dayjs'
+import ContentLoader from 'react-content-loader'
 
 // import FundManager, { FundDetailProps } from '@/class/FundManager'
 // import FundReader from '@/class/FundReader'
@@ -15,29 +16,13 @@ import FundSettleButton from '@/pages/MyManagement/Manager/FundDetail/c/FundSett
 import RoeShow from '@@/common/RoeShow'
 import { FundName } from '@@/common/FundIcon'
 import TokenValue from '@@/common/TokenValue'
-import { TableLoading, TableNoData } from '@@/common/TableEmpty'
+import { TableNoData } from '@@/common/TableEmpty'
 
 const FundList: FC = () => {
   // const { account: address } = useProfile()
   const navigate = useNavigate()
   const { manageFundList, loading, getData } = useManageFundList()
-  // const { getData } = useGetManageFundList()
-  // const { getManagerFundList } = FundReader
-  // const [list, setList] = useState<FundDetailProps[]>([])
-  // const [loading, setLoading] = useState<boolean>(false)
 
-  // const getData = useCallback(async () => {
-  //   if (address) {
-  //     setLoading(true)
-  //     const res = await getManagerFundList(address)
-  //     // console.log(2222, res)
-  //     if (res) setList(res)
-  //     setLoading(false)
-  //   }
-  // }, [address, getManagerFundList])
-
-  // useEffect(() => void getData(), [getData])
-  // const getData = () => {}
   const webColumns = [
     {
       title: 'Name',
@@ -119,22 +104,52 @@ const FundList: FC = () => {
     <>
       <div className="web-buy-table-layout">
         <h2>Fund List</h2>
-        {loading ? (
-          <TableLoading />
-        ) : (
-          <Table
-            className="web-buy-table"
-            // @ts-ignore
-            columns={webColumns}
-            emptyText={<TableNoData />}
-            data={manageFundList}
-            rowKey="address"
-            rowClassName="cup"
-            onRow={onRow}
-          />
-        )}
+        <Table
+          className="web-buy-table"
+          // @ts-ignore
+          columns={webColumns}
+          emptyText={loading ? <TableLoading /> : <TableNoData />}
+          data={manageFundList}
+          rowKey="address"
+          rowClassName="cup"
+          onRow={onRow}
+        />
       </div>
     </>
   )
 }
 export default FundList
+
+const TableLoading = () => {
+  return (
+    <ContentLoader
+      width={1120}
+      height={120}
+      viewBox="0 0 1120 120"
+      backgroundColor="#eaeced"
+      foregroundColor="#ffffff"
+    >
+      <circle cx="16" cy="16" r="16" />
+      <rect x="40" y="4" rx="4" ry="4" width="100" height="24" />
+      <rect x="240" y="4" rx="4" ry="4" width="80" height="24" />
+      <rect x="360" y="4" rx="4" ry="4" width="80" height="24" />
+      <rect x="500" y="4" rx="4" ry="4" width="80" height="24" />
+      <rect x="620" y="4" rx="4" ry="4" width="80" height="24" />
+      <rect x="740" y="4" rx="4" ry="4" width="80" height="24" />
+      <rect x="860" y="4" rx="4" ry="4" width="80" height="24" />
+      <rect x="980" y="4" rx="4" ry="4" width="30" height="24" />
+      <rect x="1060" y="4" rx="4" ry="4" width="50" height="24" />
+
+      <circle cx="16" cy="76" r="16" />
+      <rect x="40" y="64" rx="4" ry="4" width="100" height="24" />
+      <rect x="240" y="64" rx="4" ry="4" width="80" height="24" />
+      <rect x="360" y="64" rx="4" ry="4" width="80" height="24" />
+      <rect x="500" y="64" rx="4" ry="4" width="80" height="24" />
+      <rect x="620" y="64" rx="4" ry="4" width="80" height="24" />
+      <rect x="740" y="64" rx="4" ry="4" width="80" height="24" />
+      <rect x="860" y="64" rx="4" ry="4" width="80" height="24" />
+      <rect x="980" y="64" rx="4" ry="4" width="30" height="24" />
+      <rect x="1060" y="64" rx="4" ry="4" width="50" height="24" />
+    </ContentLoader>
+  )
+}
