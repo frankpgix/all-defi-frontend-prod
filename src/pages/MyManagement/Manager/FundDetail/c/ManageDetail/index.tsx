@@ -10,7 +10,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 // import { FundBaseProps, FundDetailProps } from '@/class/Fund'
 // import { FundStakeProps } from '@/class/FundManager'
 import { formatNumber } from '@/utils/tools'
-import { useFundDetail } from '@/graphql/useFundData'
+// import { useFundDetail } from '@/graphql/useFundData'
 import { getTokenByAddress } from '@/config/tokens'
 
 import { FundBaseProps, FundDetailProps, FundStakeProps, FundBreachDetailProps } from '@/class/help'
@@ -21,7 +21,7 @@ import Button from '@@/common/Button'
 import Alert from '@@/common/Alert'
 import Blank from '@@/common/Blank'
 // import PercentageLine from '@@/common/PercentageLine'
-import RoeShow from '@@/common/RoeShow'
+// import RoeShow from '@@/common/RoeShow'
 import TokenValue from '@@/common/TokenValue'
 // import Blank from '@@/common/Blank'
 // import Popper from '@@/common/Popper'
@@ -47,11 +47,12 @@ interface Props {
   stake: FundStakeProps
   breach: FundBreachDetailProps
   fundAddress: string
+  loading: boolean
   getData: () => void
 }
 
-const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getData }) => {
-  const { data: currFund } = useFundDetail(fundAddress)
+const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getData, loading }) => {
+  // const { data: currFund } = useFundDetail(fundAddress)
   // console.log('currFund', currFund)
   const percent = useMemo(
     () =>
@@ -107,10 +108,12 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
       <CountLayout>
         <CountItem
           label="Fund AUM"
+          loading={loading}
           value={<TokenValue value={data.aum} token={baseToken} size="small" format="0,0.00" />}
         />
         <CountItem
           label="Cash Balance"
+          loading={loading}
           value={
             <TokenValue value={data.unusedAsset} token={baseToken} size="small" format="0,0.00" />
           }
@@ -118,6 +121,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
         <CountItem
           label="Expected Cash For Next Round"
           popper="Required cash need to be prepared before this Epoch settlement"
+          loading={loading}
           value={
             <TokenValue
               value={nextRoundCashNewCalc}
@@ -130,6 +134,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
         {/* redeemingShares * sharePrice */}
         <CountItem
           label="Current Share Price"
+          loading={loading}
           value={
             <TokenValue value={data.sharePrice} token={baseToken} size="small" format="0,0.00" />
           }
@@ -169,19 +174,23 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           <SectionLayout col="3">
             <SectionItem
               label="Create Time"
+              loading={loading}
               value={dayjs(data.subscribeEndTime).format('MMM DD, YYYY hh:mm:ss A')}
             />
             {/* <SectionItem label="当前用户数量" value="No Data" /> */}
             <SectionItem
               popper="Number of Epochs since inception"
               label=" Round Duration"
+              loading={loading}
               value={data.epochIndex}
             />
-            <SectionItem label="Denomination Asset" value={baseToken.name} />
+
+            <SectionItem label="Denomination Asset" loading={loading} value={baseToken.name} />
           </SectionLayout>
           <SectionLayout col="3">
             <SectionItem
               label="Minimum Deposit Amount"
+              loading={loading}
               value={
                 <TokenValue
                   value={base.subscriptionMinLimit}
@@ -193,6 +202,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             />
             <SectionItem
               label="Maximum Deposit Amount"
+              loading={loading}
               value={
                 <TokenValue
                   value={base.subscriptionMaxLimit}
@@ -202,7 +212,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
                 />
               }
             />
-            <SectionItem label="Incentive Rate" value="20%" />
+            <SectionItem label="Incentive Rate" loading={loading} value="20%" />
           </SectionLayout>
 
           {/*          <SectionBlank /><SectionHeader name="Slippage Information" />
@@ -306,6 +316,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           <SectionLayout col="2">
             <SectionItem
               label="Current Epoch Manager Fee"
+              loading={loading}
               value={
                 <TokenValue value={currManagerFee} token={baseToken} size="mini" format="0,0.00" />
               }
@@ -313,6 +324,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             {/* min 0 (aum * roe) * 20%  */}
             <SectionItem
               label="Unsettled Manager Fee"
+              loading={loading}
               value={
                 <TokenValue value={data.managerFee} token={baseToken} size="mini" format="0,0.00" />
               }
@@ -322,6 +334,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           <SectionLayout col="2">
             <SectionItem
               label="Previous Epoch Settled Manager Fee"
+              loading={loading}
               value={
                 <TokenValue
                   value={data.lastManagerFee}
@@ -333,6 +346,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             />
             <SectionItem
               label="Average Price"
+              loading={loading}
               value={
                 <TokenValue value={data.costPrice} token={baseToken} size="mini" format="0,0.00" />
               }
@@ -343,6 +357,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           <SectionLayout col="3">
             <SectionItem
               label="Current Epoch Platform Fee"
+              loading={loading}
               value={
                 <TokenValue
                   value={currManagerFee / 2}
@@ -354,6 +369,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             />
             <SectionItem
               label="Unsettled Platform Fee"
+              loading={loading}
               popper="Unsettled fee to manager can be claimed when investors redeem or after 6 Epochs"
               value={
                 <TokenValue value={data.platFee} token={baseToken} size="mini" format="0,0.00" />
@@ -361,6 +377,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             />
             <SectionItem
               label="Previous Epoch Settled Platform Fee"
+              loading={loading}
               value={
                 <TokenValue
                   value={data.lastManagerFee / 2}
@@ -377,15 +394,21 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           <SectionLayout col="2">
             <SectionItem
               label="PRE-Settlement Date"
+              loading={loading}
               value={dayjs(data.subscribeEndTime).format('MMM DD, YYYY hh:mm:ss A')}
             />
             <SectionItem
               label="Semi-open dates"
+              loading={loading}
               value={dayjs(data.subscribeRedeemEndTime).format('MMM DD, YYYY hh:mm:ss A')}
             />
           </SectionLayout>
           <SectionLayout col="3">
-            <SectionItem label="Redeeming Amount" popper="Total amount of Shares under redemption">
+            <SectionItem
+              label="Redeeming Amount"
+              loading={loading}
+              popper="Total amount of Shares under redemption"
+            >
               {formatNumber(data.redeemingShares, 2, '0,0.00')} Shares ≈{' '}
               {/*formatNumber(BN(data.redeemingShares).times(data.sharePrice).toNumber(), 2, '$0,0.00')*/}
               <TokenValue
@@ -397,6 +420,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             </SectionItem>
             <SectionItem
               label="Subscribing Amount"
+              loading={loading}
               popper="Total value under subscription"
               value={
                 <TokenValue
@@ -407,7 +431,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
                 />
               }
             />
-            <SectionItem label="Fund AUM Available for Subscribtion">
+            <SectionItem loading={loading} label="Fund AUM Available for Subscribtion">
               {/*formatNumber(
                 Math.max(BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(), 0),
                 2,
@@ -430,6 +454,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           <SectionLayout col="3">
             <SectionItem
               label="ALL Token Staking Value"
+              loading={loading}
               // value={formatNumber(stake.valueInUSD, 4, '$0,0.0000')}
               value={
                 <TokenValue
@@ -442,11 +467,13 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             />
             <SectionItem
               label="ALL Token Staking Amount"
+              loading={loading}
               value={formatNumber(stake.stakeAmount, 2, '0,0.00')}
             />
             <SectionItem
               label="Max AUM Limit"
               popper="Max AUM Limit of the fund"
+              loading={loading}
               value={
                 <TokenValue
                   value={data.realtimeAUMLimit}
@@ -472,16 +499,19 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           <SectionLayout col="3">
             <SectionItem
               label="Locked From Last Epoch"
+              loading={loading}
               popper="Frozen ALL tokens due to violation of rules. It will be unfreeze at next Epoch if rules are obeyed"
               value={formatNumber(breach.latestFrozenALL, 2, '0,0.00')}
             />
             <SectionItem
               label="Deducted From Last Epoch"
+              loading={loading}
               popper="ALL tokens that are permanently confiscated due to continuous violation of rules"
               value={formatNumber(breach.latestConfiscatedALL, 2, '0,0.00')}
             />
             <SectionItem
               label="Manager ALL Token Staking Ratio"
+              loading={loading}
               popper="Ratio of the fund's Max AUM Limit to the fund's current AUM. If such ratio is less than 100%, manager can not claim all the incentive fee. The Staking Ratio of the Last Epoch is calculated by the fund's Max AUM Limit divided by the fund's AUM in the last Epoch. This ratio decides whether manager can receive 100% of the incentive fee of last Epoch"
               value={`${managerALLStakingRatio}%`}
             />
@@ -491,14 +521,20 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
               label="Current Manager All Token Staking Ratio"
               popper="The Staking Ratio of the Current Epoch is calculated by the real-time data of the fund's Max AUM Limit divided by the fund's NAV now. Manager can decide whether to stake more ALL Token in order to get 100% of the incentive fee in the next Epoch. When the Staking Ratio of the Current Epoch is less than 100%, please stake more ALL Token before end of current Epoch to sure to receive 100% of the incentive fee during settlement."
               popperWidth="400px"
+              loading={loading}
               value={`${currmanagerALLStakingRatio}%`}
             />
             <SectionItem
               label="Previous Epoch Redemption Rate"
+              loading={loading}
               popper="Redemption Fulfilled Ratio of last Epoch. The ratio less than 100% means there is not enough cash to meet all the redemption requests at last settlement. Redemption Fulfilled Ratio: (Available Cash Balance - Fees) / Total Redemption Value"
               value={`${data.lastRedemptionRatio}%`}
             />
-            <SectionItem label="Consecutive Default" value={breach.continuousBreachTimes} />
+            <SectionItem
+              label="Consecutive Default"
+              loading={loading}
+              value={breach.continuousBreachTimes}
+            />
           </SectionLayout>
         </TabPanel>
         <TabPanel>
