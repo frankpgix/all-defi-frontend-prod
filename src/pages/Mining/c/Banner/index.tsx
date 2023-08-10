@@ -10,13 +10,11 @@ import { useFundList } from '@/hooks/useFund'
 import Chart from './Chart'
 import Counts from './Counts'
 
-const Banner: FC = () => {
+const Banner: FC<{ loading: boolean }> = ({ loading }) => {
   const [timeType, setTimeType] = useState<string>('DAY')
   const [total, setTotal] = useState(0)
-  // const { data: chartData = [], loading: chartLoading } = useMiningData(timeType)
-  // const { chartData, loading: chartLoading } = { chartData: [], loading: true }
-  // console.log(chartData)
-  const { fundList, loading } = useFundList()
+
+  const { fundList, loading: listLoading } = useFundList()
   const funds = useMemo(() => fundList.map((item) => item.address), [fundList])
   const fundsName = useMemo(() => fundList.map((item) => item.name), [fundList])
   const startTime = useMemo(() => min(fundList.map((item) => item.createTime)), [fundList])
@@ -25,7 +23,6 @@ const Banner: FC = () => {
     () => calcMiningData(JSON.stringify(funds), timeType, startTime ?? 0),
     [funds, timeType, startTime]
   )
-  // console.log(gql.loc?.source.body)
   const { data: chartData, loading: chartLoading } = useMiningData(gql, fundsName, timeType)
   const chartDataStr = useMemo(() => JSON.stringify(chartData), [chartData])
   const setTotalFunc = useCallback(async () => {
@@ -38,27 +35,13 @@ const Banner: FC = () => {
             return 0
           })
         )
-        console.log(totalSum)
         setTotal(totalSum)
       }
     }
   }, [timeType, chartDataStr])
-  console.log(chartData)
-  // const { data } = useMiningTotalData()
+
   useEffect(() => {
     void setTotalFunc()
-    // if (timeType === 'DAY') {
-    //   const o = last(chartData)
-    //   if (o) {
-    //     const totalSum = sum(
-    //       Object.keys(o).map((key: string) => {
-    //         if (key !== 'time') return o[key]
-    //         return 0
-    //       })
-    //     )
-    //     setTotal(totalSum)
-    //   }
-    // }
   }, [setTotalFunc])
   // return null
   return (
@@ -75,10 +58,10 @@ const Banner: FC = () => {
           />
         </header>
         <section>
-          <Chart data={chartData} loading={loading || chartLoading} />
+          <Chart data={chartData} loading={listLoading || chartLoading} />
         </section>
       </div>
-      <Counts totalStakeValue={total} />
+      <Counts totalStakeValue={total} loading={chartLoading || loading} />
     </section>
   )
 }

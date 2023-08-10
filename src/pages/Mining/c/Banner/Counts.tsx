@@ -9,27 +9,28 @@ import DataItem from '@@/common/DataItem'
 
 interface Props {
   totalStakeValue: number
+  loading: boolean
 }
 
-const Counts: FC<Props> = ({ totalStakeValue }) => {
+const Counts: FC<Props> = ({ totalStakeValue, loading }) => {
   const { getRewardsALLBalance } = Reward
   // const { allTokenPrice } = AllProtocol
   // const { data: globalALLAmount = 0 } = useRequest(globalAccClaimedReward)
   // const { data: allPrice = 0 } = useRequest(allTokenPrice)
-  const { data: sALL = 0 } = useRequest(getRewardsALLBalance)
+  const { data: sALL = 0, loading: sALLLoading } = useRequest(getRewardsALLBalance)
   // const globalRewardALLValue = useMemo(
   //   () => BN(globalALLAmount).times(allPrice).toNumber(),
   //   [allPrice, globalALLAmount]
   // )
   return (
     <section className="web-mining-counts">
-      <DataItem label="Global Staked Share Value">
+      <DataItem label="Global Staked Share Value" loading={loading}>
         <div className="web-mining-counts-roe">
           {formatNumber(totalStakeValue, 2, '$0,0.00')} <br />
           {/*<RoeShow value={0.2} subArrow />*/}
         </div>
       </DataItem>
-      <DataItem label="Global Staked sALL Quantity" normalFont>
+      <DataItem label="Global Staked sALL Quantity" normalFont loading={sALLLoading}>
         <div className="web-mining-counts-roe">
           {formatNumber(sALL, 2, '0,0.00')} <br />
           {/*<RoeShow value={-0.2} subArrow />*/}

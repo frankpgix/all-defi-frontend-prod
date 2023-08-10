@@ -17,8 +17,9 @@ import { notify } from '@@/common/Toast'
 
 interface Props {
   stakeSharesValue: number
+  loading: boolean
 }
-const Dashboard: FC<Props> = ({ stakeSharesValue }) => {
+const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
   const { userRewardDashboard, harvestAll } = Reward
   const { signer, account: address } = useProfile()
 
@@ -57,13 +58,13 @@ const Dashboard: FC<Props> = ({ stakeSharesValue }) => {
     <>
       <section className="web-mining-dashboard">
         <main>
-          <DataItem label="You Staked Value">
+          <DataItem label="You Staked Value" loading={loading}>
             {formatNumber(stakeSharesValue, 2, '$0,0.00')}
           </DataItem>
-          <DataItem label="You Staked sALL" normalFont>
+          <DataItem label="You Staked sALL" normalFont loading={loading}>
             {formatNumber(rewardDashboard.sALL, 2, '0,0.00')}
           </DataItem>
-          <DataItem label="Claimable ALL Profit">
+          <DataItem label="Claimable ALL Profit" loading={loading}>
             <em>{formatNumber(pendingReward, 4, '0,0.0000')}</em>
             <button className="add-token-button" onClick={addAllTokenToWallet}>
               +

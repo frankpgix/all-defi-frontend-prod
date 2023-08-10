@@ -46,17 +46,11 @@ const Mining: FC = () => {
       <header className="web-mining-header">All Mining</header>
       <Help />
 
-      {loading ? (
-        <MiningLoading />
-      ) : (
-        <>
-          <Banner />
-          <Dashboard stakeSharesValue={stakeSharesValue} />
-          <Tab activeIndex={tabActiveIndex} onChange={setTabActiveIndex} />
-          {tabActiveIndex === 0 && <Stake list={stakeList ?? []} getData={getData} />}
-          {tabActiveIndex === 1 && <UnStake list={stakeList ?? []} getData={getData} />}
-        </>
-      )}
+      <Banner loading={loading} />
+      <Dashboard stakeSharesValue={stakeSharesValue} loading={loading} />
+      <Tab activeIndex={tabActiveIndex} onChange={setTabActiveIndex} />
+      {tabActiveIndex === 0 && <Stake list={stakeList ?? []} getData={getData} />}
+      {tabActiveIndex === 1 && <UnStake list={stakeList ?? []} getData={getData} />}
 
       {/* <Loading type="fixed" show={loading} /> */}
     </>
