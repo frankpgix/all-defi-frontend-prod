@@ -44,6 +44,18 @@
       // }
     }
   }
+  &.has-children {
+    border-bottom: 1px dashed $gray;
+  }
+  &.has-children &-content {
+    text-align: left;
+    right: auto;
+    left: -10px;
+    top: 10px;
+    p {
+      border-radius: 0px 10px 10px 10px;
+    }
+  }
   &-size-default &-icon {
     width: 16px;
     height: 16px;
@@ -64,6 +76,9 @@
 
   &.white {
     opacity: 0.9;
+  }
+  &.white.has-children {
+    border-bottom: 1px dashed $cff;
   }
 
   &:hover &-content {

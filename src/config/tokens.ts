@@ -40,7 +40,7 @@ export const tokenss: { [key: string]: Token } = {
     18,
     4,
     '',
-    'symbol/eth.svg'
+    'symbol/eth-blue.png'
   ),
   ETH: new Token(
     'ETH',
@@ -53,7 +53,7 @@ export const tokenss: { [key: string]: Token } = {
     18,
     4,
     '',
-    'symbol/eth.svg'
+    'symbol/eth-blue.png'
   ),
   acETH: new Token(
     'acETH',
@@ -66,7 +66,7 @@ export const tokenss: { [key: string]: Token } = {
     18,
     4,
     '',
-    'symbol/eth.svg'
+    'symbol/eth-blue.png'
   ),
   ALLTOKEN: new Token(
     'ALLTOKEN',

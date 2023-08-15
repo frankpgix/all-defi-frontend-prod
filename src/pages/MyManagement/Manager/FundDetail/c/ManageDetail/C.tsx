@@ -18,7 +18,14 @@ export const CountItem: FC<{
   return (
     <div className="web-manage-fund-count-item">
       <label>
-        {label} {popper && <Popper content={popper} white width={popperWidth} />}
+        {/* {label} {popper && <Popper content={popper} white width={popperWidth} />} */}
+        {popper ? (
+          <Popper white content={popper} width={popperWidth}>
+            {label}
+          </Popper>
+        ) : (
+          label
+        )}
       </label>
       {loading ? (
         <ContentLoader
@@ -57,8 +64,16 @@ export const SectionItem: FC<{
   return (
     <div className="web-manage-fund-section-item">
       <label>
-        {label}
-        {popper && <Popper size="mini" content={popper} width={popperWidth}></Popper>}
+        {/* {label}
+        {popper && <Popper size="mini" content={popper} width={popperWidth}></Popper>} */}
+
+        {popper ? (
+          <Popper size="mini" content={popper} width={popperWidth}>
+            {label}
+          </Popper>
+        ) : (
+          label
+        )}
       </label>
       {loading ? (
         <ContentLoader

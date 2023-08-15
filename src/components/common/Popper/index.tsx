@@ -22,8 +22,17 @@ const Popper: FC<Props> = ({ children, content, className, size = 'default', whi
   // useClickAway(clsePopper, ref)
 
   return (
-    <div className={classNames('c-popper', `c-popper-size-${size}`, className, { white })}>
-      {children ? children : <Image src={`icon/popper${white ? '-white' : ''}.svg`} className="c-popper-icon" />}
+    <div
+      className={classNames('c-popper', `c-popper-size-${size}`, className, {
+        white,
+        'has-children': Boolean(children)
+      })}
+    >
+      {children ? (
+        children
+      ) : (
+        <Image src={`icon/popper${white ? '-white' : ''}.svg`} className="c-popper-icon" />
+      )}
       {content && (
         <div className="c-popper-content" style={{ minWidth: width || 'auto' }}>
           <p>{content}</p>

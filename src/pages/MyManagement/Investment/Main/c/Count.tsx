@@ -239,13 +239,7 @@ const CountDetail: FC = () => {
             />
             {/*{formatNumber(activeData.sharePrice, 2, '$0,0.00')}*/}
           </SectionItem>
-          <SectionItem
-            label={
-              <>
-                Fund AUM <Popper content="Fund's AUM, update after settlement" />
-              </>
-            }
-          >
+          <SectionItem label="Fund AUM" popper="Fund's AUM, update after settlement">
             <TokenValue value={activeData.aum} token={baseToken} size="mini" format="0,0.00" />
             {/*{formatNumber(activeData.aum, 2, '$0,0.00')}*/}
           </SectionItem>

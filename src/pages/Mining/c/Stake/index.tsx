@@ -71,7 +71,13 @@ const Stake: FC<StakeProps> = ({ list, getData }) => {
       <div className="web-mining-stake">
         <main>
           <StakeHeader title="Select Shares" />
-          <StakeFundInput list={list} onSelect={setFund} value={amount} onChange={setAmount} maxNumber={maxNumber} />
+          <StakeFundInput
+            list={list}
+            onSelect={setFund}
+            value={amount}
+            onChange={setAmount}
+            maxNumber={maxNumber}
+          />
           <footer className="web-mining-stake-footer">
             <Button onClick={onAddShareFunc} disabled={!amount}>
               Add
@@ -89,7 +95,12 @@ const Stake: FC<StakeProps> = ({ list, getData }) => {
         </main>
       </div>
 
-      <PreView funds={fundArray} onDelete={onDelFunc} sAllAmount={sAllPreAmount} getData={onGetData} />
+      <PreView
+        funds={fundArray}
+        onDelete={onDelFunc}
+        sAllAmount={sAllPreAmount}
+        getData={onGetData}
+      />
     </div>
   )
 }

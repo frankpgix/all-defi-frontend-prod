@@ -179,8 +179,13 @@ const DashboardItem: FC<{
   return (
     <dl>
       <dt>
-        {label}
-        {popper && <Popper size="mini" content={popper} />}
+        {popper ? (
+          <Popper size="mini" content={popper}>
+            {label}
+          </Popper>
+        ) : (
+          label
+        )}
       </dt>
       <dd>
         {loading ? (

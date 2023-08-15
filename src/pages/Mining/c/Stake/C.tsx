@@ -28,8 +28,9 @@ export const StakeSAllInput: FC<StakeSAllInputProps> = ({ value, onChange, maxNu
     <div className="web-mining-stake-sall">
       <h4>
         <Image src="icon/sall-token.png" />
-        <strong>sALL</strong>
-        <Popper content="sALL token can not be unstaked after staking" />
+        <strong>
+          <Popper content="sALL token can not be unstaked after staking">sALL</Popper>
+        </strong>
       </h4>
       <Input
         value={value}
@@ -62,7 +63,14 @@ interface StakeFundInputProps extends FundSelectProps, StakeSAllInputProps {
   unStake?: boolean
 }
 
-export const StakeFundInput: FC<StakeFundInputProps> = ({ list, onSelect, value, onChange, maxNumber, unStake }) => {
+export const StakeFundInput: FC<StakeFundInputProps> = ({
+  list,
+  onSelect,
+  value,
+  onChange,
+  maxNumber,
+  unStake
+}) => {
   return (
     <div className="web-mining-stake-fund">
       <FundSelect list={list} onSelect={onSelect} unStake={unStake} />

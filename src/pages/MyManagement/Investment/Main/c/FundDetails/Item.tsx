@@ -104,7 +104,7 @@ const FundItem: FC<Props> = ({
               <ul>
                 <li>
                   <label>
-                    current subscription <Popper content="Fund's value under subscription" />
+                    <Popper content="Fund's value under subscription">Current Subscription</Popper>
                   </label>
                   <em>
                     <TokenValue
@@ -130,7 +130,7 @@ const FundItem: FC<Props> = ({
                 </li>
                 <li>
                   <label>
-                    current redemption <Popper content="Amount of Shares under redemption" />
+                    <Popper content="Amount of Shares under redemption">Current Redemption</Popper>
                   </label>
                   <em>
                     {formatNumber(fund.data.redeemingShares, 4, '0,0.0000')}
@@ -157,12 +157,8 @@ const FundItem: FC<Props> = ({
               </SectionItem>
               <section>
                 <SectionItem
-                  label={
-                    <>
-                      Cumulated Investment Profit{' '}
-                      <Popper content="Historic cumulative profit and loss" />
-                    </>
-                  }
+                  label="Cumulated Investment Profit"
+                  popper="Historic cumulative profit and loss"
                 >
                   <TokenValue
                     value={fund.data.historyReturn}
@@ -172,12 +168,8 @@ const FundItem: FC<Props> = ({
                   />
                 </SectionItem>
                 <SectionItem
-                  label={
-                    <>
-                      Claimable AC token{' '}
-                      <Popper content="Please use redemption function to claim your AC token" />
-                    </>
-                  }
+                  label="Claimable AC token"
+                  popper="Please use redemption function to claim your AC token"
                 >
                   <TokenValue
                     value={fund.data.unclaimedACToken}
