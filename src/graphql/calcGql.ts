@@ -162,7 +162,6 @@ export const calcManageFundDetailData = (
   createTime: number | string
 ) => {
   const { tableName, startTime } = calcTableAndStartTime(type, Number(createTime))
-  console.log(11111)
   return gql`
     query {
       ${tableName}(

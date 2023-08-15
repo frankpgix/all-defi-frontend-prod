@@ -17,6 +17,9 @@ const derivativesConfig: derivativesType = {
   },
   GMXEarn: {
     url: 'https://app.gmx.io/#/earn'
+  },
+  OneInch: {
+    url: 'https://app.1inch.io/'
   }
 }
 

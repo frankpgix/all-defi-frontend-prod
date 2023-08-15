@@ -16,9 +16,10 @@ interface Props {
   fundAddress: string
   data: FundDetailProps
   base: FundBaseProps
+  loading: boolean
 }
 
-const Dashboard: FC<Props> = ({ fundAddress, data, base }) => {
+const Dashboard: FC<Props> = ({ fundAddress, data, base, loading }) => {
   const [timeType, setTimeType] = useState<string>('DAY')
   const baseToken = useMemo(() => {
     return getTokenByAddress(data.baseToken)
@@ -34,7 +35,7 @@ const Dashboard: FC<Props> = ({ fundAddress, data, base }) => {
     () => calcFundDatasGql(fundAddress, timeType, ~~(base.createTime / 1000)),
     [fundAddress, timeType, base.createTime]
   )
-  const { loading, data: chartData } = useFundData(
+  const { loading: chartLoading, data: chartData } = useFundData(
     gql,
     timeType,
     baseToken.decimals,
@@ -66,7 +67,7 @@ const Dashboard: FC<Props> = ({ fundAddress, data, base }) => {
           valueFormatStr={areaValueFormatStr}
         />
       </div>
-      <Loading type="float" show={loading} />
+      <Loading type="float" show={loading || chartLoading} />
     </div>
   )
 }

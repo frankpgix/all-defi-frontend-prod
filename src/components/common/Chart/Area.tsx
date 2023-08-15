@@ -82,7 +82,7 @@ const AreaC: FC<Props> = ({
       >
         <defs>
           <linearGradient id={chartId} x1="0" y1="0" x2="0.5" y2="1">
-            <stop offset="5%" stopColor={isLoading ? '#c4c4c4' : '#A7BFFF'} stopOpacity={0.3} />
+            <stop offset="5%" stopColor={isLoading ? '#E1E1E1' : '#A7BFFF'} stopOpacity={0.3} />
             <stop offset="95%" stopColor="#A7BFFF" stopOpacity={0.1} />
           </linearGradient>
         </defs>
@@ -105,7 +105,7 @@ const AreaC: FC<Props> = ({
         <Area
           type="monotone"
           dataKey={yKey}
-          stroke={isLoading ? '#c4c4c4' : '#1137E6'}
+          stroke={isLoading ? '#efefef' : '#1137E6'}
           fillOpacity={1}
           strokeWidth={2}
           fill={`url(#${chartId})`}

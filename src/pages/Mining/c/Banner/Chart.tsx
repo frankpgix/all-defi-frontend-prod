@@ -58,6 +58,12 @@ const Chart: FC<Props> = ({ data, loading }) => {
           bottom: 0
         }}
       >
+        <defs>
+          <linearGradient id="love" x1="0" y1="0" x2="0.5" y2="1">
+            <stop offset="5%" stopColor="#E1E1E1" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1} />
+          </linearGradient>
+        </defs>
         {colors.map((color: string) => (
           <defs key={color}>
             <linearGradient id={color.replace('#', '')} x1="0" y1="0" x2="0.5" y2="1">
@@ -66,14 +72,13 @@ const Chart: FC<Props> = ({ data, loading }) => {
             </linearGradient>
           </defs>
         ))}
-        <defs>
-          <linearGradient id="gray" x1="0" y1="0" x2="0.5" y2="1">
-            <stop offset="5%" stopColor="#c4c4c4'" stopOpacity={0.3} />
-            <stop offset="95%" stopColor="#A7BFFF" stopOpacity={0.1} />
-          </linearGradient>
-        </defs>
+
         <XAxis dataKey="time" hide />
-        <YAxis tickFormatter={toPercent} hide />
+        <YAxis
+          tickFormatter={toPercent}
+          hide
+          domain={[(dataMin: number) => dataMin * 0.9, (dataMax: number) => dataMax * 1.1]}
+        />
         {!loading && data.length && <Tooltip content={renderTooltipContent} active />}
         {areaKeys.map((key, index) => {
           const color = colors[index % 4]
@@ -93,11 +98,11 @@ const Chart: FC<Props> = ({ data, loading }) => {
         {loading && (
           <Area
             type="monotone"
-            stroke={'#c4c4c4'}
+            stroke={'#efefef'}
             dataKey="x"
             stackId="1"
             strokeWidth={2}
-            fill={`url(#gray)`}
+            fill={`url(#love)`}
           />
         )}
       </AreaChart>

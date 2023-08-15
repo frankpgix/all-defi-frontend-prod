@@ -24,7 +24,7 @@ const Chart: FC = () => {
     () => calcManageFundDetailData(JSON.stringify(funds), timeType, startTime ?? 0),
     [funds, timeType, startTime]
   )
-  console.log(gql)
+  console.log(11111, funds, gql)
   // const fundsAddress = useMemo(() => manageFundList.map((item) => item.address), [manageFundList])
   // console.log(manageFundList, startTime)
 
@@ -32,7 +32,7 @@ const Chart: FC = () => {
   // const { loading, data, count } = { loading: true, data: [], count: 0 }
   return (
     <section className="web-manage-manager-chart">
-      <Loading show={loading} type="float" />
+      <Loading show={loading || manageFundList.length === 0} type="float" />
       <header>
         <label>Total NAV</label>
         <em>{formatNumber(count, 2, '$0,0.00')}</em>

@@ -266,7 +266,6 @@ export const FundStakeDefault = {
 }
 export const calcFundStake = (address: string, item: any): FundStakeProps => {
   // const decimals = getDecimalsByAddress(address)
-  console.log(item, 2222333)
   return {
     stakeAmount: Number(safeInterceptionValues(item.stakeAmount)),
     valueInUSD: Number(safeInterceptionValues(item.valueInUSD))
