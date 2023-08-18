@@ -74,7 +74,11 @@ export const calcDateDuration = (date: string) => {
 }
 
 // split number
-export const safeInterceptionValues = (value: BigNumberish, decimal = 8, precision = 18): string => {
+export const safeInterceptionValues = (
+  value: BigNumberish,
+  decimal = 8,
+  precision = 18
+): string => {
   const isDecimal = toType(value) === 'object' && String(value).includes('.')
   const regexp = /(?:\.0*|(\.\d+?)0+)$/
   const _value = isDecimal ? (value as string) : formatUnits(value, precision)
@@ -136,13 +140,14 @@ export const createArrayByNumber = (length: number) => {
   return arr
 }
 
-export const arrayObjectUniq = (Arr: any[], id: string): any[] => {
-  const obj: Record<string, any> = {}
-  return Arr.reduce((setArr, item) => {
-    obj[item[id]] ? '' : (obj[item[id]] = true && setArr.push(item))
-    return setArr
-  }, [])
-}
+// export const arrayObjectUniq = (Arr: any[], id: string): any[] => {
+//   const obj: Record<string, any> = {}
+//   return Arr.reduce((setArr, item) => {
+//     // @ts-ignore
+//     obj[item[id]] ? '' : (obj[item[id]] = true && setArr.push(item))
+//     return setArr
+//   }, [])
+// }
 
 // 定义一个泛型函数，接受一个对象作为参数，返回一个 Record 类型的对象
 export function resetObjectValues<T extends object>(obj: T): Record<keyof T, number> {
@@ -155,4 +160,13 @@ export function resetObjectValues<T extends object>(obj: T): Record<keyof T, num
   }
   // 返回对象
   return result
+}
+
+// 生成随机UUID
+export const makeUUID = () => {
+  const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
+  const radix = chars.length
+  const uuid = []
+  for (let i = 0; i < 32; i++) uuid[i] = chars[0 | (Math.random() * radix)]
+  return uuid.join('')
 }

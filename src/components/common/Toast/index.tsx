@@ -58,7 +58,13 @@ export const notify = (msg: string | ReactNode, autoClose?: number | false) => {
   toastFn.info(<NotifyBody msg={msg} />, notifyOption(autoClose))
 }
 
-notify.update = (id: Id, type: TypeOptions, msg?: ReactNode, icon = true, autoClose?: number | false) => {
+notify.update = (
+  id: Id,
+  type: TypeOptions,
+  msg?: ReactNode,
+  icon = true,
+  autoClose?: number | false
+) => {
   const message = msg
     ? msg
     : type === 'success'
@@ -77,7 +83,10 @@ notify.update = (id: Id, type: TypeOptions, msg?: ReactNode, icon = true, autoCl
   })
 }
 notify.loading = (msg?: string | ReactNode, autoClose?: number | false) => {
-  return toastFn.loading(<NotifyBody msg={msg || defaultOption.pendingMsg} />, notifyOption(autoClose))
+  return toastFn.loading(
+    <NotifyBody msg={msg || defaultOption.pendingMsg} />,
+    notifyOption(autoClose)
+  )
 }
 notify.success = (msg?: string | ReactNode, autoClose?: number | false) => {
   toastFn.success(<NotifyBody msg={msg || defaultOption.successMsg} />, notifyOption(autoClose))

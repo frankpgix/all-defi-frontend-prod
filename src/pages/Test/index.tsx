@@ -8,7 +8,7 @@ import Toasts from './Toasts'
 
 const Test: FC = () => {
   const [name, setName] = useState('')
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(false)
   return (
     <div className="web-home">
       <Toasts />
