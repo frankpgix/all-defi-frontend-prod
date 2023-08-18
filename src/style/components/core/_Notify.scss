@@ -1,0 +1,96 @@
+.c-notify {
+  &-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    background: $blue;
+    border-radius: 50%;
+    cursor: pointer;
+    @include dz();
+    z-index: -1;
+    opacity: 0;
+
+    &.show {
+      z-index: 22;
+      opacity: 1;
+    }
+  }
+
+  &-layout {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 330px;
+    z-index: 22;
+    right: -330px;
+    @include dz();
+    &.show {
+      right: -10px;
+    }
+  }
+
+  &-list {
+    padding-top: 100px;
+    padding-right: 20px;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+
+  &-item {
+    background: $cff;
+    margin-bottom: 10px;
+    display: flex;
+    min-height: 52px;
+    border-radius: 10px;
+    align-items: center;
+    position: relative;
+    padding-left: 62px;
+    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
+
+    &-icon {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 52px;
+      border-radius: 10px 0 0 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span {
+        display: block;
+        width: 32px;
+        height: 32px;
+        background: center/24px no-repeat;
+      }
+    }
+
+    &.success &-icon {
+      span {
+        background-image: url($res + 'icon/toast-success.svg');
+      }
+      background-color: #13bc8b;
+    }
+    &.warning &-icon {
+      span {
+        background-image: url($res + 'icon/toast-error.svg');
+      }
+      background-color: #ff7701;
+    }
+    &.error &-icon {
+      span {
+        background-image: url($res + 'icon/toast-error.svg');
+      }
+      background-color: #fd3d60;
+    }
+    &.loading &-icon {
+      span {
+        background-image: url($res + 'icon/toast-wait.svg');
+        animation: Toastify__spin 0.65s linear infinite;
+      }
+      background-color: #ff7701;
+    }
+  }
+}

@@ -1,23 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-export interface NotifyItemType {
-  type: 'loading' | 'success' | 'warning' | 'error'
-  title?: string
-  content?: string
-}
-
-export interface NotifyStoreItemType extends NotifyItemType {
-  id: string
-}
-
-export interface NotifyStoreType {
-  notifyList: NotifyStoreItemType[]
-  notifyShow: boolean
-  updateNotifyList: (notifyList: NotifyStoreItemType[]) => void
-  openNotifyList: () => void
-  closeNotifyList: () => void
-}
+import type { NotifyStoreItemType, NotifyStoreType } from '@/types/notify'
 
 export const useNotifyStore = create(
   persist<NotifyStoreType>(

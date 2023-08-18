@@ -4,16 +4,53 @@ import Button from '@@/common/Button'
 import FundIcon from '@@/common/FundIcon'
 import Wait from '@@/common/Status/Wait'
 import ComingSoon from '@@/common/Dialog/ComingSoon'
+import { useNotify } from '@/hooks/useNotify'
 import Toasts from './Toasts'
 
 const Test: FC = () => {
   const [name, setName] = useState('')
   const [show, setShow] = useState(false)
+  const { createNotify } = useNotify()
   return (
     <div className="web-home">
+      <Button onClick={() => createNotify({ type: 'success', content: '创建一个消息成功了' })}>
+        创建消息
+      </Button>
+      <Button
+        onClick={() =>
+          createNotify({ type: 'success', title: '这是一个标题', content: '创建带标题的消息' })
+        }
+      >
+        创建带标题的消息
+      </Button>
+      <Button
+        onClick={() =>
+          createNotify({ type: 'warning', title: '这是一个标题', content: '创建警告的消息' })
+        }
+      >
+        创建警告的消息
+      </Button>
+      <Button
+        onClick={() =>
+          createNotify({ type: 'error', title: '这是一个标题', content: '创建错误的消息' })
+        }
+      >
+        创建错误的消息
+      </Button>
+      <Button
+        onClick={() =>
+          createNotify({
+            type: 'loading',
+            title: '这是一个标题',
+            content: '创建Loding的消息',
+            hash: '0x4751a349bd7af09de1b54eabc087e72cb8a78406bbcd67ea1d8bcea059255e2c'
+          })
+        }
+      >
+        创建Loding的消息
+      </Button>
       <Toasts />
-
-      <Input type="number" value={name} onChange={(val) => setName(val)} right></Input>
+      {/* <Input type="number" value={name} onChange={(val) => setName(val)} right></Input>
       <Button disabled>222</Button>
       <Button onClick={() => setShow(!show)}>Open Wait Modal</Button>
       <Button text>222</Button>
@@ -53,7 +90,7 @@ const Test: FC = () => {
       <FundIcon name="6" />
       <FundIcon name="7" />
       <FundIcon name="8" />
-      <FundIcon name="9" />
+      <FundIcon name="9" /> */}
     </div>
   )
 }

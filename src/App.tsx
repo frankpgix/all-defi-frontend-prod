@@ -13,6 +13,7 @@ import Header from '@@/web/Header'
 import Footer from '@@/web/Footer'
 import Global from '@/pages/Updaters/Global'
 import LoopData from '@@/common/LoopData'
+import Notify from '@@/core/Notify'
 
 const Home = lazy(() => import('@/pages/Home'))
 const Buy = lazy(() => import('@/pages/Buy'))
@@ -41,6 +42,7 @@ function App() {
       </div>
       <Footer />
       <ToastContainer pauseOnFocusLoss={true} pauseOnHover={true} />
+      {Notify}
     </>
   )
 }

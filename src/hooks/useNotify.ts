@@ -1,9 +1,6 @@
-import {
-  useNotifyStore,
-  NotifyStoreItemType,
-  NotifyStoreType,
-  NotifyItemType
-} from '@/stores/useNotifyStore'
+import { useNotifyStore } from '@/stores/useNotifyStore'
+import type { NotifyStoreItemType, NotifyStoreType, NotifyItemType } from '@/types/notify'
+
 import { makeUUID } from '@/utils/tools'
 
 export const useNotify = () => {
@@ -16,14 +13,18 @@ export const useNotify = () => {
       updateNotifyList: state.updateNotifyList
     }))
 
-  const createNotifyItem = (notify: NotifyItemType) => {
-    const id = makeUUID()
-    return { id, ...notify }
+  const makeNotifyItem = (notify: NotifyStoreItemType | NotifyItemType) => {
+    const id = notify.id || makeUUID()
+    const time = +new Date()
+    return { ...notify, id, time }
   }
 
   const createNotify = (notify: NotifyItemType): string => {
-    const notifyItem = createNotifyItem(notify)
-    updateNotifyList([...notifyList, notifyItem])
+    const notifyItem = makeNotifyItem(notify)
+    const list = [notifyItem, ...notifyList]
+    if (list.length > 10) list.length = 10
+    updateNotifyList(list)
+    openNotifyList()
     return notifyItem.id
   }
 
@@ -37,7 +38,7 @@ export const useNotify = () => {
     const oldNotifyItemIndex = notifyList.findIndex((item) => item.id === notify.id)
     if (oldNotifyItemIndex !== -1) {
       const tempList = [...notifyList]
-      tempList[oldNotifyItemIndex] = notify
+      tempList[oldNotifyItemIndex] = makeNotifyItem(notify)
       updateNotifyList(tempList)
     }
   }
@@ -54,10 +55,3 @@ export const useNotify = () => {
     updateNotifyItem
   }
 }
-
-const oa = [
-  { id: 1, a: '1' },
-  { id: 2, a: '2' },
-  { id: 3, a: '3' },
-  { id: 4, a: '4' }
-]
