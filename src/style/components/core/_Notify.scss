@@ -22,9 +22,9 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    width: 330px;
+    width: 350px;
     z-index: 22;
-    right: -330px;
+    right: -350px;
     @include dz();
     &.show {
       right: -10px;
@@ -32,15 +32,22 @@
   }
 
   &-list {
-    padding-top: 100px;
-    padding-right: 20px;
+    padding: 20px;
     max-height: 100vh;
     overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &-item {
     background: $cff;
     margin-bottom: 10px;
+    width: 310px;
     display: flex;
     min-height: 52px;
     border-radius: 10px;
@@ -48,6 +55,15 @@
     position: relative;
     padding-left: 62px;
     box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
+
+    &-layout {
+      max-height: 0;
+
+      @include dz();
+      &.show {
+        max-height: 100px;
+      }
+    }
 
     &-icon {
       position: absolute;
@@ -91,6 +107,42 @@
         animation: Toastify__spin 0.65s linear infinite;
       }
       background-color: #ff7701;
+    }
+
+    &-detail {
+      padding: 8px 0;
+      font-size: 13px;
+      display: flex;
+      flex-flow: column;
+      gap: 4px;
+      h3 {
+        font-size: 14px;
+        color: $c22;
+      }
+      p {
+        color: $c55;
+      }
+
+      a {
+        color: $blue;
+      }
+    }
+
+    &-close {
+      position: absolute;
+      right: -6px;
+      top: -6px;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include dz();
+      color: $c9b;
+      cursor: pointer;
+      &:hover {
+        @include xz(180);
+      }
     }
   }
 }
