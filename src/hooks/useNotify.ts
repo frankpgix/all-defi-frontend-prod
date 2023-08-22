@@ -2,17 +2,30 @@ import { useMemo } from 'react'
 import { useNotifyStore } from '@/stores/useNotifyStore'
 import type { NotifyStoreItemType, NotifyStoreType, NotifyItemType } from '@/types/notify'
 
-import { makeUUID } from '@/utils/tools'
+import { makeUUID, sleep } from '@/utils/tools'
 
 export const useNotify = () => {
-  const { notifyList, notifyShow, openNotifyList, closeNotifyList, updateNotifyList } =
-    useNotifyStore((state: NotifyStoreType) => ({
-      notifyList: state.notifyList,
-      notifyShow: state.notifyShow,
-      openNotifyList: state.openNotifyList,
-      closeNotifyList: state.closeNotifyList,
-      updateNotifyList: state.updateNotifyList
-    }))
+  const {
+    notifyList,
+    notifyShow,
+    openNotifyList,
+    closeNotifyList,
+    updateNotifyList,
+    notifyStatus,
+    updateNotifyStatus,
+    deleteNotifyStatusByID,
+    clearAllNotifyStatus
+  } = useNotifyStore((state: NotifyStoreType) => ({
+    notifyList: state.notifyList,
+    notifyShow: state.notifyShow,
+    openNotifyList: state.openNotifyList,
+    closeNotifyList: state.closeNotifyList,
+    updateNotifyList: state.updateNotifyList,
+    notifyStatus: state.notifyStatus,
+    updateNotifyStatus: state.updateNotifyStatus,
+    deleteNotifyStatusByID: state.deleteNotifyStatusByID,
+    clearAllNotifyStatus: state.clearAllNotifyStatus
+  }))
 
   const makeNotifyItem = (notify: NotifyStoreItemType | NotifyItemType) => {
     const id = notify.id || makeUUID()
@@ -22,24 +35,64 @@ export const useNotify = () => {
 
   const hasNotify = useMemo(() => notifyList.length > 0, [notifyList.length])
 
-  const createNotify = (notify: NotifyItemType): string => {
+  const createNotify = async (notify: NotifyItemType): Promise<string> => {
     const notifyItem = makeNotifyItem(notify)
+
     const list = [notifyItem, ...notifyList]
-    if (list.length > 30) list.length = 30
+    if (list.length > 15) list.length = 15
     updateNotifyList(list)
     openNotifyList()
+    updateNotifyStatus(notifyItem.id, { animteType: 'in', layoutShow: false })
+    await sleep(200)
+    updateNotifyStatus(notifyItem.id, { animteType: 'in', layoutShow: true })
     return notifyItem.id
   }
 
-  const clearNotifyList = () => {
-    const loadingNotify = notifyList.filter((item) => item.type === 'loading')
-    const allNotifyIsLoading = notifyList.length === loadingNotify.length
-    updateNotifyList(allNotifyIsLoading ? [] : loadingNotify)
-    return allNotifyIsLoading
+  const clearNotifyList = async (): Promise<boolean> => {
+    const normalNotifyIDList = notifyList
+      .filter((item) => item.type !== 'loading')
+      .map((item) => item.id)
+      .reverse()
+    if (normalNotifyIDList.length > 0) {
+      for (let index = 0; index < normalNotifyIDList.length; index++) {
+        const id = normalNotifyIDList[index]
+        await closeNotifyItem(id)
+        await sleep(100)
+      }
+      const loadingNotify = notifyList.filter((item) => item.type === 'loading')
+      updateNotifyList(loadingNotify)
+      return loadingNotify.length === 0
+    } else {
+      clearLoadingNotifyList()
+      return true
+    }
   }
 
-  const closeNotifyItem = (notifyId: string) => {
+  const clearLoadingNotifyList = async () => {
+    const loadingNotifyIDList = notifyList
+      .filter((item) => item.type === 'loading')
+      .map((item) => item.id)
+      .reverse()
+
+    for (let index = 0; index < loadingNotifyIDList.length; index++) {
+      await sleep(100)
+      const id = loadingNotifyIDList[index]
+      await closeNotifyItem(id)
+    }
+    updateNotifyList([])
+    clearAllNotifyStatus()
+  }
+
+  const closeNotifyItem = async (notifyId: string, fast?: boolean) => {
+    updateNotifyStatus(notifyId, { animteType: 'out', layoutShow: true })
+    await sleep(fast ? 100 : 200)
+    updateNotifyStatus(notifyId, { animteType: 'out', layoutShow: false })
+    await sleep(fast ? 100 : 200)
     updateNotifyList(notifyList.filter((item) => item.id !== notifyId))
+    deleteNotifyStatusByID(notifyId)
+    if (notifyList.length === 0) {
+      clearAllNotifyStatus()
+    }
   }
 
   const updateNotifyItem = (notify: NotifyStoreItemType) => {
@@ -54,6 +107,7 @@ export const useNotify = () => {
   return {
     notifyList,
     notifyShow,
+    notifyStatus,
     hasNotify,
     openNotifyList,
     closeNotifyList,

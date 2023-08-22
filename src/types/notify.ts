@@ -11,10 +11,19 @@ export interface NotifyStoreItemType extends NotifyItemType {
   time: number
 }
 
+export interface NotifyItemStatusType {
+  animteType: 'in' | 'out' | ''
+  layoutShow: boolean
+}
+
 export interface NotifyStoreType {
   notifyList: NotifyStoreItemType[]
-  notifyShow: boolean
   updateNotifyList: (notifyList: NotifyStoreItemType[]) => void
+  notifyShow: boolean
   openNotifyList: () => void
   closeNotifyList: () => void
+  notifyStatus: { [key: string]: NotifyItemStatusType }
+  updateNotifyStatus: (key: string, status: NotifyItemStatusType) => void
+  deleteNotifyStatusByID: (key: string) => void
+  clearAllNotifyStatus: () => void
 }

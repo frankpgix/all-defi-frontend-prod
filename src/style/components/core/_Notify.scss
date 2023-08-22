@@ -80,7 +80,6 @@
 
   &-item {
     background: $cff;
-    margin-bottom: 10px;
     width: 310px;
     display: flex;
     min-height: 52px;
@@ -88,14 +87,18 @@
     align-items: center;
     position: relative;
     padding-left: 62px;
+    margin-bottom: 10px;
     box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
+    animation-duration: 0.7s;
 
     &-layout {
       max-height: 0;
+      opacity: 0;
 
       @include dz();
       &.show {
         max-height: 100px;
+        opacity: 1;
       }
     }
 

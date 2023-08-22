@@ -1,7 +1,7 @@
 import React, { FC, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import classNames from 'classnames'
-import { useMount } from 'ahooks'
+// import { useMount } from 'ahooks'
 import { useNotify } from '@/hooks/useNotify'
 import type { NotifyStoreItemType } from '@/types/notify'
 import ALink from '@@/common/ALink'
@@ -34,7 +34,7 @@ export const NotifyList: FC = () => {
   const { notifyList, notifyShow: show, hasNotify, closeNotifyList, clearNotifyList } = useNotify()
 
   const onClear = async () => {
-    const allClear = clearNotifyList()
+    const allClear = await clearNotifyList()
     if (allClear) {
       await sleep(100)
       closeNotifyList()
@@ -65,9 +65,14 @@ export const NotifyList: FC = () => {
 }
 
 export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
-  const { closeNotifyItem } = useNotify()
-  const [animteType, setAnimteType] = useState('in')
-  const [layoutShow, setLayoutShow] = useState(false)
+  const { closeNotifyItem, notifyStatus } = useNotify()
+  // const [animteType, setAnimteType] = useState('in')
+  // const [layoutShow, setLayoutShow] = useState(false)
+
+  const { layoutShow, animteType } = notifyStatus[data.id] ?? {
+    animteType: 'in',
+    layoutShow: false
+  }
 
   const animateClass = useMemo(() => {
     if (animteType === 'in') {
@@ -78,15 +83,15 @@ export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
     }
   }, [animteType])
 
-  useMount(() => {
-    setLayoutShow(true)
-  })
+  // useMount(() => {
+  //   setLayoutShow(true)
+  // })
 
   const onClose = async () => {
-    setAnimteType('out')
-    await sleep(200)
-    setLayoutShow(false)
-    await sleep(200)
+    // setAnimteType('out')
+    // await sleep(200)
+    // setLayoutShow(false)
+    // await sleep(200)
     closeNotifyItem(data.id)
   }
   return (
@@ -104,7 +109,7 @@ export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
           <div className="c-notify-item-close" onClick={onClose}>
             <svg aria-hidden="true" viewBox="0 0 14 16">
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
                 fill="currentColor"
               ></path>
