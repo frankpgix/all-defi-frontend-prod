@@ -25,13 +25,18 @@ export const useNotify = () => {
   const createNotify = (notify: NotifyItemType): string => {
     const notifyItem = makeNotifyItem(notify)
     const list = [notifyItem, ...notifyList]
-    if (list.length > 10) list.length = 10
+    if (list.length > 30) list.length = 30
     updateNotifyList(list)
     openNotifyList()
     return notifyItem.id
   }
 
-  const clearNotifyList = () => updateNotifyList([])
+  const clearNotifyList = () => {
+    const loadingNotify = notifyList.filter((item) => item.type === 'loading')
+    const allNotifyIsLoading = notifyList.length === loadingNotify.length
+    updateNotifyList(allNotifyIsLoading ? [] : loadingNotify)
+    return allNotifyIsLoading
+  }
 
   const closeNotifyItem = (notifyId: string) => {
     updateNotifyList(notifyList.filter((item) => item.id !== notifyId))

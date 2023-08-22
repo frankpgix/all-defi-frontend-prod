@@ -5,7 +5,7 @@ import { useMount } from 'ahooks'
 import { useNotify } from '@/hooks/useNotify'
 import type { NotifyStoreItemType } from '@/types/notify'
 import ALink from '@@/common/ALink'
-import Button from '@@/common/Button'
+// import Button from '@@/common/Button'
 import NoData from '@@/common/NoData'
 import { ETH_SCAN_URL } from '@/config'
 import { sleep } from '@/utils/tools'
@@ -34,9 +34,11 @@ export const NotifyList: FC = () => {
   const { notifyList, notifyShow: show, hasNotify, closeNotifyList, clearNotifyList } = useNotify()
 
   const onClear = async () => {
-    clearNotifyList()
-    await sleep(500)
-    closeNotifyList()
+    const allClear = clearNotifyList()
+    if (allClear) {
+      await sleep(100)
+      closeNotifyList()
+    }
   }
 
   return (
@@ -98,15 +100,17 @@ export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
           {data.content && <p>{data.content}</p>}
           {data.hash && <ALink to={`${ETH_SCAN_URL}/tx/${data.hash}`}>View on Arbitrumscan</ALink>}
         </div>
-        <div className="c-notify-item-close" onClick={onClose}>
-          <svg aria-hidden="true" viewBox="0 0 14 16">
-            <path
-              fill-rule="evenodd"
-              d="M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
-              fill="currentColor"
-            ></path>
-          </svg>
-        </div>
+        {data.type !== 'loading' && (
+          <div className="c-notify-item-close" onClick={onClose}>
+            <svg aria-hidden="true" viewBox="0 0 14 16">
+              <path
+                fill-rule="evenodd"
+                d="M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </div>
+        )}
       </div>
     </div>
   )
