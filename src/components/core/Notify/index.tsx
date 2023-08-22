@@ -6,6 +6,7 @@ import { useNotify } from '@/hooks/useNotify'
 import type { NotifyStoreItemType } from '@/types/notify'
 import ALink from '@@/common/ALink'
 import Button from '@@/common/Button'
+import NoData from '@@/common/NoData'
 import { ETH_SCAN_URL } from '@/config'
 import { sleep } from '@/utils/tools'
 export const Notify: FC = () => {
@@ -18,40 +19,45 @@ export const Notify: FC = () => {
 }
 
 export const NotifyButton: FC = () => {
-  const { notifyList, notifyShow, openNotifyList } = useNotify()
+  const { notifyShow, openNotifyList, hasNotify } = useNotify()
 
-  const show = useMemo(() => {
-    return notifyList.length > 0 && notifyShow === false
-  }, [notifyList.length, notifyShow])
-
-  return <div className={classNames('c-notify-button', { show })} onClick={openNotifyList}></div>
+  return (
+    <div
+      className={classNames('c-notify-button', { show: hasNotify && !notifyShow })}
+      onClick={openNotifyList}
+    ></div>
+  )
 }
 
 export const NotifyList: FC = () => {
   const ref = useRef<HTMLDivElement>(null)
-  const { notifyList, notifyShow, closeNotifyList } = useNotify()
-  // useClickAway((e: Event) => {
-  //   // @ts-ignore
-  //   const isOpenButton = e.target?.classList.value.includes('c-notify-button')
-  //   if (notifyShow && !isOpenButton) closeNotifyList()
-  //   console.log(111111)
-  // }, ref)
-  // console.log(notifyShow)
+  const { notifyList, notifyShow: show, hasNotify, closeNotifyList, clearNotifyList } = useNotify()
+
+  const onClear = async () => {
+    clearNotifyList()
+    await sleep(500)
+    closeNotifyList()
+  }
+
   return (
-    <div
-      ref={ref}
-      className={classNames('c-notify-layout', { show: notifyShow && notifyList.length > 0 })}
-    >
+    <div ref={ref} className={classNames('c-notify-layout', { show })}>
       <div className="c-notify-list">
         {notifyList.map((item) => (
           <NotifyItem data={item} key={item.id} />
         ))}
       </div>
-      <footer className="c-notify-footer">
-        <Button size="mini" outline onClick={closeNotifyList}>
-          Clear All
-        </Button>
-      </footer>
+      <NoData show={!hasNotify} small tip="No Notify" white></NoData>
+      {hasNotify && (
+        <footer className="c-notify-footer">
+          <button className="c-notify-btn-clear" onClick={onClear}>
+            Clear All
+          </button>
+        </footer>
+      )}
+      <button
+        className={classNames('c-notify-btn-hide', { show })}
+        onClick={closeNotifyList}
+      ></button>
     </div>
   )
 }

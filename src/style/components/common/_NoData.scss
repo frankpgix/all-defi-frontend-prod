@@ -38,4 +38,9 @@
       font-family: 'Proxima Nova';
     }
   }
+
+  &.white span {
+    color: $white;
+    text-shadow: 2px 2px 8px rgba($c00, 0.5);
+  }
 }

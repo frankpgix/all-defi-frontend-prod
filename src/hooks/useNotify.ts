@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useNotifyStore } from '@/stores/useNotifyStore'
 import type { NotifyStoreItemType, NotifyStoreType, NotifyItemType } from '@/types/notify'
 
@@ -18,6 +19,8 @@ export const useNotify = () => {
     const time = +new Date()
     return { ...notify, id, time }
   }
+
+  const hasNotify = useMemo(() => notifyList.length > 0, [notifyList.length])
 
   const createNotify = (notify: NotifyItemType): string => {
     const notifyItem = makeNotifyItem(notify)
@@ -46,6 +49,7 @@ export const useNotify = () => {
   return {
     notifyList,
     notifyShow,
+    hasNotify,
     openNotifyList,
     closeNotifyList,
     updateNotifyList,

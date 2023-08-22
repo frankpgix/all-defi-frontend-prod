@@ -26,8 +26,42 @@
     z-index: 22;
     right: -350px;
     @include dz();
+    @include mh();
+    background: rgba($c00, 0.1);
     &.show {
       right: -10px;
+    }
+  }
+  &-btn {
+    &-hide {
+      cursor: pointer;
+      width: 10px;
+      height: 60px;
+      border-radius: 5px;
+      background: rgba($c00, 0.3);
+      border: none;
+      position: absolute;
+      left: -15px;
+      top: 50%;
+      opacity: 0;
+      @include yd(0, -50%);
+      @include dz();
+
+      &.show {
+        opacity: 1;
+      }
+    }
+
+    &-clear {
+      text-transform: uppercase;
+      font-weight: bold;
+      border: none;
+      background: rgba($c00, 0.2);
+      display: block;
+      padding: 8px 10px;
+      border-radius: 5px;
+      color: $white;
+      cursor: pointer;
     }
   }
 

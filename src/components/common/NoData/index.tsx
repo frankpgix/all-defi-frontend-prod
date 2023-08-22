@@ -6,17 +6,18 @@ interface Props {
   tip?: string
   small?: boolean
   mini?: boolean
+  white?: boolean
 }
 
-const NoData: FC<Props> = ({ show, height, tip = 'No Data', small, mini }) => {
+const NoData: FC<Props> = ({ show, height, tip = 'No Data', small, mini, white }) => {
   const NoDataTsx = useMemo(
     () => (
-      <div className={classNames('web-nodata', { small, mini })} style={{ height }}>
+      <div className={classNames('web-nodata', { small, mini, white })} style={{ height }}>
         <i />
         <span>{tip}</span>
       </div>
     ),
-    [height, tip, small, mini]
+    [height, tip, small, mini, white]
   )
   if (!show) return null
   return NoDataTsx
