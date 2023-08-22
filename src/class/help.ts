@@ -469,13 +469,15 @@ enum Codes {
 export interface OutComeProps {
   status: boolean
   msg?: string
+  hash?: string
 }
 
-export const outcome = (code: number, msg?: any): OutComeProps => {
+export const outcome = (code: number, msg?: any, hash?: string): OutComeProps => {
   //
   return {
     status: code === 0,
     // @ts-ignore
-    msg: msg ? String(msg) : Codes[`c-${code}`]
+    msg: msg ? String(msg) : Codes[`c-${code}`],
+    hash
   }
 }

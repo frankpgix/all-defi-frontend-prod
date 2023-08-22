@@ -2,10 +2,11 @@ import React, { FC, ReactNode } from 'react'
 
 import FundPool from '@/class/FundPool'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 
 import Button, { ButtonProps } from '@@/common/Button'
 
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
 
 interface Props extends ButtonProps {
   children: ReactNode
@@ -13,19 +14,27 @@ interface Props extends ButtonProps {
   callback?: () => void
 }
 
-const FundSettleButton: FC<Props> = ({ fundAddress, children, outline, size, disabled, callback }) => {
+const FundSettleButton: FC<Props> = ({
+  fundAddress,
+  children,
+  outline,
+  size,
+  disabled,
+  callback
+}) => {
   const { settleAccount } = FundPool
   const { signer } = useProfile()
+  const { createNotify, updateNotifyItem } = useNotify()
 
   const onSettle = async () => {
     if (signer && fundAddress) {
-      const notifyId = notify.loading()
-      const { status, msg } = await settleAccount(fundAddress, signer)
+      const notifyId = await createNotify({ type: 'loading', content: 'Settle Fund' })
+      const { status, msg, hash } = await settleAccount(fundAddress, signer)
       if (status) {
         if (callback) await callback()
-        notify.update(notifyId, 'success')
+        updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        notify.update(notifyId, 'error', msg)
+        updateNotifyItem(notifyId, { type: 'error', title: 'Settle Fund', content: msg, hash })
       }
     }
   }

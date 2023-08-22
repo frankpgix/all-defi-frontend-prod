@@ -8,7 +8,7 @@ export interface NotifyItemType {
 
 export interface NotifyStoreItemType extends NotifyItemType {
   id: string
-  time: number
+  time?: number
 }
 
 export interface NotifyItemStatusType {
@@ -26,4 +26,5 @@ export interface NotifyStoreType {
   updateNotifyStatus: (key: string, status: NotifyItemStatusType) => void
   deleteNotifyStatusByID: (key: string) => void
   clearAllNotifyStatus: () => void
+  updateNotifyItem: (key: string, status: NotifyItemType) => void
 }

@@ -2,8 +2,9 @@ import React, { FC } from 'react'
 import Reward from '@/class/Reward'
 import Button from '@@/common/Button'
 
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 
 import { StakeArrayItemProps } from '../types'
 
@@ -19,12 +20,14 @@ interface Props {
 const PreView: FC<Props> = ({ funds, onDelete, sAllAmount, getData }) => {
   const { stake } = Reward
   const { signer } = useProfile()
+  const { createNotify, updateNotifyItem } = useNotify()
 
   const goStake = async () => {
     if (signer) {
-      const notifyId = notify.loading()
+      // const notifyId = notify.loading()
+      const notifyId = await createNotify({ type: 'loading', content: 'Stake Shares' })
       // 执行购买和质押
-      const { status, msg } = await stake(
+      const { status, msg, hash } = await stake(
         funds.map((item) => item.shareToken),
         funds.map((item) => item.amount),
         sAllAmount,
@@ -32,9 +35,9 @@ const PreView: FC<Props> = ({ funds, onDelete, sAllAmount, getData }) => {
       )
       if (status) {
         await getData()
-        notify.update(notifyId, 'success')
+        updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        notify.update(notifyId, 'error', msg)
+        updateNotifyItem(notifyId, { type: 'error', title: 'Claim AC token', content: msg, hash })
       }
     }
   }

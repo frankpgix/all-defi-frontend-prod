@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import AllProtocol from '@/class/AllProtocol'
 import { ProductProps } from '@/config/products'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
 
 import StepLine from './c/StepLine'
 import Step1, { Step1DataProps, Step1DataDefault } from './c/Step1'
@@ -17,6 +18,7 @@ const CreateFund: FC = () => {
   const { createFund, calcAUMLimit, getDerivativeList } = AllProtocol
   const { signer } = useProfile()
   const navigate = useNavigate()
+  const { createNotify, updateNotifyItem } = useNotify()
 
   const [stepIndex, setStepIndex] = useState(0)
   const [step1Data, setStep1Data] = useState<Step1DataProps>(Step1DataDefault)
@@ -67,8 +69,9 @@ const CreateFund: FC = () => {
   const onStep4Confirm = async () => {
     if (signer) {
       // navigate('/manage/manager')
-      const notifyId = notify.loading()
-      const { status, msg } = await createFund(
+      const notifyId = await createNotify({ type: 'loading', content: 'Create Fund' })
+
+      const { status, msg, hash } = await createFund(
         {
           ...step1Data,
           derivatives: address.map((item) => item.value),
@@ -81,9 +84,9 @@ const CreateFund: FC = () => {
       )
       if (status) {
         navigate('/manage/manager')
-        notify.update(notifyId, 'success')
+        updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        notify.update(notifyId, 'error', msg)
+        updateNotifyItem(notifyId, { type: 'error', title: 'Create Fund', content: msg, hash })
       }
     }
   }
@@ -94,7 +97,12 @@ const CreateFund: FC = () => {
     <>
       <StepLine activeIndex={stepIndex} />
       <Step1 show={stepIndex === 0} onConfirm={onStep1Confirm} />
-      <Step2 show={stepIndex === 1} derivativeList={derivativeList} onBack={onBack} onConfirm={onStep2Confirm} />
+      <Step2
+        show={stepIndex === 1}
+        derivativeList={derivativeList}
+        onBack={onBack}
+        onConfirm={onStep2Confirm}
+      />
       <Step3
         show={stepIndex === 2}
         onBack={onBack}

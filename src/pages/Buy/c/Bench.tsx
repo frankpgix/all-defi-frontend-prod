@@ -14,15 +14,16 @@ import { getTokensBalanceAsync } from '@/store/tokens'
 import { getUserStakesAsync } from '@/store/investor'
 import { formatNumber } from '@/utils/tools'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 
-// import { sleep } from '@/utils/tools'
+import { sleep } from '@/utils/tools'
 
 import { Input, Select } from '@@/common/Form'
 import Button from '@@/common/Button'
 import BlueLineSection from '@@/web/BlueLineSection'
 import InfoDialog from '@@/common/Dialog/Info'
 import Popper from '@@/common/Popper'
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
 
 const usdcAddress = tokenss.USDC.tokenAddress
 const ethAddress = tokenss.ETH.tokenAddress
@@ -33,6 +34,7 @@ const Bench: FC = () => {
   const dispatch = useAppDispatch()
   const { balance } = useTokensData()
   const { signer } = useProfile()
+  const { createNotify, updateNotifyItem } = useNotify()
 
   const [amount, setAmount] = useState<string | number>('')
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
@@ -58,23 +60,38 @@ const Bench: FC = () => {
 
   const buyAndStakeFunc = async () => {
     if (signer) {
-      const notifyId = notify.loading()
+      const notifyId = await createNotify({ content: 'Buy All Token', type: 'loading' })
       // 执行购买和质押
-      const { status, msg } = await buyAllToken(baseTokenAddress, Number(amount), signer)
+      const { status, msg, hash } = await buyAllToken(baseTokenAddress, Number(amount), signer)
+      console.log(status, msg, hash, notifyId)
       if (status) {
         // 重新获取余额信息
         await dispatch(getTokensBalanceAsync(signer))
         // 重新拉取质押信息
         await dispatch(getUserStakesAsync(signer))
         setAmount(0)
-        notify.update(notifyId, 'success')
+        // await closeNotifyItem(notifyId)
+        updateNotifyItem(notifyId, { content: 'Buy All Token', type: 'success', hash })
+        // notify.update(notifyId, 'success')
       } else {
-        notify.update(notifyId, 'error', msg)
+        await sleep(200)
+
+        // await closeNotifyItem(notifyId)
+        updateNotifyItem(notifyId, {
+          title: 'Buy All Token',
+          type: 'error',
+          content: msg,
+          hash
+        })
+        // notify.update(notifyId, 'error', msg)
       }
     }
   }
 
-  const isDisabled = useMemo(() => !amount || !isNumber(Number(amount) || Number(amount) === 0), [amount])
+  const isDisabled = useMemo(
+    () => !amount || !isNumber(Number(amount) || Number(amount) === 0),
+    [amount]
+  )
 
   const maxNumber = useMemo(() => {
     if (baseTokenAddress === usdcAddress) return Number(balance.USDC)
@@ -121,7 +138,11 @@ const Bench: FC = () => {
 
           <p>sALL Balance: {balance.sALL}</p>
         </Input>
-        <Select value={baseTokenAddress} onChange={onChangeBaseToken} objOptions={baseTokenOptions} />
+        <Select
+          value={baseTokenAddress}
+          onChange={onChangeBaseToken}
+          objOptions={baseTokenOptions}
+        />
         <div className="web-buy-bench-arrow"></div>
         <div className="web-buy-bench-pre">
           <dl>

@@ -51,7 +51,7 @@ class FundPool {
       // 等待结果
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)
@@ -71,7 +71,7 @@ class FundPool {
       const response = await contract.cancelSubscribe({ gasLimit })
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)
@@ -93,7 +93,7 @@ class FundPool {
       const response = await contract.redeem(_amount, { gasLimit })
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)
@@ -112,7 +112,7 @@ class FundPool {
       const response = await contract.cancelRedeem({ gasLimit })
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)
@@ -132,7 +132,7 @@ class FundPool {
       const response = await contract.claim({ gasLimit })
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)
@@ -176,7 +176,7 @@ class FundPool {
     const response = await contract.settleAccount({ gasLimit })
     const receipt = await response.wait()
     // 返回结果
-    if (receipt.status) return outcome(0)
+    if (receipt.status) return outcome(0, null, receipt.transactionHash)
     return outcome(500)
     // } catch (error: any) {
     //   console.info(error)
@@ -196,7 +196,7 @@ class FundPool {
       const response = await contract.claimCompensation({ gasLimit })
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)
@@ -227,7 +227,7 @@ class FundPool {
       const response = await contract.setBaseInfo(...data, { gasLimit })
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)

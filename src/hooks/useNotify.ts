@@ -14,7 +14,8 @@ export const useNotify = () => {
     notifyStatus,
     updateNotifyStatus,
     deleteNotifyStatusByID,
-    clearAllNotifyStatus
+    clearAllNotifyStatus,
+    updateNotifyItem
   } = useNotifyStore((state: NotifyStoreType) => ({
     notifyList: state.notifyList,
     notifyShow: state.notifyShow,
@@ -24,7 +25,8 @@ export const useNotify = () => {
     notifyStatus: state.notifyStatus,
     updateNotifyStatus: state.updateNotifyStatus,
     deleteNotifyStatusByID: state.deleteNotifyStatusByID,
-    clearAllNotifyStatus: state.clearAllNotifyStatus
+    clearAllNotifyStatus: state.clearAllNotifyStatus,
+    updateNotifyItem: state.updateNotifyItem
   }))
 
   const makeNotifyItem = (notify: NotifyStoreItemType | NotifyItemType) => {
@@ -63,7 +65,7 @@ export const useNotify = () => {
       updateNotifyList(loadingNotify)
       return loadingNotify.length === 0
     } else {
-      clearLoadingNotifyList()
+      await clearLoadingNotifyList()
       return true
     }
   }
@@ -95,14 +97,19 @@ export const useNotify = () => {
     }
   }
 
-  const updateNotifyItem = (notify: NotifyStoreItemType) => {
-    const oldNotifyItemIndex = notifyList.findIndex((item) => item.id === notify.id)
-    if (oldNotifyItemIndex !== -1) {
-      const tempList = [...notifyList]
-      tempList[oldNotifyItemIndex] = makeNotifyItem(notify)
-      updateNotifyList(tempList)
-    }
-  }
+  // const updateNotifyItem = async (notify: NotifyStoreItemType) => {
+  //   updateStoreNotifyItem(notify.id, notify)
+  //   // await closeNotifyItem(notify.id)
+  //   // // await sleep(100)
+  //   // console.log(notify, notifyList)
+  //   // const oldNotifyItemIndex = notifyList.findIndex((item) => item.id === notify.id)
+  //   // console.log(notify, oldNotifyItemIndex)
+  //   // if (oldNotifyItemIndex !== -1) {
+  //   //   const tempList = [...notifyList]
+  //   //   tempList[oldNotifyItemIndex] = makeNotifyItem(notify)
+  //   //   updateNotifyList(tempList)
+  //   // }
+  // }
 
   return {
     notifyList,

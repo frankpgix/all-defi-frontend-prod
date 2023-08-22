@@ -21,18 +21,23 @@ class ACProtocol {
     // 创建合约连接
     const contract = getACProtocolContract(signer)
     // const baseTokenAddress = baseToken.tokenAddress
-
     try {
       if (baseTokenAddress === '0x0000000000000000000000000000000000000000') {
         const response = await contract.ethBuy({ value: _amount })
         // 等待结果
         const receipt = await response.wait()
+        console.log(response, receipt)
         // 返回结果
-        if (receipt.status) return outcome(0)
+        if (receipt.status) return outcome(0, null, receipt.transactionHash)
         return outcome(500)
       } else {
         // 对需要操作的币种，以及合约，进行授权操作
-        const approve = await setAllowance(signer, getACProtocolAddress(), baseTokenAddress, _amount)
+        const approve = await setAllowance(
+          signer,
+          getACProtocolAddress(),
+          baseTokenAddress,
+          _amount
+        )
         console.log(approve)
         // 如果授权没有成功，返回失败
         if (!approve.status) return approve
@@ -42,8 +47,9 @@ class ACProtocol {
         const response = await contract.buy(baseTokenAddress, _amount, { gasLimit })
         // 等待结果
         const receipt = await response.wait()
+        console.log(response, receipt)
         // 返回结果
-        if (receipt.status) return outcome(0)
+        if (receipt.status) return outcome(0, null, receipt.transactionHash)
         return outcome(500)
       }
     } catch (e: any) {

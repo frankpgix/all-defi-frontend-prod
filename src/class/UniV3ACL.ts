@@ -5,7 +5,11 @@ import { outcome, OutComeProps } from './help'
 // import { safeInterceptionValues } from '@/utils/tools'
 
 class UniV3ACL {
-  registerPermitSingle = async (fundAddress: string, message: any, signer: Signer): Promise<OutComeProps> => {
+  registerPermitSingle = async (
+    fundAddress: string,
+    message: any,
+    signer: Signer
+  ): Promise<OutComeProps> => {
     if (!signer) return outcome(4010)
     const contract = getUniV3ACLContract(signer)
     // try {
@@ -20,7 +24,7 @@ class UniV3ACL {
     const response = await contract.registerPermitSingle(fundAddress, message)
     const receipt = await response.wait()
     // 返回结果
-    if (receipt.status) return outcome(0)
+    if (receipt.status) return outcome(0, null, receipt.transactionHash)
     return outcome(500)
     // } catch (error: any) {
     //   console.info(error)

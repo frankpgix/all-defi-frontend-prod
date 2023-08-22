@@ -37,13 +37,19 @@ class Reward {
     try {
       if (sAllAmount !== 0) {
         // 对需要操作的币种，以及合约，进行授权操作
-        const approveAc = await setAllowance(signer, getRewardAddress(), getsALLTOKENAddress(), unitSAllAmount)
+        const approveAc = await setAllowance(
+          signer,
+          getRewardAddress(),
+          getsALLTOKENAddress(),
+          unitSAllAmount
+        )
         // // 如果授权没有成功，返回失败
         if (!approveAc) return approveAc
       }
       if (addresss.length > 0) {
         const promises = addresss.map(
-          async (address, index) => (await setAllowance(signer, getRewardAddress(), address, unitAmounts[index])).status
+          async (address, index) =>
+            (await setAllowance(signer, getRewardAddress(), address, unitAmounts[index])).status
         )
         const apps = await Promise.all(promises)
         if (apps.includes(false)) return outcome(4011)
@@ -55,7 +61,7 @@ class Reward {
       // const response = await contract.drawShareToken()
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)
@@ -63,7 +69,11 @@ class Reward {
     }
   }
 
-  unstake = async (addresss: string[], amounts: number[], signer: Signer | null | undefined): Promise<OutComeProps> => {
+  unstake = async (
+    addresss: string[],
+    amounts: number[],
+    signer: Signer | null | undefined
+  ): Promise<OutComeProps> => {
     if (!signer || !addresss.length) return outcome(4010)
     const unitAmounts = amounts.map((amount) => getUnitAmount(amount, 18))
     try {
@@ -73,7 +83,7 @@ class Reward {
       // const response = await contract.drawShareToken()
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)
@@ -90,7 +100,7 @@ class Reward {
       // const response = await contract.drawShareToken()
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)

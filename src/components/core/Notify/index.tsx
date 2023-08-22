@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useRef, useState } from 'react'
+import React, { FC, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import classNames from 'classnames'
 // import { useMount } from 'ahooks'
@@ -101,7 +101,7 @@ export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
           <span />
         </div>
         <div className="c-notify-item-detail">
-          {data.title && <h3>{data.title}</h3>}
+          <h3>{data.title || data.type}</h3>
           {data.content && <p>{data.content}</p>}
           {data.hash && <ALink to={`${ETH_SCAN_URL}/tx/${data.hash}`}>View on Arbitrumscan</ALink>}
         </div>

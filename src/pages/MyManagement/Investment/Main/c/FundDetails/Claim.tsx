@@ -4,6 +4,7 @@ import React, { FC, useState } from 'react'
 import FundPool from '@/class/FundPool'
 import { formatNumber } from '@/utils/tools'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 
 import { Input } from '@@/common/Form'
 import Button from '@@/common/Button'
@@ -11,7 +12,7 @@ import { AllTokenUnit } from '@@/common/TokenUnit'
 import InfoDialog from '@@/common/Dialog/Info'
 import Popper from '@@/common/Popper'
 
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
 
 interface Props {
   unclaimedALL: number
@@ -22,19 +23,20 @@ interface Props {
 const Claim: FC<Props> = ({ unclaimedALL, callback, fundAddress }) => {
   const { signer } = useProfile()
   const { claimCompensation } = FundPool
+  const { createNotify, updateNotifyItem } = useNotify()
 
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
 
   const onClaim = async () => {
     if (signer && fundAddress) {
-      const notifyId = notify.loading()
+      const notifyId = await createNotify({ type: 'loading', content: 'Claim ALL Token' })
       // 执行购买和质押
-      const { status, msg } = await claimCompensation(fundAddress, signer)
+      const { status, msg, hash } = await claimCompensation(fundAddress, signer)
       if (status) {
         await callback(true)
-        notify.update(notifyId, 'success')
+        updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        notify.update(notifyId, 'error', msg)
+        updateNotifyItem(notifyId, { type: 'error', title: 'Claim ALL Token', content: msg, hash })
       }
     }
   }

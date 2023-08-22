@@ -71,7 +71,7 @@ class AllProtocol {
       )
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)
@@ -134,7 +134,7 @@ class AllProtocol {
       const response = await contract.stake(fundAddress, _amount, { gasLimit })
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)
@@ -154,7 +154,7 @@ class AllProtocol {
       const response = await contract.unstake(fundAddress, _amount, { gasLimit })
       const receipt = await response.wait()
       // 返回结果
-      if (receipt.status) return outcome(0)
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
       return outcome(500)
     } catch (error: any) {
       console.info(error)

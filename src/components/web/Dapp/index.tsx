@@ -10,9 +10,8 @@ import ALink from '@@/common/ALink'
 import { Input } from '@@/common/Form'
 import Button from '@@/common/Button'
 import Loading from '@@/common/Loading'
-import { notify } from '@@/common/Toast'
-
 // import { notify } from '@@/common/Toast'
+
 // import { sleep } from '@/utils/tools'
 import { signClient } from './utils/WalletConnectUtil'
 // import { createLegacySignClient, deleteCachedLegacySession } from './utils/tools'
@@ -21,6 +20,7 @@ import { signClient } from './utils/WalletConnectUtil'
 import dappStore from '@/stores/dappStore'
 import { getSdkError } from '@walletconnect/utils'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 
 import { useInit } from './hooks/useInit'
 import { useCacheSession } from './hooks/useCacheSession'
@@ -37,6 +37,7 @@ const Dapp: FC<Props> = ({ base, data }) => {
   const [show, setShow] = useState(false)
   //
   const { appName, topic, isConnect, loading } = useSnapshot(dappStore.state)
+  const { createNotify } = useNotify()
   //
   const fundAddress = useMemo(() => data.address, [data.address])
   const derivatives = useMemo(
@@ -57,7 +58,8 @@ const Dapp: FC<Props> = ({ base, data }) => {
       dappStore.setLoading(true)
       await signClient.pair({ uri })
     } catch (err: unknown) {
-      notify.error('Something Error, try late')
+      // notify.error('Something Error, try late')
+      createNotify({ type: 'error', content: 'Dapp Something Error, try late' })
     } finally {
       setUri('')
       dappStore.setLoading(true)

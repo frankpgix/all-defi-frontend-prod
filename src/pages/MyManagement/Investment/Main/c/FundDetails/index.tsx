@@ -5,8 +5,9 @@ import FundPool from '@/class/FundPool'
 import AllProtocol from '@/class/AllProtocol'
 import { ProductProps } from '@/config/products'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
 
 import Button from '@@/common/Button'
 
@@ -19,6 +20,7 @@ interface Props {
 
 const FundDetails: FC<Props> = ({ data, callback }) => {
   const { signer } = useProfile()
+  const { createNotify, updateNotifyItem } = useNotify()
 
   const { cancelRedeem, cancelSubscribe } = FundPool
   const { getDerivativeList } = AllProtocol
@@ -29,26 +31,26 @@ const FundDetails: FC<Props> = ({ data, callback }) => {
 
   const onCancelRedeem = async (address: string) => {
     if (signer && address) {
-      const notifyId = notify.loading()
-      const { status, msg } = await cancelRedeem(address, signer)
+      const notifyId = await createNotify({ type: 'loading', content: 'Cancel Redeem' })
+      const { status, msg, hash } = await cancelRedeem(address, signer)
       if (status) {
         await callback(true)
-        notify.update(notifyId, 'success')
+        updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        notify.update(notifyId, 'error', msg)
+        updateNotifyItem(notifyId, { type: 'error', title: 'Cancel Redeem', content: msg, hash })
       }
     }
   }
 
   const onCancelSubscribe = async (address: string) => {
     if (signer && address) {
-      const notifyId = notify.loading()
-      const { status, msg } = await cancelSubscribe(address, signer)
+      const notifyId = await createNotify({ type: 'loading', content: 'Cancel Subscribe' })
+      const { status, msg, hash } = await cancelSubscribe(address, signer)
       if (status) {
         await callback(true)
-        notify.update(notifyId, 'success')
+        updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        notify.update(notifyId, 'error', msg)
+        updateNotifyItem(notifyId, { type: 'error', title: 'Cancel Subscribe', content: msg, hash })
       }
     }
   }

@@ -7,6 +7,7 @@ import FundPool from '@/class/FundPool'
 import { FundDetailProps } from '@/class/help'
 import tokens, { getTokenByAddress } from '@/config/tokens'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 
 import { useAppDispatch } from '@/store'
 import { getTokensBalanceAsync } from '@/store/tokens'
@@ -18,7 +19,7 @@ import Button from '@@/common/Button'
 import Tip from '@@/common/Tip'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
 
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
 import Popper from '@@/common/Popper'
 // import InfoDialog from '@@/common/Dialog/Info'
 
@@ -33,6 +34,7 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
   const { signer } = useProfile()
   const { balance } = useTokensData()
   const dispatch = useAppDispatch()
+  const { createNotify, updateNotifyItem } = useNotify()
 
   const baseToken = useMemo(() => getTokenByAddress(data.baseToken), [data.baseToken])
   // const decimals = useMemo(() => baseToken.decimals, [baseToken])
@@ -92,18 +94,18 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
 
   const onSubscribe = async () => {
     if (signer && fundAddress) {
-      const notifyId = notify.loading()
+      const notifyId = await createNotify({ type: 'loading', content: 'Subscribe Funds' })
       // 执行购买和质押
-      const { status, msg } = await subscribe(Number(value), fundAddress, acToken, signer)
+      const { status, msg, hash } = await subscribe(Number(value), fundAddress, acToken, signer)
       if (status) {
         // 重新获取余额信息
         await dispatch(getTokensBalanceAsync(signer))
         await getData()
         setValue(0)
         setSliderValue(0)
-        notify.update(notifyId, 'success')
+        updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        notify.update(notifyId, 'error', msg)
+        updateNotifyItem(notifyId, { type: 'error', title: 'Subscribe Funds', content: msg, hash })
       }
     }
   }

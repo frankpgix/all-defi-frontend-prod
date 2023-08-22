@@ -15,6 +15,7 @@ export const goConnect = async (proposal: any, fundAddress?: string) => {
   dappStore.setLoading(true)
   const { id, params } = proposal
   console.log(proposal, fundAddress)
+
   // const { proposer, requiredNamespaces, optionalNamespaces, sessionProperties, relays } = params
   const chains = params.requiredNamespaces.eip155.chains[0]
   const supportChains = ['eip155:1', 'eip155:42161']

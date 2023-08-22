@@ -5,6 +5,7 @@ import { useRequest } from 'ahooks'
 
 import AllProtocol from '@/class/AllProtocol'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 
 import { useTokensData } from '@/store/tokens/hooks'
 import { formatNumber } from '@/utils/tools'
@@ -17,7 +18,7 @@ import Button from '@@/common/Button'
 import DataItem from '@@/common/DataItem'
 import { AllTokenUnit } from '@@/common/TokenUnit'
 
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
 
 import { StakeProps } from './types'
 
@@ -25,6 +26,7 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
   const { manageStakeAllTokenToFund, manageUnStakeAllTokenToFund, fundUnstakingLimit } = AllProtocol
   const { balance } = useTokensData()
   const { signer } = useProfile()
+  const { createNotify, updateNotifyItem } = useNotify()
   const { data: maxReduceAmount = 0 } = useRequest(
     async () => await fundUnstakingLimit(fundAddress)
   )
@@ -77,16 +79,26 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
 
   const onConfirm = async () => {
     if (Number(amount) > 0 && signer && fundAddress) {
-      const notifyId = notify.loading()
-      const { status, msg } = isIncrease
+      // const notifyId = notify.loading()
+      const notifyId = await createNotify({
+        type: 'loading',
+        content: 'Change Fund Stake ALL Token'
+      })
+
+      const { status, msg, hash } = isIncrease
         ? await manageStakeAllTokenToFund(Number(amount), fundAddress, signer)
         : await manageUnStakeAllTokenToFund(Number(amount), fundAddress, signer)
       if (status) {
         await getData()
         setAmount(0)
-        notify.update(notifyId, 'success')
+        updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        notify.update(notifyId, 'error', msg)
+        updateNotifyItem(notifyId, {
+          type: 'error',
+          title: 'Change Fund Stake ALL Token',
+          content: msg,
+          hash
+        })
       }
     }
   }

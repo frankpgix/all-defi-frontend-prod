@@ -4,6 +4,7 @@ import { useRequest } from 'ahooks'
 import tokens from '@/config/tokens'
 import Reward from '@/class/Reward'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 
 import { formatNumber } from '@/utils/tools'
 import { addToken2Wallet } from '@/utils/practicalMethod'
@@ -13,7 +14,7 @@ import Button from '@@/common/Button'
 import DataItem from '@@/common/DataItem'
 import InfoDialog from '@@/common/Dialog/Info'
 
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
 
 interface Props {
   stakeSharesValue: number
@@ -22,6 +23,7 @@ interface Props {
 const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
   const { userRewardDashboard, harvestAll } = Reward
   const { signer, account: address } = useProfile()
+  const { createNotify, updateNotifyItem } = useNotify()
 
   const [status, setStatus] = useState<boolean>(false)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
@@ -42,14 +44,14 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
   const onHarvestAll = async () => {
     if (signer) {
       setStatus(false)
-      const notifyId = notify.loading()
+      const notifyId = await createNotify({ type: 'loading', content: 'Claim ALL Token' })
       // 执行购买和质押
-      const { status, msg } = await harvestAll(signer)
+      const { status, msg, hash } = await harvestAll(signer)
       if (status) {
-        notify.update(notifyId, 'success')
+        updateNotifyItem(notifyId, { type: 'success', hash })
         setStatus(true)
       } else {
-        notify.update(notifyId, 'error', msg)
+        updateNotifyItem(notifyId, { type: 'error', title: 'Claim ALL Token', content: msg, hash })
         setStatus(false)
       }
     }

@@ -7,13 +7,14 @@ import FundPool from '@/class/FundPool'
 import { FundDetailProps, FundUserDataProps, ShareCompositionProps } from '@/class/help'
 import { getDecimalsByAddress } from '@/config/tokens'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 
 import { Input, Slider } from '@@/common/Form'
 import Button from '@@/common/Button'
 import Tip from '@@/common/Tip'
 import Popper from '@@/common/Popper'
 
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
 
 import InfoDialog from '@@/common/Dialog/Info'
 
@@ -28,6 +29,7 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
   const { redeem } = FundPool
   const { fundAddress } = useParams()
   const { signer } = useProfile()
+  const { createNotify, updateNotifyItem } = useNotify()
 
   const [value, setValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
@@ -55,7 +57,11 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
     if (val > maxValue) val = maxValue
     if (val < 0) val = 0
     if (maxValue > 0) {
-      const currSliderValue = BN(Number(val)).div(maxValue).multipliedBy(100).integerValue().toNumber()
+      const currSliderValue = BN(Number(val))
+        .div(maxValue)
+        .multipliedBy(100)
+        .integerValue()
+        .toNumber()
       setValue(Number(val))
       setSliderValue(currSliderValue)
     }
@@ -63,16 +69,16 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
 
   const onRedeem = async () => {
     if (signer && fundAddress) {
-      const notifyId = notify.loading()
+      const notifyId = await createNotify({ type: 'loading', content: 'Redeem Funds' })
       // 执行购买和质押
-      const { status, msg } = await redeem(Number(value), fundAddress, decimals, signer)
+      const { status, msg, hash } = await redeem(Number(value), fundAddress, decimals, signer)
       if (status) {
         await getData()
-        notify.update(notifyId, 'success')
+        updateNotifyItem(notifyId, { type: 'success', hash })
         setValue(0)
         setSliderValue(0)
       } else {
-        notify.update(notifyId, 'error', msg)
+        updateNotifyItem(notifyId, { type: 'error', title: 'Redeem Funds', content: msg, hash })
       }
     }
   }
@@ -106,7 +112,10 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
         </div>
         <div className="web-fund-detail-bench-action">
           <footer>
-            <Button onClick={() => setInfoStatus(true)} disabled={value <= 0 || !isInRedeem}>
+            <Button
+              onClick={() => setInfoStatus(true)}
+              disabled={Number(value) <= 0 || !isInRedeem}
+            >
               confirm
             </Button>
             {!isInRedeem && <Tip>Non-Redemption Period</Tip>}

@@ -10,7 +10,8 @@ import Button from '@@/common/Button'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
 import InfoDialog from '@@/common/Dialog/Info'
 
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
+import { useNotify } from '@/hooks/useNotify'
 
 interface Props {
   userData: FundUserDataProps
@@ -21,23 +22,27 @@ const Claim: FC<Props> = ({ userData, getData }) => {
   const { claim } = FundPool
   const { fundAddress } = useParams()
   const { signer } = useProfile()
+  const { createNotify, updateNotifyItem } = useNotify()
 
   const value = userData.unclaimedACToken
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const baseToken = useMemo(() => getTokenByAddress(userData.baseToken), [userData.baseToken])
-  const acToken = useMemo(() => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}`]), [baseToken])
+  const acToken = useMemo(
+    () => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}`]),
+    [baseToken]
+  )
 
-  console.log(userData.baseToken, acToken, 33333)
+  // console.log(userData.baseToken, acToken, 33333)
   const onRedeem = async () => {
     if (signer && fundAddress) {
-      const notifyId = notify.loading()
+      const notifyId = await createNotify({ type: 'loading', content: 'Claim AC token' })
       // 执行购买和质押
-      const { status, msg } = await claim(fundAddress, signer)
+      const { status, msg, hash } = await claim(fundAddress, signer)
       if (status) {
         await getData()
-        notify.update(notifyId, 'success')
+        updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        notify.update(notifyId, 'error', msg)
+        updateNotifyItem(notifyId, { type: 'error', title: 'Claim AC token', content: msg, hash })
       }
     }
   }

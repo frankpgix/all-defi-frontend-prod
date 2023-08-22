@@ -10,8 +10,9 @@ import AllProtocol from '@/class/AllProtocol'
 import { ProductProps } from '@/config/products'
 import { getDecimalsByAddress } from '@/config/tokens'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 
-import { notify } from '@@/common/Toast'
+// import { notify } from '@@/common/Toast'
 
 import BlueLineSection from '@@/web/BlueLineSection'
 import Loading from '@@/common/Loading'
@@ -26,6 +27,7 @@ const EditFund: FC = () => {
   const { getDerivativeList } = AllProtocol
   const { fundAddress = '' } = useParams()
   const { signer } = useProfile()
+  const { createNotify, updateNotifyItem } = useNotify()
 
   const [loading, setLoading] = useState(false)
   const [derivativeList, setDerivativeList] = useState<ProductProps[]>([])
@@ -69,8 +71,9 @@ const EditFund: FC = () => {
     const newDerivative = selectDerivative.filter((item) => !oldDerivative.includes(item))
     // console.log(selectDerivative, delDerivative, newDerivative)
     // if (fundAddress) return
-    const notifyId = notify.loading()
-    const { status, msg } = await setBaseInfo(
+    const notifyId = await createNotify({ type: 'loading', content: 'Set Fund Base Info' })
+
+    const { status, msg, hash } = await setBaseInfo(
       fundAddress,
       signer,
       desc,
@@ -83,9 +86,9 @@ const EditFund: FC = () => {
     )
     if (status) {
       await getData()
-      notify.update(notifyId, 'success')
+      updateNotifyItem(notifyId, { type: 'success', hash })
     } else {
-      notify.update(notifyId, 'error', msg)
+      updateNotifyItem(notifyId, { type: 'error', title: 'Set Fund Base Info', content: msg, hash })
     }
   }
 
@@ -102,14 +105,37 @@ const EditFund: FC = () => {
     <>
       <BlueLineSection className="web-manage-create-step" title="Edit Fund Base Info">
         <div className="web-manage-create-step-3col">
-          <Input value={managerName} label="manager name" count maxLength={20} onChange={setManagerName} />
+          <Input
+            value={managerName}
+            label="manager name"
+            count
+            maxLength={20}
+            onChange={setManagerName}
+          />
         </div>
         <div className="web-manage-create-step-1col">
-          <Input type="textarea" value={desc} label="manager introduction" count onChange={setDesc} maxLength={100} />
+          <Input
+            type="textarea"
+            value={desc}
+            label="manager introduction"
+            count
+            onChange={setDesc}
+            maxLength={100}
+          />
         </div>
         <div className="web-manage-create-step-2col">
-          <Input type="number" value={minAmount} label="Minimum Deposit Amount" onChange={setMinAmount} />
-          <Input type="number" value={maxAmount} label="Maximum Deposit Amount" onChange={setMaxAmount} />
+          <Input
+            type="number"
+            value={minAmount}
+            label="Minimum Deposit Amount"
+            onChange={setMinAmount}
+          />
+          <Input
+            type="number"
+            value={maxAmount}
+            label="Maximum Deposit Amount"
+            onChange={setMaxAmount}
+          />
         </div>
         <h3>select protocol allowed</h3>
         <ul className="web-manage-create-step-product-list">
