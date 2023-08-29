@@ -170,7 +170,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
         </TabList>
         {/* Basic TabPanel */}
         <TabPanel>
-          <SectionHeader name="Basic Information" />
+          <SectionHeader name="Basic" />
           <SectionLayout col="3">
             <SectionItem
               label="Create Time"
@@ -312,7 +312,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
         {/* </TabPanel> */}
         {/* Fees TabPanel */}
         <TabPanel>
-          <SectionHeader name="Fund Manager" />
+          <SectionHeader name="Manager Fee" />
           <SectionLayout col="2">
             <SectionItem
               label="Current Epoch Manager Fee"

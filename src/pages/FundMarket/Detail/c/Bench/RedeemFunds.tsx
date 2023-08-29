@@ -86,9 +86,7 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
   return (
     <>
       <section className="web-fund-detail-bench">
-        <h4>
-          Redeem Funds <Popper content="Fund is open for redemption only during Open Period" />
-        </h4>
+        <h4>Redeem Funds</h4>
         <div className="web-fund-detail-bench-input">
           <Input
             value={value}

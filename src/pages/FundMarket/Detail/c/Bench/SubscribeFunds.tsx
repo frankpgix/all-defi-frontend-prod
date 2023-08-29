@@ -112,10 +112,7 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
   return (
     <>
       <section className="web-fund-detail-bench">
-        <h4>
-          Subscribe Funds{' '}
-          <Popper content="Fund is open for subscription during Open Period or Semi-Open Period" />
-        </h4>
+        <h4>Subscribe Funds</h4>
         <div className="web-fund-detail-bench-input">
           <Input
             value={value}

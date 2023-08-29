@@ -158,10 +158,6 @@ const Bench: FC = () => {
             <dd>
               <AllTokenUnit value={preAllValue} sall>
                 sALL
-                <Popper
-                  size="default"
-                  content="The above amount is based on the best estimate, the real amount is decided by the price when the smart contract is triggered"
-                />
               </AllTokenUnit>
             </dd>
           </dl>

@@ -71,7 +71,7 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
     return o
   })
   // console.log(removeZeroKeys(data))
-  // console.log(data)
+  console.log(data)
   return {
     loading: listLoading,
     error: listError,

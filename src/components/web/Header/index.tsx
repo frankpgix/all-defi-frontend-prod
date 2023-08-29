@@ -34,7 +34,7 @@ const Header: FC = () => {
             <NavLink to="/fund-market">Fund Market</NavLink>
             <NavLink to="/manage">my management</NavLink>
             <NavLink to="/all-mining">ALL MINING</NavLink>
-            <NavLink to="/">global data</NavLink>
+            {/* <NavLink to="/">global data</NavLink> */}
           </nav>
           <div className="web-header-tools">
             <ConnectButton />
