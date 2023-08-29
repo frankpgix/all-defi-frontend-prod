@@ -1,12 +1,14 @@
-import tokens, { tokenss } from '@/config/tokens'
+import { tokenss } from '@/config/tokens'
 import contracts from '@/config/contracts'
 import { Address, ChainId } from '@/config/types'
 import { VITE_APP_CHAIN_ID } from '@/config'
 
 export const getAddress = (address: Address): string => {
   const chainId = VITE_APP_CHAIN_ID
-  return address[chainId]
-    ? (address[chainId] ?? '').toLowerCase()
+  // @ts-ignore
+  const addressChainID = address[chainId]
+  return addressChainID
+    ? (addressChainID ?? '').toLowerCase()
     : address[ChainId.MAINNET].toLowerCase()
 }
 
@@ -42,6 +44,10 @@ export const getRewardAddress = (): string => {
 }
 export const getUniV3ACLAddress = (): string => {
   return getAddress(contracts.UniV3ACL)
+}
+
+export const getPermit2Address = (): string => {
+  return getAddress(contracts.Permit2)
 }
 
 /************** Tokens **************/

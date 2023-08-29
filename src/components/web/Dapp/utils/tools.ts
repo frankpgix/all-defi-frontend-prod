@@ -1,7 +1,13 @@
+import { utils as EthUtils } from 'ethers'
+import Web3 from 'web3'
+
 import { signClient } from './WalletConnectUtil'
 import { buildApprovedNamespaces } from '@walletconnect/utils'
 import UniV3ACL from '@/class/UniV3ACL'
+// import Permit2 from '@/class/Permit2'
 import { getFundPoolContract } from '@/utils/contractHelpers'
+import { getPermit2Address } from '@/utils/addressHelpers'
+
 import { estimateGas } from '@/utils/practicalMethod'
 import { notify } from '@@/common/Toast'
 import { formatJsonRpcError, formatJsonRpcResult } from '@json-rpc-tools/utils'
@@ -105,6 +111,57 @@ export const onTransaction = async (
 }
 
 export const onSign = async (
+  payload: SignClientTypes.EventArguments['session_request'],
+  fundAddress: string,
+  signer: any
+) => {
+  const { id, topic, params } = payload
+  const data = getSignTypedDataParamsData(params.request.params)
+  const { message } = data
+  // const { approve } = Permit2
+
+  const contract = getFundPoolContract(fundAddress, signer)
+  const abiCoder = EthUtils.defaultAbiCoder
+
+  const sig0 = Web3.utils.keccak256('approve(address,address,uint160,uint48)').slice(0, 10)
+  const encoded0 = abiCoder.encode(
+    ['address', 'address', 'uint160', 'uint48'],
+    [message.details.token, message.spender, message.details.amount, message.details.expiration]
+  )
+
+  const to = getPermit2Address()
+  const enData = sig0 + encoded0.slice(2)
+
+  const gasLimit = await estimateGas(contract, 'executeTransaction', [to, enData, 0])
+  const response = await contract.executeTransaction(to, enData, 0, {
+    gasLimit
+  })
+
+  const { transactionHash } = await response.wait()
+
+  const result = formatJsonRpcResult(id, transactionHash)
+
+  signClient.respond({
+    topic,
+    response: result
+  })
+
+  // const rdata = [
+  //   message.details.token,
+  //   message.spender,
+  //   message.details.amount,
+  //   message.details.expiration
+  // ]
+  // const { hash } = await approve(rdata, signer)
+
+  // const result = formatJsonRpcResult(id, hash)
+  // await signClient.respond({
+  //   topic,
+  //   response: result
+  // })
+}
+
+export const onSign2 = async (
   payload: SignClientTypes.EventArguments['session_request'],
   fundAddress: string,
   signer: any

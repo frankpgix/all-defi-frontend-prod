@@ -30,6 +30,11 @@ const addresses: Record<string, Address> = {
     1: '',
     5: '',
     42161: '0xdCE73E4a1Ea95F38872C8A3Cdf553D0bb35A0886'
+  },
+  Permit2: {
+    1: '',
+    5: '',
+    42161: '0x000000000022D473030F116dDEE9F6B43aC78BA3'
   }
 }
 

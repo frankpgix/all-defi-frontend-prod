@@ -1,17 +1,13 @@
 import { Signer } from 'ethers'
-import { getUniV3ACLContract } from '@/utils/contractHelpers'
+import { getPermit2Contract } from '@/utils/contractHelpers'
 // import { estimateGas } from '@/utils/practicalMethod'
 import { outcome, OutComeProps } from './help'
 // import { safeInterceptionValues } from '@/utils/tools'
 
-class UniV3ACL {
-  registerPermitSingle = async (
-    fundAddress: string,
-    message: any,
-    signer: Signer
-  ): Promise<OutComeProps> => {
+class Permit2 {
+  approve = async (data: any[], signer: Signer): Promise<OutComeProps> => {
     if (!signer) return outcome(4010)
-    const contract = getUniV3ACLContract(signer)
+    const contract = getPermit2Contract(signer)
     try {
       // Number(safeInterceptionValues('99999999999900000', 4, 18))
       // const encodeData = [
@@ -19,9 +15,9 @@ class UniV3ACL {
       //   '0x221912ce795669f628c51c69b7d0873eda9c03bb',
       //   1234576
       // ]
-      // const gasLimit = await estimateGas(contract, 'registerPermitSingle', [encodeData])
-      // console.log('registerPermitSingle', fundAddress, message)
-      const response = await contract.registerPermitSingle(fundAddress, message)
+      // const gasLimit = await estimateGas(contract, 'approve', [encodeData])
+      // console.log('approve', fundAddress, message)
+      const response = await contract.approve(...data)
       const receipt = await response.wait()
       // 返回结果
       if (receipt.status) return outcome(0, null, receipt.transactionHash)
@@ -33,6 +29,6 @@ class UniV3ACL {
   }
 }
 
-const outClass = new UniV3ACL()
+const outClass = new Permit2()
 
 export default outClass
