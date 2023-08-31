@@ -138,7 +138,7 @@ export const FundDetailDefault = {
   name: '-',
   manager: '-',
   createTime: 0,
-  epochIndex: 0,
+  epochIndex: 1,
   epochStartTime: 0,
   // stageEndTime: [0, 0, 0, 0], //阶段截止时间。0申购赎回，1申购，2预结算 3结算
   status: -2,

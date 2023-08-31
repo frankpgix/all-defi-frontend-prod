@@ -68,7 +68,21 @@ const StepLine: FC<Props> = ({ data, loading }) => {
             </time>
             {label && (
               <label>
-                {label} {popper && <Popper size="mini" blue content={popper} />}
+                {loading ? (
+                  <ContentLoader
+                    width={120}
+                    height={15}
+                    viewBox="0 0 120 15"
+                    backgroundColor="#eaeced"
+                    foregroundColor="#ffffff"
+                  >
+                    <rect x="0" y="0" rx="4" ry="4" width="120" height="15" />
+                  </ContentLoader>
+                ) : (
+                  <>
+                    {label} {popper && <Popper size="mini" blue content={popper} />}
+                  </>
+                )}
               </label>
             )}
           </li>

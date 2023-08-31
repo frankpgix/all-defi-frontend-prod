@@ -29,7 +29,7 @@ const Footer: FC = () => {
           ))}
         </nav>
         <div className="web-footer-community">
-          <ALink className="twitter" title="Twitter" to="https://www.google.com">
+          <ALink className="x" title="Twitter" to="https://twitter.com/Alldefiprotocol">
             Twitter
           </ALink>
           <ALink className="email" title="Email" to="mailto:web@alldefi.com">

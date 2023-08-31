@@ -1,14 +1,18 @@
 .web-footer {
   margin-top: 64px;
-  @extend .web_;padding: 40px 40px 0;
+  @extend .web_;
+  padding: 40px 40px 0;
   background: $black;
   box-shadow: 0 100px $black;
   main {
-    display: flex;justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
     @extend .web;
   }
   &-logo {
-    width: 115px;height: 32px;text-indent: -9999px;
+    width: 115px;
+    height: 32px;
+    text-indent: -9999px;
     background: url($res + 'logo-dark.svg') center/contain no-repeat;
   }
   &-nav {
@@ -16,12 +20,21 @@
     dl {
       width: 240px;
       dt {
-        color: $orange;text-transform: uppercase;font-size: 12px;letter-spacing: 4px;font-weight: bold;margin-bottom: 8px;
+        color: $orange;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 4px;
+        font-weight: bold;
+        margin-bottom: 8px;
       }
       dd {
-        display: flex;height: 32px;align-items: center;
-        &, a {
-          color: rgba($white, .7);font-size: 14px;
+        display: flex;
+        height: 32px;
+        align-items: center;
+        &,
+        a {
+          color: rgba($white, 0.7);
+          font-size: 14px;
           &:hover {
             color: $white;
           }
@@ -32,10 +45,14 @@
   &-community {
     display: flex;
     a {
-      display: block;width: 32px;height: 32px;text-indent: -9999px;
-      background: center/contain no-repeat;margin-left: 32px;
+      display: block;
+      width: 32px;
+      height: 32px;
+      text-indent: -9999px;
+      background: center/contain no-repeat;
+      margin-left: 32px;
 
-      $icons: 'twitter', 'telegram', 'discord', 'email';
+      $icons: 'x', 'telegram', 'discord', 'email';
 
       @each $icon in $icons {
         &.#{$icon} {
@@ -45,7 +62,13 @@
     }
   }
   &-copy {
-    border-top: 1px solid $text;color: $cff;margin-top: 24px;line-height: 2;padding: 12px 0;text-align: center;font-size: 12px;
+    border-top: 1px solid $text;
+    color: $cff;
+    margin-top: 24px;
+    line-height: 2;
+    padding: 12px 0;
+    text-align: center;
+    font-size: 12px;
   }
 }
 
