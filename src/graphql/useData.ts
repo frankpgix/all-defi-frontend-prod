@@ -50,28 +50,34 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
   const sData =
     listData?.fund10MinutelyDatas ?? listData?.fundHourlyDatas ?? listData?.fundDailyDatas ?? []
   const timeArr = uniq(sData.map((item: any) => item.periodStartUnix))
-  // // console.log(timeArr)
+  // console.log(sData, timeArr)
   const data = timeArr.map((time) => {
     const o: Record<string, any> = {
       time: Number(time) * 1000
     }
-    const ss = sData.filter((item: any) => item.periodStartUnix === time)
+    const ss: any[] = sData.filter((item: any) => item.periodStartUnix === time)
     fundsName.forEach((name: string) => {
       const fund = ss.find((item: any) => item.name === name)
-      const amount = fund ? safeInterceptionValues(fund.miningAmount, 2, 18) : 0
-      // todo ,这里需要USD价格
-      const price = fund ? safeInterceptionValues(fund.sharePrice, 2, 18) : 0
-      // console.log(safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18))
-      const baseTokenPriceInUSD = fund
-        ? safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18)
-        : 0
-      const value = BN(amount).times(price).times(baseTokenPriceInUSD).toNumber()
-      o[name] = value
+      if (fund) {
+        const baseToken = getTokenByAddress(fund.baseToken)
+        // console.log(baseToken)
+        const amount = fund
+          ? safeInterceptionValues(fund.miningAmount, baseToken.decimals, baseToken.decimals)
+          : 0
+        // todo ,这里需要USD价格
+        const price = fund ? safeInterceptionValues(fund.sharePrice, 18, 18) : 0
+        // console.log(safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18))
+        const baseTokenPriceInUSD = fund
+          ? safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18)
+          : 0
+        const value = BN(amount).times(price).times(baseTokenPriceInUSD).toNumber()
+        o[name] = value
+      }
     })
     return o
   })
   // console.log(removeZeroKeys(data))
-  console.log(data)
+  // console.log(data)
   return {
     loading: listLoading,
     error: listError,

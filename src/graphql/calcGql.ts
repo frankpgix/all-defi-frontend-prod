@@ -68,6 +68,7 @@ export const calcMiningData = (fundAddress: string, type: string, createTime: nu
         sharePrice
         baseTokenPriceInUSD
         miningAmount
+        baseToken
       }
     }
   `
