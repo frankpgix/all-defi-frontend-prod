@@ -7,11 +7,12 @@ import ContentLoader from 'react-content-loader'
 
 import { FundBaseProps, FundDetailProps } from '@/class/help'
 
-import { useFundDetailChartData } from '@/graphql/useData'
+import { calcFundDetailChartGQL } from '@/gql/gqls'
+import { useFundDetailChartData } from '@/gql/useData'
 
 import Image from '@@/common/Image'
 import RoeShow from '@@/common/RoeShow'
-import Loading from '@@/common/Loading'
+// import Loading from '@@/common/Loading'
 import { AreaChart } from '@@/common/Chart'
 import TimeSelect from '@@/common/Chart/TimeSelect'
 import Popper from '@@/common/Popper'
@@ -31,15 +32,12 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
   const [timeType, setTimeType] = useState<optionProps>('all')
   const timeOptions: optionProps[] = ['current epoch', '3 Epochs', 'all']
   const baseToken = useMemo(() => getTokenByAddress(base.baseToken), [base.baseToken])
-  // console.log('realtimeAUMLimit', data.realtimeAUMLimit, 'aum', data.aum, 'subscribingACToken', data.subscribingACToken)
-  // console.log(data)
-  const { loading: chartLoading, data: chartData } = useFundDetailChartData(
-    fundAddress ?? '',
-    timeType,
-    data
-  )
 
-  // if (loading) return <DashboardLoading />
+  const gql = useMemo(
+    () => calcFundDetailChartGQL(fundAddress, data.epochIndex, timeType),
+    [fundAddress, data.epochIndex, timeType]
+  )
+  const { loading: chartLoading, data: chartData } = useFundDetailChartData(gql)
 
   return (
     <>

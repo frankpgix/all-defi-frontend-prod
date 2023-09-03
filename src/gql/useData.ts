@@ -28,3 +28,15 @@ export const useFundData = (gql: any, decimals: number, precision: number) => {
 
   return { loading, error, data }
 }
+
+export const useFundDetailChartData = (gql: any) => {
+  const { loading, error, data: sData } = useQuery(gql)
+  const data = (sData?.fundIntervalDatas ?? [])
+    .map((item: any) => ({
+      time: item.periodStartUnix * 1000,
+      value: Number(safeInterceptionValues(String(item.sharePrice), 4, 18))
+    }))
+    .reverse()
+
+  return { loading, error, data }
+}
