@@ -9,8 +9,9 @@ const Banner: FC = () => {
       <main>
         <h2>A Decentralized Asset Management Platform on Blockchain.</h2>
         <p>
-          Decentralized yet Professional <br />
-          invest only with the real professional fund managers
+          Decentralized, yet professional.
+          <br />
+          Invest with only professional fund managers.
         </p>
         <Button to="/buy">start now</Button>
       </main>

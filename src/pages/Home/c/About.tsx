@@ -12,14 +12,12 @@ const About: FC = () => {
     <section className="web-home-about">
       <main>
         <h4>
-          AllDeFi welcomes all professional and responsible fund managers to create their own funds
-          on the platform.
+          AllDeFi welcomes all professional fund managers to list their own funds on the platform.
         </h4>
         <p>
-          To ensure the quality of the service and protect investors, the fund managers need to
-          participate with a real name and prove his proficiency beforehand. Rather than a pure
-          on-chain approach, AllDeFi chooses to apply more strict due diligence in an off-chain
-          fashion.
+          To ensure service quality and protect investors, the fund managers need to participate
+          with their real name and prove their proficiency beforehand. Rather than a pure on-chain
+          approach, AllDeFi chooses to apply more strict due diligence in an off-chain fashion.
         </p>
         <Button to="/manage/manager/create" disabled={!isManager}>
           CREATE A FUND

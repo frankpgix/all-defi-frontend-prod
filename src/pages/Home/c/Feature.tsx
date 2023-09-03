@@ -10,10 +10,10 @@ const features = [
     subName: "We don't need to be",
     intro: (
       <>
-        AllDeFi is fully decentralized.
-        <br /> All asset is kept in smart contracts that allow
+        Alldefi is fully decentralized.
+        <br /> All assets are kept in smart contracts that allow
         <br /> people to invest without centralized <br />
-        counter-party risk.
+        counterparty risk.
       </>
     )
   },
@@ -22,17 +22,19 @@ const features = [
     subName: 'our managers are',
     intro: (
       <>
-        We bring the top-tiered hedge fund <br />
-        managers to the platform. All managers have <br />
-        to pass due diligence with a real name and <br />
-        prove their expertise with a real track record.
+        We bring top-tier hedge fund managers to the <br />
+        platform. All managers have to pass due <br />
+        diligence (including real name and identity
+        <br /> verification), and prove their expertise <br />
+        with a real, verified track record."
       </>
     )
   },
   {
     name: 'Easy to Use',
     subName: 'our platform is',
-    intro: 'Anyone can choose the best fund that fits own investment profiles and invest with only a few clicks.'
+    intro:
+      'Anyone can choose a fund that best fits their own investment profile, and invest with only a few clicks.'
   },
   {
     name: 'Transparent',
@@ -41,7 +43,7 @@ const features = [
       <>
         Fund managers' transactions and <br />
         performance are kept completely <br />
-        transparent in real time.
+        transparent, in real time.
       </>
     )
   }
@@ -62,7 +64,12 @@ const Feature: FC = () => {
             </li>
           ))}
         </ul>
-        <header className={classNames(`active-${activeIndex}`, 'animate__animated animate__fadeIn animate__delay-2s')}>
+        <header
+          className={classNames(
+            `active-${activeIndex}`,
+            'animate__animated animate__fadeIn animate__delay-2s'
+          )}
+        >
           {features.map(({ name }, index) => (
             <span
               key={name}
