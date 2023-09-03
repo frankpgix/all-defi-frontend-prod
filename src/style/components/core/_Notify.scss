@@ -84,12 +84,14 @@
     display: flex;
     min-height: 52px;
     border-radius: 10px;
-    align-items: center;
+    align-items: flex-start;
     position: relative;
-    padding-left: 62px;
-    margin-bottom: 10px;
     box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
     animation-duration: 0.7s;
+    padding: 16px;
+    background: $cff;
+    margin-bottom: 10px;
+    border-radius: 10px;
 
     &-layout {
       max-height: 0;
@@ -103,83 +105,111 @@
     }
 
     &-icon {
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 52px;
-      border-radius: 10px 0 0 10px;
+      width: 20px;
+      margin-right: 12px;
       display: flex;
       justify-content: center;
       align-items: center;
       span {
         display: block;
-        width: 32px;
-        height: 32px;
-        background: center/24px no-repeat;
+        width: 20px;
+        height: 20px;
+        background: center/contain no-repeat;
       }
     }
 
     &.success &-icon {
       span {
-        background-image: url($res + 'icon/toast-success.svg');
+        background-image: url($res + 'icon/notify-success.svg');
       }
-      background-color: #13bc8b;
     }
     &.warning &-icon {
       span {
-        background-image: url($res + 'icon/toast-error.svg');
+        background-image: url($res + 'icon/notify-error.svg');
       }
-      background-color: #ff7701;
     }
     &.error &-icon {
       span {
-        background-image: url($res + 'icon/toast-error.svg');
+        background-image: url($res + 'icon/notify-error.svg');
       }
-      background-color: #fd3d60;
     }
     &.loading &-icon {
       span {
-        background-image: url($res + 'icon/toast-wait.svg');
+        background-image: url($res + 'icon/notify-wait.svg');
         animation: Toastify__spin 0.65s linear infinite;
       }
-      background-color: #ff7701;
     }
 
     &-detail {
-      padding: 8px 0;
-      font-size: 13px;
+      font-size: 12px;
       display: flex;
       flex-flow: column;
       gap: 4px;
       text-transform: capitalize;
       h3 {
         font-size: 14px;
-        color: $c22;
+        line-height: 20px;
       }
       p {
-        color: $c55;
+        color: #2c2626;
+        line-height: 1.4;
       }
 
       a {
         color: $blue;
+        display: inline-flex;
+        align-items: center;
+
+        &:after {
+          content: '';
+          display: inline-block;
+          margin-left: 5px;
+          width: 16px;
+          height: 16px;
+          background: url($res + 'icon/notify-share.svg') center/contain no-repeat;
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    &.success &-detail {
+      h3 {
+        color: #4adcb3;
+      }
+    }
+    &.warning &-detail {
+      h3 {
+        color: #fea036;
+      }
+    }
+    &.error &-detail {
+      h3 {
+        color: #fd3d60;
+      }
+    }
+    &.loading &-detail {
+      h3 {
+        color: #fea036;
       }
     }
 
     &-close {
       position: absolute;
-      right: -6px;
-      top: -6px;
+      right: 10px;
+      top: 10px;
       width: 16px;
       height: 16px;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      @include dz();
-      color: $c9b;
+      background: url($res + 'icon/notify-close.svg') center/contain no-repeat;
+      opacity: 0.6;
       cursor: pointer;
+      @include dz();
       &:hover {
-        @include xz(180);
+        opacity: 1;
+        @include xz(90);
       }
     }
   }

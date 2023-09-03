@@ -45,11 +45,17 @@ const Portfolio: FC<Props> = ({ fundAddress, base }) => {
       width: 240,
       render: (value: number, row: any) => {
         const token = getTokenByAddress(row.token)
-        return row.value > 0 && value === 0 ? (
-          '-'
-        ) : (
+        console.log(row.token, token.name)
+        return token.name !== 'UNKNOWN' ? (
           <TokenValue value={value} token={token} size="mini" format="0,0.00" noUnit />
+        ) : (
+          '-'
         )
+        // return row.value > 0 && value === 0 ? (
+        //   '-'
+        // ) : (
+        //   <TokenValue value={value} token={token} size="mini" format="0,0.00" noUnit />
+        // )
       }
     },
     {

@@ -12,7 +12,8 @@ const nav: { name: string; list: { name: string; url: string; checkManage?: bool
   {
     name: 'government',
     list: [
-      { name: 'Twitter', url: 'https://twitter.com/Alldefiprotocol' }
+      { name: 'Twitter', url: 'https://twitter.com/Alldefiprotocol' },
+      { name: 'Email', url: 'mailto:web@alldefi.com' }
       // { name: 'Application Manager', url: '/manage' },
       // { name: 'Road Map', url: '/' }
     ]

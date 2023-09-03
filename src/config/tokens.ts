@@ -42,6 +42,19 @@ export const tokenss: { [key: string]: Token } = {
     '',
     'symbol/eth-blue.png'
   ),
+  WBTC: new Token(
+    'WBTC',
+    'WBTC',
+    {
+      [ChainId.MAINNET]: '',
+      [ChainId.GOERLINET]: '',
+      [ChainId.ARBITRUM]: '0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f'
+    },
+    8,
+    4,
+    '',
+    'symbol/wbtc.png'
+  ),
   ETH: new Token(
     'ETH',
     'ETH',

@@ -17,7 +17,7 @@ const Footer: FC = () => {
               {list.map(({ name, url, checkManage }, key) => (
                 <dd key={`${index}-${key}`}>
                   {checkManage ? (
-                    <ALink to={url} disabled={isManager}>
+                    <ALink to={url} disabled={!isManager}>
                       {name}
                     </ALink>
                   ) : (
@@ -28,14 +28,17 @@ const Footer: FC = () => {
             </dl>
           ))}
         </nav>
-        <div className="web-footer-community">
+        <span></span>
+        <span></span>
+        <span></span>
+        {/* <div className="web-footer-community">
           <ALink className="x" title="Twitter" to="https://twitter.com/Alldefiprotocol">
             Twitter
           </ALink>
           <ALink className="email" title="Email" to="mailto:web@alldefi.com">
             Email
           </ALink>
-        </div>
+        </div> */}
       </main>
       <div className="web-footer-copy">&copy; All DeFi</div>
     </footer>
