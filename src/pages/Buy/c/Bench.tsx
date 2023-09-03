@@ -112,7 +112,7 @@ const Bench: FC = () => {
 
   return (
     <>
-      <BlueLineSection title="Buy AC token" className="web-buy-bench select">
+      <BlueLineSection title="Buy AC Tokens" className="web-buy-bench select">
         <Input
           className="web-buy-bench-input"
           type="number"
@@ -154,7 +154,7 @@ const Bench: FC = () => {
             </dd>
           </dl>
           <dl>
-            <dt>and extra</dt>
+            <dt>and an extra</dt>
             <dd>
               <AllTokenUnit value={preAllValue} sall>
                 sALL

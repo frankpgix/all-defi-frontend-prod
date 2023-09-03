@@ -65,8 +65,8 @@ const OnceYouBuy: FC = () => {
         <div className="web-buy-once-process-item">
           <div className="web-buy-once-process-item-ball animate__animated animate__backInDown animate__delay-3s" />
           <em>STEP 4</em>
-          <h3>harvest ALL</h3>
-          <p>Harvested ALL can be claimed anytime</p>
+          <h3>Harvest ALL</h3>
+          <p>Harvested ALL tokens can be claimed at any time</p>
           <div className="web-buy-once-process-item-detail">
             <div className="web-buy-once-process-item-detail-icons">
               <i>
