@@ -1,8 +1,8 @@
 import React, { FC, useState, useEffect, useMemo, useCallback } from 'react'
 import { last, min } from 'lodash'
 import { sum, formatNumber } from '@/utils/tools'
-import { useMiningData } from '@/graphql/useData'
-import { calcMiningData } from '@/graphql/calcGql'
+import { useMiningData } from '@/gql/useData'
+import { calcMiningData } from '@/gql/gqls'
 
 import DataItem from '@@/common/DataItem'
 import TimeSelect from '@@/core/ChartTimeSelect'

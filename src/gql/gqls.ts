@@ -98,3 +98,29 @@ export const calcFundDetailChartGQL = (fundAddress: string, epoch: number, timeT
     }
   `
 }
+
+export const calcMiningData = (fundAddress: string, type: string, createTime: number) => {
+  const { dataType, startTime } = calcDataTypeAndStartTime(type, createTime)
+  return gql`
+    query {
+      fundIntervalDatas(
+        orderBy: periodStartUnix
+        orderDirection: desc
+        first: 1000
+        where: {
+          fundId_in: ${fundAddress.toLowerCase()}
+          intervalType: "${dataType}"
+          periodStartUnix_gt: ${startTime}
+        }
+      ) {
+        fundId
+        name
+        periodStartUnix
+        sharePrice
+        baseTokenPriceInUSD
+        miningAmount
+        baseToken
+      }
+    }
+  `
+}

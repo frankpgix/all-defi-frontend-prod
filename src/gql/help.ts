@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { sum } from 'lodash'
 
 export const calcDataTypeAndStartTime = (type: string, startTime: number) => {
   const now = dayjs().unix()
@@ -23,4 +24,16 @@ export const calcDataTypeAndStartTime = (type: string, startTime: number) => {
     o.dataType = '1w'
   }
   return o
+}
+
+export const removeZeroKeys = (array: any[]) => {
+  array.forEach((obj) => {
+    Object.keys(obj).forEach((key) => {
+      if (sum(array.map((item) => item[key] ?? 0)) === 0) {
+        delete obj[key]
+      }
+    })
+  })
+  // 返回修改后的数组
+  return array
 }
