@@ -12,7 +12,6 @@ import { sleep } from '@/utils/tools'
 export const Notify: FC = () => {
   return (
     <>
-      <NotifyButton />
       <NotifyList />
     </>
   )
@@ -106,6 +105,9 @@ export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
           {data.hash && <ALink to={`${ETH_SCAN_URL}/tx/${data.hash}`}>View on Arbitrumscan</ALink>}
         </div>
         {data.type !== 'loading' && <div className="c-notify-item-close" onClick={onClose} />}
+        <div className="c-notify-item-line">
+          <div className="c-notify-item-line-inner"></div>
+        </div>
       </div>
     </div>
   )

@@ -1,65 +1,95 @@
-
 .web-button {
-  display: inline-flex;justify-content: center;align-items: center;border: none;
-  @include dz();opacity: 1;cursor: pointer;text-transform: uppercase;box-sizing: border-box;
-  background: $blue;color: $cff;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  @include dz();
+  opacity: 1;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  background: $blue;
+  color: $cff;
   &:hover {
     background: $lBlue;
   }
 
   &.disabled {
     cursor: not-allowed;
-    &, &:hover {
+    &,
+    &:hover {
       background: $gray;
     }
   }
 
   &.outline {
     border-style: solid;
-    background: none;border-color: $blue;color: $blue;
+    background: none;
+    border-color: $blue;
+    color: $blue;
     &:hover {
-      border-color: $lBlue;color: $lBlue;background: none;
+      border-color: $lBlue;
+      color: $lBlue;
+      background: none;
     }
     &.disabled {
-      &, &:hover {
-        border-color: $gray;color: $gray;
+      &,
+      &:hover {
+        border-color: $gray;
+        color: $gray;
       }
     }
   }
 
   &.white {
-    background: $white;color: $blue;
+    background: $white;
+    color: $blue;
     &:hover {
-      background: rgba($white, .8);
+      background: rgba($white, 0.8);
     }
     &.disabled {
-      &, &:hover {
-        color: $gray;background: $white;
+      &,
+      &:hover {
+        color: $gray;
+        background: $white;
       }
     }
     &.outline {
-      background: transparent;color: $white;border-color: $white;
+      background: transparent;
+      color: $white;
+      border-color: $white;
       &:hover {
-        opacity: .8;
+        opacity: 0.8;
       }
     }
   }
 
   &.gradient {
-    background: linear-gradient(134.54deg, #1036E6 17.91%, #467AFF 100%);
+    background: linear-gradient(134.54deg, #1036e6 17.91%, #467aff 100%);
+  }
+
+  &.orange {
+    background: #fea036;
+    letter-spacing: 2px;
   }
 
   &.text {
-    background: none;color: $blue;
+    background: none;
+    color: $blue;
     &:after {
-      content: '';@include xz(45);border-width: 2px 2px 0 0;
-      border-style: solid;border-color: $blue;
+      content: '';
+      @include xz(45);
+      border-width: 2px 2px 0 0;
+      border-style: solid;
+      border-color: $blue;
     }
     &:hover {
-      background: none;color: $lBlue;
+      background: none;
+      color: $lBlue;
     }
     &.disabled {
-      &, &:hover {
+      &,
+      &:hover {
         color: $gray;
         &:after {
           border-color: $gray;
@@ -69,50 +99,91 @@
   }
 
   &.loading {
-    cursor: wait;opacity: .5;
+    cursor: wait;
+    opacity: 0.5;
   }
   &.full {
-    width: 100%;display: flex;
+    width: 100%;
+    display: flex;
   }
   &-size {
     &-default {
-      height: 56px;border-radius: 28px;padding: 0 40px;font-size: 12px;font-weight: bold;letter-spacing: 4px;
+      height: 56px;
+      border-radius: 28px;
+      padding: 0 40px;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 4px;
       &.outline {
         border-width: 2px;
       }
       &.text {
-        padding: 0 10px;height: auto;
+        padding: 0 10px;
+        height: auto;
         &:after {
-          width: 4px;height: 4px;margin-left: 10px;margin-top: -2px;
+          width: 4px;
+          height: 4px;
+          margin-left: 10px;
+          margin-top: -2px;
         }
+      }
+      &.round {
+        width: 56px;
+        padding: 0;
       }
     }
     &-medium {
-      height: 48px;border-radius: 24px;padding: 0 32px;font-size: 10px;font-weight: bold;letter-spacing: 4px;
+      height: 48px;
+      border-radius: 24px;
+      padding: 0 32px;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 4px;
       &.outline {
         border-width: 2px;
       }
       &.text {
-        padding: 0 10px;height: auto;
+        padding: 0 10px;
+        height: auto;
         &:after {
-          width: 4px;height: 4px;margin-left: 10px;
+          width: 4px;
+          height: 4px;
+          margin-left: 10px;
         }
+      }
+      &.round {
+        width: 48px;
+        padding: 0;
       }
     }
     &-mini {
-      height: 40px;border-radius: 20px;padding: 0 24px;font-size: 10px;font-weight: bold;letter-spacing: 4px;
+      height: 40px;
+      border-radius: 20px;
+      padding: 0 24px;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 4px;
       &.outline {
         border-width: 1px;
       }
       &.text {
-        padding: 0 10px;height: auto;
+        padding: 0 10px;
+        height: auto;
         &:after {
-          width: 3px;height: 3px;margin-left: 10px;
+          width: 3px;
+          height: 3px;
+          margin-left: 10px;
         }
+      }
+      &.round {
+        width: 40px;
+        padding: 0;
       }
     }
     &-icon {
-      width: 48px;height: 48px;border-radius: 24px;
+      width: 48px;
+      height: 48px;
+      border-radius: 24px;
     }
   }
 }

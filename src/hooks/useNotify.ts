@@ -36,6 +36,10 @@ export const useNotify = () => {
   }
 
   const hasNotify = useMemo(() => notifyList.length > 0, [notifyList.length])
+  const loadingNotifyCount = useMemo(
+    () => notifyList.filter((item) => item.type === 'loading').length,
+    [notifyList]
+  )
 
   const createNotify = async (notify: NotifyItemType): Promise<string> => {
     const notifyItem = makeNotifyItem(notify)
@@ -122,6 +126,7 @@ export const useNotify = () => {
     createNotify,
     clearNotifyList,
     closeNotifyItem,
-    updateNotifyItem
+    updateNotifyItem,
+    loadingNotifyCount
   }
 }

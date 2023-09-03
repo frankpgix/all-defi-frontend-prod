@@ -11,9 +11,11 @@ export interface ButtonProps {
   outline?: boolean
   text?: boolean
   white?: boolean
+  orange?: boolean
   icon?: string
   gradient?: boolean
   disabled?: boolean
+  round?: boolean
   full?: boolean
   onClick?: (e: any) => void
   children?: ReactNode
@@ -28,11 +30,13 @@ const Button: FC<ButtonProps> = ({
   loading,
   text,
   white,
+  orange,
   gradient,
   className,
   onClick,
   full,
-  icon
+  icon,
+  round
 }) => {
   const navigate = useNavigate()
 
@@ -54,7 +58,9 @@ const Button: FC<ButtonProps> = ({
         white,
         outline,
         full,
-        text
+        text,
+        round,
+        orange
       })}
       disabled={disabled}
       onClick={handleClick}

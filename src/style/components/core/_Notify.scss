@@ -86,13 +86,14 @@
     border-radius: 10px;
     align-items: flex-start;
     position: relative;
-    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
+    // box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
     animation-duration: 0.7s;
     padding: 16px;
     background: $cff;
     margin-bottom: 10px;
     border-radius: 10px;
-
+    overflow: hidden;
+    box-shadow: 0px 0px 10px 0px rgba(152, 149, 149, 0.16);
     &-layout {
       max-height: 0;
       opacity: 0;
@@ -212,5 +213,44 @@
         @include xz(90);
       }
     }
+
+    &-line {
+      height: 4px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #f1f3f9;
+
+      &-inner {
+        height: 4px;
+        position: absolute;
+        left: 0;
+        width: 100%;
+      }
+    }
+
+    &.success &-line-inner {
+      background: #4adcb3;
+    }
+    &.warning &-line-inner {
+      background: #fea036;
+    }
+    &.error &-line-inner {
+      background: #fd3d60;
+    }
+    &.loading &-line-inner {
+      background: #fea036;
+      animation: notify-line-load 30s linear infinite;
+    }
+  }
+}
+
+@keyframes notify-line-load {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -100%;
   }
 }
