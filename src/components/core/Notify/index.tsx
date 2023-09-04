@@ -5,8 +5,8 @@ import classNames from 'classnames'
 import { useNotify } from '@/hooks/useNotify'
 import type { NotifyStoreItemType } from '@/types/notify'
 import ALink from '@@/common/ALink'
-// import Button from '@@/common/Button'
-import NoData from '@@/common/NoData'
+import Button from '@@/common/Button'
+// import NoData from '@@/common/NoData'
 import { ETH_SCAN_URL } from '@/config'
 import { sleep } from '@/utils/tools'
 export const Notify: FC = () => {
@@ -43,22 +43,22 @@ export const NotifyList: FC = () => {
   return (
     <div ref={ref} className={classNames('c-notify-layout', { show })}>
       <div className="c-notify-list">
-        {notifyList.map((item) => (
-          <NotifyItem data={item} key={item.id} />
+        {notifyList.map((item, index) => (
+          <NotifyItem data={item} key={`${item.id}`} />
         ))}
       </div>
-      <NoData show={!hasNotify} small tip="No Notify" white></NoData>
+      {/* <NoData show={!hasNotify} small tip="No Notify" white></NoData> */}
       {hasNotify && (
         <footer className="c-notify-footer">
-          <button className="c-notify-btn-clear" onClick={onClear}>
+          <Button size="mini" onClick={onClear}>
             Clear All
-          </button>
+          </Button>
         </footer>
       )}
-      <button
+      {/* <button
         className={classNames('c-notify-btn-hide', { show })}
         onClick={closeNotifyList}
-      ></button>
+      ></button> */}
     </div>
   )
 }
@@ -86,6 +86,8 @@ export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
   //   setLayoutShow(true)
   // })
 
+  const typeShow = useMemo(() => (data.type === 'loading' ? 'Pending' : data.type), [data.type])
+
   const onClose = async () => {
     // setAnimteType('out')
     // await sleep(200)
@@ -100,7 +102,7 @@ export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
           <span />
         </div>
         <div className="c-notify-item-detail">
-          <h3>{data.title || data.type}</h3>
+          <h3>{data.title || typeShow}</h3>
           {data.content && <p>{data.content}</p>}
           {data.hash && <ALink to={`${ETH_SCAN_URL}/tx/${data.hash}`}>View on Arbitrumscan</ALink>}
         </div>

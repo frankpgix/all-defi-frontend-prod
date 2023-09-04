@@ -15,7 +15,10 @@ export const useNotify = () => {
     updateNotifyStatus,
     deleteNotifyStatusByID,
     clearAllNotifyStatus,
-    updateNotifyItem
+    updateNotifyItem: updateNotifyItemStore,
+    notifyHash,
+    createNotifyStore,
+    deleteNotifyByID
   } = useNotifyStore((state: NotifyStoreType) => ({
     notifyList: state.notifyList,
     notifyShow: state.notifyShow,
@@ -26,7 +29,10 @@ export const useNotify = () => {
     updateNotifyStatus: state.updateNotifyStatus,
     deleteNotifyStatusByID: state.deleteNotifyStatusByID,
     clearAllNotifyStatus: state.clearAllNotifyStatus,
-    updateNotifyItem: state.updateNotifyItem
+    updateNotifyItem: state.updateNotifyItem,
+    createNotifyStore: state.createNotifyStore,
+    deleteNotifyByID: state.deleteNotifyByID,
+    notifyHash: state.notifyHash
   }))
 
   const makeNotifyItem = (notify: NotifyStoreItemType | NotifyItemType) => {
@@ -36,21 +42,36 @@ export const useNotify = () => {
   }
 
   const hasNotify = useMemo(() => notifyList.length > 0, [notifyList.length])
+
   const loadingNotifyCount = useMemo(
     () => notifyList.filter((item) => item.type === 'loading').length,
-    [notifyList]
+    [notifyList, notifyHash]
   )
 
-  const createNotify = async (notify: NotifyItemType): Promise<string> => {
+  const createNotify = async (notify: NotifyItemType, autoClose?: boolean): Promise<string> => {
     const notifyItem = makeNotifyItem(notify)
 
-    const list = [notifyItem, ...notifyList]
-    if (list.length > 15) list.length = 15
-    updateNotifyList(list)
+    createNotifyStore(notifyItem)
+    // const list = [notifyItem, ...notifyList]
+    // if (list.length > 15) list.length = 15
+    // updateNotifyList(list)
     openNotifyList()
     updateNotifyStatus(notifyItem.id, { animteType: 'in', layoutShow: false })
     await sleep(200)
     updateNotifyStatus(notifyItem.id, { animteType: 'in', layoutShow: true })
+
+    // if (autoClose !== false) {
+    //   if (notifyItem.type === 'success' || notifyItem.type === 'warning') {
+    //     setTimeout(() => {
+    //       closeNotifyItem(notifyItem.id)
+    //     }, 15000)
+    //   }
+    //   if (notifyItem.type === 'loading') {
+    //     setTimeout(() => {
+    //       closeNotifyItem(notifyItem.id)
+    //     }, 60000)
+    //   }
+    // }
     return notifyItem.id
   }
 
@@ -94,26 +115,32 @@ export const useNotify = () => {
     await sleep(fast ? 100 : 200)
     updateNotifyStatus(notifyId, { animteType: 'out', layoutShow: false })
     await sleep(fast ? 100 : 200)
-    updateNotifyList(notifyList.filter((item) => item.id !== notifyId))
+    deleteNotifyByID(notifyId)
     deleteNotifyStatusByID(notifyId)
     if (notifyList.length === 0) {
       clearAllNotifyStatus()
     }
   }
 
-  // const updateNotifyItem = async (notify: NotifyStoreItemType) => {
-  //   updateStoreNotifyItem(notify.id, notify)
-  //   // await closeNotifyItem(notify.id)
-  //   // // await sleep(100)
-  //   // console.log(notify, notifyList)
-  //   // const oldNotifyItemIndex = notifyList.findIndex((item) => item.id === notify.id)
-  //   // console.log(notify, oldNotifyItemIndex)
-  //   // if (oldNotifyItemIndex !== -1) {
-  //   //   const tempList = [...notifyList]
-  //   //   tempList[oldNotifyItemIndex] = makeNotifyItem(notify)
-  //   //   updateNotifyList(tempList)
-  //   // }
-  // }
+  const updateNotifyItem = async (
+    notifyId: string,
+    notify: NotifyItemType,
+    autoClose?: boolean
+  ) => {
+    updateNotifyItemStore(notifyId, notify)
+    if (autoClose !== false) {
+      if (notify.type === 'success' || notify.type === 'warning') {
+        setTimeout(() => {
+          closeNotifyItem(notifyId)
+        }, 15000)
+      }
+      if (notify.type === 'loading') {
+        setTimeout(() => {
+          closeNotifyItem(notifyId)
+        }, 60000)
+      }
+    }
+  }
 
   return {
     notifyList,

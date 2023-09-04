@@ -20,14 +20,14 @@
 
   &-layout {
     position: fixed;
-    top: 0;
+    top: 94px;
     bottom: 0;
     width: 350px;
     z-index: 22;
     right: -350px;
     @include dz();
-    @include mh();
-    background: rgba($c00, 0.1);
+    // pointer-events: none;
+    // max-height: calc(100vh - 100px);
     &.show {
       right: -10px;
     }
@@ -46,6 +46,8 @@
       opacity: 0;
       @include yd(0, -50%);
       @include dz();
+
+      display: none;
 
       &.show {
         opacity: 1;
@@ -225,23 +227,27 @@
       &-inner {
         height: 4px;
         position: absolute;
-        left: 0;
+        left: -100%;
         width: 100%;
       }
     }
 
     &.success &-line-inner {
       background: #4adcb3;
+      animation: notify-line-load 15s linear;
     }
     &.warning &-line-inner {
       background: #fea036;
+      animation: notify-line-load 15s linear;
     }
     &.error &-line-inner {
       background: #fd3d60;
+      left: 0;
     }
     &.loading &-line-inner {
       background: #fea036;
-      animation: notify-line-load 30s linear infinite;
+      left: 0;
+      // animation: notify-line-load 60s linear;
     }
   }
 }

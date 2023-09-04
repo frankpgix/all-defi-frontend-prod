@@ -6,11 +6,27 @@ import Wait from '@@/common/Status/Wait'
 import ComingSoon from '@@/common/Dialog/ComingSoon'
 import { useNotify } from '@/hooks/useNotify'
 import Toasts from './Toasts'
+import { sleep } from '@/utils/tools'
 
 const Test: FC = () => {
   const [name, setName] = useState('')
   const [show, setShow] = useState(false)
-  const { createNotify } = useNotify()
+  const { createNotify, updateNotifyItem } = useNotify()
+  const upLoadingNotify = async () => {
+    console.log(111)
+    const id = await createNotify({
+      type: 'loading',
+      content: '等待变成成功'
+    })
+    console.log(id)
+    await sleep(5000)
+    console.log(id)
+    updateNotifyItem(id, {
+      type: 'success',
+      content: '成功的消息',
+      hash: '0x4751a349bd7af09de1b54eabc087e72cb8a78406bbcd67ea1d8bcea059255e2c'
+    })
+  }
   return (
     <div className="web-home">
       <Button onClick={() => createNotify({ type: 'success', content: '创建一个消息成功了' })}>
@@ -41,7 +57,6 @@ const Test: FC = () => {
         onClick={() =>
           createNotify({
             type: 'loading',
-            title: '这是一个标题',
             content: '创建Loding的消息',
             hash: '0x4751a349bd7af09de1b54eabc087e72cb8a78406bbcd67ea1d8bcea059255e2c'
           })
@@ -49,6 +64,7 @@ const Test: FC = () => {
       >
         创建Loding的消息
       </Button>
+      <Button onClick={upLoadingNotify}>创建一个更新的Loding的消息</Button>
       <Toasts />
       {/* <Input type="number" value={name} onChange={(val) => setName(val)} right></Input>
       <Button disabled>222</Button>

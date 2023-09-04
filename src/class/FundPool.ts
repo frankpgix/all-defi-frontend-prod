@@ -169,19 +169,19 @@ class FundPool {
     signer: Signer | undefined | null
   ): Promise<OutComeProps> => {
     if (!fundAddress || !signer) return outcome(4010)
-    // try {
-    const contract = getFundPoolContract(fundAddress, signer)
-    const gasLimit = await estimateGas(contract, 'settleAccount', [])
-    console.log(gasLimit, contract)
-    const response = await contract.settleAccount({ gasLimit })
-    const receipt = await response.wait()
-    // 返回结果
-    if (receipt.status) return outcome(0, null, receipt.transactionHash)
-    return outcome(500)
-    // } catch (error: any) {
-    //   console.info(error)
-    //   return outcome(500, error.reason)
-    // }
+    try {
+      const contract = getFundPoolContract(fundAddress, signer)
+      const gasLimit = await estimateGas(contract, 'settleAccount', [])
+      console.log(gasLimit, contract)
+      const response = await contract.settleAccount({ gasLimit })
+      const receipt = await response.wait()
+      // 返回结果
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
+      return outcome(500)
+    } catch (error: any) {
+      console.info(error)
+      return outcome(500, error.reason)
+    }
   }
 
   // 领取赔偿的ALL

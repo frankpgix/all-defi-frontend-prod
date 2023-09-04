@@ -1,3 +1,5 @@
+import { StringDecoder } from 'string_decoder'
+
 export interface NotifyItemType {
   id?: string
   type: 'loading' | 'success' | 'warning' | 'error'
@@ -27,4 +29,7 @@ export interface NotifyStoreType {
   deleteNotifyStatusByID: (key: string) => void
   clearAllNotifyStatus: () => void
   updateNotifyItem: (key: string, status: NotifyItemType) => void
+  deleteNotifyByID: (key: string) => void
+  createNotifyStore: (notify: NotifyStoreItemType) => void
+  notifyHash: string
 }
