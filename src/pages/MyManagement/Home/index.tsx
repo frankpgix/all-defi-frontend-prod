@@ -27,7 +27,9 @@ const Home: FC = () => {
           Investment <br />
           Management
         </h2>
-        <p>Investors can monitor own portofolio, manage existing funds and invest new funds</p>
+        <p>
+          Investors can monitor their own portfolio, manage existing funds, and invest in new funds
+        </p>
         <hr />
       </main>
     ),
@@ -54,7 +56,7 @@ const Home: FC = () => {
               Strategy <br />
               Management
             </h2>
-            <p>Whitelisted managers can create new funds, manage and monitor established funds</p>
+            <p>Whitelisted managers can create new funds, manage, and monitor established funds</p>
             <hr />
           </main>
         </li>

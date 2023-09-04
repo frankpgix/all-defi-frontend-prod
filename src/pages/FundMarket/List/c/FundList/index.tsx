@@ -55,7 +55,7 @@ const FundList: FC = () => {
       )
     },
     {
-      title: '1 D',
+      title: '1 Day',
       dataIndex: 'dayReturn',
       render: (value: number) => <RoeShow value={value * 100} />
     },

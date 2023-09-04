@@ -11,9 +11,9 @@ const TimeSelect: FC<Props> = ({ value, onChange, startTime }) => {
   const diff = +new Date() - startTime
   const options = [
     { time: 0, key: 'DAY', label: 'DAY' },
-    { time: 1000 * 60 * 60 * 24 * 3, key: 'WEEK', label: 'WEEK' },
-    { time: 1000 * 60 * 60 * 24 * 10, key: 'MONTH', label: 'MONTH' },
-    { time: 1000 * 60 * 60 * 24 * 30 * 3, key: 'YEAR', label: 'YEAR' },
+    { time: 1000 * 60 * 60 * 24, key: 'WEEK', label: 'WEEK' },
+    { time: 1000 * 60 * 60 * 24 * 7, key: 'MONTH', label: 'MONTH' },
+    { time: 1000 * 60 * 60 * 24 * 30, key: 'YEAR', label: 'YEAR' },
     { time: 1000 * 60 * 60 * 24 * 30 * 6, key: 'ALL', label: 'ALL' }
   ]
 

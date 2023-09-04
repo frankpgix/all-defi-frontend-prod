@@ -20,7 +20,7 @@ const Record: FC<Props> = ({ data, multiple, loading, baseToken }) => {
   console.log(baseToken)
   const webColumns = [
     {
-      title: 'ALL Token Staking Amount',
+      title: 'ALL Token Staked Amount',
       dataIndex: 'stakeAmount',
       render: (value: number) => formatNumber(value, 2, '0,0.00')
     },

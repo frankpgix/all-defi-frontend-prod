@@ -170,8 +170,8 @@ const Bench: FC = () => {
         show={infoStatus}
         onConfirm={buyAndStakeFunc}
         onClose={() => setInfoStatus(false)}
-        title="Confirm Buy AC token"
-        msg={`You will purchase ${amount} ac${currBaseTokenName}, meanwhile you will recieve ${preAllValue} sALL, total cost of ${amount} ${currBaseTokenName}`}
+        title="Confirm AC Token Purchase"
+        msg={`You will purchase ${amount} ac${currBaseTokenName}, and you will also recieve ${preAllValue} sALL token, for a total cost of ${amount} ${currBaseTokenName}`}
       />
     </>
   )

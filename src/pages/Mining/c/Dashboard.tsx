@@ -63,7 +63,7 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
           <DataItem label="You Staked Value" loading={loading}>
             {formatNumber(stakeSharesValue, 2, '$0,0.00')}
           </DataItem>
-          <DataItem label="You Staked sALL" normalFont loading={loading}>
+          <DataItem label="Your Staked sALL" normalFont loading={loading}>
             {formatNumber(rewardDashboard.sALL, 2, '0,0.00')}
           </DataItem>
           <DataItem label="Claimable ALL Profit" loading={loading}>

@@ -10,15 +10,15 @@ export const calcManageFundDatasGql = (manager: string, type: string, createTime
       return '1h'
     }
     if (type === 'WEEK') {
-      return '6h'
+      return '1h'
     }
     if (type === 'MONTH') {
-      return '1d'
+      return '6h'
     }
     if (type === 'YEAR') {
-      return '1w'
+      return '1d'
     }
-    return '1w'
+    return '1d'
   }
   const dataType = calcDataType()
   return gql`

@@ -20,7 +20,7 @@ const Manager: FC = () => {
         <span>Strategy Management</span>
         {!loading && (
           <Button to="/manage/manager/create" size="mini">
-            create fund
+            CREATE FUND
           </Button>
         )}
       </h2>

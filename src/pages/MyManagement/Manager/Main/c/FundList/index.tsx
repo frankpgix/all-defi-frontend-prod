@@ -64,7 +64,7 @@ const FundList: FC = () => {
       // align: 'right'
     },
     {
-      title: 'Last Epoch Return',
+      title: "Last Epoch's Return",
       dataIndex: 'lastRoe',
       width: 130,
       render: (value: number) => <RoeShow value={value} />

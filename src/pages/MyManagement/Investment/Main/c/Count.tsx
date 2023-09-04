@@ -8,7 +8,7 @@ import { PieChart, Pie, Cell, Sector } from 'recharts'
 // import NoData from '@@/common/NoData'
 import TokenValue from '@@/common/TokenValue'
 import { getTokenByAddress } from '@/config/tokens'
-import Popper from '@@/common/Popper'
+// import Popper from '@@/common/Popper'
 import { useUserFundList } from '@/hooks/useFund'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/FundDetail/c/ManageDetail/C'

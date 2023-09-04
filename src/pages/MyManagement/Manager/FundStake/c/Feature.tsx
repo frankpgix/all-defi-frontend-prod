@@ -15,13 +15,22 @@ const Feature: FC<DirectionProps> = ({ direction }) => {
         </Button>
       </header>*/}
       <ul>
-        <li>Each fund's Fund Max AUM Limit is depending on the amount of ALL staked in the reserved pool.</li>
+        <li>
+          Each fund's Fund Max AUM Limit is depending on the amount of ALL staked in the reserved
+          pool.
+        </li>
         <li>
           {direction === 'reduce' ? 'Reducing the ' : 'The increase '}
-          new AUM Limit will take effect immediately.
+          AUM limit will take effect immediately
         </li>
-        <li>The profit from capital that exceeds the AUM Limit will not be shared with the fund manager.</li>
-        <li>If the NAV exceeds the fund AUM Limit, the subscription will be closed for the next epoch.</li>
+        <li>
+          The profit from capital that exceeds the AUM Limit will not be shared with the fund
+          manager.
+        </li>
+        <li>
+          If the current NAV exceeds the fund's AUM limit, then subscriptions will be closed in the
+          next epoch.
+        </li>
       </ul>
     </div>
   )

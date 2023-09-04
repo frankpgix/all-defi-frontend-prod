@@ -65,7 +65,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
             </article>
           )}
           <section>
-            <h5>protocol allowed</h5>
+            <h5>Protocols Allowed</h5>
             {loading ? (
               <ContentLoader
                 width={530}
@@ -96,7 +96,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
             </DashboardItem>
             <DashboardItem
               label="Capacity Available"
-              popper="Fund's max AUM minus current AUM, which shows the available capacity of this fund from this data."
+              popper="Fund's max AUM minus current AUM, which shows the available capacity of this fund."
               loading={loading}
             >
               <TokenValue
@@ -114,14 +114,14 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
             </DashboardItem>
             <DashboardItem
               label="Current Epoch return %"
-              popper="The fund's profit and loss on real-time basis, which will be reset to zero after the end of each epoch"
+              popper="The fund's profit and loss on a real-time basis, which will be reset to zero after the end of each epoch."
               loading={loading}
             >
               <RoeShow value={data.roe} subArrow />
             </DashboardItem>
             <DashboardItem
               label="Historical return"
-              popper="Cumulated profit and loss since the inception of this fund"
+              popper="Cumulative profit and loss, since inception, of this fund"
               loading={loading}
             >
               <TokenValue value={data.historyReturn} token={baseToken} size="mini" />

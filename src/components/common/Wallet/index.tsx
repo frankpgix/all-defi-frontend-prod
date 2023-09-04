@@ -37,7 +37,7 @@ const WalletDialog: FC<Props> = ({ show, onClose, onClick }) => {
   return (
     <Dialog width="670px" show={show} onClose={onClose}>
       <div className="web-account-dialog">
-        <header>Connet Your Wallet.</header>
+        <header>Connect Your Wallet</header>
         <div className="web-account-dialog-list">
           {wallets
             .filter((w) => !w.hidden)

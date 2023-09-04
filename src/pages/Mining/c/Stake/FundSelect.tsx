@@ -20,7 +20,9 @@ const FundSelect: FC<FundSelectProps> = ({ list, onSelect, unStake }) => {
   const option = useMemo(
     () =>
       list.filter(
-        (item) => toLower(item.symbol).includes(toLower(keyword)) || toLower(item.shareToken).includes(toLower(keyword))
+        (item) =>
+          toLower(item.symbol).includes(toLower(keyword)) ||
+          toLower(item.shareToken).includes(toLower(keyword))
       ),
     [list, keyword]
   )
@@ -31,7 +33,10 @@ const FundSelect: FC<FundSelectProps> = ({ list, onSelect, unStake }) => {
   }
   return (
     <>
-      <div className={classNames('web-mining-fund-select', { show })} onClick={() => setShow(!show)}>
+      <div
+        className={classNames('web-mining-fund-select', { show })}
+        onClick={() => setShow(!show)}
+      >
         <FundIcon name={fundSymbol} />
         <strong>{fundSymbol}</strong>
       </div>
@@ -44,8 +49,8 @@ const FundSelect: FC<FundSelectProps> = ({ list, onSelect, unStake }) => {
                 <>The list below will only show the funds you have successfully staked to.</>
               ) : (
                 <>
-                  The list below will only show the funds you have successfully subscribed to.
-                  <ALink to="/fund-market">What? You haven't subscribed to a fund yet?</ALink>
+                  The list below will show only the funds you have successfully subscribed to.
+                  <ALink to="/fund-market">You haven't subscribed to a fund yet?</ALink>
                 </>
               )}
             </p>
@@ -59,7 +64,11 @@ const FundSelect: FC<FundSelectProps> = ({ list, onSelect, unStake }) => {
           {option.length ? (
             <section>
               {option.map((item, index) => (
-                <div className="web-mining-fund-select-item" key={index} onClick={() => onItemClick(item)}>
+                <div
+                  className="web-mining-fund-select-item"
+                  key={index}
+                  onClick={() => onItemClick(item)}
+                >
                   <FundIcon name={item.symbol} size="medium" />
                   <strong>{item.symbol}</strong>
                   <aside>

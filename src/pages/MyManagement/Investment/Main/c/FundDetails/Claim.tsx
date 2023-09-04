@@ -46,7 +46,7 @@ const Claim: FC<Props> = ({ unclaimedALL, callback, fundAddress }) => {
       <section className="web-fund-detail-bench web-fund-detail-claim">
         <h4>
           Claim ALL Token{' '}
-          <Popper content="Your redemption might need to be processed in multiple epochs. This is to ensure the integrity of the fund is not affected by redemptions. Fund managers need to take strategy, market condition ,and third-party Defi protocols into consideration, which can take longer time to process all redemptions. You might receive certain rewards based on the actual redemption schedule." />
+          <Popper content="Your redemption might need to be processed in multiple epochs. This is to ensure that the integrity of the fund is not affected my redemptions. Fund managers need to take strategy, market conditions, and third-party DeFi protocols into consideration, which may result in redemptions spanning multiple epochs. You may receive certain rewards based on the actual redemption schedule." />
         </h4>
         <div className="web-fund-detail-bench-input">
           <Input

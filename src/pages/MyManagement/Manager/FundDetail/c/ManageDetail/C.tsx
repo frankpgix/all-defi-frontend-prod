@@ -113,7 +113,7 @@ export const SectionPercentageLine: FC<{ percent: number; remainPercent: string 
       <PercentageLine size="large" value={percent} />
       <p>
         <em>Current Fund AUM {percent}%</em>
-        <span>Fund AUM Available For Subscribtion {remainPercent}%</span>
+        <span>Fund AUM Available For Subscription {remainPercent}%</span>
       </p>
     </div>
   )

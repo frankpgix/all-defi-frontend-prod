@@ -173,7 +173,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           {/* <SectionHeader name="Basic" /> */}
           <SectionLayout col="3">
             <SectionItem
-              label="Create Time"
+              label="Inception Date and Time"
               loading={loading}
               value={dayjs(data.subscribeEndTime).format('MMM DD, YYYY hh:mm:ss A')}
             />
@@ -222,9 +222,9 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           </SectionLayout>*/}
 
           <SectionTip>
-            Changing the fund policy can only be allowed during the open period. Once the change is
+            Changes in fund policy are permitted only during the open period. Once the change is
             confirmed, a public announcement will be made and the change will be implemented in the
-            next epoch. Please note changing the fund policy might result in redemptions of the
+            next epoch. Please note that changing fund policies might result in redemptions from the
             fund, so please proceed with caution.
           </SectionTip>
           <SectionButtons>
@@ -393,7 +393,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
         <TabPanel>
           <SectionLayout col="2">
             <SectionItem
-              label="PRE-Settlement Date"
+              label="Pre-Settlement Date"
               loading={loading}
               value={dayjs(data.subscribeEndTime).format('MMM DD, YYYY hh:mm:ss A')}
             />
@@ -431,7 +431,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
                 />
               }
             />
-            <SectionItem loading={loading} label="Fund AUM Available for Subscribtion">
+            <SectionItem loading={loading} label="Fund AUM Available For Subscription">
               {/*formatNumber(
                 Math.max(BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(), 0),
                 2,

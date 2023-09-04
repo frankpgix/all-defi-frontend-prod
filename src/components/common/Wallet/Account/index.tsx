@@ -57,7 +57,7 @@ const AccountDialog: FC<Props> = ({ show, onClose }) => {
           <Button outline onClick={disconnectEv}>
             disconnect
           </Button>
-          <Button to={`${ETH_SCAN_URL}/address/${account}`}>view on browser</Button>
+          <Button to={`${ETH_SCAN_URL}/address/${account}`}>VIEW IN BROWSER</Button>
         </footer>
       </div>
     </Dialog>

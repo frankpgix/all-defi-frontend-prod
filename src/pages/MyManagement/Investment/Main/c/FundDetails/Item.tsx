@@ -122,7 +122,7 @@ const FundItem: FC<Props> = ({
                     size="mini"
                     text
                   >
-                    Cancel it
+                    Cancel
                   </Button>
                   {!(fund.data.subscribingACToken > 0 && [0, 1, 2].includes(fund.data.status)) && (
                     <p>Exceeded the cancellation period</p>
@@ -142,7 +142,7 @@ const FundItem: FC<Props> = ({
                     onClick={() => setInfoStatus2(true)}
                     text
                   >
-                    Cancel it
+                    Cancel
                   </Button>
                   {!(fund.data.redeemingShares > 0 && fund.data.status === 1) && (
                     <p>Exceeded the cancellation period</p>
@@ -157,7 +157,7 @@ const FundItem: FC<Props> = ({
               </SectionItem>
               <section>
                 <SectionItem
-                  label="Cumulated Investment Profit"
+                  label="Accumulated Investment Profit"
                   popper="Historic cumulative profit and loss"
                 >
                   <TokenValue
@@ -168,7 +168,7 @@ const FundItem: FC<Props> = ({
                   />
                 </SectionItem>
                 <SectionItem
-                  label="Claimable AC token"
+                  label="Claimable AC Tokens"
                   popper="Please use redemption function to claim your AC token"
                 >
                   <TokenValue
