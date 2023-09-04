@@ -37,6 +37,8 @@ const Counts: FC<Props> = ({ totalStakeValue, loading }) => {
         </div>
       </DataItem>
       <DataItem label="Mining Return %">20%</DataItem>
+      {/* 新增一个每天挖出多少 ALL 的数据 */}
+      {/* <DataItem label="Mining Return %">20%</DataItem> */}
       {/*<DataItem label="Total Value">{formatNumber(globalRewardALLValue, 2, '$0,0.00')}</DataItem>*/}
     </section>
   )

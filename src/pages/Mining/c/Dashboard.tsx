@@ -66,7 +66,7 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
           <DataItem label="Your Staked sALL" normalFont loading={loading}>
             {formatNumber(rewardDashboard.sALL, 2, '0,0.00')}
           </DataItem>
-          <DataItem label="Claimable ALL Profit" loading={loading}>
+          <DataItem label="Claimable ALL" loading={loading}>
             <em>{formatNumber(pendingReward, 4, '0,0.0000')}</em>
             <button className="add-token-button" onClick={addAllTokenToWallet}>
               +

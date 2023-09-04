@@ -1,9 +1,10 @@
 import React, { FC, useMemo, memo } from 'react'
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
+import { last } from 'lodash'
+// import utc from 'dayjs/plugin/utc'
 import { formatNumber } from '@/utils/tools'
-dayjs.extend(utc)
+// dayjs.extend(utc)
 
 const toPercent = (decimal: number, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`
 
@@ -11,7 +12,7 @@ const renderTooltipContent = (o: any) => {
   const { payload, label } = o
   return (
     <div className="chart-tooltip-content">
-      <time>{dayjs.utc(label).format('MMM.DD.YYYY HH:mm')}</time>
+      <time>{dayjs(label).format('MMM.DD.YYYY HH:mm')}</time>
       <ul>
         {payload.map((entry: any, index: number) => (
           <li key={`item-${index}`}>
@@ -37,11 +38,11 @@ interface Props {
 const Chart: FC<Props> = ({ data, loading }) => {
   const areaKeys = useMemo(() => {
     if (!data.length) return []
-    return Object.keys(data[0]).filter((item) => item !== 'time')
+    return Object.keys(last(data) ?? {}).filter((item) => item !== 'time')
   }, [data])
 
   loading = loading || areaKeys.length === 0
-  // console.log(data, areaKeys)
+  console.log(data, areaKeys)
   const initData = JSON.parse(
     `[{"time": 1, "x": 0.5}, {"time": 2, "x": 1}, {"time": 3, "x": 0.5}, {"time": 4, "x":1}]`
   )
@@ -86,11 +87,11 @@ const Chart: FC<Props> = ({ data, loading }) => {
           return (
             <Area
               type="monotone"
-              key={index}
+              key={key}
               stroke={color}
               dataKey={key}
-              stackId="1"
               strokeWidth={2}
+              fillOpacity={1}
               fill={`url(${color})`}
             />
           )
@@ -100,7 +101,6 @@ const Chart: FC<Props> = ({ data, loading }) => {
             type="monotone"
             stroke={'#efefef'}
             dataKey="x"
-            stackId="1"
             strokeWidth={2}
             fill={`url(#love)`}
           />

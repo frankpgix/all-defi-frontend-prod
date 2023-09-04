@@ -75,7 +75,7 @@ const CountLoading: FC = () => {
       </div>
       <div className="web-manage-investment-count-detail">
         <article>
-          <label>Total Fund NAV</label>
+          <label>Total Investment NAV</label>
           <ContentLoader
             width={200}
             height={40}
@@ -96,19 +96,25 @@ const CountLoading: FC = () => {
           <rect x="0" y="0" rx="4" ry="4" width="150" height="30" />
         </ContentLoader>
         <section>
-          <SectionItem label="Fund NAV" popper="Fund's NAV, update in real time" loading={true} />
-          <SectionItem label="Current Share Price" loading={true} />
           <SectionItem
-            label="Fund AUM"
-            popper="Fund's AUM, update after settlement"
+            label="Current NAV"
+            popper="Your net asset value invested in the fund, updated in real time"
             loading={true}
           />
+
+          <SectionItem label="Current Share Price" loading={true} />
 
           <SectionItem
             label="Shares Holding"
             popper="Shares Holding includes a total of Fund Shares in your wallet, redeemable from AllDeFi, and staked in the mining pool"
             loading={true}
           />
+          <SectionItem label="Epoch Beginning Share Price" loading={true} />
+          {/* <SectionItem
+            label="Fund AUM"
+            popper="Fund's AUM, update after settlement"
+            loading={true}
+          /> */}
         </section>
       </div>
     </div>
@@ -221,12 +227,16 @@ const CountDetail: FC = () => {
       </div>
       <div className="web-manage-investment-count-detail">
         <article>
-          <label>Total Fund NAV</label>
+          <label>Total Investment NAV</label>
           <em>{formatNumber(totalAsset, 2, '$0,0.00')}</em>
         </article>
         <h3>{data[activeIndex].name}</h3>
         <section>
-          <SectionItem label="Fund NAV" popper="Fund's NAV, update in real time" loading={loading}>
+          <SectionItem
+            label="Current NAV"
+            popper="Your net asset value invested in the fund, updated in real time"
+            loading={loading}
+          >
             <TokenValue value={activeData.nav} token={baseToken} size="mini" format="0,0.00" />
             {/*{formatNumber(data[activeIndex].data.nav, 2, '$0,0.00')}*/}
           </SectionItem>
@@ -239,10 +249,10 @@ const CountDetail: FC = () => {
             />
             {/*{formatNumber(activeData.sharePrice, 2, '$0,0.00')}*/}
           </SectionItem>
-          <SectionItem label="Fund AUM" popper="Fund's AUM, update after settlement">
+          {/* <SectionItem label="Fund AUM" popper="Fund's AUM, update after settlement">
             <TokenValue value={activeData.aum} token={baseToken} size="mini" format="0,0.00" />
-            {/*{formatNumber(activeData.aum, 2, '$0,0.00')}*/}
-          </SectionItem>
+            {/*{formatNumber(activeData.aum, 2, '$0,0.00')}
+          </SectionItem> */}
           <SectionItem
             label="Shares Holding"
             popper="Shares Holding includes a total of Fund Shares in your wallet, redeemable from AllDeFi, and staked in the mining pool"
@@ -256,6 +266,14 @@ const CountDetail: FC = () => {
               format="0,0.00"
             />
             {/* {formatNumber(activeData.shares, 2, '0,0.00')} */}
+          </SectionItem>
+          <SectionItem label="Epoch Beginning Share Price">
+            <TokenValue
+              value={BN(activeData.aum).div(activeData.sharePrice).toNumber()}
+              token={baseToken}
+              size="mini"
+              format="0,0.00"
+            />
           </SectionItem>
         </section>
       </div>
