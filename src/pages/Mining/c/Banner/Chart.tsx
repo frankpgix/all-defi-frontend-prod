@@ -42,7 +42,7 @@ const Chart: FC<Props> = ({ data, loading }) => {
   }, [data])
 
   loading = loading || areaKeys.length === 0
-  console.log(data, areaKeys)
+  // console.log(data, areaKeys)
   const initData = JSON.parse(
     `[{"time": 1, "x": 0.5}, {"time": 2, "x": 1}, {"time": 3, "x": 0.5}, {"time": 4, "x":1}]`
   )

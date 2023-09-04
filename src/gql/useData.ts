@@ -1,8 +1,8 @@
 import { useQuery, useLazyQuery } from '@apollo/client'
 import { useEffect } from 'react'
 import BN from 'bignumber.js'
-import { uniq, last, floor } from 'lodash'
-import { getTokenByAddress } from '@/config/tokens'
+import { uniq, last } from 'lodash'
+// import { getTokenByAddress } from '@/config/tokens'
 import { safeInterceptionValues, calcDecimalsFloor } from '@/utils/tools'
 import { removeZeroKeys } from './help'
 
@@ -63,21 +63,23 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
       fundsName.forEach((name: string) => {
         const fund = ss.find((item: any) => item.name === name)
         if (fund) {
-          const baseToken = getTokenByAddress(fund.baseToken)
+          // const baseToken = getTokenByAddress(fund.baseToken)
           // console.log(fund.miningAmount)
-          const amount = fund
-            ? safeInterceptionValues(fund.miningAmount, baseToken.precision, baseToken.decimals)
-            : 0
+          const amount = fund ? safeInterceptionValues(fund.miningAmount, 18, 18) : 0
           // todo ,这里需要USD价格
-          const price = fund
-            ? safeInterceptionValues(fund.sharePrice, baseToken.precision, baseToken.decimals)
-            : 0
+          const price = fund ? safeInterceptionValues(fund.sharePrice, 18, 18) : 0
           // console.log(safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18))
           const baseTokenPriceInUSD = fund
-            ? safeInterceptionValues(fund.baseTokenPriceInUSD, 2, 18)
+            ? safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18)
             : 0
           const value = BN(amount).times(price).times(baseTokenPriceInUSD).toString()
           o[name] = Number(calcDecimalsFloor(value, 2))
+
+          if (name === 'T0-USDC' && Number(amount) > 0) {
+            console.log(fund.miningAmount, amount)
+            console.log(fund.sharePrice, price)
+            console.log(fund.baseTokenPriceInUSD, baseTokenPriceInUSD)
+          }
         }
       })
       return o
