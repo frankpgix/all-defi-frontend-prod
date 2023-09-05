@@ -23,7 +23,10 @@ const Summary: FC<Props> = ({ show, funds, sAllAmount, stakeSharesValue }) => {
     refreshDeps: [address, signer]
   })
   const sumValues = useMemo(() => {
-    return sum([...funds.map((data) => BN(data.amount).times(data.aumPerShare).toNumber()), stakeSharesValue])
+    return sum([
+      ...funds.map((data) => BN(data.amount).times(data.aumPerShare).toNumber()),
+      stakeSharesValue
+    ])
   }, [funds, stakeSharesValue])
 
   return (

@@ -37,7 +37,7 @@ const PreView: FC<Props> = ({ funds, onDelete, sAllAmount, getData }) => {
         await getData()
         updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        updateNotifyItem(notifyId, { type: 'error', title: 'Claim AC token', content: msg, hash })
+        updateNotifyItem(notifyId, { type: 'error', title: 'Stake Shares', content: msg, hash })
       }
     }
   }

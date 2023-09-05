@@ -370,7 +370,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             <SectionItem
               label="Unsettled Platform Fee"
               loading={loading}
-              popper="Unsettled fee to manager can be claimed when investors redeem or after 6 Epochs"
+              popper="Unsettled fee to platform can be claimed when investors redeem or after 6 Epochs"
               value={
                 <TokenValue value={data.platFee} token={baseToken} size="mini" format="0,0.00" />
               }
@@ -472,7 +472,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             />
             <SectionItem
               label="Max AUM Limit"
-              popper="Max AUM Limit of the fund"
+              // popper="Max AUM Limit of the fund"
               loading={loading}
               value={
                 <TokenValue

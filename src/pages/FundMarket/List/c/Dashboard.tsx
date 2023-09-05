@@ -19,7 +19,7 @@ const Dashboard: FC = () => {
         <CountLayout col="3">
           <CountItem
             label="Current Overall AUM"
-            popper="Total value of acDAO, update after settlement"
+            popper="Total value of AC DAO, update after settlement"
             value={formatNumber(data.aum, 2, '$0,0.00')}
             loading={loading}
           />

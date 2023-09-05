@@ -18,7 +18,11 @@ const PreStake: FC<Props> = ({ funds, onDelete, sAllAmount }) => {
     <>
       <div className={classNames('web-mining-preview-stake')}>
         <section>
-          <NoData show={funds.length === 0 && sAllAmount === 0} mini tip="No Data Currently Available" />
+          <NoData
+            show={funds.length === 0 && sAllAmount === 0}
+            mini
+            tip="No Data Currently Available"
+          />
           {funds.map((item, index) => (
             <div className="web-mining-preview-stake-fund" key={index}>
               <FundIcon name={item.symbol} size="mini" />

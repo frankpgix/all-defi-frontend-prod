@@ -10,7 +10,7 @@ const features = [
     subName: "We don't need to be",
     intro: (
       <>
-        Alldefi is fully decentralized.
+        AllDeFi is fully decentralized.
         <br /> All assets are kept in smart contracts that allow
         <br /> people to invest without centralized <br />
         counterparty risk.

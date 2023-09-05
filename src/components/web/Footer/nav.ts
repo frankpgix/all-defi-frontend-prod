@@ -3,7 +3,7 @@ const nav: { name: string; list: { name: string; url: string; checkManage?: bool
     name: 'users',
     list: [
       { name: 'Docs', url: 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/' },
-      { name: 'Lightpaper', url: 'https://app.alldefi.finance/' },
+      // { name: 'Lightpaper', url: 'https://app.alldefi.finance/' },
       { name: 'Buy AC Token', url: '/buy' },
       { name: 'Fund Market', url: '/fund-market' },
       { name: 'Create Fund', url: '/manage/manager/create', checkManage: true }
@@ -13,7 +13,7 @@ const nav: { name: string; list: { name: string; url: string; checkManage?: bool
     name: 'government',
     list: [
       { name: 'Twitter', url: 'https://twitter.com/Alldefiprotocol' },
-      { name: 'Email', url: 'mailto:web@alldefi.com' }
+      { name: 'Email', url: 'mailto:web@alldefi.finance' }
       // { name: 'Application Manager', url: '/manage' },
       // { name: 'Road Map', url: '/' }
     ]

@@ -27,7 +27,10 @@ const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress 
   const [sliderValue, setSliderValue] = useState(0)
 
   const maxValue = Number(balance.ALL)
-  const maxAUM = useMemo(() => BN(Number(amount)).multipliedBy(multiple).toNumber(), [amount, multiple])
+  const maxAUM = useMemo(
+    () => BN(Number(amount)).multipliedBy(multiple).toNumber(),
+    [amount, multiple]
+  )
   const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
 
   const onSliderChange = (val: number) => {
@@ -39,11 +42,15 @@ const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress 
   }
 
   const onInputChange = (val: number | string) => {
-    if (isNaN(Number(val))) val = 0
-    if (val > maxValue) val = maxValue
-    if (val < 0) val = 0
+    if (isNaN(Number(val))) val = ''
+    if (Number(val) > maxValue) val = maxValue
+    if (Number(val) < 0) val = ''
     if (maxValue > 0) {
-      const currSliderValue = BN(Number(val)).div(maxValue).multipliedBy(100).integerValue().toNumber()
+      const currSliderValue = BN(Number(val))
+        .div(maxValue)
+        .multipliedBy(100)
+        .integerValue()
+        .toNumber()
       setAmount(Number(val))
       setSliderValue(currSliderValue)
     }
@@ -52,14 +59,18 @@ const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress 
   const isDisabled = useMemo(() => !amount || Number(amount) === 0, [amount])
   return (
     <>
-      <BlueLineSection hide={!show} className="web-manage-create-step" title="Step 3 ALL Token Stake">
+      <BlueLineSection
+        hide={!show}
+        className="web-manage-create-step"
+        title="Step 3 ALL Token Stake"
+      >
         <div className="web-manage-create-step-stake">
           <Input
             className="web-buy-bench-input"
             value={amount}
             onChange={onInputChange}
             right
-            error={amount < 0.1 && amount !== ''}
+            error={Number(amount) < 0.1 && amount !== ''}
             maxNumber={maxValue}
             suffix={<AllTokenUnit />}
             placeholder="0"
@@ -71,7 +82,8 @@ const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress 
           <dl className="web-manage-create-step-stake-pre">
             <dt>Fund Max AUM Limit</dt>
             <dd>
-              {Number(calcDecimalsFloor(maxAUM, 6))} <TokenIcon size="small" name={baseToken?.name} />
+              {Number(calcDecimalsFloor(maxAUM, 6))}{' '}
+              <TokenIcon size="small" name={baseToken?.name} />
             </dd>
           </dl>
         </div>

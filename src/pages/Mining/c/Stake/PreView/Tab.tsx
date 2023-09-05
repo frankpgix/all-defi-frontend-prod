@@ -11,7 +11,11 @@ const Tab: FC<Props> = ({ activeIndex, onChange }) => {
   return (
     <div className="web-mining-preview-tab">
       {tabList.map((tab, index) => (
-        <span key={index} onClick={() => onChange(index)} className={classNames({ active: index === activeIndex })}>
+        <span
+          key={index}
+          onClick={() => onChange(index)}
+          className={classNames({ active: index === activeIndex })}
+        >
           {tab}
         </span>
       ))}

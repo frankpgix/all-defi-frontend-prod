@@ -13,7 +13,11 @@ const Tab: FC<Props> = ({ activeIndex, onChange }) => {
     <div className="web-mining-tab">
       <main>
         {tabList.map((tab, index) => (
-          <span key={index} onClick={() => onChange(index)} className={classNames({ active: index === activeIndex })}>
+          <span
+            key={index}
+            onClick={() => onChange(index)}
+            className={classNames({ active: index === activeIndex })}
+          >
             {tab}
           </span>
         ))}
