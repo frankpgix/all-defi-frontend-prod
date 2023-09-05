@@ -21,14 +21,14 @@ const Feature: FC<DirectionProps> = ({ direction }) => {
         </li>
         <li>
           {direction === 'reduce' ? 'Reducing the ' : 'The increase '}
-          MAX AUM limit will take effect immediately
+          MAX AUM Limit will take effect immediately
         </li>
         <li>
           The profit from capital that exceeds the MAX AUM Limit will not be shared with the fund
           manager.
         </li>
         <li>
-          If the current NAV exceeds the fund's MAX AUM limit, then subscriptions will be closed in
+          If the current NAV exceeds the fund's MAX AUM Limit, then subscriptions will be closed in
           the next epoch.
         </li>
       </ul>
