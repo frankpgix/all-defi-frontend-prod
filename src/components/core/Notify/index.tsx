@@ -41,7 +41,10 @@ export const NotifyList: FC = () => {
   }
 
   return (
-    <div ref={ref} className={classNames('c-notify-layout', { show })}>
+    <div
+      ref={ref}
+      className={classNames('c-notify-layout', { show: show && notifyList.length > 0 })}
+    >
       <div className="c-notify-list">
         {notifyList.map((item, index) => (
           <NotifyItem data={item} key={`${item.id}`} />

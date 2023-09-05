@@ -174,7 +174,9 @@ const HelpDetail: FC<{ show: boolean; onClose: (val: boolean) => void }> = ({ sh
   return (
     <div className={classNamses('web-manage-dapp-help-detail', { show })}>
       <article>
-        <aside></aside>
+        <aside>
+          <Image src="asset/dapp-1.jpg" />
+        </aside>
         <dl>
           <dt>Step 1</dt>
           <dd>
@@ -184,21 +186,27 @@ const HelpDetail: FC<{ show: boolean; onClose: (val: boolean) => void }> = ({ sh
         </dl>
       </article>
       <article>
-        <aside></aside>
+        <aside>
+          <Image src="asset/dapp-2.jpg" />
+        </aside>
         <dl>
           <dt>Step 2</dt>
           <dd>Click the "Copy to Clipboard" under the QR code</dd>
         </dl>
       </article>
       <article>
-        <aside></aside>
+        <aside>
+          <Image src="asset/dapp-3.jpg" />
+        </aside>
         <dl>
           <dt>Step 3</dt>
           <dd>Paste the information into the "Dapp Link" of AllDeFi, and click Connect.</dd>
         </dl>
       </article>
       <article>
-        <aside></aside>
+        <aside>
+          <Image src="asset/dapp-4.jpg" />
+        </aside>
         <dl>
           <dt>Step 4</dt>
           <dd>
