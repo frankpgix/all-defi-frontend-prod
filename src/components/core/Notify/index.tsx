@@ -73,7 +73,7 @@ export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
 
   const { layoutShow, animteType } = notifyStatus[data.id] ?? {
     animteType: 'in',
-    layoutShow: false
+    layoutShow: true
   }
 
   const animateClass = useMemo(() => {
