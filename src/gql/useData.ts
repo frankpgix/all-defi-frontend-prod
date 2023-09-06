@@ -75,11 +75,11 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
           const value = BN(amount).times(price).times(baseTokenPriceInUSD).toString()
           o[name] = Number(calcDecimalsFloor(value, 2))
 
-          if (name === 'T0-USDC' && Number(amount) > 0) {
-            console.log(fund.miningAmount, amount)
-            console.log(fund.sharePrice, price)
-            console.log(fund.baseTokenPriceInUSD, baseTokenPriceInUSD)
-          }
+          // if (name === 'T0-USDC' && Number(amount) > 0) {
+          //   console.log(fund.miningAmount, amount)
+          //   console.log(fund.sharePrice, price)
+          //   console.log(fund.baseTokenPriceInUSD, baseTokenPriceInUSD)
+          // }
         }
       })
       return o

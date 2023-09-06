@@ -54,9 +54,10 @@ export const clear = () => {
   store.clearAll()
 }
 
-export default {
+const Cache = {
   get,
   set,
   rm,
   clear
 }
+export default Cache
