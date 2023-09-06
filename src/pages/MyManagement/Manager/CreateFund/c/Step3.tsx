@@ -51,7 +51,7 @@ const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress 
         .multipliedBy(100)
         .integerValue()
         .toNumber()
-      setAmount(Number(val))
+      setAmount(val)
       setSliderValue(currSliderValue)
     }
     // console.log(val, isNaN(Number(val)))

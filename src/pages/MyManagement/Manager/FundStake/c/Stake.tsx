@@ -72,7 +72,7 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
         .multipliedBy(100)
         .integerValue()
         .toNumber()
-      setAmount(Number(val))
+      setAmount(val)
       setSliderValue(currSliderValue)
     }
   }
