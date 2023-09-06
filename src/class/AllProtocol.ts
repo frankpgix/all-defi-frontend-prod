@@ -188,6 +188,16 @@ class AllProtocol {
       return 1
     }
   }
+  allTokenPriceInUSD = async () => {
+    const contract = getAllProtocolContract()
+    try {
+      // console.log(baseToken)
+      const res = await contract.allTokenPriceInUSD()
+      return Number(safeInterceptionValues(res, 18, 18))
+    } catch (error) {
+      return 1
+    }
+  }
 
   fundUnstakingLimit = async (address: string) => {
     const contract = getAllProtocolContract()

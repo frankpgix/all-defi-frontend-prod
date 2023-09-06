@@ -10,7 +10,10 @@ import { useFundList } from '@/hooks/useFund'
 import Chart from './Chart'
 import Counts from './Counts'
 
-const Banner: FC<{ loading: boolean }> = ({ loading }) => {
+const Banner: FC<{ loading: boolean; stakeSharesValue: number }> = ({
+  loading,
+  stakeSharesValue
+}) => {
   const [timeType, setTimeType] = useState<string>('DAY')
   const [total, setTotal] = useState(0)
 
@@ -61,7 +64,11 @@ const Banner: FC<{ loading: boolean }> = ({ loading }) => {
           <Chart data={chartData} loading={listLoading || chartLoading} />
         </section>
       </div>
-      <Counts totalStakeValue={total} loading={chartLoading || loading} />
+      <Counts
+        totalStakeValue={total}
+        stakeSharesValue={stakeSharesValue}
+        loading={chartLoading || loading}
+      />
     </section>
   )
 }

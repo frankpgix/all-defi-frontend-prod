@@ -46,7 +46,7 @@ const Mining: FC = () => {
       <header className="web-mining-header">All Mining</header>
       <Help />
 
-      <Banner loading={loading} />
+      <Banner loading={loading} stakeSharesValue={stakeSharesValue} />
       <Dashboard stakeSharesValue={stakeSharesValue} loading={loading} />
       <Tab activeIndex={tabActiveIndex} onChange={setTabActiveIndex} />
       {tabActiveIndex === 0 && <Stake list={stakeList ?? []} getData={getData} />}
