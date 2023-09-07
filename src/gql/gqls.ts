@@ -124,3 +124,23 @@ export const calcMiningData = (fundAddress: string, type: string, createTime: nu
     }
   `
 }
+
+export const calcFundMonthDataGql = (fundAddress: string) => {
+  return gql`
+    query {
+      fundNaturalMonthDatas(
+        orderBy: periodStartUnix
+        orderDirection: desc
+        where: {
+          fundId: "${fundAddress}"
+        }
+      ) {
+        fundId
+        name
+        periodStartUnix
+        roe
+        baseToken
+      }
+    }
+  `
+}

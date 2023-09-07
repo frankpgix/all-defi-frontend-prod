@@ -1,4 +1,6 @@
 import { get, post } from '@/utils/http'
+import { FundMonthDataType } from '@/gql/useData'
+
 export const getDefiChartData = async () => {
   return [
     { time: 1661126400000, value: '52240366263.89' },
@@ -35,21 +37,35 @@ export const getDefiChartData = async () => {
 }
 
 export const getBtcIndexData = async () => {
-  const res = await get('https://www.binance.com/api/v3/uiKlines?limit=30&symbol=BTCBUSD&interval=1d')
+  const res = await get(
+    'https://www.binance.com/api/v3/uiKlines?limit=30&symbol=BTCBUSD&interval=1d'
+  )
   const data = res.map((item: any) => ({ time: item[6] + 1000, value: item[4] }))
   return data
 }
 export const getEthIndexData = async () => {
-  const res = await get('https://www.binance.com/api/v3/uiKlines?limit=30&symbol=ETHBUSD&interval=1d')
+  const res = await get(
+    'https://www.binance.com/api/v3/uiKlines?limit=30&symbol=ETHBUSD&interval=1d'
+  )
   const data = res.map((item: any) => ({ time: item[6] + 1000, value: item[4] }))
   return data
 }
 
 export const getDefiTvlData = async () => {
   try {
-    const { xaxis, series } = await get('https://defi-tracker.dappradar.com/api/ethereum/history/month?currency=USD')
-    return xaxis.map((time: number, index: number) => ({ time: time, value: series[0].data[index] }))
+    const { xaxis, series } = await get(
+      'https://defi-tracker.dappradar.com/api/ethereum/history/month?currency=USD'
+    )
+    return xaxis.map((time: number, index: number) => ({
+      time: time,
+      value: series[0].data[index]
+    }))
   } catch (error) {
     return await getDefiChartData()
   }
+}
+
+export const getFundRoeData = async (address: string): Promise<FundMonthDataType[]> => {
+  const res = await get(`https://all-defi-static.pages.dev/json/fund-roe/${address}.json`)
+  return res.data
 }

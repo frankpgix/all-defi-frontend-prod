@@ -140,7 +140,7 @@ class FundReader {
     fundAddress: string,
     baseTokenAddress: string
   ): Promise<AssetCompositionProps[] | null> => {
-    console.log(111, fundAddress, baseTokenAddress)
+    // console.log(111, fundAddress, baseTokenAddress)
     if (!fundAddress || !baseTokenAddress) return null
     const contract = getFundReaderContract()
     try {

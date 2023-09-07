@@ -1,10 +1,12 @@
 import { useQuery, useLazyQuery } from '@apollo/client'
 import { useEffect } from 'react'
+import dayjs from 'dayjs'
 import BN from 'bignumber.js'
 import { uniq, last } from 'lodash'
 // import { getTokenByAddress } from '@/config/tokens'
 import { safeInterceptionValues, calcDecimalsFloor } from '@/utils/tools'
 import { removeZeroKeys } from './help'
+import { calcFundMonthDataGql } from './gqls'
 
 export const useManageFundDatas = (gql: any) => {
   const { loading, error, data: sData } = useQuery(gql)
@@ -94,4 +96,26 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
   }
   // return {}
   // return { loading: true, error: null, data: [], count: 0 }
+}
+export interface FundMonthDataType {
+  year: number
+  month: number
+  roe: string
+}
+export const useFundMonthData = (fundAddress: string) => {
+  const gql = calcFundMonthDataGql(fundAddress)
+  const { loading, data: sData } = useQuery(gql)
+  const data: FundMonthDataType[] = (sData?.fundNaturalMonthDatas ?? [])
+    .map((item: any) => {
+      const time = item.periodStartUnix * 1000
+      const year = dayjs(time).year()
+      const month = dayjs(time).month() + 1
+      return {
+        year,
+        month,
+        roe: safeInterceptionValues(String(item.roe), 2, 16) + '%'
+      }
+    })
+    .reverse()
+  return { loading, data }
 }

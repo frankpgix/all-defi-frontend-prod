@@ -22,6 +22,7 @@ import Dashboard from './c/Dashboard'
 import FundStatus from './c/FundStatus'
 import Portfolio from './c/Portfolio'
 import Bench from './c/Bench'
+import RoeHistory from './c/RoeHistory'
 
 const Detail: FC = () => {
   const { signer, account: address } = useProfile()
@@ -91,6 +92,7 @@ const Detail: FC = () => {
         loading={loading}
         derivatives={derivatives ? derivatives : []}
       />
+      <RoeHistory fundAddress={fundAddress} />
       <FundStatus base={base} data={data} loading={loading} />
       <Portfolio base={base} fundAddress={fundAddress} />
       <Bench userData={userData} data={data} share={share} loading={loading} getData={getData} />
