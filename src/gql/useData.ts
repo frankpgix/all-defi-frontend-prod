@@ -101,6 +101,9 @@ export interface FundMonthDataType {
   year: number
   month: number
   roe: string
+  history?: boolean
+  isRise?: boolean
+  isFall?: boolean
 }
 export const useFundMonthData = (fundAddress: string) => {
   const gql = calcFundMonthDataGql(fundAddress)

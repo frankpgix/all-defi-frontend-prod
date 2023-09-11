@@ -1,9 +1,10 @@
 import React, { FC, useMemo } from 'react'
 import dayjs from 'dayjs'
+import classNames from 'classnames'
 import { useRequest } from 'ahooks'
 import { useFundMonthData, FundMonthDataType } from '@/gql/useData'
 import { getFundRoeData } from '@/api'
-import { spawn } from 'child_process'
+import Popper from '@@/common/Popper'
 
 interface Props {
   fundAddress: string | undefined
@@ -36,16 +37,28 @@ const RoeHistory: FC<Props> = ({ fundAddress }) => {
   )
   const { baseRoe, years } = calcBaseRoeData()
   const list = useMemo(() => {
-    if (loading || oldDataLoading) return baseRoe
-    return baseRoe.map((item) => {
+    if (loading || oldDataLoading) return []
+    const oneArr = baseRoe.map((item) => {
       const o = oldData.find((old) => old.year === item.year && old.month === item.month)
-      if (o) item.roe = o.roe
+      if (o) {
+        item.roe = o.roe
+        item.history = true
+        item.isRise = !o.roe.includes('-')
+        item.isFall = o.roe.includes('-')
+      }
       const n = data.find((old) => old.year === item.year && old.month === item.month)
-      if (n) item.roe = n.roe
+      if (n) {
+        item.roe = n.roe
+        item.history = false
+        item.isRise = !n.roe.includes('-')
+        item.isFall = n.roe.includes('-')
+      }
       return item
     })
-  }, [baseRoe, loading, oldDataLoading, oldData, data])
-
+    return years
+      .map((year) => ({ year: year, data: oneArr.filter((item) => item.year === year) }))
+      .reverse()
+  }, [baseRoe, loading, oldDataLoading, oldData, data, years])
   return (
     <div className="web-fund-detail-roe-history">
       <header>
@@ -65,16 +78,29 @@ const RoeHistory: FC<Props> = ({ fundAddress }) => {
       </header>
 
       <section>
-        <aside>
-          {years.map((item) => (
-            <span key={item}>{item}</span>
-          ))}
-        </aside>
-        <main>
-          {list.map((item, index) => (
-            <span key={index}>{item.roe}</span>
-          ))}
-        </main>
+        {list.map(({ year, data }) => (
+          <main key={year}>
+            <strong>{year}</strong>
+            {data.map((item, index) => (
+              <span
+                className={classNames({
+                  rise: item.isRise,
+                  fall: item.isFall,
+                  history: item.history
+                })}
+                key={index}
+              >
+                {item.history ? (
+                  <Popper content="This is off-chain data, used to show the historical performance of the manager under the same type of strategy. All data is provided by a third-party platform and verified by Alldefi for authenticity.">
+                    {item.roe}
+                  </Popper>
+                ) : (
+                  item.roe
+                )}
+              </span>
+            ))}
+          </main>
+        ))}
       </section>
     </div>
   )

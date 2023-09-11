@@ -284,36 +284,43 @@ export const useMiningData = (type: string) => {
 
 export const useFundActionAssetData = (fundAddress: string) => {
   const { loading, error, data: sData } = useQuery(calcFundActionAssetGQL(fundAddress))
-  const data = (sData?.fundActionAssets ?? []).map((item: any) => {
-    return {
-      id: item.id.split('-')[0],
-      derivative: utils.parseBytes32String(item.derivative),
-      method: item.method,
-      income: item.incomingAssets.map((tokenAddress: string, index: number) => {
-        const token = getTokenByAddress(tokenAddress)
-        return {
-          token,
-          value: Number(
-            safeInterceptionValues(
-              item.incomingAssetsAmmounts[index],
-              token.precision,
-              token.decimals
+  const data = (sData?.fundActionAssets ?? [])
+    .map((item: any) => {
+      return {
+        id: item.id.split('-')[0],
+        derivative: utils.parseBytes32String(item.derivative),
+        method: item.method,
+        income: item.incomingAssets.map((tokenAddress: string, index: number) => {
+          const token = getTokenByAddress(tokenAddress)
+          return {
+            token,
+            value: Number(
+              safeInterceptionValues(
+                item.incomingAssetsAmmounts[index],
+                token.precision,
+                token.decimals
+              )
             )
-          )
-        }
-      }),
-      out: item.spendAssets.map((tokenAddress: string, index: number) => {
-        const token = getTokenByAddress(tokenAddress)
-        return {
-          token,
-          value: Number(
-            safeInterceptionValues(item.spendAssetsAmmounts[index], token.precision, token.decimals)
-          )
-        }
-      }),
-      timestamp: item.timestamp * 1000
-    }
-  })
+          }
+        }),
+        out: item.spendAssets.map((tokenAddress: string, index: number) => {
+          const token = getTokenByAddress(tokenAddress)
+          return {
+            token,
+            value: Number(
+              safeInterceptionValues(
+                item.spendAssetsAmmounts[index],
+                token.precision,
+                token.decimals
+              )
+            )
+          }
+        }),
+        timestamp: item.timestamp * 1000
+      }
+    })
+    .filter((item: any) => item.income.length > 0 || item.out.length > 0)
+
   // console.log(222, JSON.stringify(sData, null, '  '))
   return { loading, error, data }
 }

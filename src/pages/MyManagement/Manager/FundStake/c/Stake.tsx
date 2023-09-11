@@ -114,7 +114,7 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
           <Blank />
         </>
       )}
-      {fundData.nav > fundData.realtimeAUMLimit && (
+      {fundData.nav > fundData.realtimeAUMLimit && fundData.aum <= fundData.realtimeAUMLimit && (
         <>
           <Alert show type="error">
             When the Staking Ratio of the Current Epoch is less than 100%, please stake more ALL

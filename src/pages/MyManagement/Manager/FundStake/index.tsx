@@ -67,7 +67,13 @@ const FundStake: FC = () => {
         getData={getData}
       />
       <Blank />
-      <Record data={stakeData} fundData={fundData} baseToken={baseToken} loading={loading} multiple={multiple} />
+      <Record
+        data={stakeData}
+        fundData={fundData}
+        baseToken={baseToken}
+        loading={loading}
+        multiple={multiple}
+      />
       <Loading type="float" show={loading} />
     </div>
   )
