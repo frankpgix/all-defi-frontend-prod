@@ -13,6 +13,7 @@ import Step1, { Step1DataProps, Step1DataDefault } from './c/Step1'
 import Step2, { Step2ConfirmProps } from './c/Step2'
 import Step3 from './c/Step3'
 import Step4 from './c/Step4'
+import SuccDialog from './c/SuccDialog'
 
 const CreateFund: FC = () => {
   const { createFund, calcAUMLimit, getDerivativeList } = AllProtocol
@@ -29,6 +30,7 @@ const CreateFund: FC = () => {
   const [stakeAmount, setStakeAmount] = useState<number>(0)
   const [derivativeList, setDerivativeList] = useState<ProductProps[]>([])
   const [multiple, setMultiple] = useState<number>(0)
+  const [succDialogStatus, setSuccDialogStatus] = useState<boolean>(true)
 
   const getData = useCallback(async () => {
     const p = await getDerivativeList()
@@ -83,7 +85,6 @@ const CreateFund: FC = () => {
         signer
       )
       if (status) {
-        navigate('/manage/manager')
         updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
         updateNotifyItem(notifyId, { type: 'error', title: 'Create Fund', content: msg, hash })
@@ -92,6 +93,11 @@ const CreateFund: FC = () => {
   }
 
   const onBack = () => setStepIndex(stepIndex - 1)
+
+  const onSuccDialogConfirm = () => {
+    setSuccDialogStatus(false)
+    navigate('/manage/manager')
+  }
 
   return (
     <>
@@ -118,6 +124,7 @@ const CreateFund: FC = () => {
         baseTokenAddress={baseTokenAddress}
         multiple={multiple}
       />
+      <SuccDialog show={succDialogStatus} data={step1Data} onConfirm={onSuccDialogConfirm} />
     </>
   )
 }

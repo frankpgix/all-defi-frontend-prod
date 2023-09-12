@@ -19,7 +19,11 @@ const Slider: FC<Props> = ({ value, onChange }) => {
       />
       <div className="web-c-slider-marks">
         {marks.map((item, index) => (
-          <span key={index} className={classNames({ active: value >= item })} onClick={() => onChange(item)} />
+          <span
+            key={index}
+            className={classNames({ active: value >= item })}
+            onClick={() => onChange(item)}
+          />
         ))}
       </div>
     </div>

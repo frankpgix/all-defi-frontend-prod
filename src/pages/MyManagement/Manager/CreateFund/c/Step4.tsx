@@ -22,7 +22,10 @@ interface Props {
 }
 
 const Step4: FC<Props> = ({ onConfirm, show, onBack, data, multiple, baseTokenAddress }) => {
-  const maxAUM = useMemo(() => BN(data.stakeAmount).multipliedBy(multiple).toNumber(), [data.stakeAmount, multiple])
+  const maxAUM = useMemo(
+    () => BN(data.stakeAmount).multipliedBy(multiple).toNumber(),
+    [data.stakeAmount, multiple]
+  )
   const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
   return (
     <>
@@ -32,7 +35,14 @@ const Step4: FC<Props> = ({ onConfirm, show, onBack, data, multiple, baseTokenAd
           <Input value={data.symbol} label="fund symbol" count maxLength={20} disabled />
           <Input value={data.managerName} label="manager name" count maxLength={20} disabled />
         </div>
-        <Input type="textarea" value={data.desc} label="manager introduction" count disabled maxLength={100} />
+        <Input
+          type="textarea"
+          value={data.desc}
+          label="manager introduction"
+          count
+          disabled
+          maxLength={100}
+        />
         {/*<h2>Deposit Limits</h2>*/}
         <div className="web-manage-create-step-2col">
           <Input

@@ -24,7 +24,10 @@ const Step1: FC<Props> = ({ onConfirm, show }) => {
   const [managerName, setManagerName] = useState('')
   const [desc, setDesc] = useState('')
 
-  const isDisabled = useMemo(() => !name || !symbol || !managerName || !desc, [desc, managerName, name, symbol])
+  const isDisabled = useMemo(
+    () => !name || !symbol || !managerName || !desc,
+    [desc, managerName, name, symbol]
+  )
 
   return (
     <>
@@ -65,7 +68,10 @@ const Step1: FC<Props> = ({ onConfirm, show }) => {
           placeholder="Enter Introduction"
         />
         <footer>
-          <Button disabled={isDisabled} onClick={() => onConfirm({ name, symbol, managerName, desc })}>
+          <Button
+            disabled={isDisabled}
+            onClick={() => onConfirm({ name, symbol, managerName, desc })}
+          >
             next
           </Button>
         </footer>
