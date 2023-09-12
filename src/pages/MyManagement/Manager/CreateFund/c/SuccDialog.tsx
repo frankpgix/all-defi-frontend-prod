@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Autoplay } from 'swiper/modules'
 import Dialog from '@/components/common/Dialog'
@@ -6,6 +6,7 @@ import FundIcon from '@@/common/FundIcon'
 import ALink from '@@/common/ALink'
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'
+import CheckBox from '@@/common/Form/CheckBox'
 import 'swiper/css'
 import 'swiper/css/pagination'
 
@@ -19,20 +20,24 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
   const docUrl = 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/'
   const formUrl = 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/'
   const termsUrl = 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/'
+
+  const [isChecked, setIsChecked] = useState(false)
   return (
     <Dialog show={show} width="800px">
       <div className="web-manage-create-dialog">
         <main>
-          {/* <header>
+          <header>
             <FundIcon name={data.name} size="large" />
             <h4>{data.name}</h4>
             <p>{data.managerName}</p>
-          </header> */}
-          <header>
-            <FundIcon name="NaNa" size="large" />
-            <h4>NaNa</h4>
-            <p>FungLeo</p>
           </header>
+          {/* <header>
+            <FundIcon name="NaNa" size="large" />
+            <article>
+              <h4>NaNa</h4>
+              <p>FungLeo</p>
+            </article>
+          </header> */}
           <section>
             <h4>Congratulations！</h4>
             <p>
@@ -48,12 +53,15 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
           </section>
           <footer>
             <aside>
-              <input type="checkbox" />
-              <p>
-                I have read and understood all <ALink to={termsUrl}>the terms</ALink>
-              </p>
+              <CheckBox value={isChecked} onChange={(val) => setIsChecked(val)}>
+                <p>
+                  I have read and understood all <ALink to={termsUrl}>the terms</ALink>
+                </p>
+              </CheckBox>
             </aside>
-            <Button>Enter the fund</Button>
+            <Button disabled={!isChecked} onClick={onConfirm}>
+              Enter the fund
+            </Button>
           </footer>
         </main>
         <div className="web-manage-create-dialog-swiper">
@@ -83,7 +91,7 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
                 <Image src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg" />
                 <h4>About MAX AUM Limit</h4>
                 <p>
-                  Please pay attention to your fund's <strong>AUM</strong>
+                  Please pay attention to your fund's <strong>AUM </strong>
                   and <strong>MAX AUM</strong> Limit at all times, to ensure maximum returns Please
                   Stake one Epoch in advance to ensure enough ALL, because the ALL supplemented in
                   this round will only increase the available balance for subscription in time, and

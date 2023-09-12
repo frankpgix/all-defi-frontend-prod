@@ -30,7 +30,7 @@ const CreateFund: FC = () => {
   const [stakeAmount, setStakeAmount] = useState<number>(0)
   const [derivativeList, setDerivativeList] = useState<ProductProps[]>([])
   const [multiple, setMultiple] = useState<number>(0)
-  const [succDialogStatus, setSuccDialogStatus] = useState<boolean>(true)
+  const [succDialogStatus, setSuccDialogStatus] = useState<boolean>(false)
 
   const getData = useCallback(async () => {
     const p = await getDerivativeList()

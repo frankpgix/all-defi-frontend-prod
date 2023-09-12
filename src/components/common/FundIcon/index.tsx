@@ -14,7 +14,13 @@ export const FundIcon: FC<Props> = ({ name, size = 'default', round }) => {
   const letterIndex = allLetter.findIndex((item) => letter.toLocaleLowerCase() === item)
   const number = ((letterIndex === -1 ? 0 : letterIndex) % 9) + 1
   return (
-    <div className={classNames('c-fund-icon', `c-fund-icon-size-${size}`, `style-${number}`, { round })}>{letter}</div>
+    <div
+      className={classNames('c-fund-icon', `c-fund-icon-size-${size}`, `style-${number}`, {
+        round
+      })}
+    >
+      {letter}
+    </div>
   )
 }
 

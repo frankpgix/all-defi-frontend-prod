@@ -19,7 +19,14 @@ export interface SelectProps {
   className?: string
 }
 
-const Select: FC<SelectProps> = ({ label, value, options = [], onChange, objOptions = [], className }) => {
+const Select: FC<SelectProps> = ({
+  label,
+  value,
+  options = [],
+  onChange,
+  objOptions = [],
+  className
+}) => {
   const ref = useRef(null)
   const [showOptions, setShowOptions] = useState(false)
   useClickAway(ref, () => setShowOptions(false))
