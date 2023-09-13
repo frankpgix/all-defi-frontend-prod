@@ -1,5 +1,10 @@
 [
   {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -41,13 +46,64 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "vType",
+        "type": "uint8"
       }
     ],
-    "name": "SetBaseInfo",
+    "name": "ExecuteVerification",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "managerFee",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "platFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "SetFee",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "enum IFund.GovState",
+        "name": "govState",
+        "type": "uint8"
+      }
+    ],
+    "name": "SetGovState",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256[4]",
+        "name": "stageEndTime",
+        "type": "uint256[4]"
+      }
+    ],
+    "name": "SetStageEndTime",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [],
+    "name": "Started",
     "type": "event"
   },
   {
@@ -79,10 +135,35 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "address[]",
+        "name": "assertsToAdd",
+        "type": "address[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "address[]",
+        "name": "assertsToRemove",
+        "type": "address[]"
+      }
+    ],
+    "name": "UpdateSupportedAssets",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "enum IFund.ActionType",
         "name": "actionType",
         "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
       },
       {
         "indexed": false,
@@ -93,62 +174,6 @@
     ],
     "name": "UserAction",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "lastUpdateEpoch",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "subscribingACToken",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "redeemingShares",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "lastRedeemingShares",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "unclaimedACToken",
-            "type": "uint256"
-          },
-          {
-            "internalType": "int256",
-            "name": "accumulatedACToken",
-            "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "unclaimedALL",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IFund.UserStorage",
-        "name": "u",
-        "type": "tuple"
-      }
-    ],
-    "name": "_userUnclaimedACUSD",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
   },
   {
     "inputs": [
@@ -332,7 +357,7 @@
           },
           {
             "internalType": "address",
-            "name": "governor",
+            "name": "weth",
             "type": "address"
           }
         ],
@@ -381,13 +406,6 @@
   {
     "inputs": [],
     "name": "claimCompensation",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "closeFund",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -572,20 +590,38 @@
         "type": "bytes"
       }
     ],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
     "inputs": [
       {
-        "internalType": "bool",
-        "name": "frozen",
-        "type": "bool"
+        "internalType": "uint8",
+        "name": "vType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bytes",
+        "name": "params",
+        "type": "bytes"
       }
     ],
-    "name": "freezeManager",
+    "name": "executeVerification",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "factory",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -595,6 +631,19 @@
       {
         "internalType": "enum IFund.Stage",
         "name": "stages",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "govState",
+    "outputs": [
+      {
+        "internalType": "enum IFund.GovState",
+        "name": "",
         "type": "uint8"
       }
     ],
@@ -686,32 +735,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "isClosed",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "isManagerFrozen",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -744,6 +767,30 @@
         "internalType": "bool",
         "name": "",
         "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "hash",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes",
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "isValidSignature",
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "magicValue",
+        "type": "bytes4"
       }
     ],
     "stateMutability": "view",
@@ -823,39 +870,6 @@
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "_desc",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_managerName",
-        "type": "string"
-      },
-      {
-        "internalType": "bytes32[]",
-        "name": "_derivativesToAdd",
-        "type": "bytes32[]"
-      },
-      {
-        "internalType": "bytes32[]",
-        "name": "_derivativesToRemove",
-        "type": "bytes32[]"
-      },
-      {
-        "internalType": "uint256[2]",
-        "name": "_subscriptionLimit",
-        "type": "uint256[2]"
-      }
-    ],
-    "name": "setBaseInfo",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "managerFee",
         "type": "uint256"
@@ -867,6 +881,19 @@
       }
     ],
     "name": "setFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum IFund.GovState",
+        "name": "state",
+        "type": "uint8"
+      }
+    ],
+    "name": "setGovState",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -959,6 +986,19 @@
     "name": "subscribe",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "supportedAssets",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1097,7 +1137,7 @@
         "type": "address"
       }
     ],
-    "name": "userUnclaimedACUSD",
+    "name": "userUnclaimedACToken",
     "outputs": [
       {
         "internalType": "uint256",

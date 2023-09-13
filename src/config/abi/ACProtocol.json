@@ -1,5 +1,10 @@
 [
   {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -42,6 +47,12 @@
       },
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
@@ -53,6 +64,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
       {
         "indexed": false,
         "internalType": "uint256",
@@ -90,6 +107,12 @@
         "internalType": "address",
         "name": "account",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
       }
     ],
     "name": "Paused",
@@ -102,6 +125,12 @@
         "indexed": false,
         "internalType": "address",
         "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "token",
         "type": "address"
       },
       {
@@ -125,6 +154,12 @@
       },
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
@@ -140,6 +175,12 @@
         "indexed": false,
         "internalType": "address",
         "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "baseToken",
         "type": "address"
       }
     ],
@@ -158,19 +199,6 @@
     ],
     "name": "Upgraded",
     "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "WETH",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
   },
   {
     "inputs": [
@@ -197,6 +225,11 @@
         "internalType": "address",
         "name": "_baseToken",
         "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_symbol",
+        "type": "string"
       }
     ],
     "name": "addVault",
@@ -259,6 +292,47 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "emergencyWithdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "emergencyWithdrawETH",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "ethBuy",
     "outputs": [],
@@ -269,7 +343,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_baseToken",
+        "name": "_weth",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_valueInterpreter",
         "type": "address"
       }
     ],
@@ -292,14 +371,26 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      }
+    ],
     "name": "pause",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "paused",
     "outputs": [
       {
@@ -328,7 +419,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "baseToken",
+        "name": "token",
         "type": "address"
       },
       {
@@ -468,7 +559,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      }
+    ],
     "name": "unpause",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -551,5 +648,22 @@
     ],
     "stateMutability": "view",
     "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "weth",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
   }
 ]

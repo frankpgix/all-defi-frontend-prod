@@ -22,7 +22,7 @@ export const tokenss: { [key: string]: Token } = {
     {
       [ChainId.MAINNET]: '',
       [ChainId.GOERLINET]: '0xCce988DF62A4D8bC4168FFA52Ba2d2AeFC571501',
-      [ChainId.ARBITRUM]: '0xcFE9FF6d9930E93bE9104eB1724F546b21e3D5CA'
+      [ChainId.ARBITRUM]: '0xF1452541295ca09d6C849653616Cb1AA8F1680D3'
     },
     6,
     2,
@@ -87,7 +87,7 @@ export const tokenss: { [key: string]: Token } = {
     {
       [ChainId.MAINNET]: '',
       [ChainId.GOERLINET]: '0x706fDbb78d9bEf1c1C6f9d101B50C4fa102b4228',
-      [ChainId.ARBITRUM]: '0xEFdC3CC5BedA16C281c7715aDf1201117F41BB66'
+      [ChainId.ARBITRUM]: '0xdBDb6bA079401f0bD555628eCe0580242cD72212'
     },
     18,
     4,
@@ -100,7 +100,7 @@ export const tokenss: { [key: string]: Token } = {
     {
       [ChainId.MAINNET]: '',
       [ChainId.GOERLINET]: '0x187891F8e9aFcdCdB31917746F214fa7eE2f3206',
-      [ChainId.ARBITRUM]: '0x536322D515152126156d188d28A71eE46e03Ef77'
+      [ChainId.ARBITRUM]: '0x59f4eEd878d3e46DA3ae3D8b91db34e9e3097E0f'
     },
     18,
     4,
