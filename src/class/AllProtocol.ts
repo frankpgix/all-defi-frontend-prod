@@ -162,6 +162,19 @@ class AllProtocol {
     }
   }
   // 检查是否具有基金经理权限
+  fundNumLimit = async (address: string) => {
+    const contract = getAllProtocolContract()
+    // console.log(contract)
+    try {
+      const res = await contract.fundNumLimit(address)
+      return Number(safeInterceptionValues(res, 0, 0))
+    } catch (error) {
+      console.info(error)
+      return 0
+    }
+  }
+
+  // 检查是否具有基金经理权限
   checkAuthorizedManager = async (address: string) => {
     const contract = getAllProtocolContract()
     // console.log(contract)

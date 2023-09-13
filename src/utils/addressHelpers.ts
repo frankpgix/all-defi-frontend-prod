@@ -50,6 +50,10 @@ export const getPermit2Address = (): string => {
   return getAddress(contracts.Permit2)
 }
 
+export const getFundFactoryAddress = (): string => {
+  return getAddress(contracts.FundFactory)
+}
+
 /************** Tokens **************/
 export const getUSDCAddress = (): string => {
   return tokenss.USDC.tokenAddress

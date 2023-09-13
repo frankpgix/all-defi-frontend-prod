@@ -6,17 +6,27 @@ interface profileProps {
   signer: null | Signer
   isManager: boolean
   loading: boolean
-  update: (account: string, isManager: boolean, signer: null | Signer, loading: boolean) => void
+  maxFundLimit: number
+  update: (
+    account: string,
+    isManager: boolean,
+    maxFundLimit: number,
+    signer: null | Signer,
+    loading: boolean
+  ) => void
 }
 
 export const useProfile = (): profileProps => {
-  const { account, signer, isManager, loading, update } = useStoreProfile((state: any) => ({
-    account: state.address,
-    signer: state.signer,
-    isManager: state.isManager,
-    loading: state.loading,
-    update: state.update
-  }))
+  const { account, signer, isManager, loading, update, maxFundLimit } = useStoreProfile(
+    (state: any) => ({
+      account: state.address,
+      signer: state.signer,
+      isManager: state.isManager,
+      loading: state.loading,
+      maxFundLimit: state.maxFundLimit,
+      update: state.update
+    })
+  )
 
   // console.log(account, signer, isManager, update)
   return {
@@ -24,6 +34,7 @@ export const useProfile = (): profileProps => {
     signer,
     isManager,
     loading,
+    maxFundLimit,
     update
   }
 }

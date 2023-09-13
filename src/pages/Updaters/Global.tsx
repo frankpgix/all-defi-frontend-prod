@@ -11,23 +11,23 @@ import AllProtocol from '@/class/AllProtocol'
 import { useProfile } from '@/hooks/useProfile'
 import { useGetFundList } from '@/hooks/useFund'
 export default function Global(): null {
-  const { checkAuthorizedManager } = AllProtocol
+  const { fundNumLimit } = AllProtocol
   // update profile info
   const { address } = useAccount()
   const { update: updateProfile } = useProfile()
   const getProfileData = useCallback(async () => {
     if (address) {
-      updateProfile(address, false, null, true)
-      const isManager = await checkAuthorizedManager(address)
+      updateProfile(address, false, 0, null, true)
+      const maxFundLimit = await fundNumLimit(address)
       // const provider = getJsonRpcProvider()
       const provider = new providers.Web3Provider(window.ethereum)
       const signer: Signer = provider.getSigner(address)
-      updateProfile(address, isManager, signer, false)
-      // console.log(isManager)
+      updateProfile(address, Boolean(maxFundLimit), maxFundLimit, signer, false)
+      console.log(maxFundLimit)
     } else {
-      updateProfile('', false, null, false)
+      updateProfile('', false, 0, null, false)
     }
-  }, [address, checkAuthorizedManager, updateProfile])
+  }, [address, fundNumLimit, updateProfile])
 
   useEffect(() => {
     void getProfileData()
