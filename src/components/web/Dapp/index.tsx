@@ -9,6 +9,7 @@ import Image from '@@/common/Image'
 import ALink from '@@/common/ALink'
 import { Input } from '@@/common/Form'
 import Button from '@@/common/Button'
+import Dialog from '@@/common/Dialog/Info'
 import Loading from '@@/common/Loading'
 // import { notify } from '@@/common/Toast'
 
@@ -35,8 +36,9 @@ const Dapp: FC<Props> = ({ base, data }) => {
   const { signer } = useProfile()
   const [uri, setUri] = useState('')
   const [show, setShow] = useState(false)
+  const [showDialog, setShowDialog] = useState(false)
   //
-  const { appName, topic, isConnect, loading } = useSnapshot(dappStore.state)
+  const { appName, appIcon, topic, isConnect, loading } = useSnapshot(dappStore.state)
   const { createNotify } = useNotify()
   //
   const fundAddress = useMemo(() => data.address, [data.address])
@@ -63,6 +65,7 @@ const Dapp: FC<Props> = ({ base, data }) => {
     } finally {
       setUri('')
       dappStore.setLoading(true)
+      setShowDialog(false)
     }
   }
 
@@ -98,49 +101,71 @@ const Dapp: FC<Props> = ({ base, data }) => {
     return !/^wc:[0-9a-f]{64}@\d+\?relay-protocol=irn&symKey=[0-9a-f]{64}$/.test(uri)
   }, [uri])
 
+  console.log(appIcon)
+
   return (
-    <div className="web-manage-dapp">
-      <div className="web-manage-dapp-section">
-        <header className="web-manage-dapp-section-header">Dapps you can choose to use</header>
-        <section className="web-manage-dapp-derivatives">
-          {derivatives.map((item, index) => (
-            <ALink to={item.url} title={item.name} key={index}>
-              <Image src={`products/${item?.name}.png`} alt={item?.name} />
-            </ALink>
-          ))}
-        </section>
+    <>
+      <div className="web-manage-dapp">
+        <div className="web-manage-dapp-section">
+          <header className="web-manage-dapp-section-header">Dapps you can choose to use</header>
+          <section className="web-manage-dapp-derivatives">
+            {derivatives.map((item, index) => (
+              <ALink to={item.url} title={item.name} key={index}>
+                <Image src={`products/${item?.name}.png`} alt={item?.name} />
+              </ALink>
+            ))}
+          </section>
+        </div>
+        <div className="web-manage-dapp-section">
+          <header className="web-manage-dapp-section-header">Dapps link</header>
+          <section className="web-manage-dapp-wc">
+            {isConnect ? (
+              <div className="web-manage-dapp-connect">
+                <div className="web-manage-dapp-connect-app">
+                  {appIcon && <Image src={appIcon} />}
+                  <Input value={appName} placeholder={''} readonly />
+                </div>
+                <Button onClick={onDisconnect}>disconnect</Button>
+              </div>
+            ) : (
+              <main>
+                {/* <Input
+                  value={uri}
+                  placeholder="Please enter the wallet connect info of the Dapp"
+                  onChange={setUri}
+                /> */}
+                <Button onClick={() => setShowDialog(true)}>CONNECT DAPP</Button>
+              </main>
+            )}
+            <Help value={show} onChange={setShow} fundAddress={fundAddress} />
+          </section>
+        </div>
+        <HelpDetail show={show} onClose={setShow} />
+        <Loading show={loading} type="float" />
       </div>
-      <div className="web-manage-dapp-section">
-        <header className="web-manage-dapp-section-header">Dapps link</header>
-        <section className="web-manage-dapp-wc">
-          {isConnect ? (
-            <main>
-              <Input
-                value={''}
-                placeholder={`Already linked with ${appName}`}
-                disabled
-                onChange={setUri}
-              />
-              <Button onClick={onDisconnect}>disconnect</Button>
-            </main>
-          ) : (
-            <main>
-              <Input
-                value={uri}
-                placeholder="Please enter the wallet connect info of the Dapp"
-                onChange={setUri}
-              />
-              <Button onClick={onConnect} disabled={isDisabled}>
-                Connect
-              </Button>
-            </main>
-          )}
-          <Help value={show} onChange={setShow} fundAddress={fundAddress} />
-        </section>
-      </div>
-      <HelpDetail show={show} onClose={setShow} />
-      <Loading show={loading} type="float" />
-    </div>
+      <Dialog
+        show={showDialog}
+        title="Connect with WalletConnect"
+        msg={
+          <>
+            Do not close this window while connecting. <br />
+            Have a question? Follow this guide.
+          </>
+        }
+        onClose={() => setShowDialog(false)}
+        confirmText="CONNECT"
+        hideCancelButton
+        onConfirm={onConnect}
+      >
+        <div className="web-manage-dapp-dialog">
+          <Input
+            value={uri}
+            placeholder="Please enter the wallet connect info of the Dapp"
+            onChange={setUri}
+          />
+        </div>
+      </Dialog>
+    </>
   )
 }
 

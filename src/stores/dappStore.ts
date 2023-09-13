@@ -5,11 +5,13 @@ interface State {
   loading: boolean
   isConnect: boolean
   appName: string
+  appIcon: string
   topic: string
 }
 
 const state = proxy<State>({
   appName: '',
+  appIcon: '',
   isConnect: false,
   loading: true,
   topic: ''
@@ -20,6 +22,10 @@ const dappStore = {
 
   setAppName(value: string) {
     state.appName = value
+  },
+
+  setAppIcon(value: string) {
+    if (value) state.appIcon = value
   },
 
   setIsConnect(value: boolean) {

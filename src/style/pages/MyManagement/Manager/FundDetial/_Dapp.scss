@@ -14,7 +14,34 @@
       color: #737373;
     }
   }
+  &-connect {
+    width: 440px;
+    padding: 20px 0;
+    &-app {
+      position: relative;
+      margin-bottom: 40px;
+      img {
+        position: absolute;
+        z-index: 1;
+        display: block;
+        width: 36px;
+        height: 36px;
+        left: 10px;
+        top: 10px;
+      }
 
+      .web-form-input {
+        flex: 1;
+        input {
+          padding-left: 60px;
+        }
+      }
+    }
+  }
+  &-dialog {
+    width: 80%;
+    margin-top: 20px;
+  }
   &-derivatives {
     display: flex;
     gap: 20px;

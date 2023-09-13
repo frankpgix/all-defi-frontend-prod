@@ -59,8 +59,11 @@ export const goConnect = async (proposal: any, fundAddress?: string) => {
 
     dappStore.setLoading(false)
     dappStore.setAppName(params.proposer.metadata.name)
+    dappStore.setAppIcon(params.proposer.metadata.icons[0])
     dappStore.setIsConnect(true)
     dappStore.setTopic(topic)
+
+    console.log('params', params)
   } catch (error) {
     const topic = params.pairingTopic
     notify.error('Something Error, try late')
