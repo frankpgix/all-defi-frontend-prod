@@ -42,6 +42,7 @@ class FundReader {
   getManagerFundList = async (address: string): Promise<FundDetailProps[] | null> => {
     try {
       const res = (await this.getFundList()) ?? []
+      console.log(res)
       return res.filter((item) => item.manager.toLowerCase() === address.toLowerCase())
     } catch (error) {
       console.info(error)

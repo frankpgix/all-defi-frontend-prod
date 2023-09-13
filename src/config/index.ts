@@ -28,7 +28,9 @@ export const RESOURCES_URL = 'https://all-defi-static.pages.dev/'
 export const STATIC_RESOURCES_URL = RESOURCES_URL + 'image/'
 export const VIDEO_RESOURCES_URL = RESOURCES_URL + 'video/'
 export const PANCAKE_SWAP_URL = 'https://pancakeswap.finance/'
-export const WEBSITE_URL = 'https://derify.finance/'
+export const WEBSITE_URL = ''
 export const LANG_CACHE_KEY = 'LANG'
 
 export const LIGHT_PAPERS_URL = ''
+
+export const MANAGER_UPLODAD_HISTORICAL_DATA_URL = 'https://google.com'

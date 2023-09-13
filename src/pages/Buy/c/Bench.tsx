@@ -69,7 +69,7 @@ const Bench: FC = () => {
         await dispatch(getTokensBalanceAsync(signer))
         // 重新拉取质押信息
         await dispatch(getUserStakesAsync(signer))
-        setAmount(0)
+        setAmount('')
         // await closeNotifyItem(notifyId)
         updateNotifyItem(notifyId, { content: 'Buy All Token', type: 'success', hash })
         // notify.update(notifyId, 'success')

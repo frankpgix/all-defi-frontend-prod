@@ -7,6 +7,7 @@ import ContentLoader from 'react-content-loader'
 // import FundManager, { FundDetailProps } from '@/class/FundManager'
 // import FundReader from '@/class/FundReader'
 import { FundDetailProps } from '@/class/help'
+import { MANAGER_UPLODAD_HISTORICAL_DATA_URL } from '@/config'
 // import { formatNumber } from '@/utils/tools'
 // import { useProfile } from '@/hooks/useProfile'
 import { useManageFundList } from '@/hooks/useFund'
@@ -14,8 +15,10 @@ import { useManageFundList } from '@/hooks/useFund'
 import FundSettleButton from '@/pages/MyManagement/Manager/FundDetail/c/FundSettleButton'
 
 import RoeShow from '@@/common/RoeShow'
+import Button from '@@/common/Button'
 import { FundName } from '@@/common/FundIcon'
 import TokenValue from '@@/common/TokenValue'
+import Badge from '@@/core/Badge'
 import { TableNoData } from '@@/common/TableEmpty'
 
 const FundList: FC = () => {
@@ -51,13 +54,14 @@ const FundList: FC = () => {
       title: 'Pre-settlement Date',
       dataIndex: 'preSettleEndTime',
       width: 200,
-      render: (value: number) => dayjs(value).format('MMM DD, YYYY hh:mm:ss A')
+      render: (value: number, row: FundDetailProps) =>
+        row.status === 0 ? '-' : dayjs(value).format('MMM DD, YYYY hh:mm:ss A')
     },
     {
       title: 'Assets To Be Redeemed',
       dataIndex: 'redeemingShares',
       width: 180,
-      render: (value: number, row: any) => (
+      render: (value: number, row: FundDetailProps) => (
         <TokenValue value={value} token={row.baseTokenObj} shares size="mini" format="0,0.00" />
       )
       // render: (value: number) => `${formatNumber(value, 2, '0,0.00 a')} Shares`
@@ -73,19 +77,27 @@ const FundList: FC = () => {
     {
       title: 'Action',
       dataIndex: 'address',
-      width: 150,
+      width: 180,
       render: (fundAddress: string, record: FundDetailProps) => {
         return (
           <div className="web-buy-table-action">
-            <FundSettleButton
-              disabled={![5, 4].includes(record.status)}
-              callback={getData}
-              fundAddress={fundAddress}
-              outline
-              size="mini"
-            >
-              settle
-            </FundSettleButton>
+            {record.status === 0 ? (
+              <Badge value="Under review">
+                <Button to={MANAGER_UPLODAD_HISTORICAL_DATA_URL} size="mini">
+                  Upload data
+                </Button>
+              </Badge>
+            ) : (
+              <FundSettleButton
+                disabled={![5, 4].includes(record.status)}
+                callback={getData}
+                fundAddress={fundAddress}
+                outline
+                size="mini"
+              >
+                settle
+              </FundSettleButton>
+            )}
           </div>
         )
       }
@@ -95,7 +107,7 @@ const FundList: FC = () => {
 
   const onRow = (record: FundDetailProps) => ({
     onClick: (e: any) => {
-      if (e.target?.tagName !== 'BUTTON') {
+      if (e.target?.tagName !== 'BUTTON' && record.status !== 0) {
         navigate(`/manage/manager/fund/${record.address}`)
       }
     }

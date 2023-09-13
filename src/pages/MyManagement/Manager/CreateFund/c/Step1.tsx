@@ -64,7 +64,7 @@ const Step1: FC<Props> = ({ onConfirm, show }) => {
           onChange={(val) => setDesc(val)}
           label="manager introduction"
           count
-          maxLength={100}
+          maxLength={200}
           placeholder="Enter Introduction"
         />
         <footer>

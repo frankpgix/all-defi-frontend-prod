@@ -86,6 +86,7 @@ const CreateFund: FC = () => {
       )
       if (status) {
         updateNotifyItem(notifyId, { type: 'success', hash })
+        setSuccDialogStatus(true)
       } else {
         updateNotifyItem(notifyId, { type: 'error', title: 'Create Fund', content: msg, hash })
       }

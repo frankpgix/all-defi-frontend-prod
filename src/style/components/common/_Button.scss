@@ -10,6 +10,8 @@
   box-sizing: border-box;
   background: $blue;
   color: $cff;
+  line-height: 1.4;
+  white-space: nowrap;
   &:hover {
     background: $lBlue;
   }

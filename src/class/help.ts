@@ -36,6 +36,7 @@ import BN from 'bignumber.js'
 // 基金详细数据三件套
 export interface FundDetailProps {
   baseToken: string
+  baseTokenObj: any
   address: string
   name: string
   manager: string
@@ -94,7 +95,7 @@ export const calcFundDetail = (item: any) => {
     createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
     epochIndex: Number(safeInterceptionValues(item.epochIndex, 0, 0)),
     epochStartTime,
-    status: Number(safeInterceptionValues(item.status, 0, 0)) + 1,
+    status: Number(safeInterceptionValues(item.status, 0, 0)),
 
     subscribeRedeemEndTime:
       epochStartTime + Number(safeInterceptionValues(item.stageEndTime[0], 0, 0)) * 1000,
@@ -134,6 +135,7 @@ export const calcFundDetail = (item: any) => {
 
 export const FundDetailDefault = {
   baseToken: '',
+  baseTokenObj: null,
   address: '-',
   name: '-',
   manager: '-',
@@ -304,7 +306,7 @@ export const calcFundUserDetail = (item: any): FundUserDataProps => {
   return {
     address: item.fundId,
     baseToken: item.baseToken,
-    status: Number(safeInterceptionValues(item.status, 0, 0)) + 1,
+    status: Number(safeInterceptionValues(item.status, 0, 0)),
     aum: Number(safeInterceptionValues(item.aum, precision, decimals)),
     nav,
     navInUSD: BN(nav).times(baseTokenPriceInUSD).toNumber(),
