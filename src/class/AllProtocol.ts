@@ -79,6 +79,39 @@ class AllProtocol {
     }
   }
 
+  updateFund = async (
+    fundAddress: string,
+    params: UpdateFundProps,
+    signer: Signer
+  ): Promise<OutComeProps> => {
+    if (!fundAddress || !signer) return outcome(4010)
+    const { desc, managerName, newDerivative, delDerivative, minAmount, maxAmount, decimals } =
+      params
+    const contract = getAllProtocolContract(signer)
+    try {
+      const _minAmount = getUnitAmount(String(minAmount), decimals)
+      const _maxAmount = getUnitAmount(String(maxAmount), decimals)
+      console.log(_minAmount, _maxAmount)
+      const data = [
+        desc,
+        managerName,
+        [_minAmount, _maxAmount],
+        newDerivative,
+        delDerivative,
+        [],
+        []
+      ]
+      const gasLimit = await estimateGas(contract, 'updateFund', [fundAddress, data])
+      const response = await contract.updateFund(fundAddress, data, { gasLimit })
+      const receipt = await response.wait()
+      // 返回结果
+      if (receipt.status) return outcome(0, null, receipt.transactionHash)
+      return outcome(500)
+    } catch (error: any) {
+      console.info(error)
+      return outcome(500, error.reason)
+    }
+  }
   // 计算质押 1 AllToken能得到多少AUM管理额度
   calcAUMLimit = async (baseTokenAddress: string): Promise<number> => {
     const _amount = getUnitAmount(String(1), 18)
@@ -234,6 +267,16 @@ export interface CreateFundProps {
   minAmount: number
   maxAmount: number
   baseTokenAddress: string
+}
+
+export interface UpdateFundProps {
+  desc: string
+  managerName: string
+  newDerivative: string[]
+  delDerivative: string[]
+  minAmount: string
+  maxAmount: string
+  decimals: number
 }
 
 export default new AllProtocol()

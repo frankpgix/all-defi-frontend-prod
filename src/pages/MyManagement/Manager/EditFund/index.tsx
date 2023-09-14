@@ -24,7 +24,7 @@ import { Input } from '@@/common/Form'
 
 const EditFund: FC = () => {
   const { getFundBase, setBaseInfo } = FundPool
-  const { getDerivativeList } = AllProtocol
+  const { getDerivativeList, updateFund } = AllProtocol
   const { fundAddress = '' } = useParams()
   const { signer } = useProfile()
   const { createNotify, updateNotifyItem } = useNotify()
@@ -73,16 +73,10 @@ const EditFund: FC = () => {
     // if (fundAddress) return
     const notifyId = await createNotify({ type: 'loading', content: 'Set Fund Base Info' })
 
-    const { status, msg, hash } = await setBaseInfo(
+    const { status, msg, hash } = await updateFund(
       fundAddress,
-      signer,
-      desc,
-      managerName,
-      newDerivative,
-      delDerivative,
-      minAmount,
-      maxAmount,
-      decimals
+      { desc, managerName, newDerivative, delDerivative, minAmount, maxAmount, decimals },
+      signer
     )
     if (status) {
       await getData()
@@ -120,7 +114,7 @@ const EditFund: FC = () => {
             label="manager introduction"
             count
             onChange={setDesc}
-            maxLength={100}
+            maxLength={200}
           />
         </div>
         <div className="web-manage-create-step-2col">
