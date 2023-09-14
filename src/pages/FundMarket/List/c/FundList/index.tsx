@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import ContentLoader from 'react-content-loader'
 
 import { FundDetailProps } from '@/class/help'
-import { useFundListData } from '@/graphql/useFundData'
+import { useFundListData } from '@/gql/useData'
 // import { formatNumber } from '@/utils/tools'
 
 import { useAppDispatch } from '@/store'
@@ -19,7 +19,7 @@ const FundList: FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { loading, data } = useFundListData()
-  // console.log(data, 2233)
+  console.log(data, 2233)
   useEffect(() => {
     if (data.length) {
       dispatch(updateFundsList(data))

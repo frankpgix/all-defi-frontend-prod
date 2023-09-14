@@ -144,3 +144,24 @@ export const calcFundMonthDataGql = (fundAddress: string) => {
     }
   `
 }
+
+export const calcFundListGQL = () => gql`
+  query {
+    funds {
+      id
+      verified
+      name
+      baseToken
+      aum
+      capacityAvailable
+      managerName
+      dayReturn
+      weekReturn
+      monthReturn
+      yearReturn
+      currentAPR
+      epochIndex
+      createTime
+    }
+  }
+`

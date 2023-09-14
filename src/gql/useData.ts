@@ -3,10 +3,10 @@ import { useEffect } from 'react'
 import dayjs from 'dayjs'
 import BN from 'bignumber.js'
 import { uniq, last } from 'lodash'
-// import { getTokenByAddress } from '@/config/tokens'
+import { getTokenByAddress } from '@/config/tokens'
 import { safeInterceptionValues, calcDecimalsFloor } from '@/utils/tools'
 import { removeZeroKeys } from './help'
-import { calcFundMonthDataGql } from './gqls'
+import { calcFundMonthDataGql, calcFundListGQL } from './gqls'
 
 export const useManageFundDatas = (gql: any) => {
   const { loading, error, data: sData } = useQuery(gql)
@@ -121,4 +121,39 @@ export const useFundMonthData = (fundAddress: string) => {
     })
     .reverse()
   return { loading, data }
+}
+
+export const useFundListData = () => {
+  const {
+    loading,
+    error,
+    data: sData
+  } = useQuery(calcFundListGQL(), {
+    fetchPolicy: 'no-cache'
+  })
+  const data = (sData?.funds ?? [])
+    .map((item: any) => {
+      const baseToken = getTokenByAddress(item.baseToken)
+      return {
+        name: item.name,
+        managerName: item.managerName,
+        epoch: item.epochIndex,
+        address: item.id,
+        aum: safeInterceptionValues(item.aum, baseToken.precision, baseToken.decimals),
+        capacityAvailable: safeInterceptionValues(
+          item.capacityAvailable,
+          baseToken.precision,
+          baseToken.decimals
+        ),
+        apr: safeInterceptionValues(item.currentAPR.split('.')[0], 4, 18),
+        dayReturn: safeInterceptionValues(item.dayReturn, 4, 18),
+        weekReturn: safeInterceptionValues(item.weekReturn, 4, 18),
+        monthReturn: safeInterceptionValues(item.monthReturn, 4, 18),
+        yearReturn: safeInterceptionValues(item.yearReturn, 4, 18),
+        baseToken,
+        verified: item.verified
+      }
+    })
+    .filter((item: any) => item.verified === true)
+  return { loading, data, error }
 }
