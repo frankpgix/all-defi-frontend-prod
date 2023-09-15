@@ -34,10 +34,13 @@ export const useStoreUserFundList = create((set) => ({
 export const useStoreManageFundVerifyList = create(
   persist(
     (set: any) => ({
+      lastChangeTime: 0,
       createVerifyList: [],
-      setCreateVerifyList: (createVerifyList: string[]) => set({ createVerifyList }),
+      setCreateVerifyList: (createVerifyList: string[], lastChangeTime: number) =>
+        set({ createVerifyList, lastChangeTime }),
       updateVerifyList: [],
-      setUpdateVerifyList: (updateVerifyList: string[]) => set({ updateVerifyList })
+      setUpdateVerifyList: (updateVerifyList: string[], lastChangeTime: number) =>
+        set({ updateVerifyList, lastChangeTime })
     }),
     { name: 'StoreManageFundVerifyList' }
   )

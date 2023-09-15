@@ -158,19 +158,35 @@ export const useGetUserFundList = () => {
 }
 
 export const useManageFundVerifyList = () => {
-  const { createVerifyList, setCreateVerifyList, updateVerifyList, setUpdateVerifyList } =
-    useStoreManageFundVerifyList((state: any) => {
-      return {
-        createVerifyList: state.createVerifyList,
-        setCreateVerifyList: state.setCreateVerifyList,
-        updateVerifyList: state.updateVerifyList,
-        setUpdateVerifyList: state.setUpdateVerifyList
-      }
-    })
+  const {
+    createVerifyList,
+    setCreateVerifyList,
+    updateVerifyList,
+    setUpdateVerifyList,
+    lastChangeTime
+  } = useStoreManageFundVerifyList((state: any) => {
+    return {
+      lastChangeTime: state.lastChangeTime,
+      createVerifyList: state.createVerifyList,
+      setCreateVerifyList: state.setCreateVerifyList,
+      updateVerifyList: state.updateVerifyList,
+      setUpdateVerifyList: state.setUpdateVerifyList
+    }
+  })
+
+  useEffect(() => {
+    const now = +new Date()
+    if (now - lastChangeTime > 1000 * 60 * 60 * 24) {
+      setCreateVerifyList([], 0)
+      setUpdateVerifyList([], 0)
+    }
+  }, [lastChangeTime, setCreateVerifyList, setUpdateVerifyList])
+
   return {
     createVerifyList,
     setCreateVerifyList,
     updateVerifyList,
-    setUpdateVerifyList
+    setUpdateVerifyList,
+    lastChangeTime
   }
 }

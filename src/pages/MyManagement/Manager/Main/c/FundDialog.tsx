@@ -47,7 +47,7 @@ const FundDialog: FC = () => {
 
   const onDialogConfirm = (index: number, address: string) => {
     onDialogClose(index)
-    setCreateVerifyList([...createVerifyList, address])
+    setCreateVerifyList([...createVerifyList, address], +new Date())
   }
   return (
     <>
