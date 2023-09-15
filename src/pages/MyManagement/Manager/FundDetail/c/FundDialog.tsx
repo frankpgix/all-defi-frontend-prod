@@ -1,41 +1,43 @@
-import React, { FC, useState, useMemo, useEffect } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { useRequest } from 'ahooks'
 
-import { useManageFundList, useManageFundVerifyList } from '@/hooks/useFund'
+import { useManageFundVerifyList } from '@/hooks/useFund'
 import FundFactory, { FundVerifiedItemTypes } from '@/class/FundFactory'
 import InfoDialog from '@@/common/Dialog/Info'
 import ALink from '@@/common/ALink'
 
-const FundDialog: FC = () => {
-  const { manageFundList = [] } = useManageFundList()
-  const { createVerifyList, setCreateVerifyList } = useManageFundVerifyList()
+interface Props {
+  fundAddress: string
+  name: string
+}
+
+const FundDialog: FC<Props> = ({ fundAddress, name }) => {
+  const { updateVerifyList, setUpdateVerifyList } = useManageFundVerifyList()
   const [dialogStatus, setDialogStatus] = useState<boolean[]>([])
   const [dialogData, setDialogData] = useState<FundVerifiedItemTypes[]>([])
-  const fundAddressList = useMemo(
-    () => manageFundList.map((item) => item.address.toLocaleLowerCase()),
-    [manageFundList]
-  )
   const { FundVerified } = FundFactory
 
-  const { loading, data } = useRequest(async () => FundVerified(0), {
-    refreshDeps: [fundAddressList]
+  const { loading, data } = useRequest(async () => FundVerified(1, name), {
+    refreshDeps: [fundAddress]
   })
 
   useEffect(() => {
-    if (loading || fundAddressList.length === 0 || !data) return
+    if (loading || !fundAddress || !data) return
     const status: boolean[] = []
     const items: FundVerifiedItemTypes[] = []
     data.forEach((item) => {
-      if (fundAddressList.includes(item.address) && !createVerifyList.includes(item.address)) {
+      if (
+        fundAddress.toLocaleLowerCase() === item.address &&
+        !updateVerifyList.includes(item.address)
+      ) {
         status.push(status.length === 0 ? true : false)
         items.push(item)
       }
     })
     setDialogStatus(status)
     setDialogData(items)
-  }, [data, loading, fundAddressList, createVerifyList])
+  }, [data, loading, fundAddress, updateVerifyList])
 
-  // console.log(dialogData, dialogStatus)
   const onDialogClose = (index: number) => {
     const status = [...dialogStatus]
     status[index] = false
@@ -47,7 +49,7 @@ const FundDialog: FC = () => {
 
   const onDialogConfirm = (index: number, address: string) => {
     onDialogClose(index)
-    setCreateVerifyList([...createVerifyList, address])
+    setUpdateVerifyList([...updateVerifyList, address])
   }
   return (
     <>
@@ -61,12 +63,15 @@ const FundDialog: FC = () => {
         >
           {item.result ? (
             <article>
-              Your application for the create of <strong>{item.data}</strong> fund has passed the
-              review, and it is now displayed in the fund list
+              Your application for modification of the <strong>{item.data}</strong> Fund has been
+              approved and will take effect at the next Epoch
             </article>
           ) : (
             <article>
               Your application for the create of <strong>{item.data}</strong> fund has been
+              rejected, please <ALink to="">contact us</ALink> if you have any questions
+              <br />
+              Your application for modification of <strong>{item.data}</strong> fund has been
               rejected, please <ALink to="">contact us</ALink> if you have any questions
             </article>
           )}

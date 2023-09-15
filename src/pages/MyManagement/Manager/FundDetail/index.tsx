@@ -22,6 +22,7 @@ import Blank from '@@/common/Blank'
 import ManageDetail from './c/ManageDetail'
 import DataTab from './c/DataTab'
 import Dashboard from './c/Dashboard'
+import FundDialog from './c/FundDialog'
 
 const FundDetail: FC = () => {
   const { fundAddress = '' } = useParams()
@@ -91,6 +92,7 @@ const FundDetail: FC = () => {
         getData={getData}
       />
       <DataTab fundAddress={fundAddress} />
+      <FundDialog fundAddress={fundAddress} name={base.name} />
     </div>
   )
 }
