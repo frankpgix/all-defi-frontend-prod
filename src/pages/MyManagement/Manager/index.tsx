@@ -18,6 +18,7 @@ const Manager: FC = () => {
     () => manageFundList?.length === 0 && !loading,
     [manageFundList, loading]
   )
+
   return (
     <div className="web-manage">
       <h2>
@@ -34,13 +35,13 @@ const Manager: FC = () => {
             <rect x="0" y="0" rx="20" ry="20" width="160" height="40" />
           </ContentLoader>
         ) : maxFundLimit === manageFundList?.length ? (
-          <Button to="/manage/manager/create" size="mini">
+          <Button to="/manage/manager/create" size="mini" disabled>
             <Popper content="The number of funds you have created has reached the maximum limit">
               CREATE FUND
             </Popper>
           </Button>
         ) : (
-          <Button to="/manage/manager/create" size="mini" disabled>
+          <Button to="/manage/manager/create" size="mini">
             CREATE FUND
           </Button>
         )}

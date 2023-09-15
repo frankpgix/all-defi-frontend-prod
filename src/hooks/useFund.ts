@@ -1,7 +1,8 @@
 import {
   useStoreManageFundList,
   useStoreFundList,
-  useStoreUserFundList
+  useStoreUserFundList,
+  useStoreManageFundVerifyList
 } from '@/stores/useStoreFunds'
 import { FundDetailProps, FundUserListDataProps } from '@/class/help'
 import { useProfile } from '@/hooks/useProfile'
@@ -154,4 +155,22 @@ export const useGetUserFundList = () => {
   useEffect(() => {
     setGetDataFunc(run)
   }, [setGetDataFunc, run])
+}
+
+export const useManageFundVerifyList = () => {
+  const { createVerifyList, setCreateVerifyList, updateVerifyList, setUpdateVerifyList } =
+    useStoreManageFundVerifyList((state: any) => {
+      return {
+        createVerifyList: state.createVerifyList,
+        setCreateVerifyList: state.setCreateVerifyList,
+        updateVerifyList: state.updateVerifyList,
+        setUpdateVerifyList: state.setUpdateVerifyList
+      }
+    })
+  return {
+    createVerifyList,
+    setCreateVerifyList,
+    updateVerifyList,
+    setUpdateVerifyList
+  }
 }

@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import { FundDetailProps, FundUserListDataProps } from '@/class/help'
 
 export const useStoreFundList = create((set) => ({
@@ -29,3 +30,15 @@ export const useStoreUserFundList = create((set) => ({
   update: (fundList: FundUserListDataProps[], loading: boolean) => set({ fundList, loading }),
   setGetDataFunc: (func: () => void) => set({ getData: func })
 }))
+
+export const useStoreManageFundVerifyList = create(
+  persist(
+    (set: any) => ({
+      createVerifyList: [],
+      setCreateVerifyList: (createVerifyList: string[]) => set({ createVerifyList }),
+      updateVerifyList: [],
+      setUpdateVerifyList: (updateVerifyList: string[]) => set({ updateVerifyList })
+    }),
+    { name: 'StoreManageFundVerifyList' }
+  )
+)
