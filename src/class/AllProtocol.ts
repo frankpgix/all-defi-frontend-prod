@@ -279,4 +279,5 @@ export interface UpdateFundProps {
   decimals: number
 }
 
-export default new AllProtocol()
+const exClass = new AllProtocol()
+export default exClass

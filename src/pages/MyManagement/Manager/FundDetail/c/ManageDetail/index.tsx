@@ -236,7 +236,9 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             >
               settle
             </FundSettleButton>
-            <Button to={`/manage/manager/fund-edit/${fundAddress}`}>Reset policies</Button>
+            <Button disabled={data.status !== 1} to={`/manage/manager/fund-edit/${fundAddress}`}>
+              Reset policies
+            </Button>
           </SectionButtons>
         </TabPanel>
         {/* Revenue TabPanel */}

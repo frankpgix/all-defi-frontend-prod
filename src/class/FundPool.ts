@@ -205,35 +205,35 @@ class FundPool {
   }
 
   //修改fund基础信息
-  setBaseInfo = async (
-    fundAddress: string,
-    signer: Signer | undefined | null,
-    desc: string,
-    managerName: string,
-    newDerivative: string[],
-    delDerivative: string[],
-    minAmount: string,
-    maxAmount: string,
-    decimals: number
-  ): Promise<OutComeProps> => {
-    if (!fundAddress || !signer) return outcome(4010)
-    try {
-      const contract = getFundPoolContract(fundAddress, signer)
-      const _minAmount = getUnitAmount(String(minAmount), decimals)
-      const _maxAmount = getUnitAmount(String(maxAmount), decimals)
-      console.log(_minAmount, _maxAmount)
-      const data = [desc, managerName, newDerivative, delDerivative, [_minAmount, _maxAmount]]
-      const gasLimit = await estimateGas(contract, 'setBaseInfo', [...data])
-      const response = await contract.setBaseInfo(...data, { gasLimit })
-      const receipt = await response.wait()
-      // 返回结果
-      if (receipt.status) return outcome(0, null, receipt.transactionHash)
-      return outcome(500)
-    } catch (error: any) {
-      console.info(error)
-      return outcome(500, error.reason)
-    }
-  }
+  // setBaseInfo = async (
+  //   fundAddress: string,
+  //   signer: Signer | undefined | null,
+  //   desc: string,
+  //   managerName: string,
+  //   newDerivative: string[],
+  //   delDerivative: string[],
+  //   minAmount: string,
+  //   maxAmount: string,
+  //   decimals: number
+  // ): Promise<OutComeProps> => {
+  //   if (!fundAddress || !signer) return outcome(4010)
+  //   try {
+  //     const contract = getFundPoolContract(fundAddress, signer)
+  //     const _minAmount = getUnitAmount(String(minAmount), decimals)
+  //     const _maxAmount = getUnitAmount(String(maxAmount), decimals)
+  //     console.log(_minAmount, _maxAmount)
+  //     const data = [desc, managerName, newDerivative, delDerivative, [_minAmount, _maxAmount]]
+  //     const gasLimit = await estimateGas(contract, 'setBaseInfo', [...data])
+  //     const response = await contract.setBaseInfo(...data, { gasLimit })
+  //     const receipt = await response.wait()
+  //     // 返回结果
+  //     if (receipt.status) return outcome(0, null, receipt.transactionHash)
+  //     return outcome(500)
+  //   } catch (error: any) {
+  //     console.info(error)
+  //     return outcome(500, error.reason)
+  //   }
+  // }
 }
 
 export default new FundPool()

@@ -23,7 +23,7 @@ import { Input } from '@@/common/Form'
 // import DataItem from '@@/common/DataItem'
 
 const EditFund: FC = () => {
-  const { getFundBase, setBaseInfo } = FundPool
+  const { getFundBase } = FundPool
   const { getDerivativeList, updateFund } = AllProtocol
   const { fundAddress = '' } = useParams()
   const { signer } = useProfile()
@@ -79,7 +79,7 @@ const EditFund: FC = () => {
       signer
     )
     if (status) {
-      await getData()
+      // await getData()
       updateNotifyItem(notifyId, { type: 'success', hash })
     } else {
       updateNotifyItem(notifyId, { type: 'error', title: 'Set Fund Base Info', content: msg, hash })
