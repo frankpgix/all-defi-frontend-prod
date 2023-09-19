@@ -1,18 +1,36 @@
 .web-buy-bench {
-  display: flex;justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
   &-input {
     width: 480px;
   }
   &-pre {
-    width: 550px;display: flex;flex-flow: column;align-items: flex-end;
+    width: 550px;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-end;
     dl {
-      display: flex;align-items: center;margin-bottom: 16px;justify-content: flex-end;
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      justify-content: flex-end;
       dt {
-        font-size: 18px;color: $lBlue;font-weight: bold;margin-right: 16px;
+        font-size: 18px;
+        color: $lBlue;
+        font-weight: bold;
+        margin-right: 16px;
       }
       dd {
-        height: 56px;border-radius: 8px;background: $bgBlue;width: 400px;padding: 0 20px;
-        display: flex;align-items: center;font-size: 18px;font-weight: bold;color: $text;
+        height: 56px;
+        border-radius: 8px;
+        background: $bgBlue;
+        width: 400px;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: $text;
       }
     }
     .web-button {
@@ -25,7 +43,10 @@
     // }
   }
   &-arrow {
-    width: 32px;height: 32px;top: 12px;position: relative;
+    width: 32px;
+    height: 32px;
+    top: 12px;
+    position: relative;
     background: url($res + 'icon/arrow-right-blue-full.svg') center/contain no-repeat;
   }
   &.select &-input {

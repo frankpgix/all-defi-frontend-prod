@@ -1,6 +1,9 @@
-import { Signer } from 'ethers'
+// import { decodeAbiParameters, parseAbiParameters } from 'viem'
+import { Signer, utils } from 'ethers'
+import { getTokenByAddress } from '@/config/tokens'
 import { sum, isNaN } from 'lodash'
 import BN from 'bignumber.js'
+import { safeInterceptionValues } from '@/utils/tools'
 
 import { getFundReaderContract } from '@/utils/contractHelpers'
 
@@ -172,8 +175,69 @@ class FundReader {
       return GlobalAssetStatisticDefault
     }
   }
+
+  getFundUpdatingData = async (
+    fundAddress: string,
+    baseToken: string
+  ): Promise<FundUpdateDataTypes | null> => {
+    const contract = getFundReaderContract()
+    try {
+      const res = await contract.fundUpdatingData(fundAddress)
+      const abiCoder = utils.defaultAbiCoder
+      const types = [
+        'tuple(string desc, string managerName, uint256[2] subscriptionLimit, bytes32[] derivativesToAdd, bytes32[] derivativesToRemove, address[] assetsToAdd, address[] assetsToRemove)'
+      ]
+      const { precision, decimals } = getTokenByAddress(baseToken)
+      if (res.params === '0x') {
+        return {
+          verifyStatus: -1,
+          data: {
+            desc: '',
+            managerName: '',
+            derivativesToAdd: [],
+            derivativesToRemove: [],
+            assetsToAdd: [],
+            assetsToRemove: [],
+            subscriptionLimit: []
+          }
+        }
+      }
+      const updateData = abiCoder.decode(types, res.params)[0]
+      return {
+        verifyStatus: res.verifyStatus,
+        data: {
+          desc: updateData.desc,
+          managerName: updateData.managerName,
+          derivativesToAdd: updateData.derivativesToAdd,
+          derivativesToRemove: updateData.derivativesToRemove,
+          assetsToAdd: updateData.assetsToAdd,
+          assetsToRemove: updateData.assetsToRemove,
+          subscriptionLimit: updateData.subscriptionLimit.map((item: string) =>
+            Number(safeInterceptionValues(item, precision, decimals))
+          )
+        }
+      }
+      // return calcGlobalAssetStatistic(res)
+    } catch (error) {
+      console.info(error)
+      return null
+    }
+  }
 }
 
 const ExportFundReader = new FundReader()
 
 export default ExportFundReader
+
+interface FundUpdateDataTypes {
+  verifyStatus: -1 | 0 | 1 | 2
+  data: {
+    desc: string
+    managerName: string
+    derivativesToAdd: string[]
+    derivativesToRemove: string[]
+    assetsToAdd: string[]
+    assetsToRemove: string[]
+    subscriptionLimit: number[]
+  }
+}

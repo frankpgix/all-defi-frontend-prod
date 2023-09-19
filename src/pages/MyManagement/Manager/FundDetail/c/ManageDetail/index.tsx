@@ -222,10 +222,9 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           </SectionLayout>*/}
 
           <SectionTip>
-            Changes in fund policy are permitted only during the open period. Once the change is
-            confirmed, a public announcement will be made and the change will be implemented in the
-            next epoch. Please note that changing fund policies might result in redemptions from the
-            fund, so please proceed with caution.
+            Reset the policy requires an audit, and it will take effect in the next Epoch after the
+            audit is passed. Please note that changing the fund policy may cause users to change
+            their investment strategy and cause redemption, please modify it carefully.
           </SectionTip>
           <SectionButtons>
             <FundSettleButton
@@ -236,9 +235,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             >
               settle
             </FundSettleButton>
-            <Button disabled={data.status !== 1} to={`/manage/manager/fund-edit/${fundAddress}`}>
-              Reset policies
-            </Button>
+            <Button to={`/manage/manager/fund-edit/${fundAddress}`}>Reset policies</Button>
           </SectionButtons>
         </TabPanel>
         {/* Revenue TabPanel */}

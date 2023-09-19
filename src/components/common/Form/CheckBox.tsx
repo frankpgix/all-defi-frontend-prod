@@ -28,14 +28,14 @@ const CheckedSvg = () => (
   <svg width="18" height="18" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="0.5" y="0.5" width="21" height="21" rx="4.5" fill="#1036E6" stroke="#1036E6" />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M17.7267 7.80001L9.1334 16.3933L4.27344 11.5333L4.9334 10.8734L9.1334 15.0734L17.0667 7.14005L17.7267 7.80001Z"
       fill="white"
       stroke="white"
-      stroke-width="0.5"
-      stroke-linecap="square"
-      stroke-linejoin="round"
+      strokeWidth="0.5"
+      strokeLinecap="square"
+      strokeLinejoin="round"
     />
   </svg>
 )

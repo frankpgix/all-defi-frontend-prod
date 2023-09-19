@@ -74,7 +74,7 @@ export const tokenss: { [key: string]: Token } = {
     {
       [ChainId.MAINNET]: '',
       [ChainId.GOERLINET]: '',
-      [ChainId.ARBITRUM]: '0x484E11eE84023e02b7D89f3608502041DA251a0B'
+      [ChainId.ARBITRUM]: '0xf7F6707DF90f739a852736236f1Cb3c20E11164b'
     },
     18,
     4,

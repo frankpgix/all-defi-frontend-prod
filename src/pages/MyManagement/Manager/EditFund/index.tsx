@@ -6,7 +6,7 @@ import { without } from 'lodash'
 
 import FundPool from '@/class/FundPool'
 import AllProtocol from '@/class/AllProtocol'
-// import FundReader from '@/class/FundReader'
+import FundReader from '@/class/FundReader'
 import { ProductProps } from '@/config/products'
 import { getDecimalsByAddress } from '@/config/tokens'
 import { useProfile } from '@/hooks/useProfile'
@@ -24,6 +24,7 @@ import { Input } from '@@/common/Form'
 
 const EditFund: FC = () => {
   const { getFundBase } = FundPool
+  const { getFundUpdatingData } = FundReader
   const { getDerivativeList, updateFund } = AllProtocol
   const { fundAddress = '' } = useParams()
   const { signer } = useProfile()
@@ -39,24 +40,42 @@ const EditFund: FC = () => {
   const [minAmount, setMinAmount] = useState('')
   const [maxAmount, setMaxAmount] = useState('')
   const [decimals, setDecimals] = useState(18)
+  const [verifyStatus, setVerifyStatus] = useState(2)
 
   const getData = useCallback(async () => {
     if (fundAddress) {
       setLoading(true)
       const res = await getFundBase(fundAddress)
       const p = await getDerivativeList()
-      // console.log(123, p)
       setDerivativeList(p)
       if (res) {
-        setManagerName(res.managerName)
-        setDesc(res.desc)
-        setSelectDerivative(res.derivatives)
         setOldDerivative(res.derivatives)
-        setMinAmount(String(res.subscriptionMinLimit))
-        setMaxAmount(String(res.subscriptionMaxLimit))
         const decimals = getDecimalsByAddress(res.baseToken)
-        console.log(decimals)
         setDecimals(decimals)
+        const upRes = await getFundUpdatingData(fundAddress, res.baseToken)
+        if (upRes) {
+          setVerifyStatus(upRes.verifyStatus)
+        }
+        if (upRes && [0, 1].includes(upRes.verifyStatus)) {
+          setManagerName(upRes.data.managerName)
+          setDesc(upRes.data.desc)
+          setMinAmount(String(upRes.data.subscriptionLimit[0]))
+          setMaxAmount(String(upRes.data.subscriptionLimit[1]))
+          // setSelectDerivative(without(selectDerivative, ...upRes.data.derivativesToRemove))
+          setSelectDerivative(
+            without(
+              [...new Set([...res.derivatives, ...upRes.data.derivativesToAdd])],
+              ...upRes.data.derivativesToRemove
+            )
+          )
+          // [...selectDerivative, item]
+        } else {
+          setManagerName(res.managerName)
+          setSelectDerivative(res.derivatives)
+          setDesc(res.desc)
+          setMinAmount(String(res.subscriptionMinLimit))
+          setMaxAmount(String(res.subscriptionMaxLimit))
+        }
       }
 
       setLoading(false)
@@ -87,10 +106,12 @@ const EditFund: FC = () => {
   }
 
   const onSelect = (item: string) => {
-    if (selectDerivative.includes(item)) {
-      setSelectDerivative(without(selectDerivative, item))
-    } else {
-      setSelectDerivative([...selectDerivative, item])
+    if (verifyStatus === -1) {
+      if (selectDerivative.includes(item)) {
+        setSelectDerivative(without(selectDerivative, item))
+      } else {
+        setSelectDerivative([...selectDerivative, item])
+      }
     }
     // console.log(selectDerivative)
   }
@@ -103,6 +124,7 @@ const EditFund: FC = () => {
             value={managerName}
             label="manager name"
             count
+            disabled={verifyStatus !== -1}
             maxLength={20}
             onChange={setManagerName}
           />
@@ -113,6 +135,7 @@ const EditFund: FC = () => {
             value={desc}
             label="manager introduction"
             count
+            disabled={verifyStatus !== -1}
             onChange={setDesc}
             maxLength={200}
           />
@@ -122,12 +145,14 @@ const EditFund: FC = () => {
             type="number"
             value={minAmount}
             label="Minimum Deposit Amount"
+            disabled={verifyStatus !== -1}
             onChange={setMinAmount}
           />
           <Input
             type="number"
             value={maxAmount}
             label="Maximum Deposit Amount"
+            disabled={verifyStatus !== -1}
             onChange={setMaxAmount}
           />
         </div>
@@ -145,7 +170,9 @@ const EditFund: FC = () => {
         </ul>
 
         <footer>
-          <Button onClick={onConfirm}>confirm</Button>
+          <Button disabled={verifyStatus !== -1} onClick={onConfirm}>
+            confirm
+          </Button>
         </footer>
       </BlueLineSection>
       <Loading type="fixed" show={loading} />
