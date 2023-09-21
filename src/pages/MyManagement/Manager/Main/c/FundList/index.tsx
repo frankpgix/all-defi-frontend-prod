@@ -104,7 +104,7 @@ const FundList: FC = () => {
       // align: 'left'
     }
   ]
-
+  // cup
   const onRow = (record: FundDetailProps) => ({
     onClick: (e: any) => {
       if (e.target?.tagName !== 'BUTTON' && record.status !== 0) {
@@ -112,6 +112,11 @@ const FundList: FC = () => {
       }
     }
   })
+
+  const calcTableRowClassName = (record: FundDetailProps) => {
+    if (record.status !== 0) return 'cup'
+    return ''
+  }
   return (
     <>
       <div className="web-buy-table-layout">
@@ -123,7 +128,7 @@ const FundList: FC = () => {
           emptyText={loading ? <TableLoading /> : <TableNoData />}
           data={manageFundList}
           rowKey="address"
-          rowClassName="cup"
+          rowClassName={calcTableRowClassName}
           onRow={onRow}
         />
       </div>

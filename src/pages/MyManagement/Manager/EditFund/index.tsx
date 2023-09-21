@@ -172,7 +172,7 @@ const EditFund: FC = () => {
         </ul>
 
         <footer>
-          {verifyStatus === -1 ? (
+          {[-1, 2].includes(verifyStatus) ? (
             <Button onClick={onConfirm}>confirm</Button>
           ) : (
             <>

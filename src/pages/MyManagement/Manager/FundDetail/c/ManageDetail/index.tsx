@@ -257,7 +257,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
                   settle
                 </FundSettleButton>
                 <Button to={`/manage/manager/fund-edit/${fundAddress}`}>
-                  {upData.verifyStatus === -1 ? 'Reset policies' : 'UNDER REVIEW'}
+                  {[-1, 2].includes(upData.verifyStatus) ? 'Reset policies' : 'UNDER REVIEW'}
                 </Button>
               </>
             )}
