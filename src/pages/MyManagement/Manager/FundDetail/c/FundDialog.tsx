@@ -6,6 +6,8 @@ import FundFactory, { FundVerifiedItemTypes } from '@/class/FundFactory'
 import InfoDialog from '@@/common/Dialog/Info'
 import ALink from '@@/common/ALink'
 
+import { CONTACT_US_URL } from '@/config'
+
 interface Props {
   fundAddress: string
   name: string
@@ -69,10 +71,12 @@ const FundDialog: FC<Props> = ({ fundAddress, name }) => {
           ) : (
             <article>
               Your application for the create of <strong>{item.data}</strong> fund has been
-              rejected, please <ALink to="">contact us</ALink> if you have any questions
+              rejected, please <ALink to={CONTACT_US_URL}>contact us</ALink> if you have any
+              questions
               <br />
               Your application for modification of <strong>{item.data}</strong> fund has been
-              rejected, please <ALink to="">contact us</ALink> if you have any questions
+              rejected, please <ALink to={CONTACT_US_URL}>contact us</ALink> if you have any
+              questions
             </article>
           )}
         </InfoDialog>

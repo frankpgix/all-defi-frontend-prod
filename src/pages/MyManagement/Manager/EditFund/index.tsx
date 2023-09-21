@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect, useCallback } from 'react'
 import classNames from 'classnames'
 // import { useRequest } from 'ahooks'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { without } from 'lodash'
 
 import FundPool from '@/class/FundPool'
@@ -9,6 +9,7 @@ import AllProtocol from '@/class/AllProtocol'
 import FundReader from '@/class/FundReader'
 import { ProductProps } from '@/config/products'
 import { getDecimalsByAddress } from '@/config/tokens'
+import { CONTACT_US_URL } from '@/config'
 import { useProfile } from '@/hooks/useProfile'
 import { useNotify } from '@/hooks/useNotify'
 
@@ -27,6 +28,7 @@ const EditFund: FC = () => {
   const { getFundUpdatingData } = FundReader
   const { getDerivativeList, updateFund } = AllProtocol
   const { fundAddress = '' } = useParams()
+  const navigate = useNavigate()
   const { signer } = useProfile()
   const { createNotify, updateNotifyItem } = useNotify()
 
@@ -170,9 +172,16 @@ const EditFund: FC = () => {
         </ul>
 
         <footer>
-          <Button disabled={verifyStatus !== -1} onClick={onConfirm}>
-            confirm
-          </Button>
+          {verifyStatus === -1 ? (
+            <Button onClick={onConfirm}>confirm</Button>
+          ) : (
+            <>
+              <Button outline onClick={() => navigate(-1)}>
+                Back
+              </Button>
+              <Button to={CONTACT_US_URL}>Contact us</Button>
+            </>
+          )}
         </footer>
       </BlueLineSection>
       <Loading type="fixed" show={loading} />

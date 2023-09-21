@@ -5,6 +5,7 @@ import { useManageFundList, useManageFundVerifyList } from '@/hooks/useFund'
 import FundFactory, { FundVerifiedItemTypes } from '@/class/FundFactory'
 import InfoDialog from '@@/common/Dialog/Info'
 import ALink from '@@/common/ALink'
+import { CONTACT_US_URL } from '@/config'
 
 const FundDialog: FC = () => {
   const { manageFundList = [] } = useManageFundList()
@@ -67,7 +68,8 @@ const FundDialog: FC = () => {
           ) : (
             <article>
               Your application for the create of <strong>{item.data}</strong> fund has been
-              rejected, please <ALink to="">contact us</ALink> if you have any questions
+              rejected, please <ALink to={CONTACT_US_URL}>contact us</ALink> if you have any
+              questions
             </article>
           )}
         </InfoDialog>

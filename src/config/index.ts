@@ -34,3 +34,5 @@ export const LANG_CACHE_KEY = 'LANG'
 export const LIGHT_PAPERS_URL = ''
 
 export const MANAGER_UPLODAD_HISTORICAL_DATA_URL = 'https://google.com'
+
+export const CONTACT_US_URL = ''
