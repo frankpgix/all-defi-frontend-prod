@@ -25,7 +25,10 @@ const AccountInfo: FC<Props> = ({ size = 'default' }) => {
       <dl>
         <dt>
           {t('Nav.Account.AvaliableMarginBalance', 'Available Margin Balance')}{' '}
-          <QuestionPopover size={size} text={t('Nav.Account.AvaliableMarginBalanceTip', 'Available Margin Balance')} />
+          <QuestionPopover
+            size={size}
+            text={t('Nav.Account.AvaliableMarginBalanceTip', 'Available Margin Balance')}
+          />
         </dt>
         <dd></dd>
       </dl>

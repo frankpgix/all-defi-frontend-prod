@@ -1,7 +1,7 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC, useState, useMemo } from 'react'
 import classNames from 'classnames'
-import { copyText } from '@/utils/tools'
-import { toast } from '@@/common/Toast'
+// import { toast } from '@@/common/Toast'
+import { sleep, copyText } from '@/utils/tools'
 
 interface Props {
   name: string
@@ -30,10 +30,14 @@ interface FundNameProps extends Props {
   address?: string
 }
 export const FundName: FC<FundNameProps> = ({ name, size, round, managerName, address }) => {
+  const [status, setStatus] = useState<boolean>(false)
   const copy = async (e: any) => {
     e.stopPropagation()
     await copyText(address ?? '')
-    toast.success('Fund Address Copied')
+    setStatus(true)
+    await sleep(1500)
+    setStatus(false)
+    // toast.success('Fund Address Copied')
   }
   return (
     <div className="c-fund-name" title={name}>
@@ -41,7 +45,11 @@ export const FundName: FC<FundNameProps> = ({ name, size, round, managerName, ad
       <p>
         <strong>
           <span>{name}</span>
-          {address && <i onClick={copy} />}
+          {address && (
+            <i onClick={copy} className={classNames({ show: status })}>
+              <u>Copied</u>
+            </i>
+          )}
         </strong>
         {managerName && <em>{managerName}</em>}
       </p>
