@@ -1,7 +1,9 @@
 import React, { FC, useMemo } from 'react'
 import dayjs from 'dayjs'
 import BN from 'bignumber.js'
+import { useRequest } from 'ahooks'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import ContentLoader from 'react-content-loader'
 // import { getTokenByAddress } from '@/config/tokens'
 // import { lowerCase } from 'lodash'
 // import { floor, isNaN } from 'lodash'
@@ -14,6 +16,7 @@ import { formatNumber } from '@/utils/tools'
 import { getTokenByAddress } from '@/config/tokens'
 
 import { FundBaseProps, FundDetailProps, FundStakeProps, FundBreachDetailProps } from '@/class/help'
+import FundReader from '@/class/FundReader'
 
 // import BlueLineSection from '@@/web/BlueLineSection'
 // import DataItem from '@@/common/DataItem'
@@ -52,6 +55,11 @@ interface Props {
 }
 
 const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getData, loading }) => {
+  const { getFundUpdatingData } = FundReader
+  const { data: upData, loading: upLoading } = useRequest(
+    async () => await getFundUpdatingData(fundAddress, base.baseToken)
+  )
+  console.log(upData, upLoading)
   // const { data: currFund } = useFundDetail(fundAddress)
   // console.log('currFund', currFund)
   const percent = useMemo(
@@ -227,15 +235,32 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             their investment strategy and cause redemption, please modify it carefully.
           </SectionTip>
           <SectionButtons>
-            <FundSettleButton
-              disabled={![5, 4].includes(data.status)}
-              outline
-              callback={getData}
-              fundAddress={fundAddress}
-            >
-              settle
-            </FundSettleButton>
-            <Button to={`/manage/manager/fund-edit/${fundAddress}`}>Reset policies</Button>
+            {upLoading || !upData ? (
+              <ContentLoader
+                width={400}
+                height={56}
+                viewBox="0 0 400 56"
+                backgroundColor="#eaeced"
+                foregroundColor="#ffffff"
+              >
+                <rect x="0" y="0" rx="28" ry="28" width="150" height="56" />
+                <rect x="170" y="0" rx="28" ry="28" width="230" height="56" />
+              </ContentLoader>
+            ) : (
+              <>
+                <FundSettleButton
+                  disabled={![5, 4].includes(data.status)}
+                  outline
+                  callback={getData}
+                  fundAddress={fundAddress}
+                >
+                  settle
+                </FundSettleButton>
+                <Button to={`/manage/manager/fund-edit/${fundAddress}`}>
+                  {upData.verifyStatus === -1 ? 'Reset policies' : 'UNDER REVIEW'}
+                </Button>
+              </>
+            )}
           </SectionButtons>
         </TabPanel>
         {/* Revenue TabPanel */}
