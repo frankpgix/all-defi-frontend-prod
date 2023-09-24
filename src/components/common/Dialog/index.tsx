@@ -17,7 +17,7 @@ interface Props {
 const DialogWrap: FC<Props> = ({ title, width, show, onClose, children }) => {
   const closeIcon = <span />
   const { mobile } = useContext(MobileContext)
-
+  if (!show) return null
   return (
     <Dialog
       destroyOnClose={true}

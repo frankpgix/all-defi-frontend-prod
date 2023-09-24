@@ -52,10 +52,10 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
     () => BN(stakeSharesValue).times(0.2).div(allPrice).div(365).toNumber(),
     [stakeSharesValue, allPrice]
   )
-
+  // console.log(allOutput, rewardDashboard.sALL)
   const isShowALLOutDialog = useMemo(() => {
     if (loading || allPriceLoading || sAllLoading) return false
-    if (allOutput === 0) return false
+    if (allOutput <= 0.0001) return false
     return allOutput > rewardDashboard.sALL
   }, [allOutput, rewardDashboard.sALL, loading, allPriceLoading, sAllLoading])
   // console.log(BN(rewardDashboard.pendingReward).toString(), rewardDashboard.pendingReward)
@@ -83,7 +83,7 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
             {formatNumber(stakeSharesValue, 2, '$0,0.00')}
           </DataItem>
           <DataItem label="Your Staked sALL" normalFont loading={sAllLoading}>
-            {formatNumber(rewardDashboard.sALL, 2, '0,0.00')}
+            {formatNumber(rewardDashboard.sALL, 4, '0,0.0000')}
           </DataItem>
           <DataItem label="Daily ALL output" loading={allPriceLoading}>
             {formatNumber(allOutput, 4, '0,0.0000')} <br />
