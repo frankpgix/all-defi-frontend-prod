@@ -52,7 +52,7 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
     () => BN(stakeSharesValue).times(0.2).div(allPrice).div(365).toNumber(),
     [stakeSharesValue, allPrice]
   )
-  // console.log(allOutput, rewardDashboard.sALL)
+  // console.log('allOutput:', allOutput, 'sALL:', rewardDashboard.sALL)
   const isShowALLOutDialog = useMemo(() => {
     if (loading || allPriceLoading || sAllLoading) return false
     if (allOutput <= 0.0001) return false
