@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useCallback } from 'react'
+import React, { FC, useState, useEffect, useCallback, useMemo } from 'react'
 import classNames from 'classnames'
 // import { useRequest } from 'ahooks'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -21,6 +21,7 @@ import Loading from '@@/common/Loading'
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'
 import { Input } from '@@/common/Form'
+import { useMeasure } from 'react-use'
 // import DataItem from '@@/common/DataItem'
 
 const EditFund: FC = () => {
@@ -107,8 +108,10 @@ const EditFund: FC = () => {
     }
   }
 
+  const isDisabled = useMemo(() => [0, 1].includes(verifyStatus), [verifyStatus])
+
   const onSelect = (item: string) => {
-    if (verifyStatus === -1) {
+    if (!isDisabled) {
       if (selectDerivative.includes(item)) {
         setSelectDerivative(without(selectDerivative, item))
       } else {
@@ -126,7 +129,7 @@ const EditFund: FC = () => {
             value={managerName}
             label="manager name"
             count
-            disabled={verifyStatus !== -1}
+            disabled={isDisabled}
             maxLength={20}
             onChange={setManagerName}
           />
@@ -137,7 +140,7 @@ const EditFund: FC = () => {
             value={desc}
             label="manager introduction"
             count
-            disabled={verifyStatus !== -1}
+            disabled={isDisabled}
             onChange={setDesc}
             maxLength={200}
           />
@@ -147,14 +150,14 @@ const EditFund: FC = () => {
             type="number"
             value={minAmount}
             label="Minimum Deposit Amount"
-            disabled={verifyStatus !== -1}
+            disabled={isDisabled}
             onChange={setMinAmount}
           />
           <Input
             type="number"
             value={maxAmount}
             label="Maximum Deposit Amount"
-            disabled={verifyStatus !== -1}
+            disabled={isDisabled}
             onChange={setMaxAmount}
           />
         </div>

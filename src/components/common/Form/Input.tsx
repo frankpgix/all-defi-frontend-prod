@@ -12,6 +12,7 @@ interface InputProps {
   suffix?: string | ReactNode
   innerSuffix?: string | ReactNode
   maxLength?: number
+  min?: number
   right?: boolean
   readonly?: boolean
   maxNumber?: number
@@ -30,6 +31,7 @@ const Input: FC<InputProps> = ({
   className,
   placeholder,
   maxLength,
+  min = -Infinity,
   suffix,
   innerSuffix,
   right,
@@ -99,6 +101,7 @@ const Input: FC<InputProps> = ({
               allowNegative={false}
               readOnly={readonly}
               disabled={disabled}
+              min={min}
             />
           ) : (
             <input
