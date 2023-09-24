@@ -27,11 +27,12 @@ const FundDialog: FC = () => {
     const status: boolean[] = []
     const items: FundVerifiedItemTypes[] = []
     data.forEach((item) => {
-      if (fundAddressList.includes(item.address) && !createVerifyList.includes(item.address)) {
+      if (!createVerifyList.includes(item.address)) {
         status.push(status.length === 0 ? true : false)
         items.push(item)
       }
     })
+    // console.log(data, status, items)
     setDialogStatus(status)
     setDialogData(items)
   }, [data, loading, fundAddressList, createVerifyList])

@@ -70,10 +70,6 @@ const FundDialog: FC<Props> = ({ fundAddress, name }) => {
             </article>
           ) : (
             <article>
-              Your application for the create of <strong>{item.data}</strong> fund has been
-              rejected, please <ALink to={CONTACT_US_URL}>contact us</ALink> if you have any
-              questions
-              <br />
               Your application for modification of <strong>{item.data}</strong> fund has been
               rejected, please <ALink to={CONTACT_US_URL}>contact us</ALink> if you have any
               questions

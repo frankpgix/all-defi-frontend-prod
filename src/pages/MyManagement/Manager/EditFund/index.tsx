@@ -100,7 +100,7 @@ const EditFund: FC = () => {
       signer
     )
     if (status) {
-      // await getData()
+      await getData()
       updateNotifyItem(notifyId, { type: 'success', hash })
     } else {
       updateNotifyItem(notifyId, { type: 'error', title: 'Set Fund Base Info', content: msg, hash })
