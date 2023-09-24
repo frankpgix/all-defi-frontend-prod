@@ -39,11 +39,11 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
             </article>
           </header> */}
           <section>
-            <h4>Congratulations！</h4>
+            <h4>Your fund creation application has been submitted</h4>
             <p>
-              The fund has been successfully established <br /> You can get more information by
-              reading the
-              <ALink to={docUrl}> Doc</ALink> to learn more about AllDeFi in detail
+              The platform will start to audit the fund, and the audit result will be notified by
+              email and platform message as soon as possible You can read the
+              <ALink to={docUrl}> Doc</ALink> to get more information and learn more about AllDeFi
             </p>
             <h4>Better promotion</h4>
             <p>
