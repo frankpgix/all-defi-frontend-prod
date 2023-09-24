@@ -4,7 +4,11 @@ import { getFundFactoryContract } from '@/utils/contractHelpers'
 import { simpleRpcProvider } from '@/utils/simpleRpcProvider'
 
 class FundFactory {
-  FundVerified = async (vType: 0 | 1, name?: string): Promise<FundVerifiedItemTypes[]> => {
+  FundVerified = async (
+    manage: string,
+    vType: 0 | 1,
+    name?: string
+  ): Promise<FundVerifiedItemTypes[]> => {
     const contract = getFundFactoryContract()
     const block = await simpleRpcProvider.getBlockNumber()
     // console.log(block)
@@ -22,11 +26,12 @@ class FundFactory {
     const data = transferEvents
       .map((item: any) => ({
         address: String(item.args.fund).toLocaleLowerCase(),
+        manage: String(item.args.manage).toLocaleLowerCase(),
         type: Number(item.args.vType),
         result: Boolean(item.args.pass),
         data: getName(item.args.data)
       }))
-      .filter((item: any) => item.type === vType)
+      .filter((item: any) => item.type === vType && manage.toLocaleLowerCase() === item.address)
     // console.log(data)
     return data
   }

@@ -111,6 +111,12 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "manager",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "fund",
         "type": "address"
       },

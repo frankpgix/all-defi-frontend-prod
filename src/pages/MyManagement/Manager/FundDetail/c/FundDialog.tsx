@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { useRequest } from 'ahooks'
 
 import { useManageFundVerifyList } from '@/hooks/useFund'
+import { useProfile } from '@/hooks/useProfile'
 import FundFactory, { FundVerifiedItemTypes } from '@/class/FundFactory'
 import InfoDialog from '@@/common/Dialog/Info'
 import ALink from '@@/common/ALink'
@@ -14,12 +15,13 @@ interface Props {
 }
 
 const FundDialog: FC<Props> = ({ fundAddress, name }) => {
+  const { account } = useProfile()
   const { updateVerifyList, setUpdateVerifyList } = useManageFundVerifyList()
   const [dialogStatus, setDialogStatus] = useState<boolean[]>([])
   const [dialogData, setDialogData] = useState<FundVerifiedItemTypes[]>([])
   const { FundVerified } = FundFactory
 
-  const { loading, data } = useRequest(async () => FundVerified(1, name), {
+  const { loading, data } = useRequest(async () => FundVerified(account, 1, name), {
     refreshDeps: [fundAddress]
   })
 

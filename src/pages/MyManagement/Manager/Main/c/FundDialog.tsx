@@ -2,12 +2,14 @@ import React, { FC, useState, useMemo, useEffect } from 'react'
 import { useRequest } from 'ahooks'
 
 import { useManageFundList, useManageFundVerifyList } from '@/hooks/useFund'
+import { useProfile } from '@/hooks/useProfile'
 import FundFactory, { FundVerifiedItemTypes } from '@/class/FundFactory'
 import InfoDialog from '@@/common/Dialog/Info'
 import ALink from '@@/common/ALink'
 import { CONTACT_US_URL } from '@/config'
 
 const FundDialog: FC = () => {
+  const { account } = useProfile()
   const { manageFundList = [] } = useManageFundList()
   const { createVerifyList, setCreateVerifyList } = useManageFundVerifyList()
   const [dialogStatus, setDialogStatus] = useState<boolean[]>([])
@@ -18,7 +20,7 @@ const FundDialog: FC = () => {
   )
   const { FundVerified } = FundFactory
 
-  const { loading, data } = useRequest(async () => FundVerified(0), {
+  const { loading, data } = useRequest(async () => FundVerified(account, 0), {
     refreshDeps: [fundAddressList]
   })
 
@@ -37,7 +39,7 @@ const FundDialog: FC = () => {
     setDialogData(items)
   }, [data, loading, fundAddressList, createVerifyList])
 
-  // console.log(dialogData, dialogStatus)
+  console.log(dialogData, dialogStatus)
   const onDialogClose = (index: number) => {
     const status = [...dialogStatus]
     status[index] = false
