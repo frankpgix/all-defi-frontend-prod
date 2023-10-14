@@ -5,7 +5,7 @@ import Dialog from '@/components/common/Dialog'
 import FundIcon from '@@/common/FundIcon'
 import ALink from '@@/common/ALink'
 import Button from '@@/common/Button'
-import Image from '@@/common/Image'
+// import Image from '@@/common/Image'
 import CheckBox from '@@/common/Form/CheckBox'
 import 'swiper/css'
 import 'swiper/css/pagination'
@@ -23,7 +23,7 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
 
   const [isChecked, setIsChecked] = useState(false)
   return (
-    <Dialog show={show} width="800px">
+    <Dialog show={show} className="web-manage-create-dialog-layout">
       <div className="web-manage-create-dialog">
         <main>
           <header>
@@ -39,12 +39,15 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
             </article>
           </header> */}
           <section>
-            <h4>Your fund creation application has been submitted</h4>
+            <h3>Congratulations!</h3>
+            <p>Your fund creation application has been submitted</p>
             <p>
               The platform will start to audit the fund, and the audit result will be notified by
               email and platform message as soon as possible You can read the
               <ALink to={docUrl}> Doc</ALink> to get more information and learn more about AllDeFi
             </p>
+          </section>
+          <section>
             <h4>Better promotion</h4>
             <p>
               <ALink to={formUrl}>Click here</ALink> you can upload more historical data, so that
@@ -76,7 +79,6 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
           >
             <SwiperSlide>
               <div className="web-manage-create-dialog-swiper-item">
-                <Image src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel1.jpeg" />
                 <h4>About the review</h4>
                 <p>
                   All funds will be officially listed on the fund supermarket after being reviewed
@@ -88,7 +90,6 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
             </SwiperSlide>
             <SwiperSlide>
               <div className="web-manage-create-dialog-swiper-item">
-                <Image src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg" />
                 <h4>About MAX AUM Limit</h4>
                 <p>
                   Please pay attention to your fund's <strong>AUM </strong>
@@ -101,14 +102,15 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
             </SwiperSlide>
             <SwiperSlide>
               <div className="web-manage-create-dialog-swiper-item">
-                <Image src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel3.jpeg" />
                 <h4>About the settlement</h4>
                 <p>
                   Each epoch has four stages. Please prepare enough cash in the Pre-Settlement
                   Period to complete the redemption requests of users, and click Settle in the
                   Settlement Period to complete the settlement and start the next epoch.
                 </p>
-                <p className="fall">Violations will result in penalties！</p>
+                <p>
+                  <strong>Violations will result in penalties！</strong>
+                </p>
               </div>
             </SwiperSlide>
           </Swiper>
