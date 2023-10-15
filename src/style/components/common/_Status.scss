@@ -10,10 +10,10 @@
       display: block;
     }
     h4 {
-      font-family: 'Didot';
-      font-size: 24px;
-      line-height: 40px;
-      color: $blue;
+      // font-family: 'Didot';
+      font-size: 28px;
+      line-height: 1.4;
+      // color: $blue;
       font-weight: bold;
       margin-top: 32px;
     }
@@ -117,6 +117,14 @@
     }
   }
   &-info {
+    &-icon {
+      p {
+        width: 100px;
+        height: 100px;
+        display: block;
+        background: url($res + 'asset/info.png') center/contain no-repeat;
+      }
+    }
     footer {
       .web-button {
         margin: 32px 10px 0;

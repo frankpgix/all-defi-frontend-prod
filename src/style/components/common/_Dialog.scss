@@ -12,15 +12,15 @@
   }
 
   &-close {
-    top: 36px;
-    right: 36px;
-    width: 32px;
-    height: 32px;
+    top: 40px;
+    right: 40px;
+    width: 40px;
+    height: 40px;
     padding: 0;
     margin: 0;
     opacity: 0.75;
     @include dz(0.1s);
-    background: url($res + 'icon/modal-close.svg') center/contain no-repeat;
+    background: url($res + 'asset/dialog-close.svg') center/contain no-repeat;
     &:hover {
       @include xz(90);
     }

@@ -76,8 +76,9 @@
 
   &-footer {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
+    padding-right: 20px;
   }
 
   &-item {
@@ -90,7 +91,7 @@
     position: relative;
     // box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
     animation-duration: 0.7s;
-    padding: 16px;
+    padding: 10px 16px;
     background: $cff;
     margin-bottom: 10px;
     border-radius: 10px;

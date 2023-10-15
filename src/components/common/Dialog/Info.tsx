@@ -34,8 +34,8 @@ const Info: FC<Props> = ({
   }
   return (
     <Dialog width="670px" show={show} onClose={onClose}>
-      <div className="web-status-info">
-        <div className="web-status-wait-icon">
+      <div className={`web-status-${type}`}>
+        <div className={`web-status-${type}-icon`}>
           <p>
             <i></i>
           </p>

@@ -168,6 +168,7 @@ const Bench: FC = () => {
       </BlueLineSection>
       <InfoDialog
         show={infoStatus}
+        type="info"
         onConfirm={buyAndStakeFunc}
         onClose={() => setInfoStatus(false)}
         title="Confirm AC Token Purchase"
