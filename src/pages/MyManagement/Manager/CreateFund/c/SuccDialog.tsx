@@ -17,11 +17,12 @@ interface Props {
 }
 
 const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
-  const docUrl = 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/'
+  // const docUrl = 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/'
   const formUrl = 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/'
   const termsUrl = 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/'
 
   const [isChecked, setIsChecked] = useState(false)
+  if (!show) return null
   return (
     <Dialog show={show} className="web-manage-create-dialog-layout">
       <div className="web-manage-create-dialog">
@@ -43,8 +44,8 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
             <p>Your fund creation application has been submitted</p>
             <p>
               The platform will start to audit the fund, and the audit result will be notified by
-              email and platform message as soon as possible You can read the
-              <ALink to={docUrl}> Doc</ALink> to get more information and learn more about AllDeFi
+              email and platform message as soon as possible
+              {/* <ALink to={docUrl}> Doc</ALink>  */}
             </p>
           </section>
           <section>
@@ -67,24 +68,23 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
             </Button>
           </footer>
         </main>
-        <div className="web-manage-create-dialog-swiper">
+        <div className="web-manage-create-dialog-swiper swiper-no-swiping">
           <Swiper
             modules={[Pagination, Autoplay]}
             spaceBetween={50}
             slidesPerView={1}
-            autoplay={{ delay: 2000 }}
+            autoplay={{ delay: 3000 }}
             pagination={{ clickable: true }}
-            onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}
           >
             <SwiperSlide>
               <div className="web-manage-create-dialog-swiper-item">
                 <h4>About the review</h4>
                 <p>
                   All funds will be officially listed on the fund supermarket after being reviewed
-                  by AllDeFi Although it may take longer to review, we still strongly recommend that
-                  you upload more historical data, which you can do at any time on the Strategy
-                  Management page before the fund is listed.
+                </p>
+                <p>
+                  Although it may take longer to review, we still strongly recommend that you upload
+                  more historical data.
                 </p>
               </div>
             </SwiperSlide>
@@ -92,11 +92,8 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
               <div className="web-manage-create-dialog-swiper-item">
                 <h4>About MAX AUM Limit</h4>
                 <p>
-                  Please pay attention to your fund's <strong>AUM </strong>
-                  and <strong>MAX AUM</strong> Limit at all times, to ensure maximum returns Please
-                  Stake one Epoch in advance to ensure enough ALL, because the ALL supplemented in
-                  this round will only increase the available balance for subscription in time, and
-                  will not change the distribution of Fee until the next round
+                  ALL supplemented in this epoch will only increase the available balance for
+                  subscription, and will not change the distribution of Fee until the next epoch.
                 </p>
               </div>
             </SwiperSlide>
@@ -105,12 +102,11 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
                 <h4>About the settlement</h4>
                 <p>
                   Each epoch has four stages. Please prepare enough cash in the Pre-Settlement
-                  Period to complete the redemption requests of users, and click Settle in the
-                  Settlement Period to complete the settlement and start the next epoch.
+                  Period to complete the redemption requests of users
                 </p>
-                <p>
+                {/* <p>
                   <strong>Violations will result in penalties！</strong>
-                </p>
+                </p> */}
               </div>
             </SwiperSlide>
           </Swiper>
