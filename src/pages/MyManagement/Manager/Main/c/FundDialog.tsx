@@ -23,7 +23,7 @@ const FundDialog: FC = () => {
   const { loading, data } = useRequest(async () => FundVerified(account, 0), {
     refreshDeps: [fundAddressList]
   })
-
+  // console.log(data)
   useEffect(() => {
     if (loading || fundAddressList.length === 0 || !data) return
     const status: boolean[] = []
