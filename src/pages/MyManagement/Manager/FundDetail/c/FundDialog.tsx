@@ -31,16 +31,18 @@ const FundDialog: FC<Props> = ({ fundAddress, name }) => {
     const items: FundVerifiedItemTypes[] = []
     data.forEach((item) => {
       if (
-        fundAddress.toLocaleLowerCase() === item.address &&
+        fundAddress.toLocaleLowerCase() === item.address.toLocaleLowerCase() &&
         !updateVerifyList.includes(item.address)
       ) {
         status.push(status.length === 0 ? true : false)
         items.push(item)
       }
     })
+
+    console.log('data', data, status)
     setDialogStatus(status)
     setDialogData(items)
-  }, [data, loading, fundAddress, updateVerifyList])
+  }, [data, loading, fundAddress])
 
   const onDialogClose = (index: number) => {
     const status = [...dialogStatus]

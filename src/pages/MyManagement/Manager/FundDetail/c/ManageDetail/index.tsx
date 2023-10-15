@@ -59,7 +59,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
   const { data: upData, loading: upLoading } = useRequest(
     async () => await getFundUpdatingData(fundAddress, base.baseToken)
   )
-  console.log(upData, upLoading)
+  // console.log(upData, upLoading)
   // const { data: currFund } = useFundDetail(fundAddress)
   // console.log('currFund', currFund)
   const percent = useMemo(
