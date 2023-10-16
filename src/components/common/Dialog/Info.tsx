@@ -7,7 +7,7 @@ import Button from '@@/common/Button'
 
 interface Props {
   show: boolean
-  title?: string
+  title?: string | ReactNode
   msg?: string | ReactNode
   onClose: () => void
   onConfirm?: () => void

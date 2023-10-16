@@ -62,6 +62,21 @@ const FundDialog: FC = () => {
           onClose={() => onDialogClose(index)}
           onConfirm={() => onDialogConfirm(index, item.address)}
           hideCancelButton
+          type={item.result ? 'succ' : 'fail'}
+          confirmText="OKAY, GOT IT"
+          title={
+            item.result ? (
+              <>
+                Well done! <br />
+                Creation application was passed
+              </>
+            ) : (
+              <>
+                Oops! <br />
+                Creation application was rejected
+              </>
+            )
+          }
         >
           {item.result ? (
             <article>

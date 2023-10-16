@@ -1,7 +1,7 @@
 .web-status {
   &-fail,
   &-wait,
-  &-success,
+  &-succ,
   &-info {
     display: flex;
     flex-flow: column;
@@ -11,11 +11,12 @@
     }
     h4 {
       // font-family: 'Didot';
+      text-align: center;
       font-size: 28px;
       line-height: 1.4;
       // color: $blue;
       font-weight: bold;
-      margin-top: 32px;
+      margin-top: 16px;
     }
     p,
     article {
@@ -107,13 +108,23 @@
     }
   }
   &-fail {
-    img {
-      // width: 252px;height: 178px;
+    &-icon {
+      p {
+        width: 100px;
+        height: 100px;
+        display: block;
+        background: url($res + 'icon/modal-fail.png') center/contain no-repeat;
+      }
     }
   }
-  &-success {
-    img {
-      // width: 174px;height: 160px;
+  &-succ {
+    &-icon {
+      p {
+        width: 100px;
+        height: 100px;
+        display: block;
+        background: url($res + 'icon/modal-succ.png') center/contain no-repeat;
+      }
     }
   }
   &-info {

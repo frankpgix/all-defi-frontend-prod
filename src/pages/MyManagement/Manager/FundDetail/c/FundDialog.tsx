@@ -66,17 +66,31 @@ const FundDialog: FC<Props> = ({ fundAddress, name }) => {
           onClose={() => onDialogClose(index)}
           onConfirm={() => onDialogConfirm(index, item.address)}
           hideCancelButton
+          type={item.result ? 'succ' : 'fail'}
+          confirmText="OKAY, GOT IT"
+          title={
+            item.result ? (
+              <>
+                Well done! <br />
+                Reset application was passed
+              </>
+            ) : (
+              <>
+                Oops! <br />
+                Reset application was rejected
+              </>
+            )
+          }
         >
           {item.result ? (
             <article>
-              Your application for modification of the <strong>{item.data}</strong> Fund has been
-              approved and will take effect at the next Epoch
+              Your application for reset of the <strong>{item.data}</strong> fund has been approved
+              and will take effect at the next Epoch
             </article>
           ) : (
             <article>
-              Your application for modification of <strong>{item.data}</strong> fund has been
-              rejected, please <ALink to={CONTACT_US_URL}>contact us</ALink> if you have any
-              questions
+              Your application for reset of <strong>{item.data}</strong> fund has been rejected,
+              please <ALink to={CONTACT_US_URL}>contact us</ALink> if you have any questions
             </article>
           )}
         </InfoDialog>
