@@ -54,8 +54,9 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
   )
   // console.log('allOutput:', allOutput, 'sALL:', rewardDashboard.sALL)
   const isShowALLOutDialog = useMemo(() => {
+    // console.log(allOutput > rewardDashboard.sALL, 'allOutput > rewardDashboard.sALL')
     if (loading || allPriceLoading || sAllLoading) return false
-    if (allOutput <= 0.0001) return false
+    // if (allOutput <= 0.0001) return false
     return allOutput > rewardDashboard.sALL
   }, [allOutput, rewardDashboard.sALL, loading, allPriceLoading, sAllLoading])
   // console.log(BN(rewardDashboard.pendingReward).toString(), rewardDashboard.pendingReward)
@@ -111,6 +112,7 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
         )} ALL will be claimed`}
       />
       <ALLOutputTipDialog status={isShowALLOutDialog} />
+      {String(isShowALLOutDialog)}
     </>
   )
 }
@@ -121,6 +123,7 @@ const ALLOutputTipDialog: FC<{ status: boolean }> = ({ status }) => {
   const CacheKey = 'ALLOutputTipDialogCloseTime'
   const [show, setShow] = useState<boolean>(false)
   useEffect(() => {
+    // console.log(111, status)
     if (status) {
       const lastCloseTime = Cache.get(CacheKey)
       if (lastCloseTime == null || Number(lastCloseTime) + 86400000 < +new Date()) {

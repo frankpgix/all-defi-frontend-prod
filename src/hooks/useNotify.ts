@@ -60,18 +60,18 @@ export const useNotify = () => {
     await sleep(200)
     updateNotifyStatus(notifyItem.id, { animteType: 'in', layoutShow: true })
 
-    // if (autoClose !== false) {
-    //   if (notifyItem.type === 'success' || notifyItem.type === 'warning') {
-    //     setTimeout(() => {
-    //       closeNotifyItem(notifyItem.id)
-    //     }, 15000)
-    //   }
-    //   if (notifyItem.type === 'loading') {
-    //     setTimeout(() => {
-    //       closeNotifyItem(notifyItem.id)
-    //     }, 60000)
-    //   }
-    // }
+    if (autoClose !== false) {
+      if (notifyItem.type === 'success' || notifyItem.type === 'warning') {
+        setTimeout(() => {
+          closeNotifyItem(notifyItem.id)
+        }, 15000)
+      }
+      // if (notifyItem.type === 'loading') {
+      //   setTimeout(() => {
+      //     closeNotifyItem(notifyItem.id)
+      //   }, 60000)
+      // }
+    }
     return notifyItem.id
   }
 
