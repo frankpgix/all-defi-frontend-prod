@@ -117,7 +117,6 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
         )} ALL will be claimed`}
       />
       <ALLOutputTipDialog status={isShowALLOutDialog} />
-      {String(isShowALLOutDialog)}
     </>
   )
 }
