@@ -44,6 +44,11 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
 
   const rewardDashboard = sourceRewardDashboard || { sALL: 0, claimedReward: 0, pendingReward: 0 }
   const pendingReward = rewardDashboard.pendingReward < 0.0001 ? 0 : rewardDashboard.pendingReward
+
+  const stakedSALL = useMemo(
+    () => BN(rewardDashboard.sALL).minus(rewardDashboard.pendingReward).toNumber(),
+    [rewardDashboard.sALL, rewardDashboard.pendingReward]
+  )
   const addAllTokenToWallet = () => {
     const { symbol, decimals } = tokens.ALLTOKEN
     addToken2Wallet(getALLTOKENAddress(), symbol ?? '', decimals ?? 18, '')
@@ -56,9 +61,9 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
   const isShowALLOutDialog = useMemo(() => {
     // console.log(allOutput > rewardDashboard.sALL, 'allOutput > rewardDashboard.sALL')
     if (loading || allPriceLoading || sAllLoading) return false
-    // if (allOutput <= 0.0001) return false
-    return allOutput > rewardDashboard.sALL
-  }, [allOutput, rewardDashboard.sALL, loading, allPriceLoading, sAllLoading])
+    if (allOutput <= 0.0001) return false
+    return allOutput > stakedSALL
+  }, [allOutput, stakedSALL, loading, allPriceLoading, sAllLoading])
   // console.log(BN(rewardDashboard.pendingReward).toString(), rewardDashboard.pendingReward)
 
   const onHarvestAll = async () => {
@@ -84,7 +89,7 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
             {formatNumber(stakeSharesValue, 2, '$0,0.00')}
           </DataItem>
           <DataItem label="Your Staked sALL" normalFont loading={sAllLoading}>
-            {formatNumber(rewardDashboard.sALL, 4, '0,0.0000')}
+            {formatNumber(stakedSALL, 4, '0,0.0000')}
           </DataItem>
           <DataItem label="Daily ALL output" loading={allPriceLoading}>
             {formatNumber(allOutput, 4, '0,0.0000')} <br />
