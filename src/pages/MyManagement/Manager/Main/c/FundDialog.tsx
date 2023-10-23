@@ -29,7 +29,7 @@ const FundDialog: FC = () => {
     const status: boolean[] = []
     const items: FundVerifiedItemTypes[] = []
     data.forEach((item) => {
-      if (!createVerifyList.includes(item.address)) {
+      if (!createVerifyList.includes(item.hash)) {
         status.push(status.length === 0 ? true : false)
         items.push(item)
       }
@@ -60,7 +60,7 @@ const FundDialog: FC = () => {
           show={dialogStatus[index]}
           key={index}
           onClose={() => onDialogClose(index)}
-          onConfirm={() => onDialogConfirm(index, item.address)}
+          onConfirm={() => onDialogConfirm(index, item.hash)}
           hideCancelButton
           type={item.result ? 'succ' : 'fail'}
           confirmText="OKAY, GOT IT"

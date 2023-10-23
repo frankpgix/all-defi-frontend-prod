@@ -243,11 +243,13 @@
     }
     &.error &-line-inner {
       background: #fd3d60;
-      left: 0;
+      animation: notify-line-load 90s linear;
+      // left: 0;
     }
     &.loading &-line-inner {
       background: #fea036;
-      left: 0;
+      animation: notify-line-load 90s linear;
+      // left: 0;
       // animation: notify-line-load 60s linear;
     }
   }

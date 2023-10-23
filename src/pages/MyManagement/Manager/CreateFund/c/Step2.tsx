@@ -41,17 +41,29 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
 
   const onNext = () => {
     const selectList = selectIndex.map((index: number) => derivativeList[index])
-    onConfirm({ addresss: selectList, minAmount: Number(minAmount), maxAmount: Number(maxAmount), baseTokenAddress })
+    onConfirm({
+      addresss: selectList,
+      minAmount: Number(minAmount),
+      maxAmount: Number(maxAmount),
+      baseTokenAddress
+    })
   }
 
-  const error = useMemo(() => Number(maxAmount) <= Number(minAmount) && Number(maxAmount) !== 0, [minAmount, maxAmount])
+  const error = useMemo(
+    () => Number(maxAmount) <= Number(minAmount) && Number(maxAmount) !== 0,
+    [minAmount, maxAmount]
+  )
   const isDisabled = useMemo(
-    () => selectIndex.length === 0 || !minAmount || !maxAmount || error,
+    () => selectIndex.length === 0 || !minAmount || Number(minAmount) === 0 || !maxAmount || error,
     [selectIndex, minAmount, maxAmount, error]
   )
   return (
     <>
-      <BlueLineSection hide={!show} className="web-manage-create-step" title="Step 2 Protocol Selection">
+      <BlueLineSection
+        hide={!show}
+        className="web-manage-create-step"
+        title="Step 2 Protocol Selection"
+      >
         {/*<h2>Deposit Limits</h2>*/}
         <div className="web-manage-create-step-2col">
           <Select
@@ -66,6 +78,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
             type="number"
             label="Minimum Deposit Amount"
             value={minAmount}
+            error={Number(minAmount) <= 0}
             onChange={setMinAmount}
             innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
           />

@@ -17,9 +17,10 @@ import { utils } from 'ethers'
 
 import dappStore from '@/stores/dappStore'
 
-export const goConnect = async (proposal: any, fundAddress?: string) => {
+export const goConnect = async (proposal: any, fundAddress?: string, createNotify?: any) => {
   dappStore.setLoading(true)
   const { id, params } = proposal
+
   console.log(proposal, fundAddress)
 
   // const { proposer, requiredNamespaces, optionalNamespaces, sessionProperties, relays } = params
@@ -66,7 +67,8 @@ export const goConnect = async (proposal: any, fundAddress?: string) => {
     console.log('params', params)
   } catch (error) {
     const topic = params.pairingTopic
-    notify.error('Something Error, try late')
+    // notify.error('Something Error, try late')
+    createNotify?.({ type: 'error', content: 'Dapp Something Error, try late' })
     await signClient.disconnect({ topic, reason: getSdkError('USER_DISCONNECTED') })
     dappStore.setLoading(false)
   }

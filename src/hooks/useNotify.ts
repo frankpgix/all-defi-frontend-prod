@@ -66,11 +66,11 @@ export const useNotify = () => {
           closeNotifyItem(notifyItem.id)
         }, 15000)
       }
-      // if (notifyItem.type === 'loading') {
-      //   setTimeout(() => {
-      //     closeNotifyItem(notifyItem.id)
-      //   }, 60000)
-      // }
+      if (notifyItem.type === 'loading' || notifyItem.type === 'error') {
+        setTimeout(() => {
+          closeNotifyItem(notifyItem.id)
+        }, 90000)
+      }
     }
     return notifyItem.id
   }

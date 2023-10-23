@@ -24,7 +24,9 @@ const Subscription: FC<Props> = ({ fundAddress }) => {
     {
       title: 'Amount',
       dataIndex: 'amount',
-      render: (value: number, row: any) => <TokenValue value={value} token={row.token} size="mini" format="0,0.00" />
+      render: (value: number, row: any) => (
+        <TokenValue value={value} token={row.token} size="mini" format="0,0.00" />
+      )
     },
     {
       title: 'Address',
@@ -33,13 +35,13 @@ const Subscription: FC<Props> = ({ fundAddress }) => {
     },
     {
       title: 'Time',
-      dataIndex: 'timestamp',
+      dataIndex: 'time',
       render: (value: number) => dayjs(value).format('MMM DD, YYYY hh:mm:ss A')
     }
   ]
 
   const { loading, data } = useFundSubscribesData(fundAddress)
-  // console.log(1211, data)
+  console.log(1211, data)
   return (
     <Table
       className="web-buy-table"

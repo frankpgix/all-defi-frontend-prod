@@ -109,11 +109,13 @@ const Dapp: FC<Props> = ({ base, data }) => {
         <div className="web-manage-dapp-section">
           <header className="web-manage-dapp-section-header">Dapps you can choose to use</header>
           <section className="web-manage-dapp-derivatives">
-            {derivatives.map((item, index) => (
-              <ALink to={item.url} title={item.name} key={index}>
-                <Image src={`products/${item?.name}.png`} alt={item?.name} />
-              </ALink>
-            ))}
+            {derivatives
+              .filter((item) => item.name !== 'OneInch')
+              .map((item, index) => (
+                <ALink to={item.url} title={item.name} key={index}>
+                  <Image src={`products/${item?.name}.png`} alt={item?.name} />
+                </ALink>
+              ))}
           </section>
         </div>
         <div className="web-manage-dapp-section">

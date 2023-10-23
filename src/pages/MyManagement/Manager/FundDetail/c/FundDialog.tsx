@@ -32,7 +32,7 @@ const FundDialog: FC<Props> = ({ fundAddress, name }) => {
     data.forEach((item) => {
       if (
         fundAddress.toLocaleLowerCase() === item.address.toLocaleLowerCase() &&
-        !updateVerifyList.includes(item.address)
+        !updateVerifyList.includes(item.hash)
       ) {
         status.push(status.length === 0 ? true : false)
         items.push(item)
@@ -64,7 +64,7 @@ const FundDialog: FC<Props> = ({ fundAddress, name }) => {
           show={dialogStatus[index]}
           key={index}
           onClose={() => onDialogClose(index)}
-          onConfirm={() => onDialogConfirm(index, item.address)}
+          onConfirm={() => onDialogConfirm(index, item.hash)}
           hideCancelButton
           type={item.result ? 'succ' : 'fail'}
           confirmText="OKAY, GOT IT"

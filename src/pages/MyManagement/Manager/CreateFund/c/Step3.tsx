@@ -99,7 +99,7 @@ const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress 
           <Button onClick={onBack} outline>
             back
           </Button>
-          <Button disabled={isDisabled} onClick={() => onConfirm(Number(amount))}>
+          <Button disabled={isDisabled || isErrorValue} onClick={() => onConfirm(Number(amount))}>
             next
           </Button>
         </footer>

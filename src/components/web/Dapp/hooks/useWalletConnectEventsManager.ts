@@ -3,6 +3,7 @@ import { EIP155_SIGNING_METHODS } from '../data/EIP155Data'
 import { signClient } from '../utils/WalletConnectUtil'
 import { SignClientTypes } from '@walletconnect/types'
 import { useCallback, useEffect } from 'react'
+import { useNotify } from '@/hooks/useNotify'
 
 import { goConnect, onTransaction, onSign } from '../utils/tools'
 
@@ -14,10 +15,11 @@ export function useWalletConnectEventsManager(
   /******************************************************************************
    * 1. Open session proposal modal for confirmation / rejection
    *****************************************************************************/
+  const { createNotify } = useNotify()
   const onSessionProposal = useCallback(
     (proposal: SignClientTypes.EventArguments['session_proposal']) => {
       // ModalStore.open('SessionProposalModal', { proposal })
-      goConnect(proposal, fundAddress)
+      goConnect(proposal, fundAddress, createNotify)
       // console.log('proposal', proposal)
     },
     [fundAddress]

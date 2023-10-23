@@ -29,8 +29,10 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
         <main>
           <header>
             <FundIcon name={data.name} size="large" />
-            <h4>{data.name}</h4>
-            <p>{data.managerName}</p>
+            <article>
+              <h4>{data.name}</h4>
+              <p>{data.managerName}</p>
+            </article>
           </header>
           {/* <header>
             <FundIcon name="NaNa" size="large" />
@@ -59,7 +61,7 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
             <aside>
               <CheckBox value={isChecked} onChange={(val) => setIsChecked(val)}>
                 <p>
-                  I have read and understood all <ALink to={termsUrl}>the terms</ALink>
+                  I have read and understood <ALink to={termsUrl}> all the terms</ALink>
                 </p>
               </CheckBox>
             </aside>
@@ -104,9 +106,6 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
                   Each epoch has four stages. Please prepare enough cash in the Pre-Settlement
                   Period to complete the redemption requests of users
                 </p>
-                {/* <p>
-                  <strong>Violations will result in penalties！</strong>
-                </p> */}
               </div>
             </SwiperSlide>
           </Swiper>

@@ -14,7 +14,7 @@ class FundFactory {
     // console.log(block)
     const transferEvents = await contract.queryFilter(
       'FundVerified',
-      block - 60 * 60 * 24 * 2,
+      block - 60 * 60 * 24 * 2 * 15,
       block
     )
     console.log(transferEvents, 'transferEvents')
@@ -28,6 +28,7 @@ class FundFactory {
       .map((item: any) => ({
         address: String(item.args.fund).toLocaleLowerCase(),
         manager: String(item.args.manager).toLocaleLowerCase(),
+        hash: String(item.transactionHash).toLocaleLowerCase(),
         type: Number(item.args.vType),
         result: Boolean(item.args.pass),
         data: getName(item.args.data)
@@ -40,6 +41,8 @@ class FundFactory {
 
 export interface FundVerifiedItemTypes {
   address: string
+  manager: string
+  hash: string
   type: number
   result: boolean
   data: string

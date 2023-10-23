@@ -33,6 +33,7 @@ export const LANG_CACHE_KEY = 'LANG'
 
 export const LIGHT_PAPERS_URL = ''
 
-export const MANAGER_UPLODAD_HISTORICAL_DATA_URL = 'https://google.com'
+export const MANAGER_UPLODAD_HISTORICAL_DATA_URL =
+  'https://docs.google.com/forms/d/1xEGMAC4VAnMWNIlCA75LasU0aG353tS5AWAJh1T4XX0/edit'
 
 export const CONTACT_US_URL = ''
