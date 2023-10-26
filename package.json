@@ -13,8 +13,11 @@
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "@reduxjs/toolkit": "^1.9.5",
+    "@safe-global/safe-core-sdk": "^3.3.5",
+    "@sentry/react": "^7.75.1",
     "@walletconnect/sign-client": "^2.9.1",
     "@walletconnect/utils": "^2.9.1",
+    "@web3-onboard/core": "^2.21.2",
     "ahooks": "^3.7.7",
     "animate.css": "^4.1.1",
     "bignumber.js": "^9.1.1",

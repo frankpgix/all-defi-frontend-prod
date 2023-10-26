@@ -1,0 +1,14 @@
+.dapp-iframe {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  border: none;
+  &-layout {
+    position: fixed;
+    top: 95px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}

@@ -1,6 +1,9 @@
 import getEnvKey from '@/config/env'
 import { ChainId } from '@/config/types'
 
+export const IS_PRODUCTION = process.env.NODE_ENV === 'production'
+export const IS_DEV = process.env.NODE_ENV === 'development'
+
 const API_PREFIX_URLS_SCHEMA: Record<string, string> = {
   prod: 'https://api.derify.exchange/bsc/',
   dev: 'https://api.derify.exchange/bsc/'
