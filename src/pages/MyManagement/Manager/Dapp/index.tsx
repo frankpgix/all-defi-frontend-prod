@@ -15,11 +15,12 @@ import {
 } from '@safe-global/safe-gateway-typescript-sdk'
 
 import { isSameUrl } from '@/utils/url'
+import { useProfile } from '@/hooks/useProfile'
 // import { useNetwork } from 'wagmi'
 
 import { safeMsgSubscribe, SafeMsgEvent } from './services/safe-messages/safeMsgEvents'
 import { useAppIsLoading } from './hooks/useAppIsLoading'
-import { useAppCommunicator } from './hooks/useAppCommunicator'
+import { useAppCommunicator, CommunicatorMessages } from './hooks/useAppCommunicator'
 import { useSafeAppFromBackend } from './hooks/useSafeAppFromBackend'
 import { useSafeAppFromManifest } from './hooks/useSafeAppFromManifest'
 import { useSafePermissions } from './hooks/permissions'
@@ -27,6 +28,7 @@ import { useGetSafeInfo } from './hooks/useGetSafeInfo'
 
 import { chain } from './config/chains'
 import { hasFeature, FEATURES } from './utils/chains'
+import { onTransaction, onSign } from './utils/tools'
 
 import SafeAppIframe from './c/IFrame'
 
@@ -35,6 +37,7 @@ const allowedFeaturesList = ''
 const DappIframe: FC = () => {
   const { iframeRef, appIsLoading, isLoadingSlow, setAppIsLoading } = useAppIsLoading()
   const [appUrl, setAppUrl] = useState('https://app.uniswap.com/')
+  const { signer } = useProfile()
   const chainId = '42161'
   // const { chain, chains } = useNetwork()
   // console.log(chain, chains)
@@ -64,7 +67,7 @@ const DappIframe: FC = () => {
   }, [appUrl, iframeRef, setAppIsLoading])
 
   const communicator = useAppCommunicator(iframeRef, remoteApp || safeAppFromManifest, chain, {
-    onConfirmTransactions: (
+    onConfirmTransactions: async (
       txs: BaseTransaction[],
       requestId: RequestId,
       params?: SendTransactionRequestParams
@@ -76,15 +79,23 @@ const DappIframe: FC = () => {
         txs: txs,
         params: params
       }
-      setCurrentRequestId(requestId)
+      console.log(111222, data)
+      const safeTxHash = await onTransaction(txs, safeAddress, signer)
+      // setCurrentRequestId(requestId)
+      communicator?.send({ safeTxHash }, requestId)
       // setTxFlow(<SafeAppsTxFlow data={data} />, onTxFlowClose)
     },
-    onSignMessage: (
+    onSignMessage: async (
       message: string | EIP712TypedData,
       requestId: string,
       method: Methods.signMessage | Methods.signTypedMessage,
       sdkVersion: string
     ) => {
+      console.log(123456, message, 'onSignMessage')
+      const signature = await onSign(message, safeAddress, signer)
+      // onSign()
+      // communicator?.send(CommunicatorMessages.REJECT_TRANSACTION_MESSAGE, requestId, true)
+      communicator?.send({ signature }, requestId)
       // const isOffChainSigningSupported = isOffchainEIP1271Supported(safe, chain, sdkVersion)
       // const signOffChain =
       //   isOffChainSigningSupported && !onChainSigning && !!settings.offChainSigning
