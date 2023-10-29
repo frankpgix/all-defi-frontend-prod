@@ -9,6 +9,7 @@ import Button from '@@/common/Button'
 import CheckBox from '@@/common/Form/CheckBox'
 import 'swiper/css'
 import 'swiper/css/pagination'
+import { MANAGER_UPLODAD_HISTORICAL_DATA_URL } from '@/config'
 
 interface Props {
   onConfirm: () => void
@@ -18,7 +19,7 @@ interface Props {
 
 const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
   // const docUrl = 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/'
-  const formUrl = 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/'
+  const formUrl = MANAGER_UPLODAD_HISTORICAL_DATA_URL
   const termsUrl = 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/'
 
   const [isChecked, setIsChecked] = useState(false)

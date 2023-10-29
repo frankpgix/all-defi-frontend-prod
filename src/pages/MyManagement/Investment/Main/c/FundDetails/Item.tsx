@@ -49,6 +49,7 @@ const FundItem: FC<Props> = ({
   const [infoStatus2, setInfoStatus2] = useState<boolean>(false)
   const currReturn = useMemo(
     () => BN(fund.data.roe).times(fund.data.shares).div(100).toNumber(),
+    // () => BN(fund.data.roe).times(fund.data.shares).toNumber(),
     [fund.data.roe, fund.data.shares]
   )
 
