@@ -10,12 +10,13 @@ interface Props {
   title?: string
   width?: string
   show: boolean
+  animation?: boolean
   onClose?: () => void
   children: ReactNode
   className?: string
 }
 
-const DialogWrap: FC<Props> = ({ title, width, show, onClose, children, className }) => {
+const DialogWrap: FC<Props> = ({ title, width, show, onClose, children, className, animation }) => {
   const closeIcon = <span />
   const { mobile } = useContext(MobileContext)
   if (!show) return null
@@ -25,7 +26,7 @@ const DialogWrap: FC<Props> = ({ title, width, show, onClose, children, classNam
       width={mobile ? px2rem(343) : width}
       closeIcon={closeIcon}
       closable={Boolean(onClose)}
-      animation="zoom"
+      animation={animation ? '' : 'zoom'}
       maskAnimation="fade"
       title={title}
       visible={show}

@@ -176,7 +176,7 @@ export const useManageFundVerifyList = () => {
 
   useEffect(() => {
     const now = +new Date()
-    if (now - lastChangeTime > 1000 * 60 * 60 * 24) {
+    if (now - lastChangeTime > 1000 * 60 * 60 * 24 * 15) {
       setCreateVerifyList([], 0)
       setUpdateVerifyList([], 0)
     }

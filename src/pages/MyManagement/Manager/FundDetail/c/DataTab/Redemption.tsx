@@ -23,7 +23,9 @@ const Redemption: FC<Props> = ({ fundAddress }) => {
       title: 'Amount',
       dataIndex: 'amount',
       // render: (value: number) => <span>{formatNumber(value, 2, '0,0.00')} USDC</span>
-      render: (value: number, row: any) => <TokenValue value={value} token={row.token} size="mini" format="0,0.00" />
+      render: (value: number, row: any) => (
+        <TokenValue value={value} token={row.token} size="mini" format="0,0.00" />
+      )
     },
     {
       title: 'Address',
@@ -32,7 +34,7 @@ const Redemption: FC<Props> = ({ fundAddress }) => {
     },
     {
       title: 'Time',
-      dataIndex: 'timestamp',
+      dataIndex: 'time',
       render: (value: number) => dayjs(value).format('MMM DD, YYYY hh:mm:ss A')
     }
   ]

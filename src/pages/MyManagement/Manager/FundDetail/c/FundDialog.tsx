@@ -39,7 +39,7 @@ const FundDialog: FC<Props> = ({ fundAddress, name }) => {
       }
     })
 
-    console.log('data', data, status)
+    // console.log('data', data, status)
     setDialogStatus(status)
     setDialogData(items)
   }, [data, loading, fundAddress])
