@@ -24,7 +24,11 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
   const [isChecked, setIsChecked] = useState(false)
   if (!show) return null
   return (
-    <Dialog show={show} className="web-manage-create-dialog-layout">
+    <Dialog
+      show={show}
+      className="web-manage-create-dialog-layout animate__animated animate__zoomIn"
+      animation
+    >
       <div className="web-manage-create-dialog">
         <main>
           <header>
