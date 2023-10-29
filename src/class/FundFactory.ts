@@ -17,7 +17,7 @@ class FundFactory {
       block - 60 * 60 * 24 * 2 * 15,
       block
     )
-    console.log(transferEvents, 'transferEvents')
+    // console.log(transferEvents, 'transferEvents')
     const getName = (enCode: `0x${string}`): string => {
       if (vType === 0) {
         return String(decodeAbiParameters([{ type: 'string', name: 'name' }], enCode)[0])
@@ -34,7 +34,7 @@ class FundFactory {
         data: getName(item.args.data)
       }))
       .filter((item: any) => item.type === vType && manager.toLocaleLowerCase() === item.manager)
-    console.log(data)
+    // console.log(data)
     return data
   }
 }

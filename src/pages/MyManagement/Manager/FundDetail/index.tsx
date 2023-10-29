@@ -54,7 +54,7 @@ const FundDetail: FC = () => {
       const breach = await getFundBreachDetail(fundAddress)
       if (breach) setBreach(breach)
       setLoading(false)
-      // console.log(breach, 3333)
+      console.log(base, data, 3333)
     }
   }, [fundAddress, signer]) // eslint-disable-line
 

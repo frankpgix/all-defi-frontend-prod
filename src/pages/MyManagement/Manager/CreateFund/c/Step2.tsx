@@ -27,7 +27,7 @@ interface Props {
 
 const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
   const [selectIndex, setSelectIndex] = useState<number[]>([])
-  const [minAmount, setMinAmount] = useState('')
+  const [minAmount, setMinAmount] = useState('0.1')
   const [maxAmount, setMaxAmount] = useState('')
   const [baseTokenAddress, setBaseTokenAddress] = useState(baseTokenOptions[0].value)
   const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])

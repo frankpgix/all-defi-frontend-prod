@@ -39,6 +39,7 @@ class AllProtocol {
         getUnitAmount(String(minAmount), decimals),
         getUnitAmount(String(maxAmount), decimals)
       ]
+      // console.log(subscriptionLimit, decimals)
       const contract = getAllProtocolContract(signer)
       // console.log({ name, symbol, desc, managerName, derivatives, stakeAmount, subscriptionLimit })
       const approve = await setAllowance(
