@@ -27,7 +27,7 @@ interface Props {
 
 const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
   const [selectIndex, setSelectIndex] = useState<number[]>([])
-  const [minAmount, setMinAmount] = useState('0.1')
+  const [minAmount, setMinAmount] = useState('')
   const [maxAmount, setMaxAmount] = useState('')
   const [baseTokenAddress, setBaseTokenAddress] = useState(baseTokenOptions[0].value)
   const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
@@ -78,7 +78,8 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
             type="number"
             label="Minimum Deposit Amount"
             value={minAmount}
-            error={Number(minAmount) <= 0}
+            min={0.1}
+            error={Number(minAmount) < 0.1 && minAmount !== ''}
             onChange={setMinAmount}
             innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
           />

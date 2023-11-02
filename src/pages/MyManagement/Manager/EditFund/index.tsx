@@ -151,7 +151,7 @@ const EditFund: FC = () => {
             value={minAmount}
             label="Minimum Deposit Amount"
             disabled={isDisabled}
-            error={Number(minAmount) <= 0}
+            error={Number(minAmount) < 0.1 && minAmount !== ''}
             onChange={setMinAmount}
           />
           <Input
