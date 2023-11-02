@@ -5,7 +5,7 @@ import { sleep, copyText } from '@/utils/tools'
 
 interface Props {
   name: string
-  size?: 'default' | 'mini' | 'medium' | 'large'
+  size?: 'default' | 'mini' | 'medium' | 'large' | 'big'
   round?: boolean
 }
 export const FundIcon: FC<Props> = ({ name, size = 'default', round }) => {

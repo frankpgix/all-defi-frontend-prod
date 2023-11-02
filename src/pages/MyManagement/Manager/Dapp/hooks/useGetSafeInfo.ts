@@ -4,6 +4,7 @@ import { useProfile } from '@/hooks/useProfile'
 export const useGetSafeInfo = () => {
   const { fundAddress = '' } = useParams()
   const { account } = useProfile()
+  // console.log(111, 'dapp', dapp)
   const info = useMemo(
     () => () => ({
       chainId: 42161,

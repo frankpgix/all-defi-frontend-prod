@@ -5,16 +5,23 @@ import UniV3ACL from '@/class/UniV3ACL'
 import { getFundPoolContract } from '@/utils/contractHelpers'
 
 import { estimateGas } from '@/utils/practicalMethod'
-import { notify } from '@@/common/Toast'
-import { formatJsonRpcError, formatJsonRpcResult } from '@json-rpc-tools/utils'
-import { SignClientTypes } from '@walletconnect/types'
-import { utils } from 'ethers'
+// import { notify } from '@@/common/Toast'
+// import { formatJsonRpcError, formatJsonRpcResult } from '@json-rpc-tools/utils'
+// import { SignClientTypes } from '@walletconnect/types'
+// import { utils } from 'ethers'
 
-export const onTransaction = async (txs: any, fundAddress: string, signer: any) => {
+export const onTransaction = async (
+  txs: any,
+  fundAddress: string,
+  signer: any,
+  createNotify: any
+) => {
   // const { id, topic, params } = data
   try {
     const transaction = txs[0]
+    // console.log(transaction)
     const contract = getFundPoolContract(fundAddress, signer)
+    // console.log(JSON.stringify([transaction.to, transaction.data, transaction?.value || 0]))
     const gasLimit = await estimateGas(contract, 'executeTransaction', [
       transaction.to,
       transaction.data,
@@ -31,7 +38,7 @@ export const onTransaction = async (txs: any, fundAddress: string, signer: any) 
 
     const { transactionHash } = await response.wait()
 
-    console.log('transactionHash', transactionHash)
+    // console.log('transactionHash', transactionHash)
 
     return transactionHash
 
@@ -42,12 +49,8 @@ export const onTransaction = async (txs: any, fundAddress: string, signer: any) 
     //   response: result
     // })
   } catch (error: any) {
-    // const result = formatJsonRpcError(id, error?.reason)
-    // signClient.respond({
-    //   topic,
-    //   response: result
-    // })
-    notify.error(error?.reason, false)
+    createNotify({ content: error?.reason, type: 'error' })
+    return null
   }
 }
 
@@ -85,12 +88,12 @@ export const onSign = async (data: any, fundAddress: string, signer: any) => {
   // })
 }
 
-function getSignTypedDataParamsData(params: string[]) {
-  const data = params.filter((p) => !utils.isAddress(p))[0]
+// function getSignTypedDataParamsData(params: string[]) {
+//   const data = params.filter((p) => !utils.isAddress(p))[0]
 
-  if (typeof data === 'string') {
-    return JSON.parse(data)
-  }
+//   if (typeof data === 'string') {
+//     return JSON.parse(data)
+//   }
 
-  return data
-}
+//   return data
+// }

@@ -92,6 +92,7 @@ export const useAppCommunicator = (
   }, [chain])
 
   useEffect(() => {
+    if (!iframeRef) return
     let communicatorInstance: AppCommunicator
 
     const initCommunicator = (
@@ -138,6 +139,8 @@ export const useAppCommunicator = (
   // We don't need to unsubscribe from the events because there can be just one subscription
   // per event type and the next effect run will simply replace the handlers
   useEffect(() => {
+    if (!communicator) return
+
     communicator?.on(Methods.getTxBySafeTxHash, (msg) => {
       const { safeTxHash } = msg.data.params as GetTxBySafeTxHashParams
 

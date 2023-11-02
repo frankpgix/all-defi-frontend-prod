@@ -1,4 +1,5 @@
 import React, { FC, useCallback, useState, useEffect } from 'react'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import type {
   AddressBookItem,
   BaseTransaction,
@@ -10,15 +11,18 @@ import type {
 import { Methods } from '@safe-global/safe-apps-sdk'
 import {
   getBalances,
-  getTransactionDetails,
-  getSafeMessage
+  getTransactionDetails
+  // getSafeMessage
 } from '@safe-global/safe-gateway-typescript-sdk'
 
 import { isSameUrl } from '@/utils/url'
 import { useProfile } from '@/hooks/useProfile'
+import { useNotify } from '@/hooks/useNotify'
 // import { useNetwork } from 'wagmi'
 
-import { safeMsgSubscribe, SafeMsgEvent } from './services/safe-messages/safeMsgEvents'
+import Loading from '@@/common/Loading'
+
+// import { safeMsgSubscribe, SafeMsgEvent } from './services/safe-messages/safeMsgEvents'
 import { useAppIsLoading } from './hooks/useAppIsLoading'
 import { useAppCommunicator, CommunicatorMessages } from './hooks/useAppCommunicator'
 import { useSafeAppFromBackend } from './hooks/useSafeAppFromBackend'
@@ -34,9 +38,18 @@ import SafeAppIframe from './c/IFrame'
 
 const allowedFeaturesList = ''
 
+let init = true
+
 const DappIframe: FC = () => {
+  const [searchParams] = useSearchParams()
+  const nav = useNavigate()
+  const { createNotify } = useNotify()
+  // const [init, setInit] = useState(true)
+
+  const appUrl = searchParams.get('dapp') ?? ''
+  // console.log()
   const { iframeRef, appIsLoading, isLoadingSlow, setAppIsLoading } = useAppIsLoading()
-  const [appUrl, setAppUrl] = useState('https://app.uniswap.com/')
+  // const [appUrl, setAppUrl] = useState('https://app.aave.com/')
   const { signer } = useProfile()
   const chainId = '42161'
   // const { chain, chains } = useNetwork()
@@ -44,17 +57,17 @@ const DappIframe: FC = () => {
   const [settings, setSettings] = useState<SafeSettings>({
     offChainSigning: true
   })
-  const [currentRequestId, setCurrentRequestId] = useState<RequestId | undefined>()
+  // const [currentRequestId, setCurrentRequestId] = useState<RequestId | undefined>()
   const [remoteApp, , isBackendAppsLoading] = useSafeAppFromBackend(appUrl, chainId)
   const { safeApp: safeAppFromManifest, isLoading } = useSafeAppFromManifest(appUrl || '', chainId)
   const { safeAddress } = useGetSafeInfo()()
 
   const {
     getPermissions,
-    hasPermission,
-    permissionsRequest,
-    setPermissionsRequest,
-    confirmPermissionRequest
+    // hasPermission,
+    // permissionsRequest,
+    setPermissionsRequest
+    // confirmPermissionRequest
   } = useSafePermissions()
 
   const onIframeLoad = useCallback(() => {
@@ -79,10 +92,14 @@ const DappIframe: FC = () => {
         txs: txs,
         params: params
       }
-      console.log(111222, data)
-      const safeTxHash = await onTransaction(txs, safeAddress, signer)
+      console.log(111222, data, safeAddress, signer)
+      const safeTxHash = await onTransaction(txs, safeAddress, signer, createNotify)
       // setCurrentRequestId(requestId)
-      communicator?.send({ safeTxHash }, requestId)
+      if (safeTxHash) {
+        communicator?.send({ safeTxHash }, requestId)
+      } else {
+        communicator?.send(CommunicatorMessages.REJECT_TRANSACTION_MESSAGE, requestId, true)
+      }
       // setTxFlow(<SafeAppsTxFlow data={data} />, onTxFlowClose)
     },
     onSignMessage: async (
@@ -182,21 +199,21 @@ const DappIframe: FC = () => {
   })
 
   useEffect(() => {
-    const unsubscribe = safeMsgSubscribe(
-      SafeMsgEvent.SIGNATURE_PREPARED,
-      ({ messageHash, requestId, signature }) => {
-        if (requestId && currentRequestId === requestId) {
-          communicator?.send({ messageHash, signature }, requestId)
-        }
-      }
-    )
+    if ((!appUrl || !safeAddress) && init) {
+      init = false
+      // setInit(false)
+      createNotify({ content: 'Fund address error or Dapp url error', type: 'error' })
+      nav(-1)
+    }
+  }, [appUrl, safeAddress])
 
-    return unsubscribe
-  }, [communicator, currentRequestId])
+  if (!appUrl || !safeAddress) {
+    return null
+  }
 
   return (
     <>
-      {/* <SafeAppIframe appUrl="https://app.uniswap.com/" allowedFeaturesList="" /> */}
+      <Loading type="fixed" show={appIsLoading} />
       <SafeAppIframe
         appUrl={appUrl}
         allowedFeaturesList={allowedFeaturesList}

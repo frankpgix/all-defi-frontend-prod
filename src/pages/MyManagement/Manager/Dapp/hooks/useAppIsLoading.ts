@@ -27,7 +27,7 @@ export const useAppIsLoading = (): UseAppIsLoadingReturnType => {
       clearTimeout(errorTimer.current)
     }
 
-    if (appIsLoading) {
+    if (appIsLoading && !iframeRef) {
       timer.current = window.setTimeout(() => {
         setIsLoadingSlow(true)
       }, APP_SLOW_LOADING_WARNING_TIMEOUT)
@@ -44,7 +44,7 @@ export const useAppIsLoading = (): UseAppIsLoadingReturnType => {
     return () => {
       clearTimeouts()
     }
-  }, [appIsLoading])
+  }, [appIsLoading, iframeRef])
 
   return {
     iframeRef,

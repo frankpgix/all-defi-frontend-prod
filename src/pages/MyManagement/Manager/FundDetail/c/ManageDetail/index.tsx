@@ -30,7 +30,7 @@ import TokenValue from '@@/common/TokenValue'
 // import Popper from '@@/common/Popper'
 
 import FundSettleButton from '../FundSettleButton'
-import Dapp from '@@/web/Dapp'
+import DappTab from './DappTab'
 
 import {
   CountLayout,
@@ -259,7 +259,9 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
                 <Button to={`/manage/manager/fund-edit/${fundAddress}`}>
                   {[-1, 2].includes(upData.verifyStatus) ? 'Reset policies' : 'UNDER REVIEW'}
                 </Button>
-                <Button to={`/manage/manager/dapp/${fundAddress}`}>dapp test</Button>
+                {/* <Button to={`/manage/manager/dapp/${fundAddress}?dapp=https://app.uniswap.com/`}>
+                  dapp test
+                </Button> */}
               </>
             )}
           </SectionButtons>
@@ -563,7 +565,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           </SectionLayout>
         </TabPanel>
         <TabPanel>
-          <Dapp base={base} data={data} />
+          <DappTab fundAddress={fundAddress} derivatives={base.derivatives} />
         </TabPanel>
       </Tabs>
     </>

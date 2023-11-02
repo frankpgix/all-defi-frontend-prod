@@ -204,7 +204,7 @@ export interface FundBaseProps {
   managerName: string
   managerFeePercent: number
   platFeePercent: number
-  derivatives: string[]
+  derivatives: `0x${string}`[]
   subscriptionMinLimit: number
   subscriptionMaxLimit: number
 }
