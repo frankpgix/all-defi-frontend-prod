@@ -57,7 +57,7 @@ const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress 
     // console.log(val, isNaN(Number(val)))
   }
   const isDisabled = useMemo(() => !amount || Number(amount) === 0, [amount])
-  const isErrorValue = useMemo(() => Number(amount) < 0.1 && amount !== '', [amount])
+  const isErrorValue = useMemo(() => Number(amount) < 1 && amount !== '', [amount])
   return (
     <>
       <BlueLineSection
@@ -78,7 +78,7 @@ const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress 
             type="number"
           >
             {isErrorValue ? (
-              <p className="fall">Minimum staking amount 0.1 ALL</p>
+              <p className="fall">Minimum staking amount 1 ALL</p>
             ) : (
               <p>ALL Token Balance: {balance.ALL}</p>
             )}

@@ -48,15 +48,32 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
       baseTokenAddress
     })
   }
+  const minAmountNumber = useMemo(() => {
+    const zero = [...new Array(baseToken.precision - 1)].map(() => '0').join('')
+    return Number(`0.${zero}1`)
+  }, [baseToken.precision])
 
-  const error = useMemo(
-    () => Number(maxAmount) <= Number(minAmount) && Number(maxAmount) !== 0,
+  const minAmountError = useMemo(
+    () => Number(minAmount) < minAmountNumber && minAmount !== '',
+    [minAmount, minAmountNumber]
+  )
+  const maxAmountError = useMemo(
+    () => Number(maxAmount) <= Number(minAmount) && maxAmount !== '',
     [minAmount, maxAmount]
   )
   const isDisabled = useMemo(
-    () => selectIndex.length === 0 || !minAmount || Number(minAmount) === 0 || !maxAmount || error,
-    [selectIndex, minAmount, maxAmount, error]
+    () =>
+      selectIndex.length === 0 ||
+      !minAmount ||
+      Number(minAmount) === 0 ||
+      !maxAmount ||
+      maxAmountError ||
+      minAmountError,
+    [selectIndex, minAmount, maxAmount, maxAmountError, minAmountError]
   )
+
+  const onBaseTokenChange = (address: number | string) => setBaseTokenAddress(String(address))
+
   return (
     <>
       <BlueLineSection
@@ -69,7 +86,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
           <Select
             label="Denomination Assets"
             value={baseTokenAddress}
-            onChange={(val) => setBaseTokenAddress(String(val))}
+            onChange={onBaseTokenChange}
             objOptions={baseTokenOptions}
           />
         </div>
@@ -78,8 +95,8 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
             type="number"
             label="Minimum Deposit Amount"
             value={minAmount}
-            min={0.1}
-            error={Number(minAmount) < 0.1 && minAmount !== ''}
+            min={minAmountNumber}
+            error={minAmountError}
             onChange={setMinAmount}
             innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
           />
@@ -88,7 +105,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
             label="Maximum Deposit Amount"
             value={maxAmount}
             onChange={setMaxAmount}
-            error={error}
+            error={maxAmountError}
             maxNumber={10000000000}
             innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
           />

@@ -5,7 +5,7 @@ import Token from '@/class/Token'
 import { getFundPoolContract } from '@/utils/contractHelpers'
 import { getUnitAmount } from '@/utils/tools'
 import { estimateGas, setAllowance } from '@/utils/practicalMethod'
-import { getacUSDCAddress } from '@/utils/addressHelpers'
+// import { getacUSDCAddress } from '@/utils/addressHelpers'
 
 import AllProtocol from './AllProtocol'
 
@@ -19,7 +19,7 @@ class FundPool {
     const contract = getFundPoolContract(fundAddress)
     try {
       const response: any = await contract.baseInfo()
-      return calcFundBase(response)
+      return calcFundBase(response, fundAddress)
     } catch (error) {
       console.info(error)
       return null

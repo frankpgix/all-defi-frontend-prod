@@ -209,7 +209,7 @@ export interface FundBaseProps {
   subscriptionMaxLimit: number
 }
 
-export const calcFundBase = (item: any): FundBaseProps => {
+export const calcFundBase = (item: any, fundAddress?: string): FundBaseProps => {
   // console.log(1234, item)
   const baseTokenObj = getTokenByAddress(item.baseToken)
   const decimals = baseTokenObj.decimals
@@ -219,7 +219,7 @@ export const calcFundBase = (item: any): FundBaseProps => {
   return {
     baseToken: item.baseToken,
     acToken: item.acToken,
-    address: item.fundId,
+    address: fundAddress ?? '',
     createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
     name: item.name,
     symbol: item.symbol,

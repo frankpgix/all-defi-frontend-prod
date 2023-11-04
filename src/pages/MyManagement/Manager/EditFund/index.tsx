@@ -8,7 +8,8 @@ import FundPool from '@/class/FundPool'
 import AllProtocol from '@/class/AllProtocol'
 import FundReader from '@/class/FundReader'
 import { ProductProps } from '@/config/products'
-import { getDecimalsByAddress } from '@/config/tokens'
+import { getTokenByAddress } from '@/config/tokens'
+// import { baseTokenOptions, getTokenByAddress } from '@/config/tokens'
 import { CONTACT_US_URL } from '@/config'
 import { useProfile } from '@/hooks/useProfile'
 import { useNotify } from '@/hooks/useNotify'
@@ -21,7 +22,7 @@ import Loading from '@@/common/Loading'
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'
 import { Input } from '@@/common/Form'
-import { useMeasure } from 'react-use'
+// import { useMeasure } from 'react-use'
 // import DataItem from '@@/common/DataItem'
 
 const EditFund: FC = () => {
@@ -42,19 +43,28 @@ const EditFund: FC = () => {
   const [selectDerivative, setSelectDerivative] = useState<string[]>([])
   const [minAmount, setMinAmount] = useState('')
   const [maxAmount, setMaxAmount] = useState('')
+  const [minAmountNumber, setMinAmountNumber] = useState(0.0001)
   const [decimals, setDecimals] = useState(18)
   const [verifyStatus, setVerifyStatus] = useState(2)
+
+  const calcAmountNumber = (precision: number): number => {
+    const zero = [...new Array(precision - 1)].map(() => '0').join('')
+    return Number(`0.${zero}1`)
+  }
 
   const getData = useCallback(async () => {
     if (fundAddress) {
       setLoading(true)
       const res = await getFundBase(fundAddress)
+      // console.log(res, 'res')
       const p = await getDerivativeList()
       setDerivativeList(p)
       if (res) {
         setOldDerivative(res.derivatives)
-        const decimals = getDecimalsByAddress(res.baseToken)
-        setDecimals(decimals)
+        const baseToken = getTokenByAddress(res.baseToken)
+        setDecimals(baseToken.decimals)
+        setMinAmountNumber(calcAmountNumber(baseToken.precision))
+
         const upRes = await getFundUpdatingData(fundAddress, res.baseToken)
         if (upRes) {
           setVerifyStatus(upRes.verifyStatus)
@@ -110,6 +120,22 @@ const EditFund: FC = () => {
 
   const isDisabled = useMemo(() => [0, 1].includes(verifyStatus), [verifyStatus])
 
+  const minAmountError = useMemo(
+    () => Number(minAmount) < minAmountNumber && minAmount !== '',
+    [minAmount, minAmountNumber]
+  )
+  const maxAmountError = useMemo(
+    () => Number(maxAmount) <= Number(minAmount) && maxAmount !== '',
+    [minAmount, maxAmount]
+  )
+
+  const disabledConfirm = useMemo(() => {
+    if (derivativeList.length === 0) return true
+    if (minAmountError) return true
+    if (maxAmountError) return true
+    return false
+  }, [derivativeList, maxAmountError, minAmountError])
+
   const onSelect = (item: string) => {
     if (!isDisabled) {
       if (selectDerivative.includes(item)) {
@@ -151,13 +177,14 @@ const EditFund: FC = () => {
             value={minAmount}
             label="Minimum Deposit Amount"
             disabled={isDisabled}
-            error={Number(minAmount) < 0.1 && minAmount !== ''}
+            error={minAmountError}
             onChange={setMinAmount}
           />
           <Input
             type="number"
             value={maxAmount}
             label="Maximum Deposit Amount"
+            error={maxAmountError}
             disabled={isDisabled}
             onChange={setMaxAmount}
           />
@@ -177,7 +204,9 @@ const EditFund: FC = () => {
 
         <footer>
           {[-1, 2].includes(verifyStatus) ? (
-            <Button onClick={onConfirm}>confirm</Button>
+            <Button disabled={disabledConfirm} onClick={onConfirm}>
+              confirm
+            </Button>
           ) : (
             <>
               <Button outline onClick={() => navigate(-1)}>
