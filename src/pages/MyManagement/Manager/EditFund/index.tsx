@@ -18,6 +18,7 @@ import { useNotify } from '@/hooks/useNotify'
 
 import BlueLineSection from '@@/web/BlueLineSection'
 import Loading from '@@/common/Loading'
+import { TokenIcon } from '@@/common/TokenUnit'
 
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'
@@ -38,19 +39,29 @@ const EditFund: FC = () => {
   const [derivativeList, setDerivativeList] = useState<ProductProps[]>([])
 
   const [managerName, setManagerName] = useState('')
+  const [baseTokenAddress, setBaseTokenAddress] = useState('')
   const [desc, setDesc] = useState('')
   const [oldDerivative, setOldDerivative] = useState<string[]>([])
   const [selectDerivative, setSelectDerivative] = useState<string[]>([])
   const [minAmount, setMinAmount] = useState('')
   const [maxAmount, setMaxAmount] = useState('')
-  const [minAmountNumber, setMinAmountNumber] = useState(0.0001)
-  const [decimals, setDecimals] = useState(18)
+  // const [minAmountNumber, setMinAmountNumber] = useState(0.0001)
+  // const [decimals, setDecimals] = useState(18)
   const [verifyStatus, setVerifyStatus] = useState(2)
 
-  const calcAmountNumber = (precision: number): number => {
-    const zero = [...new Array(precision - 1)].map(() => '0').join('')
+  const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
+
+  const baseTokenName = useMemo(
+    () => (baseToken.name === 'WETH' ? 'ETH' : baseToken.name),
+    [baseToken.name]
+  )
+
+  const minAmountNumber = useMemo(() => {
+    const zero = [...new Array(baseToken.precision - 1)].map(() => '0').join('')
     return Number(`0.${zero}1`)
-  }
+  }, [baseToken.precision])
+
+  const decimals = useMemo(() => baseToken.decimals, [baseToken.decimals])
 
   const getData = useCallback(async () => {
     if (fundAddress) {
@@ -61,9 +72,10 @@ const EditFund: FC = () => {
       setDerivativeList(p)
       if (res) {
         setOldDerivative(res.derivatives)
-        const baseToken = getTokenByAddress(res.baseToken)
-        setDecimals(baseToken.decimals)
-        setMinAmountNumber(calcAmountNumber(baseToken.precision))
+        setBaseTokenAddress(res.baseToken)
+        // const baseToken = getTokenByAddress(res.baseToken)
+        // setDecimals(baseToken.decimals)
+        // setMinAmountNumber(calcAmountNumber(baseToken.precision))
 
         const upRes = await getFundUpdatingData(fundAddress, res.baseToken)
         if (upRes) {
@@ -179,7 +191,14 @@ const EditFund: FC = () => {
             disabled={isDisabled}
             error={minAmountError}
             onChange={setMinAmount}
-          />
+            innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
+          >
+            {minAmountError && (
+              <p className="fall">
+                Minimum deposit amount {minAmountNumber} {baseTokenName}
+              </p>
+            )}
+          </Input>
           <Input
             type="number"
             value={maxAmount}
@@ -187,6 +206,7 @@ const EditFund: FC = () => {
             error={maxAmountError}
             disabled={isDisabled}
             onChange={setMaxAmount}
+            innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
           />
         </div>
         <h3>select protocol allowed</h3>

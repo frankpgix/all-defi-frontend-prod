@@ -71,7 +71,10 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
       minAmountError,
     [selectIndex, minAmount, maxAmount, maxAmountError, minAmountError]
   )
-
+  const baseTokenName = useMemo(
+    () => (baseToken.name === 'WETH' ? 'ETH' : baseToken.name),
+    [baseToken.name]
+  )
   const onBaseTokenChange = (address: number | string) => setBaseTokenAddress(String(address))
 
   return (
@@ -99,7 +102,13 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
             error={minAmountError}
             onChange={setMinAmount}
             innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
-          />
+          >
+            {minAmountError && (
+              <p className="fall">
+                Minimum deposit amount {minAmountNumber} {baseTokenName}
+              </p>
+            )}
+          </Input>
           <Input
             type="number"
             label="Maximum Deposit Amount"
