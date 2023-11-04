@@ -13,7 +13,7 @@ import { getTokenByAddress } from '@/config/tokens'
 import { CONTACT_US_URL } from '@/config'
 import { useProfile } from '@/hooks/useProfile'
 import { useNotify } from '@/hooks/useNotify'
-
+// import { sleep } from '@/utils/tools'
 // import { notify } from '@@/common/Toast'
 
 import BlueLineSection from '@@/web/BlueLineSection'
@@ -26,6 +26,8 @@ import { Input } from '@@/common/Form'
 // import { useMeasure } from 'react-use'
 // import DataItem from '@@/common/DataItem'
 
+// let baseDataStr = ''
+
 const EditFund: FC = () => {
   const { getFundBase } = FundPool
   const { getFundUpdatingData } = FundReader
@@ -36,6 +38,7 @@ const EditFund: FC = () => {
   const { createNotify, updateNotifyItem } = useNotify()
 
   const [loading, setLoading] = useState(false)
+  const [isChange, setIsChange] = useState(false)
   const [derivativeList, setDerivativeList] = useState<ProductProps[]>([])
 
   const [managerName, setManagerName] = useState('')
@@ -45,6 +48,7 @@ const EditFund: FC = () => {
   const [selectDerivative, setSelectDerivative] = useState<string[]>([])
   const [minAmount, setMinAmount] = useState('')
   const [maxAmount, setMaxAmount] = useState('')
+  const [baseDataStr, setBaseDataStr] = useState('')
   // const [minAmountNumber, setMinAmountNumber] = useState(0.0001)
   // const [decimals, setDecimals] = useState(18)
   const [verifyStatus, setVerifyStatus] = useState(2)
@@ -104,24 +108,28 @@ const EditFund: FC = () => {
       }
 
       setLoading(false)
+      // await sleep(1000)
+      // console.log(JSON.stringify(calcConfirmData()))
+      // baseDataStr = JSON.stringify(calcConfirmData())
     }
   }, [getFundBase, fundAddress, getDerivativeList])
 
   useEffect(() => void getData(), [getData])
-  const onConfirm = async () => {
-    // console.log(selectDerivative)
-    if (!fundAddress || !signer) return
+  // console.log(baseDataStr)
+  const calcConfirmData = useCallback(() => {
     const delDerivative = oldDerivative.filter((item) => !selectDerivative.includes(item))
     const newDerivative = selectDerivative.filter((item) => !oldDerivative.includes(item))
     // console.log(selectDerivative, delDerivative, newDerivative)
+    return { desc, managerName, newDerivative, delDerivative, minAmount, maxAmount, decimals }
+  }, [decimals, desc, managerName, maxAmount, minAmount, oldDerivative, selectDerivative])
+  const onConfirm = async () => {
+    // console.log(selectDerivative)
+    if (!fundAddress || !signer) return
+    const data = calcConfirmData()
     // if (fundAddress) return
     const notifyId = await createNotify({ type: 'loading', content: 'Set Fund Base Info' })
 
-    const { status, msg, hash } = await updateFund(
-      fundAddress,
-      { desc, managerName, newDerivative, delDerivative, minAmount, maxAmount, decimals },
-      signer
-    )
+    const { status, msg, hash } = await updateFund(fundAddress, data, signer)
     if (status) {
       await getData()
       updateNotifyItem(notifyId, { type: 'success', hash })
@@ -142,11 +150,13 @@ const EditFund: FC = () => {
   )
 
   const disabledConfirm = useMemo(() => {
+    if (loading) return true
+    if (!isChange) return true
     if (derivativeList.length === 0) return true
     if (minAmountError) return true
     if (maxAmountError) return true
     return false
-  }, [derivativeList, maxAmountError, minAmountError])
+  }, [derivativeList, maxAmountError, minAmountError, loading, isChange])
 
   const onSelect = (item: string) => {
     if (!isDisabled) {
@@ -158,6 +168,34 @@ const EditFund: FC = () => {
     }
     // console.log(selectDerivative)
   }
+
+  useEffect(() => {
+    // console.log('isChange', isChange)
+    if (loading) return
+    if (baseDataStr === '' && managerName !== '') {
+      setBaseDataStr(JSON.stringify(calcConfirmData()))
+      return
+    }
+    // console.log('isChange1', isChange)
+    // console.log(JSON.stringify(calcConfirmData()), 2, baseDataStr)
+    if (JSON.stringify(calcConfirmData()) !== baseDataStr) {
+      setIsChange(true)
+    } else {
+      setIsChange(false)
+    }
+  }, [
+    loading,
+    desc,
+    managerName,
+    oldDerivative,
+    selectDerivative,
+    minAmount,
+    maxAmount,
+    decimals,
+    isChange,
+    calcConfirmData,
+    baseDataStr
+  ])
 
   return (
     <>
