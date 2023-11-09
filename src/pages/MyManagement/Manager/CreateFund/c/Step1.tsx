@@ -1,8 +1,9 @@
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useMemo, useState, useEffect } from 'react'
 
 import BlueLineSection from '@@/web/BlueLineSection'
 import { Input } from '@@/common/Form'
 import Button from '@@/common/Button'
+import Cache from '@/utils/cache'
 
 export interface Step1DataProps {
   name: string
@@ -29,6 +30,22 @@ const Step1: FC<Props> = ({ onConfirm, show }) => {
     [desc, managerName, name, symbol]
   )
 
+  useEffect(() => {
+    if (name || symbol || managerName || desc) {
+      Cache.set('CreateFundStep1Temp', { name, symbol, managerName, desc })
+    }
+  }, [name, symbol, managerName, desc])
+
+  useEffect(() => {
+    const createFundStep1Temp = Cache.get('CreateFundStep1Temp')
+    if (createFundStep1Temp) {
+      const { name, symbol, managerName, desc } = createFundStep1Temp
+      setName(name)
+      setSymbol(symbol)
+      setManagerName(managerName)
+      setDesc(desc)
+    }
+  }, [])
   return (
     <>
       <BlueLineSection hide={!show} className="web-manage-create-step" title="Step 1 Basic Info">

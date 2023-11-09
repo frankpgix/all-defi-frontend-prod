@@ -5,6 +5,7 @@ import AllProtocol from '@/class/AllProtocol'
 import { ProductProps } from '@/config/products'
 import { useProfile } from '@/hooks/useProfile'
 import { useNotify } from '@/hooks/useNotify'
+import Cache from '@/utils/cache'
 
 // import { notify } from '@@/common/Toast'
 
@@ -50,11 +51,13 @@ const CreateFund: FC = () => {
   useEffect(() => void getMultiple(), [getMultiple])
 
   const onStep1Confirm = (data: Step1DataProps) => {
+    // Cache.set('CreateFundStep1Temp', data)
     setStep1Data(data)
     setStepIndex(1)
   }
 
   const onStep2Confirm = (data: Step2ConfirmProps) => {
+    // Cache.set('CreateFundStep2Temp', data)
     const { addresss, minAmount, maxAmount, baseTokenAddress } = data
     setAddress(addresss)
     setMinAmount(minAmount)
@@ -64,6 +67,7 @@ const CreateFund: FC = () => {
   }
 
   const onStep3Confirm = (data: number) => {
+    // Cache.set('CreateFundStep3Temp', data)
     setStakeAmount(data)
     setStepIndex(3)
   }
@@ -87,6 +91,9 @@ const CreateFund: FC = () => {
       if (status) {
         updateNotifyItem(notifyId, { type: 'success', hash })
         setSuccDialogStatus(true)
+        Cache.rm('CreateFundStep1Temp')
+        Cache.rm('CreateFundStep2Temp')
+        Cache.rm('CreateFundStep3Temp')
       } else {
         updateNotifyItem(notifyId, { type: 'error', title: 'Create Fund', content: msg, hash })
       }

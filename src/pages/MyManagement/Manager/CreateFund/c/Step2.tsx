@@ -1,10 +1,11 @@
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useMemo, useState, useEffect } from 'react'
 import { without } from 'lodash'
 import classNames from 'classnames'
 
 import { baseTokenOptions, getTokenByAddress } from '@/config/tokens'
 import { ProductProps } from '@/config/products'
 import { Input, Select } from '@@/common/Form'
+import Cache from '@/utils/cache'
 
 import BlueLineSection from '@@/web/BlueLineSection'
 import { TokenIcon } from '@@/common/TokenUnit'
@@ -27,10 +28,14 @@ interface Props {
 
 const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
   const [selectIndex, setSelectIndex] = useState<number[]>([])
-  const [minAmount, setMinAmount] = useState('')
-  const [maxAmount, setMaxAmount] = useState('')
+  const [minAmount, setMinAmount] = useState<string | number>('')
+  const [maxAmount, setMaxAmount] = useState<string | number>('')
   const [baseTokenAddress, setBaseTokenAddress] = useState(baseTokenOptions[0].value)
   const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
+  // const addresss = useMemo(
+  //   () => compact(selectIndex.map((index: number) => derivativeList[index])),
+  //   [selectIndex]
+  // )
   const onSelect = (index: number) => {
     if (selectIndex.includes(index)) {
       setSelectIndex(without(selectIndex, index))
@@ -40,9 +45,9 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
   }
 
   const onNext = () => {
-    const selectList = selectIndex.map((index: number) => derivativeList[index])
+    const addresss = selectIndex.map((index: number) => derivativeList[index])
     onConfirm({
-      addresss: selectList,
+      addresss,
       minAmount: Number(minAmount),
       maxAmount: Number(maxAmount),
       baseTokenAddress
@@ -76,6 +81,24 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
     [baseToken.name]
   )
   const onBaseTokenChange = (address: number | string) => setBaseTokenAddress(String(address))
+
+  useEffect(() => {
+    if (selectIndex.length || minAmount || maxAmount) {
+      Cache.set('CreateFundStep2Temp', { selectIndex, minAmount, maxAmount, baseTokenAddress })
+    }
+  }, [selectIndex, minAmount, maxAmount, baseTokenAddress])
+
+  useEffect(() => {
+    const createFundStep2Temp = Cache.get('CreateFundStep2Temp')
+    if (createFundStep2Temp) {
+      const { selectIndex, minAmount, maxAmount, baseTokenAddress } = createFundStep2Temp
+
+      setBaseTokenAddress(baseTokenAddress)
+      setSelectIndex(selectIndex)
+      setMinAmount(minAmount)
+      setMaxAmount(maxAmount)
+    }
+  }, [])
 
   return (
     <>

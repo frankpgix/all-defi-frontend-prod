@@ -1,10 +1,11 @@
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useMemo, useState, useEffect } from 'react'
 import BN from 'bignumber.js'
 import { isNaN } from 'lodash'
 
 import { useTokensData } from '@/store/tokens/hooks'
 import { getTokenByAddress } from '@/config/tokens'
 import { calcDecimalsFloor } from '@/utils/tools'
+import Cache from '@/utils/cache'
 
 import BlueLineSection from '@@/web/BlueLineSection'
 import { Input, Slider } from '@@/common/Form'
@@ -58,6 +59,21 @@ const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress 
   }
   const isDisabled = useMemo(() => !amount || Number(amount) === 0, [amount])
   const isErrorValue = useMemo(() => Number(amount) < 1 && amount !== '', [amount])
+
+  useEffect(() => {
+    if (amount) {
+      Cache.set('CreateFundStep3Temp', { amount })
+    }
+  }, [amount])
+
+  useEffect(() => {
+    const createFundStep3Temp = Cache.get('CreateFundStep3Temp')
+    if (createFundStep3Temp) {
+      const { amount } = createFundStep3Temp
+      setAmount(amount)
+    }
+  }, [])
+
   return (
     <>
       <BlueLineSection
