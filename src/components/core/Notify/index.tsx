@@ -110,9 +110,15 @@ export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
           {data.hash && <ALink to={`${ETH_SCAN_URL}/tx/${data.hash}`}>View on Arbitrumscan</ALink>}
         </div>
         {data.type !== 'loading' && <div className="c-notify-item-close" onClick={onClose} />}
-        <div className="c-notify-item-line">
-          <div className="c-notify-item-line-inner"></div>
-        </div>
+        {data.type === 'loading' ? (
+          <div className="c-notify-item-line">
+            <div className="c-notify-item-line-inner"></div>
+          </div>
+        ) : (
+          <section className="c-notify-item-line">
+            <section className="c-notify-item-line-inner"></section>
+          </section>
+        )}
       </div>
     </div>
   )
