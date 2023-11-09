@@ -49,6 +49,9 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
       setValue(currValue)
       setSliderValue(val)
     }
+    if (val === 0) {
+      setValue('')
+    }
   }
 
   const onInputChange = (val: number | string) => {
@@ -97,7 +100,7 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
             placeholder="0"
             type="number"
             error={value !== '' && Number(value) === 0}
-            disabled={!isInRedeem}
+            // disabled={!isInRedeem}
           >
             <p>Redeemable Fund Shares: {maxValue}</p>
             {/* <p>Shares in wallet: {share.balance}</p>

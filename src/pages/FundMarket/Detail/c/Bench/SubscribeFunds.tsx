@@ -74,6 +74,9 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
       setValue(currValue)
       setSliderValue(val)
     }
+    if (val === 0) {
+      setValue('')
+    }
   }
 
   const onInputChange = (val: number | string) => {
@@ -123,7 +126,7 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
             placeholder="0"
             type="number"
             error={value !== '' && Number(value) === 0}
-            disabled={!isInSubscribe}
+            // disabled={!isInSubscribe}
           >
             <p>
               {acToken?.name} Balance: {acTokenBalance}
