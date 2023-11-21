@@ -144,6 +144,7 @@ const ALLOutputTipDialog: FC<{ status: boolean }> = ({ status }) => {
     <Dialog show={show} onClose={() => setShow(false)}>
       <div className="web-status-fail">
         <Image src="asset/modal-fail.png" />
+        <h4>Your staked sAll is not enough！</h4>
         <p>
           The current daily ALL output is greater than the amount of sALL you staked, please adjust
           your strategy in advance to avoid lower returns

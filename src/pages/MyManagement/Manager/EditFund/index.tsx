@@ -153,10 +153,10 @@ const EditFund: FC = () => {
     if (loading) return true
     if (!isChange) return true
     if (derivativeList.length === 0) return true
-    if (minAmountError) return true
-    if (maxAmountError) return true
+    if (minAmountError || minAmount === '') return true
+    if (maxAmountError || maxAmount === '') return true
     return false
-  }, [derivativeList, maxAmountError, minAmountError, loading, isChange])
+  }, [derivativeList, maxAmountError, minAmountError, loading, isChange, minAmount, maxAmount])
 
   const onSelect = (item: string) => {
     if (!isDisabled) {
