@@ -7,26 +7,27 @@ import classNames from 'classnames'
 const features = [
   {
     name: 'Trusted',
-    subName: "We don't need to be",
+    subName: 'DAO TREASURY MANAGEMENT IS TRUELY Decentralised',
     intro: (
       <>
-        AllDeFi is fully decentralized.
-        <br /> All assets are kept in smart contracts that allow
-        <br /> people to invest without centralized <br />
-        counterparty risk.
+        AllDeFi allows decentralised DAO <br />
+        holders to make independent DAO Treasury <br />
+        allocation decision and <br />
+        responsible for it.
       </>
     )
   },
   {
     name: 'Professional',
-    subName: 'our managers are',
+    subName: 'OUR TEAM IS ',
     intro: (
       <>
-        We bring top-tier hedge fund managers to the <br />
-        platform. All managers have to pass due <br />
-        diligence (including real name and identity
-        <br /> verification), and prove their expertise <br />
-        with a real, verified track record."
+        We bring top-tier hedge fund managers to
+        <br /> the platform to serve DAO treasury. <br />
+        All managers have to pass due diligence <br />
+        (including real name and identity verification),
+        <br /> and prove their expertise with a real,
+        <br /> verified track record.
       </>
     )
   },
@@ -34,16 +35,16 @@ const features = [
     name: 'Easy to Use',
     subName: 'our platform is',
     intro:
-      'Anyone can choose a fund that best fits their own investment profile, and invest with only a few clicks.'
+      'Any DAO holder can choose a strategy that they think will best grow DAO treasury with only a few clicks.'
   },
   {
     name: 'Transparent',
-    subName: 'our PERFORMACES ARE',
+    subName: 'PERFORMACES ARE',
     intro: (
       <>
-        Fund managers' transactions and <br />
-        performance are kept completely <br />
-        transparent, in real time.
+        Strategy managers' transactions
+        <br /> and performance are kept completely
+        <br /> transparent, in real time.
       </>
     )
   }

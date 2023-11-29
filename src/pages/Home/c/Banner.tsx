@@ -7,11 +7,10 @@ const Banner: FC = () => {
   return (
     <section className="web-home-banner">
       <main>
-        <h2>A Decentralized Asset Management Platform on Blockchain.</h2>
+        <h2>DeFi Industry DAO, From DeFi, For DeFi</h2>
         <p>
-          Decentralized, yet professional.
-          <br />
-          Invest with only professional fund managers.
+          Enjoy DAO growth by allocating DAO <br />
+          treasury to professional strategies
         </p>
         <Button to="/buy">start now</Button>
       </main>
