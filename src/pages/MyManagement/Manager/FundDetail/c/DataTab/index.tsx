@@ -14,8 +14,8 @@ const DataTab: FC<Props> = ({ fundAddress }) => {
     <Tabs className="web-manage-tab">
       <TabList>
         <Tab>record</Tab>
-        <Tab>subscription</Tab>
-        <Tab>redemption</Tab>
+        <Tab>Allocation</Tab>
+        <Tab>Withholding</Tab>
       </TabList>
       <TabPanel className="web-manage-tab-panel">
         <Record fundAddress={fundAddress} />

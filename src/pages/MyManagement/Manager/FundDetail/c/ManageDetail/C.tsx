@@ -112,8 +112,8 @@ export const SectionPercentageLine: FC<{ percent: number; remainPercent: string 
     <div className="web-manage-fund-section-percent">
       <PercentageLine size="large" value={percent} />
       <p>
-        <em>Current Fund AUM {percent}%</em>
-        <span>Fund AUM Available For Subscription {remainPercent}%</span>
+        <em>Current Vault NAV {percent}%</em>
+        <span>Capacity Available {remainPercent}%</span>
       </p>
     </div>
   )

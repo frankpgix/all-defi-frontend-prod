@@ -9,7 +9,8 @@ const NoInvest: FC = () => {
       <Image src="asset/investment-tip.png" />
       <h4>Opps, you haven't created a fund yet.</h4>
       <p>
-        Click the button below and follow the steps to complete the establishment of your first fund
+        Click the button below and follow the steps to complete the establishment of your first
+        vault
       </p>
       <Button to="/manage/manager/create">create a fund now</Button>
     </div>

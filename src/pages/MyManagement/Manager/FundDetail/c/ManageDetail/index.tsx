@@ -172,7 +172,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           <Tab>Basic</Tab>
           {/* <Tab>Revenue</Tab> */}
           <Tab>Fees</Tab>
-          <Tab>Fund</Tab>
+          <Tab>Vault</Tab>
           <Tab>Risk Control</Tab>
           <Tab>Dapp</Tab>
         </TabList>
@@ -181,7 +181,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           {/* <SectionHeader name="Basic" /> */}
           <SectionLayout col="3">
             <SectionItem
-              label="Inception Date and Time"
+              label="Founded time"
               loading={loading}
               value={dayjs(data.subscribeEndTime).format('MMM DD, YYYY hh:mm:ss A')}
             />
@@ -231,8 +231,8 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
 
           <SectionTip>
             Reset the policy requires an audit, and it will take effect in the next Epoch after the
-            audit is passed. Please note that changing the fund policy may cause users to change
-            their investment strategy and cause redemption, please modify it carefully.
+            audit is passed. Please note that changing the Vault policy may cause users to change
+            their investment strategy and cause withholding, please modify it carefully.
           </SectionTip>
           <SectionButtons>
             {upLoading || !upData ? (
@@ -397,7 +397,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             <SectionItem
               label="Unsettled Platform Fee"
               loading={loading}
-              popper="Unsettled fee to platform can be claimed when investors redeem or after 6 Epochs"
+              popper="Unsettled Platform Fee/ Tips:Unsettled fee to platform can be claimed when investors withhold or after 6 Epochs"
               value={
                 <TokenValue value={data.platFee} token={baseToken} size="mini" format="0,0.00" />
               }
@@ -420,7 +420,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
         <TabPanel>
           <SectionLayout col="2">
             <SectionItem
-              label="Pre-Settlement Date"
+              label="PRE-Settlement Date"
               loading={loading}
               value={dayjs(data.subscribeEndTime).format('MMM DD, YYYY hh:mm:ss A')}
             />
@@ -432,9 +432,9 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           </SectionLayout>
           <SectionLayout col="3">
             <SectionItem
-              label="Redeeming Amount"
+              label="Confirming Withholding Amount"
               loading={loading}
-              popper="Total amount of Shares under redemption"
+              // popper="Total amount of Shares under redemption"
             >
               {formatNumber(data.redeemingShares, 2, '0,0.00')} Shares ≈{' '}
               {/*formatNumber(BN(data.redeemingShares).times(data.sharePrice).toNumber(), 2, '$0,0.00')*/}
@@ -446,9 +446,9 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
               />
             </SectionItem>
             <SectionItem
-              label="Subscribing Amount"
+              label="Confirming Allocation Amoun"
               loading={loading}
-              popper="Total value under subscription"
+              // popper="Total value under subscription"
               value={
                 <TokenValue
                   value={data.subscribingACToken}
@@ -458,7 +458,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
                 />
               }
             />
-            <SectionItem loading={loading} label="Fund AUM Available For Subscription">
+            <SectionItem loading={loading} label="Capacity Available">
               {/*formatNumber(
                 Math.max(BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(), 0),
                 2,
@@ -514,10 +514,10 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           <SectionPercentageLine percent={percent} remainPercent={remainPercent} />
           <SectionButtons>
             <Button to={`/manage/manager/fund-stake/${fundAddress}/increase`} outline>
-              increase fund max aum limit
+              INCREASE VAULT MAX AUM LIMIT
             </Button>
             <Button to={`/manage/manager/fund-stake/${fundAddress}/reduce`}>
-              REDUCE FUND MAX AUM LIMIT
+              REDUCE VAULT MAX AUM LIMIT
             </Button>
           </SectionButtons>
         </TabPanel>
@@ -539,7 +539,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             <SectionItem
               label="Manager ALL Token Staking Ratio"
               loading={loading}
-              popper="Ratio of the fund's Max AUM Limit to the fund's current AUM. If such ratio is less than 100%, manager can not claim all the incentive fee. The Staking Ratio of the Last Epoch is calculated by the fund's Max AUM Limit divided by the fund's AUM in the last Epoch. This ratio decides whether manager can receive 100% of the incentive fee of last Epoch"
+              popper="Ratio of the vault's Max AUM Limit to the vault's current NAV. If such ratio is less than 100%, manager can not claim all the incentive fee. The Staking Ratio of the Last Epoch is calculated by the vault's Max AUM Limit divided by the vault's NAV in the last Epoch. This ratio decides whether manager can receive 100% of the incentive fee of last Epoch"
               value={`${managerALLStakingRatio}%`}
             />
           </SectionLayout>
@@ -552,7 +552,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
               value={`${currmanagerALLStakingRatio}%`}
             />
             <SectionItem
-              label="Previous Epoch Redemption Rate"
+              label="Previous Epoch withholding Rate %"
               loading={loading}
               popper="Redemption Fulfilled Ratio of last Epoch. The ratio less than 100% means there is not enough cash to meet all the redemption requests at last settlement. Redemption Fulfilled Ratio: (Available Cash Balance - Fees) / Total Redemption Value"
               value={`${data.lastRedemptionRatio}%`}

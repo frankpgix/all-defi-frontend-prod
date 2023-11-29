@@ -40,7 +40,7 @@ const Dashboard: FC<Props> = ({ fundAddress, data, base, loading }) => {
     return (
       <div className="web-manage-manager-dashboard">
         <header>
-          <h4>Fund NAV</h4>
+          <h4>Net Asset Value</h4>
           <em>
             <TokenValue value={0} token={baseToken} format="0,0.00" />
           </em>
@@ -69,7 +69,7 @@ const Dashboard: FC<Props> = ({ fundAddress, data, base, loading }) => {
   return (
     <div className="web-manage-manager-dashboard">
       <header>
-        <h4>Fund NAV</h4>
+        <h4>Net Asset Value</h4>
         <em>
           <TokenValue value={data.nav} token={baseToken} format="0,0.00" />
         </em>

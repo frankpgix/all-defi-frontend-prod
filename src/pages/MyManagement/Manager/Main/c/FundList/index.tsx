@@ -58,7 +58,7 @@ const FundList: FC = () => {
         row.status === 0 ? '-' : dayjs(value).format('MMM DD, YYYY hh:mm:ss A')
     },
     {
-      title: 'Assets To Be Redeemed',
+      title: 'Confirming Withholding',
       dataIndex: 'redeemingShares',
       width: 180,
       render: (value: number, row: FundDetailProps) => (
@@ -120,7 +120,7 @@ const FundList: FC = () => {
   return (
     <>
       <div className="web-buy-table-layout">
-        <h2>Fund List</h2>
+        <h2>Vault List</h2>
         <Table
           className="web-buy-table"
           // @ts-ignore
