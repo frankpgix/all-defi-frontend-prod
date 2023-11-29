@@ -96,17 +96,13 @@ const CountLoading: FC = () => {
           <rect x="0" y="0" rx="4" ry="4" width="150" height="30" />
         </ContentLoader>
         <section>
-          <SectionItem
-            label="Current NAV"
-            popper="Your net asset value invested in the fund, updated in real time"
-            loading={true}
-          />
+          <SectionItem label="Net Asset Value" loading={true} />
 
           <SectionItem label="Current Share Price" loading={true} />
 
           <SectionItem
             label="Shares Holding"
-            popper="Shares Holding includes a total of Fund Shares in your wallet, redeemable from AllDeFi, and staked in the mining pool"
+            popper="Shares Holding includes a total of  Shares in your wallet, withholding from vaults, or staked in the mining pool"
             loading={true}
           />
           <SectionItem label="Epoch Beginning Share Price" loading={true} />
@@ -232,11 +228,7 @@ const CountDetail: FC = () => {
         </article>
         <h3>{data[activeIndex].name}</h3>
         <section>
-          <SectionItem
-            label="Current NAV"
-            popper="Your net asset value invested in the fund, updated in real time"
-            loading={loading}
-          >
+          <SectionItem label="Net Asset Value" loading={loading}>
             <TokenValue value={activeData.nav} token={baseToken} size="mini" format="0,0.00" />
             {/*{formatNumber(data[activeIndex].data.nav, 2, '$0,0.00')}*/}
           </SectionItem>
@@ -255,7 +247,7 @@ const CountDetail: FC = () => {
           </SectionItem> */}
           <SectionItem
             label="Shares Holding"
-            popper="Shares Holding includes a total of Fund Shares in your wallet, redeemable from AllDeFi, and staked in the mining pool"
+            popper="Shares Holding includes a total of  Shares in your wallet, withholding from vaults, or staked in the mining pool"
           >
             <TokenValue
               value={activeData.shares}

@@ -34,7 +34,7 @@ const FundStatus: FC<Props> = ({ base, data, loading }) => {
       <footer className="web-fund-detail-status-footer">
         <dl>
           <dt>
-            Subscribing Funds:
+            Allocate to vault:
             {loading ? (
               <ContentLoader
                 width={120}
@@ -55,7 +55,7 @@ const FundStatus: FC<Props> = ({ base, data, loading }) => {
         </dl>
         <dl>
           <dt>
-            Redeeming Funds:
+            Withhold from vault:
             {loading ? (
               <ContentLoader
                 width={120}

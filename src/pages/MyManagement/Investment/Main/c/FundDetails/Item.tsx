@@ -105,7 +105,9 @@ const FundItem: FC<Props> = ({
               <ul>
                 <li>
                   <label>
-                    <Popper content="Fund's value under subscription">Current Subscription</Popper>
+                    <Popper content="Fund's value under subscription">
+                      Current Confirming Allocation
+                    </Popper>
                   </label>
                   <em>
                     <TokenValue
@@ -131,7 +133,9 @@ const FundItem: FC<Props> = ({
                 </li>
                 <li>
                   <label>
-                    <Popper content="Amount of Shares under redemption">Current Redemption</Popper>
+                    <Popper content="Amount of Shares under redemption">
+                      Current Confirming Withholding
+                    </Popper>
                   </label>
                   <em>
                     {formatNumber(fund.data.redeemingShares, 4, '0,0.0000')}
@@ -206,8 +210,8 @@ const FundItem: FC<Props> = ({
         show={infoStatus}
         onConfirm={() => onCancelSubscribe(fund.address)}
         onClose={() => setInfoStatus(false)}
-        title="Cancel Subscription"
-        msg={`Cancel Subscription Request of ${formatNumber(
+        title="Cancel Allocation"
+        msg={`Cancel Allocation Request of ${formatNumber(
           fund.data.subscribingACToken,
           2,
           '0,0.00'
@@ -218,11 +222,11 @@ const FundItem: FC<Props> = ({
         onConfirm={() => onCancelRedeem(fund.address)}
         onClose={() => setInfoStatus2(false)}
         title="Claim Shares"
-        msg={` Cancel Redemption Request of ${formatNumber(
+        msg={` Cancel Withholding Request of ${formatNumber(
           fund.data.redeemingShares,
           4,
           '0,0.0000'
-        )} Fund Shares`}
+        )} Vault Shares`}
       />
     </>
   )

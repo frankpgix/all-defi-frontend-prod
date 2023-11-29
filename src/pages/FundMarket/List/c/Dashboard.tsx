@@ -14,18 +14,19 @@ const Dashboard: FC = () => {
       <div className="web-fund-dashboard">
         {/*<h3>WE ARE</h3>*/}
         <h2>
-          A Decentralized Asset Management <br /> Platform on Blockchain
+          {/* A Decentralized Asset Management <br /> Platform on Blockchain */}
+          Treasury Allocation Platform <br /> &nbsp;
         </h2>
         <CountLayout col="3">
           <CountItem
-            label="Current Overall AUM"
+            label="Current Overall NAV"
             popper="Total value of AC DAO, update after settlement"
             value={formatNumber(data.aum, 2, '$0,0.00')}
             loading={loading}
           />
           <CountItem
-            label="Current Fund AUM"
-            popper="Total AUM of all the funds, update after settlement"
+            label="Current Fund NAV"
+            popper="Total NAV of all the funds, update after settlement"
             value={formatNumber(data.assetInFunds, 2, '$0,0.00')}
             loading={loading}
           />

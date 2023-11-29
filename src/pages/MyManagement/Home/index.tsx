@@ -24,11 +24,12 @@ const Home: FC = () => {
       <main>
         <hr />
         <h2>
-          Investment <br />
+          Allocation <br />
           Management
         </h2>
         <p>
-          Investors can monitor their own portfolio, manage existing funds, and invest in new funds
+          AC Token holders can monitor their allocation performance, manage and adjust their
+          allocation
         </p>
         <hr />
       </main>
@@ -56,7 +57,9 @@ const Home: FC = () => {
               Strategy <br />
               Management
             </h2>
-            <p>Whitelisted managers can create new funds, manage, and monitor established funds</p>
+            <p>
+              Whitelisted managers can create new vaults, manage, and monitor established vaults
+            </p>
             <hr />
           </main>
         </li>

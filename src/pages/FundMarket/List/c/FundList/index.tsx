@@ -41,7 +41,7 @@ const FundList: FC = () => {
       )
     },
     {
-      title: 'Fund AUM',
+      title: 'Net Asset Value',
       dataIndex: 'aum',
       render: (value: number, row: any) => (
         <TokenValue value={value} token={row.baseToken} size="mini" format="0,0.00" />
@@ -98,7 +98,7 @@ const FundList: FC = () => {
 
   return (
     <div className="web-fund-list-layout">
-      <h2>Fund Market</h2>
+      <h2>Vaults</h2>
       <Table
         // @ts-ignore
         columns={webColumns}

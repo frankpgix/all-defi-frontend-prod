@@ -16,8 +16,7 @@ const StepLine: FC<Props> = ({ data, loading }) => {
   const steps = [
     {
       label: 'Open Period',
-      popper:
-        "During the fund's open period, you can request subscription to or redemption from this fund, or cancel these requests.",
+      popper: "During the strategy's open period, you can Allocate/withhold to strategy",
       time: data.epochStartTime,
       status: 1
     },
@@ -25,7 +24,7 @@ const StepLine: FC<Props> = ({ data, loading }) => {
       label: data.epochIndex === 0 ? 'Open Period' : 'Semi-open Period',
       time: data.subscribeRedeemEndTime,
       popper:
-        "During the fund's semi-open period, you can only request subscription to this fund. Once requested, you cannot cancel.",
+        "During the strategy's semi-open period, you can only Allocate to strategy and cannot cancel",
       status: 2
     },
     {

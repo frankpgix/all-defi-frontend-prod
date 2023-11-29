@@ -23,8 +23,8 @@ const Bench: FC<Props> = ({ userData, data, getData, share, loading }) => {
       <section className="web-fund-detail-bench-layout">
         <Tabs>
           <TabList>
-            <Tab>Subscribe funds</Tab>
-            <Tab>redeem funds & claim</Tab>
+            <Tab>Allocate to vault</Tab>
+            <Tab>Withhold from vault & Claim</Tab>
           </TabList>
           <TabPanel>
             <SubscribeFunds data={data} getData={getData} />

@@ -89,7 +89,7 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
   return (
     <>
       <section className="web-fund-detail-bench">
-        <h4>Redeem Funds</h4>
+        <h4>Withhold from vault</h4>
         <div className="web-fund-detail-bench-input">
           <Input
             value={value}
@@ -102,7 +102,7 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
             error={value !== '' && Number(value) === 0}
             // disabled={!isInRedeem}
           >
-            <p>Redeemable Fund Shares: {maxValue}</p>
+            <p>Available Shares: {maxValue}</p>
             {/* <p>Shares in wallet: {share.balance}</p>
             <p>Shares in fund: {share.reserve}</p>
             <p>Shares in redeeming: {userData.redeemingShares}</p> */}

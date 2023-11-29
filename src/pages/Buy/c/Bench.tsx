@@ -112,7 +112,7 @@ const Bench: FC = () => {
 
   return (
     <>
-      <BlueLineSection title="Buy AC Tokens" className="web-buy-bench select">
+      <BlueLineSection title="Contribution" className="web-buy-bench select">
         <Input
           className="web-buy-bench-input"
           type="number"

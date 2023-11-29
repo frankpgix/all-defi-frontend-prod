@@ -88,15 +88,15 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
             )}
           </section>
           <footer>
-            <DashboardItem label="Fund NAV" loading={loading}>
+            <DashboardItem label="Net Asset Value" loading={loading}>
               <TokenValue value={data.nav} token={baseToken} size="mini" format="0,0.00" />
             </DashboardItem>
-            <DashboardItem label="Fund Inception Date" loading={loading}>
+            <DashboardItem label="Strategy Inception Date" loading={loading}>
               {dayjs(data.createTime).format('MMM DD, YYYY')}
             </DashboardItem>
             <DashboardItem
               label="Capacity Available"
-              popper="Fund's max AUM minus current AUM, which shows the available capacity of this fund."
+              popper="Balance available for allocation"
               loading={loading}
             >
               <TokenValue
@@ -114,26 +114,29 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
             </DashboardItem>
             <DashboardItem
               label="Current Epoch return %"
-              popper="The fund's profit and loss on a real-time basis, which will be reset to zero after the end of each epoch."
+              popper="The vault's profit and loss on a real-time basis, which will be reset to zero after the end of each epoch."
               loading={loading}
             >
               <RoeShow value={data.roe} subArrow />
             </DashboardItem>
             <DashboardItem
               label="Historical return"
-              popper="Cumulative profit and loss, since inception, of this fund"
+              popper="Cumulative profit and loss, since inception, of this vault"
               loading={loading}
             >
               <TokenValue value={data.historyReturn} token={baseToken} size="mini" />
             </DashboardItem>
 
-            <DashboardItem
+            <DashboardItem label="Denomination Asset" loading={loading}>
+              {baseToken.name}
+            </DashboardItem>
+            {/* <DashboardItem
               label="Incentive Rate"
               popper="Highest incentive fee ratio managers can get"
               loading={loading}
             >
               20%
-            </DashboardItem>
+            </DashboardItem> */}
           </footer>
         </section>
         <section className="web-fund-detail-dashboard-chart">

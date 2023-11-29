@@ -115,7 +115,7 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
   return (
     <>
       <section className="web-fund-detail-bench">
-        <h4>Subscribe Funds</h4>
+        <h4>Allocate to vault</h4>
         <div className="web-fund-detail-bench-input">
           <Input
             value={value}

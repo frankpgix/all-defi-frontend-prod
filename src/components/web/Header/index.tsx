@@ -30,8 +30,8 @@ const Header: FC = () => {
             All Defi
           </h1>
           <nav className="web-header-nav">
-            <NavLink to="/buy">Buy AC Token</NavLink>
-            <NavLink to="/fund-market">Fund Market</NavLink>
+            <NavLink to="/buy">Contribution</NavLink>
+            <NavLink to="/fund-market">Vaults</NavLink>
             <NavLink to="/manage">my management</NavLink>
             <NavLink to="/all-mining">ALL MINING</NavLink>
             {/* <NavLink to="/">global data</NavLink> */}

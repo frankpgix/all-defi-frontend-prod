@@ -34,15 +34,18 @@ export interface UserFundHistoryDataProps {
 }
 
 export enum ActionType {
-  Subscribe,
-  'Cancel Subscribe',
-  Redeem,
-  'Cancel Redeem',
+  Allocate,
+  'Cancel Allocate',
+  Withhold,
+  'Cancel Withhold',
   Claim,
   'Draw Share Token'
 }
 
-export const calcActionData = (item: RecordProps, funds?: FundsProps[]): UserFundHistoryDataProps => {
+export const calcActionData = (
+  item: RecordProps,
+  funds?: FundsProps[]
+): UserFundHistoryDataProps => {
   const token = getTokenByAddress(item.baseToken)
   // console.log(22222, token, item, funds)
   const action = ActionType[item.actionType] ?? '-'
@@ -68,7 +71,9 @@ export const calcActionData = (item: RecordProps, funds?: FundsProps[]): UserFun
   }
 }
 
-export const calcUserFundHistoryData = (data: UserFundHistorySourceDataProps): UserFundHistoryDataProps[] => {
+export const calcUserFundHistoryData = (
+  data: UserFundHistorySourceDataProps
+): UserFundHistoryDataProps[] => {
   const { funds = [], fundUserActions = [] } = data ?? []
   return fundUserActions.map((item) => calcActionData(item, funds))
 }
