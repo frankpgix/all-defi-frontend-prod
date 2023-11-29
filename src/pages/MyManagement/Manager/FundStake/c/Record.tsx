@@ -25,7 +25,7 @@ const Record: FC<Props> = ({ data, multiple, loading, baseToken }) => {
       render: (value: number) => formatNumber(value, 2, '0,0.00')
     },
     {
-      title: 'Updated Fund Max AUM Limit',
+      title: 'Updated Max AUM Limit',
       dataIndex: 'stakeAmount',
       render: (value: number) => {
         const num = BN(value).times(multiple).toNumber()

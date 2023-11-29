@@ -56,7 +56,7 @@ const FundStake: FC = () => {
 
   return (
     <div className="web-manage">
-      <h2>{direction} Fund Max AUM Limit</h2>
+      <h2>{direction} Vault Max AUM Limit</h2>
       <Feature direction={direction} />
       <Stake
         direction={direction}

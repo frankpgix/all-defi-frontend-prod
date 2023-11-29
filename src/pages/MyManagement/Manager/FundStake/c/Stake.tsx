@@ -124,7 +124,10 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
           <Blank />
         </>
       )}
-      <BlueLineSection className="web-manage-fund-staker" title={`${direction} Fund Max AUM Limit`}>
+      <BlueLineSection
+        className="web-manage-fund-staker"
+        title={`${direction} Vault Max AUM Limit`}
+      >
         <div className="web-manage-fund-staker-input">
           <DataItem label="current MAX AUM limit" gray>
             {fundData.realtimeAUMLimit}
@@ -147,7 +150,7 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
             )}
           </Input>
           <div className="web-manage-create-step-stake-equal"></div>
-          <DataItem label="estimated fund MAX AUM limit" gray>
+          <DataItem label="Estimated Vault Max Aum Limit" gray>
             {formatNumber(maxAum, 6, '0,0.000000')}
           </DataItem>
         </div>

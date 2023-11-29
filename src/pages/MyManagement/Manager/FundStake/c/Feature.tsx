@@ -16,20 +16,18 @@ const Feature: FC<DirectionProps> = ({ direction }) => {
       </header>*/}
       <ul>
         <li>
-          Each fund's Fund Max AUM Limit is depending on the amount of ALL staked in the reserved
-          pool.
+          Each vault's Max AUM Limit is depending on the amount of ALL staked in the reserved pool.
         </li>
         <li>
           {direction === 'reduce' ? 'Reducing the ' : 'The increase '}
           MAX AUM Limit will take effect immediately
         </li>
         <li>
-          The profit from capital that exceeds the MAX AUM Limit will not be shared with the fund
-          manager.
+          The profit from capital that exceeds the AUM limit will not be shared with the manager.
         </li>
         <li>
-          If the current NAV exceeds the fund's MAX AUM Limit, then subscriptions will be closed in
-          the next epoch.
+          If the current NAV exceeds the AUM limit, the allocation will be closed for the next
+          epoch.
         </li>
       </ul>
     </div>

@@ -46,20 +46,20 @@ const FundSelect: FC<FundSelectProps> = ({ list, onSelect, unStake }) => {
             <h4>Select Shares.</h4>
             <p>
               {unStake ? (
-                <>The list below will only show the funds you have successfully staked to.</>
+                <>The list below will only show the vaults you have successfully staked to.</>
               ) : (
                 <>
-                  The list below will show only the funds you have successfully subscribed to.
-                  <ALink to="/fund-market">You haven't subscribed to a fund yet?</ALink>
+                  The list below will show only the vaults you have successfully subscribed to.
+                  <ALink to="/fund-market">You haven't subscribed to a vault yet?</ALink>
                 </>
               )}
             </p>
           </header>
           <Input
-            label="fund name"
+            label="Vault name"
             value={keyword}
             onChange={setKeyword}
-            placeholder="Enter Fund Name or Paste contract address"
+            placeholder="Enter Vault Name or Paste contract address"
           ></Input>
           {option.length ? (
             <section>
