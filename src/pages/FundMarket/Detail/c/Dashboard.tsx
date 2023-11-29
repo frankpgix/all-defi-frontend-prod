@@ -41,7 +41,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
 
   return (
     <>
-      <header className="web-fund-detail-header">Fund Overview</header>
+      <header className="web-fund-detail-header">Vault Overview</header>
       <section className="web-fund-detail-dashboard">
         <section className="web-fund-detail-dashboard-base">
           {loading ? (
@@ -91,14 +91,10 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
             <DashboardItem label="Net Asset Value" loading={loading}>
               <TokenValue value={data.nav} token={baseToken} size="mini" format="0,0.00" />
             </DashboardItem>
-            <DashboardItem label="Strategy Inception Date" loading={loading}>
+            <DashboardItem label="Vault Inception Date" loading={loading}>
               {dayjs(data.createTime).format('MMM DD, YYYY')}
             </DashboardItem>
-            <DashboardItem
-              label="Capacity Available"
-              popper="Balance available for allocation"
-              loading={loading}
-            >
+            <DashboardItem label="Capacity Available" popper="Capacity Available" loading={loading}>
               <TokenValue
                 value={Math.max(
                   BN(data.realtimeAUMLimit)
@@ -114,14 +110,14 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
             </DashboardItem>
             <DashboardItem
               label="Current Epoch return %"
-              popper="The vault's profit and loss on a real-time basis, which will be reset to zero after the end of each epoch."
+              popper="The vault's profit and loss on real-time basis, which will be reset to zero after the end of each epoch"
               loading={loading}
             >
               <RoeShow value={data.roe} subArrow />
             </DashboardItem>
             <DashboardItem
               label="Historical return"
-              popper="Cumulative profit and loss, since inception, of this vault"
+              popper="Cumulated profit and loss since the inception of this vault"
               loading={loading}
             >
               <TokenValue value={data.historyReturn} token={baseToken} size="mini" />

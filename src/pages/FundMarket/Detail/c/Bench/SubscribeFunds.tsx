@@ -142,7 +142,7 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
             <Button onClick={onSubscribe} disabled={Number(value) <= 0 || !isInSubscribe}>
               confirm
             </Button>
-            {!isInSubscribe && <Tip>Non-Subscription Period</Tip>}
+            {!isInSubscribe && <Tip>Unauthorized operation</Tip>}
           </footer>
         </div>
       </section>

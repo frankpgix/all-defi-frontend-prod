@@ -16,7 +16,7 @@ const StepLine: FC<Props> = ({ data, loading }) => {
   const steps = [
     {
       label: 'Open Period',
-      popper: "During the strategy's open period, you can Allocate/withhold to strategy",
+      popper: "During the vault's open period, you can allocate to vault or withhold from it",
       time: data.epochStartTime,
       status: 1
     },
@@ -24,7 +24,7 @@ const StepLine: FC<Props> = ({ data, loading }) => {
       label: data.epochIndex === 0 ? 'Open Period' : 'Semi-open Period',
       time: data.subscribeRedeemEndTime,
       popper:
-        "During the strategy's semi-open period, you can only Allocate to strategy and cannot cancel",
+        "During the vault's semi-open period, you can only allocate to strategy and cannot cancel",
       status: 2
     },
     {

@@ -57,9 +57,7 @@ const Home: FC = () => {
               Strategy <br />
               Management
             </h2>
-            <p>
-              Whitelisted managers can create new vaults, manage, and monitor established vaults
-            </p>
+            <p>Whitelisted managers can create new vault, manage and monitor established vault</p>
             <hr />
           </main>
         </li>

@@ -119,7 +119,7 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
             >
               confirm
             </Button>
-            {!isInRedeem && <Tip>Non-Redemption Period</Tip>}
+            {!isInRedeem && <Tip>Unauthorized operation</Tip>}
           </footer>
         </div>
       </section>

@@ -6,7 +6,7 @@ const OnceYouBuy: FC = () => {
   return (
     <section className="web-buy-once">
       <header>
-        <h2>Once you contribute...</h2>
+        <h2>What can you do with AC token… </h2>
         <Button text to="https://pythagoras-group.gitbook.io/alldefi-whitepaper/">
           read more
         </Button>
@@ -16,7 +16,7 @@ const OnceYouBuy: FC = () => {
           <div className="web-buy-once-process-item-ball animate__animated animate__backInDown" />
           <em>STEP 1</em>
           <h3>Contribution</h3>
-          <p>Contribute to receive AC token and sALL</p>
+          <p>Buy AC token and contribute to AC DAO, receive AC Token and sALL</p>
           <div className="web-buy-once-process-item-detail">
             <div className="web-buy-once-process-item-detail-icons">
               <i>
