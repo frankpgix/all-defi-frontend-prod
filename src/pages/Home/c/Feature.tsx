@@ -35,16 +35,14 @@ const features = [
     name: 'Easy to Use',
     subName: 'our platform is',
     intro:
-      'Any DAO holder can choose a strategy that they think will best grow DAO treasury with only a few clicks.'
+      'Any DAO holder can choose a vault that they think will best grow DAO treasury with only a few clicks.'
   },
   {
     name: 'Transparent',
     subName: 'PERFORMACES ARE',
     intro: (
       <>
-        Strategy managers' transactions
-        <br /> and performance are kept completely
-        <br /> transparent, in real time.
+        Vault managers' transactions and performance are kept completely transparent, in real time.
       </>
     )
   }

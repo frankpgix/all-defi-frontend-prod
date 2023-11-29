@@ -22,7 +22,7 @@ const About: FC = () => {
           fashion.
         </p>
         <Button to="/manage/manager/create" disabled={!isManager}>
-          CREATE A STRATEGY
+          CREATE A VAULT
         </Button>
       </main>
     </section>
