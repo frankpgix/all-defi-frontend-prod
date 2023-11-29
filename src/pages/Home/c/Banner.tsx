@@ -10,7 +10,7 @@ const Banner: FC = () => {
         <h2>DeFi Industry DAO, From DeFi, For DeFi</h2>
         <p>
           Enjoy DAO growth by allocating DAO <br />
-          treasury to professional strategies
+          treasury to professional strategies.
         </p>
         <Button to="/buy">start now</Button>
       </main>
