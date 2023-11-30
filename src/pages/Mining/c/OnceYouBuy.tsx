@@ -1,22 +1,22 @@
 import React, { FC } from 'react'
 
-import Button from '@/components/common/Button'
+// import Button from '@/components/common/Button'
 import Image from '@/components/common/Image'
 const OnceYouBuy: FC = () => {
   return (
-    <section className="web-buy-once">
-      <header>
-        <h2>What can you do with AC token… </h2>
+    <section className="web-buy-once web">
+      {/* <header>
+        <h2>Once you buy...</h2>
         <Button text to="https://pythagoras-group.gitbook.io/alldefi-whitepaper/">
           read more
         </Button>
-      </header>
+      </header> */}
       <section className="web-buy-once-process">
         <div className="web-buy-once-process-item">
           <div className="web-buy-once-process-item-ball animate__animated animate__backInDown" />
           <em>STEP 1</em>
-          <h3>Buy & Contribute</h3>
-          <p>Buy AC token and contribute to AC DAO, receive AC Token and sALL</p>
+          <h3>Contribution</h3>
+          <p>Contribute to receive AC token and sALL</p>
           <div className="web-buy-once-process-item-detail">
             <div className="web-buy-once-process-item-detail-icons">
               <i>
@@ -33,8 +33,8 @@ const OnceYouBuy: FC = () => {
         <div className="web-buy-once-process-item">
           <div className="web-buy-once-process-item-ball animate__animated animate__backInDown animate__delay-1s" />
           <em>STEP 2</em>
-          <h3>Allocate</h3>
-          <p>Allocate to any vaults managed by professional managers</p>
+          <h3>vault investment</h3>
+          <p>Invest AC tokens into any vault to receive Share Token</p>
           <div className="web-buy-once-process-item-detail">
             <div className="web-buy-once-process-item-detail-icons">
               <i>
@@ -51,8 +51,8 @@ const OnceYouBuy: FC = () => {
         <div className="web-buy-once-process-item">
           <div className="web-buy-once-process-item-ball animate__animated animate__backInDown animate__delay-2s" />
           <em>STEP 3</em>
-          <h3>Reward</h3>
-          <p>Receive AC Tokens reward if vaults perform</p>
+          <h3>ALL mining</h3>
+          <p>Stake Share Token and sALL to mine ALL</p>
           <div className="web-buy-once-process-item-detail">
             <div className="web-buy-once-process-item-detail-icons">
               <i>
@@ -65,8 +65,8 @@ const OnceYouBuy: FC = () => {
         <div className="web-buy-once-process-item">
           <div className="web-buy-once-process-item-ball animate__animated animate__backInDown animate__delay-3s" />
           <em>STEP 4</em>
-          <h3>Adjust Allocation</h3>
-          <p>Withhold from vaults and reallocate if needed</p>
+          <h3>Harvest ALL</h3>
+          <p>Harvested ALL tokens can be claimed at any time</p>
           <div className="web-buy-once-process-item-detail">
             <div className="web-buy-once-process-item-detail-icons">
               <i>

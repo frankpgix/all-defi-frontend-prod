@@ -9,7 +9,7 @@ import Reward from '@/class/Reward'
 import { useProfile } from '@/hooks/useProfile'
 
 // import Loading from '@@/common/Loading'
-import Help from './c/Help'
+import OnceYouBuy from './c/OnceYouBuy'
 import Banner from './c/Banner'
 import Dashboard from './c/Dashboard'
 import Tab from './c/Tab'
@@ -44,7 +44,7 @@ const Mining: FC = () => {
   return (
     <>
       <header className="web-mining-header">All Mining</header>
-      <Help />
+      <OnceYouBuy />
 
       <Banner loading={loading} stakeSharesValue={stakeSharesValue} />
       <Dashboard stakeSharesValue={stakeSharesValue} loading={loading} />
