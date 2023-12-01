@@ -70,8 +70,8 @@ const OnceYouBuy: FC = () => {
           <div className="c-buy-once-process-item-detail">
             <div className="c-buy-once-process-item-detail-icons">
               <i>
-                <Image src="icon/buy-0.png" />
-                <span>Share Token</span>
+                <Image src="asset/loop.png" />
+                <span>Withhold</span>
               </i>
               {/* <i>
                 <Image src="icon/alltoken.png" />

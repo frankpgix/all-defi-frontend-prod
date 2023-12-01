@@ -192,7 +192,7 @@
       &:nth-child(n + 2) i {
         img {
           width: 106px;
-          height: 106px;
+          height: auto;
         }
         margin-bottom: 20px;
       }
@@ -237,11 +237,11 @@
       //   top: 268px;
       // }
       &-5 {
-        background-image: url($res + 'icon/buy-arrow-3.png');
+        background-image: url($res + 'icon/buy-arrow-0.png');
         width: 120px;
-        height: 111px;
+        height: 52px;
         left: 844px;
-        top: 210px;
+        top: 235px;
       }
     }
   }
