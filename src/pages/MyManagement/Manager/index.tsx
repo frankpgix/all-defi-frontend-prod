@@ -37,12 +37,12 @@ const Manager: FC = () => {
         ) : maxFundLimit === manageFundList?.length ? (
           <Button to="/manage/manager/create" size="mini" disabled>
             <Popper content="The number of funds you have created has reached the maximum limit">
-              CREATE VAULT
+              CREATE VAULTS
             </Popper>
           </Button>
         ) : (
           <Button to="/manage/manager/create" size="mini">
-            CREATE VAULT
+            CREATE VAULTS
           </Button>
         )}
       </h2>

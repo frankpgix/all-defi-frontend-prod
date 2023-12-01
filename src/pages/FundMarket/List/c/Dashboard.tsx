@@ -25,8 +25,8 @@ const Dashboard: FC = () => {
             loading={loading}
           />
           <CountItem
-            label="Current Fund NAV"
-            popper="Total NAV of all the funds, update after settlement"
+            label="Current Vaults NAV"
+            popper="Total NAV of all the Vaults, update after settlement"
             value={formatNumber(data.assetInFunds, 2, '$0,0.00')}
             loading={loading}
           />

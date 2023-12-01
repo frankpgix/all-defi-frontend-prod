@@ -15,8 +15,8 @@ const OnceYouBuy: FC = () => {
         <div className="web-buy-once-process-item">
           <div className="web-buy-once-process-item-ball animate__animated animate__backInDown" />
           <em>STEP 1</em>
-          <h3>Contribution</h3>
-          <p>Contribute to receive AC token and sALL</p>
+          <h3>Buy & Contribute</h3>
+          <p>Buy AC token and contribute to AC DAO, receive AC Token and sALL</p>
           <div className="web-buy-once-process-item-detail">
             <div className="web-buy-once-process-item-detail-icons">
               <i>
@@ -33,8 +33,8 @@ const OnceYouBuy: FC = () => {
         <div className="web-buy-once-process-item">
           <div className="web-buy-once-process-item-ball animate__animated animate__backInDown animate__delay-1s" />
           <em>STEP 2</em>
-          <h3>vault investment</h3>
-          <p>Invest AC tokens into any vault to receive Share Token</p>
+          <h3>Allocate</h3>
+          <p>Allocate to any vaults managed by professional managers</p>
           <div className="web-buy-once-process-item-detail">
             <div className="web-buy-once-process-item-detail-icons">
               <i>

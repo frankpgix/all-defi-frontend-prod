@@ -35,7 +35,7 @@ const FundList: FC = () => {
       )
     },
     {
-      title: 'Fund NAV',
+      title: 'Net Asset Value',
       dataIndex: 'nav',
       width: 120,
       render: (value: number, row: any) => (

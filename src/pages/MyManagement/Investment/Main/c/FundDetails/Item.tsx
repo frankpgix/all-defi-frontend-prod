@@ -105,9 +105,10 @@ const FundItem: FC<Props> = ({
               <ul>
                 <li>
                   <label>
-                    <Popper content="Fund's value under subscription">
+                    Current Confirming Allocation
+                    {/* <Popper content="Fund's value under subscription">
                       Current Confirming Allocation
-                    </Popper>
+                    </Popper> */}
                   </label>
                   <em>
                     <TokenValue
@@ -133,9 +134,10 @@ const FundItem: FC<Props> = ({
                 </li>
                 <li>
                   <label>
-                    <Popper content="Amount of Shares under redemption">
+                    Current Confirming Withholding
+                    {/* <Popper content="Amount of Shares under redemption">
                       Current Confirming Withholding
-                    </Popper>
+                    </Popper> */}
                   </label>
                   <em>
                     {formatNumber(fund.data.redeemingShares, 4, '0,0.0000')}
@@ -156,7 +158,7 @@ const FundItem: FC<Props> = ({
               </ul>
             </div>
             <div className="web-manage-investment-fund-item-data">
-              <SectionItem label="Fund NAV">
+              <SectionItem label="Net Asset Value">
                 <TokenValue value={fund.data.nav} token={acToken} size="mini" format="0,0.00" />
                 {/*{formatNumber(fund.data.navInUSD, 2, '$0,0.00')}*/}
               </SectionItem>
@@ -174,7 +176,7 @@ const FundItem: FC<Props> = ({
                 </SectionItem>
                 <SectionItem
                   label="Claimable AC Tokens"
-                  popper="Please use redemption function to claim your AC token"
+                  // popper="Please use redemption function to claim your AC token"
                 >
                   <TokenValue
                     value={fund.data.unclaimedACToken}
@@ -213,16 +215,16 @@ const FundItem: FC<Props> = ({
         title="Cancel Allocation"
         msg={`Cancel Allocation Request of ${formatNumber(
           fund.data.subscribingACToken,
-          2,
-          '0,0.00'
+          4,
+          '0,0.0000'
         )} ${acToken.name}`}
       />
       <InfoDialog
         show={infoStatus2}
         onConfirm={() => onCancelRedeem(fund.address)}
         onClose={() => setInfoStatus2(false)}
-        title="Claim Shares"
-        msg={` Cancel Withholding Request of ${formatNumber(
+        title="Cancel Withholding"
+        msg={`Cancel Withholding Request of ${formatNumber(
           fund.data.redeemingShares,
           4,
           '0,0.0000'

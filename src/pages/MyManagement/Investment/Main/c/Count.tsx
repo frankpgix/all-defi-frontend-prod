@@ -75,7 +75,7 @@ const CountLoading: FC = () => {
       </div>
       <div className="web-manage-investment-count-detail">
         <article>
-          <label>Total Investment NAV</label>
+          <label>Total Allocation NAV</label>
           <ContentLoader
             width={200}
             height={40}
@@ -223,7 +223,7 @@ const CountDetail: FC = () => {
       </div>
       <div className="web-manage-investment-count-detail">
         <article>
-          <label>Total Investment NAV</label>
+          <label>Total Allocation NAV</label>
           <em>{formatNumber(totalAsset, 2, '$0,0.00')}</em>
         </article>
         <h3>{data[activeIndex].name}</h3>

@@ -13,7 +13,7 @@ const Investment: FC = () => {
 
   return (
     <div className="web-manage">
-      <h2>Investment Management</h2>
+      <h2>Allocation Management</h2>
       {isInvest ? <NoInvest /> : <Main loading={loading} getData={getData} data={fundList} />}
     </div>
   )

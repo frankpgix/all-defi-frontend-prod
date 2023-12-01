@@ -31,8 +31,8 @@ const Step4: FC<Props> = ({ onConfirm, show, onBack, data, multiple, baseTokenAd
     <>
       <BlueLineSection hide={!show} className="web-manage-create-step" title="Step 4 Review">
         <div className="web-manage-create-step-3col">
-          <Input value={data.name} label="fund name" count maxLength={20} disabled />
-          <Input value={data.symbol} label="fund symbol" count maxLength={20} disabled />
+          <Input value={data.name} label="Vault name" count maxLength={20} disabled />
+          <Input value={data.symbol} label="Vault symbol" count maxLength={20} disabled />
           <Input value={data.managerName} label="manager name" count maxLength={20} disabled />
         </div>
         <Input
@@ -70,7 +70,7 @@ const Step4: FC<Props> = ({ onConfirm, show, onBack, data, multiple, baseTokenAd
         <div className="web-manage-create-step-1col">
           <Input
             value={maxAUM}
-            label="expected fund max aum limit"
+            label="expected max aum limit"
             disabled
             innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
           />

@@ -5,8 +5,8 @@ const nav: { name: string; list: { name: string; url: string; checkManage?: bool
       { name: 'Docs', url: 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/' },
       // { name: 'Lightpaper', url: 'https://app.alldefi.finance/' },
       { name: 'Buy AC Token', url: '/buy' },
-      { name: 'Fund Market', url: '/fund-market' },
-      { name: 'Create Fund', url: '/manage/manager/create', checkManage: true }
+      { name: 'Vaults', url: '/fund-market' },
+      { name: 'Create Vault', url: '/manage/manager/create', checkManage: true }
     ]
   },
   {

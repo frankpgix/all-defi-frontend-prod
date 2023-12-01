@@ -77,9 +77,9 @@ const DappCard: FC<DappCardType> = ({ data, fundAddress }) => {
         </div>
       </div>
       <footer className="web-dapp-card-btns">
-        <Button size="mini" outline>
+        {/* <Button size="mini" outline>
           info
-        </Button>
+        </Button> */}
         <Button size="mini" to={`/manage/manager/dapp/${fundAddress}?dapp=${data.url}`}>
           connect
         </Button>

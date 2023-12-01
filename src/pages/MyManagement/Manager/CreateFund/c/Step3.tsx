@@ -101,7 +101,7 @@ const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress 
           </Input>
           <div className="web-manage-create-step-stake-equal"></div>
           <dl className="web-manage-create-step-stake-pre">
-            <dt>Fund Max AUM Limit</dt>
+            <dt>Max AUM Limit</dt>
             <dd>
               {Number(calcDecimalsFloor(maxAUM, 6))}{' '}
               <TokenIcon size="small" name={baseToken?.name} />

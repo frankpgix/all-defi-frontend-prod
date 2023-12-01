@@ -127,8 +127,8 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
         show={infoStatus}
         onConfirm={onRedeem}
         onClose={() => setInfoStatus(false)}
-        title="Redeem Funds"
-        msg={`Will redeem ${value} Fund Share, you can claim your AC tokens anytime after final settlement of current epoch`}
+        title="Withhold From Vault"
+        msg={`Will withhold ${value} vault Share, you can claim your AC tokens anytime after final settlement of current epoch`}
       />
     </>
   )

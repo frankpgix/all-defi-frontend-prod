@@ -53,18 +53,18 @@ const Step1: FC<Props> = ({ onConfirm, show }) => {
           <Input
             value={name}
             onChange={(val) => setName(val)}
-            label="fund name"
+            label="Vault name"
             count
             maxLength={20}
-            placeholder="Enter Fund Name"
+            placeholder="Enter Vault Name"
           />
           <Input
             value={symbol}
             onChange={(val) => setSymbol(val)}
-            label="fund symbol"
+            label="Vault symbol"
             count
             maxLength={20}
-            placeholder="Enter Fund Symbol"
+            placeholder="Enter Vault Symbol"
           />
           <Input
             value={managerName}

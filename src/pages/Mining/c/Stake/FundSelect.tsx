@@ -43,14 +43,15 @@ const FundSelect: FC<FundSelectProps> = ({ list, onSelect, unStake }) => {
       <Dialog show={show} onClose={() => setShow(false)} width="670px">
         <div className="web-mining-fund-select-dialog">
           <header>
-            <h4>Select Shares.</h4>
+            <h4>Select Shares</h4>
+
             <p>
               {unStake ? (
                 <>The list below will only show the vaults you have successfully staked to.</>
               ) : (
                 <>
-                  The list below will show only the vaults you have successfully subscribed to.
-                  <ALink to="/fund-market">You haven't subscribed to a vault yet?</ALink>
+                  The list below will show only the vaults you have successfully allocated to.
+                  <ALink to="/fund-market">You haven't allocated to a vault yet?</ALink>
                 </>
               )}
             </p>

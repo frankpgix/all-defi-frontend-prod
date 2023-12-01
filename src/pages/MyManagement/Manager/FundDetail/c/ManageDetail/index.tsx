@@ -115,7 +115,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
     <>
       <CountLayout>
         <CountItem
-          label="Fund AUM"
+          label="Last Epoch NAV"
           loading={loading}
           value={<TokenValue value={data.aum} token={baseToken} size="small" format="0,0.00" />}
         />
@@ -127,7 +127,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           }
         />
         <CountItem
-          label="Expected Cash For Next Round"
+          label="Expected Cash For Next Epoch"
           popper="Required cash need to be prepared before this Epoch settlement"
           loading={loading}
           value={
@@ -397,7 +397,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             <SectionItem
               label="Unsettled Platform Fee"
               loading={loading}
-              popper="Unsettled Platform Fee/ Tips:Unsettled fee to platform can be claimed when investors withhold or after 6 Epochs"
+              popper="Unsettled fee to platform can be claimed when investors withhold or after 6 Epochs"
               value={
                 <TokenValue value={data.platFee} token={baseToken} size="mini" format="0,0.00" />
               }
@@ -446,7 +446,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
               />
             </SectionItem>
             <SectionItem
-              label="Confirming Allocation Amoun"
+              label="Confirming Allocation Amount"
               loading={loading}
               // popper="Total value under subscription"
               value={
@@ -546,7 +546,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           <SectionLayout col="3">
             <SectionItem
               label="Current Manager All Token Staking Ratio"
-              popper="The Staking Ratio of the Current Epoch is calculated by the real-time data of the fund's Max AUM Limit divided by the fund's NAV now. Manager can decide whether to stake more ALL Token in order to get 100% of the incentive fee in the next Epoch. When the Staking Ratio of the Current Epoch is less than 100%, please stake more ALL Token before end of current Epoch to sure to receive 100% of the incentive fee during settlement."
+              popper="The Staking Ratio of the Current Epoch is calculated by the real-time data of the vault's Max AUM Limit divided by the vault's NAV now. Manager can decide whether to stake more ALL Token in order to get 100% of the incentive fee in the next Epoch. When the Staking Ratio of the Current Epoch is less than 100%, please stake more ALL Token before end of current Epoch to sure to receive 100% of the incentive fee during settlement."
               popperWidth="400px"
               loading={loading}
               value={`${currmanagerALLStakingRatio}%`}
@@ -554,7 +554,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             <SectionItem
               label="Previous Epoch withholding Rate %"
               loading={loading}
-              popper="Redemption Fulfilled Ratio of last Epoch. The ratio less than 100% means there is not enough cash to meet all the redemption requests at last settlement. Redemption Fulfilled Ratio: (Available Cash Balance - Fees) / Total Redemption Value"
+              popper="Withholding Fulfilled Ratio of last Epoch. The ratio less than 100% means there is not enough cash to meet all the withholding requests at last settlement. withholding Fulfilled Ratio: (Available Cash Balance - Fees) / Total withholding Value"
               value={`${data.lastRedemptionRatio}%`}
             />
             <SectionItem

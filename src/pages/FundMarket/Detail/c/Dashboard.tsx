@@ -94,7 +94,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
             <DashboardItem label="Vault Inception Date" loading={loading}>
               {dayjs(data.createTime).format('MMM DD, YYYY')}
             </DashboardItem>
-            <DashboardItem label="Capacity Available" popper="Capacity Available" loading={loading}>
+            <DashboardItem label="Capacity Available" loading={loading}>
               <TokenValue
                 value={Math.max(
                   BN(data.realtimeAUMLimit)
