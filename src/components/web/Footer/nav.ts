@@ -6,7 +6,7 @@ const nav: { name: string; list: { name: string; url: string; checkManage?: bool
       // { name: 'Lightpaper', url: 'https://app.alldefi.finance/' },
       { name: 'Buy AC Token', url: '/buy' },
       { name: 'Vaults', url: '/fund-market' },
-      { name: 'Create Vault', url: '/manage/manager/create', checkManage: true }
+      { name: 'Create Vaults', url: '/manage/manager/create', checkManage: true }
     ]
   },
   {
