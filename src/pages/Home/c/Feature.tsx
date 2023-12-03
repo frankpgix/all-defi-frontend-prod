@@ -6,8 +6,8 @@ import classNames from 'classnames'
 
 const features = [
   {
-    name: 'Trusted',
-    subName: 'DAO TREASURY MANAGEMENT IS TRUELY Decentralised',
+    name: 'Decentralized',
+    subName: 'DAO TREASURY MANAGEMENT IS TRUELY',
     intro: (
       <>
         AllDeFi allows decentralised DAO <br />
