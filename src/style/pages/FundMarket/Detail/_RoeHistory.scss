@@ -6,7 +6,7 @@
   text-align: center;
   header {
     display: grid;
-    grid-template-columns: repeat(13, 1fr);
+    grid-template-columns: repeat(14, 1fr);
     font-size: 18px;
     color: $blue;
     text-transform: capitalize;
@@ -22,7 +22,7 @@
   section {
     main {
       display: grid;
-      grid-template-columns: repeat(13, 1fr);
+      grid-template-columns: repeat(14, 1fr);
       span {
         font-size: 14px;
       }

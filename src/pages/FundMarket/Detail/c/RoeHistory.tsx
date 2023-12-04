@@ -1,5 +1,6 @@
 import React, { FC, useMemo } from 'react'
 import dayjs from 'dayjs'
+import BN from 'bignumber.js'
 import classNames from 'classnames'
 import { useRequest } from 'ahooks'
 import { useFundMonthData, FundMonthDataType } from '@/gql/useData'
@@ -13,7 +14,7 @@ interface Props {
 const calcBaseRoeData = () => {
   const year = dayjs().year()
   const years = [year - 2, year - 1, year]
-  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
   const baseRoe: FundMonthDataType[] = []
   years.forEach((year) => {
     months.forEach((month) => {
@@ -25,6 +26,18 @@ const calcBaseRoeData = () => {
     })
   })
   return { baseRoe, years }
+}
+
+const calcYearReturn = (arr: FundMonthDataType[]) => {
+  if (!arr.length) return null
+  return (
+    BN.sum
+      .apply(
+        null,
+        arr.map((dat) => BN(dat.roe.replace('%', '')).toNumber())
+      )
+      .toString() + '%'
+  )
 }
 
 const RoeHistory: FC<Props> = ({ fundAddress }) => {
@@ -40,18 +53,33 @@ const RoeHistory: FC<Props> = ({ fundAddress }) => {
     if (loading || oldDataLoading) return []
     const oneArr = baseRoe.map((item) => {
       const o = oldData.find((old) => old.year === item.year && old.month === item.month)
+      // const oy = oldData.filter((old) => old.year === item.year)
+      // console.log(oy)
       if (o) {
         item.roe = o.roe
         item.history = true
         item.isRise = !o.roe.includes('-')
         item.isFall = o.roe.includes('-')
       }
-      const n = data.find((old) => old.year === item.year && old.month === item.month)
+      const n = data.find((dat) => dat.year === item.year && dat.month === item.month)
+
       if (n) {
         item.roe = n.roe
         item.history = false
         item.isRise = !n.roe.includes('-')
         item.isFall = n.roe.includes('-')
+      }
+
+      if (item.month === 13) {
+        const yearReturn = calcYearReturn(
+          [...data, ...oldData].filter((dat) => dat.year === item.year)
+        )
+        console.log(yearReturn)
+        if (yearReturn) {
+          item.roe = yearReturn
+          item.isRise = !yearReturn.includes('-')
+          item.isFall = yearReturn.includes('-')
+        }
       }
       return item
     })
@@ -75,6 +103,7 @@ const RoeHistory: FC<Props> = ({ fundAddress }) => {
         <span>OCT</span>
         <span>NOV</span>
         <span>DEC</span>
+        <span>1 Year Return</span>
       </header>
 
       <section>
