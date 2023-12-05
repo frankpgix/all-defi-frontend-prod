@@ -30,12 +30,18 @@ const calcBaseRoeData = () => {
 
 const calcYearReturn = (arr: FundMonthDataType[]) => {
   if (!arr.length) return null
+  const year = dayjs().year()
+  if (arr[0].year === year) {
+    arr.length = arr.length - 1
+  }
   return (
     BN.sum
       .apply(
         null,
-        arr.map((dat) => BN(dat.roe.replace('%', '')).toNumber())
+        arr.map((dat) => BN(dat.roe.replace('%', '')))
       )
+      .div(arr.length)
+      .times(12)
       .toString() + '%'
   )
 }
@@ -74,7 +80,7 @@ const RoeHistory: FC<Props> = ({ fundAddress }) => {
         const yearReturn = calcYearReturn(
           [...data, ...oldData].filter((dat) => dat.year === item.year)
         )
-        console.log(yearReturn)
+        // console.log(yearReturn)
         if (yearReturn) {
           item.roe = yearReturn
           item.isRise = !yearReturn.includes('-')
