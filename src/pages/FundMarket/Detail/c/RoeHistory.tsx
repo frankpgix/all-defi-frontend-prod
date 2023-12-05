@@ -6,7 +6,7 @@ import { useRequest } from 'ahooks'
 import { useFundMonthData, FundMonthDataType } from '@/gql/useData'
 import { getFundRoeData } from '@/api'
 import Popper from '@@/common/Popper'
-
+import { calcDecimalsFloor } from '@/utils/tools'
 interface Props {
   fundAddress: string | undefined
 }
@@ -34,16 +34,15 @@ const calcYearReturn = (arr: FundMonthDataType[]) => {
   if (arr[0].year === year) {
     arr.length = arr.length - 1
   }
-  return (
-    BN.sum
-      .apply(
-        null,
-        arr.map((dat) => BN(dat.roe.replace('%', '')))
-      )
-      .div(arr.length)
-      .times(12)
-      .toString() + '%'
-  )
+  const res = BN.sum
+    .apply(
+      null,
+      arr.map((dat) => BN(dat.roe.replace('%', '')))
+    )
+    .div(arr.length)
+    .times(12)
+    .toNumber()
+  return `${calcDecimalsFloor(res, 2)}%`
 }
 
 const RoeHistory: FC<Props> = ({ fundAddress }) => {
