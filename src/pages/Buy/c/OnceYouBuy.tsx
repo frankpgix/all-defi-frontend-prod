@@ -56,7 +56,7 @@ const OnceYouBuy: FC = () => {
           <div className="c-buy-once-process-item-detail">
             <div className="c-buy-once-process-item-detail-icons">
               <i>
-                <Image src="icon/buy-1.png" />
+                <Image src="asset/mining.png" />
                 <span>Mining</span>
               </i>
             </div>
@@ -70,7 +70,7 @@ const OnceYouBuy: FC = () => {
           <div className="c-buy-once-process-item-detail">
             <div className="c-buy-once-process-item-detail-icons">
               <i>
-                <Image src="asset/loop.png" />
+                <Image src="asset/withhold.png" />
                 <span>Withhold</span>
               </i>
               {/* <i>
