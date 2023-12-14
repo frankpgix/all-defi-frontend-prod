@@ -19,14 +19,14 @@ const Dashboard: FC = () => {
         </h2>
         <CountLayout col="3">
           <CountItem
-            label="Current Overall NAV"
+            label="Current Overall AUM"
             popper="Total value of AC DAO, update after settlement"
             value={formatNumber(data.aum, 2, '$0,0.00')}
             loading={loading}
           />
           <CountItem
-            label="Current Vaults NAV"
-            popper="Total NAV of all the Vaults, update after settlement"
+            label="Current Vaults AUM"
+            popper="Total AUM of all the Vaults, update after settlement"
             value={formatNumber(data.assetInFunds, 2, '$0,0.00')}
             loading={loading}
           />

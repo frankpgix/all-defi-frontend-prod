@@ -36,7 +36,7 @@ const CountLoading = () => {
   return (
     <div className="web-manage-investment-fund">
       <h2>
-        Fund Details
+        Vault Details
         <Button text to="/manage/investment/history">
           view transaction history
         </Button>

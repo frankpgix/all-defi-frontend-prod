@@ -41,7 +41,7 @@ const FundList: FC = () => {
       )
     },
     {
-      title: 'Net Asset Value',
+      title: 'Asset Under Management',
       dataIndex: 'aum',
       render: (value: number, row: any) => (
         <TokenValue value={value} token={row.baseToken} size="mini" format="0,0.00" />

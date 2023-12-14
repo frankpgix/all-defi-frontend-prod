@@ -75,7 +75,7 @@ const CreateFund: FC = () => {
   const onStep4Confirm = async () => {
     if (signer) {
       // navigate('/manage/manager')
-      const notifyId = await createNotify({ type: 'loading', content: 'Create Fund' })
+      const notifyId = await createNotify({ type: 'loading', content: 'Create Vault' })
 
       const { status, msg, hash } = await createFund(
         {
@@ -95,7 +95,7 @@ const CreateFund: FC = () => {
         Cache.rm('CreateFundStep2Temp')
         Cache.rm('CreateFundStep3Temp')
       } else {
-        updateNotifyItem(notifyId, { type: 'error', title: 'Create Fund', content: msg, hash })
+        updateNotifyItem(notifyId, { type: 'error', title: 'Create Vault', content: msg, hash })
       }
     }
   }

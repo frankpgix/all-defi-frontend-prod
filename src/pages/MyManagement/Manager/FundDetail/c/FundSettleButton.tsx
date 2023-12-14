@@ -28,13 +28,13 @@ const FundSettleButton: FC<Props> = ({
 
   const onSettle = async () => {
     if (signer && fundAddress) {
-      const notifyId = await createNotify({ type: 'loading', content: 'Settle Fund' })
+      const notifyId = await createNotify({ type: 'loading', content: 'Settle Vault' })
       const { status, msg, hash } = await settleAccount(fundAddress, signer)
       if (status) {
         if (callback) await callback()
         updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        updateNotifyItem(notifyId, { type: 'error', title: 'Settle Fund', content: msg, hash })
+        updateNotifyItem(notifyId, { type: 'error', title: 'Settle Vault', content: msg, hash })
       }
     }
   }

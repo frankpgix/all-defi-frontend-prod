@@ -151,8 +151,8 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
       {data.aum > data.realtimeAUMLimit && (
         <>
           <Alert show type="error">
-            Your current fund AUM has exceeded the fund max AUM limited. please increase the fund
-            max AUM limit before settlement.
+            Your current Net Asset Value has exceeded the Max AUM Limited. please increase the Max
+            AUM Limit before settlement.
           </Alert>
           <Blank />
         </>

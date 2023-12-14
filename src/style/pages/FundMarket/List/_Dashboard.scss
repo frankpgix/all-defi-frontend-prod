@@ -1,5 +1,7 @@
 .web-fund-dashboard {
   @extend .web;
+  position: relative;
+  z-index: 1;
   // padding-bottom: 64px;
   &-layout {
     @extend .web_;

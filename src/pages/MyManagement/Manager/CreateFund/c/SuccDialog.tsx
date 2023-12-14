@@ -48,9 +48,9 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
           </header> */}
           <section>
             <h3>Congratulations!</h3>
-            <p>Your fund creation application has been submitted</p>
+            <p>Your Vault creation application has been submitted</p>
             <p>
-              The platform will start to audit the fund, and the audit result will be notified by
+              The platform will start to audit the Vault, and the audit result will be notified by
               email and platform message as soon as possible
               {/* <ALink to={docUrl}> Doc</ALink>  */}
             </p>
@@ -71,7 +71,7 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
               </CheckBox>
             </aside>
             <Button disabled={!isChecked} onClick={onConfirm}>
-              Enter the fund
+              Enter the VAULT
             </Button>
           </footer>
         </main>
@@ -87,11 +87,9 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
               <div className="web-manage-create-dialog-swiper-item">
                 <h4>About the review</h4>
                 <p>
-                  All funds will be officially listed on the fund supermarket after being reviewed
-                </p>
-                <p>
-                  Although it may take longer to review, we still strongly recommend that you upload
-                  more historical data.
+                  All Vaults will be officially listed on the market after being reviewed Although
+                  it may take longer to review, we still strongly recommend that you upload more
+                  historical data.
                 </p>
               </div>
             </SwiperSlide>
@@ -100,7 +98,7 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
                 <h4>About MAX AUM Limit</h4>
                 <p>
                   ALL supplemented in this epoch will only increase the available balance for
-                  subscription, and will not change the distribution of Fee until the next epoch.
+                  Allocation, and will not change the distribution of Fee until the next epoch.
                 </p>
               </div>
             </SwiperSlide>
@@ -109,7 +107,7 @@ const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
                 <h4>About the settlement</h4>
                 <p>
                   Each epoch has four stages. Please prepare enough cash in the Pre-Settlement
-                  Period to complete the redemption requests of users
+                  Period to complete the withhold requests of users
                 </p>
               </div>
             </SwiperSlide>

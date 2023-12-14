@@ -72,7 +72,7 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
 
   const onRedeem = async () => {
     if (signer && fundAddress) {
-      const notifyId = await createNotify({ type: 'loading', content: 'Redeem Funds' })
+      const notifyId = await createNotify({ type: 'loading', content: 'Withhold from vault' })
       // 执行购买和质押
       const { status, msg, hash } = await redeem(Number(value), fundAddress, decimals, signer)
       if (status) {
@@ -81,7 +81,12 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
         setValue(0)
         setSliderValue(0)
       } else {
-        updateNotifyItem(notifyId, { type: 'error', title: 'Redeem Funds', content: msg, hash })
+        updateNotifyItem(notifyId, {
+          type: 'error',
+          title: 'Withhold from vault',
+          content: msg,
+          hash
+        })
       }
     }
   }

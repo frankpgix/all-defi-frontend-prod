@@ -158,7 +158,7 @@ const FundItem: FC<Props> = ({
               </ul>
             </div>
             <div className="web-manage-investment-fund-item-data">
-              <SectionItem label="Net Asset Value">
+              <SectionItem label="Allocation Value">
                 <TokenValue value={fund.data.nav} token={acToken} size="mini" format="0,0.00" />
                 {/*{formatNumber(fund.data.navInUSD, 2, '$0,0.00')}*/}
               </SectionItem>

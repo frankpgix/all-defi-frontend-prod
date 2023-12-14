@@ -223,12 +223,12 @@ const CountDetail: FC = () => {
       </div>
       <div className="web-manage-investment-count-detail">
         <article>
-          <label>Total Allocation NAV</label>
+          <label>Total Allocation </label>
           <em>{formatNumber(totalAsset, 2, '$0,0.00')}</em>
         </article>
         <h3>{data[activeIndex].name}</h3>
         <section>
-          <SectionItem label="Net Asset Value" loading={loading}>
+          <SectionItem label="Allocation Value" loading={loading}>
             <TokenValue value={activeData.nav} token={baseToken} size="mini" format="0,0.00" />
             {/*{formatNumber(data[activeIndex].data.nav, 2, '$0,0.00')}*/}
           </SectionItem>

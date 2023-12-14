@@ -31,26 +31,31 @@ const FundDetails: FC<Props> = ({ data, callback }) => {
 
   const onCancelRedeem = async (address: string) => {
     if (signer && address) {
-      const notifyId = await createNotify({ type: 'loading', content: 'Cancel Redeem' })
+      const notifyId = await createNotify({ type: 'loading', content: 'Cancel Withhold' })
       const { status, msg, hash } = await cancelRedeem(address, signer)
       if (status) {
         await callback(true)
         updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        updateNotifyItem(notifyId, { type: 'error', title: 'Cancel Redeem', content: msg, hash })
+        updateNotifyItem(notifyId, { type: 'error', title: 'Cancel Withhold', content: msg, hash })
       }
     }
   }
 
   const onCancelSubscribe = async (address: string) => {
     if (signer && address) {
-      const notifyId = await createNotify({ type: 'loading', content: 'Cancel Subscribe' })
+      const notifyId = await createNotify({ type: 'loading', content: 'Cancel Allocation' })
       const { status, msg, hash } = await cancelSubscribe(address, signer)
       if (status) {
         await callback(true)
         updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        updateNotifyItem(notifyId, { type: 'error', title: 'Cancel Subscribe', content: msg, hash })
+        updateNotifyItem(notifyId, {
+          type: 'error',
+          title: 'Cancel Allocation',
+          content: msg,
+          hash
+        })
       }
     }
   }

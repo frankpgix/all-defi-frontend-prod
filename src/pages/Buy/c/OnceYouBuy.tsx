@@ -57,7 +57,7 @@ const OnceYouBuy: FC = () => {
             <div className="c-buy-once-process-item-detail-icons">
               <i>
                 <Image src="asset/mining.png" />
-                <span>Mining</span>
+                <span>Reward</span>
               </i>
             </div>
           </div>

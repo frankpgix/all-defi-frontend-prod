@@ -127,14 +127,19 @@ const EditFund: FC = () => {
     if (!fundAddress || !signer) return
     const data = calcConfirmData()
     // if (fundAddress) return
-    const notifyId = await createNotify({ type: 'loading', content: 'Set Fund Base Info' })
+    const notifyId = await createNotify({ type: 'loading', content: 'Set Vault Base Info' })
 
     const { status, msg, hash } = await updateFund(fundAddress, data, signer)
     if (status) {
       await getData()
       updateNotifyItem(notifyId, { type: 'success', hash })
     } else {
-      updateNotifyItem(notifyId, { type: 'error', title: 'Set Fund Base Info', content: msg, hash })
+      updateNotifyItem(notifyId, {
+        type: 'error',
+        title: 'Set Vault Base Info',
+        content: msg,
+        hash
+      })
     }
   }
 

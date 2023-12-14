@@ -97,7 +97,7 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
 
   const onSubscribe = async () => {
     if (signer && fundAddress) {
-      const notifyId = await createNotify({ type: 'loading', content: 'Subscribe Funds' })
+      const notifyId = await createNotify({ type: 'loading', content: 'Allocate to vault' })
       // 执行购买和质押
       const { status, msg, hash } = await subscribe(Number(value), fundAddress, acToken, signer)
       if (status) {
@@ -108,7 +108,12 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
         setSliderValue(0)
         updateNotifyItem(notifyId, { type: 'success', hash })
       } else {
-        updateNotifyItem(notifyId, { type: 'error', title: 'Subscribe Funds', content: msg, hash })
+        updateNotifyItem(notifyId, {
+          type: 'error',
+          title: 'Allocate to vault',
+          content: msg,
+          hash
+        })
       }
     }
   }

@@ -7,11 +7,8 @@ const Banner: FC = () => {
   return (
     <section className="web-home-banner">
       <main>
-        <h2>DeFi Industry DAO, From DeFi, For DeFi</h2>
-        <p>
-          Enjoy DAO growth by allocating DAO <br />
-          treasury to professional strategies.
-        </p>
+        <h2>Enjoy DAO Growth By Allocating DAO Treasury To Professional Managers.</h2>
+        <p>DeFi Industry DAO, From DeFi, For DeFi</p>
         <Button to="/buy">start now</Button>
       </main>
       <div className="web-home-banner-video-layout">
