@@ -74,7 +74,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
     [data.aum, data.settleAUMLimit]
   )
   const remainPercent = useMemo(() => BN(100).minus(percent).toNumber(), [percent])
-  // console.log('data', data, 'base', base)
+  console.log('breach', breach, 'data', data, 'base', base)
   // const allPledgeRate = useMemo(() => {
   //   const val = BN(data.settleAUMLimit).div(data.aum).times(100).toNumber()
   //   return isNaN(val) ? 0 : floor(val, 4)
@@ -91,15 +91,20 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
   }, [data.settleAUMLimit, data.nav])
 
   const nextRoundCash = useMemo(
-    () => BN(data.redeemingShares).times(data.sharePrice).toNumber(),
-    [data.redeemingShares, data.sharePrice]
+    () =>
+      BN(data.redeemingShares)
+        .times(data.sharePrice)
+        .minus(data.subscribingACToken)
+        .toFixed(2, BN.ROUND_UP),
+    [data.redeemingShares, data.sharePrice, data.subscribingACToken]
   )
-  const nextRoundCashNewCalc = useMemo(() => {
-    const temp1 = BN(data.managerFee).plus(data.platFee)
-    const temp2 = BN(nextRoundCash).div(data.nav)
-    return BN(temp1).times(temp2).toNumber()
-  }, [data, nextRoundCash])
+  // const nextRoundCashNewCalc = useMemo(() => {
+  //   const temp1 = BN(data.managerFee).plus(data.platFee)
+  //   const temp2 = BN(nextRoundCash).div(data.nav)
+  //   return BN(temp1).times(temp2).toNumber()
+  // }, [data, nextRoundCash])
 
+  console.log('nextRoundCash', nextRoundCash)
   // min 0 (aum * roe) * 20%
   const currManagerFee = useMemo(
     () => Math.max(BN(data.aum).times(data.roe).times(0.2).div(100).toNumber(), 0),
@@ -131,12 +136,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           popper="Required cash need to be prepared before this Epoch settlement"
           loading={loading}
           value={
-            <TokenValue
-              value={nextRoundCashNewCalc}
-              token={baseToken}
-              size="small"
-              format="0,0.00"
-            />
+            <TokenValue value={nextRoundCash} token={baseToken} size="small" format="0,0.00" />
           }
         />
         {/* redeemingShares * sharePrice */}

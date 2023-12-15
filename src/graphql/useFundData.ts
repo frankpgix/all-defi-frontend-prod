@@ -202,7 +202,10 @@ export const useFundRedeemsData = (fundAddress: string) => {
     error,
     data: sData
   } = useQuery(
-    calcFundSubscribesOrRedeemsGQL(fundAddress, [ActionType['Redeem'], ActionType['Cancel Redeem']])
+    calcFundSubscribesOrRedeemsGQL(fundAddress, [
+      ActionType['Withhold'],
+      ActionType['Cancel Withhold']
+    ])
   )
   const data = (sData?.fundUserActions ?? []).map((item: RecordProps) => calcActionData(item))
   // console.log(data, sData?.fundUserActions)

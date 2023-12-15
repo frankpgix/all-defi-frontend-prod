@@ -76,12 +76,7 @@ export interface FundDetailProps {
 }
 
 export const calcFundDetail = (item: any) => {
-  // console.log(
-  //   safeInterceptionValues(item.aum, 18, 18),
-  //   safeInterceptionValues(item.nav, 18, 18),
-  //   Number(safeInterceptionValues('99999990000000000', 4, 18)),
-  //   'test'
-  // )
+  console.log(item, 'test')
   const epochStartTime = Number(safeInterceptionValues(item.epochStartTime, 0, 0)) * 1000
   const baseTokenObj = getTokenByAddress(item.baseToken)
   const decimals = baseTokenObj.decimals
@@ -106,30 +101,28 @@ export const calcFundDetail = (item: any) => {
     settleEndTime:
       epochStartTime + Number(safeInterceptionValues(item.stageEndTime[3], 0, 0)) * 1000,
 
-    settleAUMLimit: Number(safeInterceptionValues(item.settleAUMLimit, precision, decimals)),
-    realtimeAUMLimit: Number(safeInterceptionValues(item.realtimeAUMLimit, precision, decimals)),
-    aum: Number(safeInterceptionValues(item.aum, precision, decimals)),
-    nav: Number(safeInterceptionValues(item.nav, precision, decimals)),
+    settleAUMLimit: Number(safeInterceptionValues(item.settleAUMLimit, decimals, decimals)),
+    realtimeAUMLimit: Number(safeInterceptionValues(item.realtimeAUMLimit, decimals, decimals)),
+    aum: Number(safeInterceptionValues(item.aum, decimals, decimals)),
+    nav: Number(safeInterceptionValues(item.nav, decimals, decimals)),
 
     sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
     baseTokenPriceInUSD: Number(safeInterceptionValues(item.baseTokenPriceInUSD, 4, 18)),
     costPrice: Number(safeInterceptionValues(item.costPrice, 4, 18)),
-    unusedAsset: Number(safeInterceptionValues(item.unusedAsset, precision, decimals)),
-    subscribingACToken: Number(
-      safeInterceptionValues(item.subscribingACToken, precision, decimals)
-    ),
+    unusedAsset: Number(safeInterceptionValues(item.unusedAsset, decimals, decimals)),
+    subscribingACToken: Number(safeInterceptionValues(item.subscribingACToken, decimals, decimals)),
     redeemingShares: Number(safeInterceptionValues(item.redeemingShares)),
     miningShares: Number(safeInterceptionValues(item.miningShares)),
 
     roe: Number(safeInterceptionValues(item.roe, 4, 16)),
     lastRoe: Number(safeInterceptionValues(item.lastRoe, 4, 16)),
     lastRedemptionRatio: Number(safeInterceptionValues(item.lastRedemptionRatio, 4, 16)),
-    historyReturn: Number(safeInterceptionValues(item.historyReturn, precision, decimals)),
+    historyReturn: Number(safeInterceptionValues(item.historyReturn, decimals, decimals)),
 
-    managerFee: Number(safeInterceptionValues(item.managerFee, precision, decimals)),
-    platFee: Number(safeInterceptionValues(item.platFee, precision, decimals)),
-    lastManagerFee: Number(safeInterceptionValues(item.lastManagerFee, precision, decimals)),
-    historyManagerFee: Number(safeInterceptionValues(item.historyManagerFee, precision, decimals))
+    managerFee: Number(safeInterceptionValues(item.managerFee, decimals, decimals)),
+    platFee: Number(safeInterceptionValues(item.platFee, decimals, decimals)),
+    lastManagerFee: Number(safeInterceptionValues(item.lastManagerFee, decimals, decimals)),
+    historyManagerFee: Number(safeInterceptionValues(item.historyManagerFee, decimals, decimals))
   }
 }
 
