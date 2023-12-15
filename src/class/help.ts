@@ -76,11 +76,11 @@ export interface FundDetailProps {
 }
 
 export const calcFundDetail = (item: any) => {
-  console.log(item, 'test')
+  // console.log(item, 'test')
   const epochStartTime = Number(safeInterceptionValues(item.epochStartTime, 0, 0)) * 1000
   const baseTokenObj = getTokenByAddress(item.baseToken)
   const decimals = baseTokenObj.decimals
-  const precision = baseTokenObj.precision
+  // const precision = baseTokenObj.precision
   return {
     baseTokenObj,
     baseToken: item.baseToken,

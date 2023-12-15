@@ -74,7 +74,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
     [data.aum, data.settleAUMLimit]
   )
   const remainPercent = useMemo(() => BN(100).minus(percent).toNumber(), [percent])
-  console.log('breach', breach, 'data', data, 'base', base)
+  // console.log('breach', breach, 'data', data, 'base', base)
   // const allPledgeRate = useMemo(() => {
   //   const val = BN(data.settleAUMLimit).div(data.aum).times(100).toNumber()
   //   return isNaN(val) ? 0 : floor(val, 4)
