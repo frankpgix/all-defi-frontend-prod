@@ -90,14 +90,15 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
     return formatNumber(BN(data.settleAUMLimit).div(data.nav).toNumber(), 2, '0.00')
   }, [data.settleAUMLimit, data.nav])
 
-  const nextRoundCash = useMemo(
-    () =>
+  const nextRoundCash = useMemo(() => {
+    const v = Number(
       BN(data.redeemingShares)
         .times(data.sharePrice)
         .minus(data.subscribingACToken)
-        .toFixed(2, BN.ROUND_UP),
-    [data.redeemingShares, data.sharePrice, data.subscribingACToken]
-  )
+        .toFixed(2, BN.ROUND_UP)
+    )
+    return v >= 0 ? v : 0
+  }, [data.redeemingShares, data.sharePrice, data.subscribingACToken])
   // const nextRoundCashNewCalc = useMemo(() => {
   //   const temp1 = BN(data.managerFee).plus(data.platFee)
   //   const temp2 = BN(nextRoundCash).div(data.nav)
@@ -136,7 +137,12 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           popper="Required cash need to be prepared before this Epoch settlement"
           loading={loading}
           value={
-            <TokenValue value={nextRoundCash} token={baseToken} size="small" format="0,0.00" />
+            <TokenValue
+              value={Number(nextRoundCash)}
+              token={baseToken}
+              size="small"
+              format="0,0.00"
+            />
           }
         />
         {/* redeemingShares * sharePrice */}

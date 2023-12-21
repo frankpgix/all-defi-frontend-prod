@@ -3,6 +3,7 @@ import ContentLoader from 'react-content-loader'
 
 import { useManageFundList, useGetManageFundList } from '@/hooks/useFund'
 import { useProfile } from '@/hooks/useProfile'
+import Cache from '@/utils/cache'
 
 import NoInvest from './NoInvest'
 import Main from './Main'
@@ -18,6 +19,11 @@ const Manager: FC = () => {
     () => manageFundList?.length === 0 && !loading,
     [manageFundList, loading]
   )
+
+  const isCacheCreate =
+    Cache.get('CreateFundStep1Temp') ||
+    Cache.get('CreateFundStep2Temp') ||
+    Cache.get('CreateFundStep3Temp')
 
   return (
     <div className="web-manage">
@@ -42,7 +48,7 @@ const Manager: FC = () => {
           </Button>
         ) : (
           <Button to="/manage/manager/create" size="mini">
-            CREATE VAULTS
+            {isCacheCreate ? 'UNFINISHED EDITS' : 'CREATE VAULTS'}
           </Button>
         )}
       </h2>

@@ -17,6 +17,7 @@ import { Input, Slider } from '@@/common/Form'
 import Button from '@@/common/Button'
 import DataItem from '@@/common/DataItem'
 import { AllTokenUnit } from '@@/common/TokenUnit'
+import TokenValue from '@@/common/TokenValue'
 
 // import { notify } from '@@/common/Toast'
 
@@ -35,7 +36,7 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
   const [sliderValue, setSliderValue] = useState(0)
 
   const isIncrease = useMemo(() => direction === 'increase', [direction])
-  // console.log(fundData, stakeData)
+  console.log(fundData)
   const maxValue = isIncrease ? Number(balance.ALL) : maxReduceAmount
 
   const maxAum = useMemo(() => {
@@ -82,7 +83,7 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
       // const notifyId = notify.loading()
       const notifyId = await createNotify({
         type: 'loading',
-        content: 'Change Fund Stake ALL Token'
+        content: 'Change Vault Stake ALL Token'
       })
 
       const { status, msg, hash } = isIncrease
@@ -95,14 +96,14 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
       } else {
         updateNotifyItem(notifyId, {
           type: 'error',
-          title: 'Change Fund Stake ALL Token',
+          title: 'Change Vault Stake ALL Token',
           content: msg,
           hash
         })
       }
     }
   }
-  const isDisabled = useMemo(() => !amount || Number(amount) === 0, [amount])
+  const isDisabled = useMemo(() => !amount || Number(amount) <= 1, [amount])
   return (
     <>
       {fundData.aum > fundData.realtimeAUMLimit && (
@@ -130,7 +131,13 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
       >
         <div className="web-manage-fund-staker-input">
           <DataItem label="current MAX AUM limit" gray>
-            {fundData.realtimeAUMLimit}
+            <TokenValue
+              value={fundData.realtimeAUMLimit}
+              token={fundData.baseTokenObj}
+              format="0.00"
+              noUnit
+            />
+            {/* {formatNumber(fundData.realtimeAUMLimit, 6, '0.000000')} */}
           </DataItem>
           <div className={`web-manage-create-step-stake-${isIncrease ? 'plus' : 'minus'}`}></div>
           <Input
@@ -141,7 +148,7 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
             maxNumber={maxValue}
             suffix={<AllTokenUnit>ALL Token</AllTokenUnit>}
             placeholder="0"
-            error={Number(amount) === 0 && amount !== ''}
+            error={Number(amount) <= 1 && amount !== ''}
           >
             {isIncrease ? (
               <p>ALL Token Balance: {balance.ALL}</p>

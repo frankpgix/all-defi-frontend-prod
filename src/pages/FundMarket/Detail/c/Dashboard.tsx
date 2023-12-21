@@ -38,7 +38,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
     [fundAddress, data.epochIndex, timeType]
   )
   const { loading: chartLoading, data: chartData } = useFundDetailChartData(gql)
-
+  // console.log(data.historyReturn, 'data.historyReturn')
   return (
     <>
       <header className="web-fund-detail-header">Vault Overview</header>
@@ -120,7 +120,12 @@ const Dashboard: FC<Props> = ({ base, data, loading, derivatives = [], fundAddre
               popper="Cumulated profit and loss since the inception of this vault"
               loading={loading}
             >
-              <TokenValue value={data.historyReturn} token={baseToken} size="mini" />
+              <TokenValue
+                value={data.historyReturn}
+                format="0,0.00"
+                token={baseToken}
+                size="mini"
+              />
             </DashboardItem>
 
             <DashboardItem label="Denomination Asset" loading={loading}>

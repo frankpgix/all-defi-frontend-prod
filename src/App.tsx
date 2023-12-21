@@ -15,11 +15,11 @@ import Global from '@/pages/Updaters/Global'
 import LoopData from '@@/common/LoopData'
 import Notify from '@@/core/Notify'
 
-const Home = lazy(() => import('@/pages/Home'))
-const Buy = lazy(() => import('@/pages/Buy'))
-const FundMarket = lazy(() => import('@/pages/FundMarket'))
-const MyManagement = lazy(() => import('@/pages/MyManagement'))
-const Mining = lazy(() => import('@/pages/Mining'))
+import Home from '@/pages/Home'
+import Buy from '@/pages/Buy'
+import FundMarket from '@/pages/FundMarket'
+import MyManagement from '@/pages/MyManagement'
+import Mining from '@/pages/Mining'
 const Test = lazy(() => import('@/pages/Test'))
 
 function App() {

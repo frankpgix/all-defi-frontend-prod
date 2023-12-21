@@ -92,7 +92,7 @@ const FundDetail: FC = () => {
         getData={getData}
       />
       <DataTab fundAddress={fundAddress} />
-      <FundDialog fundAddress={fundAddress} name={base.name} />
+      {!loading && <FundDialog fundAddress={fundAddress} name={base.name} />}
     </div>
   )
 }

@@ -80,12 +80,12 @@ const FundDialog: FC = () => {
         >
           {item.result ? (
             <article>
-              Your application for the create of <strong>{item.data}</strong> fund has passed the
+              Your application for the create of <strong>{item.data}</strong> vault has passed the
               review, and it is now displayed in the fund list
             </article>
           ) : (
             <article>
-              Your application for the create of <strong>{item.data}</strong> fund has been
+              Your application for the create of <strong>{item.data}</strong> vault has been
               rejected, please <ALink to={CONTACT_US_URL}>contact us</ALink> if you have any
               questions
             </article>

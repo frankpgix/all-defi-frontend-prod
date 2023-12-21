@@ -43,7 +43,7 @@ const FundDialog: FC<Props> = ({ fundAddress, name }) => {
     setDialogStatus(status)
     setDialogData(items)
   }, [data, loading, fundAddress])
-
+  console.log('dialogData', dialogData)
   const onDialogClose = (index: number) => {
     const status = [...dialogStatus]
     status[index] = false
@@ -84,12 +84,12 @@ const FundDialog: FC<Props> = ({ fundAddress, name }) => {
         >
           {item.result ? (
             <article>
-              Your application for reset of the <strong>{item.data}</strong> fund has been approved
+              Your application for reset of the <strong>{item.data}</strong> vault has been approved
               and will take effect at the next Epoch
             </article>
           ) : (
             <article>
-              Your application for reset of <strong>{item.data}</strong> fund has been rejected,
+              Your application for reset of <strong>{item.data}</strong> vault has been rejected,
               please <ALink to={CONTACT_US_URL}>contact us</ALink> if you have any questions
             </article>
           )}
