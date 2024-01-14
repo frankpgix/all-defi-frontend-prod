@@ -1,17 +1,6 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "contract IERC20Extended",
-        "name": "_allToken",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IFactory",
-        "name": "_fundFactory",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -33,18 +22,44 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "previousAdmin",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "beacon",
+        "type": "address"
+      }
+    ],
+    "name": "BeaconUpgraded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "reward",
         "type": "uint256"
       }
     ],
     "name": "HarvestAll",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [],
-    "name": "OnFundSettle",
     "type": "event"
   },
   {
@@ -64,6 +79,32 @@
       }
     ],
     "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "paused",
+        "type": "bool"
+      }
+    ],
+    "name": "Paused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "keeper",
+        "type": "address"
+      }
+    ],
+    "name": "SetKeeper",
     "type": "event"
   },
   {
@@ -111,8 +152,59 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "underlyingToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "shareValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "UpdateShare",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      }
+    ],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
     "inputs": [],
-    "name": "ALL_TOKEN",
+    "name": "allProtocol",
+    "outputs": [
+      {
+        "internalType": "contract IAllProtocol",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "allToken",
     "outputs": [
       {
         "internalType": "contract IERC20Extended",
@@ -124,95 +216,16 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "FUND_FACTORY",
-    "outputs": [
-      {
-        "internalType": "contract IFactory",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "UNIT_REWARDS_PER_SECOND",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
-        "name": "_shareToken",
+        "name": "pool",
         "type": "address"
       }
     ],
-    "name": "addPool",
+    "name": "archivePool",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getPoolList",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "shareToken",
-            "type": "address"
-          },
-          {
-            "internalType": "string",
-            "name": "symbol",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "aumPerShare",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "shareBalance",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "stakeAmount",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IRewardTracker.PoolItemView[]",
-        "name": "poolItems",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getUserPools",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "_poolKeys",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -238,19 +251,27 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "fund",
+        "internalType": "contract IAllProtocol",
+        "name": "_allProtocol",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "aumPerShare",
-        "type": "uint256"
       }
     ],
-    "name": "onFundSettleAccount",
+    "name": "initialize",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "keeper",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -261,6 +282,19 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "paused",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -297,7 +331,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "lastRewardTime",
+        "name": "sharePriceInUSD",
         "type": "uint256"
       },
       {
@@ -312,7 +346,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "aumPerShare",
+        "name": "lastRewardTime",
         "type": "uint256"
       }
     ],
@@ -322,19 +356,109 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_shareToken",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "indexFrom",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "indexTo",
+        "type": "uint256"
       }
     ],
-    "name": "removePool",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "poolList",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "shareToken",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePriceInUSD",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "shareBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "stakedShare",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IRewardTracker.PoolItemView[]",
+        "name": "poolItems",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proxiableUUID",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_keeper",
+        "type": "address"
+      }
+    ],
+    "name": "setKeeper",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "_paused",
+        "type": "bool"
+      }
+    ],
+    "name": "setPaused",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_unitRewardPerSec",
+        "type": "uint256"
+      }
+    ],
+    "name": "setUnitRewardPerSec",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -400,6 +524,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "unitRewardPerSec",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address[]",
@@ -421,6 +558,60 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "underlyingToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "sharePrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateShare",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      }
+    ],
+    "name": "upgradeTo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -431,6 +622,46 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "userPoolList",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "shareToken",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePriceInUSD",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "shareBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "stakedShare",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IRewardTracker.PoolItemView[]",
+        "name": "poolItems",
+        "type": "tuple[]"
       }
     ],
     "stateMutability": "view",

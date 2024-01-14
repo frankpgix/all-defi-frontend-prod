@@ -32,7 +32,8 @@ class FundReader {
   getFundList = async (): Promise<FundDetailProps[] | null> => {
     const contract = getFundReaderContract()
     try {
-      const response = await contract.fundDetailList(0, 999, false)
+      const response = await contract.vaultDetailList(0, 999, false)
+      // console.log(111, response)
       return response.map((item: any) => calcFundDetail(item))
       // return null
     } catch (error) {
@@ -45,7 +46,7 @@ class FundReader {
   getManagerFundList = async (address: string): Promise<FundDetailProps[] | null> => {
     try {
       const res = (await this.getFundList()) ?? []
-      // console.log(res)
+      console.log(res)
       return res.filter((item) => item.manager.toLowerCase() === address.toLowerCase())
     } catch (error) {
       console.info(error)
@@ -85,7 +86,7 @@ class FundReader {
     if (!fundAddress) return null
     const contract = getFundReaderContract()
     try {
-      const response: any = await contract.fundDetail(fundAddress)
+      const response: any = await contract.vaultDetail(fundAddress)
       return calcFundDetail(response)
     } catch (error) {
       return null
@@ -131,8 +132,8 @@ class FundReader {
     const contract = getFundReaderContract()
     // console.log(contract)
     try {
-      const response: any = await contract.fundBreachDetail(fundAddress)
-      // console.log(response)
+      const response: any = await contract.vaultBreachDetail(fundAddress)
+      // console.log('vaultBreachDetail', response)
       return calcFundBreachDetail(response)
     } catch (error) {
       console.info(error)
@@ -182,7 +183,7 @@ class FundReader {
   ): Promise<FundUpdateDataTypes | null> => {
     const contract = getFundReaderContract()
     try {
-      const res = await contract.fundUpdatingData(fundAddress)
+      const res = await contract.vaultUpdatingData(fundAddress)
       const abiCoder = utils.defaultAbiCoder
       const types = [
         'tuple(string desc, string managerName, uint256[2] subscriptionLimit, bytes32[] derivativesToAdd, bytes32[] derivativesToRemove, address[] assetsToAdd, address[] assetsToRemove)'

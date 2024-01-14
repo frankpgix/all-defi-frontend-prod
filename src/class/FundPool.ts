@@ -45,9 +45,9 @@ class FundPool {
       if (!approveAc) return approveAc
 
       // 根据合约和参数，计算 gas 费用，最后的 0 是允许计算的偏差值，如果总是失败，可以将值设置大一些
-      const gasLimit = await estimateGas(contract, 'subscribe', [_amount])
+      const gasLimit = await estimateGas(contract, 'allocate', [_amount])
       //  调用合约
-      const response = await contract.subscribe(_amount, { gasLimit })
+      const response = await contract.allocate(_amount, { gasLimit })
       // 等待结果
       const receipt = await response.wait()
       // 返回结果
@@ -67,8 +67,8 @@ class FundPool {
     if (!fundAddress || !signer) return outcome(4010)
     const contract = getFundPoolContract(fundAddress, signer)
     try {
-      const gasLimit = await estimateGas(contract, 'cancelSubscribe', [])
-      const response = await contract.cancelSubscribe({ gasLimit })
+      const gasLimit = await estimateGas(contract, 'cancelAllocation', [])
+      const response = await contract.cancelAllocation({ gasLimit })
       const receipt = await response.wait()
       // 返回结果
       if (receipt.status) return outcome(0, null, receipt.transactionHash)
@@ -89,8 +89,8 @@ class FundPool {
     const contract = getFundPoolContract(fundAddress, signer)
     try {
       const _amount = getUnitAmount(String(amount), 18)
-      const gasLimit = await estimateGas(contract, 'redeem', [_amount])
-      const response = await contract.redeem(_amount, { gasLimit })
+      const gasLimit = await estimateGas(contract, 'withhold', [_amount])
+      const response = await contract.withhold(_amount, { gasLimit })
       const receipt = await response.wait()
       // 返回结果
       if (receipt.status) return outcome(0, null, receipt.transactionHash)
@@ -108,8 +108,8 @@ class FundPool {
     if (!fundAddress || !signer) return outcome(4010)
     const contract = getFundPoolContract(fundAddress, signer)
     try {
-      const gasLimit = await estimateGas(contract, 'cancelRedeem', [])
-      const response = await contract.cancelRedeem({ gasLimit })
+      const gasLimit = await estimateGas(contract, 'cancelWithholding', [])
+      const response = await contract.cancelWithholding({ gasLimit })
       const receipt = await response.wait()
       // 返回结果
       if (receipt.status) return outcome(0, null, receipt.transactionHash)

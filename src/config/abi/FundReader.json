@@ -70,25 +70,12 @@
   },
   {
     "inputs": [],
-    "name": "activeFundList",
+    "name": "activeVaultList",
     "outputs": [
       {
         "internalType": "address[]",
-        "name": "funds",
+        "name": "vaults",
         "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "allProtocol",
-    "outputs": [
-      {
-        "internalType": "contract IAllProtocol",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -98,7 +85,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
       }
     ],
@@ -132,7 +119,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct FundReader.Asset[]",
+        "internalType": "struct VaultReader.Asset[]",
         "name": "_assets",
         "type": "tuple[]"
       }
@@ -157,452 +144,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "fund",
-        "type": "address"
-      }
-    ],
-    "name": "fundBreachDetail",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "fundId",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "latestFrozenALL",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "latestConfiscatedALL",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "continuousBreachTimes",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isFundFrozen",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct FundReader.FundBreachDetail",
-        "name": "detail",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "fund",
-        "type": "address"
-      }
-    ],
-    "name": "fundDetail",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "fundId",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "baseToken",
-            "type": "address"
-          },
-          {
-            "internalType": "string",
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "internalType": "address",
-            "name": "manager",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "createTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "epochIndex",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "epochStartTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256[4]",
-            "name": "stageEndTime",
-            "type": "uint256[4]"
-          },
-          {
-            "internalType": "uint256",
-            "name": "status",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "settleAUMLimit",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "realtimeAUMLimit",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "aum",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "nav",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "sharePrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "costPrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "baseTokenPriceInUSD",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "unusedAsset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "subscribingACToken",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "redeemingShares",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "miningShares",
-            "type": "uint256"
-          },
-          {
-            "internalType": "int256",
-            "name": "roe",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "lastRoe",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "historyReturn",
-            "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "managerFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "platFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "lastManagerFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "historyManagerFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "lastRedemptionRatio",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct FundReader.FundDetail",
-        "name": "detail",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "indexFrom",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "indexTo",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "activeOnly",
-        "type": "bool"
-      }
-    ],
-    "name": "fundDetailList",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "fundId",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "baseToken",
-            "type": "address"
-          },
-          {
-            "internalType": "string",
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "internalType": "address",
-            "name": "manager",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "createTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "epochIndex",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "epochStartTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256[4]",
-            "name": "stageEndTime",
-            "type": "uint256[4]"
-          },
-          {
-            "internalType": "uint256",
-            "name": "status",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "settleAUMLimit",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "realtimeAUMLimit",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "aum",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "nav",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "sharePrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "costPrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "baseTokenPriceInUSD",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "unusedAsset",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "subscribingACToken",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "redeemingShares",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "miningShares",
-            "type": "uint256"
-          },
-          {
-            "internalType": "int256",
-            "name": "roe",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "lastRoe",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "historyReturn",
-            "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "managerFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "platFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "lastManagerFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "historyManagerFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "lastRedemptionRatio",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct FundReader.FundDetail[]",
-        "name": "_details",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "fundList",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "funds",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "fund",
-        "type": "address"
-      }
-    ],
-    "name": "fundUpdatingData",
-    "outputs": [
-      {
-        "internalType": "bytes",
-        "name": "params",
-        "type": "bytes"
-      },
-      {
-        "internalType": "uint8",
-        "name": "verifyStatus",
-        "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "globalAssetStatistic",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "aum",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "assetInFunds",
-            "type": "uint256"
-          },
-          {
-            "internalType": "int256",
-            "name": "historyReturn",
-            "type": "int256"
-          }
-        ],
-        "internalType": "struct FundReader.GlobalAssetStatistic",
-        "name": "info",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IFactory",
-        "name": "_factory",
+        "name": "_vaultGovernor",
         "type": "address"
       }
     ],
@@ -615,7 +157,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
       },
       {
@@ -672,7 +214,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
       },
       {
@@ -690,7 +232,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "redeeming",
+        "name": "withholding",
         "type": "uint256"
       },
       {
@@ -750,7 +292,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
       },
       {
@@ -765,27 +307,17 @@
         "components": [
           {
             "internalType": "address",
-            "name": "fundId",
+            "name": "vaultId",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "baseToken",
+            "name": "underlyingToken",
             "type": "address"
           },
           {
             "internalType": "uint256",
-            "name": "status",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "aum",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "nav",
+            "name": "stage",
             "type": "uint256"
           },
           {
@@ -800,17 +332,17 @@
           },
           {
             "internalType": "uint256",
-            "name": "baseTokenPriceInUSD",
+            "name": "nav",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "subscribingACToken",
+            "name": "allocatingACToken",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "redeemingShares",
+            "name": "withholdingShare",
             "type": "uint256"
           },
           {
@@ -834,7 +366,7 @@
             "type": "int256"
           }
         ],
-        "internalType": "struct FundReader.UserDetail",
+        "internalType": "struct VaultReader.UserDetail",
         "name": "detail",
         "type": "tuple"
       }
@@ -866,7 +398,7 @@
         "components": [
           {
             "internalType": "address",
-            "name": "baseToken",
+            "name": "underlyingToken",
             "type": "address"
           },
           {
@@ -905,18 +437,8 @@
             "type": "string"
           },
           {
-            "internalType": "uint256",
-            "name": "managerFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "platFee",
-            "type": "uint256"
-          },
-          {
             "internalType": "uint256[2]",
-            "name": "subscriptionLimit",
+            "name": "allocationLimits",
             "type": "uint256[2]"
           },
           {
@@ -931,7 +453,7 @@
           },
           {
             "internalType": "uint256[4]",
-            "name": "stageEndTime",
+            "name": "stageDurations",
             "type": "uint256[4]"
           },
           {
@@ -941,39 +463,29 @@
           },
           {
             "internalType": "address",
-            "name": "weth",
+            "name": "governor",
             "type": "address"
           }
         ],
-        "internalType": "struct IFund.BaseInfo[]",
-        "name": "_funds",
+        "internalType": "struct IVault.BaseInfo[]",
+        "name": "_vaults",
         "type": "tuple[]"
       },
       {
         "components": [
           {
             "internalType": "address",
-            "name": "fundId",
+            "name": "vaultId",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "baseToken",
+            "name": "underlyingToken",
             "type": "address"
           },
           {
             "internalType": "uint256",
-            "name": "status",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "aum",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "nav",
+            "name": "stage",
             "type": "uint256"
           },
           {
@@ -988,17 +500,17 @@
           },
           {
             "internalType": "uint256",
-            "name": "baseTokenPriceInUSD",
+            "name": "nav",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "subscribingACToken",
+            "name": "allocatingACToken",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "redeemingShares",
+            "name": "withholdingShare",
             "type": "uint256"
           },
           {
@@ -1022,9 +534,437 @@
             "type": "int256"
           }
         ],
-        "internalType": "struct FundReader.UserDetail[]",
+        "internalType": "struct VaultReader.UserDetail[]",
         "name": "_users",
         "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "vaultBreachDetail",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "vaultId",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastFrozenALL",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastConfiscatedALL",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "consecutiveBreachCount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "managerPaused",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct VaultReader.VaultBreachDetail",
+        "name": "detail",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "vaultDetail",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "vaultId",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "underlyingToken",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "createTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "epochIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "epochStartTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[4]",
+            "name": "stageDurations",
+            "type": "uint256[4]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "stage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "settlementAUMLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aumLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "beginningAUM",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "costPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "underlyingTokenPriceInUSD",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unusedAsset",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocatingACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "withholdingShare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "miningShare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "roe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "lastRoe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historyReturn",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "managerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "platFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastManagerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "historyManagerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastWithholdingRatio",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct VaultReader.VaultDetail",
+        "name": "detail",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "indexFrom",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "indexTo",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "activeOnly",
+        "type": "bool"
+      }
+    ],
+    "name": "vaultDetailList",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "vaultId",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "underlyingToken",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "createTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "epochIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "epochStartTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[4]",
+            "name": "stageDurations",
+            "type": "uint256[4]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "stage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "settlementAUMLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aumLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "beginningAUM",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "costPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "underlyingTokenPriceInUSD",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unusedAsset",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocatingACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "withholdingShare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "miningShare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "roe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "lastRoe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historyReturn",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "managerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "platFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastManagerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "historyManagerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastWithholdingRatio",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct VaultReader.VaultDetail[]",
+        "name": "_details",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "vaultGovernor",
+    "outputs": [
+      {
+        "internalType": "contract IAllProtocol",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "vaultList",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "vaults",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "vaultUpdatingData",
+    "outputs": [
+      {
+        "internalType": "bytes",
+        "name": "params",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint8",
+        "name": "reviewStatus",
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",

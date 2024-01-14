@@ -2,13 +2,13 @@ import React, { FC } from 'react'
 import { useRequest } from 'ahooks'
 import { formatNumber } from '@/utils/tools'
 
-import FundReader from '@/class/FundReader'
+import AUMStats from '@/class/AUMStats'
 import { GlobalAssetStatisticDefault } from '@/class/help'
 import { CountItem, CountLayout } from '@/pages/MyManagement/Manager/FundDetail/c/ManageDetail/C'
 
 const Dashboard: FC = () => {
-  const { getGlobalAssetStatistic } = FundReader
-  const { data = GlobalAssetStatisticDefault, loading } = useRequest(getGlobalAssetStatistic)
+  const { getGlobalAssetStats } = AUMStats
+  const { data = GlobalAssetStatisticDefault, loading } = useRequest(getGlobalAssetStats)
   return (
     <section className="web-fund-dashboard-layout">
       <div className="web-fund-dashboard">

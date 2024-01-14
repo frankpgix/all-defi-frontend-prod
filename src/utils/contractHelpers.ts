@@ -16,6 +16,7 @@ import RewardAbi from '@/config/abi/Reward.json'
 import UniV3ACLAbi from '@/config/abi/UniV3ACL.json'
 import Permit2Abi from '@/config/abi/Permit2.json'
 import FundFactoryAbi from '@/config/abi/FundFactory.json'
+import AUMStatsAbi from '@/config/abi/AUMStats.json'
 
 import {
   getACProtocolAddress,
@@ -25,7 +26,8 @@ import {
   getRewardAddress,
   getUniV3ACLAddress,
   getPermit2Address,
-  getFundFactoryAddress
+  getFundFactoryAddress,
+  getAUMStatsAddress
 } from '@/utils/addressHelpers'
 
 export const getJsonRpcProvider = (): StaticJsonRpcProvider => {
@@ -88,4 +90,7 @@ export const getPermit2Contract = (signer?: Signer | Provider | null) => {
 
 export const getFundFactoryContract = (signer?: Signer | Provider | null) => {
   return getContract(FundFactoryAbi, getFundFactoryAddress(), signer)
+}
+export const getAUMStatsContract = (signer?: Signer | Provider | null) => {
+  return getContract(AUMStatsAbi, getAUMStatsAddress(), signer)
 }

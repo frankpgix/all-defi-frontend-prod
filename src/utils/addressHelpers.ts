@@ -53,6 +53,9 @@ export const getPermit2Address = (): string => {
 export const getFundFactoryAddress = (): string => {
   return getAddress(contracts.FundFactory)
 }
+export const getAUMStatsAddress = (): string => {
+  return getAddress(contracts.AUMStats)
+}
 
 /************** Tokens **************/
 export const getUSDCAddress = (): string => {

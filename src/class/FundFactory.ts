@@ -13,7 +13,7 @@ class FundFactory {
     const block = await simpleRpcProvider.getBlockNumber()
     // console.log(block)
     const transferEvents = await contract.queryFilter(
-      'FundVerified',
+      'VaultReviewed',
       block - 60 * 60 * 24 * 2 * 15,
       block
     )

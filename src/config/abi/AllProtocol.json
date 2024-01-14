@@ -29,11 +29,11 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
       }
     ],
-    "name": "ArchiveFund",
+    "name": "ArchiveVault",
     "type": "event"
   },
   {
@@ -47,25 +47,6 @@
       }
     ],
     "name": "BeaconUpgraded",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "fund",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "reason",
-        "type": "string"
-      }
-    ],
-    "name": "ExecuteUpdateFundFailed",
     "type": "event"
   },
   {
@@ -92,12 +73,12 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "fund",
-        "type": "address"
+        "internalType": "bool",
+        "name": "paused",
+        "type": "bool"
       }
     ],
-    "name": "RemoveFund",
+    "name": "Paused",
     "type": "event"
   },
   {
@@ -106,11 +87,36 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "protocol",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum IFactory.ReviewType",
+        "name": "vType",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "pass",
+        "type": "bool"
+      }
+    ],
+    "name": "ReviewVault",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "aumStats",
         "type": "address"
       }
     ],
-    "name": "SetACProtocol",
+    "name": "SetAUMStats",
     "type": "event"
   },
   {
@@ -132,17 +138,56 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "platFeeTo",
+        "name": "keeper",
+        "type": "address"
+      }
+    ],
+    "name": "SetKeeper",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "reviewer",
+        "type": "address"
+      }
+    ],
+    "name": "SetReviewer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "tracker",
+        "type": "address"
+      }
+    ],
+    "name": "SetRewardTracker",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "vault",
         "type": "address"
       },
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "teamFeeTo",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "multiplier",
+        "type": "uint256"
       }
     ],
-    "name": "SetFeeTo",
+    "name": "SetSaftyLimitMuitiplier",
     "type": "event"
   },
   {
@@ -161,52 +206,7 @@
         "type": "uint256[]"
       }
     ],
-    "name": "SetFundNumLimit",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "minimum",
-        "type": "uint256"
-      }
-    ],
-    "name": "SetMinimumStake",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "percent",
-        "type": "uint256"
-      }
-    ],
-    "name": "SetUserRewardPercent",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "add",
-        "type": "bool"
-      }
-    ],
-    "name": "SetVerifier",
+    "name": "SetVaultCountLimit",
     "type": "event"
   },
   {
@@ -215,7 +215,7 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
       },
       {
@@ -234,7 +234,7 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
       },
       {
@@ -253,7 +253,7 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
       },
       {
@@ -278,11 +278,11 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
       }
     ],
-    "name": "UpdateFund",
+    "name": "UpdateVault",
     "type": "event"
   },
   {
@@ -299,61 +299,12 @@
     "type": "event"
   },
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "fund",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "enum IFactory.VerificationType",
-        "name": "vType",
-        "type": "uint8"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "pass",
-        "type": "bool"
-      }
-    ],
-    "name": "VerifyFund",
-    "type": "event"
-  },
-  {
     "inputs": [],
-    "name": "TEAM_FEE_PERCENT",
+    "name": "MINIMUM_STAKE",
     "outputs": [
       {
         "internalType": "uint256",
         "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "fund",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "stakeAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "_calcAUMLimit",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "limit",
         "type": "uint256"
       }
     ],
@@ -374,6 +325,34 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "underlyingToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "acToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "aum",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "acquireUnderlying",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "allToken",
     "outputs": [
@@ -390,57 +369,38 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "baseToken",
+        "name": "vault",
         "type": "address"
       }
     ],
-    "name": "allTokenPrice",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "allTokenPriceInUSD",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "fund",
-        "type": "address"
-      }
-    ],
-    "name": "archiveFund",
+    "name": "archiveVault",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "aumStats",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
-        "name": "baseToken",
+        "name": "vault",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "stakeAmount",
+        "name": "stakedALL",
         "type": "uint256"
       }
     ],
@@ -484,7 +444,7 @@
       },
       {
         "internalType": "uint256[2]",
-        "name": "subscriptionLimit",
+        "name": "allocationLimits",
         "type": "uint256[2]"
       },
       {
@@ -494,11 +454,11 @@
       },
       {
         "internalType": "address",
-        "name": "baseToken",
+        "name": "underlyingToken",
         "type": "address"
       }
     ],
-    "name": "createFund",
+    "name": "createVault",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -534,228 +494,9 @@
     "name": "factory",
     "outputs": [
       {
-        "internalType": "contract IFactory",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "baseToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "acToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "fundBorrow",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "name": "fundNumLimit",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "fund",
-        "type": "address"
-      }
-    ],
-    "name": "fundRealtimeAUMLimit",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "limit",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "baseToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "fundRepay",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "fund",
-        "type": "address"
-      }
-    ],
-    "name": "fundSettleAUMLimit",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "limit",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "fund",
-        "type": "address"
-      }
-    ],
-    "name": "fundStaking",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "stakeAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "fundStorage",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "stakeAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "frozenAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "settleAUMLimit",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "latestConfiscatedAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "continuousBreachTimes",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "fund",
-        "type": "address"
-      }
-    ],
-    "name": "fundUnstakingLimit",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "limit",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getVerifiers",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "globalAUMInUSD",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "globalReturnInUSD",
-    "outputs": [
-      {
-        "internalType": "int256",
-        "name": "",
-        "type": "int256"
       }
     ],
     "stateMutability": "view",
@@ -786,12 +527,12 @@
   },
   {
     "inputs": [],
-    "name": "minimumStake",
+    "name": "keeper",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "address",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -801,30 +542,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "baseToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "acAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "onACBuy",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "baseToken",
+        "name": "underlyingToken",
         "type": "address"
       },
       {
@@ -834,31 +552,31 @@
       },
       {
         "internalType": "uint256",
-        "name": "nav",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "aum",
         "type": "uint256"
       },
       {
+        "internalType": "int256",
+        "name": "aumDelta",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "profit",
+        "type": "int256"
+      },
+      {
         "internalType": "uint256",
-        "name": "lastAUM",
+        "name": "withholdingRatio",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "redemptionRatio",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "redeemingTokenAmount",
+        "name": "withholdingACToken",
         "type": "uint256"
       }
     ],
-    "name": "onFundSettleAccount",
+    "name": "onVaultSettleAccount",
     "outputs": [
       {
         "internalType": "uint256",
@@ -877,6 +595,19 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "paused",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -909,19 +640,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "fund",
-        "type": "address"
-      }
-    ],
-    "name": "removeFund",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
@@ -932,11 +650,102 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_acProtocol",
+        "name": "underlyingToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "returnUnderlying",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "enum IFactory.ReviewType",
+        "name": "vType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "pass",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "instantApply",
+        "type": "bool"
+      }
+    ],
+    "name": "reviewVault",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "reviewer",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "setACProtocol",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rewardTracker",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "saftyLimitMultiplier",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_aumStats",
+        "type": "address"
+      }
+    ],
+    "name": "setAUMStats",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -958,16 +767,68 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_platFeeTo",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_teamFeeTo",
+        "name": "account",
         "type": "address"
       }
     ],
-    "name": "setFeeTo",
+    "name": "setKeeper",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "_paused",
+        "type": "bool"
+      }
+    ],
+    "name": "setPaused",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reviewer",
+        "type": "address"
+      }
+    ],
+    "name": "setReviewer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tracker",
+        "type": "address"
+      }
+    ],
+    "name": "setRewardTracker",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "multiplier",
+        "type": "uint256"
+      }
+    ],
+    "name": "setSaftyLimitMultiplier",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -981,37 +842,11 @@
       },
       {
         "internalType": "uint256[]",
-        "name": "nums",
+        "name": "counts",
         "type": "uint256[]"
       }
     ],
-    "name": "setFundNumLimit",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "minimum",
-        "type": "uint256"
-      }
-    ],
-    "name": "setMinimumStake",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "percent",
-        "type": "uint256"
-      }
-    ],
-    "name": "setUserRewardPercent",
+    "name": "setVaultCountLimit",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1020,25 +855,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "add",
-        "type": "bool"
-      }
-    ],
-    "name": "setVerifier",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
       },
       {
@@ -1050,19 +867,6 @@
     "name": "stake",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "teamFeeTo",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1082,7 +886,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
       },
       {
@@ -1100,7 +904,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
       },
       {
@@ -1117,7 +921,7 @@
           },
           {
             "internalType": "uint256[2]",
-            "name": "subscriptionLimit",
+            "name": "allocationLimits",
             "type": "uint256[2]"
           },
           {
@@ -1141,12 +945,12 @@
             "type": "address[]"
           }
         ],
-        "internalType": "struct IFund.UpdateParams",
+        "internalType": "struct IVault.UpdateParams",
         "name": "params",
         "type": "tuple"
       }
     ],
-    "name": "updateFund",
+    "name": "updateVault",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1183,8 +987,33 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "userRewardPercent",
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "vaultAUMLimit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "vaultCountLimit",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1199,23 +1028,101 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "fund",
+        "name": "vault",
         "type": "address"
-      },
-      {
-        "internalType": "enum IFactory.VerificationType",
-        "name": "vType",
-        "type": "uint8"
-      },
-      {
-        "internalType": "bool",
-        "name": "pass",
-        "type": "bool"
       }
     ],
-    "name": "verifyFund",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "vaultSettlementAUMLimit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "vaultStakedALL",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "stakedALL",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "vaultStorage",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "stakedALL",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "frozenALL",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "settlementAUMLimit",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastConfiscatedALL",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "consecutiveBreachCount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "vaultUnstakeLimit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]

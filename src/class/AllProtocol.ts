@@ -49,7 +49,7 @@ class AllProtocol {
         stakeAmount
       )
       if (!approve) return approve
-      const gasLimit = await estimateGas(contract, 'createFund', [
+      const gasLimit = await estimateGas(contract, 'createVault', [
         name,
         symbol,
         desc,
@@ -59,7 +59,7 @@ class AllProtocol {
         stakeAmount,
         baseTokenAddress
       ])
-      const response = await contract.createFund(
+      const response = await contract.createVault(
         name,
         symbol,
         desc,
@@ -102,8 +102,8 @@ class AllProtocol {
         [],
         []
       ]
-      const gasLimit = await estimateGas(contract, 'updateFund', [fundAddress, data])
-      const response = await contract.updateFund(fundAddress, data, { gasLimit })
+      const gasLimit = await estimateGas(contract, 'updateVault', [fundAddress, data])
+      const response = await contract.updateVault(fundAddress, data, { gasLimit })
       const receipt = await response.wait()
       // 返回结果
       if (receipt.status) return outcome(0, null, receipt.transactionHash)
@@ -200,7 +200,7 @@ class AllProtocol {
     const contract = getAllProtocolContract()
     // console.log(contract)
     try {
-      const res = await contract.fundNumLimit(address)
+      const res = await contract.vaultCountLimit(address)
       return Number(safeInterceptionValues(res, 0, 0))
     } catch (error) {
       console.info(error)
@@ -209,16 +209,16 @@ class AllProtocol {
   }
 
   // 检查是否具有基金经理权限
-  checkAuthorizedManager = async (address: string) => {
-    const contract = getAllProtocolContract()
-    // console.log(contract)
-    try {
-      return await contract.isManagerAuthorized(address)
-    } catch (error) {
-      console.info(error)
-      return false
-    }
-  }
+  // checkAuthorizedManager = async (address: string) => {
+  //   const contract = getAllProtocolContract()
+  //   // console.log(contract)
+  //   try {
+  //     return await contract.isManagerAuthorized(address)
+  //   } catch (error) {
+  //     console.info(error)
+  //     return false
+  //   }
+  // }
 
   allTokenPrice = async (baseToken: string) => {
     console.log(baseToken)
@@ -249,7 +249,7 @@ class AllProtocol {
   fundUnstakingLimit = async (address: string) => {
     const contract = getAllProtocolContract()
     try {
-      const res = await contract.fundUnstakingLimit(address)
+      const res = await contract.vaultUnstakeLimit(address)
       return Number(safeInterceptionValues(res, 4, 18))
     } catch (error) {
       console.info(error)

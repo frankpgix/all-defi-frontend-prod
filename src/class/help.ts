@@ -78,45 +78,46 @@ export interface FundDetailProps {
 export const calcFundDetail = (item: any) => {
   // console.log(item, 'test')
   const epochStartTime = Number(safeInterceptionValues(item.epochStartTime, 0, 0)) * 1000
-  const baseTokenObj = getTokenByAddress(item.baseToken)
+  const baseTokenObj = getTokenByAddress(item.underlyingToken)
   const decimals = baseTokenObj.decimals
+  // console.log(epochStartTime, 'test')
   // const precision = baseTokenObj.precision
   return {
     baseTokenObj,
-    baseToken: item.baseToken,
-    address: item.fundId,
+    baseToken: item.underlyingToken,
+    address: item.vaultId,
     name: item.name,
     manager: item.manager,
     createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
     epochIndex: Number(safeInterceptionValues(item.epochIndex, 0, 0)),
     epochStartTime,
-    status: Number(safeInterceptionValues(item.status, 0, 0)),
+    status: Number(safeInterceptionValues(item.stage, 0, 0)),
 
     subscribeRedeemEndTime:
-      epochStartTime + Number(safeInterceptionValues(item.stageEndTime[0], 0, 0)) * 1000,
+      epochStartTime + Number(safeInterceptionValues(item.stageDurations[0], 0, 0)) * 1000,
     subscribeEndTime:
-      epochStartTime + Number(safeInterceptionValues(item.stageEndTime[1], 0, 0)) * 1000,
+      epochStartTime + Number(safeInterceptionValues(item.stageDurations[1], 0, 0)) * 1000,
     preSettleEndTime:
-      epochStartTime + Number(safeInterceptionValues(item.stageEndTime[2], 0, 0)) * 1000,
+      epochStartTime + Number(safeInterceptionValues(item.stageDurations[2], 0, 0)) * 1000,
     settleEndTime:
-      epochStartTime + Number(safeInterceptionValues(item.stageEndTime[3], 0, 0)) * 1000,
+      epochStartTime + Number(safeInterceptionValues(item.stageDurations[3], 0, 0)) * 1000,
 
-    settleAUMLimit: Number(safeInterceptionValues(item.settleAUMLimit, decimals, decimals)),
-    realtimeAUMLimit: Number(safeInterceptionValues(item.realtimeAUMLimit, decimals, decimals)),
-    aum: Number(safeInterceptionValues(item.aum, decimals, decimals)),
-    nav: Number(safeInterceptionValues(item.nav, decimals, decimals)),
+    settleAUMLimit: Number(safeInterceptionValues(item.settlementAUMLimit, decimals, decimals)),
+    realtimeAUMLimit: Number(safeInterceptionValues(item.aumLimit, decimals, decimals)),
+    aum: Number(safeInterceptionValues(item.beginningAUM, decimals, decimals)),
+    nav: Number(safeInterceptionValues(item.aum, decimals, decimals)),
 
     sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
-    baseTokenPriceInUSD: Number(safeInterceptionValues(item.baseTokenPriceInUSD, 4, 18)),
+    baseTokenPriceInUSD: Number(safeInterceptionValues(item.underlyingTokenPriceInUSD, 4, 18)),
     costPrice: Number(safeInterceptionValues(item.costPrice, 4, 18)),
     unusedAsset: Number(safeInterceptionValues(item.unusedAsset, decimals, decimals)),
-    subscribingACToken: Number(safeInterceptionValues(item.subscribingACToken, decimals, decimals)),
-    redeemingShares: Number(safeInterceptionValues(item.redeemingShares)),
-    miningShares: Number(safeInterceptionValues(item.miningShares)),
+    subscribingACToken: Number(safeInterceptionValues(item.allocatingACToken, decimals, decimals)),
+    redeemingShares: Number(safeInterceptionValues(item.withholdingShare)),
+    miningShares: Number(safeInterceptionValues(item.miningShare)),
 
     roe: Number(safeInterceptionValues(item.roe, 4, 16)),
     lastRoe: Number(safeInterceptionValues(item.lastRoe, 4, 16)),
-    lastRedemptionRatio: Number(safeInterceptionValues(item.lastRedemptionRatio, 4, 16)),
+    lastRedemptionRatio: Number(safeInterceptionValues(item.lastWithholdingRatio, 4, 16)),
     historyReturn: Number(safeInterceptionValues(item.historyReturn, decimals, decimals)),
 
     managerFee: Number(safeInterceptionValues(item.managerFee, decimals, decimals)),
@@ -204,13 +205,13 @@ export interface FundBaseProps {
 
 export const calcFundBase = (item: any, fundAddress?: string): FundBaseProps => {
   // console.log(1234, item)
-  const baseTokenObj = getTokenByAddress(item.baseToken)
+  const baseTokenObj = getTokenByAddress(item.underlyingToken)
   const decimals = baseTokenObj.decimals
   const precision = baseTokenObj.precision
   // const decimals = getDecimalsByAddress(item.baseToken)
   // console.log(1234, item, item.baseToken, decimals, safeInterceptionValues(item.subscriptionLimit[1], 6, 18))
   return {
-    baseToken: item.baseToken,
+    baseToken: item.underlyingToken,
     acToken: item.acToken,
     address: fundAddress ?? '',
     createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
@@ -219,14 +220,16 @@ export const calcFundBase = (item: any, fundAddress?: string): FundBaseProps => 
     desc: item.desc,
     manager: item.manager,
     managerName: item.managerName,
-    managerFeePercent: Number(safeInterceptionValues(item.managerFee, 2, 2)),
-    platFeePercent: Number(safeInterceptionValues(item.platFee, 2, 2)),
+    managerFeePercent: 0.2,
+    platFeePercent: 0.1,
+    // managerFeePercent: Number(safeInterceptionValues(item.managerFee, 2, 2)),
+    // platFeePercent: Number(safeInterceptionValues(item.platFee, 2, 2)),
     derivatives: item.supportedDerivatives,
     subscriptionMinLimit: Number(
-      safeInterceptionValues(item.subscriptionLimit[0], precision, decimals)
+      safeInterceptionValues(item.allocationLimits[0], precision, decimals)
     ),
     subscriptionMaxLimit: Number(
-      safeInterceptionValues(item.subscriptionLimit[1], precision, decimals)
+      safeInterceptionValues(item.allocationLimits[1], precision, decimals)
     )
   }
 }
@@ -281,9 +284,9 @@ export const GlobalAssetStatisticDefault = {
 }
 export const calcGlobalAssetStatistic = (item: any): GlobalAssetStatisticProps => {
   return {
-    assetInFunds: Number(safeInterceptionValues(item.assetInFunds)),
-    aum: Number(safeInterceptionValues(item.aum)),
-    historyReturn: Number(safeInterceptionValues(item.historyReturn))
+    assetInFunds: Number(safeInterceptionValues(item._vaultAUMInUSD)),
+    aum: Number(safeInterceptionValues(item._overallAUMInUSD)),
+    historyReturn: Number(safeInterceptionValues(item._overallReturnInUSD))
   }
 }
 
@@ -396,12 +399,13 @@ export const FundBreachDetailDefault = {
 }
 
 export const calcFundBreachDetail = (item: any) => {
+  // console.log(item)
   return {
-    address: item.fundId,
-    latestFrozenALL: Number(safeInterceptionValues(item.latestFrozenALL, 4, 18)),
-    latestConfiscatedALL: Number(safeInterceptionValues(item.latestConfiscatedALL, 4, 18)),
-    continuousBreachTimes: Number(safeInterceptionValues(item.continuousBreachTimes, 0, 0)),
-    isManagerFrozen: item.isManagerFrozen
+    address: item.vaultId,
+    latestFrozenALL: Number(safeInterceptionValues(item.lastFrozenALL, 4, 18)),
+    latestConfiscatedALL: Number(safeInterceptionValues(item.lastConfiscatedALL, 4, 18)),
+    continuousBreachTimes: Number(safeInterceptionValues(item.consecutiveBreachCount, 0, 0)),
+    isManagerFrozen: item.managerPaused
     // fundCloseStatus: Number(safeInterceptionValues(item.fundCloseStatus, 0, 0))
   }
 }

@@ -31,12 +31,30 @@
   },
   {
     "anonymous": false,
+    "inputs": [],
+    "name": "Archived",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
     "inputs": [
       {
         "indexed": true,
         "internalType": "address",
         "name": "target",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
       }
     ],
     "name": "Execute",
@@ -47,12 +65,12 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "uint8",
-        "name": "vType",
-        "type": "uint8"
+        "internalType": "bool",
+        "name": "paused",
+        "type": "bool"
       }
     ],
-    "name": "ExecuteVerification",
+    "name": "SetInvestorsPaused",
     "type": "event"
   },
   {
@@ -60,31 +78,12 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "managerFee",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "platFee",
-        "type": "uint256"
+        "internalType": "bool",
+        "name": "paused",
+        "type": "bool"
       }
     ],
-    "name": "SetFee",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "enum IFund.GovState",
-        "name": "govState",
-        "type": "uint8"
-      }
-    ],
-    "name": "SetGovState",
+    "name": "SetManagerPaused",
     "type": "event"
   },
   {
@@ -97,13 +96,7 @@
         "type": "uint256[4]"
       }
     ],
-    "name": "SetStageEndTime",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [],
-    "name": "Started",
+    "name": "SetStageDurations",
     "type": "event"
   },
   {
@@ -151,29 +144,17 @@
     "type": "event"
   },
   {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "enum IFund.ActionType",
-        "name": "actionType",
-        "type": "uint8"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "baseToken",
-        "type": "address"
-      },
-      {
-        "indexed": false,
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
       }
     ],
-    "name": "UserAction",
-    "type": "event"
+    "name": "allocate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [
@@ -224,22 +205,10 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "assetPosition",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
+    "inputs": [],
+    "name": "archive",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -282,7 +251,7 @@
         "components": [
           {
             "internalType": "address",
-            "name": "baseToken",
+            "name": "underlyingToken",
             "type": "address"
           },
           {
@@ -321,18 +290,8 @@
             "type": "string"
           },
           {
-            "internalType": "uint256",
-            "name": "managerFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "platFee",
-            "type": "uint256"
-          },
-          {
             "internalType": "uint256[2]",
-            "name": "subscriptionLimit",
+            "name": "allocationLimits",
             "type": "uint256[2]"
           },
           {
@@ -347,7 +306,7 @@
           },
           {
             "internalType": "uint256[4]",
-            "name": "stageEndTime",
+            "name": "stageDurations",
             "type": "uint256[4]"
           },
           {
@@ -357,11 +316,11 @@
           },
           {
             "internalType": "address",
-            "name": "weth",
+            "name": "governor",
             "type": "address"
           }
         ],
-        "internalType": "struct IFund.BaseInfo",
+        "internalType": "struct IVault.BaseInfo",
         "name": "",
         "type": "tuple"
       }
@@ -371,29 +330,29 @@
   },
   {
     "inputs": [],
-    "name": "baseToken",
-    "outputs": [
+    "name": "cancelAllocation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "cancelWithholding",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
+        "internalType": "bytes",
+        "name": "params",
+        "type": "bytes"
       }
     ],
+    "name": "checkUpdateParams",
+    "outputs": [],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "cancelRedeem",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "cancelSubscribe",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -408,19 +367,6 @@
     "name": "claimCompensation",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "daoAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -461,25 +407,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "name": "derivativePosition",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "epochInfo",
     "outputs": [
@@ -497,37 +424,22 @@
           },
           {
             "internalType": "uint256",
-            "name": "totalShares",
+            "name": "shares",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "totalSubscribingACToken",
+            "name": "allocatingACToken",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "totalRedeemingShares",
+            "name": "withholdingShare",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "aum",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "lastManagerFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "int256",
-            "name": "historyReturn",
-            "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "historyManagerFee",
+            "name": "beginningAUM",
             "type": "uint256"
           },
           {
@@ -554,14 +466,37 @@
             "internalType": "uint256",
             "name": "totalReservedALL",
             "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "archived",
+            "type": "bool"
           }
         ],
-        "internalType": "struct IFund.Epoch",
+        "internalType": "struct IVault.Epoch",
         "name": "",
         "type": "tuple"
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "vType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bytes",
+        "name": "params",
+        "type": "bytes"
+      }
+    ],
+    "name": "executeReview",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -594,24 +529,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "vType",
-        "type": "uint8"
-      },
-      {
-        "internalType": "bytes",
-        "name": "params",
-        "type": "bytes"
-      }
-    ],
-    "name": "executeVerification",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "factory",
     "outputs": [
@@ -626,25 +543,22 @@
   },
   {
     "inputs": [],
-    "name": "fundStage",
+    "name": "historyStats",
     "outputs": [
       {
-        "internalType": "enum IFund.Stage",
-        "name": "stages",
-        "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "govState",
-    "outputs": [
+        "internalType": "uint256",
+        "name": "lastManagerFee",
+        "type": "uint256"
+      },
       {
-        "internalType": "enum IFund.GovState",
-        "name": "",
-        "type": "uint8"
+        "internalType": "uint256",
+        "name": "historyManagerFee",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "historyReturn",
+        "type": "int256"
       }
     ],
     "stateMutability": "view",
@@ -710,21 +624,21 @@
           },
           {
             "internalType": "address[]",
-            "name": "tokens",
+            "name": "assets",
             "type": "address[]"
           },
           {
             "internalType": "uint256[2]",
-            "name": "subscriptionLimit",
+            "name": "allocationLimits",
             "type": "uint256[2]"
           },
           {
             "internalType": "address",
-            "name": "acToken",
+            "name": "underlyingToken",
             "type": "address"
           }
         ],
-        "internalType": "struct IFund.InitParams",
+        "internalType": "struct IVault.InitParams",
         "name": "params",
         "type": "tuple"
       }
@@ -732,6 +646,19 @@
     "name": "initialize",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "investorsPaused",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -798,12 +725,38 @@
   },
   {
     "inputs": [],
+    "name": "keeper",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "manager",
     "outputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "managerPaused",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -823,46 +776,14 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "nav",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "_nav",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
+        "internalType": "bool",
+        "name": "paused",
+        "type": "bool"
       }
     ],
-    "name": "pendingCompensationOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "redeem",
+    "name": "setInvestorsPaused",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -870,30 +791,12 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "managerFee",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "platFee",
-        "type": "uint256"
+        "internalType": "bool",
+        "name": "paused",
+        "type": "bool"
       }
     ],
-    "name": "setFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "enum IFund.GovState",
-        "name": "state",
-        "type": "uint8"
-      }
-    ],
-    "name": "setGovState",
+    "name": "setManagerPaused",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -902,11 +805,11 @@
     "inputs": [
       {
         "internalType": "uint256[4]",
-        "name": "endTime",
+        "name": "durations",
         "type": "uint256[4]"
       }
     ],
-    "name": "setStageEndTime",
+    "name": "setStageDurations",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -926,7 +829,7 @@
         "type": "uint256"
       }
     ],
-    "name": "settleHistory",
+    "name": "settlementSnapshot",
     "outputs": [
       {
         "internalType": "uint256",
@@ -935,12 +838,12 @@
       },
       {
         "internalType": "uint256",
-        "name": "redemptionRatio",
+        "name": "withholdingRatio",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "redeemingShares",
+        "name": "withholdingShare",
         "type": "uint256"
       },
       {
@@ -958,34 +861,21 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "_sharePrice",
+        "name": "sharePrice",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_pendingManagerFee",
+        "name": "pendingManagerFee",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_pendingPlatFee",
+        "name": "pendingPlatFee",
         "type": "uint256"
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "subscribe",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1081,33 +971,36 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "underlyingToken",
+    "outputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "token",
         "type": "address"
       }
     ],
-    "name": "userStorage",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "userInfo",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "lastUpdateEpoch",
+        "name": "allocatingACToken",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "subscribingACToken",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "redeemingShares",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lastRedeemingShares",
+        "name": "withholdingShare",
         "type": "uint256"
       },
       {
@@ -1133,16 +1026,59 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "account",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "userUnclaimedACToken",
+    "name": "userStorage",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "lastUpdateEpoch",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "allocatingACToken",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "withholdingShare",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastWithholdingShare",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "unclaimedACToken",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "accumulatedACToken",
+        "type": "int256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "unclaimedALL",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "vaultStage",
+    "outputs": [
+      {
+        "internalType": "enum IVault.Stage",
+        "name": "stage",
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",
@@ -1185,6 +1121,19 @@
       }
     ],
     "name": "withdrawTokens",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withhold",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
