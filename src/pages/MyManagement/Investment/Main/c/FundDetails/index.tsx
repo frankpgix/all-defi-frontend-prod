@@ -67,7 +67,7 @@ const FundDetails: FC<Props> = ({ data, callback }) => {
 
   const getData = useCallback(async () => {
     const res = await getDerivativeList()
-    console.log(res, 'getDerivativeList')
+    // console.log(res, 'getDerivativeList')
     if (res) setDerivativeList(res)
   }, [getDerivativeList])
 

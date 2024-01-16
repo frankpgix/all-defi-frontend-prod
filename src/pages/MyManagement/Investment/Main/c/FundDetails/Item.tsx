@@ -17,7 +17,7 @@ import RoeShow from '@@/common/RoeShow'
 import InfoDialog from '@@/common/Dialog/Info'
 import FundIcon from '@@/common/FundIcon'
 import TokenValue from '@@/common/TokenValue'
-import Popper from '@@/common/Popper'
+// import Popper from '@@/common/Popper'
 
 import Claim from './Claim'
 
@@ -49,8 +49,15 @@ const FundItem: FC<Props> = ({
   const [infoStatus2, setInfoStatus2] = useState<boolean>(false)
   const currReturn = useMemo(
     // () => BN(fund.data.nav).minus(fund.data.aum).toNumber(),
-    () => BN(fund.data.roe).times(fund.data.aum).div(100).toNumber(),
-    [fund.data.roe, fund.data.aum]
+    // () => BN(fund.data.roe).times(fund.data.aum).div(100).toNumber(),
+    // () => BN(fund.data.roe).times(fund.data.aum).div(100).toNumber(),
+    () =>
+      BN(fund.data.roe)
+        .times(fund.data.beginSharePrice)
+        .times(fund.data.shares)
+        .div(100)
+        .toNumber(),
+    [fund.data.roe, fund.data.beginSharePrice, fund.data.shares]
   )
 
   const derivatives = useMemo(

@@ -27,6 +27,7 @@ const Banner: FC<{ loading: boolean; stakeSharesValue: number }> = ({
     [funds, timeType, startTime]
   )
   const { data: chartData, loading: chartLoading } = useMiningData(gql, fundsName, timeType)
+  console.log('chartData', chartData)
   const chartDataStr = useMemo(() => JSON.stringify(chartData), [chartData])
   const setTotalFunc = useCallback(async () => {
     if (timeType === 'DAY') {

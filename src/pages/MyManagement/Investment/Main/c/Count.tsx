@@ -261,7 +261,9 @@ const CountDetail: FC = () => {
           </SectionItem>
           <SectionItem label="Epoch Beginning Share Price">
             <TokenValue
-              value={BN(activeData.aum).div(activeData.shares).toNumber()}
+              // value={BN(activeData.aum).div(activeData.shares).toNumber()}
+              value={activeData.beginSharePrice}
+              // value={BN(activeData.aum).div(activeData.shares).toNumber()}
               token={baseToken}
               size="mini"
               format="0,0.00"

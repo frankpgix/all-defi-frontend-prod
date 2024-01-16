@@ -62,6 +62,7 @@ class FundReader {
     // return null
     try {
       const [fundList, detailList] = await contract.userDetailList(0, 999, false)
+      // console.log(fundList, detailList)
       const list = fundList
         .map((item: any, index: number) => {
           const fund: FundProps = calcFundBase(item)

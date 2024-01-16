@@ -293,26 +293,32 @@ export const calcGlobalAssetStatistic = (item: any): GlobalAssetStatisticProps =
 // 个人基金数据三件套
 export const calcFundUserDetail = (item: any): FundUserDataProps => {
   // const decimals = getDecimalsByAddress(item.baseToken)
-  const baseTokenObj = getTokenByAddress(item.baseToken)
+  const baseTokenObj = getTokenByAddress(item.underlyingToken)
   const decimals = baseTokenObj.decimals
   const precision = baseTokenObj.precision
 
   const nav = Number(safeInterceptionValues(item.nav, precision, decimals))
-  const baseTokenPriceInUSD = Number(safeInterceptionValues(item.baseTokenPriceInUSD, 4, 18))
+  // const baseTokenPriceInUSD = Number(safeInterceptionValues(item.underlyingTokenPriceInUSD, 4, 18))
+  const baseTokenPriceInUSD = 1
+  const beginSharePrice = BN(safeInterceptionValues(item.shares, 18, 18))
+    .div(BN(safeInterceptionValues(item.roe, 18, 18)).plus(1))
+    .toNumber()
+
+  // console.log('beginSharePrice', beginSharePrice)
   return {
-    address: item.fundId,
-    baseToken: item.baseToken,
-    status: Number(safeInterceptionValues(item.status, 0, 0)),
-    aum: Number(safeInterceptionValues(item.aum, precision, decimals)),
+    address: item.vaultId,
+    baseToken: item.underlyingToken,
+    status: Number(safeInterceptionValues(item.stage, 0, 0)),
+    // aum: Number(safeInterceptionValues(item.beginningAUM, precision, decimals)),
+    aum: Number(BN(beginSharePrice).times(safeInterceptionValues(item.shares, 18, 18))),
+    beginSharePrice,
     nav,
     navInUSD: BN(nav).times(baseTokenPriceInUSD).toNumber(),
     baseTokenPriceInUSD,
     shares: Number(safeInterceptionValues(item.shares, 4, 18)),
     sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
-    subscribingACToken: Number(
-      safeInterceptionValues(item.subscribingACToken, precision, decimals)
-    ),
-    redeemingShares: Number(safeInterceptionValues(item.redeemingShares, 4, 18)),
+    subscribingACToken: Number(safeInterceptionValues(item.allocatingACToken, precision, decimals)),
+    redeemingShares: Number(safeInterceptionValues(item.withholdingShare, 4, 18)),
     unclaimedACToken: Number(safeInterceptionValues(item.unclaimedACToken, precision, decimals)),
     unclaimedALL: Number(safeInterceptionValues(item.unclaimedALL, 4, 18)),
     historyReturn: Number(safeInterceptionValues(item.historyReturn, precision, decimals)),
@@ -351,6 +357,7 @@ export interface FundUserDataProps {
   unclaimedALL: number
   historyReturn: number
   roe: number
+  beginSharePrice: number
 }
 
 export interface FundProps extends FundBaseProps {
@@ -376,7 +383,8 @@ export const FundUserDataDefault = {
   navInUSD: 0,
   baseTokenPriceInUSD: 0,
   historyReturn: 0,
-  roe: 0
+  roe: 0,
+  beginSharePrice: 0
 }
 
 // 基金冻结状态三件套

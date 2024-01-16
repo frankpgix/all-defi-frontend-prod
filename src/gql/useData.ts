@@ -53,7 +53,7 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
   })
   useEffect(() => void getData(), [timeType])
 
-  const sData = listData?.fundIntervalDatas ?? []
+  const sData = listData?.vaultIntervalDatas ?? []
   const timeArr = uniq(sData.map((item: any) => item.periodStartUnix))
   // console.log(sData, timeArr)
   const data = timeArr
@@ -67,12 +67,12 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
         if (fund) {
           // const baseToken = getTokenByAddress(fund.baseToken)
           // console.log(fund.miningAmount)
-          const amount = fund ? safeInterceptionValues(fund.miningAmount, 18, 18) : 0
+          const amount = fund ? safeInterceptionValues(fund.miningShare, 18, 18) : 0
           // todo ,这里需要USD价格
           const price = fund ? safeInterceptionValues(fund.sharePrice, 18, 18) : 0
           // console.log(safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18))
           const baseTokenPriceInUSD = fund
-            ? safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18)
+            ? safeInterceptionValues(fund.underlyingTokenPriceInUSD, 18, 18)
             : 0
           const value = BN(amount).times(price).times(baseTokenPriceInUSD).toString()
           o[name] = Number(calcDecimalsFloor(value, 2))

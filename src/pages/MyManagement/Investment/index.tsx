@@ -8,7 +8,7 @@ import Main from './Main'
 const Investment: FC = () => {
   useGetUserFundList()
   const { loading, fundList, getData } = useUserFundList()
-  console.log(loading)
+  // console.log(loading)
   const isInvest = useMemo(() => fundList.length === 0 && !loading, [fundList, loading])
 
   return (

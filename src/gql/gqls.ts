@@ -103,23 +103,23 @@ export const calcMiningData = (fundAddress: string, type: string, createTime: nu
   const { dataType, startTime } = calcDataTypeAndStartTime(type, createTime)
   return gql`
     query {
-      fundIntervalDatas(
+      vaultIntervalDatas(
         orderBy: periodStartUnix
         orderDirection: desc
         first: 1000
         where: {
-          fundId_in: ${fundAddress.toLowerCase()}
+          vaultId_in: ${fundAddress.toLowerCase()}
           intervalType: "${dataType}"
           periodStartUnix_gt: ${startTime}
         }
       ) {
-        fundId
+        vaultId
         name
         periodStartUnix
         sharePrice
-        baseTokenPriceInUSD
-        miningAmount
-        baseToken
+        underlyingTokenPriceInUSD
+        miningShare
+        underlyingToken
       }
     }
   `

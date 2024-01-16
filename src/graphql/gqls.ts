@@ -189,24 +189,24 @@ export const calcUniSwapRecordGQL = (fundAddress: string) => gql`
 export const calcUserFundHistoryGQL = (userAddress?: string, fundAddress?: string) => {
   return gql`
     query {
-      funds {
+      vaults {
         id
         name
       }
-      fundUserActions(
+      vaultUserActions(
         orderBy: timestamp
         orderDirection: desc
         where: {
           ${userAddress ? `investor: "${userAddress.toLowerCase()}"` : ''}
-          ${fundAddress ? `fundId: "${fundAddress.toLowerCase()}"` : ''}
+          ${fundAddress ? `vaultId: "${fundAddress.toLowerCase()}"` : ''}
         }
       ) {
         id
         investor
-        fundId
+        vaultId
         amount
         actionType
-        baseToken
+        underlyingToken
         timestamp
       }
     }
