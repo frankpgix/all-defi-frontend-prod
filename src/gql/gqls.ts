@@ -162,6 +162,7 @@ export const calcFundListGQL = () => gql`
       currentAPR
       epochIndex
       createTime
+      stage
     }
   }
 `

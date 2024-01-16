@@ -133,28 +133,29 @@ export const useFundListData = () => {
   })
 
   console.log(sData)
-  const data = (sData?.vaults ?? []).map((item: any) => {
-    const baseToken = getTokenByAddress(item.underlyingToken)
-    return {
-      name: item.name,
-      managerName: item.managerName,
-      epoch: item.epochIndex,
-      address: item.id,
-      aum: safeInterceptionValues(item.beginningAUM, baseToken.precision, baseToken.decimals),
-      capacityAvailable: safeInterceptionValues(
-        item.capacityAvailable,
-        baseToken.precision,
-        baseToken.decimals
-      ),
-      apr: safeInterceptionValues(item.currentAPR.split('.')[0], 4, 18),
-      dayReturn: safeInterceptionValues(item.dayReturn, 4, 18),
-      weekReturn: safeInterceptionValues(item.weekReturn, 4, 18),
-      monthReturn: safeInterceptionValues(item.monthReturn, 4, 18),
-      yearReturn: safeInterceptionValues(item.yearReturn, 4, 18),
-      baseToken
-      // verified: item.verified
-    }
-  })
-  // .filter((item: any) => item.verified === true)
+  const data = (sData?.vaults ?? [])
+    .map((item: any) => {
+      const baseToken = getTokenByAddress(item.underlyingToken)
+      return {
+        name: item.name,
+        managerName: item.managerName,
+        epoch: item.epochIndex,
+        address: item.id,
+        aum: safeInterceptionValues(item.beginningAUM, baseToken.precision, baseToken.decimals),
+        capacityAvailable: safeInterceptionValues(
+          item.capacityAvailable,
+          baseToken.precision,
+          baseToken.decimals
+        ),
+        apr: safeInterceptionValues(item.currentAPR.split('.')[0], 4, 18),
+        dayReturn: safeInterceptionValues(item.dayReturn, 4, 18),
+        weekReturn: safeInterceptionValues(item.weekReturn, 4, 18),
+        monthReturn: safeInterceptionValues(item.monthReturn, 4, 18),
+        yearReturn: safeInterceptionValues(item.yearReturn, 4, 18),
+        baseToken,
+        verified: item.stage !== 0
+      }
+    })
+    .filter((item: any) => item.verified === true)
   return { loading, data, error }
 }
