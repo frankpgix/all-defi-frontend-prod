@@ -49,7 +49,7 @@ export interface ACBuyDataProps {
   id: string
   investor: string
   sallAmount: string
-  baseToken: string
+  underlyingToken: string
 }
 
 export interface FundActionAssetProps {

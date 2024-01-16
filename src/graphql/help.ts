@@ -9,9 +9,9 @@ interface FundsProps {
 export interface RecordProps {
   id: string
   investor: string
-  fundId: string
+  vaultId: string
   amount: string
-  baseToken: string
+  underlyingToken: string
   actionType: number
   timestamp: number
 }
@@ -46,7 +46,7 @@ export const calcActionData = (
   item: RecordProps,
   funds?: FundsProps[]
 ): UserFundHistoryDataProps => {
-  const token = getTokenByAddress(item.baseToken)
+  const token = getTokenByAddress(item.underlyingToken)
   // console.log(22222, token, item, funds)
   const action = ActionType[item.actionType] ?? '-'
   let amount = 0
@@ -59,12 +59,12 @@ export const calcActionData = (
     amount = -amount
   }
   return {
-    name: (funds ? funds.find((fund) => fund.id === item.fundId)?.name : '') ?? '',
+    name: (funds ? funds.find((fund) => fund.id === item.vaultId)?.name : '') ?? '',
     amount,
     action,
     hash: item.id.split('-')[0],
     investor: item.investor,
-    baseToken: item.baseToken,
+    baseToken: item.underlyingToken,
     tokenName: token.name,
     time: item.timestamp * 1000,
     token

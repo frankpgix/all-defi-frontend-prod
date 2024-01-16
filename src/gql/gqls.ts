@@ -37,7 +37,7 @@ export const calcManageFundDatasGql = (manager: string, type: string, createTime
         manager
         intervalType
         periodStartUnix
-        navInUSD
+        aumInUSD
       }
     }
   `
@@ -47,19 +47,19 @@ export const calcFundDatasGql = (fundAddress: string, type: string, createTime: 
   const { startTime, dataType } = calcDataTypeAndStartTime(type, createTime)
   return gql`
     query {
-      fundIntervalDatas(
+      vaultIntervalDatas(
         orderBy: periodStartUnix
         orderDirection: desc
         first: 1000
         where: {
-          fundId: "${fundAddress.toLowerCase()}"
+          vaultId: "${fundAddress.toLowerCase()}"
           intervalType: "${dataType}"
           periodStartUnix_gt: ${startTime}
         }
       ) {
         intervalType
         periodStartUnix
-        nav
+        aum
       }
     }
   `
@@ -80,19 +80,19 @@ export const calcFundDetailChartGQL = (fundAddress: string, epoch: number, timeT
   const epochs = calcEpochs()
   return gql`
     query {
-      fundIntervalDatas(
+      vaultIntervalDatas(
         orderBy: periodStartUnix
         orderDirection: desc
         first: 1000
         where: {
-          fundId: "${fundAddress.toLowerCase()}"
+          vaultId: "${fundAddress.toLowerCase()}"
           intervalType: "${dataType}"
           epochIndex_in: ${JSON.stringify(epochs)}
         }
       ) {
         intervalType
         periodStartUnix
-        nav
+        aum
         sharePrice
       }
     }

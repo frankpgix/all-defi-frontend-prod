@@ -191,7 +191,7 @@ export const useFundSubscribesData = (fundAddress: string) => {
       ActionType['Cancel Allocate']
     ])
   )
-  const data = (sData?.fundUserActions ?? []).map((item: RecordProps) => calcActionData(item))
+  const data = (sData?.vaultUserActions ?? []).map((item: RecordProps) => calcActionData(item))
   // console.log(data, sData?.fundUserActions)
   return { loading, error, data }
 }
@@ -235,7 +235,7 @@ export const useUserACBuyData = (userAddress: string) => {
   })
   // getTokenByAddress
   const data = (sData?.acbuys ?? []).map((item: ACBuyDataProps) => {
-    const token = getTokenByAddress(item.baseToken)
+    const token = getTokenByAddress(item.underlyingToken)
     // console.log(111, token, item)
     return {
       amount: Number(safeInterceptionValues(item.amount, token.decimals, token.decimals)),
@@ -287,7 +287,7 @@ export const useMiningData = (type: string) => {
 
 export const useFundActionAssetData = (fundAddress: string) => {
   const { loading, error, data: sData } = useQuery(calcFundActionAssetGQL(fundAddress))
-  const data = (sData?.fundActionAssets ?? [])
+  const data = (sData?.vaultActionAssets ?? [])
     .map((item: any) => {
       return {
         id: item.id.split('-')[0],

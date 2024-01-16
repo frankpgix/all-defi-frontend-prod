@@ -25,7 +25,7 @@ const Chart: FC = () => {
   )
 
   const { loading, data, count } = useManageFundDatas(gql)
-
+  // console.log(11, data)
   if (manageFundList.length === 0) {
     return (
       <section className="web-manage-manager-chart">

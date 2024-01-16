@@ -35,7 +35,7 @@ const Dashboard: FC<Props> = ({ fundAddress, data, base, loading }) => {
     baseToken.decimals,
     baseToken.precision
   )
-
+  console.log(123, chartData)
   if (loading) {
     return (
       <div className="web-manage-manager-dashboard">

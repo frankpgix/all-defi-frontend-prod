@@ -13,7 +13,7 @@ export const useManageFundDatas = (gql: any) => {
   const data = (sData?.managerIntervalDatas ?? [])
     .map((item: any) => ({
       time: item.periodStartUnix * 1000,
-      value: Number(safeInterceptionValues(String(item.navInUSD).split('.')[0], 2, 18))
+      value: Number(safeInterceptionValues(String(item.aumInUSD).split('.')[0], 2, 18))
     }))
     .reverse()
 
@@ -25,10 +25,10 @@ export const useManageFundDatas = (gql: any) => {
 
 export const useFundData = (gql: any, decimals: number, precision: number) => {
   const { loading, error, data: sData } = useQuery(gql)
-  const data = (sData?.fundIntervalDatas ?? [])
+  const data = (sData?.vaultIntervalDatas ?? [])
     .map((item: any) => ({
       time: item.periodStartUnix * 1000,
-      value: Number(safeInterceptionValues(String(item.nav).split('.')[0], precision, decimals))
+      value: Number(safeInterceptionValues(String(item.aum).split('.')[0], precision, decimals))
     }))
     .reverse()
 
@@ -37,7 +37,7 @@ export const useFundData = (gql: any, decimals: number, precision: number) => {
 
 export const useFundDetailChartData = (gql: any) => {
   const { loading, error, data: sData } = useQuery(gql)
-  const data = (sData?.fundIntervalDatas ?? [])
+  const data = (sData?.vaultIntervalDatas ?? [])
     .map((item: any) => ({
       time: item.periodStartUnix * 1000,
       value: Number(safeInterceptionValues(String(item.sharePrice), 4, 18))

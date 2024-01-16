@@ -140,20 +140,20 @@ export const calcFundDetailGQL = (fundAddress: string) => gql`
 export const calcFundSubscribesOrRedeemsGQL = (fundAddress: string, type: number[]) => {
   return gql`
     query {
-      fundUserActions(
+      vaultUserActions(
         orderBy: timestamp
         orderDirection: desc
         where: {
-          fundId: "${fundAddress.toLowerCase()}"
+          vaultId: "${fundAddress.toLowerCase()}"
           actionType_in: ${JSON.stringify(type)}
         }
       ) {
         id
         investor
-        fundId
+        vaultId
         amount
         actionType
-        baseToken
+        underlyingToken
         timestamp
       }
     }
@@ -226,7 +226,7 @@ export const calcUserACBuyGQL = (userAddress: string) => gql`
       investor
       amount
       sallAmount
-      baseToken
+      underlyingToken
       timestamp
     }
   }
@@ -234,15 +234,15 @@ export const calcUserACBuyGQL = (userAddress: string) => gql`
 
 export const calcFundActionAssetGQL = (fundAddress: string) => gql`
   query {
-    fundActionAssets(
+    vaultActionAssets(
       orderBy: timestamp
       orderDirection: desc
       where: {
-        fundId: "${fundAddress.toLowerCase()}"
+        vaultId: "${fundAddress.toLowerCase()}"
       }
     ) {
       id
-      fundId
+      vaultId
       derivative
       selector
       method
