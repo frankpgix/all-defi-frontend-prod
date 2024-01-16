@@ -17,8 +17,8 @@ export interface RecordProps {
 }
 
 interface UserFundHistorySourceDataProps {
-  funds: FundsProps[]
-  fundUserActions: RecordProps[]
+  vaults: FundsProps[]
+  vaultUserActions: RecordProps[]
 }
 
 export interface UserFundHistoryDataProps {
@@ -74,6 +74,6 @@ export const calcActionData = (
 export const calcUserFundHistoryData = (
   data: UserFundHistorySourceDataProps
 ): UserFundHistoryDataProps[] => {
-  const { funds = [], fundUserActions = [] } = data ?? []
-  return fundUserActions.map((item) => calcActionData(item, funds))
+  const { vaults = [], vaultUserActions = [] } = data ?? []
+  return vaultUserActions.map((item) => calcActionData(item, vaults))
 }

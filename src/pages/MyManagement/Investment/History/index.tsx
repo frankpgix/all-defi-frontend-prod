@@ -25,6 +25,7 @@ const AmountShow: FC<AmountShowProps> = ({ value, action, row }) => {
 const History: FC = () => {
   const { account: userAddress } = useProfile()
   const { loading, data } = useUserFundHistoryData(userAddress ?? '')
+  console.log(data)
   // useEffect(() => void refetch(), [refetch])
   const webColumns = [
     {

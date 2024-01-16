@@ -1,6 +1,6 @@
 import { Signer, utils } from 'ethers'
 
-// import Token from '@/class/Token'
+import FundFactory from '@/class/FundFactory'
 import tokens from '@/config/tokens'
 import { getAllProtocolContract } from '@/utils/contractHelpers'
 import { getAllProtocolAddress, getALLTOKENAddress } from '@/utils/addressHelpers'
@@ -221,26 +221,30 @@ class AllProtocol {
   // }
 
   allTokenPrice = async (baseToken: string) => {
-    console.log(baseToken)
-    const contract = getAllProtocolContract()
+    // console.log(baseToken)
+    // const contract = getAllProtocolContract()
+    const { getAssetPrice } = FundFactory
     try {
       if (baseToken === '0x0000000000000000000000000000000000000000') {
         baseToken = tokens.WETH.tokenAddress
       }
       // console.log(baseToken)
-      const res = await contract.allTokenPrice(baseToken)
-      return Number(safeInterceptionValues(res, 18, 18))
+      const res = await getAssetPrice(tokens.ALLTOKEN.tokenAddress, baseToken)
+      // console.log(safeInterceptionValues(res, 6, 18))
+      return res
     } catch (error) {
       console.info(error)
       return 1
     }
   }
   allTokenPriceInUSD = async () => {
-    const contract = getAllProtocolContract()
+    // const contract = getAllProtocolContract()
+    const { getAssetPriceInUSD } = FundFactory
     try {
       // console.log(baseToken)
-      const res = await contract.allTokenPriceInUSD()
-      return Number(safeInterceptionValues(res, 18, 18))
+      // const res = await contract.allTokenPriceInUSD()
+      const res = await getAssetPriceInUSD(tokens.ALLTOKEN.tokenAddress)
+      return res
     } catch (error) {
       return 1
     }

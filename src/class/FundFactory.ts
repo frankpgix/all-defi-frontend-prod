@@ -2,6 +2,7 @@
 import { decodeAbiParameters } from 'viem'
 import { getFundFactoryContract } from '@/utils/contractHelpers'
 import { simpleRpcProvider } from '@/utils/simpleRpcProvider'
+import { safeInterceptionValues } from '@/utils/tools'
 
 class FundFactory {
   FundVerified = async (
@@ -36,6 +37,29 @@ class FundFactory {
       .filter((item: any) => item.type === vType && manager.toLocaleLowerCase() === item.manager)
     // console.log(data)
     return data
+  }
+
+  getAssetPrice = async (baseAsset: string, quoteAsset: string) => {
+    const contract = getFundFactoryContract()
+    try {
+      // console.log(baseToken)
+      const res = await contract.assetPrice(baseAsset, quoteAsset)
+      console.log(res, safeInterceptionValues(res, 6, 18))
+      return Number(safeInterceptionValues(res, 6, 18))
+    } catch (error) {
+      return 1
+    }
+  }
+
+  getAssetPriceInUSD = async (address: string) => {
+    const contract = getFundFactoryContract()
+    try {
+      // console.log(baseToken)
+      const res = await contract.assetPriceInUSD(address)
+      return Number(safeInterceptionValues(res, 6, 18))
+    } catch (error) {
+      return 1
+    }
   }
 }
 
