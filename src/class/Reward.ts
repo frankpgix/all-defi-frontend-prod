@@ -8,20 +8,21 @@ import { outcome, OutComeProps } from './help'
 
 class Reward {
   getPoolList = async (signer: Signer | null | undefined): Promise<PoolProps[]> => {
-    try {
-      const contract = getRewardContract(signer)
-      const response = await contract.poolList()
-      return (response ?? []).map((item: any) => ({
-        shareToken: item.shareToken,
-        symbol: item.symbol,
-        aumPerShare: Number(safeInterceptionValues(item.aumPerShare, 4, 18)),
-        shareBalance: Number(safeInterceptionValues(item.shareBalance, 4, 18)),
-        stakeAmount: Number(safeInterceptionValues(item.stakedShare, 4, 18))
-      }))
-    } catch (error) {
-      console.info(error)
-      return []
-    }
+    // try {
+    const contract = getRewardContract(signer)
+    const response = await contract.poolList(0, 999)
+    console.log(response)
+    return (response ?? []).map((item: any) => ({
+      shareToken: item.shareToken,
+      symbol: item.symbol,
+      aumPerShare: Number(safeInterceptionValues(item.sharePriceInUSD, 4, 18)),
+      shareBalance: Number(safeInterceptionValues(item.shareBalance, 4, 18)),
+      stakeAmount: Number(safeInterceptionValues(item.stakedShare, 4, 18))
+    }))
+    // } catch (error) {
+    //   console.info(error)
+    //   return []
+    // }
   }
 
   stake = async (
