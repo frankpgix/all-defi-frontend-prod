@@ -39,7 +39,7 @@ const addresses: Record<string, Address> = {
   UniV3ACL: {
     1: '',
     5: '',
-    42161: '0xB269f89B59A8A67f6BE9EE9DCc5dACCE040084b0'
+    42161: '0x3479c404b219BDd57ACbC9f68feaB343bE294013'
   },
   Permit2: {
     1: '',
