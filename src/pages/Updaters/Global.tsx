@@ -7,11 +7,14 @@ import { providers } from 'ethers'
 // import { useStoreProfile, useStoreBalances } from '@/stores/useStoreProfile'
 // import { useStoreDerivativeList } from '@/stores/useStoreFunds'
 import AllProtocol from '@/class/AllProtocol'
+import FundFactry from '@/class/FundFactory'
 // import { getJsonRpcProvider } from '@/utils/contractHelpers'
 import { useProfile } from '@/hooks/useProfile'
 import { useGetFundList } from '@/hooks/useFund'
+import { useUpdateTokenPriceInUSD } from '@/hooks/useTokenPrice'
 export default function Global(): null {
   const { fundNumLimit } = AllProtocol
+  const { getBaseTokenPriceInUSD } = FundFactry
   // update profile info
   const { address } = useAccount()
   const { update: updateProfile } = useProfile()
@@ -23,7 +26,7 @@ export default function Global(): null {
       const provider = new providers.Web3Provider(window.ethereum)
       const signer: Signer = provider.getSigner(address)
       updateProfile(address, Boolean(maxFundLimit), maxFundLimit, signer, false)
-      console.log(maxFundLimit)
+      // console.log(maxFundLimit)
     } else {
       updateProfile('', false, 0, null, false)
     }
@@ -31,9 +34,11 @@ export default function Global(): null {
 
   useEffect(() => {
     void getProfileData()
-  }, [getProfileData])
+    void getBaseTokenPriceInUSD()
+  }, [getProfileData, getBaseTokenPriceInUSD])
 
   useGetFundList()
+  useUpdateTokenPriceInUSD()
   // update balance info
   // const balances = useBalances()
   // const updateBalances = useStoreBalances((state: any) => state.update)

@@ -1,4 +1,6 @@
 import { ethers } from 'ethers'
+import { createPublicClient, http } from 'viem'
+import { arbitrum } from 'viem/chains'
 
 import { getMulticallContract } from '@/utils/contractHelpers'
 
@@ -29,3 +31,8 @@ export const multicall: (params: Params) => Promise<any[]> = async ({ abi, calls
 }
 
 export default multicall
+
+export const viemClient = createPublicClient({
+  chain: arbitrum,
+  transport: http()
+})

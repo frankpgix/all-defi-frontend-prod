@@ -114,6 +114,7 @@ export const BASE_TOKEN_SYMBOL = 'USDC'
 export default tokenss
 
 export const baseTokens = [tokenss.USDC, tokenss.ETH]
+export const baseToken = [tokenss.USDC, tokenss.WETH]
 // console.log(11222, baseTokens)
 
 // const ETH = {

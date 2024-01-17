@@ -10,6 +10,7 @@ import TokenValue from '@@/common/TokenValue'
 import { getTokenByAddress } from '@/config/tokens'
 // import Popper from '@@/common/Popper'
 import { useUserFundList } from '@/hooks/useFund'
+import { useTokenPriceInUSD } from '@/hooks/useTokenPrice'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/FundDetail/c/ManageDetail/C'
 
@@ -128,9 +129,20 @@ const Count: FC = () => {
 }
 const CountDetail: FC = () => {
   // console.log(1122233, data)
-  const { loading, fundList: data } = useUserFundList()
-
+  const { loading, fundList: sData } = useUserFundList()
+  const { tokenPriceList } = useTokenPriceInUSD()
   const [activeIndex, setActiveIndex] = useState(0)
+
+  // console.log('data', data)
+  const data = sData.map((item) => {
+    const i = { ...item }
+    const tpo = tokenPriceList.find(
+      (tp) => tp.address.toLocaleLowerCase() === i.baseToken.toLocaleLowerCase()
+    )
+    const tp = tpo ? tpo.priceInUSD : 1
+    i.data.navInUSD = BN(i.data.nav).times(tp).toNumber()
+    return i
+  })
   const rawData = useMemo(
     () =>
       data.map(({ name, data }) => ({
