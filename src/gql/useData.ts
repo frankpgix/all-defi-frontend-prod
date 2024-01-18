@@ -108,7 +108,7 @@ export interface FundMonthDataType {
 export const useFundMonthData = (fundAddress: string) => {
   const gql = calcFundMonthDataGql(fundAddress)
   const { loading, data: sData } = useQuery(gql)
-  const data: FundMonthDataType[] = (sData?.fundNaturalMonthDatas ?? [])
+  const data: FundMonthDataType[] = (sData?.vaultNaturalMonthDatas ?? [])
     .map((item: any) => {
       const time = item.periodStartUnix * 1000
       const year = dayjs(time).year()

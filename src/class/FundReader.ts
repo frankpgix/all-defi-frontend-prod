@@ -120,6 +120,7 @@ class FundReader {
     try {
       const contract = getFundReaderContract(signer)
       const response = await contract.shareCompositionOf(fundAddress, userAddress)
+      // console.log(111, response)
       // 返回结果
       return calcShareComposition(response)
     } catch (error) {
@@ -149,8 +150,12 @@ class FundReader {
     // console.log(111, fundAddress, baseTokenAddress)
     if (!fundAddress || !baseTokenAddress) return null
     const contract = getFundReaderContract()
+    // console.log(222, contract, fundAddress)
+    const response: any = await contract.assetComposition(fundAddress)
+    // console.log(222, response)
     try {
-      const response: any = await contract.assetComposition(fundAddress)
+      // const response: any = await contract.assetComposition(fundAddress)
+      // console.log(222, response)
       const data = response
         .map((item: any) => calcAssetComposition(item, baseTokenAddress))
         .filter((item: AssetCompositionProps) => item.value > 0)

@@ -128,18 +128,18 @@ export const calcMiningData = (fundAddress: string, type: string, createTime: nu
 export const calcFundMonthDataGql = (fundAddress: string) => {
   return gql`
     query {
-      fundNaturalMonthDatas(
+      vaultNaturalMonthDatas(
         orderBy: periodStartUnix
         orderDirection: desc
         where: {
-          fundId: "${fundAddress}"
+          vaultId: "${fundAddress}"
         }
       ) {
-        fundId
+        vaultId
         name
         periodStartUnix
         roe
-        baseToken
+        underlyingToken
       }
     }
   `

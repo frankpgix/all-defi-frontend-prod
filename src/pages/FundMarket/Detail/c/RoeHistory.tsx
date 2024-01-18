@@ -34,6 +34,7 @@ const calcYearReturn = (arr: FundMonthDataType[]) => {
   if (arr[0].year === year) {
     arr.length = arr.length - 1
   }
+
   const res = BN.sum
     .apply(
       null,
@@ -42,7 +43,7 @@ const calcYearReturn = (arr: FundMonthDataType[]) => {
     .div(arr.length)
     .times(12)
     .toNumber()
-  return `${calcDecimalsFloor(res, 2)}%`
+  return `${calcDecimalsFloor(!isNaN(res) ? res : 0, 2)}%`
 }
 
 const RoeHistory: FC<Props> = ({ fundAddress }) => {
@@ -76,10 +77,9 @@ const RoeHistory: FC<Props> = ({ fundAddress }) => {
       }
 
       if (item.month === 13) {
-        const yearReturn = calcYearReturn(
-          [...data, ...oldData].filter((dat) => dat.year === item.year)
-        )
-        // console.log(yearReturn)
+        const arr = [...data, ...oldData].filter((dat) => dat.year === item.year)
+        const yearReturn = calcYearReturn(arr)
+        // console.log([...data, ...oldData].filter((dat) => dat.year === item.year))
         if (yearReturn) {
           item.roe = yearReturn
           item.isRise = !yearReturn.includes('-')
@@ -92,6 +92,8 @@ const RoeHistory: FC<Props> = ({ fundAddress }) => {
       .map((year) => ({ year: year, data: oneArr.filter((item) => item.year === year) }))
       .reverse()
   }, [baseRoe, loading, oldDataLoading, oldData, data, years])
+
+  // console.log(list, 'list')
   return (
     <div className="web-fund-detail-roe-history">
       <header>

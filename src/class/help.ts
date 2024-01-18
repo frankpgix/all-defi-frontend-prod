@@ -435,7 +435,7 @@ export const ShareCompositionDefault = {
 export const calcShareComposition = (item: any) => {
   return {
     balance: Number(safeInterceptionValues(item.balance, 4, 18)),
-    redeeming: Number(safeInterceptionValues(item.redeeming, 4, 18)),
+    redeeming: Number(safeInterceptionValues(item.withholding, 4, 18)),
     mining: Number(safeInterceptionValues(item.mining, 4, 18))
   }
 }
