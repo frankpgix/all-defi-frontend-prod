@@ -38,7 +38,7 @@ const Detail: FC = () => {
   const { data: derivatives } = useRequest(() => getSupportedDerivatives(fundAddress), {
     refreshDeps: [fundAddress]
   })
-
+  console.log('fundBase', fundBase)
   const {
     data: fundDetail,
     loading: fundDetailLoading,
