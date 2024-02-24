@@ -1,5 +1,5 @@
-import React, { FC, useRef, useState, useMemo } from 'react'
-import { useClickAway } from 'react-use'
+import { FC, useRef, useState } from 'react'
+import { useClickAway } from 'ahooks'
 import classNames from 'classnames'
 
 import Button from '@/components/common/Button'
@@ -13,10 +13,10 @@ interface Props {
 }
 
 const LeverageSelect: FC<Props> = ({ value, onChange, className }) => {
-  const ref = useRef(null)
+  const ref = useRef<HTMLDivElement>(null)
   const [showOptions, setShowOptions] = useState(false)
   const [stepperValue, setStepperValue] = useState(value)
-  useClickAway(ref, () => setShowOptions(false))
+  useClickAway(() => setShowOptions(false), ref)
 
   const onConfirm = () => {
     onChange(stepperValue)
@@ -29,7 +29,13 @@ const LeverageSelect: FC<Props> = ({ value, onChange, className }) => {
         {value}x
       </div>
       <div className="web-leverage-select-stepper">
-        <Stepper value={stepperValue} min={1} onChange={(val) => setStepperValue(val)} suffix="x" input />
+        <Stepper
+          value={stepperValue}
+          min={1}
+          onChange={(val) => setStepperValue(val)}
+          suffix="x"
+          input
+        />
         <Button size="medium" onClick={onConfirm}>
           Confirm
         </Button>

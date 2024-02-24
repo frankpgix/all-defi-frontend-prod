@@ -1,5 +1,5 @@
-import React, { FC, useState, useRef } from 'react'
-import { useClickAway } from 'react-use'
+import { FC, useState, useRef } from 'react'
+import { useClickAway } from 'ahooks'
 import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 
@@ -44,9 +44,9 @@ const SelectNetworkButton: FC = () => {
     setMenuStatus(false)
   }
 
-  useClickAway(ref, () => {
+  useClickAway(() => {
     setMenuStatus(false)
-  })
+  }, ref)
 
   return (
     <div className="web-select-network-button" ref={ref}>

@@ -3,6 +3,7 @@ import { Buffer } from 'buffer'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { WagmiProvider } from 'wagmi'
+import { BrowserRouter } from 'react-router-dom'
 
 import '@/style/style.scss'
 
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById('all-defi')!).render(
   <React.StrictMode>
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </QueryClientProvider>
     </WagmiProvider>
   </React.StrictMode>

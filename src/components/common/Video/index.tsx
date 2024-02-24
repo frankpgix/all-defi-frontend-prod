@@ -1,5 +1,5 @@
-import React, { FC, MutableRefObject, useRef, useMemo } from 'react'
-import { useMount } from 'react-use'
+import { FC, MutableRefObject, useRef, useMemo } from 'react'
+import { useMount } from 'ahooks'
 import classnames from 'classnames'
 import { VIDEO_RESOURCES_URL } from '@/config'
 
@@ -17,7 +17,10 @@ const Video: FC<any> = ({
   const videoRef: MutableRefObject<HTMLVideoElement | null> = useRef(null)
 
   const memoSrc = useMemo(
-    () => (/^https?:\/\//.test(src ?? '') || /^data:/.test(src ?? '') ? src : `${VIDEO_RESOURCES_URL}${src}`),
+    () =>
+      /^https?:\/\//.test(src ?? '') || /^data:/.test(src ?? '')
+        ? src
+        : `${VIDEO_RESOURCES_URL}${src}`,
     [src]
   )
 

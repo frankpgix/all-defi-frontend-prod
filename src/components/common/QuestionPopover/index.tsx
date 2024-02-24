@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef, useMemo } from 'react'
-import { useClickAway } from 'react-use'
+import { useClickAway } from 'ahooks'
 import classNames from 'classnames'
 
 import { getMaxZIndex } from '@/utils/tools'
@@ -13,7 +13,7 @@ interface Props {
 const QuestionPopover: FC<Props> = ({ text, size }) => {
   const ref = useRef(null)
   const [show, setShow] = useState<boolean>(false)
-  useClickAway(ref, () => setShow(false))
+  useClickAway(() => setShow(false), ref)
 
   const zIndexStyle = useMemo(() => {
     if (show) return { zIndex: getMaxZIndex() + 1 }
@@ -21,7 +21,10 @@ const QuestionPopover: FC<Props> = ({ text, size }) => {
   }, [show])
 
   return (
-    <div className={classNames('web-question-popover', `web-question-popover-size-${size}`)} ref={ref}>
+    <div
+      className={classNames('web-question-popover', `web-question-popover-size-${size}`)}
+      ref={ref}
+    >
       <Image src="icon/question.svg" onClick={() => setShow(!show)} />
       {show && (
         <div className="web-question-popover-text" style={zIndexStyle}>

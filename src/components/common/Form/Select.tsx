@@ -1,5 +1,5 @@
-import React, { FC, useRef, useState, useMemo } from 'react'
-import { useClickAway } from 'react-use'
+import { FC, useRef, useState, useMemo } from 'react'
+import { useClickAway } from 'ahooks'
 import classNames from 'classnames'
 // import { toType } from '@/utils/tools'
 import Image from '@@/common/Image'
@@ -31,7 +31,7 @@ const Select: FC<SelectProps> = ({
 }) => {
   const ref = useRef(null)
   const [showOptions, setShowOptions] = useState(false)
-  useClickAway(ref, () => setShowOptions(false))
+  useClickAway(() => setShowOptions(false), ref)
 
   const calcCurrLabel = useMemo(() => {
     if (options.length) return value

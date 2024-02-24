@@ -1,5 +1,5 @@
-import React, { FC, useState, useRef } from 'react'
-import { useClickAway } from 'react-use'
+import { FC, useState, useRef } from 'react'
+import { useClickAway } from 'ahooks'
 import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 
@@ -18,9 +18,9 @@ const AddTokenButton: FC = () => {
   const ref = useRef(null)
   const [menuStatus, setMenuStatus] = useState<boolean>(false)
 
-  useClickAway(ref, () => {
+  useClickAway(() => {
     setMenuStatus(false)
-  })
+  }, ref)
 
   const tokens: Record<string, any>[] = [
     { ...tokensInfo.USDT, image: '' },
