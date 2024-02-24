@@ -1,0 +1,111 @@
+.web-account-dialog {
+  margin: -24px;
+  & > h2,
+  & > header {
+    font-family: 'Didot';
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: bold;
+    color: $blue;
+    &:before {
+      content: '';
+      display: block;
+      width: 120px;
+      height: 120px;
+      background: url($res + 'asset/wallet.png') center/contain no-repeat;
+    }
+  }
+
+  & > header {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  &-address {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    address {
+      font-size: 16px;
+      line-height: 2;
+      color: $text;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-right: 10px;
+    }
+  }
+
+  &-blance {
+    padding: 16px 0;
+    border: solid #d1e0fe;
+    border-width: 1px 0;
+    display: flex;
+    li {
+      border-radius: 8px;
+      background: #d1e0fe;
+      padding: 0 8px;
+      display: flex;
+      align-items: center;
+      height: 40px;
+      i {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 8px;
+        width: 24px;
+        height: 24px;
+        background: rgba($white, 0.8);
+        border-radius: 50%;
+        img {
+          max-width: 18px;
+          max-height: 18px;
+          display: block;
+        }
+      }
+    }
+  }
+
+  & > footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 32px;
+    .web-button {
+      margin-left: 16px;
+    }
+  }
+
+  &-list {
+    width: 390px;
+    margin: 24px auto 0;
+    &-item {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 16px;
+      height: 72px;
+      margin-bottom: 16px;
+      padding: 16px;
+      cursor: pointer;
+      box-shadow: 0px 0px 16px #dbe1df;
+      img {
+        width: 40px;
+        height: 40px;
+        display: block;
+        margin-right: 16px;
+        @include dz();
+      }
+      &:hover {
+        img {
+          @include fd(1.1);
+        }
+      }
+      p {
+        flex: 1;
+        background: url($res + 'icon/arrow-right-blue.svg') right center/20px 20px no-repeat;
+      }
+    }
+  }
+}

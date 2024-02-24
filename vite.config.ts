@@ -21,7 +21,7 @@ export default defineConfig(({ mode, command, ssrBuild }) => {
     },
     plugins: [react()],
     server: {
-      port: 5678,
+      port: 5680,
       host: '0.0.0.0'
     }
   }

@@ -1,0 +1,212 @@
+.web-status {
+  &-fail,
+  &-wait,
+  &-succ,
+  &-info {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    img {
+      display: block;
+    }
+    h4 {
+      // font-family: 'Didot';
+      text-align: center;
+      font-size: 28px;
+      line-height: 1.4;
+      // color: $blue;
+      font-weight: bold;
+      margin-top: 16px;
+    }
+    p,
+    article {
+      font-size: 14px;
+      line-height: 1.6;
+      width: 440px;
+      text-align: center;
+      margin-top: 12px;
+      color: $black;
+
+      a {
+        color: $blue;
+        &:hover {
+          color: $orange;
+        }
+      }
+    }
+    article {
+      font-size: 16px;
+    }
+    .web-button {
+      margin-top: 32px;
+      // width: 180px;
+    }
+
+    & > footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+  }
+  &-wait {
+    img {
+      // width: 208px;height: 136px;
+    }
+    &-icon {
+      width: 180px;
+      height: 180px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p {
+        display: block;
+        width: 130px;
+        height: 130px;
+        animation: zoom-in-mini 2s linear infinite alternate;
+        i {
+          display: block;
+          width: 130px;
+          height: 130px;
+          border-radius: 50%;
+          background: linear-gradient(134.54deg, #ffe7d9 0%, #fd7a01 100%);
+          filter: blur(10px);
+          transform: rotate(31.07deg);
+          animation: rotation 3s linear infinite alternate;
+        }
+      }
+      // filter: blur(20px);
+      // animation: zoom-in 3s;
+      // // transform: translate3d(304.5px, 0px, 0px) scale(1.09932);
+      // video {
+      //   width: 100%;height: 100%;object-fit:cover;
+      //   @include fd(1.8);
+      // }
+      //
+      // &-video {
+      //   position: absolute;top: 0;right: 0;bottom: 0;left: 0;
+      //   // &:nth-child(1) { animation: load 3s linear infinite alternate; }
+      //   &:nth-child(2) { animation: load 3s linear 0s infinite alternate; }
+      //   &:nth-child(3) { animation: load 3s linear 1.5s infinite alternate; }
+      // }
+    }
+    h4 {
+      margin-bottom: 32px;
+    }
+    span {
+      display: block;
+      position: relative;
+      height: 10px;
+      border-radius: 5px;
+      background: $bgBlue;
+      width: 440px;
+      overflow: hidden;
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        height: 10px;
+        border-radius: 5px;
+        left: 0;
+        bottom: 0;
+        @include jb($blue, $lBlue, -135);
+        animation: wait-modal 2s infinite;
+      }
+    }
+  }
+  &-fail {
+    &-icon {
+      p {
+        width: 100px;
+        height: 100px;
+        display: block;
+        background: url($res + 'icon/modal-fail.png') center/contain no-repeat;
+      }
+    }
+  }
+  &-succ {
+    &-icon {
+      p {
+        width: 100px;
+        height: 100px;
+        display: block;
+        background: url($res + 'icon/modal-succ.png') center/contain no-repeat;
+      }
+    }
+  }
+  &-info {
+    &-icon {
+      p {
+        width: 100px;
+        height: 100px;
+        display: block;
+        background: url($res + 'asset/info.png') center/contain no-repeat;
+      }
+    }
+    footer {
+      .web-button {
+        margin: 32px 10px 0;
+      }
+    }
+  }
+
+  &-coming-soon {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    &-icon {
+      width: 300px;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p {
+        display: block;
+        width: 300px;
+        height: 300px;
+        animation: zoom-in-mini 2s linear infinite alternate;
+        i {
+          display: block;
+          width: 300px;
+          height: 300px;
+          border-radius: 50%;
+          background: linear-gradient(134.54deg, #ffe7d9 0%, #fd7a01 100%);
+          filter: blur(30px);
+          transform: rotate(31.07deg);
+          animation: rotation 3s linear infinite alternate;
+        }
+      }
+    }
+    article {
+      position: absolute;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      small {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 22px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+      }
+      h4 {
+        font-size: 56px;
+        font-family: Didot;
+        font-weight: 700;
+        line-height: 56px;
+        letter-spacing: -1px;
+        margin: 16px 0 25px;
+      }
+      p {
+        width: 340px;
+        height: 101px;
+        font-size: 18px;
+        line-height: 24px;
+      }
+    }
+  }
+}

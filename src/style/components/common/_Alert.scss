@@ -1,0 +1,25 @@
+.web-c-alert {
+  width: 100%;
+  padding: 16px 42px;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+
+  &:before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: center/contain no-repeat;
+    margin-right: 18px;
+  }
+
+  &-error {
+    background: #ffecec;
+    color: $red;
+    &:before {
+      background-image: url($res + 'icon/warning.svg');
+    }
+  }
+}

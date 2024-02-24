@@ -9,17 +9,16 @@ import '@/style/style.scss'
 import App from './App.tsx'
 import { config } from '@/config/wagmi.ts'
 
-
 globalThis.Buffer = Buffer
 
 const queryClient = new QueryClient()
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById('all-defi')!).render(
   <React.StrictMode>
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
     </WagmiProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 )

@@ -93,7 +93,7 @@ kbd,
 pre,
 samp,
 tt {
-  font-family: 'xpaider', Consolas, 'Courier New', Courier, monospace;
+  font-family: Consolas, 'Courier New', Courier, monospace;
 }
 address,
 cite,
@@ -127,7 +127,8 @@ a {
 }
 .dark a {
   color: $cff;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     color: $orange;
   }
 }
@@ -146,4 +147,12 @@ body {
   //@include ns();
   margin: 0 !important;
   padding: 0 !important;
+}
+
+svg,
+g,
+path {
+  &:focus {
+    outline: none;
+  }
 }

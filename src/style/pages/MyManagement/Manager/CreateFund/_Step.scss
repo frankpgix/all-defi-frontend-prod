@@ -1,0 +1,82 @@
+.web-manage-create-step {
+  &-3col {
+    display: grid;grid-template-columns: 1fr 1fr 1fr;grid-column-gap: 40px;margin-bottom: 32px;
+
+    .web-c-data-item img {
+      display: block;width: 64px;height: 64px;margin-right: 5px;
+    }
+  }
+  &-2col {
+    display: grid;grid-template-columns: 1fr 1fr;grid-column-gap: 40px;margin-bottom: 32px;
+  }
+  &-1col {
+    display: grid;grid-template-columns: 1fr;grid-column-gap: 40px;margin-bottom: 32px;
+    .web-c-data-item img {
+      display: block;width: 64px;height: 64px;margin-right: 5px;
+    }
+  }
+  &-stake {
+    display: flex;justify-content: space-between;margin-bottom: 40px;
+    &-equal {
+      width: 32px;height: 32px;margin-top: 12px;
+      background: url($res + 'icon/equal-blue.svg') center/contain no-repeat;
+    }
+    &-plus {
+      width: 32px;height: 32px;margin-top: 12px;
+      background: url($res + 'icon/plus.svg') center/contain no-repeat;
+    }
+    &-minus {
+      width: 32px;height: 32px;margin-top: 12px;
+      background: url($res + 'icon/minus.svg') center/contain no-repeat;
+    }
+    &-pre {
+      width: 450px;color: $text;font-weight: 800;margin-top: -24px;
+      dt {
+        font-size: 14px;line-height: 16px;letter-spacing: .5px;margin-bottom: 8px;text-transform: capitalize;
+      }
+      dd {
+        height: 56px;background: $bgBlue;border-radius: 8px;padding: 0 15px 0 32px;
+        display: flex;align-items: center;justify-content: space-between;
+        font-size: 24px;
+      }
+    }
+  }
+  & > footer {
+    display: flex;justify-content: flex-end;margin-top: 48px;
+    .web-button {
+      // width: 280px;
+      margin-left: 20px;
+    }
+  }
+  & > h3, & > h2 {
+    line-height: 1.2;letter-spacing: .5px;text-transform: capitalize;
+  }
+  & > h3 {
+    font-size: 14px;margin-bottom: 8px;color: #737373;
+  }
+  & > h2 {
+    font-size: 18px;margin-bottom: 10px;
+    // color: $blue;
+  }
+
+  &-product-list {
+    padding: 24px;border-radius: 8px;background: $bgBlue;min-height: 128px;
+    @extend .cf;
+    li {
+      position: relative;float: left;cursor: pointer;margin: 8px;
+      img {
+        display: block;width: 64px;height: 64px;border-radius: 16px;
+      }
+      &.active {
+        img {
+          box-shadow: 0 0 0 2px $blue;
+        }
+        &:before {
+          content: '';display: block;width: 22px;height: 22px;
+          position: absolute;right: -6px;top: -6px;
+          background: url($res + 'icon/select.svg') center/contain no-repeat;
+        }
+      }
+    }
+  }
+}

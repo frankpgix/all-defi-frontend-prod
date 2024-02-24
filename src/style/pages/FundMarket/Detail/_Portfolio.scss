@@ -1,0 +1,27 @@
+.web-fund-detail-portfolio {
+  @extend .web;
+  margin-top: 30px;
+
+  & > h2 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+  & > h3 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  & > h4 {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 5px;
+  }
+  .rc-table-cell {
+    height: 56px;
+  }
+
+  .rc-table {
+    margin-bottom: 40px;
+  }
+}
