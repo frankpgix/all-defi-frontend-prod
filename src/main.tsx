@@ -4,8 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { WagmiProvider } from 'wagmi'
 import { BrowserRouter } from 'react-router-dom'
-
-import '@/style/style.scss'
+import MobileProvider from '@/context/Mobile/index.tsx'
 
 import App from './App.tsx'
 import { config } from '@/config/wagmi.ts'
@@ -19,7 +18,9 @@ ReactDOM.createRoot(document.getElementById('all-defi')!).render(
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <App />
+          <MobileProvider>
+            <App />
+          </MobileProvider>
         </BrowserRouter>
       </QueryClientProvider>
     </WagmiProvider>

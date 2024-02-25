@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 // import Button from '@/components/common/Button'
-import ConnectButton from '@/components/common/Wallet/ConnectButton'
+import ConnectButton from '@/components/core/Wallet/ConnectButton'
 // import SelectNetworkButton from '@/components/common/Wallet/SelectNetworkButton'
 import { useToPageTop } from '@/hooks/useToPageTop'
 

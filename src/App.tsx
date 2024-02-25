@@ -9,7 +9,7 @@ import 'rc-collapse/assets/index.css'
 import 'rc-table/assets/index.css'
 import '@/style/style.scss'
 
-// import Header from '@@/web/Header'
+import Header from '@@/web/Header'
 // import Footer from '@@/web/Footer'
 // import Global from '@/pages/Updaters/Global'
 // import LoopData from '@@/common/LoopData'
@@ -26,7 +26,7 @@ function App() {
   return (
     <>
       <div className="web-main">
-        {/* <Header /> */}
+        <Header />
         {/* <Global />
         <LoopData /> */}
         <Suspense fallback={null}>
