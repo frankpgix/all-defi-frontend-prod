@@ -11,6 +11,7 @@
     "style": "node ./src/style/build.cjs"
   },
   "dependencies": {
+    "@apollo/client": "^3.9.5",
     "@tanstack/react-query": "^5.17.15",
     "ahooks": "^3.7.10",
     "animate.css": "^4.1.1",
