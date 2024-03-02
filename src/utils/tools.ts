@@ -75,12 +75,12 @@ export const calcDateDuration = (date: string) => {
 }
 
 // split number
-export const safeInterceptionValues = (value: any, decimal = 8, precision = 18): string => {
+export const safeInterceptionValues = (value: any, precision = 8, decimal = 18): string => {
   const isDecimal = toType(value) === 'object' && String(value).includes('.')
   const regexp = /(?:\.0*|(\.\d+?)0+)$/
-  const _value = isDecimal ? (value as string) : formatUnits(value, precision)
+  const _value = isDecimal ? (value as string) : formatUnits(value, decimal)
   const _split = _value.split('.')
-  const handle = `${_split[0]}.${(_split[1] ?? '0').substring(0, decimal)}`
+  const handle = `${_split[0]}.${(_split[1] ?? '0').substring(0, precision)}`
   return handle.replace(regexp, '$1')
 }
 

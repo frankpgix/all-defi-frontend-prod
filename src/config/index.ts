@@ -1,10 +1,4 @@
-import getEnvKey from '@/config/env'
 import { ChainId } from '@/config/types'
-
-const API_PREFIX_URLS_SCHEMA: Record<string, string> = {
-  prod: 'https://api.derify.exchange/bsc/',
-  dev: 'https://api.derify.exchange/bsc/'
-}
 
 const ETH_SCAN_URLS_SCHEMA: Record<string, string> = {
   [ChainId.MAINNET]: 'https://etherscan.io',
@@ -18,7 +12,6 @@ const GRAPHQL_API_PREFIX_SCHEMA: Record<string, string> = {
 
 export const { VITE_APP_CHAIN_ID } = import.meta.env
 
-export const API_PREFIX_URL = API_PREFIX_URLS_SCHEMA['dev']
 export const ETH_SCAN_URL = ETH_SCAN_URLS_SCHEMA[VITE_APP_CHAIN_ID]
 export const GRAPHQL_API_PREFIX = GRAPHQL_API_PREFIX_SCHEMA[VITE_APP_CHAIN_ID]
 export const RESOURCES_URL = 'https://all-defi-static.pages.dev/'

@@ -38,7 +38,7 @@ const AccountDialog: FC<Props> = ({ show, onClose }) => {
             <i>
               <Image src="icon/eth.svg" />
             </i>
-            <span>{safeInterceptionValues(data?.value, 6, 18)} ETH</span>
+            <span>{safeInterceptionValues(data?.value ?? '', 6, 18)} ETH</span>
           </li>
         </ul>
         <footer>

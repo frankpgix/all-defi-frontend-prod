@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import tokens from '@/config/tokens'
 import { resetObjectValues } from '@/utils/tools'
-import type { Signer } from '@ethersproject/abstract-signer'
 
 import { AddressType } from '@/config/types'
 
@@ -14,14 +13,8 @@ export const useStoreProfile = create((set) => {
     signer: null,
     loading: false,
     maxFundLimit: 0,
-    update: (
-      address: AddressType,
-      isManager: boolean,
-      maxFundLimit: number,
-      signer: Signer,
-      loading: boolean
-    ) => {
-      set({ address, isManager, maxFundLimit, signer, loading })
+    update: (address: AddressType, isManager: boolean, maxFundLimit: number, loading: boolean) => {
+      set({ address, isManager, maxFundLimit, loading })
     }
   }
 })

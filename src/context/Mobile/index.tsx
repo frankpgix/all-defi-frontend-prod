@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, createContext, ReactNode } from 'react'
+import { FC, useState, useEffect, createContext, ReactNode } from 'react'
 import { isMobile } from '@/utils/tools'
 
 export const MobileContext = createContext({

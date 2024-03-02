@@ -1,0 +1,973 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "previousAdmin",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "beacon",
+        "type": "address"
+      }
+    ],
+    "name": "BeaconUpgraded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      }
+    ],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "activeVaultList",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "vaults",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "assetComposition",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "decimals",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct VaultReader.Asset[]",
+        "name": "_assets",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "factory",
+    "outputs": [
+      {
+        "internalType": "contract IFactory",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_vaultGovernor",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "miningShareOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proxiableUUID",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "shareCompositionOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "withholding",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "mining",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      }
+    ],
+    "name": "upgradeTo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "userDetail",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "vaultId",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "underlyingToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "stage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "shares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nav",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocatingACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "withholdingShare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unclaimedACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unclaimedALL",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "roe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historyReturn",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct VaultReader.UserDetail",
+        "name": "detail",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "indexFrom",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "indexTo",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "activeOnly",
+        "type": "bool"
+      }
+    ],
+    "name": "userDetailList",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "underlyingToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "acToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "createTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "desc",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "managerName",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256[2]",
+            "name": "allocationLimits",
+            "type": "uint256[2]"
+          },
+          {
+            "internalType": "address[]",
+            "name": "supportedAssets",
+            "type": "address[]"
+          },
+          {
+            "internalType": "bytes32[]",
+            "name": "supportedDerivatives",
+            "type": "bytes32[]"
+          },
+          {
+            "internalType": "uint256[4]",
+            "name": "stageDurations",
+            "type": "uint256[4]"
+          },
+          {
+            "internalType": "address",
+            "name": "factory",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "governor",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IVault.BaseInfo[]",
+        "name": "_vaults",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "vaultId",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "underlyingToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "stage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "shares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nav",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocatingACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "withholdingShare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unclaimedACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unclaimedALL",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "roe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historyReturn",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct VaultReader.UserDetail[]",
+        "name": "_users",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "vaultBreachDetail",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "vaultId",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastFrozenALL",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastConfiscatedALL",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "consecutiveBreachCount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "managerPaused",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct VaultReader.VaultBreachDetail",
+        "name": "detail",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "vaultDetail",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "vaultId",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "underlyingToken",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "createTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "epochIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "epochStartTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[4]",
+            "name": "stageDurations",
+            "type": "uint256[4]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "stage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "settlementAUMLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aumLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "beginningAUM",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "costPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "underlyingTokenPriceInUSD",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unusedAsset",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocatingACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "withholdingShare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "miningShare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "roe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "lastRoe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historyReturn",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "managerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "platFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastManagerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "historyManagerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastWithholdingRatio",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct VaultReader.VaultDetail",
+        "name": "detail",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "indexFrom",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "indexTo",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "activeOnly",
+        "type": "bool"
+      }
+    ],
+    "name": "vaultDetailList",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "vaultId",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "underlyingToken",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "createTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "epochIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "epochStartTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[4]",
+            "name": "stageDurations",
+            "type": "uint256[4]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "stage",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "settlementAUMLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aumLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "beginningAUM",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "costPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "underlyingTokenPriceInUSD",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unusedAsset",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocatingACToken",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "withholdingShare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "miningShare",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "roe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "lastRoe",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historyReturn",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "managerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "platFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastManagerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "historyManagerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastWithholdingRatio",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct VaultReader.VaultDetail[]",
+        "name": "_details",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "vaultGovernor",
+    "outputs": [
+      {
+        "internalType": "contract IAllProtocol",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "vaultList",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "vaults",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "vaultUpdatingData",
+    "outputs": [
+      {
+        "internalType": "bytes",
+        "name": "params",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint8",
+        "name": "reviewStatus",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
