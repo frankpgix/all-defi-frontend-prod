@@ -8,7 +8,7 @@ export const _getAddress = (address: ChainIdRec): AddressType => {
   // console.log('chainId', chainId)
   // @ts-ignore
   const _address = address[chainId] ?? address[ChainId.ARBITRUM]
-  return _address.toLowerCase()
+  return _address
 }
 
 export function addressCheck(address: AddressType, key?: string) {

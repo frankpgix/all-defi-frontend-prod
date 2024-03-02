@@ -122,7 +122,7 @@ export const getDecimalsByAddress = (address: string) => getTokenByAddress(addre
 
 export const baseTokenOptions = baseTokens.map(({ name, address, icon }) => ({
   label: name,
-  value: String(address),
+  value: address,
   icon
 }))
 

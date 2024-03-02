@@ -16,7 +16,7 @@ import Header from '@@/web/Header'
 import Notify from '@@/core/Notify'
 
 import Home from '@/pages/Home'
-// import Buy from '@/pages/Buy'
+import Buy from '@/pages/Buy'
 // import FundMarket from '@/pages/FundMarket'
 // import MyManagement from '@/pages/MyManagement'
 // import Mining from '@/pages/Mining'
@@ -31,8 +31,8 @@ function App() {
         <LoopData /> */}
         <Suspense fallback={null}>
           <Routes>
-            {/* <Route path="/buy" element={<Buy />} />
-            <Route path="/fund-market/*" element={<FundMarket />} />
+            <Route path="/buy" element={<Buy />} />
+            {/* <Route path="/fund-market/*" element={<FundMarket />} />
             <Route path="/manage/*" element={<MyManagement />} />
             <Route path="/all-mining" element={<Mining />} /> */}
             <Route path="/test" element={<Test />} />
