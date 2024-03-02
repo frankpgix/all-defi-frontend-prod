@@ -1,5 +1,5 @@
 import { useReadContract } from 'wagmi'
-import tokens from '@/config/tokens'
+import { tokens, ZERO_ADDRESS } from '@/config/tokens'
 import { useAllProtocolContract } from '@/hooks/useContract'
 import { useAssetPrice } from '@/hooks/useVaultFactory'
 import { AddressType } from '@/types/base'
@@ -25,7 +25,7 @@ const AllProtocolContract = useAllProtocolContract()
 
 export const useAllTokenPrice = (baseToken: AddressType) => {
   // const res = useReadContract({ ...AllProtocolContract , })
-  if (baseToken === '0x0000000000000000000000000000000000000000') {
+  if (baseToken === ZERO_ADDRESS) {
     baseToken = tokens.WETH.address
   }
   return useAssetPrice(tokens.ALLTOKEN.address, baseToken)

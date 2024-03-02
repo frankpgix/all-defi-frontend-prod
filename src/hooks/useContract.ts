@@ -4,7 +4,7 @@ import { getContractAddress } from '@/config/contracts'
 
 import ERC20Abi from '@/config/abi/erc20.json'
 // import MultiCallAbi from '@/config/abi/Multicall.json'
-// import ACProtocolAbi from '@/config/abi/ACProtocol.json'
+import ACProtocolAbi from '@/config/abi/ACProtocol.json'
 import AllProtocolAbi from '@/config/abi/AllProtocol.json'
 // import FundPoolAbi from '@/config/abi/FundPool.json'
 // import FundReaderAbi from '@/config/abi/FundReader.json'
@@ -20,6 +20,9 @@ export const useContract = (address: AddressType, abi: any) => {
 
 export const useERC20Contract = (address: AddressType) => {
   return useContract(address, ERC20Abi)
+}
+export const useACProtocolContract = () => {
+  return useContract(getContractAddress('ACProtocol'), ACProtocolAbi)
 }
 export const useAllProtocolContract = () => {
   return useContract(getContractAddress('AllProtocol'), AllProtocolAbi)

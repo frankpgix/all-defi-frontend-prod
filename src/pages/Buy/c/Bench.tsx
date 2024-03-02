@@ -1,42 +1,28 @@
 import { FC, useState, useMemo } from 'react'
 import BN from 'bignumber.js'
 import { isNumber } from 'lodash'
-// import { useRequest } from 'ahooks'
 
 import { AllTokenUnit, AcUSDCUnit } from '@@/common/TokenUnit'
-// import contracts from '@/config/contracts'
 import { baseTokenOptions, tokens } from '@/config/tokens'
-// import ACProtocol from '@/class/ACProtocol'
-// import AllProtocol from '@/class/AllProtocol'
-// import { useTokensData } from '@/store/tokens/hooks'
-// import { useAppDispatch } from '@/store'
-// import { getTokensBalanceAsync } from '@/store/tokens'
-// import { getUserStakesAsync } from '@/store/investor'
+
 import { formatNumber } from '@/utils/tools'
-// import { useProfile } from '@/hooks/useProfile'
-import { useNotify } from '@/hooks/useNotify'
+import { useProfile } from '@/hooks/useProfile'
 import { useUserBalances } from '@/hooks/useProfile'
 import { useAllTokenPrice } from '@/hooks/useAllProtocol'
+import { useBuyAcToken } from '@/hooks/useACProtocol'
 
-import { sleep } from '@/utils/tools'
 import { AddressType } from '@/types/base'
 
 import { Input, Select } from '@@/common/Form'
 import Button from '@@/common/Button'
 import BlueLineSection from '@@/web/BlueLineSection'
 import InfoDialog from '@@/common/Dialog/Info'
-// import Popper from '@@/common/Popper'
-// import { notify } from '@@/common/Toast'
 
 const usdcAddress = tokens.USDC.address
 const ethAddress = tokens.ETH.address
 const Bench: FC = () => {
-  // const { buyAllToken } = ACProtocol
-  // const { allTokenPrice } = AllProtocol
-  // const dispatch = useAppDispatch()
-  // const { balance } = useTokensData()
-  // const { signer } = useProfile()
-  // const { createNotify, updateNotifyItem } = useNotify()
+  const { buyAcToken } = useBuyAcToken()
+  const { account } = useProfile()
   const balances = useUserBalances()
   const [amount, setAmount] = useState<string | number>('')
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
@@ -59,32 +45,10 @@ const Bench: FC = () => {
   )
 
   const buyAndStakeFunc = async () => {
-    // if (signer) {
-    //   const notifyId = await createNotify({ content: 'Buy AC Token', type: 'loading' })
-    //   // 执行购买和质押
-    //   const { status, msg, hash } = await buyAllToken(baseTokenAddress, Number(amount), signer)
-    //   console.log(status, msg, hash, notifyId)
-    //   if (status) {
-    //     // 重新获取余额信息
-    //     await dispatch(getTokensBalanceAsync(signer))
-    //     // 重新拉取质押信息
-    //     await dispatch(getUserStakesAsync(signer))
-    //     setAmount('')
-    //     // await closeNotifyItem(notifyId)
-    //     updateNotifyItem(notifyId, { content: 'Buy AC Token', type: 'success', hash })
-    //     // notify.update(notifyId, 'success')
-    //   } else {
-    //     await sleep(200)
-    //     // await closeNotifyItem(notifyId)
-    //     updateNotifyItem(notifyId, {
-    //       title: 'Buy All Token',
-    //       type: 'error',
-    //       content: msg,
-    //       hash
-    //     })
-    //     // notify.update(notifyId, 'error', msg)
-    //   }
-    // }
+    if (account) {
+      // 执行购买和质押
+      await buyAcToken(baseTokenAddress, Number(amount), account)
+    }
   }
 
   const isDisabled = useMemo(
@@ -99,7 +63,7 @@ const Bench: FC = () => {
   }, [balances.USDC, balances.ETH, baseTokenAddress])
 
   const onChangeBaseToken = (address: any) => {
-    setBaseTokenAddress(String(address))
+    setBaseTokenAddress(address)
     setAmount('')
   }
 

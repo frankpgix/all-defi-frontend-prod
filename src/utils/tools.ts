@@ -110,8 +110,8 @@ export const getDecimalAmount = (amount: number | string | BN, decimals = 8): BN
   return new BN(amount).times(new BN(10).pow(decimals))
 }
 
-export const getUnitAmount = (amount: number | string, decimals = 8): string => {
-  return String(parseUnits(String(amount), decimals))
+export const getUnitAmount = (amount: number | string, decimals = 8): bigint => {
+  return parseUnits(String(amount), decimals)
 }
 
 export const toHexString = (amount: number | string, decimals = 8) => {

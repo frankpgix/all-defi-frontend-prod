@@ -5,9 +5,9 @@ import { tokens, ZERO_ADDRESS } from '@/config/tokens'
 import { useERC20Contract } from '@/hooks/useContract'
 import { safeInterceptionValues } from '@/utils/tools'
 
-export const userProfile = () => {
-  const account = useAccount()
-  console.log(account)
+export const useProfile = () => {
+  const { address } = useAccount()
+  return { account: address }
 }
 
 export const useETHBalance = () => {

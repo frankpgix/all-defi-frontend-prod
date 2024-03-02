@@ -35,5 +35,5 @@ export type ContractKeys =
   | 'GMXTradePosition'
   | 'GMXEarnPosition'
 
-export type AddressType = `0x${string}` | undefined
+export type AddressType = `0x${string}`
 export type AccountType = AddressType

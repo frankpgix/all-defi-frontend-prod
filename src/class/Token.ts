@@ -1,6 +1,6 @@
 // import { getAddress } from '@ethersproject/address'
 import { getAddress } from 'viem'
-import { ChainId, ChainIdRec, AddressType } from '@/config/types'
+import { ChainId, ChainIdRec, AddressType } from '@/types/base'
 import { VITE_APP_CHAIN_ID } from '@/config'
 
 export const _getAddress = (address: ChainIdRec): AddressType => {
