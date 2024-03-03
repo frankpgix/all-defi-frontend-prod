@@ -7,7 +7,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import { VaultDetailProps, VaultUserDetailProps, ShareCompositionProps } from '@/types/vault'
 
 import Allocate from './Allocate'
-// import RedeemFunds from './RedeemFunds'
+import Withhold from './Withhold'
 // import Claim from './Claim'
 // import DrawShares from './DrawShares'
 
@@ -32,8 +32,8 @@ const Bench: FC<Props> = ({ userData, data, getData, share, loading }) => {
             <Allocate data={data} getData={getData} />
           </TabPanel>
           <TabPanel>
-            {/* <RedeemFunds userData={userData} data={data} share={share} getData={getData} />
-            <Claim userData={userData} getData={getData} /> */}
+            <Withhold userData={userData} data={data} share={share} getData={getData} />
+            {/* <Claim userData={userData} getData={getData} /> */}
           </TabPanel>
         </Tabs>
       </section>

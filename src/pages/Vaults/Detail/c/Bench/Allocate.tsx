@@ -52,7 +52,7 @@ const Allocate: FC<Props> = ({ getData, data }) => {
   const maxBalance = useMemo(() => BN(acTokenBalance).toNumber(), [acTokenBalance])
   const maxValue = useMemo(() => Math.min(maxAum, maxBalance), [maxAum, maxBalance])
 
-  const isInSubscribe = useMemo(() => [0, 1, 2].includes(data.status), [data.status])
+  const isInAllocate = useMemo(() => [0, 1, 2].includes(data.status), [data.status])
 
   const onSliderChange = (val: number) => {
     // console.log()
@@ -82,7 +82,7 @@ const Allocate: FC<Props> = ({ getData, data }) => {
     }
   }
 
-  const onSubscribe = async () => {
+  const goAllocate = async () => {
     if (account) {
       await onAllocate(acToken, Number(value), account)
       reBalances()
@@ -118,10 +118,10 @@ const Allocate: FC<Props> = ({ getData, data }) => {
         </div>
         <div className="web-fund-detail-bench-action">
           <footer>
-            <Button onClick={onSubscribe} disabled={Number(value) <= 0 || !isInSubscribe}>
+            <Button onClick={goAllocate} disabled={Number(value) <= 0 || !isInAllocate}>
               confirm
             </Button>
-            {!isInSubscribe && <Tip>Unauthorized operation</Tip>}
+            {!isInAllocate && <Tip>Unauthorized operation</Tip>}
           </footer>
         </div>
       </section>

@@ -54,7 +54,7 @@ export const useShareCompositionOf = (vaultAddress: AddressType) => {
     args: [vaultAddress, address ?? '0x']
   })
   if (!isLoading && isSuccess && address) {
-    console.log(1111, data)
+    // console.log(1111, data)
     return { data: calcShareComposition(data), isLoading, isSuccess, refetch }
   }
   return { data: ShareCompositionDefault, isLoading, isSuccess, refetch }

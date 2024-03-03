@@ -52,7 +52,7 @@ export const userVaultPositionDetail = (vaultAddress: AddressType, underlyingTok
   })
 
   if (!isLoading && isSuccess) {
-    console.log(data)
+    // console.log(data)
     const uniDetail = calcUniV3NonfungiblePosition(data[0].result as any[], underlyingToken)
     const avveDetail = calcAaveV3Position(data[1].result as any, underlyingToken)
     const GMXTradeDetail = calcGMXTradePosition(data[2].result as any[])

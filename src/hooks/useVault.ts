@@ -55,3 +55,37 @@ export const useAllocate = (vaultAddress: AddressType) => {
   }
   return { onAllocate }
 }
+
+export const useWithhold = (vaultAddress: AddressType) => {
+  const vaultContract = useVaultContract(vaultAddress)
+
+  const { writeContractAsync } = useWriteContract()
+  const { createNotify, updateNotifyItem } = useNotify()
+
+  const onWithhold = async (amount: number, account: AddressType) => {
+    const _amount = getUnitAmount(String(amount), 18)
+
+    if (account) {
+      const notifyId = await createNotify({ type: 'loading', content: 'Withhold from vault' })
+
+      await writeContractAsync({
+        ...vaultContract,
+        functionName: 'withhold',
+        args: [_amount],
+        account
+      })
+        .then((hash: string) => {
+          console.log(hash)
+          updateNotifyItem(notifyId, { title: 'Withhold from vault', type: 'success', hash })
+        })
+        .catch((error: any) => {
+          updateNotifyItem(notifyId, {
+            title: 'Withhold from vault',
+            type: 'error',
+            content: error.shortMessage
+          })
+        })
+    }
+  }
+  return { onWithhold }
+}

@@ -1,45 +1,34 @@
-import React, { FC, useState, useMemo } from 'react'
+import { FC, useState, useMemo } from 'react'
 import BN from 'bignumber.js'
-import { useParams } from 'react-router-dom'
 import { isNaN } from 'lodash'
 
-import FundPool from '@/class/FundPool'
-import { FundDetailProps, FundUserDataProps, ShareCompositionProps } from '@/class/help'
-import { getDecimalsByAddress } from '@/config/tokens'
 import { useProfile } from '@/hooks/useProfile'
-import { useNotify } from '@/hooks/useNotify'
+import { useWithhold } from '@/hooks/useVault'
+
+import { VaultDetailProps, VaultUserDetailProps, ShareCompositionProps } from '@/types/vault'
 
 import { Input, Slider } from '@@/common/Form'
 import Button from '@@/common/Button'
 import Tip from '@@/common/Tip'
-import Popper from '@@/common/Popper'
-
-// import { notify } from '@@/common/Toast'
-
 import InfoDialog from '@@/common/Dialog/Info'
 
 interface Props {
-  userData: FundUserDataProps
-  data: FundDetailProps
+  userData: VaultUserDetailProps
+  data: VaultDetailProps
   share: ShareCompositionProps
   getData: () => void
 }
 
-const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
-  const { redeem } = FundPool
-  const { fundAddress } = useParams()
-  const { signer } = useProfile()
-  const { createNotify, updateNotifyItem } = useNotify()
+const Withhold: FC<Props> = ({ data, userData, getData, share }) => {
+  const { account } = useProfile()
+  const { onWithhold } = useWithhold(data.address)
 
   const [value, setValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
 
-  const decimals = useMemo(() => getDecimalsByAddress(data.baseToken), [data.baseToken])
-
-  const isInRedeem = useMemo(() => data.status === 1, [data.status])
+  const isInWithhold = useMemo(() => data.status === 1, [data.status])
   const maxValue = useMemo(() => {
-    // console.log(userData.shares, userData.redeemingShares, share.mining)
     return BN(userData.shares).minus(userData.redeemingShares).minus(share.mining).toNumber()
   }, [userData.shares, userData.redeemingShares, share.mining])
 
@@ -70,24 +59,12 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
     }
   }
 
-  const onRedeem = async () => {
-    if (signer && fundAddress) {
-      const notifyId = await createNotify({ type: 'loading', content: 'Withhold from vault' })
-      // 执行购买和质押
-      const { status, msg, hash } = await redeem(Number(value), fundAddress, decimals, signer)
-      if (status) {
-        await getData()
-        updateNotifyItem(notifyId, { type: 'success', hash })
-        setValue(0)
-        setSliderValue(0)
-      } else {
-        updateNotifyItem(notifyId, {
-          type: 'error',
-          title: 'Withhold from vault',
-          content: msg,
-          hash
-        })
-      }
+  const goWithhold = async () => {
+    if (account) {
+      await onWithhold(Number(value), account)
+      getData()
+      setValue(0)
+      setSliderValue(0)
     }
   }
 
@@ -120,17 +97,17 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
           <footer>
             <Button
               onClick={() => setInfoStatus(true)}
-              disabled={Number(value) <= 0 || !isInRedeem}
+              disabled={Number(value) <= 0 || !isInWithhold}
             >
               confirm
             </Button>
-            {!isInRedeem && <Tip>Unauthorized operation</Tip>}
+            {!isInWithhold && <Tip>Unauthorized operation</Tip>}
           </footer>
         </div>
       </section>
       <InfoDialog
         show={infoStatus}
-        onConfirm={onRedeem}
+        onConfirm={goWithhold}
         onClose={() => setInfoStatus(false)}
         title="Withhold From Vault"
         msg={`Will withhold ${value} vault Share, you can claim your AC tokens anytime after final settlement of current epoch`}
@@ -139,4 +116,4 @@ const RedeemFunds: FC<Props> = ({ data, userData, getData, share }) => {
   )
 }
 
-export default RedeemFunds
+export default Withhold
