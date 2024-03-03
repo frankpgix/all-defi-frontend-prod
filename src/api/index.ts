@@ -1,4 +1,4 @@
-import { get, post } from '@/utils/http'
+import { get } from '@/utils/http'
 import { VaultMonthDataType } from '@/types/gql'
 
 export const getDefiChartData = async () => {
@@ -53,8 +53,9 @@ export const getEthIndexData = async () => {
 
 export const getDefiTvlData = async () => {
   try {
+    // ;('https://defi-tracker.dappradar.com/api/ethereum/history/month?currency=USD')
     const { xaxis, series } = await get(
-      'https://defi-tracker.dappradar.com/api/ethereum/history/month?currency=USD'
+      'https://api-proxy.jimmyllee098.workers.dev/api/ethereum/history/month?currency=USD'
     )
     return xaxis.map((time: number, index: number) => ({
       time: time,
