@@ -7,7 +7,7 @@ import ERC20Abi from '@/config/abi/erc20.json'
 import ACProtocolAbi from '@/config/abi/ACProtocol.json'
 import AllProtocolAbi from '@/config/abi/AllProtocol.json'
 import VaultAbi from '@/config/abi/Vault.json'
-// import FundReaderAbi from '@/config/abi/FundReader.json'
+import VaultReaderAbi from '@/config/abi/VaultReader.json'
 // import RewardAbi from '@/config/abi/Reward.json'
 // import UniV3ACLAbi from '@/config/abi/UniV3ACL.json'
 // import Permit2Abi from '@/config/abi/Permit2.json'
@@ -30,9 +30,13 @@ export const useAllProtocolContract = () => {
 export const useVaultFactoryContract = () => {
   return useContract(getContractAddress('VaultFactory'), VaultFactoryAbi)
 }
+
 export const useAUMStatsContract = () => {
   return useContract(getContractAddress('AUMStats'), AUMStatsAbi)
 }
 export const useVaultContract = (address: AddressType) => {
   return useContract(address, VaultAbi)
+}
+export const useVaultReaderContract = () => {
+  return useContract(getContractAddress('VaultReader'), VaultReaderAbi)
 }

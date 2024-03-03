@@ -5,11 +5,14 @@ import { useParams } from 'react-router-dom'
 // import Blank from '@@/common/Blank'
 
 import { useBaseInfo } from '@/hooks/useVault'
+import { useVaultDetail } from '@/hooks/useVaultReader'
 const Detail: FC = () => {
   // console.log(base, 'base')
   const { fundAddress = '0x' } = useParams() as { fundAddress: AddressType }
-  const { data } = useBaseInfo(fundAddress)
-  console.log(data)
+  const { data: baseInfo, isLoading: baseInfoLoading } = useBaseInfo(fundAddress)
+  console.log('baseInfo', baseInfo, baseInfoLoading)
+  const { data: vaultDetail, isLoading: vaultDetailLoading } = useVaultDetail(fundAddress)
+  console.log('vaultDetail', vaultDetail, vaultDetailLoading)
   return (
     <>
       222

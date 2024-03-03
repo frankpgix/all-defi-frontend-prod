@@ -8,13 +8,13 @@ import { VaultBaseInfoDefault } from '@/data/vault'
 
 export const useBaseInfo = (vaultAddress: AddressType) => {
   const vaultContract = useVaultContract(vaultAddress)
-  const { data, isLoading, isSuccess } = useReadContract({
+  const { data, isLoading, isSuccess, refetch } = useReadContract({
     ...vaultContract,
     functionName: 'baseInfo'
   })
 
   if (!isLoading && isSuccess) {
-    return { data: calcVaultBaseInfo(data), isLoading, isSuccess }
+    return { data: calcVaultBaseInfo(data), isLoading, isSuccess, refetch }
   }
-  return { data: VaultBaseInfoDefault, isLoading, isSuccess }
+  return { data: VaultBaseInfoDefault, isLoading, isSuccess, refetch }
 }
