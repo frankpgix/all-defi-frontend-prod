@@ -89,3 +89,35 @@ export const useWithhold = (vaultAddress: AddressType) => {
   }
   return { onWithhold }
 }
+
+export const useClaim = (vaultAddress: AddressType) => {
+  const vaultContract = useVaultContract(vaultAddress)
+
+  const { writeContractAsync } = useWriteContract()
+  const { createNotify, updateNotifyItem } = useNotify()
+
+  const onClaim = async (account: AddressType) => {
+    if (account) {
+      const notifyId = await createNotify({ type: 'loading', content: 'Claim AC token' })
+
+      await writeContractAsync({
+        ...vaultContract,
+        functionName: 'claim',
+        args: [],
+        account
+      })
+        .then((hash: string) => {
+          console.log(hash)
+          updateNotifyItem(notifyId, { title: 'Claim AC token', type: 'success', hash })
+        })
+        .catch((error: any) => {
+          updateNotifyItem(notifyId, {
+            title: 'Claim AC token',
+            type: 'error',
+            content: error.shortMessage
+          })
+        })
+    }
+  }
+  return { onClaim }
+}

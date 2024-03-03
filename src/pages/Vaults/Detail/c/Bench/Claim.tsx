@@ -1,49 +1,38 @@
-import React, { FC, useState, useMemo } from 'react'
+import { FC, useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 
-import FundPool from '@/class/FundPool'
-import { FundUserDataProps } from '@/class/help'
-import tokens, { getTokenByAddress } from '@/config/tokens'
+import tokens from '@/config/tokens'
 import { useProfile } from '@/hooks/useProfile'
 import { Input } from '@@/common/Form'
 import Button from '@@/common/Button'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
 import InfoDialog from '@@/common/Dialog/Info'
 
-// import { notify } from '@@/common/Toast'
-import { useNotify } from '@/hooks/useNotify'
+import { useClaim } from '@/hooks/useVault'
+import { VaultUserDetailProps } from '@/types/vault'
 
 interface Props {
-  userData: FundUserDataProps
+  userData: VaultUserDetailProps
   getData: () => void
 }
 
 const Claim: FC<Props> = ({ userData, getData }) => {
-  const { claim } = FundPool
+  const { onClaim } = useClaim(userData.address)
   const { fundAddress } = useParams()
-  const { signer } = useProfile()
-  const { createNotify, updateNotifyItem } = useNotify()
+  const { account } = useProfile()
 
   const value = userData.unclaimedACToken
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
-  const baseToken = useMemo(() => getTokenByAddress(userData.baseToken), [userData.baseToken])
+  const baseToken = useMemo(() => userData.underlyingToken, [userData.underlyingToken])
   const acToken = useMemo(
     () => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}`]),
     [baseToken]
   )
 
-  // console.log(userData.baseToken, acToken, 33333)
   const onRedeem = async () => {
-    if (signer && fundAddress) {
-      const notifyId = await createNotify({ type: 'loading', content: 'Claim AC token' })
-      // 执行购买和质押
-      const { status, msg, hash } = await claim(fundAddress, signer)
-      if (status) {
-        await getData()
-        updateNotifyItem(notifyId, { type: 'success', hash })
-      } else {
-        updateNotifyItem(notifyId, { type: 'error', title: 'Claim AC token', content: msg, hash })
-      }
+    if (account && fundAddress) {
+      await onClaim(account)
+      getData()
     }
   }
 

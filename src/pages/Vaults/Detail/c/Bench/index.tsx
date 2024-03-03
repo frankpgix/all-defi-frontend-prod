@@ -8,7 +8,7 @@ import { VaultDetailProps, VaultUserDetailProps, ShareCompositionProps } from '@
 
 import Allocate from './Allocate'
 import Withhold from './Withhold'
-// import Claim from './Claim'
+import Claim from './Claim'
 // import DrawShares from './DrawShares'
 
 interface Props {
@@ -33,7 +33,7 @@ const Bench: FC<Props> = ({ userData, data, getData, share, loading }) => {
           </TabPanel>
           <TabPanel>
             <Withhold userData={userData} data={data} share={share} getData={getData} />
-            {/* <Claim userData={userData} getData={getData} /> */}
+            <Claim userData={userData} getData={getData} />
           </TabPanel>
         </Tabs>
       </section>

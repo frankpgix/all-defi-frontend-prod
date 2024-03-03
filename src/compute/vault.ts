@@ -29,7 +29,7 @@ export const calcVaultBaseInfo = (item: any, fundAddress?: AddressType): VaultBa
   return {
     underlyingToken,
     acToken: item.acToken,
-    address: fundAddress ?? '',
+    address: fundAddress ?? '0x',
     createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
     name: item.name,
     symbol: item.symbol,

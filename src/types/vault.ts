@@ -12,7 +12,7 @@ export interface GlobalAssetStatisticProps {
 export interface VaultBaseInfoProps {
   underlyingToken: Token
   acToken: string
-  address: string
+  address: AddressType
   createTime: number
   name: string
   symbol: string
@@ -68,7 +68,7 @@ export interface VaultDetailProps {
 }
 
 export interface VaultUserDetailProps {
-  address: string
+  address: AddressType
   underlyingToken: Token
   underlyingTokenPriceInUSD: number
   status: number

@@ -18,7 +18,7 @@ export const GlobalAssetStatisticDefault: GlobalAssetStatisticProps = {
 export const VaultBaseInfoDefault: VaultBaseInfoProps = {
   underlyingToken: getTokenByAddress('0x'),
   acToken: '',
-  address: '-',
+  address: '0x',
   createTime: 0,
   name: '-',
   symbol: '-',
@@ -35,7 +35,7 @@ export const VaultBaseInfoDefault: VaultBaseInfoProps = {
 
 export const VaultDetailDefault: VaultDetailProps = {
   underlyingToken: getTokenByAddress('0x'),
-  address: '-',
+  address: '0x',
   name: '-',
   manager: '-',
   createTime: 0,
@@ -74,7 +74,7 @@ export const VaultDetailDefault: VaultDetailProps = {
 }
 
 export const VaultUserDetailDefault: VaultUserDetailProps = {
-  address: '-',
+  address: '0x',
   underlyingToken: getTokenByAddress('0x'),
   status: 1,
   shares: 0,
