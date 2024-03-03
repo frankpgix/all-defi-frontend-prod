@@ -2,6 +2,7 @@
 import { gql } from '@apollo/client'
 
 import { timeDiffType, typeStartTime, get10MinutelyUnix } from './tools'
+import { createArrayByNumber } from '@/utils/tools'
 
 const calcTableAndStartTime = (type: string, startTime: number, monthHouer?: boolean) => {
   // const diffType = timeDiffType(startTime)
@@ -97,46 +98,34 @@ export const calcMiningTotalDataGQL = () => {
 }
 // miningAmount_not: 0
 
-export const calcFundDetailChartGQL = (
-  fundAddress: string,
-  epochs: number[],
-  startTime: number,
-  createTime: number
-) => {
-  let tableName = 'fundDailyDatas'
-
-  const diffType = timeDiffType(startTime)
-  if (epochs.length === 1) {
-    if (diffType === 'hour') {
-      tableName = 'fund10MinutelyDatas'
-    } else if (diffType === 'day') {
-      tableName = 'fundHourlyDatas'
+export const calcVaultDetailChartGQL = (fundAddress: string, epoch: number, timeType: string) => {
+  let dataType = '1h'
+  const calcEpochs = (): number[] => {
+    if (timeType === 'current epoch') return [epoch]
+    if (timeType === '3 Epochs') {
+      dataType = '6h'
+      return Array.from(new Set([Math.max(epoch - 2, 0), Math.max(epoch - 1, 0), epoch]))
     }
+    dataType = '1d'
+    return createArrayByNumber(epoch)
   }
-  const diffCTimeType = timeDiffType(createTime)
 
-  if (diffCTimeType === 'hour') {
-    tableName = 'fund10MinutelyDatas'
-  } else if (diffCTimeType === 'day') {
-    tableName = 'fundHourlyDatas'
-  }
+  const epochs = calcEpochs()
   return gql`
     query {
-      ${tableName}(
+      vaultIntervalDatas(
         orderBy: periodStartUnix
         orderDirection: desc
         first: 1000
         where: {
-          fundId: "${fundAddress.toLowerCase()}"
+          vaultId: "${fundAddress.toLowerCase()}"
+          intervalType: "${dataType}"
           epochIndex_in: ${JSON.stringify(epochs)}
         }
       ) {
-        fundId
+        intervalType
         periodStartUnix
-        epochIndex
         aum
-        nav
-        roe
         sharePrice
       }
     }
@@ -206,3 +195,23 @@ export const calcVaultListGQL = () => gql`
     }
   }
 `
+
+export const calcVaultMonthDataGql = (fundAddress: string) => {
+  return gql`
+    query {
+      vaultNaturalMonthDatas(
+        orderBy: periodStartUnix
+        orderDirection: desc
+        where: {
+          vaultId: "${fundAddress}"
+        }
+      ) {
+        vaultId
+        name
+        periodStartUnix
+        roe
+        underlyingToken
+      }
+    }
+  `
+}

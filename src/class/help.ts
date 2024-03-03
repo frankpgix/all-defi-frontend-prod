@@ -422,20 +422,20 @@ export const calcFundBreachDetail = (item: any) => {
 
 export interface ShareCompositionProps {
   balance: number
-  redeeming: number
+  withholding: number
   mining: number
 }
 
 export const ShareCompositionDefault = {
   balance: 0,
-  redeeming: 0,
+  withholding: 0,
   mining: 0
 }
 
 export const calcShareComposition = (item: any) => {
   return {
     balance: Number(safeInterceptionValues(item.balance, 4, 18)),
-    redeeming: Number(safeInterceptionValues(item.withholding, 4, 18)),
+    withholding: Number(safeInterceptionValues(item.withholding, 4, 18)),
     mining: Number(safeInterceptionValues(item.mining, 4, 18))
   }
 }

@@ -66,3 +66,46 @@ export interface VaultDetailProps {
   lastManagerFee: number
   historyManagerFee: number
 }
+
+export interface VaultUserDetailProps {
+  address: string
+  underlyingToken: Token
+  underlyingTokenPriceInUSD: number
+  status: number
+  aum: number
+  nav: number
+  navInUSD: number
+  shares: number
+  sharePrice: number
+  subscribingACToken: number
+  redeemingShares: number
+  unclaimedACToken: number
+  unclaimedALL: number
+  historyReturn: number
+  roe: number
+  beginSharePrice: number
+}
+
+export interface VaultProps extends VaultBaseInfoProps {
+  data?: VaultUserDetailProps | null
+  detail?: VaultDetailProps | null
+}
+export interface FundUserListDataProps extends VaultProps {
+  data: VaultUserDetailProps
+}
+
+export interface ShareCompositionProps {
+  balance: number
+  withholding: number
+  mining: number
+}
+
+export interface AssetCompositionProps {
+  token: string //token地址
+  symbol: string //token符号
+  decimals: number //精度
+  precision: number //保留小数位
+  amount: number //数量
+  value: number //价值
+  percentage: number //价值百分比
+}

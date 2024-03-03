@@ -1,18 +1,20 @@
 import { useQuery, useLazyQuery } from '@apollo/client'
-import { safeInterceptionValues, createArrayByNumber } from '@/utils/tools'
+import { safeInterceptionValues } from '@/utils/tools'
 import { getTokenByAddress } from '@/config/tokens'
 import { uniq, last } from 'lodash'
 // import { useMemo } from 'react'
 import BN from 'bignumber.js'
 import { sum } from '@/utils/tools'
-import { useEffect, useCallback } from 'react'
+import { useEffect } from 'react'
 // import { useDebounceEffect, useMount } from 'ahooks'
 import { toLower } from 'lodash'
+import dayjs from 'dayjs'
 import {
-  calcFundDatasGql,
-  calcMiningData,
-  calcFundDetailChartGQL,
-  calcVaultListGQL
+  // calcFundDatasGql,
+  // calcMiningData,
+  // calcFundDetailChartGQL,
+  calcVaultListGQL,
+  calcVaultMonthDataGql
   // calcManageFundsData,
   // calcManageFundDetailData,
   // calcMiningTotalDataGQL
@@ -20,7 +22,8 @@ import {
 
 import { FundDataProps } from './types'
 import { removeZeroKeys } from './tools'
-import { FundDetailProps } from '@/class/help'
+import { VaultMonthDataType } from '@/types/graphql'
+// import { FundDetailProps } from '@/class/help'
 
 export const useFundData = (gql: any, timeType: string, decimals: number, precision: number) => {
   const { loading, error, data: sData } = useQuery(gql)
@@ -154,47 +157,16 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
 //   return { data: 0, loading }
 // }
 
-export const useFundDetailChartData = (
-  fundAddress: string,
-  timeType: 'current epoch' | '3 Epochs' | 'all',
-  fundData: FundDetailProps
-) => {
-  const calcEpochs = (): number[] => {
-    if (timeType === 'current epoch') return [fundData.epochIndex]
-    if (timeType === '3 Epochs')
-      return Array.from(
-        new Set([
-          Math.max(fundData.epochIndex - 2, 0),
-          Math.max(fundData.epochIndex - 1, 0),
-          fundData.epochIndex
-        ])
-      )
-    return createArrayByNumber(fundData.epochIndex)
-  }
-  const epochs = calcEpochs()
-  const {
-    loading,
-    error,
-    data: sData
-  } = useQuery(
-    calcFundDetailChartGQL(fundAddress, epochs, fundData.epochStartTime, fundData.createTime)
-  )
-  const data = (sData?.fundHourlyDatas ?? sData?.fundDailyDatas ?? sData?.fund10MinutelyDatas ?? [])
-    .map((item: FundDataProps) => ({
+export const useVaultDetailChartData = (gql: any) => {
+  const { loading, error, data: sData } = useQuery(gql)
+  const data = (sData?.vaultIntervalDatas ?? [])
+    .map((item: any) => ({
       time: item.periodStartUnix * 1000,
-      value: Number(safeInterceptionValues(item.sharePrice, 4, 18))
+      value: Number(safeInterceptionValues(String(item.sharePrice), 18, 18)),
+      aum: Number(safeInterceptionValues(String(item.aum), 18, 18))
     }))
     .reverse()
-  const dataLength = data.length
-  // console.log(dataLength)
-  if (dataLength > 60) {
-    const remainder = ~~(dataLength / 30)
-    return {
-      loading,
-      error,
-      data: data.filter((_: any, index: number) => index % remainder === 0)
-    }
-  }
+
   return { loading, error, data }
 }
 
@@ -298,4 +270,22 @@ export const useVaultListData = (): { loading: boolean; data: any[]; error: any 
     })
     .filter((item: any) => item.verified === true)
   return { loading, data, error }
+}
+
+export const useValutMonthData = (fundAddress: string) => {
+  const gql = calcVaultMonthDataGql(fundAddress)
+  const { loading, data: sData } = useQuery(gql)
+  const data: VaultMonthDataType[] = (sData?.vaultNaturalMonthDatas ?? [])
+    .map((item: any) => {
+      const time = item.periodStartUnix * 1000
+      const year = dayjs(time).year()
+      const month = dayjs(time).month() + 1
+      return {
+        year,
+        month,
+        roe: safeInterceptionValues(String(item.roe), 2, 16) + '%'
+      }
+    })
+    .reverse()
+  return { loading, data }
 }

@@ -1,5 +1,12 @@
 import { getTokenByAddress } from '@/config/tokens'
-import { GlobalAssetStatisticProps, VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
+import {
+  GlobalAssetStatisticProps,
+  VaultBaseInfoProps,
+  VaultDetailProps,
+  VaultUserDetailProps,
+  ShareCompositionProps,
+  AssetCompositionProps
+} from '@/types/vault'
 
 // Vaults Global Asset Statistics Default Data
 export const GlobalAssetStatisticDefault: GlobalAssetStatisticProps = {
@@ -64,4 +71,39 @@ export const VaultDetailDefault: VaultDetailProps = {
   platFee: 0,
   lastManagerFee: 0,
   historyManagerFee: 0
+}
+
+export const VaultUserDetailDefault: VaultUserDetailProps = {
+  address: '-',
+  underlyingToken: getTokenByAddress('0x'),
+  status: 1,
+  shares: 0,
+  aum: 0,
+  sharePrice: 0,
+  subscribingACToken: 0,
+  redeemingShares: 0,
+  unclaimedACToken: 0,
+  unclaimedALL: 0,
+  nav: 0,
+  navInUSD: 0,
+  underlyingTokenPriceInUSD: 0,
+  historyReturn: 0,
+  roe: 0,
+  beginSharePrice: 0
+}
+
+export const ShareCompositionDefault: ShareCompositionProps = {
+  balance: 0,
+  withholding: 0,
+  mining: 0
+}
+
+export const AssetCompositionDefault: AssetCompositionProps = {
+  token: '', //token地址
+  symbol: '', //token符号
+  decimals: 18, //精度
+  precision: 6, //保留小数位
+  amount: 0, //数量
+  value: 0, //价值
+  percentage: 0 //价值百分比
 }
