@@ -23,7 +23,7 @@ const ethAddress = tokens.ETH.address
 const Bench: FC = () => {
   const { buyAcToken } = useBuyAcToken()
   const { account } = useProfile()
-  const balances = useUserBalances()
+  const { balances } = useUserBalances()
   const [amount, setAmount] = useState<string | number>('')
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>(baseTokenOptions[0].value)

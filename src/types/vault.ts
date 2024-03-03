@@ -29,7 +29,7 @@ export interface VaultBaseInfoProps {
 
 export interface VaultDetailProps {
   underlyingToken: Token
-  address: string
+  address: AddressType
   name: string
   manager: string
   createTime: number

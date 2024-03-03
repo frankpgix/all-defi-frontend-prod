@@ -26,6 +26,7 @@ export interface AaveV3DetailTypes {
 }
 
 export interface GMXTradePositionTypes {
+  id: number
   collateralToken: Token
   indexToken: Token
   isLong: boolean
@@ -41,6 +42,7 @@ export interface GMXTradePositionTypes {
 }
 
 export interface GMXEarnDetailTypes {
+  id: number
   glpBlance: string
   glpValue: string
   pendingReward: string

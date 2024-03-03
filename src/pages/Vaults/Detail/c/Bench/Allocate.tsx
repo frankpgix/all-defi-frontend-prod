@@ -1,58 +1,40 @@
-import React, { FC, useState, useMemo } from 'react'
+import { FC, useState, useMemo } from 'react'
 import BN from 'bignumber.js'
-import { useParams } from 'react-router-dom'
 import { isNaN } from 'lodash'
 
-import FundPool from '@/class/FundPool'
-import { FundDetailProps } from '@/class/help'
-import tokens, { getTokenByAddress } from '@/config/tokens'
-import { useProfile } from '@/hooks/useProfile'
-import { useNotify } from '@/hooks/useNotify'
+import { tokens } from '@/config/tokens'
+import { useProfile, useUserBalances } from '@/hooks/useProfile'
 
-import { useAppDispatch } from '@/store'
-import { getTokensBalanceAsync } from '@/store/tokens'
-import { useTokensData } from '@/store/tokens/hooks'
 import { formatNumber } from '@/utils/tools'
 
 import { Input, Slider } from '@@/common/Form'
 import Button from '@@/common/Button'
 import Tip from '@@/common/Tip'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
+import { VaultDetailProps } from '@/types/vault'
 
-// import { notify } from '@@/common/Toast'
-import Popper from '@@/common/Popper'
-// import InfoDialog from '@@/common/Dialog/Info'
+import { useAllocate } from '@/hooks/useVault'
 
 interface Props {
   getData: () => void
-  data: FundDetailProps
+  data: VaultDetailProps
 }
 
-const SubscribeFunds: FC<Props> = ({ getData, data }) => {
-  const { subscribe } = FundPool
-  const { fundAddress } = useParams()
-  const { signer } = useProfile()
-  const { balance } = useTokensData()
-  const dispatch = useAppDispatch()
-  const { createNotify, updateNotifyItem } = useNotify()
+const Allocate: FC<Props> = ({ getData, data }) => {
+  const { account } = useProfile()
+  const { balances, refetch: reBalances } = useUserBalances()
+  const { onAllocate } = useAllocate(data.address)
 
-  const baseToken = useMemo(() => getTokenByAddress(data.baseToken), [data.baseToken])
-  // const decimals = useMemo(() => baseToken.decimals, [baseToken])
+  const baseToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
   const acToken = useMemo(
     () => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}`]),
     [baseToken]
   )
-  // @ts-ignore
-  const acTokenBalance = useMemo(() => balance[acToken?.name], [balance, acToken?.name])
+
+  const acTokenBalance = useMemo(() => balances[acToken?.name], [balances, acToken?.name])
   const [value, setValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
 
-  // console.log(
-  //   BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(),
-  //   acToken,
-  //   data,
-  //   222
-  // )
   const maxAum = useMemo(
     () =>
       Number(
@@ -101,25 +83,12 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
   }
 
   const onSubscribe = async () => {
-    if (signer && fundAddress) {
-      const notifyId = await createNotify({ type: 'loading', content: 'Allocate to vault' })
-      // 执行购买和质押
-      const { status, msg, hash } = await subscribe(Number(value), fundAddress, acToken, signer)
-      if (status) {
-        // 重新获取余额信息
-        await dispatch(getTokensBalanceAsync(signer))
-        await getData()
-        setValue(0)
-        setSliderValue(0)
-        updateNotifyItem(notifyId, { type: 'success', hash })
-      } else {
-        updateNotifyItem(notifyId, {
-          type: 'error',
-          title: 'Allocate to vault',
-          content: msg,
-          hash
-        })
-      }
+    if (account) {
+      await onAllocate(acToken, Number(value), account)
+      reBalances()
+      getData()
+      setValue(0)
+      setSliderValue(0)
     }
   }
   return (
@@ -160,4 +129,4 @@ const SubscribeFunds: FC<Props> = ({ getData, data }) => {
   )
 }
 
-export default SubscribeFunds
+export default Allocate

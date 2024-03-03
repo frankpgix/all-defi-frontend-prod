@@ -76,7 +76,8 @@ export const calcAaveV3Position = (
 }
 
 export const calcGMXTradePosition = (response: any[]): GMXTradePositionTypes[] => {
-  return (response ?? []).map((item: any) => ({
+  return (response ?? []).map((item: any, id) => ({
+    id,
     collateralToken: getTokenByAddress(item.collateralToken),
     indexToken: getTokenByAddress(item.indexToken),
     isLong: Boolean(item.isLong),
@@ -98,6 +99,7 @@ export const calcGMXEarnPosition = (
 ): GMXEarnDetailTypes[] => {
   return [
     {
+      id: 0,
       glpBlance: safeInterceptionValues(response.glpBlance, 6, 18),
       glpValue: safeInterceptionValues(
         response.glpValue,

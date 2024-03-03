@@ -10,35 +10,35 @@ import { useVaultDetail, useUserVaultDetail, useShareCompositionOf } from '@/hoo
 import Dashboard from './c/Dashboard'
 import VaultStatus from './c/VaultStatus'
 import Portfolio from './c/Portfolio'
-// import Bench from './c/Bench'
+import Bench from './c/Bench'
 import RoeHistory from './c/RoeHistory'
 
 const Detail: FC = () => {
   // console.log(base, 'base')
   const { fundAddress = '0x' } = useParams() as { fundAddress: AddressType }
   const { data: baseInfo, isLoading: baseInfoLoading } = useBaseInfo(fundAddress)
-  console.log('baseInfo', baseInfo, baseInfoLoading)
+  // console.log('baseInfo', baseInfo, baseInfoLoading)
 
   const {
     data: vaultDetail,
     isLoading: vaultDetailLoading,
     refetch: getVaultDetail
   } = useVaultDetail(fundAddress)
-  console.log('vaultDetail', vaultDetail, vaultDetailLoading)
+  // console.log('vaultDetail', vaultDetail, vaultDetailLoading)
 
   const {
     data: vaultUserDetail,
     isLoading: vaultUserDetailLoading,
     refetch: getVaultUserDetail
   } = useUserVaultDetail(fundAddress)
-  console.log('vaultUserDetail', vaultUserDetail, vaultUserDetailLoading)
+  // console.log('vaultUserDetail', vaultUserDetail, vaultUserDetailLoading)
 
   const {
     data: vaultShareComposition,
     isLoading: vaultShareCompositionLoading,
     refetch: getVaultShareComposition
   } = useShareCompositionOf(fundAddress)
-  console.log('vaultShareComposition', vaultShareComposition, vaultShareCompositionLoading)
+  // console.log('vaultShareComposition', vaultShareComposition, vaultShareCompositionLoading)
 
   const getData = () => {
     getVaultDetail()
@@ -69,7 +69,13 @@ const Detail: FC = () => {
       <RoeHistory fundAddress={fundAddress} />
       <VaultStatus base={baseInfo} data={vaultDetail} loading={loading} />
       <Portfolio base={baseInfo} fundAddress={fundAddress} />
-      {/* <Bench userData={userData} data={data} share={share} loading={loading} getData={getData} /> */}
+      <Bench
+        userData={vaultUserDetail}
+        data={vaultDetail}
+        share={vaultShareComposition}
+        loading={loading}
+        getData={getData}
+      />
     </>
   )
 }

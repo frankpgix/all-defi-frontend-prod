@@ -32,7 +32,7 @@ export const useUserBalances = () => {
     })
     .filter((token) => token.address !== ZERO_ADDRESS)
 
-  if (!address) return balances
+  if (!address) return { balances, refetch: () => {} }
 
   const contracts = tokenList.map((token) => {
     return {
@@ -42,7 +42,7 @@ export const useUserBalances = () => {
     }
   })
 
-  const { data } = useReadContracts({ contracts })
+  const { data, refetch } = useReadContracts({ contracts })
 
   tokenList.forEach((token, index) => {
     const balance = data?.[index]
@@ -51,5 +51,5 @@ export const useUserBalances = () => {
     balances[token.name] = balance
   })
   balances.ETH = ethBalances
-  return balances
+  return { balances, refetch }
 }
