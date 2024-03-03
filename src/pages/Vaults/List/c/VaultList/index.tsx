@@ -99,7 +99,7 @@ const FundList: FC = () => {
   ]
 
   const onRow = (record: FundDetailProps) => ({
-    onClick: () => navigate(`/fund-market/detail/${record.address}`)
+    onClick: () => navigate(`/vaults/detail/${record.address}`)
   })
 
   return (

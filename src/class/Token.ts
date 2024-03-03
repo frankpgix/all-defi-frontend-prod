@@ -45,7 +45,7 @@ class Token {
   readonly address: AddressType
   readonly decimals: number
   readonly precision: number
-  readonly projectLink: string
+  readonly projectLink?: string
   readonly icon: string
 
   constructor({
