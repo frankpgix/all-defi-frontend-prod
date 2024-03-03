@@ -11,7 +11,8 @@ import { toLower } from 'lodash'
 import {
   calcFundDatasGql,
   calcMiningData,
-  calcFundDetailChartGQL
+  calcFundDetailChartGQL,
+  calcVaultListGQL
   // calcManageFundsData,
   // calcManageFundDetailData,
   // calcMiningTotalDataGQL
@@ -191,7 +192,7 @@ export const useFundDetailChartData = (
     return {
       loading,
       error,
-      data: data.filter((item: any, index: number) => index % remainder === 0)
+      data: data.filter((_: any, index: number) => index % remainder === 0)
     }
   }
   return { loading, error, data }
@@ -259,4 +260,42 @@ export const useManagerFundData = (gql: any, fundData: any[], startTime: number,
   return { loading, error, data, count }
 
   // return { loading: true, error: null, data: [], count: 0 }
+}
+
+export const useVaultListData = (): { loading: boolean; data: any[]; error: any } => {
+  const {
+    loading,
+    error,
+    data: sData
+  } = useQuery(calcVaultListGQL(), {
+    fetchPolicy: 'no-cache'
+  })
+
+  console.log(sData, 'sData')
+  const data = (sData?.vaults ?? [])
+    .map((item: any) => {
+      const baseToken = getTokenByAddress(item.underlyingToken)
+      return {
+        name: item.name,
+        managerName: item.managerName,
+        epoch: item.epochIndex,
+        address: item.id,
+        aum: safeInterceptionValues(item.beginningAUM, baseToken.precision, baseToken.decimals),
+        capacityAvailable: safeInterceptionValues(
+          item.capacityAvailable,
+          baseToken.precision,
+          baseToken.decimals
+        ),
+        apr: safeInterceptionValues(item.currentAPR.split('.')[0], 4, 18),
+        dayReturn: safeInterceptionValues(item.dayReturn, 4, 18),
+        weekReturn: safeInterceptionValues(item.weekReturn, 4, 18),
+        monthReturn: safeInterceptionValues(item.monthReturn, 4, 18),
+        yearReturn: safeInterceptionValues(item.yearReturn, 4, 18),
+        baseToken,
+        status: item.stage,
+        verified: item.stage !== 0
+      }
+    })
+    .filter((item: any) => item.verified === true)
+  return { loading, data, error }
 }

@@ -184,3 +184,25 @@ export const calcManageFundDetailData = (
     }
   `
 }
+
+export const calcVaultListGQL = () => gql`
+  query {
+    vaults {
+      id
+      # verified
+      name
+      underlyingToken
+      beginningAUM
+      capacityAvailable
+      managerName
+      dayReturn
+      weekReturn
+      monthReturn
+      yearReturn
+      currentAPR
+      epochIndex
+      createTime
+      stage
+    }
+  }
+`

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 // import Button from '@/components/common/Button'
@@ -12,16 +12,6 @@ const Header: FC = () => {
   const navigate = useNavigate()
   useToPageTop()
 
-  // const { pathname } = useLocation()
-  //
-  // const LaunchAppBtn = useMemo(() => {
-  //   if (pathname !== '/') return <ConnectButton />
-  //   return (
-  //     <Button to="/fund-market" size="medium">
-  //       LAUNCH APP
-  //     </Button>
-  //   )
-  // }, [pathname])
   return (
     <>
       <header className="web-header">
@@ -31,7 +21,7 @@ const Header: FC = () => {
           </h1>
           <nav className="web-header-nav">
             <NavLink to="/buy">Buy AC Token</NavLink>
-            <NavLink to="/fund-market">Vaults</NavLink>
+            <NavLink to="/vaults">Vaults</NavLink>
             <NavLink to="/manage">my management</NavLink>
             <NavLink to="/all-mining">ALL MINING</NavLink>
             {/* <NavLink to="/">global data</NavLink> */}

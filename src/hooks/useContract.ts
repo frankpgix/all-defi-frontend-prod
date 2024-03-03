@@ -12,7 +12,7 @@ import AllProtocolAbi from '@/config/abi/AllProtocol.json'
 // import UniV3ACLAbi from '@/config/abi/UniV3ACL.json'
 // import Permit2Abi from '@/config/abi/Permit2.json'
 import VaultFactoryAbi from '@/config/abi/VaultFactory.json'
-// import AUMStatsAbi from '@/config/abi/AUMStats.json'
+import AUMStatsAbi from '@/config/abi/AUMStats.json'
 
 export const useContract = (address: AddressType, abi: any) => {
   return { address, abi }
@@ -29,4 +29,7 @@ export const useAllProtocolContract = () => {
 }
 export const useVaultFactoryContract = () => {
   return useContract(getContractAddress('VaultFactory'), VaultFactoryAbi)
+}
+export const useAUMStatsContract = () => {
+  return useContract(getContractAddress('AUMStats'), AUMStatsAbi)
 }
