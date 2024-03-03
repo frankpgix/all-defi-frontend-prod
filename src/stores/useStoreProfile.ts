@@ -10,10 +10,14 @@ export const useStoreProfile = create((set) => {
   return {
     address: '',
     isManager: false,
-    signer: null,
     loading: false,
     maxFundLimit: 0,
-    update: (address: AddressType, isManager: boolean, maxFundLimit: number, loading: boolean) => {
+    update: (
+      address: AddressType | '',
+      isManager: boolean,
+      maxFundLimit: number,
+      loading: boolean
+    ) => {
       set({ address, isManager, maxFundLimit, loading })
     }
   }

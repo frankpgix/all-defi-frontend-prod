@@ -1,17 +1,48 @@
-import { useAccount, useReadContracts, useBalance } from 'wagmi'
+import { useReadContracts, useBalance } from 'wagmi'
 
 import { tokens, ZERO_ADDRESS } from '@/config/tokens'
 
 import { useERC20Contract } from '@/hooks/useContract'
 import { safeInterceptionValues } from '@/utils/tools'
+import { profileProps } from '@/types/profile'
+// import { useVaultCountLimit } from '@/hooks/useAllProtocol'
 
-export const useProfile = () => {
-  const { address } = useAccount()
-  return { account: address }
+import { useStoreProfile } from '@/stores/useStoreProfile'
+
+// export const useProfile = (): profileProps => {
+//   const { address: account } = useAccount()
+//   const { data: maxFundLimit, isLoading: loading, refetch: update } = useVaultCountLimit()
+
+//   return {
+//     account,
+//     isManager: Boolean(maxFundLimit),
+//     loading,
+//     maxFundLimit,
+//     update
+//   }
+// }
+
+export const useProfile = (): profileProps => {
+  const { account, isManager, loading, update, maxFundLimit } = useStoreProfile((state: any) => ({
+    account: state.address,
+    isManager: state.isManager,
+    loading: state.loading,
+    maxFundLimit: state.maxFundLimit,
+    update: state.update
+  }))
+
+  // console.log(account, signer, isManager, update)
+  return {
+    account,
+    isManager,
+    loading,
+    maxFundLimit,
+    update
+  }
 }
 
 export const useETHBalance = () => {
-  const { address } = useAccount()
+  const { account: address } = useProfile()
   if (!address) return 0
   const { data } = useBalance({ address })
   if (!data) return 0
@@ -20,7 +51,7 @@ export const useETHBalance = () => {
 }
 
 export const useUserBalances = () => {
-  const { address } = useAccount()
+  const { account: address } = useProfile()
 
   const balances: Record<string, number> = {}
   const ethBalances = useETHBalance()

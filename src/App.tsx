@@ -11,14 +11,14 @@ import '@/style/style.scss'
 
 import Header from '@@/web/Header'
 import Footer from '@@/web/Footer'
-// import Global from '@/pages/Updaters/Global'
+import Global from '@/pages/Updaters/Global'
 // import LoopData from '@@/common/LoopData'
 import Notify from '@@/core/Notify'
 
 import Home from '@/pages/Home'
 import Buy from '@/pages/Buy'
 import Vaults from '@/pages/Vaults'
-// import MyManagement from '@/pages/MyManagement'
+import MyManagement from '@/pages/MyManagement'
 // import Mining from '@/pages/Mining'
 const Test = lazy(() => import('@/pages/Test'))
 
@@ -27,14 +27,14 @@ function App() {
     <>
       <div className="web-main">
         <Header />
-        {/* <Global />
-        <LoopData /> */}
+        <Global />
+        {/* <LoopData /> */}
         <Suspense fallback={null}>
           <Routes>
             <Route path="/buy" element={<Buy />} />
             <Route path="/vaults/*" element={<Vaults />} />
-            {/*<Route path="/manage/*" element={<MyManagement />} />
-            <Route path="/all-mining" element={<Mining />} /> */}
+            <Route path="/manage/*" element={<MyManagement />} />
+            {/*<Route path="/all-mining" element={<Mining />} /> */}
             <Route path="/test" element={<Test />} />
             <Route path="/" element={<Home />} />
           </Routes>

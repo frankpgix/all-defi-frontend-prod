@@ -1,7 +1,8 @@
-import { useReadContract, useAccount } from 'wagmi'
+import { useReadContract } from 'wagmi'
 import { sum, isNaN } from 'lodash'
 import BN from 'bignumber.js'
 import { useVaultReaderContract } from '@/hooks/useContract'
+import { useProfile } from '@/hooks/useProfile'
 import { AddressType } from '@/types/base'
 import { VaultDetailDefault, VaultUserDetailDefault, ShareCompositionDefault } from '@/data/vault'
 import {
@@ -28,7 +29,7 @@ export const useVaultDetail = (vaultAddress: AddressType) => {
 }
 
 export const useUserVaultDetail = (vaultAddress: AddressType) => {
-  const { address } = useAccount()
+  const { account: address } = useProfile()
   if (!address) {
     return { data: VaultUserDetailDefault, isLoading: false, isSuccess: false, refetch: () => {} }
   }
@@ -44,7 +45,7 @@ export const useUserVaultDetail = (vaultAddress: AddressType) => {
 }
 
 export const useShareCompositionOf = (vaultAddress: AddressType) => {
-  const { address } = useAccount()
+  const { account: address } = useProfile()
   if (!address) {
     return { data: ShareCompositionDefault, isLoading: false, isSuccess: false, refetch: () => {} }
   }

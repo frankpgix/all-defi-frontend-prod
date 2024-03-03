@@ -3,6 +3,7 @@ import { tokens, ZERO_ADDRESS } from '@/config/tokens'
 import { useAllProtocolContract } from '@/hooks/useContract'
 import { useAssetPrice } from '@/hooks/useVaultFactory'
 import { AddressType } from '@/types/base'
+import { safeInterceptionValues } from '@/utils/tools'
 
 // allTokenPrice = async (baseToken: string) => {
 //   // console.log(baseToken)
@@ -29,4 +30,19 @@ export const useAllTokenPrice = (baseToken: AddressType) => {
     baseToken = tokens.WETH.address
   }
   return useAssetPrice(tokens.ALLTOKEN.address, baseToken)
+}
+
+export const useVaultCountLimit = (address?: AddressType | '') => {
+  if (!address) {
+    return { data: 0, isLoading: false, isSuccess: true, refetch: () => {} }
+  }
+  const { isLoading, isSuccess, data, refetch } = useReadContract({
+    ...AllProtocolContract,
+    functionName: 'vaultCountLimit',
+    args: [address]
+  })
+  if (!isLoading && isSuccess) {
+    return { data: Number(safeInterceptionValues(data, 0, 0)), isLoading, isSuccess, refetch }
+  }
+  return { data: 0, isLoading, isSuccess, refetch }
 }
