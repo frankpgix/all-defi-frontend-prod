@@ -1,5 +1,5 @@
 import { get } from '@/utils/http'
-import { VaultMonthDataType } from '@/types/gql'
+import { VaultMonthDataType } from '@/types/graphql'
 
 export const getDefiChartData = async () => {
   return [
