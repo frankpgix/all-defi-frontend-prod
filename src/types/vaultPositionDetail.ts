@@ -24,3 +24,24 @@ export interface AaveV3DetailTypes {
   collateral: AaveV3DetailAssetTypes[]
   debt: AaveV3DetailAssetTypes[]
 }
+
+export interface GMXTradePositionTypes {
+  collateralToken: Token
+  indexToken: Token
+  isLong: boolean
+  size: string
+  collateral: string
+  positionFee: string
+  fundingFee: string
+  unrealizedPnl: string
+  entryPrice: string
+  markPrice: string
+  liquidationPrice: string
+  positionValue: string
+}
+
+export interface GMXEarnDetailTypes {
+  glpBlance: string
+  glpValue: string
+  pendingReward: string
+}

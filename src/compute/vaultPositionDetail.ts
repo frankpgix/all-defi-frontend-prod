@@ -2,7 +2,12 @@ import Token from '@/class/Token'
 import { getTokenByAddress } from '@/config/tokens'
 import { safeInterceptionValues } from '@/utils/tools'
 
-import { UniLPDetailTypes, AaveV3DetailTypes } from '@/types/vaultPositionDetail'
+import {
+  UniLPDetailTypes,
+  AaveV3DetailTypes,
+  GMXTradePositionTypes,
+  GMXEarnDetailTypes
+} from '@/types/vaultPositionDetail'
 import { AddressType } from '@/types/base'
 
 export const calcUniV3NonfungiblePosition = (
@@ -68,4 +73,42 @@ export const calcAaveV3Position = (
   })
   if (collateral.length === 0 && debt.length === 0) return null
   return { collateral, debt }
+}
+
+export const calcGMXTradePosition = (response: any[]): GMXTradePositionTypes[] => {
+  return (response ?? []).map((item: any) => ({
+    collateralToken: getTokenByAddress(item.collateralToken),
+    indexToken: getTokenByAddress(item.indexToken),
+    isLong: Boolean(item.isLong),
+    size: safeInterceptionValues(item.size, 6, 18),
+    collateral: safeInterceptionValues(item.collateral, 6, 18),
+    positionFee: safeInterceptionValues(item.positionFee, 6, 18),
+    fundingFee: safeInterceptionValues(item.fundingFee, 6, 18),
+    unrealizedPnl: safeInterceptionValues(item.unrealizedPnl, 6, 18),
+    entryPrice: safeInterceptionValues(item.entryPrice, 6, 18),
+    markPrice: safeInterceptionValues(item.markPrice, 6, 18),
+    liquidationPrice: safeInterceptionValues(item.liquidationPrice, 6, 18),
+    positionValue: safeInterceptionValues(item.positionValue, 6, 18)
+  }))
+}
+
+export const calcGMXEarnPosition = (
+  response: any,
+  underlyingToken: Token
+): GMXEarnDetailTypes[] => {
+  return [
+    {
+      glpBlance: safeInterceptionValues(response.glpBlance, 6, 18),
+      glpValue: safeInterceptionValues(
+        response.glpValue,
+        underlyingToken.decimals,
+        underlyingToken.decimals
+      ),
+      pendingReward: safeInterceptionValues(
+        response.pendingReward,
+        underlyingToken.decimals,
+        underlyingToken.decimals
+      )
+    }
+  ]
 }

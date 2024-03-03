@@ -1,30 +1,33 @@
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 import Table from 'rc-table'
 import ContentLoader from 'react-content-loader'
 
-import { useRequest } from 'ahooks'
+// import { useRequest } from 'ahooks'
+import Token from '@/class/Token'
 
-import PositionDetail from '@/class/PositionDetail'
-import { getTokenByAddress } from '@/config/tokens'
+// import PositionDetail from '@/class/PositionDetail'
+// import { getTokenByAddress } from '@/config/tokens'
+import { GMXEarnDetailTypes } from '@/types/vaultPositionDetail'
 
 import { TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
 
 interface Props {
-  fundAddress?: string
-  baseTokenAddress: string
+  data: GMXEarnDetailTypes[]
+  underlyingToken: Token
+  loading: boolean
 }
 
-const GMXEarn: FC<Props> = ({ fundAddress, baseTokenAddress }) => {
-  const { getGMXEarnPosition } = PositionDetail
-  const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
+const GMXEarn: FC<Props> = ({ data, underlyingToken, loading }) => {
+  // const { getGMXEarnPosition } = PositionDetail
+  // const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
 
-  const { data, loading = true } = useRequest(
-    () => getGMXEarnPosition(fundAddress ?? '', baseTokenAddress),
-    {
-      refreshDeps: [fundAddress]
-    }
-  )
+  // const { data, loading = true } = useRequest(
+  //   () => getGMXEarnPosition(fundAddress ?? '', baseTokenAddress),
+  //   {
+  //     refreshDeps: [fundAddress]
+  //   }
+  // )
   // console.log(data)
   const webColumns = [
     {
@@ -38,7 +41,7 @@ const GMXEarn: FC<Props> = ({ fundAddress, baseTokenAddress }) => {
       dataIndex: 'glpValue',
       // width: 200
       render: (value: number) => (
-        <TokenValue value={value} token={baseToken} size="mini" format="0,0.00" />
+        <TokenValue value={value} token={underlyingToken} size="mini" format="0,0.00" />
       )
     },
     {
@@ -46,7 +49,7 @@ const GMXEarn: FC<Props> = ({ fundAddress, baseTokenAddress }) => {
       dataIndex: 'pendingReward',
       // width: 200,
       render: (value: number) => (
-        <TokenValue value={value} token={baseToken} size="mini" format="0,0.00" />
+        <TokenValue value={value} token={underlyingToken} size="mini" format="0,0.00" />
       )
     }
   ]

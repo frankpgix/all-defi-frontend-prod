@@ -1,33 +1,21 @@
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 import Table from 'rc-table'
 import ContentLoader from 'react-content-loader'
 
-import { useRequest } from 'ahooks'
+import Token from '@/class/Token'
 
-import PositionDetail from '@/class/PositionDetail'
-import { getTokenByAddress } from '@/config/tokens'
-import { getUSDCAddress } from '@/utils/addressHelpers'
 import { TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
 import { TokenIcon } from '@@/common/TokenUnit'
+import { GMXTradePositionTypes } from '@/types/vaultPositionDetail'
 
 interface Props {
-  fundAddress?: string
-  baseTokenAddress: string
+  data: GMXTradePositionTypes[]
+  underlyingToken: Token
+  loading: boolean
 }
 
-const GMXTrade: FC<Props> = ({ fundAddress, baseTokenAddress }) => {
-  const { getGMXTradePosition } = PositionDetail
-  const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
-  const usdcToken = useMemo(() => getTokenByAddress(getUSDCAddress()), [])
-
-  const { data, loading = true } = useRequest(
-    () => getGMXTradePosition(fundAddress ?? '', baseTokenAddress),
-    {
-      refreshDeps: [fundAddress]
-    }
-  )
-  console.log(data)
+const GMXTrade: FC<Props> = ({ data, underlyingToken, loading }) => {
   const webColumns = [
     {
       title: 'Symbol',
@@ -44,7 +32,7 @@ const GMXTrade: FC<Props> = ({ fundAddress, baseTokenAddress }) => {
       dataIndex: 'size',
       // width: 200
       render: (value: number) => (
-        <TokenValue value={value} token={baseToken} size="mini" format="0,0.00" />
+        <TokenValue value={value} token={underlyingToken} size="mini" format="0,0.00" />
       )
     },
     {
@@ -52,7 +40,7 @@ const GMXTrade: FC<Props> = ({ fundAddress, baseTokenAddress }) => {
       dataIndex: 'positionValue',
       // width: 200
       render: (value: number) => (
-        <TokenValue value={value} token={baseToken} size="mini" format="0,0.00" />
+        <TokenValue value={value} token={underlyingToken} size="mini" format="0,0.00" />
       )
     },
     {
@@ -60,7 +48,7 @@ const GMXTrade: FC<Props> = ({ fundAddress, baseTokenAddress }) => {
       dataIndex: 'markPrice',
       // width: 200,
       render: (value: number) => (
-        <TokenValue value={value} token={baseToken} size="mini" format="0,0.00" />
+        <TokenValue value={value} token={underlyingToken} size="mini" format="0,0.00" />
       )
     },
     {
@@ -68,7 +56,7 @@ const GMXTrade: FC<Props> = ({ fundAddress, baseTokenAddress }) => {
       dataIndex: 'unrealizedPnl',
       // width: 200,
       render: (value: number) => (
-        <TokenValue value={value} token={baseToken} size="mini" format="0,0.00" />
+        <TokenValue value={value} token={underlyingToken} size="mini" format="0,0.00" />
       )
     },
     {
@@ -76,7 +64,7 @@ const GMXTrade: FC<Props> = ({ fundAddress, baseTokenAddress }) => {
       dataIndex: 'entryPrice',
       // width: 200,
       render: (value: number) => (
-        <TokenValue value={value} token={baseToken} size="mini" format="0,0.00" />
+        <TokenValue value={value} token={underlyingToken} size="mini" format="0,0.00" />
       )
     },
     {
@@ -84,7 +72,7 @@ const GMXTrade: FC<Props> = ({ fundAddress, baseTokenAddress }) => {
       dataIndex: 'fundingFee',
       // width: 200,
       render: (value: number) => (
-        <TokenValue value={value} token={baseToken} size="mini" format="0,0.00" />
+        <TokenValue value={value} token={underlyingToken} size="mini" format="0,0.00" />
       )
     },
     {
