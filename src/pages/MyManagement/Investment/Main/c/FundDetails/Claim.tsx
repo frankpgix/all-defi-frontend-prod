@@ -1,10 +1,12 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 // import BN from 'bignumber.js'
 
-import FundPool from '@/class/FundPool'
+// import FundPool from '@/class/FundPool'
 import { formatNumber } from '@/utils/tools'
 import { useProfile } from '@/hooks/useProfile'
-import { useNotify } from '@/hooks/useNotify'
+// import { useNotify } from '@/hooks/useNotify'
+import { useClaimCompensation } from '@/hooks/useVault'
+import { AddressType } from '@/types/base'
 
 import { Input } from '@@/common/Form'
 import Button from '@@/common/Button'
@@ -16,28 +18,22 @@ import Popper from '@@/common/Popper'
 
 interface Props {
   unclaimedALL: number
-  fundAddress: string
-  callback: (update: boolean) => void
+  fundAddress: AddressType
+  callback: () => void
 }
 
 const Claim: FC<Props> = ({ unclaimedALL, callback, fundAddress }) => {
-  const { signer } = useProfile()
-  const { claimCompensation } = FundPool
-  const { createNotify, updateNotifyItem } = useNotify()
+  const { account } = useProfile()
+  // const { claimCompensation } = FundPool
+  const { onClaim } = useClaimCompensation(fundAddress)
+  // const { createNotify, updateNotifyItem } = useNotify()
 
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
 
-  const onClaim = async () => {
-    if (signer && fundAddress) {
-      const notifyId = await createNotify({ type: 'loading', content: 'Claim ALL Token' })
-      // 执行购买和质押
-      const { status, msg, hash } = await claimCompensation(fundAddress, signer)
-      if (status) {
-        await callback(true)
-        updateNotifyItem(notifyId, { type: 'success', hash })
-      } else {
-        updateNotifyItem(notifyId, { type: 'error', title: 'Claim ALL Token', content: msg, hash })
-      }
+  const goClaim = async () => {
+    if (account && fundAddress) {
+      await onClaim(account)
+      callback()
     }
   }
   if (unclaimedALL === 0) return null
@@ -67,7 +63,7 @@ const Claim: FC<Props> = ({ unclaimedALL, callback, fundAddress }) => {
       </section>
       <InfoDialog
         show={infoStatus}
-        onConfirm={onClaim}
+        onConfirm={goClaim}
         onClose={() => setInfoStatus(false)}
         title="Claim ALL Token"
         msg={`${formatNumber(unclaimedALL, 8, '0.00000000')} ALL will be claimed`}

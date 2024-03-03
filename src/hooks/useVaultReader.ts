@@ -6,13 +6,19 @@ import { useProfile } from '@/hooks/useProfile'
 import { AddressType } from '@/types/base'
 import { VaultDetailDefault, VaultUserDetailDefault, ShareCompositionDefault } from '@/data/vault'
 import {
+  calcVaultBaseInfo,
   calcVaultDetail,
   calcVaultUserDetail,
   calcShareComposition,
   calcAssetComposition
 } from '@/compute/vault'
 
-import { AssetCompositionProps } from '@/types/vault'
+import {
+  AssetCompositionProps,
+  // VaultUserDetailProps,
+  VaultProps,
+  VaultUserListDataProps
+} from '@/types/vault'
 
 const VaultReaderContract = useVaultReaderContract()
 
@@ -95,4 +101,49 @@ export const useAssetComposition = (
     }
   }
   return { data: [], isLoading, isSuccess }
+}
+
+export const useUserVaultList = () => {
+  const { account } = useProfile()
+
+  if (!account) {
+    return {
+      data: [] as VaultUserListDataProps[],
+      isLoading: false,
+      isSuccess: true,
+      refetch: () => {}
+    }
+  }
+
+  const {
+    data: sData,
+    isSuccess,
+    isLoading,
+    refetch
+  } = useReadContract({
+    ...VaultReaderContract,
+    functionName: 'userDetailList',
+    args: [0, 999, false],
+    account: account || undefined
+  }) as { data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
+
+  if (!isLoading && isSuccess) {
+    const [fundList, detailList] = sData
+
+    const data: VaultUserListDataProps[] = fundList
+      .map((item: any, index: number) => {
+        const fund: VaultProps = calcVaultBaseInfo(item)
+        fund.data = calcVaultUserDetail(detailList[index])
+        fund.address = fund.data.address
+        return fund
+      })
+      .filter(
+        (item: VaultUserListDataProps) =>
+          item.data.subscribingACToken + item.data.unclaimedACToken + item.data.shares !== 0
+      )
+
+    // console.log(data, 222)
+    return { data, isSuccess, isLoading, refetch }
+  }
+  return { data: [] as VaultUserListDataProps[], isLoading, isSuccess, refetch }
 }

@@ -1,12 +1,13 @@
-import React, { FC, useMemo, useState, useRef, useEffect, useCallback } from 'react'
+import { FC, useMemo, useState, useRef, useEffect, useCallback } from 'react'
 import classNames from 'classnames'
 import BN from 'bignumber.js'
 // import { floor } from 'lodash'
 
-import { FundUserListDataProps } from '@/class/help'
+// import { FundUserListDataProps } from '@/class/help'
 import { formatNumber, sleep } from '@/utils/tools'
-import { ProductProps } from '@/config/products'
+// import { ProductProps } from '@/config/products'
 import { getTokenByAddress } from '@/config/tokens'
+import { VaultUserListDataProps } from '@/types/vault'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/FundDetail/c/ManageDetail/C'
 
@@ -27,12 +28,11 @@ import Claim from './Claim'
 interface Props {
   active: boolean
   isInit: boolean
-  fund: FundUserListDataProps
+  fund: VaultUserListDataProps
   onChange: () => void
-  callback: (update: boolean) => void
+  callback: () => void
   onCancelRedeem: (address: string) => void
   onCancelSubscribe: (address: string) => void
-  derivativeList: ProductProps[]
 }
 
 const FundItem: FC<Props> = ({
@@ -42,8 +42,7 @@ const FundItem: FC<Props> = ({
   fund,
   onCancelRedeem,
   onCancelSubscribe,
-  callback,
-  derivativeList
+  callback
 }) => {
   // console.log(fund, 22222)
   // const subscribedAmount = useMemo(() => BN(fund.data.subscribingACUSD ?? 0).toNumber(), [fund.data.subscribingACUSD])
@@ -63,13 +62,13 @@ const FundItem: FC<Props> = ({
     [fund.data.roe, fund.data.beginSharePrice, fund.data.shares]
   )
 
-  const derivatives = useMemo(
-    () =>
-      fund.derivatives.map((address: string) =>
-        derivativeList.find((item) => item.value === address)
-      ),
-    [fund.derivatives, derivativeList]
-  )
+  // const derivatives = useMemo(
+  //   () =>
+  //     fund.derivatives.map((address: string) =>
+  //       derivativeList.find((item) => item.value === address)
+  //     ),
+  //   [fund.derivatives, derivativeList]
+  // )
 
   const inView = useCallback(async () => {
     await sleep(250)
@@ -115,7 +114,7 @@ const FundItem: FC<Props> = ({
               <section>
                 <h5>protocol allowed</h5>
                 <main>
-                  {derivatives.map((item, index) => (
+                  {fund.derivativesInfo.map((item, index) => (
                     <p key={index} title={item?.name}>
                       {item && <Image src={`products/${item?.name}.png`} alt={item?.name} />}
                     </p>

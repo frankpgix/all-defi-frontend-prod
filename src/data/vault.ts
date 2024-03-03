@@ -17,7 +17,7 @@ export const GlobalAssetStatisticDefault: GlobalAssetStatisticProps = {
 
 export const VaultBaseInfoDefault: VaultBaseInfoProps = {
   underlyingToken: getTokenByAddress('0x'),
-  acToken: '',
+  acToken: '0x',
   address: '0x',
   createTime: 0,
   name: '-',

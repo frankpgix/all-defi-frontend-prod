@@ -11,7 +11,7 @@ export interface GlobalAssetStatisticProps {
 // Vault baseInfo Props
 export interface VaultBaseInfoProps {
   underlyingToken: Token
-  acToken: string
+  acToken: AddressType
   address: AddressType
   createTime: number
   name: string
@@ -90,7 +90,7 @@ export interface VaultProps extends VaultBaseInfoProps {
   data?: VaultUserDetailProps | null
   detail?: VaultDetailProps | null
 }
-export interface FundUserListDataProps extends VaultProps {
+export interface VaultUserListDataProps extends VaultProps {
   data: VaultUserDetailProps
 }
 

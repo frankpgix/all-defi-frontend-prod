@@ -121,3 +121,35 @@ export const useClaim = (vaultAddress: AddressType) => {
   }
   return { onClaim }
 }
+
+export const useClaimCompensation = (vaultAddress: AddressType) => {
+  const vaultContract = useVaultContract(vaultAddress)
+
+  const { writeContractAsync } = useWriteContract()
+  const { createNotify, updateNotifyItem } = useNotify()
+
+  const onClaim = async (account: AddressType) => {
+    if (account) {
+      const notifyId = await createNotify({ type: 'loading', content: 'Claim ALL Token' })
+
+      await writeContractAsync({
+        ...vaultContract,
+        functionName: 'claimCompensation',
+        args: [],
+        account
+      })
+        .then((hash: string) => {
+          console.log(hash)
+          updateNotifyItem(notifyId, { title: 'Claim ALL Token', type: 'success', hash })
+        })
+        .catch((error: any) => {
+          updateNotifyItem(notifyId, {
+            title: 'Claim ALL Token',
+            type: 'error',
+            content: error.shortMessage
+          })
+        })
+    }
+  }
+  return { onClaim }
+}

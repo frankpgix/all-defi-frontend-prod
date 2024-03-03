@@ -1,20 +1,22 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import ContentLoader from 'react-content-loader'
 
-import { FundUserListDataProps } from '@/class/help'
+// import { FundUserListDataProps } from '@/class/help'
 import Button from '@@/common/Button'
+
+import { VaultUserListDataProps } from '@/types/vault'
 
 // import Loading from '@@/common/Loading'
 
 // import Dashboard from './c/Dashboard'
-import Count from './c/Count'
+// import Count from './c/Count'
 import FundDetails from './c/FundDetails'
 // import ContributionManagement from '@/pages/Buy/c/ContributionManagement'
 
 interface Props {
   loading: boolean
-  getData: (update: boolean) => void
-  data: FundUserListDataProps[]
+  getData: () => void
+  data: VaultUserListDataProps[]
 }
 
 const Main: FC<Props> = ({ loading, getData, data }) => {
@@ -22,7 +24,7 @@ const Main: FC<Props> = ({ loading, getData, data }) => {
   // console.log(data, 2222)
   return (
     <div className="web-manage">
-      <Count />
+      {/* <Count /> */}
 
       {loading ? <CountLoading /> : <FundDetails data={data} callback={getData} />}
     </div>
