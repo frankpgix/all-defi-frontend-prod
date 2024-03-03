@@ -7,7 +7,7 @@ import { userVaultPositionDetail } from '@/hooks/useVaultPositionDetail'
 
 import Tokens from './Tokens'
 import UniLP from './UniLP'
-// import AAVE from './AAVE'
+import AAVE from './AAVE'
 // import GMXEarn from './GMXEarn'
 // import GMXTrade from './GMXTrade'
 
@@ -18,7 +18,7 @@ interface Props {
 
 const Portfolio: FC<Props> = ({ fundAddress, base }) => {
   const {
-    data: { uniDetail },
+    data: { uniDetail, avveDetail },
     isLoading
   } = userVaultPositionDetail(fundAddress, base.underlyingToken)
   return (
@@ -27,8 +27,8 @@ const Portfolio: FC<Props> = ({ fundAddress, base }) => {
         <h2>Portfolio</h2>
         <Tokens {...{ fundAddress, base }} />
         <UniLP data={uniDetail} underlyingToken={base.underlyingToken} loading={isLoading} />
-        {/* <AAVE {...{ fundAddress, base }} />
-        <GMXEarn {...{ fundAddress, base }} />
+        <AAVE data={avveDetail} underlyingToken={base.underlyingToken} loading={isLoading} />
+        {/* <GMXEarn {...{ fundAddress, base }} />
         <GMXTrade {...{ fundAddress, base }} /> */}
       </section>
     </>

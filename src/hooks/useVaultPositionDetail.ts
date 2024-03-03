@@ -9,7 +9,7 @@ import AaveV3PositionAbi from '@/config/abi/PositionDetail/AaveV3Position.json'
 import GMXTradePositionAbi from '@/config/abi/PositionDetail/GMXTradePosition.json'
 import GMXEarnPositionAbi from '@/config/abi/PositionDetail/GMXEarnPosition.json'
 
-import { calcUniV3NonfungiblePosition } from '@/compute/vaultPositionDetail'
+import { calcUniV3NonfungiblePosition, calcAaveV3Position } from '@/compute/vaultPositionDetail'
 import { UniLPDetailTypes } from '@/types/vaultPositionDetail'
 
 export const userVaultPositionDetail = (vaultAddress: AddressType, underlyingToken: Token) => {
@@ -45,8 +45,9 @@ export const userVaultPositionDetail = (vaultAddress: AddressType, underlyingTok
   if (!isLoading && isSuccess) {
     console.log(data)
     const uniDetail = calcUniV3NonfungiblePosition(data[0].result as any[], underlyingToken)
-    return { data: { uniDetail }, isLoading, isSuccess }
+    const avveDetail = calcAaveV3Position(data[1].result as any, underlyingToken)
+    return { data: { uniDetail, avveDetail }, isLoading, isSuccess }
   }
 
-  return { data: { uniDetail: [] as UniLPDetailTypes[] }, isLoading, isSuccess }
+  return { data: { uniDetail: [] as UniLPDetailTypes[], avveDetail: null }, isLoading, isSuccess }
 }

@@ -2,7 +2,8 @@ import Token from '@/class/Token'
 import { getTokenByAddress } from '@/config/tokens'
 import { safeInterceptionValues } from '@/utils/tools'
 
-import { UniLPDetailTypes } from '@/types/vaultPositionDetail'
+import { UniLPDetailTypes, AaveV3DetailTypes } from '@/types/vaultPositionDetail'
+import { AddressType } from '@/types/base'
 
 export const calcUniV3NonfungiblePosition = (
   sData: any[],
@@ -29,4 +30,42 @@ export const calcUniV3NonfungiblePosition = (
       )
     }
   })
+}
+
+export const calcAaveV3Position = (
+  response: any,
+  underlyingToken: Token
+): AaveV3DetailTypes | null => {
+  const collateral = response.collateralAssets.map((address: AddressType, index: number) => {
+    const asset = getTokenByAddress(address)
+    return {
+      id: index,
+      asset,
+      blances: safeInterceptionValues(
+        response.collateralBlances[index],
+        asset.decimals,
+        asset.decimals
+      ),
+      value: safeInterceptionValues(
+        response.collateralValues[index],
+        underlyingToken.decimals,
+        underlyingToken.decimals
+      )
+    }
+  })
+  const debt = response.debtAssets.map((address: AddressType, index: number) => {
+    const asset = getTokenByAddress(address)
+    return {
+      id: index,
+      asset,
+      blances: safeInterceptionValues(response.debtBlances[index], asset.decimals, asset.decimals),
+      value: safeInterceptionValues(
+        response.debtValues[index],
+        underlyingToken.decimals,
+        underlyingToken.decimals
+      )
+    }
+  })
+  if (collateral.length === 0 && debt.length === 0) return null
+  return { collateral, debt }
 }
