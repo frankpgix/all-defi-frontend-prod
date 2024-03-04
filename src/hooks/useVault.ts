@@ -56,6 +56,38 @@ export const useAllocate = (vaultAddress: AddressType) => {
   return { onAllocate }
 }
 
+export const useCancelAllocate = (vaultAddress: AddressType) => {
+  const vaultContract = useVaultContract(vaultAddress)
+
+  const { writeContractAsync } = useWriteContract()
+  const { createNotify, updateNotifyItem } = useNotify()
+
+  const onCancelAllocate = async (account: AddressType) => {
+    if (account) {
+      const notifyId = await createNotify({ type: 'loading', content: 'Cancel Allocation' })
+
+      await writeContractAsync({
+        ...vaultContract,
+        functionName: 'cancelAllocation',
+        args: [],
+        account
+      })
+        .then((hash: string) => {
+          // console.log(hash)
+          updateNotifyItem(notifyId, { title: 'Cancel Allocation', type: 'success', hash })
+        })
+        .catch((error: any) => {
+          updateNotifyItem(notifyId, {
+            title: 'Cancel Allocation',
+            type: 'error',
+            content: error.shortMessage
+          })
+        })
+    }
+  }
+  return { onCancelAllocate }
+}
+
 export const useWithhold = (vaultAddress: AddressType) => {
   const vaultContract = useVaultContract(vaultAddress)
 
@@ -88,6 +120,38 @@ export const useWithhold = (vaultAddress: AddressType) => {
     }
   }
   return { onWithhold }
+}
+
+export const useCancelWithholding = (vaultAddress: AddressType) => {
+  const vaultContract = useVaultContract(vaultAddress)
+
+  const { writeContractAsync } = useWriteContract()
+  const { createNotify, updateNotifyItem } = useNotify()
+
+  const onCancelWithholding = async (account: AddressType) => {
+    if (account) {
+      const notifyId = await createNotify({ type: 'loading', content: 'Cancel Withholding' })
+
+      await writeContractAsync({
+        ...vaultContract,
+        functionName: 'cancelWithholding',
+        args: [],
+        account
+      })
+        .then((hash: string) => {
+          // console.log(hash)
+          updateNotifyItem(notifyId, { title: 'Cancel Withholding', type: 'success', hash })
+        })
+        .catch((error: any) => {
+          updateNotifyItem(notifyId, {
+            title: 'Cancel Withholding',
+            type: 'error',
+            content: error.shortMessage
+          })
+        })
+    }
+  }
+  return { onCancelWithholding }
 }
 
 export const useClaim = (vaultAddress: AddressType) => {

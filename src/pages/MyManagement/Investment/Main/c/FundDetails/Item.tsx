@@ -8,6 +8,8 @@ import { formatNumber, sleep } from '@/utils/tools'
 // import { ProductProps } from '@/config/products'
 import { getTokenByAddress } from '@/config/tokens'
 import { VaultUserListDataProps } from '@/types/vault'
+import { useCancelAllocate, useCancelWithholding } from '@/hooks/useVault'
+import { useProfile } from '@/hooks/useProfile'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/FundDetail/c/ManageDetail/C'
 
@@ -31,21 +33,14 @@ interface Props {
   fund: VaultUserListDataProps
   onChange: () => void
   callback: () => void
-  onCancelRedeem: (address: string) => void
-  onCancelSubscribe: (address: string) => void
 }
 
-const FundItem: FC<Props> = ({
-  active,
-  isInit,
-  onChange,
-  fund,
-  onCancelRedeem,
-  onCancelSubscribe,
-  callback
-}) => {
+const FundItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
+  const { account } = useProfile()
   // console.log(fund, 22222)
   // const subscribedAmount = useMemo(() => BN(fund.data.subscribingACUSD ?? 0).toNumber(), [fund.data.subscribingACUSD])
+  const { onCancelAllocate } = useCancelAllocate(fund.address)
+  const { onCancelWithholding } = useCancelWithholding(fund.address)
   const ref = useRef<HTMLDivElement>(null)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const [infoStatus2, setInfoStatus2] = useState<boolean>(false)
@@ -62,14 +57,19 @@ const FundItem: FC<Props> = ({
     [fund.data.roe, fund.data.beginSharePrice, fund.data.shares]
   )
 
-  // const derivatives = useMemo(
-  //   () =>
-  //     fund.derivatives.map((address: string) =>
-  //       derivativeList.find((item) => item.value === address)
-  //     ),
-  //   [fund.derivatives, derivativeList]
-  // )
+  const goCancelAllocate = async () => {
+    if (account) {
+      await onCancelAllocate(account)
+      callback()
+    }
+  }
 
+  const goCancelcWithholding = async () => {
+    if (account) {
+      await onCancelWithholding(account)
+      callback()
+    }
+  }
   const inView = useCallback(async () => {
     await sleep(250)
     if (!isInit && active && ref.current) {
@@ -230,7 +230,7 @@ const FundItem: FC<Props> = ({
       </section>
       <InfoDialog
         show={infoStatus}
-        onConfirm={() => onCancelSubscribe(fund.address)}
+        onConfirm={() => goCancelAllocate()}
         onClose={() => setInfoStatus(false)}
         title="Cancel Allocation"
         msg={`Cancel Allocation Request of ${formatNumber(
@@ -241,7 +241,7 @@ const FundItem: FC<Props> = ({
       />
       <InfoDialog
         show={infoStatus2}
-        onConfirm={() => onCancelRedeem(fund.address)}
+        onConfirm={() => goCancelcWithholding()}
         onClose={() => setInfoStatus2(false)}
         title="Cancel Withholding"
         msg={`Cancel Withholding Request of ${formatNumber(
