@@ -1,9 +1,10 @@
 import { ChainId, AddressType } from '@/types/base'
 import Token from '@/class/Token'
 import { toLower } from 'lodash'
+import { zeroAddress } from 'viem'
 // import { AddressType } from './types'
 
-export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+export const ZERO_ADDRESS = zeroAddress
 
 export const tokens: { [key: string]: Token } = {
   USDC: new Token({

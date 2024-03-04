@@ -109,3 +109,9 @@ export interface AssetCompositionProps {
   value: number //价值
   percentage: number //价值百分比
 }
+
+export interface baseTokenPriceInUSDTypes {
+  address: string
+  tokenName: string
+  priceInUSD: number
+}

@@ -9,7 +9,7 @@ import { VaultUserListDataProps } from '@/types/vault'
 // import Loading from '@@/common/Loading'
 
 // import Dashboard from './c/Dashboard'
-// import Count from './c/Count'
+import Count from './c/Count'
 import FundDetails from './c/FundDetails'
 // import ContributionManagement from '@/pages/Buy/c/ContributionManagement'
 
@@ -20,11 +20,11 @@ interface Props {
 }
 
 const Main: FC<Props> = ({ loading, getData, data }) => {
-  // if (loading) return <CountLoading />
+  if (loading) return <CountLoading />
   // console.log(data, 2222)
   return (
     <div className="web-manage">
-      {/* <Count /> */}
+      <Count data={data} loading={loading} />
 
       {loading ? <CountLoading /> : <FundDetails data={data} callback={getData} />}
     </div>

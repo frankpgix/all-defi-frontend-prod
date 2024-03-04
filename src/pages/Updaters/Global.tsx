@@ -10,7 +10,7 @@ import { config } from '@/config/wagmi'
 import { useProfile } from '@/hooks/useProfile'
 import { useVaultCountLimit } from '@/hooks/useAllProtocol'
 // import { useGetFundList } from '@/hooks/useFund'
-// import { useUpdateTokenPriceInUSD } from '@/hooks/useTokenPrice'
+// import { useUpdateBaseTokenPriceInUSD } from '@/hooks/useBaseTokenPrice'
 export default function Global(): null {
   const { address } = getAccount(config)
   // console.log(address)
@@ -32,7 +32,7 @@ export default function Global(): null {
   }, [address, maxFundLimit, isLoading])
 
   // useGetFundList()
-  // useUpdateTokenPriceInUSD()
+  // useUpdateBaseTokenPriceInUSD()
   // update balance info
   // const balances = useBalances()
   // const updateBalances = useStoreBalances((state: any) => state.update)

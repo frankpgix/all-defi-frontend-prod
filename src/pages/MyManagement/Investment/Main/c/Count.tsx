@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo } from 'react'
+import { FC, useState, useMemo } from 'react'
 import BN from 'bignumber.js'
 import classNames from 'classnames'
 import ContentLoader from 'react-content-loader'
@@ -7,10 +7,11 @@ import { formatNumber } from '@/utils/tools'
 import { PieChart, Pie, Cell, Sector } from 'recharts'
 // import NoData from '@@/common/NoData'
 import TokenValue from '@@/common/TokenValue'
-import { getTokenByAddress } from '@/config/tokens'
+// import { getTokenByAddress } from '@/config/tokens'
 // import Popper from '@@/common/Popper'
-import { useUserFundList } from '@/hooks/useFund'
-import { useTokenPriceInUSD } from '@/hooks/useTokenPrice'
+// import { useUserFundList } from '@/hooks/useFund'
+import { VaultUserListDataProps, baseTokenPriceInUSDTypes } from '@/types/vault'
+import { useBaseTokenPriceUSD } from '@/hooks/useVaultFactory'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/FundDetail/c/ManageDetail/C'
 
@@ -117,27 +118,32 @@ const CountLoading: FC = () => {
     </div>
   )
 }
-
-const Count: FC = () => {
-  const { loading, fundList } = useUserFundList()
-  if (loading || fundList.length === 0) return <CountLoading />
+interface CountProps {
+  loading: boolean
+  data: VaultUserListDataProps[]
+}
+const Count: FC<CountProps> = ({ loading, data }) => {
+  // const { loading, fundList } = useUserFundList()
+  const { data: baseTokenPriceList, isLoading } = useBaseTokenPriceUSD()
+  if (loading || data.length === 0 || isLoading) return <CountLoading />
   return (
     <>
-      <CountDetail />
+      <CountDetail {...{ loading, data, baseTokenPriceList }} />
     </>
   )
 }
-const CountDetail: FC = () => {
-  // console.log(1122233, data)
-  const { loading, fundList: sData } = useUserFundList()
-  const { tokenPriceList } = useTokenPriceInUSD()
+
+interface CountDetailProps extends CountProps {
+  baseTokenPriceList: baseTokenPriceInUSDTypes[]
+}
+
+const CountDetail: FC<CountDetailProps> = ({ loading, data: sData, baseTokenPriceList }) => {
   const [activeIndex, setActiveIndex] = useState(0)
 
-  // console.log('data', data)
   const data = sData.map((item) => {
     const i = { ...item }
-    const tpo = tokenPriceList.find(
-      (tp) => tp.address.toLocaleLowerCase() === i.baseToken.toLocaleLowerCase()
+    const tpo = baseTokenPriceList.find(
+      (tp) => tp.address.toLocaleLowerCase() === i.underlyingToken.address.toLocaleLowerCase()
     )
     const tp = tpo ? tpo.priceInUSD : 1
     i.data.navInUSD = BN(i.data.nav).times(tp).toNumber()
@@ -159,7 +165,7 @@ const CountDetail: FC = () => {
     [rawData]
   )
   const activeData = useMemo(() => data[activeIndex]?.data, [data, activeIndex])
-  const baseToken = useMemo(() => getTokenByAddress(activeData?.baseToken), [activeData])
+  const baseToken = useMemo(() => activeData?.underlyingToken, [activeData])
 
   const pieData = useMemo(
     () =>
@@ -172,7 +178,7 @@ const CountDetail: FC = () => {
     [rawData, totalAsset]
   )
 
-  const onPieClick = (e: any, index: number) => {
+  const onPieClick = (_: any, index: number) => {
     setActiveIndex(index)
   }
 
@@ -208,7 +214,7 @@ const CountDetail: FC = () => {
               // label={renderCustomizedLabel}
               onClick={onPieClick}
             >
-              {pieData.map((entry, index) => (
+              {pieData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
