@@ -52,6 +52,8 @@ export const useGetManageVaultList = () => {
   useEffect(() => {
     setGetDataFunc(run)
   }, [setGetDataFunc, run])
+
+  useEffect(run, [account])
 }
 
 export const useVaultList = (): VaultListType => {
@@ -135,6 +137,8 @@ export const useGetUserVaultList = () => {
   useEffect(() => {
     setGetDataFunc(run)
   }, [setGetDataFunc, run])
+
+  useEffect(run, [account])
 }
 
 export const useManageVaultVerifyList = () => {
