@@ -1,4 +1,4 @@
-import { useReadContracts, useBalance } from 'wagmi'
+import { useReadContracts, useBalance, useAccount } from 'wagmi'
 
 import { tokens, ZERO_ADDRESS } from '@/config/tokens'
 
@@ -11,14 +11,28 @@ import { useStoreProfile } from '@/stores/useStoreProfile'
 
 // export const useProfile = (): profileProps => {
 //   const { address: account } = useAccount()
-//   const { data: maxFundLimit, isLoading: loading, refetch: update } = useVaultCountLimit()
-
+//   const {
+//     data: maxFundLimit,
+//     isLoading: loading,
+//     isSuccess,
+//     refetch: update
+//   } = useVaultCountLimit(account)
+//   console.log(Boolean(maxFundLimit), maxFundLimit)
+//   if (!loading && isSuccess) {
+//     return {
+//       account,
+//       isManager: Boolean(maxFundLimit),
+//       loading,
+//       maxFundLimit,
+//       update
+//     }
+//   }
 //   return {
 //     account,
-//     isManager: Boolean(maxFundLimit),
-//     loading,
-//     maxFundLimit,
-//     update
+//     isManager: false,
+//     loading: false,
+//     maxFundLimit: 0,
+//     update: () => {}
 //   }
 // }
 
@@ -42,10 +56,9 @@ export const useProfile = (): profileProps => {
 }
 
 export const useETHBalance = () => {
-  const { account: address } = useProfile()
-  if (!address) return 0
-  const { data } = useBalance({ address })
-  if (!data) return 0
+  const { account } = useProfile()
+  const { data } = useBalance({ address: account || undefined })
+  if (!account || !data) return 0
 
   return Number(safeInterceptionValues(data?.value ?? '', 6, 18))
 }

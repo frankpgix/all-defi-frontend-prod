@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react'
-// import { useAccount } from 'wagmi'
-import { getAccount } from '@wagmi/core'
-import { config } from '@/config/wagmi'
+import { useAccount } from 'wagmi'
+// import { getAccount } from '@wagmi/core'
+// import { config } from '@/config/wagmi'
 // // import { useIsManager, useDerivativeList } from '@/hooks/useAllProtocol'
 // // import { useBalances } from '@/hooks/useTokens'
 // // import { useStoreProfile, useStoreBalances } from '@/stores/useStoreProfile'
@@ -12,7 +12,8 @@ import { useVaultCountLimit } from '@/hooks/useAllProtocol'
 // import { useGetFundList } from '@/hooks/useFund'
 // import { useUpdateBaseTokenPriceInUSD } from '@/hooks/useBaseTokenPrice'
 export default function Global(): null {
-  const { address } = getAccount(config)
+  // const { address } = getAccount(config)
+  const { address } = useAccount()
   // console.log(address)
 
   const { update: updateProfile } = useProfile()

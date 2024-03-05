@@ -26,40 +26,41 @@ import { baseTokenPriceInUSDTypes } from '@/types/vault'
 const VaultFactoryContract = useVaultFactoryContract()
 
 export const useAssetPrice = (baseAsset: AddressType, quoteAsset: AddressType) => {
-  if (!baseAsset || !quoteAsset) {
-    return {
-      isLoading: false,
-      isSuccess: true,
-      data: 0
-    }
-  }
   const { data, isLoading, isSuccess } = useReadContract({
     ...VaultFactoryContract,
     functionName: 'assetPrice',
     args: [baseAsset, quoteAsset]
   })
+
+  if (baseAsset && quoteAsset && !isLoading && isSuccess) {
+    return {
+      data: Number(safeInterceptionValues(data, 6, 18)),
+      isLoading,
+      isSuccess
+    }
+  }
   return {
-    data: !isLoading && isSuccess ? Number(safeInterceptionValues(data, 6, 18)) : 0,
+    data: 0,
     isLoading,
     isSuccess
   }
 }
 
 export const useAssetPriceUSD = (quoteAsset: AddressType) => {
-  if (!quoteAsset) {
-    return {
-      isLoading: false,
-      isSuccess: true,
-      data: 0
-    }
-  }
   const { data, isLoading, isSuccess } = useReadContract({
     ...VaultFactoryContract,
     functionName: 'assetPriceInUSD',
     args: [quoteAsset]
   })
+  if (!isLoading && isSuccess) {
+    return {
+      data: Number(safeInterceptionValues(data, 6, 18)),
+      isLoading,
+      isSuccess
+    }
+  }
   return {
-    data: !isLoading && isSuccess ? Number(safeInterceptionValues(data, 6, 18)) : 0,
+    data: 0,
     isLoading,
     isSuccess
   }

@@ -36,9 +36,9 @@ export const useVaultDetail = (vaultAddress: AddressType) => {
 
 export const useUserVaultDetail = (vaultAddress: AddressType) => {
   const { account: address } = useProfile()
-  if (!address) {
-    return { data: VaultUserDetailDefault, isLoading: false, isSuccess: false, refetch: () => {} }
-  }
+  // if (!address) {
+  //   return { data: VaultUserDetailDefault, isLoading: false, isSuccess: false, refetch: () => {} }
+  // }
   const { data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
     functionName: 'userDetail',
@@ -106,14 +106,14 @@ export const useAssetComposition = (
 export const useUserVaultList = () => {
   const { account } = useProfile()
 
-  if (!account) {
-    return {
-      data: [] as VaultUserListDataProps[],
-      isLoading: false,
-      isSuccess: true,
-      refetch: () => {}
-    }
-  }
+  // if (!account) {
+  //   return {
+  //     data: [] as VaultUserListDataProps[],
+  //     isLoading: false,
+  //     isSuccess: true,
+  //     refetch: () => {}
+  //   }
+  // }
 
   const {
     data: sData,
@@ -127,7 +127,7 @@ export const useUserVaultList = () => {
     account: account || undefined
   }) as { data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
 
-  if (!isLoading && isSuccess) {
+  if (account && !isLoading && isSuccess) {
     const [fundList, detailList] = sData
 
     const data: VaultUserListDataProps[] = fundList

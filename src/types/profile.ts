@@ -10,4 +10,5 @@ export interface profileProps {
     maxFundLimit: number,
     loading: boolean
   ) => void
+  // update: () => void
 }

@@ -33,13 +33,13 @@ export const useAllTokenPrice = (baseToken: AddressType) => {
 }
 
 export const useVaultCountLimit = (address?: AddressType | '') => {
-  if (!address) {
-    return { data: 0, isLoading: false, isSuccess: true, refetch: () => {} }
-  }
+  // if (!address) {
+  //   return { data: 0, isLoading: false, isSuccess: true, refetch: () => {} }
+  // }
   const { isLoading, isSuccess, data, refetch } = useReadContract({
     ...AllProtocolContract,
     functionName: 'vaultCountLimit',
-    args: [address]
+    args: [address ?? '']
   })
   if (!isLoading && isSuccess) {
     return { data: Number(safeInterceptionValues(data, 0, 0)), isLoading, isSuccess, refetch }
