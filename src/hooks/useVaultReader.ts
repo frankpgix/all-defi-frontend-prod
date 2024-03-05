@@ -17,6 +17,7 @@ import {
   AssetCompositionProps,
   // VaultUserDetailProps,
   VaultProps,
+  VaultDetailProps,
   VaultUserListDataProps
 } from '@/types/vault'
 
@@ -146,4 +147,27 @@ export const useUserVaultList = () => {
     return { data, isSuccess, isLoading, refetch }
   }
   return { data: [] as VaultUserListDataProps[], isLoading, isSuccess, refetch }
+}
+export const useVaultList = () => {
+  const { data, isSuccess, isLoading, refetch } = useReadContract({
+    ...VaultReaderContract,
+    functionName: 'vaultDetailList',
+    args: [0, 999, false]
+  }) as { data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
+
+  if (!isLoading && isSuccess) {
+    return { data: data.map((item) => calcVaultDetail(item)), isSuccess, isLoading, refetch }
+  }
+  return { data: [] as VaultDetailProps[], isLoading, isSuccess, refetch }
+}
+
+export const useManageVaultList = () => {
+  const { account = '' } = useProfile()
+  const { data, isSuccess, isLoading, refetch } = useVaultList()
+  return {
+    data: data.filter((item) => item.manager.toLowerCase() === account.toLowerCase()),
+    isSuccess,
+    isLoading,
+    refetch
+  }
 }

@@ -1,9 +1,10 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import ContentLoader from 'react-content-loader'
 
-import { useManageFundList, useGetManageFundList } from '@/hooks/useFund'
+// import { useManageVaultListHook, useGetManageVaultList } from '@/hooks/useVaultList'
 import { useProfile } from '@/hooks/useProfile'
 import Cache from '@/utils/cache'
+import { useManageVaultList } from '@/hooks/useVaultReader'
 
 import NoInvest from './NoInvest'
 import Main from './Main'
@@ -11,15 +12,15 @@ import Button from '@@/common/Button'
 import Popper from '@@/common/Popper'
 
 const Manager: FC = () => {
-  useGetManageFundList()
-  const { loading, manageFundList } = useManageFundList()
+  // useGetManageVaultList()
+  // const { loading, manageFundList } = useManageVaultListHook()
   const { maxFundLimit } = useProfile()
-
+  const { data: manageFundList, isLoading: loading } = useManageVaultList()
   const isInvest = useMemo(
     () => manageFundList?.length === 0 && !loading,
     [manageFundList, loading]
   )
-
+  console.log(manageFundList)
   const isCacheCreate =
     Cache.get('CreateFundStep1Temp') ||
     Cache.get('CreateFundStep2Temp') ||

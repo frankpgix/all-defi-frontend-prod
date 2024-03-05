@@ -1,12 +1,13 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { FundDetailProps, FundUserListDataProps } from '@/class/help'
+// import { FundDetailProps, FundUserListDataProps } from '@/class/help'
+import { VaultDetailProps, VaultUserListDataProps } from '@/types/vault'
 
-export const useStoreFundList = create((set) => ({
-  fundList: [],
+export const useStoreVaultList = create((set) => ({
+  vaultList: [],
   loading: true,
   getData: () => {},
-  update: (fundList: FundDetailProps[], loading: boolean) => set({ fundList, loading }),
+  update: (vaultList: VaultDetailProps[], loading: boolean) => set({ vaultList, loading }),
   setGetDataFunc: (func: () => void) => set({ getData: func })
 }))
 
@@ -15,23 +16,24 @@ export const useStoreDerivativeList = create((set) => ({
   update: (derivativeList: any[]) => set({ derivativeList })
 }))
 
-export const useStoreManageFundList = create((set) => ({
-  manageFundList: [],
+export const useStoreManageVaultList = create((set) => ({
+  manageVaultList: [],
   loading: true,
   getData: () => {},
-  update: (manageFundList: FundDetailProps[], loading: boolean) => set({ manageFundList, loading }),
+  update: (manageVaultList: VaultDetailProps[], loading: boolean) =>
+    set({ manageVaultList, loading }),
   setGetDataFunc: (func: () => void) => set({ getData: func })
 }))
 
-export const useStoreUserFundList = create((set) => ({
-  fundList: [],
+export const useStoreUserVaultList = create((set) => ({
+  vaultList: [],
   loading: true,
   getData: () => {},
-  update: (fundList: FundUserListDataProps[], loading: boolean) => set({ fundList, loading }),
+  update: (vaultList: VaultUserListDataProps[], loading: boolean) => set({ vaultList, loading }),
   setGetDataFunc: (func: () => void) => set({ getData: func })
 }))
 
-export const useStoreManageFundVerifyList = create(
+export const useStoreManageVaultVerifyList = create(
   persist(
     (set: any) => ({
       lastChangeTime: 0,

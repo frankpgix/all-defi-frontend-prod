@@ -1,4 +1,4 @@
-import { useReadContracts, useBalance, useAccount } from 'wagmi'
+import { useReadContracts, useBalance } from 'wagmi'
 
 import { tokens, ZERO_ADDRESS } from '@/config/tokens'
 
