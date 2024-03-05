@@ -1,45 +1,44 @@
-import React, { FC, useState, useMemo, useEffect } from 'react'
+import { FC, useState, useMemo, useEffect } from 'react'
 import { useRequest } from 'ahooks'
 
-import { useManageFundList, useManageFundVerifyList } from '@/hooks/useFund'
+import { useManageVaultListHook, useManageVaultVerifyList } from '@/hooks/useVaultList'
 import { useProfile } from '@/hooks/useProfile'
-import FundFactory, { FundVerifiedItemTypes } from '@/class/FundFactory'
 import InfoDialog from '@@/common/Dialog/Info'
 import ALink from '@@/common/ALink'
 import { CONTACT_US_URL } from '@/config'
 
+import { VaultVerifiedItemTypes } from '@/types/vault'
+import { getVaultReviewed } from '@/api/vaultList'
+
 const FundDialog: FC = () => {
   const { account } = useProfile()
-  const { manageFundList = [] } = useManageFundList()
-  const { createVerifyList, setCreateVerifyList } = useManageFundVerifyList()
+  const { manageVaultList = [] } = useManageVaultListHook()
+  const { createVerifyList, setCreateVerifyList } = useManageVaultVerifyList()
   const [dialogStatus, setDialogStatus] = useState<boolean[]>([])
-  const [dialogData, setDialogData] = useState<FundVerifiedItemTypes[]>([])
-  const fundAddressList = useMemo(
-    () => manageFundList.map((item) => item.address.toLocaleLowerCase()),
-    [manageFundList]
+  const [dialogData, setDialogData] = useState<VaultVerifiedItemTypes[]>([])
+  const vaultAddressList = useMemo(
+    () => manageVaultList.map((item) => item.address.toLocaleLowerCase()),
+    [manageVaultList]
   )
-  const { FundVerified } = FundFactory
 
-  const { loading, data } = useRequest(async () => FundVerified(account, 0), {
-    refreshDeps: [fundAddressList]
+  const { loading, data } = useRequest(async () => getVaultReviewed(account ?? '0x', 0), {
+    refreshDeps: [vaultAddressList]
   })
   // console.log(data)
   useEffect(() => {
-    if (loading || fundAddressList.length === 0 || !data) return
+    if (loading || vaultAddressList.length === 0 || !data) return
     const status: boolean[] = []
-    const items: FundVerifiedItemTypes[] = []
+    const items: VaultVerifiedItemTypes[] = []
     data.forEach((item) => {
       if (!createVerifyList.includes(item.hash)) {
         status.push(status.length === 0 ? true : false)
         items.push(item)
       }
     })
-    // console.log(data, status, items)
     setDialogStatus(status)
     setDialogData(items)
-  }, [data, loading, fundAddressList, createVerifyList])
+  }, [data, loading, vaultAddressList, createVerifyList])
 
-  console.log(dialogData, dialogStatus)
   const onDialogClose = (index: number) => {
     const status = [...dialogStatus]
     status[index] = false
@@ -53,6 +52,7 @@ const FundDialog: FC = () => {
     onDialogClose(index)
     setCreateVerifyList([...createVerifyList, address], +new Date())
   }
+
   return (
     <>
       {dialogData.map((item, index) => (

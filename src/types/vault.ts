@@ -115,3 +115,12 @@ export interface baseTokenPriceInUSDTypes {
   tokenName: string
   priceInUSD: number
 }
+
+export interface VaultVerifiedItemTypes {
+  address: AddressType
+  manager: AddressType
+  hash: AddressType
+  type: number
+  result: boolean
+  data: string
+}

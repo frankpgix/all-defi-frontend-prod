@@ -24,3 +24,5 @@ export const API_PREFIX_URL = ''
 
 export const MANAGER_UPLODAD_HISTORICAL_DATA_URL =
   'https://docs.google.com/forms/d/1xEGMAC4VAnMWNIlCA75LasU0aG353tS5AWAJh1T4XX0/edit'
+
+export const CONTACT_US_URL = 'https://twitter.com/Alldefiprotocol'

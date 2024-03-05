@@ -1,4 +1,5 @@
 import { VaultDetailProps, VaultUserListDataProps } from '@/types/vault'
+import { AddressType } from '@/types/base'
 export interface ManageVaultListType {
   manageVaultList: VaultDetailProps[]
   loading: boolean

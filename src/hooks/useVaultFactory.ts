@@ -1,9 +1,13 @@
+// import { useEffect, useCallback } from 'react'
+
 import { useReadContract, useReadContracts } from 'wagmi'
 import { AddressType } from '@/types/base'
 import { safeInterceptionValues } from '@/utils/tools'
 import { baseTokens, tokens, ZERO_ADDRESS } from '@/config/tokens'
 import { useVaultFactoryContract } from '@/hooks/useContract'
 import { baseTokenPriceInUSDTypes } from '@/types/vault'
+
+// import { getVaultReviewed } from '@/api/vaultList'
 // import contracts from '@/config/contracts'
 
 // allTokenPrice = async (baseToken: string) => {
@@ -98,3 +102,15 @@ export const useBaseTokenPriceUSD = () => {
     refetch
   }
 }
+
+// export const useVaultReviewed = (manager: AddressType, vType: 0 | 1, name?: string) => {
+//   const getData = useCallback(async () => {
+//     await getVaultReviewed(manager, vType, name)
+//   }, [])
+
+//   useEffect(() => {
+//     void getData()
+//   }, [])
+//   // const { data: blockBigint } = useBlockNumber()
+//   // console.log(safeInterceptionValues(blockBigint ?? 0, 0, 0))
+// }

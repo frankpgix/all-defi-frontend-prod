@@ -20,7 +20,7 @@ const Manager: FC = () => {
     () => manageVaultList?.length === 0 && !loading,
     [manageVaultList, loading]
   )
-  console.log(loading, manageVaultList)
+  // console.log(loading, manageVaultList)
   const isCacheCreate =
     Cache.get('CreateFundStep1Temp') ||
     Cache.get('CreateFundStep2Temp') ||
