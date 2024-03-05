@@ -1,15 +1,15 @@
 import { FC } from 'react'
 
 import Chart from './c/Chart'
-// import FundList from './c/FundList'
+import ValutList from './c/ValutList'
 // import FundDialog from './c/FundDialog'
 
 const Main: FC = () => {
   return (
     <>
       <Chart />
-      {/*  <FundList />
-      <FundDialog /> */}
+      <ValutList />
+      {/* <FundDialog /> */}
     </>
   )
 }

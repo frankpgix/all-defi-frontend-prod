@@ -4,16 +4,12 @@ import Table from 'rc-table'
 import dayjs from 'dayjs'
 import ContentLoader from 'react-content-loader'
 
-// import FundManager, { FundDetailProps } from '@/class/FundManager'
-// import FundReader from '@/class/FundReader'
-// import { FundDetailProps } from '@/class/help'
 import { VaultDetailProps } from '@/types/vault'
 import { MANAGER_UPLODAD_HISTORICAL_DATA_URL } from '@/config'
-// import { formatNumber } from '@/utils/tools'
-// import { useProfile } from '@/hooks/useProfile'
+
 import { useManageVaultListHook } from '@/hooks/useVaultList'
 
-import FundSettleButton from '@/pages/MyManagement/Manager/FundDetail/c/FundSettleButton'
+import ValutSettleButton from '@/pages/MyManagement/Manager/FundDetail/ValutSettleButton'
 
 import RoeShow from '@@/common/RoeShow'
 import Button from '@@/common/Button'
@@ -23,7 +19,6 @@ import Badge from '@@/core/Badge'
 import { TableNoData } from '@@/common/TableEmpty'
 
 const FundList: FC = () => {
-  // const { account: address } = useProfile()
   const navigate = useNavigate()
   const { manageVaultList, loading, getData } = useManageVaultListHook()
 
@@ -79,28 +74,27 @@ const FundList: FC = () => {
       title: 'Action',
       dataIndex: 'address',
       width: 180,
-      render: (fundAddress: string, record: VaultDetailProps) => {
+      render: (_: string, record: VaultDetailProps) => {
         return (
           <div className="web-buy-table-action">
-            123
-            {/* {record.status === 0 ? (
+            {record.status === 0 ? (
               <Badge value="Under review">
                 <Button to={MANAGER_UPLODAD_HISTORICAL_DATA_URL} size="mini">
                   Upload data
                 </Button>
               </Badge>
             ) : (
-              <FundSettleButton
+              <ValutSettleButton
                 disabled={![5, 4, 6].includes(record.status)}
                 callback={getData}
-                fundAddress={fundAddress}
+                fundAddress={record.address}
                 outline
                 size="mini"
                 data={record}
               >
                 settle
-              </FundSettleButton>
-            )} */}
+              </ValutSettleButton>
+            )}
           </div>
         )
       }

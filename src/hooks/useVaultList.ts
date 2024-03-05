@@ -42,12 +42,12 @@ export const useGetManageVaultList = () => {
   })
 
   useEffect(() => {
-    if (data) {
+    if (data && !loading) {
       update(data, loading)
     } else {
       update([], true)
     }
-  }, [data, loading, update])
+  }, [data, loading])
 
   useEffect(() => {
     setGetDataFunc(run)

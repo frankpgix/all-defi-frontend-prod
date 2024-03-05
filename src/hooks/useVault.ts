@@ -217,3 +217,35 @@ export const useClaimCompensation = (vaultAddress: AddressType) => {
   }
   return { onClaim }
 }
+
+export const useSettleAccount = (vaultAddress: AddressType) => {
+  const vaultContract = useVaultContract(vaultAddress)
+
+  const { writeContractAsync } = useWriteContract()
+  const { createNotify, updateNotifyItem } = useNotify()
+
+  const onSettleAccount = async (account: AddressType) => {
+    if (account) {
+      const notifyId = await createNotify({ type: 'loading', content: 'Settle Vault' })
+
+      await writeContractAsync({
+        ...vaultContract,
+        functionName: 'settleAccount',
+        args: [],
+        account
+      })
+        .then((hash: string) => {
+          console.log(hash)
+          updateNotifyItem(notifyId, { title: 'Settle Vault', type: 'success', hash })
+        })
+        .catch((error: any) => {
+          updateNotifyItem(notifyId, {
+            title: 'Settle Vault',
+            type: 'error',
+            content: error.shortMessage
+          })
+        })
+    }
+  }
+  return { onSettleAccount }
+}
