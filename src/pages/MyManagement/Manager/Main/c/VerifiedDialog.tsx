@@ -10,7 +10,7 @@ import { CONTACT_US_URL } from '@/config'
 import { VaultVerifiedItemTypes } from '@/types/vault'
 import { getVaultReviewed } from '@/api/vaultList'
 
-const FundDialog: FC = () => {
+const VerifiedDialog: FC = () => {
   const { account } = useProfile()
   const { manageVaultList = [] } = useManageVaultListHook()
   const { createVerifyList, setCreateVerifyList } = useManageVaultVerifyList()
@@ -96,4 +96,4 @@ const FundDialog: FC = () => {
   )
 }
 
-export default FundDialog
+export default VerifiedDialog
