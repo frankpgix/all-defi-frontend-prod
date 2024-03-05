@@ -107,15 +107,6 @@ export const useAssetComposition = (
 export const useUserVaultList = () => {
   const { account } = useProfile()
 
-  // if (!account) {
-  //   return {
-  //     data: [] as VaultUserListDataProps[],
-  //     isLoading: false,
-  //     isSuccess: true,
-  //     refetch: () => {}
-  //   }
-  // }
-
   const {
     data: sData,
     isSuccess,

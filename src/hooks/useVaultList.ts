@@ -4,31 +4,26 @@ import {
   useStoreUserVaultList,
   useStoreManageVaultVerifyList
 } from '@/stores/useStoreVaultList'
-// import { VaultDetailProps, VaultUserListDataProps } from '@/class/help'
-import { VaultDetailProps, VaultUserListDataProps } from '@/types/vault'
+// import { VaultDetailProps, VaultUserListDataProps } from '@/types/vault'
 import { useProfile } from '@/hooks/useProfile'
-import { useManageVaultList, useVaultList, useUserVaultList } from '@/hooks/useVaultReader'
+// import { useVaultList, useUserVaultList } from '@/hooks/useVaultReader'
 // import FundReader from '@/class/FundReader'
-// import { useRequest } from 'ahooks'
-import { useEffect, useCallback } from 'react'
+import { useRequest } from 'ahooks'
+import { useEffect } from 'react'
+import { getVaultList, getManageVaultList, getUserVaultList } from '@/api/vaultList'
 
-interface ManageFundListType {
-  manageFundList: VaultDetailProps[]
-  loading: boolean
-  update: (manageFundList: VaultDetailProps[], loading: boolean) => void
-  getData: () => void
-}
+import { ManageVaultListType, VaultListType, UserVaultListType } from '@/types/vaultListStore'
 
-export const useManageVaultListHook = (): ManageFundListType => {
-  const { manageFundList, loading, update, getData } = useStoreManageVaultList((state: any) => ({
-    manageFundList: state.manageFundList,
+export const useManageVaultListHook = (): ManageVaultListType => {
+  const { manageVaultList, loading, update, getData } = useStoreManageVaultList((state: any) => ({
+    manageVaultList: state.manageVaultList,
     loading: state.loading,
     update: state.update,
     getData: state.getData
   }))
 
   return {
-    manageFundList,
+    manageVaultList,
     loading,
     update,
     getData
@@ -36,60 +31,15 @@ export const useManageVaultListHook = (): ManageFundListType => {
 }
 
 export const useGetManageVaultList = () => {
-  const { data, isLoading: loading, refetch } = useManageVaultList()
+  const { account } = useProfile()
   const { update, setGetDataFunc } = useStoreManageVaultList((state: any) => ({
     update: state.update,
     setGetDataFunc: state.setGetDataFunc
   }))
 
-  const getData = useCallback(() => {
-    if (!loading) {
-      update(data, loading)
-    }
-  }, [data, loading])
-  useEffect(() => {
-    void getData()
-  }, [getData])
-
-  useEffect(() => {
-    setGetDataFunc(refetch)
-  }, [setGetDataFunc, refetch])
-}
-
-interface FundListType {
-  fundList: VaultDetailProps[]
-  loading: boolean
-  update: (manageFundList: VaultDetailProps[], loading: boolean) => void
-  getData: () => void
-}
-
-export const useFundList = (): FundListType => {
-  const { fundList, loading, update, getData } = useStoreVaultList((state: any) => ({
-    fundList: state.fundList,
-    loading: state.loading,
-    update: state.update,
-    getData: state.getData
-  }))
-
-  return {
-    fundList,
-    loading,
-    update,
-    getData
-  }
-}
-
-export const useGetFundList = () => {
-  // const { getFundList } = FundReader
-  const { data, isLoading: loading, refetch } = useVaultList()
-  const { update, setGetDataFunc } = useStoreVaultList((state: any) => ({
-    update: state.update,
-    setGetDataFunc: state.setGetDataFunc
-  }))
-
-  // const { data, loading, run } = useRequest(async () => await getFundList(), {
-  //   debounceWait: 300
-  // })
+  const { data, loading, run } = useRequest(async () => await getManageVaultList(account), {
+    debounceWait: 300
+  })
 
   useEffect(() => {
     if (data) {
@@ -100,51 +50,80 @@ export const useGetFundList = () => {
   }, [data, loading, update])
 
   useEffect(() => {
-    setGetDataFunc(refetch)
-  }, [setGetDataFunc, refetch])
+    setGetDataFunc(run)
+  }, [setGetDataFunc, run])
 }
 
-interface UserFundListType {
-  fundList: VaultUserListDataProps[]
-  loading: boolean
-  update: (manageFundList: VaultUserListDataProps[], loading: boolean) => void
-  getData: () => void
-}
-
-export const useUserFundList = (): UserFundListType => {
-  const { fundList, loading, update, getData } = useStoreUserVaultList((state: any) => ({
-    fundList: state.fundList,
+export const useVaultList = (): VaultListType => {
+  const { vaultList, loading, update, getData } = useStoreVaultList((state: any) => ({
+    vaultList: state.vaultList,
     loading: state.loading,
     update: state.update,
     getData: state.getData
   }))
 
   return {
-    fundList,
+    vaultList,
     loading,
     update,
     getData
   }
 }
 
-export const useGetUserFundList = () => {
-  const { account } = useProfile()
-  // const { getUserFundList } = FundReader
+export const useGetVaultList = () => {
+  const { update, setGetDataFunc } = useStoreVaultList((state: any) => ({
+    update: state.update,
+    setGetDataFunc: state.setGetDataFunc
+  }))
 
-  const { data, isLoading: loading, refetch } = useUserVaultList()
+  const { data, loading, run } = useRequest(async () => await getVaultList(), {
+    debounceWait: 300
+  })
+
+  useEffect(() => {
+    if (data) {
+      update(data, loading)
+    } else {
+      update([], true)
+    }
+  }, [data, loading, update])
+
+  useEffect(() => {
+    setGetDataFunc(run)
+  }, [setGetDataFunc, run])
+}
+
+export const useUserVaultList = (): UserVaultListType => {
+  const { vaultList, loading, update, getData } = useStoreUserVaultList((state: any) => ({
+    vaultList: state.vaultList,
+    loading: state.loading,
+    update: state.update,
+    getData: state.getData
+  }))
+
+  return {
+    vaultList,
+    loading,
+    update,
+    getData
+  }
+}
+
+export const useGetUserVaultList = () => {
+  const { account } = useProfile()
   const { update, setGetDataFunc } = useStoreUserVaultList((state: any) => ({
     update: state.update,
     setGetDataFunc: state.setGetDataFunc
   }))
 
-  // const { data, loading, run } = useRequest(
-  //   async () => {
-  //     if (account) return await getUserFundList(account)
-  //   },
-  //   {
-  //     refreshDeps: [account]
-  //   }
-  // )
+  const { data, loading, run } = useRequest(
+    async () => {
+      if (account) return await getUserVaultList(account)
+    },
+    {
+      refreshDeps: [account]
+    }
+  )
   useEffect(() => {
     if (data) {
       update(data, loading)
@@ -154,11 +133,11 @@ export const useGetUserFundList = () => {
   }, [data, loading, update, account])
 
   useEffect(() => {
-    setGetDataFunc(refetch)
-  }, [setGetDataFunc, refetch])
+    setGetDataFunc(run)
+  }, [setGetDataFunc, run])
 }
 
-export const useManageFundVerifyList = () => {
+export const useManageVaultVerifyList = () => {
   const {
     createVerifyList,
     setCreateVerifyList,

@@ -1,5 +1,8 @@
+import dayjs from 'dayjs'
+
 import { safeInterceptionValues } from '@/utils/tools'
 import { getTokenByAddress } from '@/config/tokens'
+import { AddressType } from '@/types/base'
 
 interface FundsProps {
   id: string
@@ -11,7 +14,7 @@ export interface RecordProps {
   investor: string
   vaultId: string
   amount: string
-  underlyingToken: string
+  underlyingToken: AddressType
   actionType: number
   timestamp: number
 }
@@ -76,4 +79,29 @@ export const calcUserFundHistoryData = (
 ): UserFundHistoryDataProps[] => {
   const { vaults = [], vaultUserActions = [] } = data ?? []
   return vaultUserActions.map((item) => calcActionData(item, vaults))
+}
+
+export const calcDataTypeAndStartTime = (type: string, startTime: number) => {
+  const now = dayjs().unix()
+  const o = {
+    startTime,
+    dataType: '1w'
+  }
+  if (type === 'DAY') {
+    o.startTime = now - 24 * 60 * 60
+    o.dataType = '15m'
+  }
+  if (type === 'WEEK') {
+    o.startTime = now - 24 * 60 * 60 * 7
+    o.dataType = '1h'
+  }
+  if (type === 'MONTH') {
+    o.startTime = now - 24 * 60 * 60 * 30
+    o.dataType = '6h'
+  }
+  if (type === 'YEAR') {
+    o.startTime = now - 24 * 60 * 60 * 365
+    o.dataType = '1w'
+  }
+  return o
 }

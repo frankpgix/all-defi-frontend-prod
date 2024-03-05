@@ -4,6 +4,10 @@ import { gql } from '@apollo/client'
 import { timeDiffType, typeStartTime, get10MinutelyUnix } from './tools'
 import { createArrayByNumber } from '@/utils/tools'
 
+import { AddressType } from '@/types/base'
+
+import { calcDataTypeAndStartTime } from './help'
+
 const calcTableAndStartTime = (type: string, startTime: number, monthHouer?: boolean) => {
   // const diffType = timeDiffType(startTime)
   const o = {
@@ -211,6 +215,47 @@ export const calcVaultMonthDataGql = (fundAddress: string) => {
         periodStartUnix
         roe
         underlyingToken
+      }
+    }
+  `
+}
+
+export const calcManageVaultDatasGql = (manager: AddressType, type: string, createTime: number) => {
+  // const { tableName, startTime } = calcTableAndStartTime(type, createTime, true)
+  const { startTime } = calcDataTypeAndStartTime(type, createTime)
+  const calcDataType = () => {
+    if (type === 'DAY') {
+      return '1h'
+    }
+    if (type === 'WEEK') {
+      return '1h'
+    }
+    if (type === 'MONTH') {
+      return '6h'
+    }
+    if (type === 'YEAR') {
+      return '1d'
+    }
+    return '1d'
+  }
+  const dataType = calcDataType()
+  return gql`
+    query {
+      managerIntervalDatas(
+        orderBy: periodStartUnix
+        orderDirection: desc
+        first: 1000
+        where: {
+          manager: "${manager.toLowerCase()}"
+          intervalType: "${dataType}"
+          periodStartUnix_gt: ${startTime}
+        }
+      ) {
+        id
+        manager
+        intervalType
+        periodStartUnix
+        aumInUSD
       }
     }
   `

@@ -289,3 +289,18 @@ export const useValutMonthData = (fundAddress: string) => {
     .reverse()
   return { loading, data }
 }
+
+export const useManageValutDatas = (gql: any) => {
+  const { loading, error, data: sData } = useQuery(gql)
+  const data = (sData?.managerIntervalDatas ?? [])
+    .map((item: any) => ({
+      time: item.periodStartUnix * 1000,
+      value: Number(safeInterceptionValues(String(item.aumInUSD).split('.')[0], 2, 18))
+    }))
+    .reverse()
+
+  // @ts-ignore
+  const count = last(data)?.value ?? 0
+
+  return { loading, error, data, count }
+}

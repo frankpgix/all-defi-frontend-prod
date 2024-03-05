@@ -1,10 +1,10 @@
 import { FC, useMemo } from 'react'
 import ContentLoader from 'react-content-loader'
 
-// import { useManageVaultListHook, useGetManageVaultList } from '@/hooks/useVaultList'
+import { useManageVaultListHook, useGetManageVaultList } from '@/hooks/useVaultList'
 import { useProfile } from '@/hooks/useProfile'
 import Cache from '@/utils/cache'
-import { useManageVaultList } from '@/hooks/useVaultReader'
+// import { useManageVaultList } from '@/hooks/useVaultReader'
 
 import NoInvest from './NoInvest'
 import Main from './Main'
@@ -12,15 +12,15 @@ import Button from '@@/common/Button'
 import Popper from '@@/common/Popper'
 
 const Manager: FC = () => {
-  // useGetManageVaultList()
-  // const { loading, manageFundList } = useManageVaultListHook()
+  useGetManageVaultList()
+  const { loading, manageVaultList } = useManageVaultListHook()
   const { maxFundLimit } = useProfile()
-  const { data: manageFundList, isLoading: loading } = useManageVaultList()
+  // const { data: manageFundList, isLoading: loading } = useManageVaultList()
   const isInvest = useMemo(
-    () => manageFundList?.length === 0 && !loading,
-    [manageFundList, loading]
+    () => manageVaultList?.length === 0 && !loading,
+    [manageVaultList, loading]
   )
-  console.log(manageFundList)
+  console.log(loading, manageVaultList)
   const isCacheCreate =
     Cache.get('CreateFundStep1Temp') ||
     Cache.get('CreateFundStep2Temp') ||
@@ -41,7 +41,7 @@ const Manager: FC = () => {
           >
             <rect x="0" y="0" rx="20" ry="20" width="160" height="40" />
           </ContentLoader>
-        ) : maxFundLimit === manageFundList?.length ? (
+        ) : maxFundLimit === manageVaultList?.length ? (
           <Button to="/manage/manager/create" size="mini" disabled>
             <Popper content="The number of funds you have created has reached the maximum limit">
               CREATE VAULTS
