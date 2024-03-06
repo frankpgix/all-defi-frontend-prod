@@ -5,7 +5,10 @@ import {
   VaultDetailProps,
   VaultUserDetailProps,
   ShareCompositionProps,
-  AssetCompositionProps
+  AssetCompositionProps,
+  VaultStakeProps,
+  VaultBreachDetailProps,
+  VaultUpdatingDataProps
 } from '@/types/vault'
 
 // Vaults Global Asset Statistics Default Data
@@ -106,4 +109,30 @@ export const AssetCompositionDefault: AssetCompositionProps = {
   amount: 0, //数量
   value: 0, //价值
   percentage: 0 //价值百分比
+}
+
+export const VaultStakeDataDefault: VaultStakeProps = {
+  stakedALL: 0,
+  value: 0
+}
+
+export const VaultBreachDetailDataDefault: VaultBreachDetailProps = {
+  address: '0x',
+  latestFrozenALL: 0,
+  latestConfiscatedALL: 0,
+  consecutiveBreachCount: 0,
+  managerPaused: false
+}
+
+export const VaultUpdatingDataDefault: VaultUpdatingDataProps = {
+  verifyStatus: -1,
+  data: {
+    desc: '',
+    managerName: '',
+    derivativesToAdd: [],
+    derivativesToRemove: [],
+    assetsToAdd: [],
+    assetsToRemove: [],
+    allocationLimits: []
+  }
 }

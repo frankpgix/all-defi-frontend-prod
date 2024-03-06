@@ -124,3 +124,29 @@ export interface VaultVerifiedItemTypes {
   result: boolean
   data: string
 }
+
+export interface VaultStakeProps {
+  stakedALL: number
+  value: number
+}
+
+export interface VaultBreachDetailProps {
+  address: AddressType //基金id/地址
+  latestFrozenALL: number //上轮冻结ALL
+  latestConfiscatedALL: number //上轮扣除ALL
+  consecutiveBreachCount: number //连续违约次数
+  managerPaused: boolean //经理操作权限被冻结
+}
+
+export interface VaultUpdatingDataProps {
+  verifyStatus: number
+  data: {
+    desc: string
+    managerName: string
+    derivativesToAdd: string[]
+    derivativesToRemove: string[]
+    assetsToAdd: string[]
+    assetsToRemove: string[]
+    allocationLimits: string[]
+  }
+}

@@ -9,7 +9,7 @@ import { MANAGER_UPLODAD_HISTORICAL_DATA_URL } from '@/config'
 
 import { useManageVaultListHook } from '@/hooks/useVaultList'
 
-import ValutSettleButton from '@/pages/MyManagement/Manager/FundDetail/ValutSettleButton'
+import ValutSettleButton from '@/pages/MyManagement/Manager/VaultDetail/ValutSettleButton'
 
 import RoeShow from '@@/common/RoeShow'
 import Button from '@@/common/Button'
@@ -105,7 +105,7 @@ const FundList: FC = () => {
   const onRow = (record: VaultDetailProps) => ({
     onClick: (e: any) => {
       if (e.target?.tagName !== 'BUTTON' && record.status !== 0) {
-        navigate(`/manage/manager/fund/${record.address}`)
+        navigate(`/manage/manager/vault/${record.address}`)
       }
     }
   })

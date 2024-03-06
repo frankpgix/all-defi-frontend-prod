@@ -4,7 +4,8 @@ import { useAllProtocolContract } from '@/hooks/useContract'
 import { useAssetPrice } from '@/hooks/useVaultFactory'
 import { AddressType } from '@/types/base'
 import { safeInterceptionValues } from '@/utils/tools'
-
+import { calcVaultStakedALL } from '@/compute/vault'
+import { VaultStakeDataDefault } from '@/data/vault'
 // allTokenPrice = async (baseToken: string) => {
 //   // console.log(baseToken)
 //   // const contract = getAllProtocolContract()
@@ -25,7 +26,6 @@ import { safeInterceptionValues } from '@/utils/tools'
 const AllProtocolContract = useAllProtocolContract()
 
 export const useAllTokenPrice = (baseToken: AddressType) => {
-  // const res = useReadContract({ ...AllProtocolContract , })
   if (baseToken === ZERO_ADDRESS) {
     baseToken = tokens.WETH.address
   }
@@ -33,16 +33,31 @@ export const useAllTokenPrice = (baseToken: AddressType) => {
 }
 
 export const useVaultCountLimit = (address?: AddressType | '') => {
-  // if (!address) {
-  //   return { data: 0, isLoading: false, isSuccess: true, refetch: () => {} }
-  // }
   const { isLoading, isSuccess, data, refetch } = useReadContract({
     ...AllProtocolContract,
     functionName: 'vaultCountLimit',
     args: [address ?? '']
   })
-  if (!isLoading && isSuccess) {
+  if (address && !isLoading && isSuccess) {
     return { data: Number(safeInterceptionValues(data, 0, 0)), isLoading, isSuccess, refetch }
   }
   return { data: 0, isLoading, isSuccess, refetch }
+}
+
+export const useVaultStakedALL = (vaultAddress: AddressType) => {
+  const { isLoading, isSuccess, data, refetch } = useReadContract({
+    ...AllProtocolContract,
+    functionName: 'vaultStakedALL',
+    args: [vaultAddress ?? '']
+  }) as { data: bigint[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
+
+  if (vaultAddress && !isLoading && isSuccess) {
+    return {
+      data: calcVaultStakedALL(data),
+      isLoading,
+      isSuccess,
+      refetch
+    }
+  }
+  return { data: VaultStakeDataDefault, isLoading, isSuccess, refetch }
 }

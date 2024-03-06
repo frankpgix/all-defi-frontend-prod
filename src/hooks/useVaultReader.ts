@@ -4,13 +4,21 @@ import BN from 'bignumber.js'
 import { useVaultReaderContract } from '@/hooks/useContract'
 import { useProfile } from '@/hooks/useProfile'
 import { AddressType } from '@/types/base'
-import { VaultDetailDefault, VaultUserDetailDefault, ShareCompositionDefault } from '@/data/vault'
+import {
+  VaultDetailDefault,
+  VaultUserDetailDefault,
+  ShareCompositionDefault,
+  VaultBreachDetailDataDefault,
+  VaultUpdatingDataDefault
+} from '@/data/vault'
 import {
   calcVaultBaseInfo,
   calcVaultDetail,
   calcVaultUserDetail,
   calcShareComposition,
-  calcAssetComposition
+  calcAssetComposition,
+  calcVaultBreachDetail,
+  calcVaultUpdatingData
 } from '@/compute/vault'
 
 import {
@@ -20,6 +28,7 @@ import {
   VaultDetailProps,
   VaultUserListDataProps
 } from '@/types/vault'
+import Token from '@/class/Token'
 
 const VaultReaderContract = useVaultReaderContract()
 
@@ -161,4 +170,30 @@ export const useManageVaultList = () => {
     isLoading,
     refetch
   }
+}
+
+export const useVaultBreachDetail = (vaultAddress: AddressType) => {
+  const { data, isSuccess, isLoading, refetch } = useReadContract({
+    ...VaultReaderContract,
+    functionName: 'vaultBreachDetail',
+    args: [vaultAddress]
+  }) as { data: any; isSuccess: boolean; isLoading: boolean; refetch: () => void }
+
+  if (!isLoading && isSuccess) {
+    return { data: calcVaultBreachDetail(data), isSuccess, isLoading, refetch }
+  }
+  return { data: VaultBreachDetailDataDefault, isSuccess, isLoading, refetch }
+}
+
+export const useVaultUpdatingData = (vaultAddress: AddressType, underlyingToken: Token) => {
+  const { data, isSuccess, isLoading, refetch } = useReadContract({
+    ...VaultReaderContract,
+    functionName: 'vaultUpdatingData',
+    args: [vaultAddress]
+  }) as { data: [AddressType, BigInt]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
+  if (!isLoading && isSuccess) {
+    // console.log(data, 'data')
+    return { data: calcVaultUpdatingData(data, underlyingToken), isSuccess, isLoading, refetch }
+  }
+  return { data: VaultUpdatingDataDefault, isSuccess, isLoading, refetch }
 }

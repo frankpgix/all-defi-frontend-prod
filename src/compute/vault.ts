@@ -1,4 +1,4 @@
-import { hexToString } from 'viem'
+import { hexToString, decodeAbiParameters } from 'viem'
 import BN from 'bignumber.js'
 
 import { getTokenByAddress } from '@/config/tokens'
@@ -10,8 +10,12 @@ import {
   VaultDetailProps,
   VaultUserDetailProps,
   ShareCompositionProps,
-  AssetCompositionProps
+  AssetCompositionProps,
+  VaultStakeProps,
+  VaultBreachDetailProps
 } from '@/types/vault'
+import Token from '@/class/Token'
+import { VaultUpdatingDataDefault } from '@/data/vault'
 
 export const calcGlobalAssetStatistic = (item: any): GlobalAssetStatisticProps => {
   return {
@@ -158,5 +162,62 @@ export const calcAssetComposition = (
     amount: Number(safeInterceptionValues(item.amount, token.precision, decimals)),
     value: Number(safeInterceptionValues(item.value, baseToken.precision, baseToken.decimals)),
     percentage: 0
+  }
+}
+
+export const calcVaultStakedALL = (data: bigint[]): VaultStakeProps => {
+  return {
+    stakedALL: Number(safeInterceptionValues(data[0], 8, 18)),
+    value: Number(safeInterceptionValues(data[1], 8, 18))
+  }
+}
+
+export const calcVaultBreachDetail = (item: any): VaultBreachDetailProps => {
+  return {
+    address: item.vaultId,
+    latestFrozenALL: Number(safeInterceptionValues(item.lastFrozenALL, 4, 18)),
+    latestConfiscatedALL: Number(safeInterceptionValues(item.lastConfiscatedALL, 4, 18)),
+    consecutiveBreachCount: Number(safeInterceptionValues(item.consecutiveBreachCount, 0, 0)),
+    managerPaused: item.managerPaused
+  }
+}
+
+export const calcVaultUpdatingData = (data: [AddressType, BigInt], underlyingToken: Token) => {
+  const { precision, decimals } = underlyingToken
+  const [sData, verifyStatus] = data
+  const types = [
+    {
+      name: 'detail',
+      type: 'tuple',
+      components: [
+        { type: 'string', name: 'desc' },
+        { type: 'string', name: 'managerName' },
+        { type: 'uint256[2]', name: 'allocationLimits' },
+        { type: 'bytes32[2]', name: 'derivativesToAdd' },
+        { type: 'bytes32[2]', name: 'derivativesToRemove' },
+        { type: 'address[2]', name: 'assetsToAdd' },
+        { type: 'address[2]', name: 'assetsToRemove' }
+      ]
+    }
+  ]
+  if (data[0] === '0x') {
+    return VaultUpdatingDataDefault
+  }
+
+  const updateData: any = decodeAbiParameters(types, sData)[0]
+
+  return {
+    verifyStatus,
+    data: {
+      desc: updateData.desc,
+      managerName: updateData.managerName,
+      derivativesToAdd: updateData.derivativesToAdd,
+      derivativesToRemove: updateData.derivativesToRemove,
+      assetsToAdd: updateData.assetsToAdd,
+      assetsToRemove: updateData.assetsToRemove,
+      allocationLimits: updateData.allocationLimits.map((item: string) =>
+        Number(safeInterceptionValues(item, precision, decimals))
+      )
+    }
   }
 }
