@@ -251,17 +251,17 @@ export const useUserACBuyData = (userAddress: string) => {
   return { loading, error, data, refetch }
 }
 
-export const useMiningData = (type: string) => {
+export const useMiningData = () => {
   // console.log(type)
   const { loading: fundLoading, error: fundError, data: fundData } = useQuery(calcFundListGQL())
   const funds = (fundData?.funds ?? []).map((item: any) => item.id)
   const fundsName = (fundData?.funds ?? []).map((item: any) => item.name)
-  const cTime = Math.min(...(fundData?.funds ?? []).map((item: any) => item.createTime))
+  // const cTime = Math.min(...(fundData?.funds ?? []).map((item: any) => item.createTime))
   const {
     loading: listLoading,
     error: listError,
     data: listData
-  } = useQuery(calcMiningData(JSON.stringify(funds), getTypeUnix(type, cTime)))
+  } = useQuery(calcMiningData(JSON.stringify(funds)))
 
   const sData = listData?.fund10MinutelyDatas ?? []
   const timeArr = uniq(sData.map((item: any) => item.periodStartUnix))

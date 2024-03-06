@@ -55,7 +55,7 @@ export const calcManageFundDetailData = (fundAddress: string, unix: string | nul
   }
 `
 
-export const calcMiningData = (fundAddress: string, unix: string | null) => gql`
+export const calcMiningData = (fundAddress: string) => gql`
   query {
     fund10MinutelyDatas(
       orderBy: periodStartUnix
