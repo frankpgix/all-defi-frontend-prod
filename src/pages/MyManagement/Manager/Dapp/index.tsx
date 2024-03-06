@@ -35,6 +35,7 @@ import { hasFeature, FEATURES } from './utils/chains'
 import { onTransaction, onSign } from './utils/tools'
 
 import SafeAppIframe from './c/IFrame'
+import { AddressType } from '@/types/base'
 
 const allowedFeaturesList = ''
 
@@ -60,7 +61,7 @@ const DappIframe: FC = () => {
   // const [currentRequestId, setCurrentRequestId] = useState<RequestId | undefined>()
   const [remoteApp, , isBackendAppsLoading] = useSafeAppFromBackend(appUrl, chainId)
   const { safeApp: safeAppFromManifest, isLoading } = useSafeAppFromManifest(appUrl || '', chainId)
-  const { safeAddress } = useGetSafeInfo()()
+  const { safeAddress } = useGetSafeInfo()() as { safeAddress: AddressType }
 
   const {
     getPermissions,
@@ -93,14 +94,14 @@ const DappIframe: FC = () => {
         params: params
       }
       console.log(111222, data, safeAddress, account)
-      const safeTxHash = await onTransaction(txs, safeAddress, account, createNotify)
-      // setCurrentRequestId(requestId)
-      if (safeTxHash) {
-        communicator?.send({ safeTxHash }, requestId)
-      } else {
-        communicator?.send(CommunicatorMessages.REJECT_TRANSACTION_MESSAGE, requestId, true)
+      if (account) {
+        const safeTxHash = await onTransaction(txs, safeAddress, account, createNotify)
+        if (safeTxHash) {
+          communicator?.send({ safeTxHash }, requestId)
+        } else {
+          communicator?.send(CommunicatorMessages.REJECT_TRANSACTION_MESSAGE, requestId, true)
+        }
       }
-      // setTxFlow(<SafeAppsTxFlow data={data} />, onTxFlowClose)
     },
     onSignMessage: async (
       message: string | EIP712TypedData,
@@ -109,10 +110,14 @@ const DappIframe: FC = () => {
       sdkVersion: string
     ) => {
       console.log(123456, message, 'onSignMessage')
-      const signature = await onSign(message, safeAddress, account)
+      if (account) {
+        const signature = await onSign(message, safeAddress, account)
+        communicator?.send({ signature }, requestId)
+      }
+      // const signature = await onSign(message, safeAddress, account)
       // onSign()
       // communicator?.send(CommunicatorMessages.REJECT_TRANSACTION_MESSAGE, requestId, true)
-      communicator?.send({ signature }, requestId)
+      // communicator?.send({ signature }, requestId)
       // const isOffChainSigningSupported = isOffchainEIP1271Supported(safe, chain, sdkVersion)
       // const signOffChain =
       //   isOffChainSigningSupported && !onChainSigning && !!settings.offChainSigning
@@ -202,6 +207,7 @@ const DappIframe: FC = () => {
   useEffect(() => {
     if ((!appUrl || !safeAddress) && init) {
       init = false
+      console.log(appUrl, safeAddress, init)
       // setInit(false)
       createNotify({ content: 'Fund address error or Dapp url error', type: 'error' })
       nav(-1)

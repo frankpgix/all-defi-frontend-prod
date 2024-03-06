@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { useProfile } from '@/hooks/useProfile'
 export const useGetSafeInfo = () => {
-  const { fundAddress = '' } = useParams()
+  const { vaultAddress = '' } = useParams()
   const { account } = useProfile()
   // console.log(111, 'dapp', dapp)
   const info = useMemo(
@@ -11,10 +11,10 @@ export const useGetSafeInfo = () => {
       isReadOnly: false,
       network: 'Arbitrum',
       owners: [account],
-      safeAddress: fundAddress,
+      safeAddress: vaultAddress,
       threshold: 1
     }),
-    [fundAddress, account]
+    [vaultAddress, account]
   )
   return info
 }

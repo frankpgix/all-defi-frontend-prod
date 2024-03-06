@@ -9,7 +9,7 @@ import AllProtocolAbi from '@/config/abi/AllProtocol.json'
 import VaultAbi from '@/config/abi/Vault.json'
 import VaultReaderAbi from '@/config/abi/VaultReader.json'
 // import RewardAbi from '@/config/abi/Reward.json'
-// import UniV3ACLAbi from '@/config/abi/UniV3ACL.json'
+import UniV3ACLAbi from '@/config/abi/UniV3ACL.json'
 // import Permit2Abi from '@/config/abi/Permit2.json'
 import VaultFactoryAbi from '@/config/abi/VaultFactory.json'
 import AUMStatsAbi from '@/config/abi/AUMStats.json'
@@ -39,4 +39,8 @@ export const useVaultContract = (address: AddressType) => {
 }
 export const useVaultReaderContract = () => {
   return useContract(getContractAddress('VaultReader'), VaultReaderAbi)
+}
+
+export const useUniV3ACLContract = () => {
+  return useContract(getContractAddress('UniV3ACL'), UniV3ACLAbi)
 }
