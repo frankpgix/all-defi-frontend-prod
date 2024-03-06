@@ -26,3 +26,13 @@ export interface CreateVaultDataType {
   maxAmount: number
   baseTokenAddress: AddressType
 }
+
+export interface UpdateVaultDataType {
+  desc: string
+  managerName: string
+  newDerivative: AddressType[]
+  delDerivative: AddressType[]
+  minAmount: string
+  maxAmount: string
+  decimals: number
+}

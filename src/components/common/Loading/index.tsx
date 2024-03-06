@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import classNames from 'classnames'
 

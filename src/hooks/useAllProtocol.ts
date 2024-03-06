@@ -5,8 +5,9 @@ import { useAssetPrice } from '@/hooks/useVaultFactory'
 import { AddressType } from '@/types/base'
 import { safeInterceptionValues, getUnitAmount } from '@/utils/tools'
 import { calcVaultStakedALL, calcVaultDerivativesInfo } from '@/compute/vault'
+import { calcCaeateVaultData, calcUpdateVaultData } from '@/compute/caeateVault'
 import { VaultStakeDataDefault } from '@/data/vault'
-import { CreateVaultDataType } from '@/types/createVault'
+import { CreateVaultDataType, UpdateVaultDataType } from '@/types/createVault'
 import { useNotify } from '@/hooks/useNotify'
 
 const AllProtocolContract = useAllProtocolContract()
@@ -96,39 +97,11 @@ export const useCreateVault = () => {
     callback: () => void
   ) => {
     const notifyId = await createNotify({ type: 'loading', content: 'Create Vault' })
-    const {
-      name,
-      symbol,
-      desc,
-      managerName,
-      derivatives,
-      stakeAmount: amount,
-      minAmount,
-      maxAmount
-    } = data
-    let baseTokenAddress = data.baseTokenAddress
-    if (baseTokenAddress === '0x0000000000000000000000000000000000000000') {
-      baseTokenAddress = tokens.WETH.address
-    }
-    const baseToken = getTokenByAddress(baseTokenAddress)
-    const stakeAmount = getUnitAmount(String(amount), 18)
-    const allocationLimits = [
-      getUnitAmount(String(minAmount), baseToken.decimals),
-      getUnitAmount(String(maxAmount), baseToken.decimals)
-    ]
+    const args = calcCaeateVaultData(data)
     await writeContractAsync({
       ...AllProtocolContract,
       functionName: 'createVault',
-      args: [
-        name,
-        symbol,
-        desc,
-        managerName,
-        derivatives,
-        allocationLimits,
-        stakeAmount,
-        baseTokenAddress
-      ],
+      args,
       account
     })
       .then((hash: string) => {
@@ -145,4 +118,38 @@ export const useCreateVault = () => {
       })
   }
   return { onCreateVault }
+}
+
+export const useUpdateVault = () => {
+  const { writeContractAsync } = useWriteContract()
+  const { createNotify, updateNotifyItem } = useNotify()
+
+  const onUpdateVault = async (
+    vaultAddress: AddressType,
+    data: UpdateVaultDataType,
+    account: AddressType,
+    callback: () => void
+  ) => {
+    const notifyId = await createNotify({ type: 'loading', content: 'Set Vault Base Info' })
+    const upData = calcUpdateVaultData(data)
+    await writeContractAsync({
+      ...AllProtocolContract,
+      functionName: 'updateVault',
+      args: [vaultAddress, upData],
+      account
+    })
+      .then((hash: string) => {
+        // console.log(hash)
+        updateNotifyItem(notifyId, { title: 'Set Vault Base Info', type: 'success', hash })
+        callback()
+      })
+      .catch((error: any) => {
+        updateNotifyItem(notifyId, {
+          title: 'Set Vault Base Info',
+          type: 'error',
+          content: error.shortMessage
+        })
+      })
+  }
+  return { onUpdateVault }
 }

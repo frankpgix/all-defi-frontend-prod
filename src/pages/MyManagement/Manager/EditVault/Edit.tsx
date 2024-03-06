@@ -1,20 +1,17 @@
-import React, { FC, useState, useEffect, useCallback, useMemo } from 'react'
-import classNames from 'classnames'
-// import { useRequest } from 'ahooks'
-import { useParams, useNavigate } from 'react-router-dom'
+import { FC, useState, useMemo, useEffect, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { without } from 'lodash'
+import classNames from 'classnames'
 
-import FundPool from '@/class/FundPool'
-import AllProtocol from '@/class/AllProtocol'
-import FundReader from '@/class/FundReader'
-import { ProductProps } from '@/config/products'
-import { getTokenByAddress } from '@/config/tokens'
-// import { baseTokenOptions, getTokenByAddress } from '@/config/tokens'
 import { CONTACT_US_URL } from '@/config'
+
+import { useVaultUpdatingData } from '@/hooks/useVaultReader'
+import { useDerivativeList, useUpdateVault } from '@/hooks/useAllProtocol'
 import { useProfile } from '@/hooks/useProfile'
-import { useNotify } from '@/hooks/useNotify'
-// import { sleep } from '@/utils/tools'
-// import { notify } from '@@/common/Toast'
+
+import { AddressType } from '@/types/base'
+import { VaultBaseInfoProps, VaultDerivativesProps } from '@/types/vault'
+import { UpdateVaultDataType } from '@/types/createVault'
 
 import BlueLineSection from '@@/web/BlueLineSection'
 import Loading from '@@/common/Loading'
@@ -23,29 +20,29 @@ import { TokenIcon } from '@@/common/TokenUnit'
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'
 import { Input } from '@@/common/Form'
-// import { useMeasure } from 'react-use'
-// import DataItem from '@@/common/DataItem'
 
-// let baseDataStr = ''
+interface Props {
+  baseInfo: VaultBaseInfoProps
+}
 
-const EditFund: FC = () => {
-  const { getFundBase } = FundPool
-  const { getFundUpdatingData } = FundReader
-  const { getDerivativeList, updateFund } = AllProtocol
-  const { fundAddress = '' } = useParams()
+const Edit: FC<Props> = ({ baseInfo }) => {
   const navigate = useNavigate()
-  const { signer } = useProfile()
-  const { createNotify, updateNotifyItem } = useNotify()
+  const { account } = useProfile()
+  const { data: derivativeList } = useDerivativeList()
+  const { onUpdateVault } = useUpdateVault()
+  const {
+    data: updatingData,
+    isLoading: loading,
+    isSuccess,
+    refetch: getData
+  } = useVaultUpdatingData(baseInfo.acToken, baseInfo.underlyingToken)
 
-  const [loading, setLoading] = useState(false)
   const [isChange, setIsChange] = useState(false)
-  const [derivativeList, setDerivativeList] = useState<ProductProps[]>([])
-
   const [managerName, setManagerName] = useState('')
-  const [baseTokenAddress, setBaseTokenAddress] = useState('')
+  // const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>('0x')
   const [desc, setDesc] = useState('')
-  const [oldDerivative, setOldDerivative] = useState<string[]>([])
-  const [selectDerivative, setSelectDerivative] = useState<string[]>([])
+  // const [oldDerivative, setOldDerivative] = useState<AddressType[]>(baseInfo.derivatives)
+  const [selectDerivative, setSelectDerivative] = useState<AddressType[]>([])
   const [minAmount, setMinAmount] = useState('')
   const [maxAmount, setMaxAmount] = useState('')
   const [baseDataStr, setBaseDataStr] = useState('')
@@ -53,7 +50,8 @@ const EditFund: FC = () => {
   // const [decimals, setDecimals] = useState(18)
   const [verifyStatus, setVerifyStatus] = useState(2)
 
-  const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
+  const baseToken = useMemo(() => baseInfo.underlyingToken, [baseInfo.underlyingToken])
+  const oldDerivative = useMemo(() => baseInfo.derivatives, [baseInfo.derivatives])
 
   const baseTokenName = useMemo(
     () => (baseToken.name === 'WETH' ? 'ETH' : baseToken.name),
@@ -67,81 +65,41 @@ const EditFund: FC = () => {
 
   const decimals = useMemo(() => baseToken.decimals, [baseToken.decimals])
 
-  const getData = useCallback(async () => {
-    if (fundAddress) {
-      setLoading(true)
-      const res = await getFundBase(fundAddress)
-      // console.log(res, 'res')
-      const p = await getDerivativeList()
-      setDerivativeList(p)
-      if (res) {
-        setOldDerivative(res.derivatives)
-        setBaseTokenAddress(res.baseToken)
-        // const baseToken = getTokenByAddress(res.baseToken)
-        // setDecimals(baseToken.decimals)
-        // setMinAmountNumber(calcAmountNumber(baseToken.precision))
-
-        const upRes = await getFundUpdatingData(fundAddress, res.baseToken)
-        if (upRes) {
-          setVerifyStatus(upRes.verifyStatus)
-        }
-        if (upRes && [0, 1].includes(upRes.verifyStatus)) {
-          setManagerName(upRes.data.managerName)
-          setDesc(upRes.data.desc)
-          setMinAmount(String(upRes.data.subscriptionLimit[0]))
-          setMaxAmount(String(upRes.data.subscriptionLimit[1]))
-          // setSelectDerivative(without(selectDerivative, ...upRes.data.derivativesToRemove))
-          setSelectDerivative(
-            without(
-              [...new Set([...res.derivatives, ...upRes.data.derivativesToAdd])],
-              ...upRes.data.derivativesToRemove
-            )
-          )
-          // [...selectDerivative, item]
-        } else {
-          setManagerName(res.managerName)
-          setSelectDerivative(res.derivatives)
-          setDesc(res.desc)
-          setMinAmount(String(res.subscriptionMinLimit))
-          setMaxAmount(String(res.subscriptionMaxLimit))
-        }
+  useEffect(() => {
+    if (!loading && isSuccess) {
+      if (updatingData) {
+        setVerifyStatus(updatingData.verifyStatus)
       }
 
-      setLoading(false)
-      // await sleep(1000)
-      // console.log(JSON.stringify(calcConfirmData()))
-      // baseDataStr = JSON.stringify(calcConfirmData())
+      if (updatingData && [0, 1].includes(updatingData.verifyStatus)) {
+        setManagerName(updatingData.data.managerName)
+        setDesc(updatingData.data.desc)
+        setMinAmount(String(updatingData.data.allocationLimits[0]))
+        setMaxAmount(String(updatingData.data.allocationLimits[1]))
+        // setSelectDerivative(without(selectDerivative, ...updatingData.data.derivativesToRemove))
+        setSelectDerivative(
+          without(
+            [...new Set([...baseInfo.derivatives, ...updatingData.data.derivativesToAdd])],
+            ...updatingData.data.derivativesToRemove
+          )
+        )
+        // [...selectDerivative, item]
+      } else {
+        setManagerName(baseInfo.managerName)
+        setSelectDerivative(baseInfo.derivatives)
+        setDesc(baseInfo.desc)
+        setMinAmount(String(baseInfo.subscriptionMinLimit))
+        setMaxAmount(String(baseInfo.subscriptionMaxLimit))
+      }
     }
-  }, [getFundBase, fundAddress, getDerivativeList])
+  }, [updatingData, loading, isSuccess])
 
-  useEffect(() => void getData(), [getData])
-  // console.log(baseDataStr)
-  const calcConfirmData = useCallback(() => {
+  const calcConfirmData = useCallback((): UpdateVaultDataType => {
     const delDerivative = oldDerivative.filter((item) => !selectDerivative.includes(item))
     const newDerivative = selectDerivative.filter((item) => !oldDerivative.includes(item))
     // console.log(selectDerivative, delDerivative, newDerivative)
     return { desc, managerName, newDerivative, delDerivative, minAmount, maxAmount, decimals }
   }, [decimals, desc, managerName, maxAmount, minAmount, oldDerivative, selectDerivative])
-  const onConfirm = async () => {
-    // console.log(selectDerivative)
-    if (!fundAddress || !signer) return
-    const data = calcConfirmData()
-    // if (fundAddress) return
-    const notifyId = await createNotify({ type: 'loading', content: 'Set Vault Base Info' })
-
-    const { status, msg, hash } = await updateFund(fundAddress, data, signer)
-    if (status) {
-      await getData()
-      updateNotifyItem(notifyId, { type: 'success', hash })
-    } else {
-      updateNotifyItem(notifyId, {
-        type: 'error',
-        title: 'Set Vault Base Info',
-        content: msg,
-        hash
-      })
-    }
-  }
 
   const isDisabled = useMemo(() => [0, 1].includes(verifyStatus), [verifyStatus])
 
@@ -167,10 +125,10 @@ const EditFund: FC = () => {
   const onSelect = (item: string) => {
     if (isLock) return
     if (!isDisabled) {
-      if (selectDerivative.includes(item)) {
-        setSelectDerivative(without(selectDerivative, item))
+      if (selectDerivative.includes(item as AddressType)) {
+        setSelectDerivative(without(selectDerivative, item) as AddressType[])
       } else {
-        setSelectDerivative([...selectDerivative, item])
+        setSelectDerivative([...selectDerivative, item] as AddressType[])
       }
     }
     // console.log(selectDerivative)
@@ -202,6 +160,12 @@ const EditFund: FC = () => {
     calcConfirmData,
     baseDataStr
   ])
+
+  const onConfirm = () => {
+    if (!account) return
+    const data = calcConfirmData()
+    onUpdateVault(baseInfo.address, data, account, getData)
+  }
 
   return (
     <>
@@ -259,7 +223,7 @@ const EditFund: FC = () => {
         </div>
         <h3>select protocol allowed</h3>
         <ul className="web-manage-create-step-product-list">
-          {derivativeList.map((item: ProductProps, index: number) => (
+          {derivativeList.map((item: VaultDerivativesProps, index: number) => (
             <li
               key={index}
               onClick={() => onSelect(item.value)}
@@ -289,4 +253,5 @@ const EditFund: FC = () => {
     </>
   )
 }
-export default EditFund
+
+export default Edit
