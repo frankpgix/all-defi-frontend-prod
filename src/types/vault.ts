@@ -155,3 +155,5 @@ export interface VaultDerivativesProps {
   name: string
   value: AddressType
 }
+
+export type VaultStakeType = 'increase' | 'reduce'

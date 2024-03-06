@@ -8,6 +8,7 @@ import { calcVaultStakedALL, calcVaultDerivativesInfo } from '@/compute/vault'
 import { calcCaeateVaultData, calcUpdateVaultData } from '@/compute/caeateVault'
 import { VaultStakeDataDefault } from '@/data/vault'
 import { CreateVaultDataType, UpdateVaultDataType } from '@/types/createVault'
+import { VaultStakeType } from '@/types/vault'
 import { useNotify } from '@/hooks/useNotify'
 
 const AllProtocolContract = useAllProtocolContract()
@@ -152,4 +153,56 @@ export const useUpdateVault = () => {
       })
   }
   return { onUpdateVault }
+}
+
+//vault可取消质押的最大数量
+export const useVaultUnstakeLimit = (vaultAddress: AddressType) => {
+  const { isLoading, isSuccess, data, refetch } = useReadContract({
+    ...AllProtocolContract,
+    functionName: 'vaultUnstakeLimit',
+    args: [vaultAddress]
+  }) as { data: bigint; isSuccess: boolean; isLoading: boolean; refetch: () => void }
+  if (!isLoading && isSuccess) {
+    return { data: Number(safeInterceptionValues(data, 4, 18)), isLoading, isSuccess, refetch }
+  }
+  return { data: 0, isLoading, isSuccess, refetch }
+}
+
+export const useVaultChangeStakeALL = () => {
+  const { writeContractAsync } = useWriteContract()
+  const { createNotify, updateNotifyItem } = useNotify()
+
+  const onVaultChangeStakeALL = async (
+    vaultAddress: AddressType,
+    amount: number,
+    direction: VaultStakeType,
+    account: AddressType,
+    callback: () => void
+  ) => {
+    const _amount = getUnitAmount(amount, 18)
+
+    const notifyId = await createNotify({
+      type: 'loading',
+      content: 'Change Vault Stake ALL Token'
+    })
+    console.log(direction === 'increase' ? 'stake' : 'unstake')
+    await writeContractAsync({
+      ...AllProtocolContract,
+      functionName: direction === 'increase' ? 'stake' : 'unstake',
+      args: [vaultAddress, _amount],
+      account
+    })
+      .then((hash: string) => {
+        updateNotifyItem(notifyId, { title: 'Change Vault Stake ALL Token', type: 'success', hash })
+        callback()
+      })
+      .catch((error: any) => {
+        updateNotifyItem(notifyId, {
+          title: 'Change Vault Stake ALL Token',
+          type: 'error',
+          content: error.shortMessage
+        })
+      })
+  }
+  return { onVaultChangeStakeALL }
 }

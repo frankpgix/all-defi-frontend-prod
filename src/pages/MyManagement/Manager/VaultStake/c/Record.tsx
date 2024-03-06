@@ -1,35 +1,34 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import Table from 'rc-table'
 import BN from 'bignumber.js'
 
-import { FundDetailProps, FundStakeProps } from '@/class/help'
-
+import Token from '@/class/Token'
+import { VaultStakeProps } from '@/types/vault'
 import { formatNumber } from '@/utils/tools'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
 
 interface Props {
-  data: FundStakeProps
-  fundData: FundDetailProps
+  stakeData: VaultStakeProps
   multiple: number
   loading: boolean
-  baseToken: any
+  underlyingToken: Token
 }
 // 这里是有问题的
-const Record: FC<Props> = ({ data, multiple, loading, baseToken }) => {
-  console.log(baseToken)
+const Record: FC<Props> = ({ stakeData, multiple, loading, underlyingToken }) => {
+  // console.log(underlyingToken)
   const webColumns = [
     {
       title: 'ALL Token Staked Amount',
-      dataIndex: 'stakeAmount',
+      dataIndex: 'stakedALL',
       render: (value: number) => formatNumber(value, 2, '0,0.00')
     },
     {
       title: 'Updated Max AUM Limit',
-      dataIndex: 'stakeAmount',
+      dataIndex: 'stakedALL',
       render: (value: number) => {
         const num = BN(value).times(multiple).toNumber()
-        return <TokenValue value={num} token={baseToken} size="mini" format="0,0.00" />
+        return <TokenValue value={num} token={underlyingToken} size="mini" format="0,0.00" />
       }
     }
   ]
@@ -39,8 +38,8 @@ const Record: FC<Props> = ({ data, multiple, loading, baseToken }) => {
       className="web-buy-table"
       columns={webColumns}
       emptyText={loading ? <TableLoading /> : <TableNoData />}
-      data={[data]}
-      rowKey="valueInUSD"
+      data={[stakeData]}
+      rowKey="value"
     />
   )
 }

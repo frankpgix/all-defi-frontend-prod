@@ -1,13 +1,12 @@
-import React, { FC, useMemo, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 import BN from 'bignumber.js'
-import { isNaN } from 'lodash'
-import { useRequest } from 'ahooks'
 
-import AllProtocol from '@/class/AllProtocol'
-import { useProfile } from '@/hooks/useProfile'
-import { useNotify } from '@/hooks/useNotify'
+import { VaultDetailProps, VaultStakeType } from '@/types/vault'
+import { AddressType } from '@/types/base'
 
-import { useTokensData } from '@/store/tokens/hooks'
+import { useVaultUnstakeLimit, useVaultChangeStakeALL } from '@/hooks/useAllProtocol'
+import { useProfile, useUserBalances } from '@/hooks/useProfile'
+
 import { formatNumber } from '@/utils/tools'
 
 import Alert from '@@/common/Alert'
@@ -19,38 +18,40 @@ import DataItem from '@@/common/DataItem'
 import { AllTokenUnit } from '@@/common/TokenUnit'
 import TokenValue from '@@/common/TokenValue'
 
-// import { notify } from '@@/common/Toast'
+interface StakeProps {
+  direction: VaultStakeType
+  vaultDetail: VaultDetailProps
+  multiple: number
+  vaultAddress: AddressType
+  getData: () => void
+}
 
-import { StakeProps } from './types'
+const Stake: FC<StakeProps> = ({ direction, vaultAddress, vaultDetail, multiple, getData }) => {
+  const { account } = useProfile()
+  const { balances } = useUserBalances()
 
-const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direction }) => {
-  const { manageStakeAllTokenToFund, manageUnStakeAllTokenToFund, fundUnstakingLimit } = AllProtocol
-  const { balance } = useTokensData()
-  const { signer } = useProfile()
-  const { createNotify, updateNotifyItem } = useNotify()
-  const { data: maxReduceAmount = 0 } = useRequest(
-    async () => await fundUnstakingLimit(fundAddress)
-  )
-  // console.log(test)
+  const { data: maxReduceAmount } = useVaultUnstakeLimit(vaultAddress)
+  const { onVaultChangeStakeALL } = useVaultChangeStakeALL()
+
   const [amount, setAmount] = useState<string | number>('')
   const [sliderValue, setSliderValue] = useState(0)
 
   const isIncrease = useMemo(() => direction === 'increase', [direction])
-  console.log(fundData)
-  const maxValue = isIncrease ? Number(balance.ALL) : maxReduceAmount
+  // console.log(fundData)
+  const maxValue = isIncrease ? Number(balances.ALLTOKEN) : maxReduceAmount
 
   const maxAum = useMemo(() => {
     if (isIncrease) {
       return BN(isNaN(Number(amount)) ? 0 : Number(amount))
         .multipliedBy(multiple)
-        .plus(fundData.realtimeAUMLimit)
+        .plus(vaultDetail.realtimeAUMLimit)
         .toNumber()
     }
-    const val = BN(fundData.realtimeAUMLimit)
+    const val = BN(vaultDetail.realtimeAUMLimit)
       .minus(BN(isNaN(Number(amount)) ? 0 : Number(amount)).multipliedBy(multiple))
       .toNumber()
     return val < 0.0001 ? 0 : val
-  }, [isIncrease, amount, fundData.realtimeAUMLimit, multiple])
+  }, [isIncrease, amount, vaultDetail.realtimeAUMLimit, multiple])
 
   // console.log(maxAum)
 
@@ -63,10 +64,6 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
   }
 
   const onInputChange = (val: number | string) => {
-    // console.log(val, String(val)[String(val).length - 1])
-    // if (String(val)[String(val).length - 1] === '.') if (isNaN(Number(val))) val = 0
-    // if (val > maxValue) val = maxValue
-    // if (val < 0) val = 0
     if (maxValue > 0) {
       const currSliderValue = BN(Number(val))
         .div(maxValue)
@@ -79,34 +76,17 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
   }
 
   const onConfirm = async () => {
-    if (Number(amount) > 0 && signer && fundAddress) {
-      // const notifyId = notify.loading()
-      const notifyId = await createNotify({
-        type: 'loading',
-        content: 'Change Vault Stake ALL Token'
-      })
-
-      const { status, msg, hash } = isIncrease
-        ? await manageStakeAllTokenToFund(Number(amount), fundAddress, signer)
-        : await manageUnStakeAllTokenToFund(Number(amount), fundAddress, signer)
-      if (status) {
-        await getData()
+    if (Number(amount) > 1 && account && vaultAddress) {
+      onVaultChangeStakeALL(vaultAddress, Number(amount), direction, account, () => {
+        getData()
         setAmount(0)
-        updateNotifyItem(notifyId, { type: 'success', hash })
-      } else {
-        updateNotifyItem(notifyId, {
-          type: 'error',
-          title: 'Change Vault Stake ALL Token',
-          content: msg,
-          hash
-        })
-      }
+      })
     }
   }
   const isDisabled = useMemo(() => !amount || Number(amount) <= 1, [amount])
   return (
     <>
-      {fundData.aum > fundData.realtimeAUMLimit && (
+      {vaultDetail.aum > vaultDetail.realtimeAUMLimit && (
         <>
           <Alert show type="error">
             Your current fund AUM has exceeded the fund max AUM limited, please increase the fund
@@ -115,16 +95,17 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
           <Blank />
         </>
       )}
-      {fundData.nav > fundData.realtimeAUMLimit && fundData.aum <= fundData.realtimeAUMLimit && (
-        <>
-          <Alert show type="error">
-            When the Staking Ratio of the Current Epoch is less than 100%, please stake more ALL
-            Token before end of current Epoch to sure to receive 100% of the incentive fee during
-            settlement.
-          </Alert>
-          <Blank />
-        </>
-      )}
+      {vaultDetail.nav > vaultDetail.realtimeAUMLimit &&
+        vaultDetail.aum <= vaultDetail.realtimeAUMLimit && (
+          <>
+            <Alert show type="error">
+              When the Staking Ratio of the Current Epoch is less than 100%, please stake more ALL
+              Token before end of current Epoch to sure to receive 100% of the incentive fee during
+              settlement.
+            </Alert>
+            <Blank />
+          </>
+        )}
       <BlueLineSection
         className="web-manage-fund-staker"
         title={`${direction} Vault Max AUM Limit`}
@@ -132,8 +113,8 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
         <div className="web-manage-fund-staker-input">
           <DataItem label="current MAX AUM limit" gray>
             <TokenValue
-              value={fundData.realtimeAUMLimit}
-              token={fundData.baseTokenObj}
+              value={vaultDetail.realtimeAUMLimit}
+              token={vaultDetail.underlyingToken}
               format="0.00"
               noUnit
             />
@@ -151,7 +132,7 @@ const Stake: FC<StakeProps> = ({ fundData, multiple, fundAddress, getData, direc
             error={Number(amount) < 1 && amount !== ''}
           >
             {isIncrease ? (
-              <p>ALL Token Balance: {balance.ALL}</p>
+              <p>ALL Token Balance: {balances.ALLTOKEN}</p>
             ) : (
               <p>Staked ALL Token: {maxReduceAmount}</p>
             )}

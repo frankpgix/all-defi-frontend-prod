@@ -320,7 +320,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                   settle
                 </ValutSettleButton>
                 <Button
-                  to={`/manage/manager/fund-edit/${vaultAddress}`}
+                  to={`/manage/manager/vault-edit/${vaultAddress}`}
                   disabled={upData.verifyStatus === 1}
                 >
                   {[-1, 2].includes(upData.verifyStatus) ? 'Reset policies' : 'UNDER REVIEW'}
@@ -574,10 +574,10 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           </SectionLayout>
           <SectionPercentageLine percent={percent} remainPercent={remainPercent} />
           <SectionButtons>
-            <Button to={`/manage/manager/fund-stake/${vaultAddress}/increase`} outline>
+            <Button to={`/manage/manager/vault-stake/${vaultAddress}/increase`} outline>
               INCREASE VAULT MAX AUM LIMIT
             </Button>
-            <Button to={`/manage/manager/fund-stake/${vaultAddress}/reduce`}>
+            <Button to={`/manage/manager/vault-stake/${vaultAddress}/reduce`}>
               REDUCE VAULT MAX AUM LIMIT
             </Button>
           </SectionButtons>
