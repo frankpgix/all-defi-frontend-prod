@@ -1,3 +1,4 @@
+import { AddressType } from '@/types/base'
 export interface FundDataProps {
   fundId: string
   periodStartUnix: number
@@ -49,7 +50,7 @@ export interface ACBuyDataProps {
   id: string
   investor: string
   sallAmount: string
-  underlyingToken: string
+  underlyingToken: AddressType
 }
 
 export interface FundActionAssetProps {

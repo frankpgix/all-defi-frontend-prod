@@ -20,26 +20,20 @@ import {
   // calcMiningTotalDataGQL
 } from './calcGql'
 
-import { FundDataProps } from './types'
+// import { FundDataProps } from './types'
 import { removeZeroKeys } from './tools'
 import { VaultMonthDataType } from '@/types/graphql'
 // import { FundDetailProps } from '@/class/help'
 
-export const useFundData = (gql: any, timeType: string, decimals: number, precision: number) => {
+export const useVaultData = (gql: any, decimals: number, precision: number) => {
   const { loading, error, data: sData } = useQuery(gql)
-  const data = (sData?.fund10MinutelyDatas ?? sData?.fundHourlyDatas ?? sData?.fundDailyDatas ?? [])
-    .map((item: FundDataProps) => ({
+  const data = (sData?.vaultIntervalDatas ?? [])
+    .map((item: any) => ({
       time: item.periodStartUnix * 1000,
-      value: Number(safeInterceptionValues(item.nav, precision, decimals))
+      value: Number(safeInterceptionValues(String(item.aum).split('.')[0], precision, decimals)),
+      price: Number(safeInterceptionValues(item.sharePrice, 18, 18))
     }))
     .reverse()
-
-  if (timeType === 'MONTH') {
-    const mData = data
-      .map((item: FundDataProps, index: number) => (index % 6 === 0 ? item : null))
-      .filter((item: FundDataProps) => item)
-    return { loading, error, data: mData }
-  }
 
   return { loading, error, data }
 }

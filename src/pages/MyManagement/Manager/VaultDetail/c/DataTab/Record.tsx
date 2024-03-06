@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import Table from 'rc-table'
 import dayjs from 'dayjs'
 
@@ -8,12 +8,13 @@ import { useFundActionAssetData } from '@/graphql/useFundData'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 import Image from '@@/common/Image'
 import HashLink from '@@/common/HashLink'
+import { AddressType } from '@/types/base'
 
 interface Props {
-  fundAddress: string
+  vaultAddress: AddressType
 }
 
-const Record: FC<Props> = ({ fundAddress }) => {
+const Record: FC<Props> = ({ vaultAddress }) => {
   const webColumns = [
     {
       title: 'Category',
@@ -62,7 +63,7 @@ const Record: FC<Props> = ({ fundAddress }) => {
   ]
 
   // const list = [{ id: 1, category: 'Uniswap', out: 100000, in: 1000000, time: 123456 }]
-  const { loading, data } = useFundActionAssetData(fundAddress)
+  const { loading, data } = useFundActionAssetData(vaultAddress)
   // console.log(JSON.stringify(data, null, '  '))
   return (
     <Table

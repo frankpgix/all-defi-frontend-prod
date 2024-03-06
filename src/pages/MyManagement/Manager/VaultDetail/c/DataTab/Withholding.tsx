@@ -1,18 +1,19 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import Table from 'rc-table'
 import dayjs from 'dayjs'
 
-import { useFundRedeemsData } from '@/graphql/useFundData'
+import { useVaultWithholdData } from '@/graphql/useFundData'
 // import { formatNumber } from '@/utils/tools'
 import HashLink from '@@/common/HashLink'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
+import { AddressType } from '@/types/base'
 
 interface Props {
-  fundAddress: string
+  vaultAddress: AddressType
 }
 
-const Redemption: FC<Props> = ({ fundAddress }) => {
+const Withholding: FC<Props> = ({ vaultAddress }) => {
   const webColumns = [
     {
       title: '# Hash',
@@ -39,7 +40,7 @@ const Redemption: FC<Props> = ({ fundAddress }) => {
     }
   ]
 
-  const { loading, data } = useFundRedeemsData(fundAddress)
+  const { loading, data } = useVaultWithholdData(vaultAddress)
 
   return (
     <Table
@@ -52,4 +53,4 @@ const Redemption: FC<Props> = ({ fundAddress }) => {
   )
 }
 
-export default Redemption
+export default Withholding

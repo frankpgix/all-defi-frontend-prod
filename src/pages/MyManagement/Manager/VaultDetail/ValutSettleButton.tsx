@@ -13,13 +13,13 @@ import { VaultDetailProps } from '@/types/vault'
 
 interface Props extends ButtonProps {
   children: ReactNode
-  fundAddress: AddressType
+  vaultAddress: AddressType
   callback?: () => void
   data: VaultDetailProps
 }
 
 const ValutSettleButton: FC<Props> = ({
-  fundAddress,
+  vaultAddress,
   children,
   outline,
   size,
@@ -27,7 +27,7 @@ const ValutSettleButton: FC<Props> = ({
   callback,
   data
 }) => {
-  const { onSettleAccount } = useSettleAccount(fundAddress)
+  const { onSettleAccount } = useSettleAccount(vaultAddress)
   const { account } = useProfile()
 
   const [show, { setLeft: closeModal, setRight: openModal }] = useToggle()
@@ -85,7 +85,7 @@ const ValutSettleButton: FC<Props> = ({
     closeModal()
     closeModal2()
     closeModal3()
-    if (account && fundAddress) {
+    if (account && vaultAddress) {
       await onSettleAccount(account)
       if (callback) callback()
     }

@@ -137,7 +137,7 @@ export const calcFundDetailGQL = (fundAddress: string) => gql`
 `
 // fundId: "${'0xb8874ad74192ce798391ca316d47ad97e168128b'.toLowerCase()}"
 
-export const calcFundSubscribesOrRedeemsGQL = (fundAddress: string, type: number[]) => {
+export const calcVaultAllocationOrWithholdGQL = (fundAddress: string, type: number[]) => {
   return gql`
     query {
       vaultUserActions(

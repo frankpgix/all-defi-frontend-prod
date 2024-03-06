@@ -30,28 +30,27 @@ const calcTableAndStartTime = (type: string, startTime: number, monthHouer?: boo
   return o
 }
 
-export const calcFundDatasGql = (fundAddress: string, type: string, createTime: number) => {
-  const { tableName, startTime } = calcTableAndStartTime(type, createTime, true)
-
-  return gql`query {
-    ${tableName}(
-      orderBy: periodStartUnix
-      orderDirection: desc
-      first: 1000
-      where: {
-        fundId: "${fundAddress.toLowerCase()}"
-        periodStartUnix_gt: ${startTime}
+export const calcVaultDatasGql = (fundAddress: string, type: string, createTime: number) => {
+  const { startTime, dataType } = calcDataTypeAndStartTime(type, createTime)
+  return gql`
+    query {
+      vaultIntervalDatas(
+        orderBy: periodStartUnix
+        orderDirection: desc
+        first: 1000
+        where: {
+          vaultId: "${fundAddress.toLowerCase()}"
+          intervalType: "${dataType}"
+          periodStartUnix_gt: ${startTime}
+        }
+      ) {
+        intervalType
+        periodStartUnix
+        aum
+        sharePrice
       }
-    ) {
-      fundId
-      periodStartUnix
-      epochIndex
-      aum
-      roe
-      nav
-      sharePrice
     }
-  }`
+  `
 }
 
 export const calcMiningData = (fundAddress: string, type: string, createTime: number) => {

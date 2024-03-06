@@ -1,8 +1,8 @@
-// Subscription
-import React, { FC } from 'react'
+// Allocation
+import { FC } from 'react'
 import Table from 'rc-table'
 import dayjs from 'dayjs'
-import { useFundSubscribesData } from '@/graphql/useFundData'
+import { useVaultAllocationData } from '@/graphql/useFundData'
 
 // import { formatNumber } from '@/utils/tools'
 
@@ -11,10 +11,10 @@ import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
 
 interface Props {
-  fundAddress: string
+  vaultAddress: string
 }
 
-const Subscription: FC<Props> = ({ fundAddress }) => {
+const Allocation: FC<Props> = ({ vaultAddress }) => {
   const webColumns = [
     {
       title: '# Hash',
@@ -40,8 +40,8 @@ const Subscription: FC<Props> = ({ fundAddress }) => {
     }
   ]
 
-  const { loading, data } = useFundSubscribesData(fundAddress)
-  console.log(1211, data)
+  const { loading, data } = useVaultAllocationData(vaultAddress)
+  // console.log(1211, data)
   return (
     <Table
       className="web-buy-table"
@@ -53,4 +53,4 @@ const Subscription: FC<Props> = ({ fundAddress }) => {
   )
 }
 
-export default Subscription
+export default Allocation

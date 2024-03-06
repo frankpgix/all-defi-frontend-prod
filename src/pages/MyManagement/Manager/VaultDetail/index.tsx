@@ -1,7 +1,7 @@
-import React, { FC, useState, useEffect, useCallback } from 'react'
+import { FC } from 'react'
 import { useParams } from 'react-router-dom'
-// import ContentLoader from 'react-content-loader'
-import { getTokenByAddress, baseTokens } from '@/config/tokens'
+import ContentLoader from 'react-content-loader'
+// import { getTokenByAddress, baseTokens } from '@/config/tokens'
 // import FundPool from '@/class/FundPool'
 // import FundReader from '@/class/FundReader'
 // import AllProtocol from '@/class/AllProtocol'
@@ -16,60 +16,32 @@ import { getTokenByAddress, baseTokens } from '@/config/tokens'
 //   FundBreachDetailDefault
 // } from '@/class/help'
 
-import { useProfile } from '@/hooks/useProfile'
-import { useVaultStakedALL } from '@/hooks/useAllProtocol'
-import { useVaultBreachDetail, useVaultUpdatingData } from '@/hooks/useVaultReader'
+// import { useProfile } from '@/hooks/useProfile'
+// import { useVaultStakedALL } from '@/hooks/useAllProtocol'
+import { useVaultManageDetails } from '@/hooks/useVaultDetails'
+// import { useVaultBreachDetail, useVaultUpdatingData } from '@/hooks/useVaultReader'
 import { AddressType } from '@/types/base'
-// import Blank from '@@/common/Blank'
+import Blank from '@@/common/Blank'
 
-// import ManageDetail from './c/ManageDetail'
-// import DataTab from './c/DataTab'
-// import Dashboard from './c/Dashboard'
+import ManageDetail from './c/ManageDetail'
+import DataTab from './c/DataTab'
+import Dashboard from './c/Dashboard'
 // import FundDialog from './c/FundDialog'
 
 const VaultDetail: FC = () => {
   const { vaultAddress } = useParams() as { vaultAddress: AddressType }
 
-  const { account } = useProfile()
-  const testToken = getTokenByAddress(baseTokens[0].address)
-  const a = useVaultUpdatingData(vaultAddress, testToken)
-  useVaultStakedALL(vaultAddress)
-  const res = useVaultBreachDetail(vaultAddress)
-  console.log(a, res)
-  // const { getFundBase } = FundPool
-  // const { getFundDetail, getFundBreachDetail } = FundReader
-  // const { getFundStake } = AllProtocol
-
-  // const [loading, setLoading] = useState(true)
-
-  // const [base, setBase] = useState<FundBaseProps>(FundBaseDefault)
-  // const [data, setData] = useState<FundDetailProps>(FundDetailDefault)
-  // const [stake, setStake] = useState<FundStakeProps>(FundStakeDefault)
-  // const [breach, setBreach] = useState<FundBreachDetailProps>(FundBreachDetailDefault)
-
-  // const getData = useCallback(async () => {
-  //   if (fundAddress && signer) {
-  //     setLoading(true)
-  //     const base = await getFundBase(fundAddress)
-  //     if (base) setBase(base)
-
-  //     const data = await getFundDetail(fundAddress)
-  //     if (data) setData(data)
-  //     const stake = await getFundStake(fundAddress, signer)
-  //     if (stake) setStake(stake)
-
-  //     const breach = await getFundBreachDetail(fundAddress)
-  //     if (breach) setBreach(breach)
-  //     setLoading(false)
-  //     // console.log(base, data, 3333)
-  //   }
-  // }, [fundAddress, signer]) // eslint-disable-line
-
-  // useEffect(() => void getData(), [getData])
+  // const { account } = useProfile()
+  const {
+    data: { baseInfo, vaultDetail, vaultBreachDetail, vaultStakedALL },
+    isLoading: loading,
+    refetch: getData
+  } = useVaultManageDetails(vaultAddress)
+  console.log(baseInfo, vaultDetail, vaultBreachDetail, vaultStakedALL)
 
   return (
     <div className="web-manage">
-      {/* <h2>
+      <h2>
         {loading ? (
           <ContentLoader
             width={200}
@@ -81,22 +53,23 @@ const VaultDetail: FC = () => {
             <rect x="0" y="0" rx="4" ry="4" width="200" height="30" />
           </ContentLoader>
         ) : (
-          base.name
+          baseInfo.name
         )}
       </h2>
-      <Dashboard fundAddress={fundAddress} loading={loading} data={data} base={base} />
+      <Dashboard vaultAddress={vaultAddress} loading={loading} data={vaultDetail} base={baseInfo} />
       <Blank />
       <ManageDetail
         loading={loading}
-        fundAddress={fundAddress}
-        base={base}
-        data={data}
-        stake={stake}
-        breach={breach}
+        vaultAddress={vaultAddress}
+        base={baseInfo}
+        data={vaultDetail}
+        stake={vaultStakedALL}
+        breach={vaultBreachDetail}
         getData={getData}
       />
-      <DataTab fundAddress={fundAddress} />
-      {!loading && <FundDialog fundAddress={fundAddress} name={base.name} />} */}
+
+      <DataTab vaultAddress={vaultAddress} />
+      {/* {!loading && <FundDialog fundAddress={fundAddress} name={base.name} />} */}
     </div>
   )
 }

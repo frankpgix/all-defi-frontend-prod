@@ -207,7 +207,7 @@ export const calcVaultUpdatingData = (data: [AddressType, BigInt], underlyingTok
   const updateData: any = decodeAbiParameters(types, sData)[0]
 
   return {
-    verifyStatus,
+    verifyStatus: Number(safeInterceptionValues(verifyStatus, 0, 0)),
     data: {
       desc: updateData.desc,
       managerName: updateData.managerName,

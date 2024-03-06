@@ -87,7 +87,7 @@ const FundList: FC = () => {
               <ValutSettleButton
                 disabled={![5, 4, 6].includes(record.status)}
                 callback={getData}
-                fundAddress={record.address}
+                vaultAddress={record.address}
                 outline
                 size="mini"
                 data={record}

@@ -1,7 +1,7 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import dayjs from 'dayjs'
 import BN from 'bignumber.js'
-import { useRequest } from 'ahooks'
+// import { useRequest } from 'ahooks'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import ContentLoader from 'react-content-loader'
 // import { getTokenByAddress } from '@/config/tokens'
@@ -13,10 +13,10 @@ import ContentLoader from 'react-content-loader'
 // import { FundStakeProps } from '@/class/FundManager'
 import { formatNumber } from '@/utils/tools'
 // import { useFundDetail } from '@/graphql/useFundData'
-import { getTokenByAddress } from '@/config/tokens'
+// import { getTokenByAddress } from '@/config/tokens'
 
-import { FundBaseProps, FundDetailProps, FundStakeProps, FundBreachDetailProps } from '@/class/help'
-import FundReader from '@/class/FundReader'
+// import { FundBaseProps, FundDetailProps, FundStakeProps, FundBreachDetailProps } from '@/class/help'
+// import FundReader from '@/class/FundReader'
 
 // import BlueLineSection from '@@/web/BlueLineSection'
 // import DataItem from '@@/common/DataItem'
@@ -29,9 +29,18 @@ import TokenValue from '@@/common/TokenValue'
 // import Blank from '@@/common/Blank'
 // import Popper from '@@/common/Popper'
 
-import FundSettleButton from '../FundSettleButton'
+import ValutSettleButton from '../../ValutSettleButton'
 import DappTab from './DappTab'
-import Dapp from '@@/web/Dapp'
+// import Dapp from '@@/web/Dapp'
+import {
+  VaultBaseInfoProps,
+  VaultDetailProps,
+  VaultStakeProps,
+  VaultBreachDetailProps
+} from '@/types/vault'
+import { AddressType } from '@/types/base'
+
+import { useVaultUpdatingData } from '@/hooks/useVaultReader'
 
 import {
   CountLayout,
@@ -46,22 +55,26 @@ import {
 } from './C'
 
 interface Props {
-  base: FundBaseProps
-  data: FundDetailProps
-  stake: FundStakeProps
-  breach: FundBreachDetailProps
-  fundAddress: string
+  base: VaultBaseInfoProps
+  data: VaultDetailProps
+  stake: VaultStakeProps
+  breach: VaultBreachDetailProps
+  vaultAddress: AddressType
   loading: boolean
   getData: () => void
 }
 
-const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getData, loading }) => {
-  const { getFundUpdatingData } = FundReader
-  const { data: upData, loading: upLoading } = useRequest(
-    async () => await getFundUpdatingData(fundAddress, base.baseToken)
+const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getData, loading }) => {
+  // const { getFundUpdatingData } = FundReader
+  // const { data: upData, loading: upLoading } = useRequest(
+  //   async () => await getFundUpdatingData(vaultAddress, base.baseToken)
+  // )
+  const { data: upData, isLoading: upLoading } = useVaultUpdatingData(
+    vaultAddress,
+    base.underlyingToken
   )
   // console.log(upData, data)
-  // const { data: currFund } = useFundDetail(fundAddress)
+  // const { data: currFund } = useFundDetail(vaultAddress)
   // console.log('currFund', currFund)
   const percent = useMemo(
     () =>
@@ -118,7 +131,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
     () => Math.max(BN(data.aum).times(data.roe).times(0.2).div(100).toNumber(), 0),
     [data.aum, data.roe]
   )
-  const baseToken = useMemo(() => getTokenByAddress(base.baseToken), [base.baseToken])
+  const baseToken = useMemo(() => base.underlyingToken, [base.underlyingToken])
 
   const activeIndex = import.meta.env.NODE_ENV === 'development' ? 0 : 0
   // const acToken = useMemo(() => {
@@ -297,22 +310,22 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
               </ContentLoader>
             ) : (
               <>
-                <FundSettleButton
+                <ValutSettleButton
                   disabled={![5, 4, 6].includes(data.status)}
                   outline
                   callback={getData}
-                  fundAddress={fundAddress}
+                  vaultAddress={vaultAddress}
                   data={data}
                 >
                   settle
-                </FundSettleButton>
+                </ValutSettleButton>
                 <Button
-                  to={`/manage/manager/fund-edit/${fundAddress}`}
+                  to={`/manage/manager/fund-edit/${vaultAddress}`}
                   disabled={upData.verifyStatus === 1}
                 >
                   {[-1, 2].includes(upData.verifyStatus) ? 'Reset policies' : 'UNDER REVIEW'}
                 </Button>
-                {/* <Button to={`/manage/manager/dapp/${fundAddress}?dapp=https://app.uniswap.com/`}>
+                {/* <Button to={`/manage/manager/dapp/${vaultAddress}?dapp=https://app.uniswap.com/`}>
                   dapp test
                 </Button> */}
               </>
@@ -537,18 +550,13 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
               loading={loading}
               // value={formatNumber(stake.valueInUSD, 4, '$0,0.0000')}
               value={
-                <TokenValue
-                  value={stake.valueInUSD}
-                  token={baseToken}
-                  size="mini"
-                  format="0,0.00"
-                />
+                <TokenValue value={stake.value} token={baseToken} size="mini" format="0,0.00" />
               }
             />
             <SectionItem
               label="ALL Token Staking Amount"
               loading={loading}
-              value={formatNumber(stake.stakeAmount, 2, '0,0.00')}
+              value={formatNumber(stake.stakedALL, 2, '0,0.00')}
             />
             <SectionItem
               label="Max AUM Limit"
@@ -566,10 +574,10 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
           </SectionLayout>
           <SectionPercentageLine percent={percent} remainPercent={remainPercent} />
           <SectionButtons>
-            <Button to={`/manage/manager/fund-stake/${fundAddress}/increase`} outline>
+            <Button to={`/manage/manager/fund-stake/${vaultAddress}/increase`} outline>
               INCREASE VAULT MAX AUM LIMIT
             </Button>
-            <Button to={`/manage/manager/fund-stake/${fundAddress}/reduce`}>
+            <Button to={`/manage/manager/fund-stake/${vaultAddress}/reduce`}>
               REDUCE VAULT MAX AUM LIMIT
             </Button>
           </SectionButtons>
@@ -613,16 +621,14 @@ const ManageDetail: FC<Props> = ({ base, data, stake, fundAddress, breach, getDa
             <SectionItem
               label="Consecutive Default"
               loading={loading}
-              value={breach.continuousBreachTimes}
+              value={breach.consecutiveBreachCount}
             />
           </SectionLayout>
         </TabPanel>
         <TabPanel>
-          <DappTab fundAddress={fundAddress} derivatives={base.derivatives} />
+          <DappTab vaultAddress={vaultAddress} derivatives={base.derivatives} />
         </TabPanel>
-        <TabPanel>
-          <Dapp base={base} data={data} />
-        </TabPanel>
+        {/* <TabPanel>2<Dapp base={base} data={data} /></TabPanel> */}
       </Tabs>
     </>
   )

@@ -12,7 +12,7 @@ import { getTypeUnix } from '@/utils/qraphqlTools'
 import { FundDataProps, ACBuyDataProps } from './types'
 import {
   calcFundHourlyDatasGQL,
-  calcFundSubscribesOrRedeemsGQL,
+  calcVaultAllocationOrWithholdGQL,
   // calcUniSwapRecordGQL,
   calcFundDetailChartGQL,
   calcFundListGQL,
@@ -26,6 +26,7 @@ import {
 } from './gqls'
 
 import { calcUserFundHistoryData, ActionType, calcActionData, RecordProps } from './help'
+import { AddressType } from '@/types/base'
 
 export const useFundListData = () => {
   const {
@@ -181,13 +182,13 @@ export const useFundDetailChartData = (fundAddress: string, epochs: number[]) =>
   return { loading, error, data }
 }
 
-export const useFundSubscribesData = (fundAddress: string) => {
+export const useVaultAllocationData = (vaultAddress: string) => {
   const {
     loading,
     error,
     data: sData
   } = useQuery(
-    calcFundSubscribesOrRedeemsGQL(fundAddress, [
+    calcVaultAllocationOrWithholdGQL(vaultAddress, [
       ActionType['Allocate'],
       ActionType['Cancel Allocate']
     ])
@@ -197,13 +198,13 @@ export const useFundSubscribesData = (fundAddress: string) => {
   return { loading, error, data }
 }
 
-export const useFundRedeemsData = (fundAddress: string) => {
+export const useVaultWithholdData = (fundAddress: string) => {
   const {
     loading,
     error,
     data: sData
   } = useQuery(
-    calcFundSubscribesOrRedeemsGQL(fundAddress, [
+    calcVaultAllocationOrWithholdGQL(fundAddress, [
       ActionType['Withhold'],
       ActionType['Cancel Withhold']
     ])
@@ -294,7 +295,7 @@ export const useFundActionAssetData = (fundAddress: string) => {
         id: item.id.split('-')[0],
         derivative: hexToString(item.derivative, { size: 32 }),
         method: item.method,
-        income: item.incomingAssets.map((tokenAddress: string, index: number) => {
+        income: item.incomingAssets.map((tokenAddress: AddressType, index: number) => {
           const token = getTokenByAddress(tokenAddress)
           return {
             token,
@@ -307,7 +308,7 @@ export const useFundActionAssetData = (fundAddress: string) => {
             )
           }
         }),
-        out: item.spendAssets.map((tokenAddress: string, index: number) => {
+        out: item.spendAssets.map((tokenAddress: AddressType, index: number) => {
           const token = getTokenByAddress(tokenAddress)
           return {
             token,

@@ -8,8 +8,10 @@ import { derivativesConfig, DerivativesInfoType } from '@/config/derivatives'
 import Image from '@@/common/Image'
 import Button from '@@/common/Button'
 
-const DappTab: FC<{ fundAddress: string; derivatives: `0x${string}`[] }> = ({
-  fundAddress,
+import { AddressType } from '@/types/base'
+
+const DappTab: FC<{ vaultAddress: AddressType; derivatives: `0x${string}`[] }> = ({
+  vaultAddress,
   derivatives
 }) => {
   const list = useMemo(
@@ -31,7 +33,7 @@ const DappTab: FC<{ fundAddress: string; derivatives: `0x${string}`[] }> = ({
   return (
     <div className="web-dapp-tab">
       {list.map((item, index) => (
-        <DappCard data={item} key={index} fundAddress={fundAddress} />
+        <DappCard data={item} key={index} vaultAddress={vaultAddress} />
       ))}
     </div>
   )
@@ -44,10 +46,10 @@ interface DappCardDataType extends DerivativesInfoType {
 }
 interface DappCardType {
   data: DappCardDataType
-  fundAddress: string
+  vaultAddress: AddressType
 }
 
-const DappCard: FC<DappCardType> = ({ data, fundAddress }) => {
+const DappCard: FC<DappCardType> = ({ data, vaultAddress }) => {
   const [showCopy, setShowCopy] = useState(false)
 
   const onCopyAddress = async () => {
@@ -80,7 +82,7 @@ const DappCard: FC<DappCardType> = ({ data, fundAddress }) => {
         {/* <Button size="mini" outline>
           info
         </Button> */}
-        <Button size="mini" to={`/manage/manager/dapp/${fundAddress}?dapp=${data.url}`}>
+        <Button size="mini" to={`/manage/manager/dapp/${vaultAddress}?dapp=${data.url}`}>
           connect
         </Button>
       </footer>
