@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState, useEffect } from 'react'
+import { FC, useCallback, useState, useEffect } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import type {
   AddressBookItem,
@@ -50,7 +50,7 @@ const DappIframe: FC = () => {
   // console.log()
   const { iframeRef, appIsLoading, isLoadingSlow, setAppIsLoading } = useAppIsLoading()
   // const [appUrl, setAppUrl] = useState('https://app.aave.com/')
-  const { signer } = useProfile()
+  const { account } = useProfile()
   const chainId = '42161'
   // const { chain, chains } = useNetwork()
   // console.log(chain, chains)
@@ -92,8 +92,8 @@ const DappIframe: FC = () => {
         txs: txs,
         params: params
       }
-      console.log(111222, data, safeAddress, signer)
-      const safeTxHash = await onTransaction(txs, safeAddress, signer, createNotify)
+      console.log(111222, data, safeAddress, account)
+      const safeTxHash = await onTransaction(txs, safeAddress, account, createNotify)
       // setCurrentRequestId(requestId)
       if (safeTxHash) {
         communicator?.send({ safeTxHash }, requestId)
@@ -109,7 +109,7 @@ const DappIframe: FC = () => {
       sdkVersion: string
     ) => {
       console.log(123456, message, 'onSignMessage')
-      const signature = await onSign(message, safeAddress, signer)
+      const signature = await onSign(message, safeAddress, account)
       // onSign()
       // communicator?.send(CommunicatorMessages.REJECT_TRANSACTION_MESSAGE, requestId, true)
       communicator?.send({ signature }, requestId)
@@ -154,6 +154,7 @@ const DappIframe: FC = () => {
     onGetEnvironmentInfo: () => ({
       origin: document.location.origin
     }),
+    // @ts-ignore
     onGetSafeInfo: useGetSafeInfo(),
     onGetSafeBalances: (currency) => {
       const isDefaultTokenlistSupported = chain && hasFeature(chain, FEATURES.DEFAULT_TOKENLIST)

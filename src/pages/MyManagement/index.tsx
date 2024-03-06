@@ -10,7 +10,7 @@ const CreateVault = lazy(() => import('./Manager/CreateVault'))
 const VaultDetail = lazy(() => import('./Manager/VaultDetail'))
 const VaultStake = lazy(() => import('./Manager/VaultStake'))
 const EditVault = lazy(() => import('./Manager/EditVault'))
-// const Dapp = lazy(() => import('./Manager/Dapp'))
+const Dapp = lazy(() => import('./Manager/Dapp'))
 
 const MyManagement: FC = () => {
   return (
@@ -23,7 +23,7 @@ const MyManagement: FC = () => {
       <Route path="manager/create" element={<CreateVault />} />
       <Route path="manager/vault-edit/:vaultAddress" element={<EditVault />} />
       <Route path="manager/vault-stake/:vaultAddress/:direction" element={<VaultStake />} />
-      {/*<Route path="manager/dapp/:fundAddress" element={<Dapp />} /> */}
+      <Route path="manager/dapp/:vaultAddress" element={<Dapp />} />
     </Routes>
   )
 }
