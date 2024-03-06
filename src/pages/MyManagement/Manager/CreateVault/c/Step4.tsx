@@ -1,7 +1,8 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import BN from 'bignumber.js'
 
-import { ProductProps } from '@/config/products'
+import { VaultDerivativesProps } from '@/types/vault'
+import { AddressType } from '@/types/base'
 import { getTokenByAddress } from '@/config/tokens'
 
 import BlueLineSection from '@@/web/BlueLineSection'
@@ -18,7 +19,7 @@ interface Props {
   show: boolean
   data: Record<string, any>
   multiple: number
-  baseTokenAddress: string
+  baseTokenAddress: AddressType
 }
 
 const Step4: FC<Props> = ({ onConfirm, show, onBack, data, multiple, baseTokenAddress }) => {
@@ -62,7 +63,7 @@ const Step4: FC<Props> = ({ onConfirm, show, onBack, data, multiple, baseTokenAd
         </div>
         <div className="web-manage-create-step-1col">
           <DataItem label="selected protocol">
-            {data.address.map((item: ProductProps, index: number) => (
+            {data.address.map((item: VaultDerivativesProps, index: number) => (
               <Image key={index} src={`/products/${item.name}.png`} />
             ))}
           </DataItem>

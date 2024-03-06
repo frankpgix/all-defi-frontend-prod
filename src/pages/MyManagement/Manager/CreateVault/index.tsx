@@ -1,62 +1,53 @@
-import React, { FC, useState, useEffect, useCallback } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import AllProtocol from '@/class/AllProtocol'
-import { ProductProps } from '@/config/products'
+import { baseTokens } from '@/config/tokens'
 import { useProfile } from '@/hooks/useProfile'
-import { useNotify } from '@/hooks/useNotify'
+import { useDerivativeList, useCalcAUMLimit, useCreateVault } from '@/hooks/useAllProtocol'
 import Cache from '@/utils/cache'
+import { CreateVaultStep1DataDefault } from '@/data/createVault'
 
-// import { notify } from '@@/common/Toast'
+import { VaultDerivativesProps } from '@/types/vault'
+import { AddressType } from '@/types/base'
+import { CreateVaultStep1DataTypes, CreateVaultStep2DataTypes } from '@/types/createVault'
 
 import StepLine from './c/StepLine'
-import Step1, { Step1DataProps, Step1DataDefault } from './c/Step1'
-import Step2, { Step2ConfirmProps } from './c/Step2'
+import Step1 from './c/Step1'
+import Step2 from './c/Step2'
 import Step3 from './c/Step3'
 import Step4 from './c/Step4'
 import SuccDialog from './c/SuccDialog'
 
 const CreateFund: FC = () => {
-  const { createFund, calcAUMLimit, getDerivativeList } = AllProtocol
-  const { signer } = useProfile()
+  // const { createFund, calcAUMLimit, getDerivativeList } = AllProtocol
+  const { account } = useProfile()
   const navigate = useNavigate()
-  const { createNotify, updateNotifyItem } = useNotify()
+
+  const { onCreateVault } = useCreateVault()
+  // const { createNotify, updateNotifyItem } = useNotify()
 
   const [stepIndex, setStepIndex] = useState(0)
-  const [step1Data, setStep1Data] = useState<Step1DataProps>(Step1DataDefault)
-  const [address, setAddress] = useState<ProductProps[]>([])
+  const [step1Data, setStep1Data] = useState<CreateVaultStep1DataTypes>(CreateVaultStep1DataDefault)
+  const [address, setAddress] = useState<VaultDerivativesProps[]>([])
   const [minAmount, setMinAmount] = useState(0)
   const [maxAmount, setMaxAmount] = useState(0)
-  const [baseTokenAddress, setBaseTokenAddress] = useState('')
+  const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>(baseTokens[0].address)
   const [stakeAmount, setStakeAmount] = useState<number>(0)
-  const [derivativeList, setDerivativeList] = useState<ProductProps[]>([])
-  const [multiple, setMultiple] = useState<number>(0)
+  // const [derivativeList, setDerivativeList] = useState<VaultDerivativesProps[]>([])
+  // const [multiple, setMultiple] = useState<number>(0)
   const [succDialogStatus, setSuccDialogStatus] = useState<boolean>(false)
 
-  const getData = useCallback(async () => {
-    const p = await getDerivativeList()
-    setDerivativeList(p)
-  }, [getDerivativeList])
+  const { data: derivativeList } = useDerivativeList()
+  const { data: multiple, refetch: reGetMultiple } = useCalcAUMLimit(baseTokenAddress)
 
-  useEffect(() => void getData(), [getData])
+  useEffect(() => void reGetMultiple(), [baseTokenAddress])
 
-  const getMultiple = useCallback(async () => {
-    if (baseTokenAddress) {
-      const multiple = await calcAUMLimit(baseTokenAddress)
-      // console.log(multiple, 221111)
-      setMultiple(multiple)
-    }
-  }, [baseTokenAddress, calcAUMLimit])
-
-  useEffect(() => void getMultiple(), [getMultiple])
-
-  const onStep1Confirm = (data: Step1DataProps) => {
-    // Cache.set('CreateFundStep1Temp', data)
+  const onStep1Confirm = (data: CreateVaultStep1DataTypes) => {
     setStep1Data(data)
     setStepIndex(1)
   }
 
-  const onStep2Confirm = (data: Step2ConfirmProps) => {
+  const onStep2Confirm = (data: CreateVaultStep2DataTypes) => {
     // Cache.set('CreateFundStep2Temp', data)
     const { addresss, minAmount, maxAmount, baseTokenAddress } = data
     setAddress(addresss)
@@ -73,11 +64,8 @@ const CreateFund: FC = () => {
   }
 
   const onStep4Confirm = async () => {
-    if (signer) {
-      // navigate('/manage/manager')
-      const notifyId = await createNotify({ type: 'loading', content: 'Create Vault' })
-
-      const { status, msg, hash } = await createFund(
+    if (account) {
+      await onCreateVault(
         {
           ...step1Data,
           derivatives: address.map((item) => item.value),
@@ -86,17 +74,14 @@ const CreateFund: FC = () => {
           stakeAmount,
           baseTokenAddress
         },
-        signer
+        account,
+        () => {
+          setSuccDialogStatus(true)
+          Cache.rm('CreateFundStep1Temp')
+          Cache.rm('CreateFundStep2Temp')
+          Cache.rm('CreateFundStep3Temp')
+        }
       )
-      if (status) {
-        updateNotifyItem(notifyId, { type: 'success', hash })
-        setSuccDialogStatus(true)
-        Cache.rm('CreateFundStep1Temp')
-        Cache.rm('CreateFundStep2Temp')
-        Cache.rm('CreateFundStep3Temp')
-      } else {
-        updateNotifyItem(notifyId, { type: 'error', title: 'Create Vault', content: msg, hash })
-      }
     }
   }
 

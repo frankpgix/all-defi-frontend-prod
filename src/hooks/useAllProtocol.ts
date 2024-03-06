@@ -1,28 +1,14 @@
-import { useReadContract } from 'wagmi'
-import { tokens, ZERO_ADDRESS } from '@/config/tokens'
+import { useReadContract, useWriteContract } from 'wagmi'
+import { tokens, ZERO_ADDRESS, getTokenByAddress } from '@/config/tokens'
 import { useAllProtocolContract } from '@/hooks/useContract'
 import { useAssetPrice } from '@/hooks/useVaultFactory'
 import { AddressType } from '@/types/base'
-import { safeInterceptionValues } from '@/utils/tools'
-import { calcVaultStakedALL } from '@/compute/vault'
+import { safeInterceptionValues, getUnitAmount } from '@/utils/tools'
+import { calcVaultStakedALL, calcVaultDerivativesInfo } from '@/compute/vault'
 import { VaultStakeDataDefault } from '@/data/vault'
-// allTokenPrice = async (baseToken: string) => {
-//   // console.log(baseToken)
-//   // const contract = getAllProtocolContract()
-//   const { getAssetPrice } = FundFactory
-//   try {
-//     if (baseToken === '0x0000000000000000000000000000000000000000') {
-//       baseToken = tokens.WETH.tokenAddress
-//     }
-//     // console.log(baseToken)
-//     const res = await getAssetPrice(tokens.ALLTOKEN.tokenAddress, baseToken)
-//     // console.log(safeInterceptionValues(res, 6, 18))
-//     return res
-//   } catch (error) {
-//     console.info(error)
-//     return 1
-//   }
-// }
+import { CreateVaultDataType } from '@/types/createVault'
+import { useNotify } from '@/hooks/useNotify'
+
 const AllProtocolContract = useAllProtocolContract()
 
 export const useAllTokenPrice = (baseToken: AddressType) => {
@@ -60,4 +46,103 @@ export const useVaultStakedALL = (vaultAddress: AddressType) => {
     }
   }
   return { data: VaultStakeDataDefault, isLoading, isSuccess, refetch }
+}
+
+export const useDerivativeList = () => {
+  const { isLoading, isSuccess, data, refetch } = useReadContract({
+    ...AllProtocolContract,
+    functionName: 'derivativeList',
+    args: []
+  }) as { data: AddressType[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
+  if (!isLoading && isSuccess) {
+    return { data: calcVaultDerivativesInfo(data), isLoading, isSuccess, refetch }
+  }
+  return { data: [], isLoading, isSuccess, refetch }
+}
+
+export const useCalcAUMLimit = (underlyingToken: AddressType) => {
+  const _amount = getUnitAmount(String(1), 18)
+
+  if (underlyingToken === ZERO_ADDRESS) {
+    underlyingToken = tokens.WETH.address
+  }
+
+  const { isLoading, isSuccess, data, refetch } = useReadContract({
+    ...AllProtocolContract,
+    functionName: 'calcAUMLimit',
+    args: [underlyingToken, _amount]
+  }) as { data: bigint; isSuccess: boolean; isLoading: boolean; refetch: () => void }
+  console.log(data, isLoading, isSuccess)
+  if (!isLoading && isSuccess) {
+    const { decimals } = getTokenByAddress(underlyingToken)
+
+    return {
+      data: Number(safeInterceptionValues(data, decimals, decimals)),
+      isLoading,
+      isSuccess,
+      refetch
+    }
+  }
+  return { data: 20, isLoading, isSuccess, refetch }
+}
+
+export const useCreateVault = () => {
+  const { writeContractAsync } = useWriteContract()
+  const { createNotify, updateNotifyItem } = useNotify()
+
+  const onCreateVault = async (
+    data: CreateVaultDataType,
+    account: AddressType,
+    callback: () => void
+  ) => {
+    const notifyId = await createNotify({ type: 'loading', content: 'Create Vault' })
+    const {
+      name,
+      symbol,
+      desc,
+      managerName,
+      derivatives,
+      stakeAmount: amount,
+      minAmount,
+      maxAmount
+    } = data
+    let baseTokenAddress = data.baseTokenAddress
+    if (baseTokenAddress === '0x0000000000000000000000000000000000000000') {
+      baseTokenAddress = tokens.WETH.address
+    }
+    const baseToken = getTokenByAddress(baseTokenAddress)
+    const stakeAmount = getUnitAmount(String(amount), 18)
+    const allocationLimits = [
+      getUnitAmount(String(minAmount), baseToken.decimals),
+      getUnitAmount(String(maxAmount), baseToken.decimals)
+    ]
+    await writeContractAsync({
+      ...AllProtocolContract,
+      functionName: 'createVault',
+      args: [
+        name,
+        symbol,
+        desc,
+        managerName,
+        derivatives,
+        allocationLimits,
+        stakeAmount,
+        baseTokenAddress
+      ],
+      account
+    })
+      .then((hash: string) => {
+        // console.log(hash)
+        updateNotifyItem(notifyId, { title: 'Create Vault', type: 'success', hash })
+        callback()
+      })
+      .catch((error: any) => {
+        updateNotifyItem(notifyId, {
+          title: 'Create Vault',
+          type: 'error',
+          content: error.shortMessage
+        })
+      })
+  }
+  return { onCreateVault }
 }

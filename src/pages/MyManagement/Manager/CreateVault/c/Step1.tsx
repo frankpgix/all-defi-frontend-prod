@@ -1,21 +1,14 @@
-import React, { FC, useMemo, useState, useEffect } from 'react'
+import { FC, useMemo, useState, useEffect } from 'react'
 
 import BlueLineSection from '@@/web/BlueLineSection'
 import { Input } from '@@/common/Form'
 import Button from '@@/common/Button'
 import Cache from '@/utils/cache'
 
-export interface Step1DataProps {
-  name: string
-  symbol: string
-  managerName: string
-  desc: string
-}
-
-export const Step1DataDefault = { name: '', symbol: '', managerName: '', desc: '' }
+import { CreateVaultStep1DataTypes } from '@/types/createVault'
 
 interface Props {
-  onConfirm: (data: Step1DataProps) => void
+  onConfirm: (data: CreateVaultStep1DataTypes) => void
   show: boolean
 }
 

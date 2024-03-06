@@ -1,11 +1,13 @@
-import React, { FC, useMemo, useState, useEffect } from 'react'
+import { FC, useMemo, useState, useEffect } from 'react'
 import BN from 'bignumber.js'
 import { isNaN } from 'lodash'
 
-import { useTokensData } from '@/store/tokens/hooks'
+// import { useTokensData } from '@/store/tokens/hooks'
+import { useUserBalances } from '@/hooks/useProfile'
 import { getTokenByAddress } from '@/config/tokens'
 import { calcDecimalsFloor } from '@/utils/tools'
 import Cache from '@/utils/cache'
+import { AddressType } from '@/types/base'
 
 import BlueLineSection from '@@/web/BlueLineSection'
 import { Input, Slider } from '@@/common/Form'
@@ -18,16 +20,16 @@ interface Props {
   onBack: () => void
   show: boolean
   multiple: number
-  baseTokenAddress: string
+  baseTokenAddress: AddressType
 }
 
 const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress }) => {
-  const { balance } = useTokensData()
+  const { balances } = useUserBalances()
 
   const [amount, setAmount] = useState<string | number>('')
   const [sliderValue, setSliderValue] = useState(0)
 
-  const maxValue = Number(balance.ALL)
+  const maxValue = Number(balances.ALLTOKEN)
   const maxAUM = useMemo(
     () => BN(Number(amount)).multipliedBy(multiple).toNumber(),
     [amount, multiple]
@@ -96,7 +98,7 @@ const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress 
             {isErrorValue ? (
               <p className="fall">Minimum staking amount 1 ALL</p>
             ) : (
-              <p>ALL Token Balance: {balance.ALL}</p>
+              <p>ALL Token Balance: {balances.ALLTOKEN}</p>
             )}
           </Input>
           <div className="web-manage-create-step-stake-equal"></div>

@@ -150,3 +150,8 @@ export interface VaultUpdatingDataProps {
     allocationLimits: string[]
   }
 }
+
+export interface VaultDerivativesProps {
+  name: string
+  value: AddressType
+}

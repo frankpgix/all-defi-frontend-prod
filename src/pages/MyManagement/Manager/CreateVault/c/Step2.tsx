@@ -1,9 +1,11 @@
-import React, { FC, useMemo, useState, useEffect } from 'react'
+import { FC, useMemo, useState, useEffect } from 'react'
 import { without } from 'lodash'
 import classNames from 'classnames'
 
 import { baseTokenOptions, getTokenByAddress } from '@/config/tokens'
-import { ProductProps } from '@/config/products'
+import { VaultDerivativesProps } from '@/types/vault'
+import { AddressType } from '@/types/base'
+import { CreateVaultStep2DataTypes } from '@/types/createVault'
 import { Input, Select } from '@@/common/Form'
 import Cache from '@/utils/cache'
 
@@ -12,18 +14,11 @@ import { TokenIcon } from '@@/common/TokenUnit'
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'
 
-export interface Step2ConfirmProps {
-  addresss: ProductProps[]
-  minAmount: number
-  maxAmount: number
-  baseTokenAddress: string
-}
-
 interface Props {
-  onConfirm: (data: Step2ConfirmProps) => void
+  onConfirm: (data: CreateVaultStep2DataTypes) => void
   onBack: () => void
   show: boolean
-  derivativeList: ProductProps[]
+  derivativeList: VaultDerivativesProps[]
 }
 
 const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
@@ -80,7 +75,8 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
     () => (baseToken.name === 'WETH' ? 'ETH' : baseToken.name),
     [baseToken.name]
   )
-  const onBaseTokenChange = (address: number | string) => setBaseTokenAddress(String(address))
+  const onBaseTokenChange = (address: number | string) =>
+    setBaseTokenAddress(String(address) as AddressType)
 
   useEffect(() => {
     if (selectIndex.length || minAmount || maxAmount) {
@@ -144,7 +140,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
         </div>
         <h3>select protocol allowed</h3>
         <ul className="web-manage-create-step-product-list">
-          {derivativeList.map((item: ProductProps, index: number) => (
+          {derivativeList.map((item, index: number) => (
             <li
               key={index}
               onClick={() => onSelect(index)}

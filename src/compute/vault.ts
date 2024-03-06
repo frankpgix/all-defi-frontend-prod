@@ -43,10 +43,7 @@ export const calcVaultBaseInfo = (item: any, fundAddress?: AddressType): VaultBa
     managerFeePercent: 0.2,
     platFeePercent: 0.1,
     derivatives: item.supportedDerivatives,
-    derivativesInfo: (item.supportedDerivatives ?? []).map((value: AddressType) => ({
-      name: hexToString(value, { size: 32 }),
-      value
-    })),
+    derivativesInfo: calcVaultDerivativesInfo(item.supportedDerivatives ?? []),
     subscriptionMinLimit: Number(
       safeInterceptionValues(item.allocationLimits[0], precision, decimals)
     ),
@@ -220,4 +217,11 @@ export const calcVaultUpdatingData = (data: [AddressType, BigInt], underlyingTok
       )
     }
   }
+}
+
+export const calcVaultDerivativesInfo = (data: AddressType[]) => {
+  return data.map((value: AddressType) => ({
+    name: hexToString(value, { size: 32 }),
+    value
+  }))
 }
