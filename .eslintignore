@@ -12,3 +12,4 @@ Dockerfile
 /public
 /docs
 /bin
+/src/pages/MyManagement/Manager/Dapp

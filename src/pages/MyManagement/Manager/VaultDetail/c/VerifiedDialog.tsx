@@ -1,37 +1,40 @@
 import { FC, useState, useEffect } from 'react'
 import { useRequest } from 'ahooks'
 
-import { useManageFundVerifyList } from '@/hooks/useFund'
+import { useManageVaultVerifyList } from '@/hooks/useVaultList'
+
+import { getVaultReviewed } from '@/api/vaultList'
 import { useProfile } from '@/hooks/useProfile'
-import FundFactory, { FundVerifiedItemTypes } from '@/class/FundFactory'
+// import FundFactory, { VaultVerifiedItemTypes } from '@/class/FundFactory'
 import InfoDialog from '@@/common/Dialog/Info'
 import ALink from '@@/common/ALink'
 
 import { CONTACT_US_URL } from '@/config'
+import { AddressType } from '@/types/base'
+import { VaultVerifiedItemTypes } from '@/types/vault'
 
 interface Props {
-  fundAddress: string
+  vaultAddress: AddressType
   name: string
 }
 
-const FundDialog: FC<Props> = ({ fundAddress, name }) => {
+const FundDialog: FC<Props> = ({ vaultAddress, name }) => {
   const { account } = useProfile()
-  const { updateVerifyList, setUpdateVerifyList } = useManageFundVerifyList()
+  const { updateVerifyList, setUpdateVerifyList } = useManageVaultVerifyList()
   const [dialogStatus, setDialogStatus] = useState<boolean[]>([])
-  const [dialogData, setDialogData] = useState<FundVerifiedItemTypes[]>([])
-  const { FundVerified } = FundFactory
+  const [dialogData, setDialogData] = useState<VaultVerifiedItemTypes[]>([])
 
-  const { loading, data } = useRequest(async () => FundVerified(account, 1, name), {
-    refreshDeps: [fundAddress]
+  const { loading, data } = useRequest(async () => getVaultReviewed(account ?? '0x', 1, name), {
+    refreshDeps: [vaultAddress]
   })
 
   useEffect(() => {
-    if (loading || !fundAddress || !data) return
+    if (loading || !vaultAddress || !data) return
     const status: boolean[] = []
-    const items: FundVerifiedItemTypes[] = []
+    const items: VaultVerifiedItemTypes[] = []
     data.forEach((item) => {
       if (
-        fundAddress.toLocaleLowerCase() === item.address.toLocaleLowerCase() &&
+        vaultAddress.toLocaleLowerCase() === item.address.toLocaleLowerCase() &&
         !updateVerifyList.includes(item.hash)
       ) {
         status.push(status.length === 0 ? true : false)
@@ -42,7 +45,7 @@ const FundDialog: FC<Props> = ({ fundAddress, name }) => {
     // console.log('data', data, status)
     setDialogStatus(status)
     setDialogData(items)
-  }, [data, loading, fundAddress])
+  }, [data, loading, vaultAddress])
   // console.log('dialogData', dialogData)
   const onDialogClose = (index: number) => {
     const status = [...dialogStatus]
