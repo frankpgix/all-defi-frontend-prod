@@ -76,13 +76,15 @@ export const getAllUnix = (startTime: number) => {
   }
 
   if (diffTime <= 60 * 60 * 24 * 30 * 12 * 2) {
-    return [...new Array(30)].map((_, index: number) => currHourUnix - index * 60 * 60 * 24 * 12 * 2)
+    return [...new Array(30)].map(
+      (_, index: number) => currHourUnix - index * 60 * 60 * 24 * 12 * 2
+    )
   }
 
   return null
 }
 
-export const getTypeUnix = (type: string, startTime?: number) => {
+export const getTypeUnix = (type: string) => {
   if (type === 'DAY') return JSON.stringify(get24HourUnix())
   if (type === 'WEEK') return JSON.stringify(getWeekUnix())
   if (type === 'MONTH') return JSON.stringify(getMonthUnix())

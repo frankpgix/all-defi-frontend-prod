@@ -3,8 +3,9 @@ import Table from 'rc-table'
 import { useNavigate } from 'react-router-dom'
 import ContentLoader from 'react-content-loader'
 
-import { FundDetailProps } from '@/class/help'
+// import { VaultDetailProps } from '@/class/help'
 import { useVaultListData } from '@/graphql/useData'
+import { VaultDetailProps } from '@/types/vault'
 // import { formatNumber } from '@/utils/tools'
 
 // import { useAppDispatch } from '@/store'
@@ -98,7 +99,7 @@ const FundList: FC = () => {
     }
   ]
 
-  const onRow = (record: FundDetailProps) => ({
+  const onRow = (record: VaultDetailProps) => ({
     onClick: () => navigate(`/vaults/detail/${record.address}`)
   })
 

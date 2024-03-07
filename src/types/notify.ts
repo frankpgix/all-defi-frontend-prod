@@ -1,5 +1,3 @@
-import { StringDecoder } from 'string_decoder'
-
 export interface NotifyItemType {
   id?: string
   type: 'loading' | 'success' | 'warning' | 'error'

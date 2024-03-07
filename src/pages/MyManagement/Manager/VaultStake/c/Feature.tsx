@@ -1,19 +1,11 @@
 import { FC } from 'react'
 // import Button from '@@/common/Button'
 
-import { DirectionProps } from './types'
+import { DirectionProps } from '@/types/vault'
 
 const Feature: FC<DirectionProps> = ({ direction }) => {
-  console.log(direction)
   return (
     <div className="web-manage-fund-stake-feature">
-      {/*<header>
-        <h3></h3>
-
-        <Button text to="/">
-          Read more
-        </Button>
-      </header>*/}
       <ul>
         <li>
           Each vault's Max AUM Limit is depending on the amount of ALL staked in the reserved pool.

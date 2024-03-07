@@ -11,8 +11,11 @@ interface HttpResponse extends Response {
 // get request parameters
 const combineUrl = (url: string, params: Record<string, unknown> | undefined) => {
   if (params) {
-    const paramsArr = Object.keys(params).map((key) => `${key}=${encodeURIComponent(params[key] as string)}`)
-    if (url.search(/\?/) === -1) return typeof params === 'object' ? `${url}?${paramsArr.join('&')}` : url
+    const paramsArr = Object.keys(params).map(
+      (key) => `${key}=${encodeURIComponent(params[key] as string)}`
+    )
+    if (url.search(/\?/) === -1)
+      return typeof params === 'object' ? `${url}?${paramsArr.join('&')}` : url
     return `${url}&${paramsArr.join('&')}`
   }
   return url
@@ -20,21 +23,21 @@ const combineUrl = (url: string, params: Record<string, unknown> | undefined) =>
 
 // the request timed out - promise
 // const controller = new AbortController()
-const timedOutPromise = (delay: number): Promise<Response> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const response = new Response(
-        JSON.stringify({
-          code: 500,
-          msg: 'timed-out',
-          data: null
-        })
-      )
-      resolve(response)
-      // controller.abort()
-    }, delay)
-  })
-}
+// const timedOutPromise = (delay: number): Promise<Response> => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       const response = new Response(
+//         JSON.stringify({
+//           code: 500,
+//           msg: 'timed-out',
+//           data: null
+//         })
+//       )
+//       resolve(response)
+//       // controller.abort()
+//     }, delay)
+//   })
+// }
 
 // whether it is an external link
 export const externalLink = (url: string): string => {
@@ -56,12 +59,20 @@ export async function http(request: Request): Promise<HttpResponse> {
     })
 }
 
-export async function get(path: string, params?: Record<string, unknown>, args?: RequestInit): Promise<HttpResponse> {
+export async function get(
+  path: string,
+  params?: Record<string, unknown>,
+  args?: RequestInit
+): Promise<HttpResponse> {
   const _path = combineUrl(externalLink(path), params)
   return await http(new Request(_path, { ...args, method: 'get' }))
 }
 
-export async function post(path: string, body?: Record<string, unknown>, args?: RequestInit): Promise<HttpResponse> {
+export async function post(
+  path: string,
+  body?: Record<string, unknown>,
+  args?: RequestInit
+): Promise<HttpResponse> {
   const headers = new Headers()
   const _body = isEmpty(body) ? '' : JSON.stringify(body)
   headers.append('Content-Type', 'application/json;charset=UTF-8')
@@ -76,7 +87,11 @@ export async function post(path: string, body?: Record<string, unknown>, args?: 
   )
 }
 
-export async function formDataPost(path: string, body: Record<string, any>, args?: RequestInit): Promise<HttpResponse> {
+export async function formDataPost(
+  path: string,
+  body: Record<string, any>,
+  args?: RequestInit
+): Promise<HttpResponse> {
   const formData = new FormData()
   Object.keys(body).forEach((key) => {
     formData.append(key, body[key])

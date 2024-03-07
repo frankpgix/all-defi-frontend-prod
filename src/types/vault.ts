@@ -157,3 +157,7 @@ export interface VaultDerivativesProps {
 }
 
 export type VaultStakeType = 'increase' | 'reduce'
+
+export interface DirectionProps {
+  direction: VaultStakeType
+}

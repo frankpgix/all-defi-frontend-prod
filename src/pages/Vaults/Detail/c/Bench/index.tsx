@@ -19,7 +19,7 @@ interface Props {
   loading: boolean
 }
 
-const Bench: FC<Props> = ({ userData, data, getData, share, loading }) => {
+const Bench: FC<Props> = ({ userData, data, getData, share }) => {
   return (
     <>
       <section className="web-fund-detail-bench-layout">

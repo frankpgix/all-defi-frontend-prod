@@ -2,7 +2,6 @@ import { FC, useState } from 'react'
 import { Input } from '@@/common/Form'
 import Button from '@@/common/Button'
 import FundIcon from '@@/common/FundIcon'
-import Wait from '@@/common/Status/Wait'
 import ComingSoon from '@@/common/Dialog/ComingSoon'
 import { useNotify } from '@/hooks/useNotify'
 import Toasts from './Toasts'
@@ -70,7 +69,7 @@ const Test: FC = () => {
       </Button>
       <Button onClick={upLoadingNotify}>创建一个更新的Loding的消息</Button>
       <Toasts />
-      {/* <Input type="number" value={name} onChange={(val) => setName(val)} right></Input>
+      <Input type="number" value={name} onChange={(val) => setName(val)} right></Input>
       <Button disabled>222</Button>
       <Button onClick={() => setShow(!show)}>Open Wait Modal</Button>
       <Button text>222</Button>
@@ -110,7 +109,7 @@ const Test: FC = () => {
       <FundIcon name="6" />
       <FundIcon name="7" />
       <FundIcon name="8" />
-      <FundIcon name="9" /> */}
+      <FundIcon name="9" />
     </div>
   )
 }
