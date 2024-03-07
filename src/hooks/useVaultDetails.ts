@@ -1,4 +1,6 @@
 import { useReadContracts } from 'wagmi'
+
+import { useProfile } from '@/hooks/useProfile'
 import {
   useVaultContract,
   useVaultReaderContract,
@@ -8,13 +10,17 @@ import {
   calcVaultBaseInfo,
   calcVaultDetail,
   calcVaultBreachDetail,
-  calcVaultStakedALL
+  calcVaultStakedALL,
+  calcVaultUserDetail,
+  calcShareComposition
 } from '@/compute/vault'
 import {
   VaultBaseInfoDefault,
   VaultDetailDefault,
   VaultBreachDetailDataDefault,
-  VaultStakeDataDefault
+  VaultStakeDataDefault,
+  VaultUserDetailDefault,
+  ShareCompositionDefault
 } from '@/data/vault'
 import { AddressType } from '@/types/base'
 
@@ -90,6 +96,71 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
     isSuccess,
     refetch
   }
+}
 
-  console.log(data, isLoading, isSuccess)
+export const useVaultDetails = (vaultAddress: AddressType) => {
+  const { account } = useProfile()
+  const VaultContract = useVaultContract(vaultAddress)
+  const VaultReaderContract = useVaultReaderContract()
+  const { data, isLoading, isSuccess, refetch } = useReadContracts({
+    contracts: [
+      {
+        ...VaultContract,
+        functionName: 'baseInfo'
+      },
+      {
+        ...VaultReaderContract,
+        functionName: 'vaultDetail',
+        args: [vaultAddress]
+      },
+      {
+        ...VaultReaderContract,
+        functionName: 'userDetail',
+        args: [vaultAddress, account ?? '0x']
+      },
+      {
+        ...VaultReaderContract,
+        functionName: 'shareCompositionOf',
+        args: [vaultAddress, account ?? '0x']
+      }
+    ]
+  }) as {
+    data: [
+      { result: any; status: string },
+      { result: any; status: string },
+      { result: any; status: string },
+      { result: any; status: string }
+    ]
+    isLoading: boolean
+    isSuccess: boolean
+    refetch: () => {}
+  }
+  if (!isLoading && isSuccess) {
+    const baseInfo =
+      data[0].status === 'success' ? calcVaultBaseInfo(data[0].result) : VaultBaseInfoDefault
+    const vaultDetail =
+      data[1].status === 'success' ? calcVaultDetail(data[1].result) : VaultDetailDefault
+    const vaultUserDetail =
+      data[2].status === 'success' ? calcVaultUserDetail(data[2].result) : VaultUserDetailDefault
+    const vaultShareComposition =
+      data[3].status === 'success' ? calcShareComposition(data[3].result) : ShareCompositionDefault
+
+    return {
+      data: { baseInfo, vaultDetail, vaultUserDetail, vaultShareComposition },
+      isLoading,
+      isSuccess,
+      refetch
+    }
+  }
+  return {
+    data: {
+      baseInfo: VaultBaseInfoDefault,
+      vaultDetail: VaultDetailDefault,
+      vaultUserDetail: VaultUserDetailDefault,
+      vaultShareComposition: ShareCompositionDefault
+    },
+    isLoading,
+    isSuccess,
+    refetch
+  }
 }

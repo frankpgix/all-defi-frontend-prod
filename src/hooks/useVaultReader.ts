@@ -45,32 +45,27 @@ export const useVaultDetail = (vaultAddress: AddressType) => {
 }
 
 export const useUserVaultDetail = (vaultAddress: AddressType) => {
-  const { account: address } = useProfile()
-  // if (!address) {
-  //   return { data: VaultUserDetailDefault, isLoading: false, isSuccess: false, refetch: () => {} }
-  // }
+  const { account } = useProfile()
   const { data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
     functionName: 'userDetail',
-    args: [vaultAddress, address ?? '0x']
+    args: [vaultAddress, account ?? '0x']
   })
-  if (!isLoading && isSuccess && address) {
+  if (!isLoading && isSuccess && account) {
     return { data: calcVaultUserDetail(data), isLoading, isSuccess, refetch }
   }
   return { data: VaultUserDetailDefault, isLoading, isSuccess, refetch }
 }
 
 export const useShareCompositionOf = (vaultAddress: AddressType) => {
-  const { account: address } = useProfile()
-  if (!address) {
-    return { data: ShareCompositionDefault, isLoading: false, isSuccess: false, refetch: () => {} }
-  }
+  const { account } = useProfile()
+
   const { data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
     functionName: 'shareCompositionOf',
-    args: [vaultAddress, address ?? '0x']
+    args: [vaultAddress, account ?? '0x']
   })
-  if (!isLoading && isSuccess && address) {
+  if (!isLoading && isSuccess && account) {
     // console.log(1111, data)
     return { data: calcShareComposition(data), isLoading, isSuccess, refetch }
   }
