@@ -3,9 +3,10 @@ import Table from 'rc-table'
 import dayjs from 'dayjs'
 
 import { useUserVaultHistoryData } from '@/graphql/useFundData'
-import { UserFundHistoryDataProps } from '@/graphql/help'
 import { formatNumber } from '@/utils/tools'
 import { useProfile } from '@/hooks/useProfile'
+
+import { UserVaultHistoryDataProps } from '@/types/graphql'
 
 import HashLink from '@@/common/HashLink'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
@@ -14,7 +15,7 @@ import TokenValue from '@@/common/TokenValue'
 interface AmountShowProps {
   value: number
   action: string
-  row: UserFundHistoryDataProps
+  row: UserVaultHistoryDataProps
 }
 const AmountShow: FC<AmountShowProps> = ({ value, action, row }) => {
   // console.log(row.token, 222)
@@ -35,7 +36,7 @@ const History: FC = () => {
     {
       title: 'Amount',
       dataIndex: 'amount',
-      render: (value: number, row: UserFundHistoryDataProps) => (
+      render: (value: number, row: UserVaultHistoryDataProps) => (
         <AmountShow value={value} action={row.action} row={row} />
       )
     },

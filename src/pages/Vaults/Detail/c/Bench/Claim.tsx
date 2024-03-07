@@ -10,6 +10,7 @@ import InfoDialog from '@@/common/Dialog/Info'
 
 import { useClaim } from '@/hooks/useVault'
 import { VaultUserDetailProps } from '@/types/vault'
+import { TokenKeys } from '@/types/base'
 
 interface Props {
   userData: VaultUserDetailProps
@@ -25,7 +26,7 @@ const Claim: FC<Props> = ({ userData, getData }) => {
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const baseToken = useMemo(() => userData.underlyingToken, [userData.underlyingToken])
   const acToken = useMemo(
-    () => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}`]),
+    () => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}` as TokenKeys]),
     [baseToken]
   )
 

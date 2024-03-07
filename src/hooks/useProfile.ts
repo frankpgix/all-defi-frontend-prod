@@ -66,22 +66,12 @@ export const useETHBalance = () => {
 export const useUserBalances = () => {
   const { account } = useProfile()
 
-  // const balances: Record<string, number> = {}
-  const balances: { [key in TokenKeys]: number } = {
-    USDC: 0,
-    acUSDC: 0,
-    WETH: 0,
-    ETH: 0,
-    WBTC: 0,
-    acETH: 0,
-    ALLTOKEN: 0,
-    sALLTOKEN: 0
-  }
-  // | 'USDC' | 'acUSDC' | 'WETH' | 'ETH' | 'WBTC' | 'acETH' | 'ALLTOKEN' | 'sALLTOKEN'
+  const balances: Record<string, number> = {}
   const ethBalances = useETHBalance()
 
   const tokenList = Object.keys(tokens)
     .map((token) => {
+      balances[tokens[token as TokenKeys].name] = 0
       return tokens[token as TokenKeys]
     })
     .filter((token) => token.address !== ZERO_ADDRESS)
@@ -102,7 +92,7 @@ export const useUserBalances = () => {
         data?.[index] && data[index].status === 'success'
           ? Number(safeInterceptionValues(data[index].result, token.precision, token.decimals))
           : 0
-      balances[token.name as TokenKeys] = balance
+      balances[token.name] = balance
     })
     balances.ETH = ethBalances
     return { balances, refetch }
