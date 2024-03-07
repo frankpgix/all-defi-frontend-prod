@@ -12,7 +12,6 @@ import ContentLoader from 'react-content-loader'
 // import { FundBaseProps, FundDetailProps } from '@/class/Fund'
 // import { FundStakeProps } from '@/class/FundManager'
 import { formatNumber } from '@/utils/tools'
-// import { useFundDetail } from '@/graphql/useFundData'
 // import { getTokenByAddress } from '@/config/tokens'
 
 // import { FundBaseProps, FundDetailProps, FundStakeProps, FundBreachDetailProps } from '@/class/help'
@@ -74,8 +73,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
     base.underlyingToken
   )
   // console.log(upData, data)
-  // const { data: currFund } = useFundDetail(vaultAddress)
-  // console.log('currFund', currFund)
+
   const percent = useMemo(
     () =>
       Number(

@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Table from 'rc-table'
 import dayjs from 'dayjs'
 
-import { useUserFundHistoryData } from '@/graphql/useFundData'
+import { useUserVaultHistoryData } from '@/graphql/useFundData'
 import { UserFundHistoryDataProps } from '@/graphql/help'
 import { formatNumber } from '@/utils/tools'
 import { useProfile } from '@/hooks/useProfile'
@@ -24,8 +24,8 @@ const AmountShow: FC<AmountShowProps> = ({ value, action, row }) => {
 
 const History: FC = () => {
   const { account: userAddress } = useProfile()
-  const { loading, data } = useUserFundHistoryData(userAddress ?? '')
-  console.log(data)
+  const { loading, data } = useUserVaultHistoryData(userAddress ?? '')
+  // console.log(data)
   // useEffect(() => void refetch(), [refetch])
   const webColumns = [
     {

@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Table from 'rc-table'
 import dayjs from 'dayjs'
 
-import { useFundActionAssetData } from '@/graphql/useFundData'
+import { useVaultActionAssetData } from '@/graphql/useFundData'
 // import { FundActionAssetProps } from '@/graphql/types'
 // import { formatNumber } from '@/utils/tools'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
@@ -63,7 +63,7 @@ const Record: FC<Props> = ({ vaultAddress }) => {
   ]
 
   // const list = [{ id: 1, category: 'Uniswap', out: 100000, in: 1000000, time: 123456 }]
-  const { loading, data } = useFundActionAssetData(vaultAddress)
+  const { loading, data } = useVaultActionAssetData(vaultAddress)
   // console.log(JSON.stringify(data, null, '  '))
   return (
     <Table

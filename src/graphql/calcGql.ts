@@ -1,36 +1,9 @@
-// import dayjs from 'dayjs'
 import { gql } from '@apollo/client'
-
-import { typeStartTime, get10MinutelyUnix } from './tools'
 import { createArrayByNumber } from '@/utils/tools'
-
 import { AddressType } from '@/types/base'
-
 import { calcDataTypeAndStartTime } from './help'
 
-const calcTableAndStartTime = (type: string, startTime: number, monthHouer?: boolean) => {
-  // const diffType = timeDiffType(startTime)
-  const o = {
-    tableName: 'fundHourlyDatas',
-    startTime: String(startTime)
-  }
-  if (type === 'DAY') {
-    o.startTime = String(typeStartTime(type))
-    o.tableName = 'fund10MinutelyDatas'
-  } else if (type === 'WEEK') {
-    o.tableName = 'fundHourlyDatas'
-    o.startTime = String(typeStartTime(type))
-  } else if (type === 'MONTH' || type === 'YEAR') {
-    o.tableName = 'fundDailyDatas'
-    o.startTime = String(typeStartTime(type))
-  }
-  if (monthHouer && type === 'MONTH') {
-    o.tableName = 'fundHourlyDatas'
-  }
-  return o
-}
-
-export const calcVaultDatasGql = (fundAddress: string, type: string, createTime: number) => {
+export const calcVaultDatasGql = (vaultAddress: string, type: string, createTime: number) => {
   const { startTime, dataType } = calcDataTypeAndStartTime(type, createTime)
   return gql`
     query {
@@ -39,7 +12,7 @@ export const calcVaultDatasGql = (fundAddress: string, type: string, createTime:
         orderDirection: desc
         first: 1000
         where: {
-          vaultId: "${fundAddress.toLowerCase()}"
+          vaultId: "${vaultAddress.toLowerCase()}"
           intervalType: "${dataType}"
           periodStartUnix_gt: ${startTime}
         }
@@ -53,7 +26,7 @@ export const calcVaultDatasGql = (fundAddress: string, type: string, createTime:
   `
 }
 
-export const calcMiningData = (fundAddress: string, type: string, createTime: number) => {
+export const calcMiningData = (vaultAddress: string, type: string, createTime: number) => {
   const { dataType, startTime } = calcDataTypeAndStartTime(type, createTime)
   return gql`
     query {
@@ -62,7 +35,7 @@ export const calcMiningData = (fundAddress: string, type: string, createTime: nu
         orderDirection: desc
         first: 1000
         where: {
-          vaultId_in: ${fundAddress.toLowerCase()}
+          vaultId_in: ${vaultAddress.toLowerCase()}
           intervalType: "${dataType}"
           periodStartUnix_gt: ${startTime}
         }
@@ -79,30 +52,7 @@ export const calcMiningData = (fundAddress: string, type: string, createTime: nu
   `
 }
 
-export const calcMiningTotalDataGQL = () => {
-  // console.log(get10MinutelyUnix())
-  return gql`
-    query {
-      fund10MinutelyDatas(
-        orderBy: periodStartUnix
-        orderDirection: asc
-        where: {
-          periodStartUnix_gte: ${get10MinutelyUnix()}
-        }
-      ) {
-        fundId
-        name
-        periodStartUnix
-        sharePrice
-        baseTokenPriceInUSD
-        miningAmount
-      }
-    }
-  `
-}
-// miningAmount_not: 0
-
-export const calcVaultDetailChartGQL = (fundAddress: string, epoch: number, timeType: string) => {
+export const calcVaultDetailChartGQL = (vaultAddress: string, epoch: number, timeType: string) => {
   let dataType = '1h'
   const calcEpochs = (): number[] => {
     if (timeType === 'current epoch') return [epoch]
@@ -122,7 +72,7 @@ export const calcVaultDetailChartGQL = (fundAddress: string, epoch: number, time
         orderDirection: desc
         first: 1000
         where: {
-          vaultId: "${fundAddress.toLowerCase()}"
+          vaultId: "${vaultAddress.toLowerCase()}"
           intervalType: "${dataType}"
           epochIndex_in: ${JSON.stringify(epochs)}
         }
@@ -131,48 +81,6 @@ export const calcVaultDetailChartGQL = (fundAddress: string, epoch: number, time
         periodStartUnix
         aum
         sharePrice
-      }
-    }
-  `
-}
-
-export const calcManageFundsData = (fundAddress: string) => gql`
-  query{
-    funds(
-      where:{
-        manager: "${fundAddress.toLowerCase()}"
-      }
-    ) {
-      id
-      manager
-      createTime
-    }
-  }
-`
-
-export const calcManageFundDetailData = (
-  fundAddress: string,
-  type: string,
-  createTime: number | string
-) => {
-  const { tableName, startTime } = calcTableAndStartTime(type, Number(createTime))
-  return gql`
-    query {
-      ${tableName}(
-        orderBy: periodStartUnix
-        orderDirection: desc
-        first: 1000
-        where: {
-          fundId_in: ${fundAddress.toLowerCase()}
-          periodStartUnix_gt: ${startTime}
-        }
-      ) {
-        fundId
-        periodStartUnix
-        aum
-        nav
-        baseToken
-        baseTokenPriceInUSD
       }
     }
   `
@@ -200,14 +108,14 @@ export const calcVaultListGQL = () => gql`
   }
 `
 
-export const calcVaultMonthDataGql = (fundAddress: string) => {
+export const calcVaultMonthDataGql = (vaultAddress: string) => {
   return gql`
     query {
       vaultNaturalMonthDatas(
         orderBy: periodStartUnix
         orderDirection: desc
         where: {
-          vaultId: "${fundAddress}"
+          vaultId: "${vaultAddress}"
         }
       ) {
         vaultId
@@ -221,7 +129,6 @@ export const calcVaultMonthDataGql = (fundAddress: string) => {
 }
 
 export const calcManageVaultDatasGql = (manager: AddressType, type: string, createTime: number) => {
-  // const { tableName, startTime } = calcTableAndStartTime(type, createTime, true)
   const { startTime } = calcDataTypeAndStartTime(type, createTime)
   const calcDataType = () => {
     if (type === 'DAY') {

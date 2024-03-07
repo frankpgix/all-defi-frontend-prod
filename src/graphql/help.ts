@@ -2,39 +2,13 @@ import dayjs from 'dayjs'
 
 import { safeInterceptionValues } from '@/utils/tools'
 import { getTokenByAddress } from '@/config/tokens'
-import { AddressType } from '@/types/base'
 
-interface FundsProps {
-  id: string
-  name: string
-}
-
-export interface RecordProps {
-  id: string
-  investor: string
-  vaultId: string
-  amount: string
-  underlyingToken: AddressType
-  actionType: number
-  timestamp: number
-}
-
-interface UserFundHistorySourceDataProps {
-  vaults: FundsProps[]
-  vaultUserActions: RecordProps[]
-}
-
-export interface UserFundHistoryDataProps {
-  name: string
-  amount: number
-  action: string
-  investor: string
-  baseToken: string
-  tokenName: string
-  hash: string
-  time: number
-  token: any
-}
+import {
+  VaultsSimpleTypes,
+  VaultUserActionsItemTypes,
+  UserVaultHistorySourceDataProps,
+  UserVaultHistoryDataProps
+} from '@/types/graphql'
 
 export enum ActionType {
   Allocate,
@@ -46,9 +20,9 @@ export enum ActionType {
 }
 
 export const calcActionData = (
-  item: RecordProps,
-  funds?: FundsProps[]
-): UserFundHistoryDataProps => {
+  item: VaultUserActionsItemTypes,
+  funds?: VaultsSimpleTypes[]
+): UserVaultHistoryDataProps => {
   const token = getTokenByAddress(item.underlyingToken)
   // console.log(22222, token, item, funds)
   const action = ActionType[item.actionType] ?? '-'
@@ -74,9 +48,9 @@ export const calcActionData = (
   }
 }
 
-export const calcUserFundHistoryData = (
-  data: UserFundHistorySourceDataProps
-): UserFundHistoryDataProps[] => {
+export const calcUserVaultHistoryData = (
+  data: UserVaultHistorySourceDataProps
+): UserVaultHistoryDataProps[] => {
   const { vaults = [], vaultUserActions = [] } = data ?? []
   return vaultUserActions.map((item) => calcActionData(item, vaults))
 }
