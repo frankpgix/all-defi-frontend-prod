@@ -4,7 +4,7 @@ interface Props {
   show: boolean
 }
 
-const ChartLoading: FC<Props> = ({ show }) => {
+const ChartLoading: FC<Props> = () => {
   const list = new Array(100).fill('')
   return (
     <div className="web-c-chart-loading-warp">

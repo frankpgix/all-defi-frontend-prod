@@ -11,7 +11,7 @@ import { VaultUserListDataProps } from '@/types/vault'
 import { useCancelAllocate, useCancelWithholding } from '@/hooks/useVault'
 import { useProfile } from '@/hooks/useProfile'
 
-import { SectionItem } from '@/pages/MyManagement/Manager/FundDetail/c/ManageDetail/C'
+import { SectionItem } from '@/pages/MyManagement/Manager/VaultDetail/c/ManageDetail/C'
 
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'

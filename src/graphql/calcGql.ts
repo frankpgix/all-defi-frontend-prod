@@ -1,7 +1,7 @@
 // import dayjs from 'dayjs'
 import { gql } from '@apollo/client'
 
-import { timeDiffType, typeStartTime, get10MinutelyUnix } from './tools'
+import { typeStartTime, get10MinutelyUnix } from './tools'
 import { createArrayByNumber } from '@/utils/tools'
 
 import { AddressType } from '@/types/base'

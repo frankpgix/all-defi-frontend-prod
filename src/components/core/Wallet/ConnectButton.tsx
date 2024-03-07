@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, useMemo, useCallback, ReactNode } from 'react'
-import { useAccount, useConnect, useChains, useSwitchChain } from 'wagmi'
+import { useAccount, useConnect } from 'wagmi'
 // import { type UseWriteContractParameters } from 'wagmi'
 import WalletDialog from '@/components/core/Wallet'
 import AccountDialog from '@/components/core/Wallet/Account'
@@ -19,12 +19,12 @@ function CustomComponent(props: any) {
 
 const Connect: FC<Props> = ({ simple, children, as = 'div' }) => {
   const { connector: activeConnector, isConnected, address } = useAccount()
-  const chains = useChains()
-  const { switchChain } = useSwitchChain()
+  // const chains = useChains()
+  // const { switchChain } = useSwitchChain()
   const { connectAsync, connectors, isPending } = useConnect()
   const { hasNotify, loadingNotifyCount, openNotifyList, closeNotifyList, notifyShow } = useNotify()
 
-  const [needSwitchNet, setNeedSwitchNet] = useState<boolean>(false)
+  // const [needSwitchNet, setNeedSwitchNet] = useState<boolean>(false)
   const [showWalletInf, setShowWalletInf] = useState<boolean>(false)
   const [dialogStatus, setDialogStatus] = useState<string>('')
 

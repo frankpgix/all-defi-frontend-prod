@@ -62,7 +62,7 @@ notify.update = (
   id: Id,
   type: TypeOptions,
   msg?: ReactNode,
-  icon = true,
+  icon = null,
   autoClose?: number | false
 ) => {
   const message = msg

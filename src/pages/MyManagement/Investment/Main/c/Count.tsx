@@ -13,7 +13,7 @@ import TokenValue from '@@/common/TokenValue'
 import { VaultUserListDataProps, baseTokenPriceInUSDTypes } from '@/types/vault'
 import { useBaseTokenPriceUSD } from '@/hooks/useVaultFactory'
 
-import { SectionItem } from '@/pages/MyManagement/Manager/FundDetail/c/ManageDetail/C'
+import { SectionItem } from '@/pages/MyManagement/Manager/VaultDetail/c/ManageDetail/C'
 
 const renderActiveShape = (props: any) => {
   const { cx, cy, outerRadius, innerRadius, startAngle, endAngle, fill } = props

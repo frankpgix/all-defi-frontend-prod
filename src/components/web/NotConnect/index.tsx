@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import ConnectButton from '@/components/common/Wallet/ConnectButton'
+import ConnectButton from '@@/core/Wallet/ConnectButton'
 import { useProfile } from '@/hooks/useProfile'
 
 export interface NotConnect {

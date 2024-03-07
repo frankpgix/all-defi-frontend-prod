@@ -169,7 +169,7 @@ export const useVaultDetailChartData = (gql: any) => {
   return { loading, error, data }
 }
 
-export const useManagerFundData = (gql: any, fundData: any[], startTime: number, type: string) => {
+export const useManagerFundData = (gql: any, fundData: any[]) => {
   // 获取基金经理所属基金
   const funds = (fundData ?? []).map((item: any) => toLower(item.address))
 

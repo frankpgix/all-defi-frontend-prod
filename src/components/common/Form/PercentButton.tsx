@@ -1,5 +1,5 @@
 // PercentButton
-import { FC, useEffect, useMemo, useState } from 'react'
+import { FC } from 'react'
 import classNames from 'classnames'
 import BN from 'bignumber.js'
 
@@ -27,7 +27,7 @@ const PercentButton: FC<Props> = ({ value, onChange, allValue }) => {
 
   return (
     <div className="web-percent-button">
-      {list.map((percent: number, index: number) => (
+      {list.map((percent: number) => (
         <span
           key={percent}
           onClick={() => submitChange(percent)}

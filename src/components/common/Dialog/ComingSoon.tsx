@@ -15,7 +15,7 @@ interface Props {
   type?: 'info' | 'succ' | 'fail' | 'wait'
 }
 
-const Info: FC<Props> = ({ show, onClose, msg, onConfirm, title, type = 'info' }) => {
+const Info: FC<Props> = ({ show, onClose, onConfirm }) => {
   const onConfirmFunc = () => {
     onConfirm && onConfirm()
     onClose()

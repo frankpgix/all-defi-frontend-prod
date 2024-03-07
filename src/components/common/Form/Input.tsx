@@ -1,7 +1,6 @@
 import { FC, ChangeEvent, ReactNode, useEffect } from 'react'
 import { NumericFormat, NumberFormatValues } from 'react-number-format'
 import classNames from 'classnames'
-import { isNaN } from 'lodash'
 interface InputProps {
   type?: string
   value: number | string

@@ -41,7 +41,7 @@ const WalletDialog: FC<Props> = ({ show, onClose, onClick }) => {
         <div className="web-account-dialog-list">
           {wallets
             .filter((w) => !w.hidden)
-            .map((w, index) => (
+            .map((w) => (
               <div
                 className="web-account-dialog-list-item"
                 key={w.title}
