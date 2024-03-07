@@ -14,7 +14,7 @@ const Stake: FC<PoolStakeTypes> = ({ list, getData }) => {
   const [vault, setVault] = useState<PoolItemTypes | null>(null)
   const [vaultArray, setVaultArray] = useState<PoolStakeArrayItemTypes[]>([])
   const [amount, setAmount] = useState('')
-  console.log(vault, list)
+  // console.log(vault, list)
   const onAddFunc = () => {
     if (!vault) return
     const oldIndex = vaultArray.findIndex((item) => item.shareToken === vault.shareToken)

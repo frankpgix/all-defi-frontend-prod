@@ -1,6 +1,5 @@
 import { FC } from 'react'
 
-// import Reward from '@/class/Reward'
 import { formatNumber } from '@/utils/tools'
 import { useProfile } from '@/hooks/useProfile'
 import { useUserAccClaimedReward } from '@/hooks/useRewardTracker'

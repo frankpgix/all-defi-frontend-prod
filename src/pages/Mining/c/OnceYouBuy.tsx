@@ -1,16 +1,10 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 
-// import Button from '@/components/common/Button'
-import Image from '@/components/common/Image'
+import Image from '@@/common/Image'
+
 const OnceYouBuy: FC = () => {
   return (
     <section className="web-buy-once web">
-      {/* <header>
-        <h2>Once you buy...</h2>
-        <Button text to="https://pythagoras-group.gitbook.io/alldefi-whitepaper/">
-          read more
-        </Button>
-      </header> */}
       <section className="web-buy-once-process">
         <div className="web-buy-once-process-item">
           <div className="web-buy-once-process-item-ball animate__animated animate__backInDown" />

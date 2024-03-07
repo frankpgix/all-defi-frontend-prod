@@ -6,14 +6,13 @@ import FundIcon from '@@/common/FundIcon'
 import Dialog from '@@/common/Dialog'
 import ALink from '@@/common/ALink'
 import Input from '@@/common/Form/Input'
-// import { PoolVaultSelectTypes, PoolItemTypes } from './types'
 import { PoolItemTypes, PoolVaultSelectTypes } from '@/types/rewardTracker'
 
-const FundSelect: FC<PoolVaultSelectTypes> = ({ list, onSelect, unStake }) => {
+const VaultSelect: FC<PoolVaultSelectTypes> = ({ list, onSelect, unStake }) => {
   const [show, setShow] = useState(false)
   const [currFund, setCurrFund] = useState('')
   const [keyword, setKeyword] = useState('')
-  const fundSymbol = useMemo(() => {
+  const vaultSymbol = useMemo(() => {
     const o = list.find((item) => item.shareToken === currFund)
     return o ? o.symbol : 'Select a Share'
   }, [list, currFund])
@@ -38,8 +37,8 @@ const FundSelect: FC<PoolVaultSelectTypes> = ({ list, onSelect, unStake }) => {
         className={classNames('web-mining-fund-select', { show })}
         onClick={() => setShow(!show)}
       >
-        <FundIcon name={fundSymbol} />
-        <strong>{fundSymbol}</strong>
+        <FundIcon name={vaultSymbol} />
+        <strong>{vaultSymbol}</strong>
       </div>
       <Dialog show={show} onClose={() => setShow(false)} width="670px">
         <div className="web-mining-fund-select-dialog">
@@ -94,4 +93,4 @@ const FundSelect: FC<PoolVaultSelectTypes> = ({ list, onSelect, unStake }) => {
   )
 }
 
-export default FundSelect
+export default VaultSelect

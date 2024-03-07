@@ -8,15 +8,14 @@ import { PoolItemTypes, PoolStakeTypes, PoolStakeArrayItemTypes } from '@/types/
 import Button from '@@/common/Button'
 // import Tip from '@@/common/Tip'
 
-// import { StakeProps, PoolItemTypes, StakeArrayItemProps } from './types'
 import PreView from './PreView'
 import { StakeHeader, StakeFundInput, StakeSAllInput } from './C'
 
 const Stake: FC<PoolStakeTypes> = ({ list, getData }) => {
   const { balances } = useUserBalances()
 
-  const [fund, setFund] = useState<PoolItemTypes | null>(null)
-  const [fundArray, setFundArray] = useState<PoolStakeArrayItemTypes[]>([])
+  const [vault, setVault] = useState<PoolItemTypes | null>(null)
+  const [vaultArray, setVaultArray] = useState<PoolStakeArrayItemTypes[]>([])
   const [amount, setAmount] = useState('')
   const [sAllAmount, setSAllAmount] = useState('')
   const [sAllPreAmount, setSAllPreAmountAmount] = useState(0)
@@ -29,18 +28,18 @@ const Stake: FC<PoolStakeTypes> = ({ list, getData }) => {
   }
 
   const onAddShareFunc = () => {
-    if (!fund) return
-    const oldIndex = fundArray.findIndex((item) => item.shareToken === fund.shareToken)
+    if (!vault) return
+    const oldIndex = vaultArray.findIndex((item) => item.shareToken === vault.shareToken)
     if (oldIndex !== -1) {
-      const arr = [...fundArray]
+      const arr = [...vaultArray]
       arr[oldIndex].amount = Math.min(
         arr[oldIndex].shareBalance,
         BN(Number(amount)).plus(arr[oldIndex].amount).toNumber()
       )
-      setFundArray(arr)
+      setVaultArray(arr)
     } else {
-      const o = { ...fund, amount: Number(amount) }
-      setFundArray([...fundArray, o])
+      const o = { ...vault, amount: Number(amount) }
+      setVaultArray([...vaultArray, o])
     }
     setAmount('')
   }
@@ -50,23 +49,23 @@ const Stake: FC<PoolStakeTypes> = ({ list, getData }) => {
       setSAllAmount('')
       setSAllPreAmountAmount(0)
     } else {
-      const arr = [...fundArray]
+      const arr = [...vaultArray]
       pullAt(arr, index)
-      setFundArray(arr)
+      setVaultArray(arr)
     }
   }
 
   const onGetData = async () => {
     await getData()
-    setFundArray([])
-    // setFund(null)
+    setVaultArray([])
+    // setVault(null)
     setSAllPreAmountAmount(0)
   }
 
   const maxNumber = useMemo(() => {
-    const currShare = list.find((item) => item.shareToken === fund?.shareToken)
+    const currShare = list.find((item) => item.shareToken === vault?.shareToken)
     return currShare?.shareBalance ?? 0
-  }, [fund, list])
+  }, [vault, list])
 
   return (
     <div className="web-mining-stake-layout">
@@ -75,7 +74,7 @@ const Stake: FC<PoolStakeTypes> = ({ list, getData }) => {
           <StakeHeader title="Select Shares" />
           <StakeFundInput
             list={list}
-            onSelect={setFund}
+            onSelect={setVault}
             value={amount}
             onChange={setAmount}
             maxNumber={maxNumber}
@@ -98,7 +97,7 @@ const Stake: FC<PoolStakeTypes> = ({ list, getData }) => {
       </div>
 
       <PreView
-        vaults={fundArray}
+        vaults={vaultArray}
         onDelete={onDelFunc}
         sAllAmount={sAllPreAmount}
         getData={onGetData}

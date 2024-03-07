@@ -6,7 +6,7 @@ import Popper from '@@/common/Popper'
 
 import { PoolVaultSelectTypes } from '@/types/rewardTracker'
 
-import FundSelect from './FundSelect'
+import VaultSelect from './VaultSelect'
 
 export const StakeHeader: FC<{ title: string }> = ({ title }) => {
   return (
@@ -74,7 +74,7 @@ export const StakeFundInput: FC<StakeFundInputProps> = ({
 }) => {
   return (
     <div className="web-mining-stake-fund">
-      <FundSelect list={list} onSelect={onSelect} unStake={unStake} />
+      <VaultSelect list={list} onSelect={onSelect} unStake={unStake} />
       <Input
         value={value}
         onChange={onChange}
