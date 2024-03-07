@@ -1,6 +1,5 @@
 import { useReadContracts } from 'wagmi'
 
-import { useProfile } from '@/hooks/useProfile'
 import {
   useVaultContract,
   useVaultReaderContract,
@@ -98,8 +97,8 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
   }
 }
 
-export const useVaultDetails = (vaultAddress: AddressType) => {
-  const { account } = useProfile()
+export const useVaultDetails = (vaultAddress: AddressType, account: AddressType) => {
+  // const { account } = useProfile()
   const VaultContract = useVaultContract(vaultAddress)
   const VaultReaderContract = useVaultReaderContract()
   const { data, isLoading, isSuccess, refetch } = useReadContracts({
@@ -116,12 +115,12 @@ export const useVaultDetails = (vaultAddress: AddressType) => {
       {
         ...VaultReaderContract,
         functionName: 'userDetail',
-        args: [vaultAddress, account ?? '0x']
+        args: [vaultAddress, account]
       },
       {
         ...VaultReaderContract,
         functionName: 'shareCompositionOf',
-        args: [vaultAddress, account ?? '0x']
+        args: [vaultAddress, account]
       }
     ]
   }) as {

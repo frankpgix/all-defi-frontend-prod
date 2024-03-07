@@ -28,7 +28,12 @@ export const useAllocate = (vaultAddress: AddressType) => {
   const { writeContractAsync } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
 
-  const onAllocate = async (acToken: Token, amount: number, account: AddressType) => {
+  const onAllocate = async (
+    acToken: Token,
+    amount: number,
+    account: AddressType,
+    callback?: () => void
+  ) => {
     const _amount = getUnitAmount(String(amount), acToken.decimals)
 
     if (account) {
@@ -43,6 +48,7 @@ export const useAllocate = (vaultAddress: AddressType) => {
         .then((hash: string) => {
           console.log(hash)
           updateNotifyItem(notifyId, { title: 'Allocate to vault', type: 'success', hash })
+          if (callback) callback()
         })
         .catch((error: any) => {
           updateNotifyItem(notifyId, {

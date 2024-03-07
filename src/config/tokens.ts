@@ -1,4 +1,4 @@
-import { ChainId, AddressType } from '@/types/base'
+import { ChainId, AddressType, TokenKeys } from '@/types/base'
 import Token from '@/class/Token'
 import { toLower } from 'lodash'
 import { zeroAddress } from 'viem'
@@ -6,7 +6,7 @@ import { zeroAddress } from 'viem'
 
 export const ZERO_ADDRESS = zeroAddress
 
-export const tokens: { [key: string]: Token } = {
+export const tokens: { [key in TokenKeys]: Token } = {
   USDC: new Token({
     name: 'USDC',
     symbol: 'USDC',
@@ -114,7 +114,7 @@ const UNKNOWN = {
 export const getTokenByAddress = (address: AddressType) => {
   if (address === ZERO_ADDRESS) return tokens.ETH
   const token = Object.keys(tokens)
-    .map((key: string) => tokens[key])
+    .map((key) => tokens[key as TokenKeys])
     .find((item) => toLower(String(item.address)) === toLower(address))
   if (token) return token
   return UNKNOWN

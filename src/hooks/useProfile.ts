@@ -6,7 +6,7 @@ import { useERC20Contract } from '@/hooks/useContract'
 import { safeInterceptionValues } from '@/utils/tools'
 import { profileProps } from '@/types/profile'
 // import { useVaultCountLimit } from '@/hooks/useAllProtocol'
-
+import { TokenKeys } from '@/types/base'
 import { useStoreProfile } from '@/stores/useStoreProfile'
 
 // export const useProfile = (): profileProps => {
@@ -64,36 +64,48 @@ export const useETHBalance = () => {
 }
 
 export const useUserBalances = () => {
-  const { account: address } = useProfile()
+  const { account } = useProfile()
 
-  const balances: Record<string, number> = {}
+  // const balances: Record<string, number> = {}
+  const balances: { [key in TokenKeys]: number } = {
+    USDC: 0,
+    acUSDC: 0,
+    WETH: 0,
+    ETH: 0,
+    WBTC: 0,
+    acETH: 0,
+    ALLTOKEN: 0,
+    sALLTOKEN: 0
+  }
+  // | 'USDC' | 'acUSDC' | 'WETH' | 'ETH' | 'WBTC' | 'acETH' | 'ALLTOKEN' | 'sALLTOKEN'
   const ethBalances = useETHBalance()
 
   const tokenList = Object.keys(tokens)
     .map((token) => {
-      balances[tokens[token].name] = 0
-      return tokens[token]
+      return tokens[token as TokenKeys]
     })
     .filter((token) => token.address !== ZERO_ADDRESS)
-
-  if (!address) return { balances, refetch: () => {} }
 
   const contracts = tokenList.map((token) => {
     return {
       ...useERC20Contract(token.address),
       functionName: 'balanceOf',
-      args: [address]
+      args: [account]
     }
   })
 
-  const { data, refetch } = useReadContracts({ contracts })
+  const { isLoading, isSuccess, data, refetch } = useReadContracts({ contracts })
 
-  tokenList.forEach((token, index) => {
-    const balance = data?.[index]
-      ? Number(safeInterceptionValues(data[index].result, token.precision, token.decimals))
-      : 0
-    balances[token.name] = balance
-  })
-  balances.ETH = ethBalances
+  if (!isLoading && isSuccess) {
+    tokenList.forEach((token, index) => {
+      const balance =
+        data?.[index] && data[index].status === 'success'
+          ? Number(safeInterceptionValues(data[index].result, token.precision, token.decimals))
+          : 0
+      balances[token.name as TokenKeys] = balance
+    })
+    balances.ETH = ethBalances
+    return { balances, refetch }
+  }
   return { balances, refetch }
 }

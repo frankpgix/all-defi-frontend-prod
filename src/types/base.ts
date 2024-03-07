@@ -37,3 +37,13 @@ export type ContractKeys =
 
 export type AddressType = `0x${string}`
 export type AccountType = AddressType
+
+export type TokenKeys =
+  | 'USDC'
+  | 'acUSDC'
+  | 'WETH'
+  | 'ETH'
+  | 'WBTC'
+  | 'acETH'
+  | 'ALLTOKEN'
+  | 'sALLTOKEN'

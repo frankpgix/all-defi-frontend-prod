@@ -12,6 +12,7 @@ import Button from '@@/common/Button'
 import Tip from '@@/common/Tip'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
 import { VaultDetailProps } from '@/types/vault'
+import { TokenKeys } from '@/types/base'
 
 import { useAllocate } from '@/hooks/useVault'
 
@@ -25,13 +26,16 @@ const Allocate: FC<Props> = ({ getData, data }) => {
   const { balances, refetch: reBalances } = useUserBalances()
   const { onAllocate } = useAllocate(data.address)
 
-  const baseToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
+  const baseToken = data.underlyingToken
   const acToken = useMemo(
-    () => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}`]),
+    () => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}` as TokenKeys]),
     [baseToken]
   )
 
-  const acTokenBalance = useMemo(() => balances[acToken?.name], [balances, acToken?.name])
+  const acTokenBalance = useMemo(
+    () => balances[acToken?.name as TokenKeys],
+    [balances, acToken?.name]
+  )
   const [value, setValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
 
@@ -84,11 +88,12 @@ const Allocate: FC<Props> = ({ getData, data }) => {
 
   const goAllocate = async () => {
     if (account) {
-      await onAllocate(acToken, Number(value), account)
-      reBalances()
-      getData()
-      setValue(0)
-      setSliderValue(0)
+      await onAllocate(acToken, Number(value), account, () => {
+        reBalances()
+        getData()
+        setValue(0)
+        setSliderValue(0)
+      })
     }
   }
   return (

@@ -7,10 +7,4 @@ export const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-export const uniSwapClient = new ApolloClient({
-  // uri: GRAPHQL_API_PREFIX + 'uniswap/uniswap-v3',
-  uri: GRAPHQL_API_PREFIX + 'liqwiz/uniswap-v3-goerli',
-  cache: new InMemoryCache()
-})
-
 export default client

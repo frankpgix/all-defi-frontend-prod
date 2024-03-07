@@ -5,6 +5,7 @@ import Alert from '@@/common/Alert'
 import Blank from '@@/common/Blank'
 
 import { useVaultDetails } from '@/hooks/useVaultDetails'
+import { useProfile } from '@/hooks/useProfile'
 
 import Dashboard from './c/Dashboard'
 import VaultStatus from './c/VaultStatus'
@@ -14,12 +15,13 @@ import RoeHistory from './c/RoeHistory'
 
 const Detail: FC = () => {
   const { fundAddress = '0x' } = useParams() as { fundAddress: AddressType }
+  const { account } = useProfile()
 
   const {
     data: { baseInfo, vaultDetail, vaultUserDetail, vaultShareComposition },
     isLoading: loading,
     refetch: getData
-  } = useVaultDetails(fundAddress)
+  } = useVaultDetails(fundAddress, account ?? '0x')
 
   return (
     <>
@@ -36,13 +38,15 @@ const Detail: FC = () => {
       <RoeHistory fundAddress={fundAddress} />
       <VaultStatus base={baseInfo} data={vaultDetail} loading={loading} />
       <Portfolio base={baseInfo} fundAddress={fundAddress} />
-      <Bench
-        userData={vaultUserDetail}
-        data={vaultDetail}
-        share={vaultShareComposition}
-        loading={loading}
-        getData={getData}
-      />
+      {!loading && (
+        <Bench
+          userData={vaultUserDetail}
+          data={vaultDetail}
+          share={vaultShareComposition}
+          loading={loading}
+          getData={getData}
+        />
+      )}
     </>
   )
 }
