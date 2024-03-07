@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import Table from 'rc-table'
 import { useRequest } from 'ahooks'
 import ContentLoader from 'react-content-loader'

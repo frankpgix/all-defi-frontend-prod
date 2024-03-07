@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useCallback, useMemo } from 'react'
+import { FC, useEffect, useState, useCallback, useMemo } from 'react'
 import { useDisconnect } from 'wagmi'
 import { useTranslation } from 'react-i18next'
 

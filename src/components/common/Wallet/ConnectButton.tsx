@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useMemo, useCallback, ReactNode } from 'react'
+import { FC, useEffect, useState, useMemo, useCallback, ReactNode } from 'react'
 import { useAccount, useConnect, useNetwork, useSwitchNetwork } from 'wagmi'
 
 import WalletDialog from '@/components/common/Wallet'

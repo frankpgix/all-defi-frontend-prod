@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import ContentLoader from 'react-content-loader'
 

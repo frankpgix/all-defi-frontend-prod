@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { useRequest } from 'ahooks'
 
 import { useManageFundVerifyList } from '@/hooks/useFund'

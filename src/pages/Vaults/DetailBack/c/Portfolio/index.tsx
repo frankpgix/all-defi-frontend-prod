@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 
 // import { formatNumber } from '@/utils/tools'
 import { FundBaseProps } from '@/class/help'

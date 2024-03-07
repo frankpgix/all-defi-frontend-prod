@@ -1,4 +1,4 @@
-import React, { FC, useContext, ReactNode } from 'react'
+import { FC, useContext, ReactNode } from 'react'
 import Dialog from 'rc-dialog'
 
 import { px2rem } from '@/utils/tools'

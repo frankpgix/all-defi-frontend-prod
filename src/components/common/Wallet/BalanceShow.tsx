@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import numeral from 'numeral'
 import BN from 'bignumber.js'
 
@@ -43,7 +43,7 @@ export default BalanceShow
  * 处理无小数位时候不显示小数位情况
  * 支持任意大的整数
 
- import React, { FC } from 'react'
+ import  { FC } from 'react'
  import { safeInterceptionValues } from '@/utils/tools'
  interface Props {
   value: string

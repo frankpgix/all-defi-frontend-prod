@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 
 import Dialog from '@@/common/Dialog'
 import Button from '@@/common/Button'

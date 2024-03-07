@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import classNames from 'classnames'
 import { floor } from 'lodash'
 interface Props {
@@ -10,7 +10,13 @@ interface Props {
 const RoeShow: FC<Props> = ({ value, preArrow, subArrow }) => {
   const val = floor(Number(value), 2)
   const className = useMemo(
-    () => classNames('web-c-row-show', val < 0 ? 'fall' : 'rise', { 'pre-arrow': preArrow }, { 'sub-arrow': subArrow }),
+    () =>
+      classNames(
+        'web-c-row-show',
+        val < 0 ? 'fall' : 'rise',
+        { 'pre-arrow': preArrow },
+        { 'sub-arrow': subArrow }
+      ),
     [val, preArrow, subArrow]
   )
   return (

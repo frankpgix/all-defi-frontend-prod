@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import classNames from 'classnames'
 interface Props {
   pageSize?: number
@@ -45,12 +45,22 @@ const Pagination: FC<Props> = ({ pageSize = 10, total, page, full, onChange }) =
 
   return (
     <div className="web-pagination">
-      <span className={classNames('web-pagination-home', { disabled: isInHome })} onClick={goHome} />
-      <span className={classNames('web-pagination-prev', { disabled: isInHome })} onClick={goPrev} />
+      <span
+        className={classNames('web-pagination-home', { disabled: isInHome })}
+        onClick={goHome}
+      />
+      <span
+        className={classNames('web-pagination-prev', { disabled: isInHome })}
+        onClick={goPrev}
+      />
       {full ? (
         <>
           {pager.map((item: number, index: number) => (
-            <i key={index} className={classNames({ active: item === page })} onClick={() => onChange(item)}>
+            <i
+              key={index}
+              className={classNames({ active: item === page })}
+              onClick={() => onChange(item)}
+            >
               {item + 1}
             </i>
           ))}

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { FC, useContext, useMemo } from 'react'
+import { FC, useContext, useMemo } from 'react'
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import dayjs from 'dayjs'
 import numeral from 'numeral'

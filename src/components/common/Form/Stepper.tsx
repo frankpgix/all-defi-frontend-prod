@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useImperativeHandle, ChangeEvent } from 'react'
+import { FC, useState, useEffect, useImperativeHandle, ChangeEvent } from 'react'
 import classNames from 'classnames'
 interface Props {
   value?: number // 初始值

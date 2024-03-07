@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo } from 'react'
+import { FC, useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 
 import FundPool from '@/class/FundPool'

@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import dayjs from 'dayjs'
 import BN from 'bignumber.js'
 import classNames from 'classnames'

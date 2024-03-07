@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import dayjs from 'dayjs'
 import classNames from 'classnames'
 import { FundBaseProps, FundDetailProps } from '@/class/help'

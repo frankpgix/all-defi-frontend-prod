@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 
@@ -14,9 +14,13 @@ const MultipleStatus: FC<MultipleStatusProps> = ({ multiple, direction }) => {
   const { t } = useTranslation()
   return (
     <div
-      className={classNames('web-trade-multiple-status', `status-${direction.toLocaleLowerCase()}`, {
-        'no-multiple': !multiple
-      })}
+      className={classNames(
+        'web-trade-multiple-status',
+        `status-${direction.toLocaleLowerCase()}`,
+        {
+          'no-multiple': !multiple
+        }
+      )}
     >
       <span>{t(`common.${direction.toLocaleLowerCase()}`)}</span>
       {multiple && <em>{multiple}x</em>}

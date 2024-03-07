@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { FC, useContext, useEffect, useState } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 
 // import Image from '@/components/common/Image'
 import FormContext from './FormContext'

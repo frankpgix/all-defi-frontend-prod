@@ -1,5 +1,5 @@
 // PercentButton
-import React, { FC, useEffect, useMemo, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import classNames from 'classnames'
 import BN from 'bignumber.js'
 
@@ -31,7 +31,9 @@ const PercentButton: FC<Props> = ({ value, onChange, allValue }) => {
         <span
           key={percent}
           onClick={() => submitChange(percent)}
-          className={classNames({ active: BN(allValue).multipliedBy(percent).toString() === String(value) })}
+          className={classNames({
+            active: BN(allValue).multipliedBy(percent).toString() === String(value)
+          })}
         >
           {percent * 100}%
         </span>

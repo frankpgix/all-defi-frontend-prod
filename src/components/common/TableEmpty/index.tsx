@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import ContentLoader from 'react-content-loader'
 import Image from '@@/common/Image'
 // import Loading from '@@/common/Loading'

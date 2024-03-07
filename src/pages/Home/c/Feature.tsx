@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import classNames from 'classnames'
 // import Video from '@/components/common/Video'
 

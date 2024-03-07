@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 
 import { useProfile } from '@/hooks/useProfile'
 import ALink from '@@/common/ALink'

@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo } from 'react'
+import { FC, useState, useMemo } from 'react'
 import classNames from 'classnames'
 // import { toast } from '@@/common/Toast'
 import { sleep, copyText } from '@/utils/tools'

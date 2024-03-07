@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import React, { FC, ReactNode, useContext } from 'react'
+import { FC, ReactNode, useContext } from 'react'
 import classNames from 'classnames'
 import Image from '@/components/common/Image'
 

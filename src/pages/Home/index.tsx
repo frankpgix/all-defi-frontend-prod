@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 
 import Banner from './c/Banner'
 import Feature from './c/Feature'

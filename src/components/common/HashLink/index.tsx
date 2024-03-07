@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import classNames from 'classnames'
 import { ETH_SCAN_URL } from '@/config'
 import ALink from '@@/common/ALink'
@@ -14,7 +14,11 @@ interface Props {
 const HashLink: FC<Props> = ({ address, className, prefixLength = 8, suffixLength = 8 }) => {
   const type = address.length === 66 ? 'tx' : 'address'
   return (
-    <ALink className={classNames('outlink', className)} to={`${ETH_SCAN_URL}/${type}/${address}`} title={address}>
+    <ALink
+      className={classNames('outlink', className)}
+      to={`${ETH_SCAN_URL}/${type}/${address}`}
+      title={address}
+    >
       {calcShortHash(address, prefixLength, suffixLength)}
     </ALink>
   )

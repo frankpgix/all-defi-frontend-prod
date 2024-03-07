@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 import Image from '@@/common/Image'
 import tokenss from '@/config/tokens'
 import classNames from 'classnames'

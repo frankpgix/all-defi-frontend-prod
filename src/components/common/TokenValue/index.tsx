@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import { TokenProps } from '@/class/Token'
 // import classNames from 'classnames'
 import { TokenIcon } from '@@/common/TokenUnit'

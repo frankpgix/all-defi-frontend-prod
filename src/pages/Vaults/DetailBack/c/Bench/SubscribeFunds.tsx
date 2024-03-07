@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo } from 'react'
+import { FC, useState, useMemo } from 'react'
 import BN from 'bignumber.js'
 import { useParams } from 'react-router-dom'
 import { isNaN } from 'lodash'

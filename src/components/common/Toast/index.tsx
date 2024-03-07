@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 import { ToastContainer, toast as toastFn, Id, TypeOptions } from 'react-toastify'
 
 // Toast
@@ -68,10 +68,10 @@ notify.update = (
   const message = msg
     ? msg
     : type === 'success'
-    ? defaultOption.successMsg
-    : type === 'error'
-    ? defaultOption.errorMsg
-    : ''
+      ? defaultOption.successMsg
+      : type === 'error'
+        ? defaultOption.errorMsg
+        : ''
   if (type === 'error') autoClose = false
   return toastFn.update(id, {
     ...notifyOption(autoClose),

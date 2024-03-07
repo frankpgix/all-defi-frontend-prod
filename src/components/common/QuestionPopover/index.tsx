@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, useMemo } from 'react'
+import { FC, useState, useRef, useMemo } from 'react'
 import { useClickAway } from 'ahooks'
 import classNames from 'classnames'
 

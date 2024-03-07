@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import classNames from 'classnames'
 import BN from 'bignumber.js'
 
@@ -14,7 +14,14 @@ const ChangePercent: FC<Props> = ({ value, size }) => {
     return [valStr, isUp]
   }, [value])
   return (
-    <div className={classNames('web-change-percent', `web-change-percent-size-${size}`, { up: isUp }, { down: !isUp })}>
+    <div
+      className={classNames(
+        'web-change-percent',
+        `web-change-percent-size-${size}`,
+        { up: isUp },
+        { down: !isUp }
+      )}
+    >
       <span>{valStr}</span>
     </div>
   )

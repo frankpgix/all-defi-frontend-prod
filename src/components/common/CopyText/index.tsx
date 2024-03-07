@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react'
+import { FC, useState, useCallback } from 'react'
 import classNames from 'classnames'
 import { sleep, copyText } from '@/utils/tools'
 

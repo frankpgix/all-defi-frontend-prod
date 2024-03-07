@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import Button from '@@/common/Button'
 import { toast, notify } from '@@/common/Toast'
 

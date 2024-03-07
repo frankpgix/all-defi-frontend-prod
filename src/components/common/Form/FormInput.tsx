@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { FC, useContext } from 'react'
+import { FC, useContext } from 'react'
 
 import FormContext from './FormContext'
 
@@ -13,7 +13,14 @@ interface InputProps {
   clearable?: boolean
 }
 
-const FormInput: FC<InputProps> = ({ type = 'text', name, placeholder, maxLength, clearable, readOnly }) => {
+const FormInput: FC<InputProps> = ({
+  type = 'text',
+  name,
+  placeholder,
+  maxLength,
+  clearable,
+  readOnly
+}) => {
   const { register, resetField, rules, watch } = useContext(FormContext)
   const rest = () => resetField(name)
   const value = watch(name)
@@ -21,7 +28,11 @@ const FormInput: FC<InputProps> = ({ type = 'text', name, placeholder, maxLength
   return (
     <div className="web-form-input">
       {type === 'textarea' ? (
-        <textarea {...register(name, rules[name])} maxLength={maxLength} placeholder={placeholder} />
+        <textarea
+          {...register(name, rules[name])}
+          maxLength={maxLength}
+          placeholder={placeholder}
+        />
       ) : (
         <input
           type={type}

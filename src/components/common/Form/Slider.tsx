@@ -1,5 +1,5 @@
 // SubscribeFunds
-import React, { FC } from 'react'
+import { FC } from 'react'
 import ReactSlider from 'react-slider'
 import classNames from 'classnames'
 interface Props {

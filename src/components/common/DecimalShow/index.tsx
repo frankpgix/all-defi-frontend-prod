@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useContext } from 'react'
+import { FC, useMemo, useContext } from 'react'
 
 import { MobileContext } from '@/context/Mobile'
 
