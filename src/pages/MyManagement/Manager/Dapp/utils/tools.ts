@@ -76,6 +76,8 @@ export const onSign = async (data: any, vaultAddress: AddressType, account: Addr
     // value: getUnitAmount(value || 0, 18),
     account
   })
+
+  console.log(transactionHash)
   delete types.EIP712Domain
   const signature = await signTypedData(config, { domain, types, message, primaryType })
   return signature

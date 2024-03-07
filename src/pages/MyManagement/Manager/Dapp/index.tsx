@@ -8,7 +8,7 @@ import type {
   SafeSettings,
   SendTransactionRequestParams
 } from '@safe-global/safe-apps-sdk'
-import { Methods } from '@safe-global/safe-apps-sdk'
+// import { Methods } from '@safe-global/safe-apps-sdk'
 import {
   getBalances,
   getTransactionDetails
@@ -22,7 +22,6 @@ import { useNotify } from '@/hooks/useNotify'
 
 import Loading from '@@/common/Loading'
 
-// import { safeMsgSubscribe, SafeMsgEvent } from './services/safe-messages/safeMsgEvents'
 import { useAppIsLoading } from './hooks/useAppIsLoading'
 import { useAppCommunicator, CommunicatorMessages } from './hooks/useAppCommunicator'
 import { useSafeAppFromBackend } from './hooks/useSafeAppFromBackend'
@@ -49,7 +48,7 @@ const DappIframe: FC = () => {
 
   const appUrl = searchParams.get('dapp') ?? ''
   // console.log()
-  const { iframeRef, appIsLoading, isLoadingSlow, setAppIsLoading } = useAppIsLoading()
+  const { iframeRef, appIsLoading, setAppIsLoading } = useAppIsLoading()
   // const [appUrl, setAppUrl] = useState('https://app.aave.com/')
   const { account } = useProfile()
   const chainId = '42161'
@@ -59,8 +58,8 @@ const DappIframe: FC = () => {
     offChainSigning: true
   })
   // const [currentRequestId, setCurrentRequestId] = useState<RequestId | undefined>()
-  const [remoteApp, , isBackendAppsLoading] = useSafeAppFromBackend(appUrl, chainId)
-  const { safeApp: safeAppFromManifest, isLoading } = useSafeAppFromManifest(appUrl || '', chainId)
+  const [remoteApp] = useSafeAppFromBackend(appUrl, chainId)
+  const { safeApp: safeAppFromManifest } = useSafeAppFromManifest(appUrl || '', chainId)
   const { safeAddress } = useGetSafeInfo()() as { safeAddress: AddressType }
 
   const {
@@ -106,8 +105,8 @@ const DappIframe: FC = () => {
     onSignMessage: async (
       message: string | EIP712TypedData,
       requestId: string,
-      method: Methods.signMessage | Methods.signTypedMessage,
-      sdkVersion: string
+      // method: Methods.signMessage | Methods.signTypedMessage,
+      // sdkVersion: string
     ) => {
       console.log(123456, message, 'onSignMessage')
       if (account) {
@@ -149,7 +148,7 @@ const DappIframe: FC = () => {
     },
     onGetPermissions: getPermissions,
     onSetPermissions: setPermissionsRequest,
-    onRequestAddressBook: (origin: string): AddressBookItem[] => {
+    onRequestAddressBook: (): AddressBookItem[] => {
       // if (hasPermission(origin, Methods.requestAddressBook)) {
       //   return Object.entries(addressBook).map(([address, name]) => ({ address, name, chainId }))
       // }
@@ -188,7 +187,7 @@ const DappIframe: FC = () => {
       setSettings(newSettings)
       return newSettings
     },
-    onGetOffChainSignature: async (messageHash: string) => {
+    onGetOffChainSignature: async () => {
       // const safeMessage = safeMessages.data?.results
       //   ?.filter(isSafeMessageListItem)
       //   ?.find((item) => item.messageHash === messageHash)

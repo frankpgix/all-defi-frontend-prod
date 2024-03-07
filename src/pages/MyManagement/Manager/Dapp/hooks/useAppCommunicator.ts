@@ -100,7 +100,7 @@ export const useAppCommunicator = (
       app?: SafeAppData
     ) => {
       communicatorInstance = new AppCommunicator(iframeRef, {
-        onMessage: (msg) => {
+        onMessage: () => {
           // const isCustomApp = app && app.id < 1
           // trackSafeAppEvent(
           //   { ...SAFE_APPS_EVENTS.SAFE_APP_SDK_METHOD_CALL },
