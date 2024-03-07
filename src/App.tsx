@@ -19,7 +19,7 @@ import Home from '@/pages/Home'
 import Buy from '@/pages/Buy'
 import Vaults from '@/pages/Vaults'
 import MyManagement from '@/pages/MyManagement'
-// import Mining from '@/pages/Mining'
+import Mining from '@/pages/Mining'
 const Test = lazy(() => import('@/pages/Test'))
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
             <Route path="/buy" element={<Buy />} />
             <Route path="/vaults/*" element={<Vaults />} />
             <Route path="/manage/*" element={<MyManagement />} />
-            {/*<Route path="/all-mining" element={<Mining />} /> */}
+            <Route path="/all-mining" element={<Mining />} />
             <Route path="/test" element={<Test />} />
             <Route path="/" element={<Home />} />
           </Routes>

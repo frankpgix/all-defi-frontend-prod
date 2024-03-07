@@ -1,7 +1,7 @@
 import { useReadContract, useWriteContract } from 'wagmi'
 import { tokens, ZERO_ADDRESS, getTokenByAddress } from '@/config/tokens'
 import { useAllProtocolContract } from '@/hooks/useContract'
-import { useAssetPrice } from '@/hooks/useVaultFactory'
+import { useAssetPrice, useAssetPriceUSD } from '@/hooks/useVaultFactory'
 import { AddressType } from '@/types/base'
 import { safeInterceptionValues, getUnitAmount } from '@/utils/tools'
 import { calcVaultStakedALL, calcVaultDerivativesInfo } from '@/compute/vault'
@@ -18,6 +18,10 @@ export const useAllTokenPrice = (baseToken: AddressType) => {
     baseToken = tokens.WETH.address
   }
   return useAssetPrice(tokens.ALLTOKEN.address, baseToken)
+}
+
+export const useAllTokenPriceInUSD = () => {
+  return useAssetPriceUSD(tokens.ALLTOKEN.address)
 }
 
 export const useVaultCountLimit = (address?: AddressType | '') => {

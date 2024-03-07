@@ -75,7 +75,7 @@ export const tokens: { [key: string]: Token } = {
   }),
   ALLTOKEN: new Token({
     name: 'ALLTOKEN',
-    symbol: 'ALL',
+    symbol: 't_ALL',
     address: {
       [ChainId.MAINNET]: '',
       [ChainId.ARBITRUM]: '0x994D01b43e3F9B54D67aACa35af33ADC0b21ac83'

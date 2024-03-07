@@ -8,7 +8,7 @@ import ACProtocolAbi from '@/config/abi/ACProtocol.json'
 import AllProtocolAbi from '@/config/abi/AllProtocol.json'
 import VaultAbi from '@/config/abi/Vault.json'
 import VaultReaderAbi from '@/config/abi/VaultReader.json'
-// import RewardAbi from '@/config/abi/Reward.json'
+import RewardTrackerAbi from '@/config/abi/RewardTracker.json'
 import UniV3ACLAbi from '@/config/abi/UniV3ACL.json'
 // import Permit2Abi from '@/config/abi/Permit2.json'
 import VaultFactoryAbi from '@/config/abi/VaultFactory.json'
@@ -43,4 +43,7 @@ export const useVaultReaderContract = () => {
 
 export const useUniV3ACLContract = () => {
   return useContract(getContractAddress('UniV3ACL'), UniV3ACLAbi)
+}
+export const useRewardTrackerContract = () => {
+  return useContract(getContractAddress('RewardTracker'), RewardTrackerAbi)
 }

@@ -4,7 +4,7 @@ import { getTokenByAddress } from '@/config/tokens'
 import { uniq, last } from 'lodash'
 // import { useMemo } from 'react'
 import BN from 'bignumber.js'
-import { sum } from '@/utils/tools'
+import { sum, calcDecimalsFloor } from '@/utils/tools'
 import { useEffect } from 'react'
 // import { useDebounceEffect, useMount } from 'ahooks'
 import { toLower } from 'lodash'
@@ -42,38 +42,43 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
   const [getData, { loading: listLoading, error: listError, data: listData }] = useLazyQuery(gql, {
     fetchPolicy: 'cache-first'
   })
-
   useEffect(() => void getData(), [timeType])
 
-  const sData =
-    listData?.fund10MinutelyDatas ?? listData?.fundHourlyDatas ?? listData?.fundDailyDatas ?? []
+  const sData = listData?.vaultIntervalDatas ?? []
   const timeArr = uniq(sData.map((item: any) => item.periodStartUnix))
   // console.log(sData, timeArr)
-  const data = timeArr.map((time) => {
-    const o: Record<string, any> = {
-      time: Number(time) * 1000
-    }
-    const ss: any[] = sData.filter((item: any) => item.periodStartUnix === time)
-    fundsName.forEach((name: string) => {
-      const fund = ss.find((item: any) => item.name === name)
-      if (fund) {
-        const baseToken = getTokenByAddress(fund.baseToken)
-        // console.log(baseToken)
-        const amount = fund
-          ? safeInterceptionValues(fund.miningAmount, baseToken.decimals, baseToken.decimals)
-          : 0
-        // todo ,这里需要USD价格
-        const price = fund ? safeInterceptionValues(fund.sharePrice, 18, 18) : 0
-        // console.log(safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18))
-        const baseTokenPriceInUSD = fund
-          ? safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18)
-          : 0
-        const value = BN(amount).times(price).times(baseTokenPriceInUSD).toNumber()
-        o[name] = value
+  const data = timeArr
+    .map((time) => {
+      const o: Record<string, any> = {
+        time: Number(time) * 1000
       }
+      const ss: any[] = sData.filter((item: any) => item.periodStartUnix === time)
+      fundsName.forEach((name: string) => {
+        const fund = ss.find((item: any) => item.name === name)
+        if (fund) {
+          // const baseToken = getTokenByAddress(fund.baseToken)
+          // console.log(fund.miningAmount)
+          const amount = fund ? safeInterceptionValues(fund.miningShare, 18, 18) : 0
+          // todo ,这里需要USD价格
+          const price = fund ? safeInterceptionValues(fund.sharePrice, 18, 18) : 0
+          // console.log(safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18))
+          const baseTokenPriceInUSD = fund
+            ? safeInterceptionValues(fund.underlyingTokenPriceInUSD, 18, 18)
+            : 0
+          const value = BN(amount).times(price).times(baseTokenPriceInUSD).toString()
+          o[name] = Number(calcDecimalsFloor(value, 2))
+
+          // if (name === 'T0-USDC' && Number(amount) > 0) {
+          //   console.log(fund.miningAmount, amount)
+          //   console.log(fund.sharePrice, price)
+          //   console.log(fund.baseTokenPriceInUSD, baseTokenPriceInUSD)
+          // }
+        }
+      })
+      return o
     })
-    return o
-  })
+    .reverse()
+
   // console.log(removeZeroKeys(data))
   // console.log(data)
   return {

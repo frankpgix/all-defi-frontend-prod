@@ -9,7 +9,7 @@ import { useAccount } from 'wagmi'
 // // import { getJsonRpcProvider } from '@/utils/contractHelpers'
 import { useProfile } from '@/hooks/useProfile'
 import { useVaultCountLimit } from '@/hooks/useAllProtocol'
-// import { useGetFundList } from '@/hooks/useFund'
+import { useGetVaultList } from '@/hooks/useVaultList'
 // import { useUpdateBaseTokenPriceInUSD } from '@/hooks/useBaseTokenPrice'
 export default function Global(): null {
   // const { address } = getAccount(config)
@@ -23,7 +23,7 @@ export default function Global(): null {
     if (address) {
       updateProfile(address, Boolean(maxFundLimit), maxFundLimit, isLoading)
     } else {
-      updateProfile('', false, 0, isLoading)
+      updateProfile(undefined, false, 0, isLoading)
     }
   }, [address, isLoading])
 
@@ -32,7 +32,7 @@ export default function Global(): null {
     // void getBaseTokenPriceInUSD()
   }, [address, maxFundLimit, isLoading])
 
-  // useGetFundList()
+  useGetVaultList()
   // useUpdateBaseTokenPriceInUSD()
   // update balance info
   // const balances = useBalances()
