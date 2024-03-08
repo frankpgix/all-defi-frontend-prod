@@ -46,8 +46,8 @@ const DappIframe: FC = () => {
   const { createNotify } = useNotify()
   // const [init, setInit] = useState(true)
 
-  const appUrl = searchParams.get('dapp') ?? ''
-  // console.log()
+  const appUrl = decodeURIComponent(searchParams.get('dapp') ?? '')
+  console.log(appUrl)
   const { iframeRef, appIsLoading, setAppIsLoading } = useAppIsLoading()
   // const [appUrl, setAppUrl] = useState('https://app.aave.com/')
   const { account } = useProfile()
