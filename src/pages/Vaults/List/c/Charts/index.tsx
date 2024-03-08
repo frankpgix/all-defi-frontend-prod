@@ -1,23 +1,15 @@
-import { FC, useState, useEffect, useCallback } from 'react'
+import { FC } from 'react'
+
+import { useRequest } from 'ahooks'
 
 import { getEthIndexData, getBtcIndexData, getDefiTvlData } from '@/api'
-// import FundManager, { FundGlobalAssetProps, FundGlobalAssetDefaultData } from '@/class/FundManager'
 
 import Item from './Item'
 
 const Charts: FC = () => {
-  const [defiTvl, setDefiTvl] = useState<{ time: number; value: string }[]>([])
-  const [btc, setBtc] = useState<{ time: number; value: string }[]>([])
-  const [eth, setEth] = useState<{ time: number; value: string }[]>([])
-  const getData = useCallback(async () => {
-    const btc = await getBtcIndexData()
-    const eth = await getEthIndexData()
-    const defi = await getDefiTvlData()
-    setBtc(btc)
-    setEth(eth)
-    setDefiTvl(defi)
-  }, [])
-  useEffect(() => void getData(), [])
+  const { data: btc } = useRequest(getBtcIndexData)
+  const { data: eth } = useRequest(getEthIndexData)
+  const { data: defiTvl } = useRequest(getDefiTvlData)
 
   return (
     <section className="web-fund-charts">
@@ -27,17 +19,17 @@ const Charts: FC = () => {
           name="BTC Index"
           subName="Return (1D)"
           icon="icon/btc.svg"
-          data={btc}
+          data={btc ?? []}
           yLabel="Price"
         />
         <Item
           name="ETH Index"
           subName="Return (1D)"
           icon="icon/eth-index.svg"
-          data={eth}
+          data={eth ?? []}
           yLabel="Price"
         />
-        <Item name="DeFi TVL" subName="TVL (1D)" icon="icon/defi-tvl.svg" data={defiTvl} />
+        <Item name="DeFi TVL" subName="TVL (1D)" icon="icon/defi-tvl.svg" data={defiTvl ?? []} />
       </div>
     </section>
   )

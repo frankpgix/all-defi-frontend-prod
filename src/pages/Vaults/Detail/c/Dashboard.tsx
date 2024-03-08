@@ -40,7 +40,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
     [fundAddress, data.epochIndex, timeType]
   )
   const { loading: chartLoading, data: chartData } = useVaultDetailChartData(gql)
-  // console.log(chartData, 'data.historyReturn')
+  console.log(chartData, 'data.historyReturn')
   return (
     <>
       <header className="web-fund-detail-header">Vault Overview</header>

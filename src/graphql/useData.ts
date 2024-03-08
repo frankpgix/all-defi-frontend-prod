@@ -81,7 +81,7 @@ export const useVaultDetailChartData = (gql: any) => {
   const data = (sData?.vaultIntervalDatas ?? [])
     .map((item: any) => ({
       time: item.periodStartUnix * 1000,
-      value: Number(safeInterceptionValues(String(item.sharePrice), 18, 18)),
+      value: Number(safeInterceptionValues(String(item.sharePrice), 6, 18)),
       aum: Number(safeInterceptionValues(String(item.aum), 18, 18))
     }))
     .reverse()

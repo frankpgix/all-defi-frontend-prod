@@ -40,14 +40,14 @@ export const getBtcIndexData = async () => {
   const res = await get(
     'https://www.binance.com/api/v3/uiKlines?limit=30&symbol=BTCBUSD&interval=1d'
   )
-  const data = res.map((item: any) => ({ time: item[6] + 1000, value: item[4] }))
+  const data = res.map((item: any) => ({ time: item[6] + 1000, value: Number(item[4]) }))
   return data
 }
 export const getEthIndexData = async () => {
   const res = await get(
     'https://www.binance.com/api/v3/uiKlines?limit=30&symbol=ETHBUSD&interval=1d'
   )
-  const data = res.map((item: any) => ({ time: item[6] + 1000, value: item[4] }))
+  const data = res.map((item: any) => ({ time: item[6] + 1000, value: Number(item[4]) }))
   return data
 }
 
@@ -59,7 +59,7 @@ export const getDefiTvlData = async () => {
     )
     return xaxis.map((time: number, index: number) => ({
       time: time,
-      value: series[0].data[index]
+      value: Number(series[0].data[index])
     }))
   } catch (error) {
     return await getDefiChartData()
