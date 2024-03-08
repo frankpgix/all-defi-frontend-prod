@@ -19,20 +19,11 @@ interface Props {
 }
 
 const GMXEarn: FC<Props> = ({ data, underlyingToken, loading }) => {
-  // const { getGMXEarnPosition } = PositionDetail
-  // const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
-
-  // const { data, loading = true } = useRequest(
-  //   () => getGMXEarnPosition(fundAddress ?? '', baseTokenAddress),
-  //   {
-  //     refreshDeps: [fundAddress]
-  //   }
-  // )
-  // console.log(data)
   const webColumns = [
     {
       title: 'Blance',
-      dataIndex: 'glpBlance'
+      dataIndex: 'glpBlance',
+      width: '400px'
       // width: 200,
       // render: (asset: any) => <>{asset}</>
     },
@@ -47,6 +38,7 @@ const GMXEarn: FC<Props> = ({ data, underlyingToken, loading }) => {
     {
       title: 'Pending Reward',
       dataIndex: 'pendingReward',
+      width: '300px',
       // width: 200,
       render: (value: number) => (
         <TokenValue value={value} token={underlyingToken} size="mini" format="0,0.00" />
@@ -54,6 +46,7 @@ const GMXEarn: FC<Props> = ({ data, underlyingToken, loading }) => {
     }
   ]
   if (loading || (!loading && data?.length === 0)) return null
+  if (data[0].glpBlance === '0') return null
   return (
     <>
       <h3>GMX EARN</h3>

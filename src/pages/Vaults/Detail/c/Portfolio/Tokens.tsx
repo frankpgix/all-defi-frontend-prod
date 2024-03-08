@@ -12,6 +12,7 @@ import { useAssetComposition } from '@/hooks/useVaultReader'
 import PercentageLine from '@@/common/PercentageLine'
 import { TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
+import { TokenIcon } from '@@/common/TokenUnit'
 
 interface Props {
   fundAddress: AddressType
@@ -36,7 +37,12 @@ const Portfolio: FC<Props> = ({ fundAddress, base }) => {
     {
       title: 'Asset Name',
       dataIndex: 'symbol',
-      width: 200
+      width: 200,
+      render: (token: any) => (
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <TokenIcon name={token} size="mini" /> {token}
+        </div>
+      )
     },
     {
       title: 'Percentage',

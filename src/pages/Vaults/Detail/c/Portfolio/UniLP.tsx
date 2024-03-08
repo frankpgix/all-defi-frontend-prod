@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import Table from 'rc-table'
 import ContentLoader from 'react-content-loader'
-
+import classNames from 'classnames'
 // import { useRequest } from 'ahooks'
 import Token from '@/class/Token'
 
@@ -11,7 +11,8 @@ import { UniLPDetailTypes } from '@/types/vaultPositionDetail'
 
 import { TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
-import Button from '@@/common/Button'
+import { TokenIcon } from '@@/common/TokenUnit'
+// import Button from '@@/common/Button'
 interface Props {
   data: UniLPDetailTypes[]
   underlyingToken: Token
@@ -30,7 +31,10 @@ const UniLP: FC<Props> = ({ data, underlyingToken, loading }) => {
       width: 200,
       render: (_: number, row: any) => (
         <>
-          {row.token0.name}/{row.token1.name}
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            <TokenIcon name={row.token0.name} size="mini" /> {row.token0.name} <span>/</span>
+            <TokenIcon name={row.token1.name} size="mini" /> {row.token1.name}
+          </div>
         </>
       )
     },
@@ -55,9 +59,9 @@ const UniLP: FC<Props> = ({ data, underlyingToken, loading }) => {
       dataIndex: 'inRange',
       width: 100,
       render: (value: boolean) => (
-        <Button size="mini" outline nohand>
+        <span className={classNames({ rise: value, fall: !value })}>
           {value ? 'IN RANGE' : 'Not within Range'}
-        </Button>
+        </span>
       )
     }
   ]

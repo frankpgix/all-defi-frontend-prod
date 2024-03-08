@@ -6,6 +6,7 @@ import { AaveV3DetailTypes } from '@/types/vaultPositionDetail'
 
 import { TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
+import { TokenIcon } from '@@/common/TokenUnit'
 
 interface Props {
   data: AaveV3DetailTypes | null
@@ -14,11 +15,17 @@ interface Props {
 }
 
 const AAVE: FC<Props> = ({ data, underlyingToken, loading }) => {
-  const webColumns = [
+  console.log(data)
+  const caclWebColumns = (isDeposit: boolean) => [
     {
-      title: 'Name',
+      title: isDeposit ? 'Deposit' : 'Debt',
       dataIndex: 'asset',
-      render: (asset: any) => <>{asset.name}</>
+      width: '400px',
+      render: (asset: any) => (
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <TokenIcon name={asset.name} size="mini" /> {asset.name}
+        </div>
+      )
     },
     {
       title: 'Amount',
@@ -27,22 +34,23 @@ const AAVE: FC<Props> = ({ data, underlyingToken, loading }) => {
     {
       title: 'Value',
       dataIndex: 'value',
+      width: '300px',
       render: (value: number) => (
         <TokenValue value={value} token={underlyingToken} size="mini" format="0,0.00" />
       )
     }
   ]
-  if (loading || (!loading && data)) return null
+  if (loading || (!loading && !data)) return null
   if (data) {
     return (
       <>
         <h3>AAVE</h3>
         {data.collateral.length ? (
           <>
-            <h4>Deposit</h4>
+            {/* <h4>Deposit</h4> */}
             <Table
               className="web-fund-detail-portfolio-table"
-              columns={webColumns}
+              columns={caclWebColumns(true)}
               emptyText={loading ? <TableLoading /> : <TableNoData />}
               data={data?.collateral ?? []}
               rowKey="id"
@@ -51,10 +59,10 @@ const AAVE: FC<Props> = ({ data, underlyingToken, loading }) => {
         ) : null}
         {data.debt.length ? (
           <>
-            <h4>Debt</h4>
+            {/* <h4>Debt</h4> */}
             <Table
               className="web-fund-detail-portfolio-table"
-              columns={webColumns}
+              columns={caclWebColumns(false)}
               emptyText={loading ? <TableLoading /> : <TableNoData />}
               data={data?.debt ?? []}
               rowKey="id"
