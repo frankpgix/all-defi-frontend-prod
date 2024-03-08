@@ -25,6 +25,10 @@ const Connect: FC<Props> = ({ simple, children, as = 'div' }) => {
     return ''
   }, [address, hasNotify])
 
+  // useEffect(() => {
+  //   if (isConnected) closeDialog()
+  // }, [isConnected])
+
   if (simple) {
     return (
       <>
@@ -69,12 +73,10 @@ const getConnectorIcon = (id: string) => {
   const icons: Record<string, string> = {
     coinbaseWalletSDK: 'icon/coinbase.svg',
     walletConnect: 'icon/wallet-connect.svg',
-    // injected: 'others-wallet.svg',
     injected: 'asset/wallet.png',
     'com.okex.wallet': 'icon/okx.svg',
     'io.metamask': 'icon/metamask.svg'
   }
-  // if (icons[id]) return
   return icons[id] ?? ''
 }
 
@@ -98,10 +100,9 @@ interface ConnectDialogProps {
 }
 
 const ConnectDialog: FC<ConnectDialogProps> = ({ show, onClose }) => {
-  const { connectors, connect } = useConnect()
-  const onConnect = (connector: Connector) => {
-    connect({ connector })
-    onClose()
+  const { connectors, connectAsync, reset } = useConnect()
+  const onConnect = async (connector: Connector) => {
+    await connectAsync({ connector }).then(onClose).catch(reset)
   }
   return (
     <Dialog width="670px" show={show} onClose={onClose}>
