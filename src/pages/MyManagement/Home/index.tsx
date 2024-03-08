@@ -1,17 +1,14 @@
-// import { useAccount } from 'wagmi'
 import { FC, useMemo } from 'react'
 import classNames from 'classnames'
 import { useNavigate } from 'react-router-dom'
 
 import { useProfile } from '@/hooks/useProfile'
 
-// import Button from '@@/common/Button'
 import Loading from '@@/common/Loading'
 import ConnectButton from '@@/core/Wallet/ConnectButton'
 
 const Home: FC = () => {
   const navigate = useNavigate()
-  // const { address, isConnected: isManager, isConnecting: loading } = useAccount()
   const { account: address, isManager, loading } = useProfile()
 
   const noAddress = useMemo(() => !Boolean(address), [address])

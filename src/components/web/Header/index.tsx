@@ -1,11 +1,11 @@
 import { FC } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-// import Button from '@/components/common/Button'
 import ConnectButton from '@/components/core/Wallet/ConnectButton'
 import { useToPageTop } from '@/hooks/useToPageTop'
 
 import ErrorNetworkAlert from './ErrorNetworkAlert'
+import NotifyButton from './NotifyButton'
 
 const Header: FC = () => {
   const navigate = useNavigate()
@@ -27,6 +27,7 @@ const Header: FC = () => {
           </nav>
           <div className="web-header-tools">
             <ConnectButton />
+            <NotifyButton />
           </div>
         </div>
       </header>
