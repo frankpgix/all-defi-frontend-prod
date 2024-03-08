@@ -233,7 +233,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           <Tab>Fees</Tab>
           <Tab>Vault</Tab>
           <Tab>Risk Control</Tab>
-          <Tab>Dapp</Tab>
+          <Tab disabled={data.isClosed}>Dapp</Tab>
           {/* <Tab>Dapp2</Tab> */}
         </TabList>
         {/* Basic TabPanel */}
@@ -309,7 +309,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
             ) : (
               <>
                 <ValutSettleButton
-                  disabled={![5, 4, 6].includes(data.status)}
+                  disabled={![5, 4, 6].includes(data.status) || data.isClosed}
                   outline
                   callback={getData}
                   vaultAddress={vaultAddress}
@@ -319,7 +319,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                 </ValutSettleButton>
                 <Button
                   to={`/manage/manager/vault-edit/${vaultAddress}`}
-                  disabled={upData.verifyStatus === 1}
+                  disabled={upData.verifyStatus === 1 || data.isClosed}
                 >
                   {[-1, 2].includes(upData.verifyStatus) ? 'Reset policies' : 'UNDER REVIEW'}
                 </Button>
@@ -572,10 +572,17 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           </SectionLayout>
           <SectionPercentageLine percent={percent} remainPercent={remainPercent} />
           <SectionButtons>
-            <Button to={`/manage/manager/vault-stake/${vaultAddress}/increase`} outline>
+            <Button
+              to={`/manage/manager/vault-stake/${vaultAddress}/increase`}
+              outline
+              disabled={data.isClosed}
+            >
               INCREASE VAULT MAX AUM LIMIT
             </Button>
-            <Button to={`/manage/manager/vault-stake/${vaultAddress}/reduce`}>
+            <Button
+              to={`/manage/manager/vault-stake/${vaultAddress}/reduce`}
+              disabled={data.isClosed}
+            >
               REDUCE VAULT MAX AUM LIMIT
             </Button>
           </SectionButtons>
