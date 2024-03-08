@@ -58,6 +58,7 @@ export const calcVaultDetail = (item: any): VaultDetailProps => {
   const epochStartTime = Number(safeInterceptionValues(item.epochStartTime, 0, 0)) * 1000
   const underlyingToken = getTokenByAddress(item.underlyingToken)
   const decimals = underlyingToken.decimals
+  const status = Number(safeInterceptionValues(item.stage, 0, 0))
   // console.log(epochStartTime, 'test')
   // const precision = baseTokenObj.precision
   return {
@@ -68,7 +69,8 @@ export const calcVaultDetail = (item: any): VaultDetailProps => {
     createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
     epochIndex: Number(safeInterceptionValues(item.epochIndex, 0, 0)),
     epochStartTime,
-    status: Number(safeInterceptionValues(item.stage, 0, 0)),
+    status,
+    isClosed: status === 6,
 
     subscribeRedeemEndTime:
       epochStartTime + Number(safeInterceptionValues(item.stageDurations[0], 0, 0)) * 1000,

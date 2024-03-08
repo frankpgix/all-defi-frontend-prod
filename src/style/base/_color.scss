@@ -14,7 +14,7 @@ $ce7: #e7e7e7;
 $cc4: #c4c4c4;
 $c9b: #9b9b9b;
 $c73: #737373;
-$c26: #2C2626;
+$c26: #2c2626;
 
 $white: $cff;
 $bg: $cf8;
@@ -25,36 +25,35 @@ $text: $c73;
 $black: $c26;
 
 // system
-$succ: #4ADCB3;
-$fail: #FD3D60;
-$wait: #FFB764;
-$info: #B1DCFF;
+$succ: #4adcb3;
+$fail: #fd3d60;
+$wait: #ffb764;
+$info: #b1dcff;
 
-$rise: #13BC8B;
+$rise: #13bc8b;
 $fall: $fail;
 
 // 彩色
 // 蓝色
-$blue: #1036E6;
+$blue: #1036e6;
 // 浅蓝色
-$lBlue: #467AFF;
+$lBlue: #467aff;
 // 作为背景用的蓝色
-$bgBlue: #F1F3F9;
+$bgBlue: #f1f3f9;
 // 橘色
-$orange: #FEA036;
+$orange: #fea036;
 // 浅橘色
-$lOrange: #FFB663;
+$lOrange: #ffb663;
 // 深橘色
-$dOrange: #D55C05;
+$dOrange: #d55c05;
 // 绿色
 $green: #007955;
-$lGreen: #4ADCB3;
+$lGreen: #4adcb3;
 // 紫色
-$purple: #632ECA;
+$purple: #632eca;
 $red: $fail;
 
-$bgRed: #FFECEC;
-
+$bgRed: #ffecec;
 
 // 主色
 $primary: $blue;
@@ -70,4 +69,8 @@ $line: $cf7;
 }
 .warn {
   color: $orange;
+}
+
+.all-gray {
+  filter: grayscale(100%);
 }

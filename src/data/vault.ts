@@ -46,6 +46,7 @@ export const VaultDetailDefault: VaultDetailProps = {
   epochStartTime: 0,
   // stageEndTime: [0, 0, 0, 0], //阶段截止时间。0申购赎回，1申购，2预结算 3结算
   status: -2,
+  isClosed: false,
 
   subscribeRedeemEndTime: 0,
   subscribeEndTime: 0,

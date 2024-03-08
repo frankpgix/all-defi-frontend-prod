@@ -104,6 +104,7 @@ const Withhold: FC<Props> = ({ data, userData, getData, share }) => {
             {!isInWithhold && <Tip>Unauthorized operation</Tip>}
           </footer>
         </div>
+        <hr />
       </section>
       <InfoDialog
         show={infoStatus}

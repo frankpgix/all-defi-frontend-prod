@@ -25,14 +25,18 @@ const Bench: FC<Props> = ({ userData, data, getData, share }) => {
       <section className="web-fund-detail-bench-layout">
         <Tabs>
           <TabList>
-            <Tab>Allocate to vault</Tab>
-            <Tab>Withhold from vault & Claim</Tab>
+            {!data.isClosed && <Tab>Allocate to vault</Tab>}
+            <Tab>{!data.isClosed && <>Withhold from vault & </>}Claim</Tab>
           </TabList>
+          {!data.isClosed && (
+            <TabPanel>
+              <Allocate data={data} getData={getData} />
+            </TabPanel>
+          )}
           <TabPanel>
-            <Allocate data={data} getData={getData} />
-          </TabPanel>
-          <TabPanel>
-            <Withhold userData={userData} data={data} share={share} getData={getData} />
+            {!data.isClosed && (
+              <Withhold userData={userData} data={data} share={share} getData={getData} />
+            )}
             <Claim userData={userData} getData={getData} />
           </TabPanel>
         </Tabs>

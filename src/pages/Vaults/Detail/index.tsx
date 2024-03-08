@@ -25,7 +25,7 @@ const Detail: FC = () => {
 
   return (
     <>
-      {!loading && vaultDetail.status === 6 && (
+      {!loading && vaultDetail.isClosed && (
         <div className="web">
           <Alert show type="error">
             {baseInfo.name} has submitted an exit application to the platform. If approved, the

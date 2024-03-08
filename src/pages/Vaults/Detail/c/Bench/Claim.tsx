@@ -40,7 +40,6 @@ const Claim: FC<Props> = ({ userData, getData }) => {
   return (
     <>
       <section className="web-fund-detail-bench">
-        <hr />
         <h4>Claim AC token</h4>
         <div className="web-fund-detail-bench-input">
           <Input

@@ -37,6 +37,7 @@ export interface VaultDetailProps {
   epochStartTime: number
   // stageEndTime: [number, number, number, number] //阶段截止时间。0申购赎回，1申购，2预结算 3结算
   status: number
+  isClosed: boolean
 
   subscribeRedeemEndTime: number
   subscribeEndTime: number

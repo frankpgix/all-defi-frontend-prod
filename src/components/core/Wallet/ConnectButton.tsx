@@ -77,7 +77,7 @@ const getConnectorIcon = (id: string) => {
     'com.okex.wallet': 'icon/okx.svg',
     'io.metamask': 'icon/metamask.svg'
   }
-  return icons[id] ?? ''
+  return icons[id] ?? 'asset/wallet.png'
 }
 
 const ConnectorItem: FC<ConnectorItemProps> = ({ connector, onClick }) => {
