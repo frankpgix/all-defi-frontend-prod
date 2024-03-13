@@ -21,12 +21,14 @@ export const onTransaction = async (
     const VaultContract = useVaultContract(vaultAddress)
     const transaction = txs[0]
     const { data, value } = fixGmxTrade(transaction.data, transaction?.value)
+    // const data = transaction.data
+    // const value = transaction?.value
 
     const transactionHash = await writeContract(config, {
       ...VaultContract,
       functionName: 'executeTransaction',
-      args: [transaction.to, data],
-      value: getUnitAmount(value || 0, 18),
+      args: [transaction.to, data, value || 0],
+      // value: getUnitAmount(value || 0, 18),
       account
     })
 
@@ -49,7 +51,7 @@ export const onTransaction = async (
 
     // return transactionHash
   } catch (error: any) {
-    createNotify({ content: error?.reason, type: 'error' })
+    createNotify({ content: error?.shortMessage || error?.reason, type: 'error' })
     return null
   }
 }
@@ -69,6 +71,7 @@ export const onSign = async (data: any, vaultAddress: AddressType, account: Addr
     message.sigDeadline
   ]
 
+  console.log('encodeData', encodeData)
   const transactionHash = await writeContract(config, {
     ...UniV3ACLContract,
     functionName: 'registerPermitSingle',
@@ -79,7 +82,8 @@ export const onSign = async (data: any, vaultAddress: AddressType, account: Addr
 
   console.log(transactionHash)
   delete types.EIP712Domain
-  const signature = await signTypedData(config, { domain, types, message, primaryType })
+  const signature = await signTypedData(config, { account, domain, types, message, primaryType })
+  console.log('signature', signature)
   return signature
   // return transactionHash
   // const { domain, types, message } = data
