@@ -18,6 +18,17 @@ export const tokens: { [key in TokenKeys]: Token } = {
     precision: 2,
     icon: 'symbol/usdc.svg'
   }),
+  USDT: new Token({
+    name: 'USDT',
+    symbol: 'USDT',
+    address: {
+      [ChainId.MAINNET]: '',
+      [ChainId.ARBITRUM]: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9'
+    },
+    decimals: 6,
+    precision: 2,
+    icon: 'symbol/usdc.svg'
+  }),
   acUSDC: new Token({
     name: 'acUSDC',
     symbol: 'acUSDC',

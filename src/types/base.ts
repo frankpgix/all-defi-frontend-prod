@@ -40,6 +40,7 @@ export type AccountType = AddressType
 
 export type TokenKeys =
   | 'USDC'
+  | 'USDT'
   | 'acUSDC'
   | 'WETH'
   | 'ETH'
