@@ -23,6 +23,7 @@ export interface AaveV3DetailAssetTypes {
 export interface AaveV3DetailTypes {
   collateral: AaveV3DetailAssetTypes[]
   debt: AaveV3DetailAssetTypes[]
+  healthFactor: string
 }
 
 export interface GMXTradePositionTypes {

@@ -22,3 +22,13 @@ const Icon: FC<Props> = ({ size, name }) => {
 }
 
 export default Icon
+
+export const IconGroup: FC<{ list: TokenKeys[]; size?: string }> = ({ list, size = 'mini' }) => {
+  return (
+    <div className="c-token-icon-group">
+      {list.map((item) => (
+        <Icon name={item} size={size} />
+      ))}
+    </div>
+  )
+}

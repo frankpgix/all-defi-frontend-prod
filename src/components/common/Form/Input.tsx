@@ -45,7 +45,6 @@ const Input: FC<InputProps> = ({
   const onChangeFunc = (values: NumberFormatValues) => {
     if (!onChange) return
     onChange(values.value)
-    // console.log(1111)
   }
 
   const changeFunc = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

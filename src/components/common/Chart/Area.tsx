@@ -1,11 +1,7 @@
-// @ts-nocheck
-import { FC, useContext, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import dayjs from 'dayjs'
-import numeral from 'numeral'
 import { formatNumber } from '@/utils/tools'
-
-// import ThemeContext from '@/context/Theme/Context'
 
 interface Props {
   data: any[]
@@ -34,18 +30,13 @@ const AreaC: FC<Props> = ({
   className,
   loading
 }) => {
-  // const { theme } = useContext(ThemeContext)
   const formatTime = (time: number) => {
-    // console.log(index)
     return dayjs(time).format(timeFormatStr)
   }
-  // const formatValue = (value: number) => numeral(value).format(valueFormatStr).toLocaleUpperCase()
-  // const formatTip = (value: number): [number, string] => [value, yLabel]
   const formatTip = (value: number) => [
     `${formatNumber(value, valueDecimal, valueFormatStr)} ${valueSuffix ? valueSuffix : ''}`,
     yLabel
   ]
-  // [value, yLabel]
   const toolTipStyle = {
     borderWidth: 0,
     backgroundColor: '#1036E6',
@@ -55,20 +46,17 @@ const AreaC: FC<Props> = ({
     boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)',
     fontSize: '14px'
   }
-  const isZeroData = useMemo(
-    () => !Boolean(data.find((item: any) => item[yKey] !== 0)),
-    [data, yKey]
-  )
-  const isLoading = useMemo(
-    () => loading || data.length < 2 || isZeroData,
-    [loading, data.length, isZeroData]
-  )
-  // if (loading || data.length < 2) return <ChartLoading show />
+  // const isZeroData = useMemo(
+  //   () => !Boolean(data.find((item: any) => item[yKey] !== 0)),
+  //   [data, yKey]
+  // )
+  // const isLoading = useMemo(() => loading || data.length < 2 || isZeroData, [loading, data.length, isZeroData])
+
+  const isLoading = useMemo(() => loading || data.length < 2, [loading, data.length])
   const initData = JSON.parse(
     `[{"${xKey}": 0, "${yKey}": 0.5}, {"${xKey}": 0, "${yKey}": 0.9}, {"${xKey}": 0, "${yKey}": 0.1}, {"${xKey}": 0, "${yKey}": 0.5}]`
   )
 
-  // console.log('data', data)
   return (
     <ResponsiveContainer width="100%" height="100%" className={className}>
       <AreaChart
@@ -90,7 +78,7 @@ const AreaC: FC<Props> = ({
         <YAxis
           dataKey={yKey}
           hide
-          domain={[(dataMin) => dataMin * 0.9, (dataMax) => dataMax * 1.1]}
+          domain={[(dataMin: number) => dataMin * 0.9, (dataMax: number) => dataMax * 1.1]}
         />
         {!isLoading && (
           <Tooltip

@@ -64,7 +64,7 @@ const Record: FC<Props> = ({ vaultAddress }) => {
 
   // const list = [{ id: 1, category: 'Uniswap', out: 100000, in: 1000000, time: 123456 }]
   const { loading, data } = useVaultActionAssetData(vaultAddress)
-  // console.log(JSON.stringify(data, null, '  '))
+  console.log(JSON.stringify(data, null, '  '))
   return (
     <Table
       className="web-buy-table"

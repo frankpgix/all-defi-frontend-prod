@@ -11,6 +11,13 @@
     font-size: 20px;
     font-weight: 800;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    small {
+      margin-left: 50px;
+      font-size: 14px;
+      font-weight: normal;
+    }
   }
   & > h4 {
     font-size: 16px;

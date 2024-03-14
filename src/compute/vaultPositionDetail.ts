@@ -41,6 +41,8 @@ export const calcAaveV3Position = (
   response: any,
   underlyingToken: Token
 ): AaveV3DetailTypes | null => {
+  console.log(response, 'response')
+  const healthFactor = safeInterceptionValues(response.healthFactor, 4, 4)
   const collateral = response.collateralAssets.map((address: AddressType, index: number) => {
     const asset = getTokenByAddress(address)
     return {
@@ -72,7 +74,7 @@ export const calcAaveV3Position = (
     }
   })
   if (collateral.length === 0 && debt.length === 0) return null
-  return { collateral, debt }
+  return { collateral, debt, healthFactor }
 }
 
 export const calcGMXTradePosition = (response: any[]): GMXTradePositionTypes[] => {

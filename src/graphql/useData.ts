@@ -10,6 +10,7 @@ import { calcVaultListGQL, calcVaultMonthDataGql } from './calcGql'
 
 import { removeZeroKeys } from './tools'
 import { VaultMonthDataType } from '@/types/graphql'
+import Token from '@/class/Token'
 
 export const useVaultData = (gql: any, decimals: number, precision: number) => {
   const { loading, error, data: sData } = useQuery(gql)
@@ -76,13 +77,20 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
   // return { loading: true, error: null, data: [], count: 0 }
 }
 
-export const useVaultDetailChartData = (gql: any) => {
+export const useVaultDetailChartData = (gql: any, underlyingToken: Token) => {
   const { loading, error, data: sData } = useQuery(gql)
+  console.log(sData, 'sData')
   const data = (sData?.vaultIntervalDatas ?? [])
     .map((item: any) => ({
       time: item.periodStartUnix * 1000,
       value: Number(safeInterceptionValues(String(item.sharePrice), 6, 18)),
-      aum: Number(safeInterceptionValues(String(item.aum), 18, 18))
+      aum: Number(
+        safeInterceptionValues(
+          String(item.aum),
+          underlyingToken.precision,
+          underlyingToken.decimals
+        )
+      )
     }))
     .reverse()
 

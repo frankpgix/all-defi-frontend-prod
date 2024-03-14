@@ -11,7 +11,7 @@ import { UniLPDetailTypes } from '@/types/vaultPositionDetail'
 
 import { TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
-import { TokenIcon } from '@@/common/TokenUnit'
+import { IconGroup } from '@@/common/TokenUnit'
 // import Button from '@@/common/Button'
 interface Props {
   data: UniLPDetailTypes[]
@@ -30,12 +30,10 @@ const UniLP: FC<Props> = ({ data, underlyingToken, loading }) => {
       dataIndex: 'id',
       width: 200,
       render: (_: number, row: any) => (
-        <>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-            <TokenIcon name={row.token0.name} size="mini" /> {row.token0.name} <span>/</span>
-            <TokenIcon name={row.token1.name} size="mini" /> {row.token1.name}
-          </div>
-        </>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <IconGroup list={[row.token0.name, row.token1.name]} /> {row.token0.name}/
+          {row.token1.name}
+        </div>
       )
     },
     {

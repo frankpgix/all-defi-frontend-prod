@@ -11,7 +11,7 @@ import { Input, Slider } from '@@/common/Form'
 import Button from '@@/common/Button'
 import Tip from '@@/common/Tip'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
-import { VaultDetailProps } from '@/types/vault'
+import { VaultDetailProps, VaultBaseInfoProps } from '@/types/vault'
 import { TokenKeys } from '@/types/base'
 
 import { useAllocate } from '@/hooks/useVault'
@@ -19,9 +19,10 @@ import { useAllocate } from '@/hooks/useVault'
 interface Props {
   getData: () => void
   data: VaultDetailProps
+  base: VaultBaseInfoProps
 }
 
-const Allocate: FC<Props> = ({ getData, data }) => {
+const Allocate: FC<Props> = ({ getData, data, base }) => {
   const { account } = useProfile()
   const { balances, refetch: reBalances } = useUserBalances()
   const { onAllocate } = useAllocate(data.address)
@@ -37,6 +38,7 @@ const Allocate: FC<Props> = ({ getData, data }) => {
     [balances, acToken?.name]
   )
   const [value, setValue] = useState<number | string>('')
+  const [inputValue, setInputValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
 
   const maxAum = useMemo(
@@ -53,8 +55,13 @@ const Allocate: FC<Props> = ({ getData, data }) => {
       ),
     [data.realtimeAUMLimit, data.aum, data.subscribingACToken]
   )
-  const maxBalance = useMemo(() => BN(acTokenBalance).toNumber(), [acTokenBalance])
-  const maxValue = useMemo(() => Math.min(maxAum, maxBalance), [maxAum, maxBalance])
+  // const maxBalance = useMemo(() => BN(acTokenBalance).toNumber(), [acTokenBalance])
+  const maxValue = useMemo(
+    () => Math.min(maxAum, acTokenBalance, base.subscriptionMaxLimit),
+    [maxAum, acTokenBalance, base.subscriptionMaxLimit]
+  )
+  console.log(maxValue, maxAum, acTokenBalance, base.subscriptionMaxLimit)
+  // const maxValue = useMemo(() => 10000, [maxAum, maxBalance])
 
   const isInAllocate = useMemo(() => [0, 1, 2].includes(data.status), [data.status])
 
@@ -72,6 +79,7 @@ const Allocate: FC<Props> = ({ getData, data }) => {
 
   const onInputChange = (val: number | string) => {
     val = Number(val)
+    setInputValue(val)
     if (isNaN(val)) val = 0
     if (val > maxValue) val = maxValue
     if (val < 0) val = 0
@@ -96,10 +104,22 @@ const Allocate: FC<Props> = ({ getData, data }) => {
       })
     }
   }
+
+  const minAmountError = useMemo(
+    () => inputValue !== '' && Number(inputValue) < base.subscriptionMinLimit,
+    [inputValue]
+  )
+  const maxAmountError = useMemo(
+    () => inputValue !== '' && Number(inputValue) > maxValue,
+    [inputValue]
+  )
   return (
     <>
       <section className="web-fund-detail-bench">
-        <h4>Allocate to vault</h4>
+        <h4>
+          Allocate to vault {String(value)}
+          {JSON.stringify(minAmountError)}
+        </h4>
         <div className="web-fund-detail-bench-input">
           <Input
             value={value}
@@ -109,9 +129,19 @@ const Allocate: FC<Props> = ({ getData, data }) => {
             right
             placeholder="0"
             type="number"
-            error={value !== '' && Number(value) === 0}
+            error={(value !== '' && Number(value) === 0) || minAmountError || maxAmountError}
             // disabled={!isInSubscribe}
           >
+            {minAmountError && (
+              <p className="fall">
+                Minimum deposit amount {base.subscriptionMinLimit} ac{baseToken.name}
+              </p>
+            )}
+            {maxAmountError && (
+              <p className="fall">
+                Maxmum deposit amount {maxValue} ac{baseToken.name}
+              </p>
+            )}
             <p>
               {acToken?.name} Balance: {acTokenBalance}
             </p>

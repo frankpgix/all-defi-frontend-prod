@@ -41,6 +41,7 @@ const Detail: FC = () => {
       {!loading && (
         <Bench
           userData={vaultUserDetail}
+          base={baseInfo}
           data={vaultDetail}
           share={vaultShareComposition}
           loading={loading}

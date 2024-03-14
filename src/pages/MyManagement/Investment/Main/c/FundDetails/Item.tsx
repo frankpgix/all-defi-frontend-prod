@@ -81,20 +81,27 @@ const FundItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
 
   const acToken = useMemo(() => getTokenByAddress(fund.acToken), [fund.acToken])
 
+  const ivFinish = useMemo(() => fund.data.status === 6, [fund.data.status])
+
   useEffect(() => {
     void inView()
   }, [inView])
 
   return (
     <>
-      <section className={classNames('web-manage-investment-fund-item', { active, finish: false })}>
+      <section
+        className={classNames('web-manage-investment-fund-item', {
+          active,
+          finish: ivFinish
+        })}
+      >
         <div ref={ref} className="web-manage-investment-fund-item-position"></div>
         <header onClick={onChange}>
           <h3>{fund.name}</h3>
         </header>
 
         <div className="web-manage-investment-fund-item-detail">
-          {fund.data.status === 6 && (
+          {ivFinish && (
             <div style={{ padding: '0 40px' }}>
               <Blank height={30} />
 

@@ -15,7 +15,7 @@ interface Props {
 }
 
 const AAVE: FC<Props> = ({ data, underlyingToken, loading }) => {
-  console.log(data)
+  console.log(data?.healthFactor, 'healthFactor')
   const caclWebColumns = (isDeposit: boolean) => [
     {
       title: isDeposit ? 'Deposit' : 'Debt',
@@ -44,7 +44,9 @@ const AAVE: FC<Props> = ({ data, underlyingToken, loading }) => {
   if (data) {
     return (
       <>
-        <h3>AAVE</h3>
+        <h3>
+          AAVE <small>Health Factor: {data?.healthFactor ?? 0}</small>
+        </h3>
         {data.collateral.length ? (
           <>
             {/* <h4>Deposit</h4> */}

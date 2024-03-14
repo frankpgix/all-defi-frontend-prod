@@ -37,7 +37,7 @@ const Dashboard: FC<Props> = ({ vaultAddress, data, base, loading }) => {
     baseToken.decimals,
     baseToken.precision
   )
-  // console.log(123, chartData)
+  console.log(123, data)
   if (loading) {
     return (
       <div className="web-manage-manager-dashboard">
@@ -71,9 +71,13 @@ const Dashboard: FC<Props> = ({ vaultAddress, data, base, loading }) => {
   return (
     <div className="web-manage-manager-dashboard">
       <header>
-        <h4>Net Asset Value</h4>
+        <h4>{chartType === 'nav' ? 'Net Asset Value' : 'Share Price'}</h4>
         <em>
-          <TokenValue value={data.nav} token={baseToken} format="0,0.00" />
+          <TokenValue
+            value={chartType === 'nav' ? data.nav : data.sharePrice}
+            token={baseToken}
+            format="0,0.00"
+          />
         </em>
       </header>
       <TimeSelect

@@ -4,7 +4,12 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 
 // import { FundDetailProps, FundUserDataProps, ShareCompositionProps } from '@/class/help'
 
-import { VaultDetailProps, VaultUserDetailProps, ShareCompositionProps } from '@/types/vault'
+import {
+  VaultBaseInfoProps,
+  VaultDetailProps,
+  VaultUserDetailProps,
+  ShareCompositionProps
+} from '@/types/vault'
 
 import Allocate from './Allocate'
 import Withhold from './Withhold'
@@ -14,12 +19,13 @@ import Claim from './Claim'
 interface Props {
   userData: VaultUserDetailProps
   data: VaultDetailProps
+  base: VaultBaseInfoProps
   share: ShareCompositionProps
   getData: () => void
   loading: boolean
 }
 
-const Bench: FC<Props> = ({ userData, data, getData, share }) => {
+const Bench: FC<Props> = ({ userData, data, base, getData, share }) => {
   return (
     <>
       <section className="web-fund-detail-bench-layout">
@@ -30,7 +36,7 @@ const Bench: FC<Props> = ({ userData, data, getData, share }) => {
           </TabList>
           {!data.isClosed && (
             <TabPanel>
-              <Allocate data={data} getData={getData} />
+              <Allocate data={data} base={base} getData={getData} />
             </TabPanel>
           )}
           <TabPanel>

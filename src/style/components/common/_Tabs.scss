@@ -23,6 +23,9 @@
       color: $white;
       box-shadow: 4px 0px 16px #a7c0ff;
     }
+    &--disabled {
+      cursor: not-allowed;
+    }
     &:focus-visible {
       outline: none;
     }
@@ -36,3 +39,4 @@
     }
   }
 }
+// react-tabs__tab

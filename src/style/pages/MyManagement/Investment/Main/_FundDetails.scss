@@ -30,12 +30,12 @@
       align-items: center;
       padding-right: 20px;
       h3 {
-        height: 60px;
         padding: 0 40px;
         font-size: 16px;
         display: flex;
         align-items: center;
         @include ns();
+        position: relative;
       }
 
       &:after {
@@ -82,8 +82,15 @@
       }
     }
     &.finish {
-      & > header {
-        background: $lBlue;
+      & > header h3::before {
+        // background: $lBlue;
+        content: '';
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: url($res + 'icon/warning.svg') center/contain no-repeat;
+        position: absolute;
+        left: 10px;
       }
     }
     &:not(:last-child) {
