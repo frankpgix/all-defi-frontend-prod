@@ -14,7 +14,7 @@ export const derivativesConfig: DerivativesType = {
     info: 'UNIV3 info, need some words in here, about this dapp.',
     tags: ['DeFi', 'Dex'],
     url: encodeURIComponent(
-      'https://bafybeieu3j7cdq5nz4r6z7qnoxcyqq7bk4wjiyxmelpzprkvoaedcb4uze.ipfs.cf-ipfs.com/#/swap'
+      'https://bafybeibsiv5ydw2r7uxbe47gv2skti7s2basi5swll6pjcpnyapvab4dua.ipfs.cf-ipfs.com/#/swap'
     )
   },
   UNIV3LP: {
@@ -22,7 +22,7 @@ export const derivativesConfig: DerivativesType = {
     info: 'UNIV3LP info, need some words in here, about this dapp.',
     tags: ['DeFi', 'Earn'],
     url: encodeURIComponent(
-      'https://bafybeieu3j7cdq5nz4r6z7qnoxcyqq7bk4wjiyxmelpzprkvoaedcb4uze.ipfs.cf-ipfs.com/#/pools'
+      'https://bafybeibsiv5ydw2r7uxbe47gv2skti7s2basi5swll6pjcpnyapvab4dua.ipfs.cf-ipfs.com/#/pool'
     )
   },
   AAVEV3: {
