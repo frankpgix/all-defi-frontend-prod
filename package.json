@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.5",
+    "@rainbow-me/rainbowkit": "^2.0.2",
     "@safe-global/safe-core-sdk": "^3.3.5",
     "@sentry/react": "^7.105.0",
     "@tanstack/react-query": "^5.17.15",
@@ -24,7 +25,6 @@
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
-    "process": "^0.11.10",
     "rc-collapse": "^3.7.2",
     "rc-dialog": "^9.3.4",
     "rc-table": "^7.41.0",
@@ -54,12 +54,12 @@
     "@types/store": "^2.0.5",
     "@typescript-eslint/parser": "^6.19.0",
     "@vitejs/plugin-react": "^4.1.0",
-    "buffer": "^6.0.3",
     "eslint": "^8.56.0",
     "prettier": "^3.2.4",
     "sass": "^1.70.0",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-node-polyfills": "^0.21.0"
   }
 }

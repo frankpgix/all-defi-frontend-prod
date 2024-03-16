@@ -1,21 +1,32 @@
-import { http, createConfig } from 'wagmi'
+import { createConfig, http } from 'wagmi'
 import { arbitrum } from 'wagmi/chains'
-import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors'
+
+import { connectorsForWallets } from '@rainbow-me/rainbowkit'
+import {
+  coinbaseWallet,
+  injectedWallet,
+  metaMaskWallet,
+  okxWallet,
+  walletConnectWallet
+} from '@rainbow-me/rainbowkit/wallets'
+
+const connectors = connectorsForWallets(
+  [
+    {
+      groupName: 'Recommended',
+      wallets: [metaMaskWallet, okxWallet, injectedWallet, coinbaseWallet, walletConnectWallet]
+    }
+  ],
+  {
+    appName: 'MyDapp',
+    projectId: '90c1c8a3dd769315f8c0e10b2ae4bd16'
+  }
+)
 
 export const config = createConfig({
   chains: [arbitrum],
-  connectors: [
-    injected(),
-    coinbaseWallet({ appName: 'ALL DeFi' }),
-    walletConnect({ projectId: '90c1c8a3dd769315f8c0e10b2ae4bd16' })
-  ],
+  connectors,
   transports: {
     [arbitrum.id]: http()
   }
 })
-
-declare module 'wagmi' {
-  interface Register {
-    config: typeof config
-  }
-}
