@@ -1,6 +1,6 @@
 import { useReadContract, useWriteContract } from 'wagmi'
 import { AddressType } from '@/types/base'
-import { useVaultContract } from '@/hooks/useContract'
+import { useVaultContract } from '@/hooks/Contracts/useContract'
 import Token from '@/class/Token'
 
 // import { VaultBaseInfoProps } from '@/types/vault'

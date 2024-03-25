@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import Alert from '@@/common/Alert'
 import Blank from '@@/common/Blank'
 
-import { useVaultDetails } from '@/hooks/useVaultDetails'
+import { useVaultDetails } from '@/hooks/Contracts/useVaultDetails'
 import { useProfile } from '@/hooks/useProfile'
 
 import Dashboard from './c/Dashboard'

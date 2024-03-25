@@ -4,7 +4,7 @@ import {
   useVaultContract,
   useVaultReaderContract,
   useAllProtocolContract
-} from '@/hooks/useContract'
+} from '@/hooks/Contracts/useContract'
 import {
   calcVaultBaseInfo,
   calcVaultDetail,

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useParams, Navigate } from 'react-router-dom'
 import { AddressType } from '@/types/base'
-import { useBaseInfo } from '@/hooks/useVault'
+import { useBaseInfo } from '@/hooks/Contracts/useVault'
 
 import Loading from '@@/common/Loading'
 

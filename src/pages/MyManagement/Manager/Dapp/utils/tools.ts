@@ -1,6 +1,6 @@
 import { writeContract, signTypedData } from '@wagmi/core'
 import { config } from '@/config/wagmi'
-import { useVaultContract, useUniV3ACLContract } from '@/hooks/useContract'
+import { useVaultContract, useUniV3ACLContract } from '@/hooks/Contracts/useContract'
 import { AddressType } from '@/types/base'
 // import { getUnitAmount } from '@/utils/tools'
 

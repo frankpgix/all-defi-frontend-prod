@@ -3,7 +3,7 @@ import BN from 'bignumber.js'
 import { useToggle } from 'ahooks'
 
 import { useProfile } from '@/hooks/useProfile'
-import { useSettleAccount } from '@/hooks/useVault'
+import { useSettleAccount } from '@/hooks/Contracts/useVault'
 
 import Button, { ButtonProps } from '@@/common/Button'
 

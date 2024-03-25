@@ -6,7 +6,7 @@ import { STATIC_RESOURCES_URL } from '@/config'
 
 import { useProfile } from '@/hooks/useProfile'
 import { useAllTokenPriceInUSD } from '@/hooks/Contracts/useAllProtocol'
-import { useHarvestAll, useUserRewardDashboard } from '@/hooks/useRewardTracker'
+import { useHarvestAll, useUserRewardDashboard } from '@/hooks/Contracts/useRewardTracker'
 
 import { addTokenToWallet } from '@/utils/wallet'
 import { formatNumber } from '@/utils/tools'

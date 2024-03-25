@@ -1,5 +1,5 @@
 import { useWriteContract } from 'wagmi'
-import { useACProtocolContract } from '@/hooks/useContract'
+import { useACProtocolContract } from '@/hooks/Contracts/useContract'
 import { AddressType } from '@/types/base'
 import { getUnitAmount } from '@/utils/tools'
 import { getTokenByAddress } from '@/config/tokens'

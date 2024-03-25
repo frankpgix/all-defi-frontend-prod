@@ -18,7 +18,7 @@ import ContentLoader from 'react-content-loader'
 
 // import { useProfile } from '@/hooks/useProfile'
 // import { useVaultStakedALL } from '@/hooks/useAllProtocol'
-import { useVaultManageDetails } from '@/hooks/useVaultDetails'
+import { useVaultManageDetails } from '@/hooks/Contracts/useVaultDetails'
 // import { useVaultBreachDetail, useVaultUpdatingData } from '@/hooks/useVaultReader'
 import { AddressType } from '@/types/base'
 import Blank from '@@/common/Blank'

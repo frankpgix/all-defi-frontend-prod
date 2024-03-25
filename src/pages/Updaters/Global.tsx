@@ -9,7 +9,7 @@ import { useAccount } from 'wagmi'
 // // import { getJsonRpcProvider } from '@/utils/contractHelpers'
 import { useProfile } from '@/hooks/useProfile'
 import { useVaultCountLimit } from '@/hooks/Contracts/useAllProtocol'
-import { useGetVaultList } from '@/hooks/useVaultList'
+import { useGetVaultList } from '@/hooks/Contracts/useVaultList'
 // import { useUpdateBaseTokenPriceInUSD } from '@/hooks/useBaseTokenPrice'
 export default function Global(): null {
   // const { address } = getAccount(config)

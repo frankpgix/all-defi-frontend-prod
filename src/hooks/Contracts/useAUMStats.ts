@@ -1,5 +1,5 @@
 import { useReadContract } from 'wagmi'
-import { useAUMStatsContract } from '@/hooks/useContract'
+import { useAUMStatsContract } from '@/hooks/Contracts/useContract'
 import { GlobalAssetStatisticDefault } from '@/data/vault'
 import { calcGlobalAssetStatistic } from '@/compute/vault'
 

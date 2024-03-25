@@ -1,7 +1,7 @@
 import { FC, useState, useMemo, memo } from 'react'
 import { min } from 'lodash'
 import { formatNumber } from '@/utils/tools'
-import { useManageVaultListHook } from '@/hooks/useVaultList'
+import { useManageVaultListHook } from '@/hooks/Contracts/useVaultList'
 
 import TimeSelect from '@@/core/ChartTimeSelect'
 import { AreaChart } from '@/components/common/Chart'

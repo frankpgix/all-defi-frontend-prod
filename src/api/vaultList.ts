@@ -4,7 +4,7 @@ import { decodeAbiParameters } from 'viem'
 
 import { AbiEvent } from 'abitype'
 import { config } from '@/config/wagmi'
-import { useVaultReaderContract, useVaultFactoryContract } from '@/hooks/useContract'
+import { useVaultReaderContract, useVaultFactoryContract } from '@/hooks/Contracts/useContract'
 import { calcVaultBaseInfo, calcVaultDetail, calcVaultUserDetail } from '@/compute/vault'
 
 import { VaultProps, VaultDetailProps, VaultUserListDataProps } from '@/types/vault'

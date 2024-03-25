@@ -8,7 +8,7 @@ import Button from '@@/common/Button'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
 import InfoDialog from '@@/common/Dialog/Info'
 
-import { useClaim } from '@/hooks/useVault'
+import { useClaim } from '@/hooks/Contracts/useVault'
 import { VaultUserDetailProps } from '@/types/vault'
 import { TokenKeys } from '@/types/base'
 

@@ -3,7 +3,7 @@ import BN from 'bignumber.js'
 import { isNaN } from 'lodash'
 
 import { useProfile } from '@/hooks/useProfile'
-import { useWithhold } from '@/hooks/useVault'
+import { useWithhold } from '@/hooks/Contracts/useVault'
 
 import { VaultDetailProps, VaultUserDetailProps, ShareCompositionProps } from '@/types/vault'
 

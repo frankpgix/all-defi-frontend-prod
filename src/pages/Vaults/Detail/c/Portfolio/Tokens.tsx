@@ -7,7 +7,7 @@ import { AddressType } from '@/types/base'
 import { getTokenByAddress } from '@/config/tokens'
 import { VaultBaseInfoProps } from '@/types/vault'
 
-import { useAssetComposition } from '@/hooks/useVaultReader'
+import { useAssetComposition } from '@/hooks/Contracts/useVaultReader'
 
 import PercentageLine from '@@/common/PercentageLine'
 import { TableNoData } from '@@/common/TableEmpty'

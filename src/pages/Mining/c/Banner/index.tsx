@@ -6,7 +6,7 @@ import { calcMiningData } from '@/graphql/calcGql'
 
 import DataItem from '@@/common/DataItem'
 import TimeSelect from '@@/core/ChartTimeSelect'
-import { useVaultList } from '@/hooks/useVaultList'
+import { useVaultList } from '@/hooks/Contracts/useVaultList'
 import Chart from './Chart'
 import Counts from './Counts'
 

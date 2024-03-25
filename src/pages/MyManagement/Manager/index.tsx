@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 import ContentLoader from 'react-content-loader'
 
-import { useManageVaultListHook, useGetManageVaultList } from '@/hooks/useVaultList'
+import { useManageVaultListHook, useGetManageVaultList } from '@/hooks/Contracts/useVaultList'
 import { useProfile } from '@/hooks/useProfile'
 import Cache from '@/utils/cache'
 // import { useManageVaultList } from '@/hooks/useVaultReader'

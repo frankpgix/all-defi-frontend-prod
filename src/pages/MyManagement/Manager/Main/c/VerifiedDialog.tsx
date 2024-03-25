@@ -1,7 +1,7 @@
 import { FC, useState, useMemo, useEffect } from 'react'
 import { useRequest } from 'ahooks'
 
-import { useManageVaultListHook, useManageVaultVerifyList } from '@/hooks/useVaultList'
+import { useManageVaultListHook, useManageVaultVerifyList } from '@/hooks/Contracts/useVaultList'
 import { useProfile } from '@/hooks/useProfile'
 import InfoDialog from '@@/common/Dialog/Info'
 import ALink from '@@/common/ALink'

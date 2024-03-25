@@ -11,7 +11,7 @@ import TokenValue from '@@/common/TokenValue'
 // import Popper from '@@/common/Popper'
 // import { useUserFundList } from '@/hooks/useFund'
 import { VaultUserListDataProps, baseTokenPriceInUSDTypes } from '@/types/vault'
-import { useBaseTokenPriceUSD } from '@/hooks/useVaultFactory'
+import { useBaseTokenPriceUSD } from '@/hooks/Contracts/useVaultFactory'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/VaultDetail/c/ManageDetail/C'
 

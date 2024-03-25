@@ -1,6 +1,6 @@
 import { useStoreBaseTokenPrice } from '@/stores/useStoreBaseTokenPrice'
 import { useInterval } from 'ahooks'
-import { useBaseTokenPriceUSD } from '@/hooks/useVaultFactory'
+import { useBaseTokenPriceUSD } from '@/hooks/Contracts/useVaultFactory'
 
 export const useBaseTokenPriceInUSD = () => {
   const { baseTokenPriceList, update } = useStoreBaseTokenPrice((state) => ({

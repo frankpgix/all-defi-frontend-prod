@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from 'react'
 import { useRequest } from 'ahooks'
 
-import { useManageVaultVerifyList } from '@/hooks/useVaultList'
+import { useManageVaultVerifyList } from '@/hooks/Contracts/useVaultList'
 
 import { getVaultReviewed } from '@/api/vaultList'
 import { useProfile } from '@/hooks/useProfile'

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useParams, Navigate } from 'react-router-dom'
 
-import { useVaultDetail } from '@/hooks/useVaultReader'
+import { useVaultDetail } from '@/hooks/Contracts/useVaultReader'
 
 import { AddressType } from '@/types/base'
 import { VaultStakeType } from '@/types/vault'

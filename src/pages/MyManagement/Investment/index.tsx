@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 
 // import { useGetUserFundList, useUserFundList } from '@/hooks/useFund'
-import { useUserVaultList } from '@/hooks/useVaultReader'
+import { useUserVaultList } from '@/hooks/Contracts/useVaultReader'
 import NoInvest from './NoInvest'
 import Main from './Main'
 

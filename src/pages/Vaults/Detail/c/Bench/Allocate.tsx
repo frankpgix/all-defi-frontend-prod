@@ -14,7 +14,7 @@ import { AcUSDCUnit } from '@@/common/TokenUnit'
 import { VaultDetailProps, VaultBaseInfoProps } from '@/types/vault'
 import { TokenKeys } from '@/types/base'
 
-import { useAllocate } from '@/hooks/useVault'
+import { useAllocate } from '@/hooks/Contracts/useVault'
 
 interface Props {
   getData: () => void

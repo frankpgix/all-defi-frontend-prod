@@ -39,7 +39,7 @@ import {
 } from '@/types/vault'
 import { AddressType } from '@/types/base'
 
-import { useVaultUpdatingData } from '@/hooks/useVaultReader'
+import { useVaultUpdatingData } from '@/hooks/Contracts/useVaultReader'
 
 import {
   CountLayout,

@@ -2,7 +2,7 @@ import { useReadContracts, useBalance } from 'wagmi'
 
 import { tokens, ZERO_ADDRESS } from '@/config/tokens'
 
-import { useERC20Contract } from '@/hooks/useContract'
+import { useERC20Contract } from '@/hooks/Contracts/useContract'
 import { safeInterceptionValues } from '@/utils/tools'
 import { profileProps } from '@/types/profile'
 // import { useVaultCountLimit } from '@/hooks/useAllProtocol'

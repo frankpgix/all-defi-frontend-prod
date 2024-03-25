@@ -5,7 +5,7 @@ import { FC, useState } from 'react'
 import { formatNumber } from '@/utils/tools'
 import { useProfile } from '@/hooks/useProfile'
 // import { useNotify } from '@/hooks/useNotify'
-import { useClaimCompensation } from '@/hooks/useVault'
+import { useClaimCompensation } from '@/hooks/Contracts/useVault'
 import { AddressType } from '@/types/base'
 
 import { Input } from '@@/common/Form'

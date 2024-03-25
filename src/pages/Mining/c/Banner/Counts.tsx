@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { formatNumber } from '@/utils/tools'
 import DataItem from '@@/common/DataItem'
-import { useRewardsALLBalance } from '@/hooks/useRewardTracker'
+import { useRewardsALLBalance } from '@/hooks/Contracts/useRewardTracker'
 interface Props {
   totalStakeValue: number
   stakeSharesValue: number

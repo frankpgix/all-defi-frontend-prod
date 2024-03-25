@@ -8,7 +8,7 @@ import { formatNumber, sleep } from '@/utils/tools'
 // import { ProductProps } from '@/config/products'
 import { getTokenByAddress } from '@/config/tokens'
 import { VaultUserListDataProps } from '@/types/vault'
-import { useCancelAllocate, useCancelWithholding } from '@/hooks/useVault'
+import { useCancelAllocate, useCancelWithholding } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/VaultDetail/c/ManageDetail/C'

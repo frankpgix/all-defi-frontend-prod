@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Button from '@@/common/Button'
 
 import { useProfile } from '@/hooks/useProfile'
-import { useStake } from '@/hooks/useRewardTracker'
+import { useStake } from '@/hooks/Contracts/useRewardTracker'
 
 import { PoolStakeArrayItemTypes } from '@/types/rewardTracker'
 import PreStake from './PreStake'

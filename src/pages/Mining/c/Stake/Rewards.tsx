@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { formatNumber } from '@/utils/tools'
 import { useProfile } from '@/hooks/useProfile'
-import { useUserAccClaimedReward } from '@/hooks/useRewardTracker'
+import { useUserAccClaimedReward } from '@/hooks/Contracts/useRewardTracker'
 
 import Popper from '@@/common/Popper'
 

@@ -2,7 +2,7 @@ import { useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 
 import { tokens } from '@/config/tokens'
 
-import { useRewardTrackerContract, useERC20Contract } from '@/hooks/useContract'
+import { useRewardTrackerContract, useERC20Contract } from '@/hooks/Contracts/useContract'
 import { useNotify } from '@/hooks/useNotify'
 
 import { calcPoolItemData } from '@/compute/rewardTracker'

@@ -6,7 +6,7 @@ import BN from 'bignumber.js'
 // import Reward from '@/class/Reward'
 import { sum, formatNumber } from '@/utils/tools'
 import { useProfile } from '@/hooks/useProfile'
-import { useUserSALLAmount } from '@/hooks/useRewardTracker'
+import { useUserSALLAmount } from '@/hooks/Contracts/useRewardTracker'
 
 import { PoolStakeArrayItemTypes } from '@/types/rewardTracker'
 

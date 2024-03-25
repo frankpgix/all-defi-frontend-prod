@@ -1,7 +1,7 @@
 import { useReadContract } from 'wagmi'
 import { sum, isNaN } from 'lodash'
 import BN from 'bignumber.js'
-import { useVaultReaderContract } from '@/hooks/useContract'
+import { useVaultReaderContract } from '@/hooks/Contracts/useContract'
 import { useProfile } from '@/hooks/useProfile'
 import { AddressType } from '@/types/base'
 import {

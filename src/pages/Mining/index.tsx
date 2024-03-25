@@ -2,7 +2,7 @@ import { FC, useMemo, useState } from 'react'
 import BN from 'bignumber.js'
 
 import { sum } from '@/utils/tools'
-import { usePoolList } from '@/hooks/useRewardTracker'
+import { usePoolList } from '@/hooks/Contracts/useRewardTracker'
 import { useProfile } from '@/hooks/useProfile'
 
 import OnceYouBuy from './c/OnceYouBuy'

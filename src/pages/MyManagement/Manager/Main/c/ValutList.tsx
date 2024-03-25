@@ -7,7 +7,7 @@ import ContentLoader from 'react-content-loader'
 import { VaultDetailProps } from '@/types/vault'
 import { MANAGER_UPLODAD_HISTORICAL_DATA_URL } from '@/config'
 
-import { useManageVaultListHook } from '@/hooks/useVaultList'
+import { useManageVaultListHook } from '@/hooks/Contracts/useVaultList'
 
 import ValutSettleButton from '@/pages/MyManagement/Manager/VaultDetail/ValutSettleButton'
 

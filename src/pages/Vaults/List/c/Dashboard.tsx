@@ -2,7 +2,7 @@ import { FC } from 'react'
 // import { useRequest } from 'ahooks'
 import { formatNumber } from '@/utils/tools'
 
-import { useGlobalAssetStats } from '@/hooks/useAUMStats'
+import { useGlobalAssetStats } from '@/hooks/Contracts/useAUMStats'
 
 // import AUMStats from '@/class/AUMStats'
 // import { GlobalAssetStatisticDefault } from '@/class/help'

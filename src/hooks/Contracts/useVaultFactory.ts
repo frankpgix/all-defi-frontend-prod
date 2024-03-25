@@ -4,7 +4,7 @@ import { useReadContract, useReadContracts } from 'wagmi'
 import { AddressType } from '@/types/base'
 import { safeInterceptionValues } from '@/utils/tools'
 import { baseTokens, tokens, ZERO_ADDRESS } from '@/config/tokens'
-import { useVaultFactoryContract } from '@/hooks/useContract'
+import { useVaultFactoryContract } from '@/hooks/Contracts/useContract'
 import { baseTokenPriceInUSDTypes } from '@/types/vault'
 
 // import { getVaultReviewed } from '@/api/vaultList'
