@@ -61,6 +61,10 @@ export interface TokenConfigTypes {
   projectLink?: string
   icon: string
 }
+export interface ContractConfigType {
+  name: string
+  address: AddressRec
+}
 
 export interface TokenTypes {
   name: string
