@@ -1,15 +1,16 @@
 import { FC, useMemo } from 'react'
 import ContentLoader from 'react-content-loader'
 
-import { useManageVaultListHook, useGetManageVaultList } from '@/hooks/Contracts/useVaultList'
 import { useProfile } from '@/hooks/useProfile'
-import Cache from '@/utils/cache'
-// import { useManageVaultList } from '@/hooks/useVaultReader'
+import { useGetManageVaultList, useManageVaultListHook } from '@/hooks/useVaultList'
 
-import NoInvest from './NoInvest'
-import Main from './Main'
+import Cache from '@/utils/cache'
 import Button from '@@/common/Button'
 import Popper from '@@/common/Popper'
+
+import Main from './Main'
+// import { useManageVaultList } from '@/hooks/useVaultReader'
+import NoInvest from './NoInvest'
 
 const Manager: FC = () => {
   useGetManageVaultList()

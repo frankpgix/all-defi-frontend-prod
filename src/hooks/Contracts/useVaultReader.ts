@@ -1,50 +1,53 @@
-import { useReadContract } from 'wagmi'
-import { sum, isNaN } from 'lodash'
 import BN from 'bignumber.js'
-import { useVaultReaderContract } from '@/hooks/Contracts/useContract'
-import { useProfile } from '@/hooks/useProfile'
-import { AddressType } from '@/types/base'
-import {
-  VaultDetailDefault,
-  VaultUserDetailDefault,
-  ShareCompositionDefault,
-  VaultBreachDetailDataDefault,
-  VaultUpdatingDataDefault
-} from '@/data/vault'
-import {
-  calcVaultBaseInfo,
-  calcVaultDetail,
-  calcVaultUserDetail,
-  calcShareComposition,
-  calcAssetComposition,
-  calcVaultBreachDetail,
-  calcVaultUpdatingData
-} from '@/compute/vault'
+import { isNaN, sum } from 'lodash'
+import { useReadContract } from 'wagmi'
 
+import { useVaultReaderContract } from '@/hooks/Contracts/useContract'
+import { useToken } from '@/hooks/Tokens/useToken'
+import { useProfile } from '@/hooks/useProfile'
+
+import { AddressType, TokenTypes } from '@/types/base'
 import {
   AssetCompositionProps,
-  // VaultUserDetailProps,
+  VaultDetailProps, // VaultUserDetailProps,
   VaultProps,
-  VaultDetailProps,
   VaultUserListDataProps
 } from '@/types/vault'
-import Token from '@/class/Token'
+
+import {
+  calcAssetComposition,
+  calcShareComposition,
+  calcVaultBaseInfo,
+  calcVaultBreachDetail,
+  calcVaultDetail,
+  calcVaultUpdatingData,
+  calcVaultUserDetail
+} from '@/compute/vault'
+import {
+  ShareCompositionDefault,
+  VaultBreachDetailDataDefault,
+  VaultDetailDefault,
+  VaultUpdatingDataDefault,
+  VaultUserDetailDefault
+} from '@/data/vault'
 
 const VaultReaderContract = useVaultReaderContract()
 
 export const useVaultDetail = (vaultAddress: AddressType) => {
+  const { getTokenByAddress } = useToken()
   const { data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
     functionName: 'vaultDetail',
     args: [vaultAddress]
   })
   if (!isLoading && isSuccess) {
-    return { data: calcVaultDetail(data), isLoading, isSuccess, refetch }
+    return { data: calcVaultDetail(data, getTokenByAddress), isLoading, isSuccess, refetch }
   }
   return { data: VaultDetailDefault, isLoading, isSuccess, refetch }
 }
 
 export const useUserVaultDetail = (vaultAddress: AddressType) => {
+  const { getTokenByAddress } = useToken()
   const { account } = useProfile()
   const { data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
@@ -52,7 +55,7 @@ export const useUserVaultDetail = (vaultAddress: AddressType) => {
     args: [vaultAddress, account ?? '0x']
   })
   if (!isLoading && isSuccess && account) {
-    return { data: calcVaultUserDetail(data), isLoading, isSuccess, refetch }
+    return { data: calcVaultUserDetail(data, getTokenByAddress), isLoading, isSuccess, refetch }
   }
   return { data: VaultUserDetailDefault, isLoading, isSuccess, refetch }
 }
@@ -78,6 +81,7 @@ export const useAssetComposition = (
   vaultAddress: AddressType,
   underlyingTokenAddress: AddressType
 ) => {
+  const { getTokenByAddress } = useToken()
   const {
     data: sData,
     isSuccess,
@@ -89,7 +93,7 @@ export const useAssetComposition = (
   }) as { data: any[]; isSuccess: boolean; isLoading: boolean }
   if (!isLoading && isSuccess) {
     const tempData = sData
-      .map((item) => calcAssetComposition(item, underlyingTokenAddress))
+      .map((item) => calcAssetComposition(item, underlyingTokenAddress, getTokenByAddress))
       .filter((item: AssetCompositionProps) => item.value > 0)
     const sumValue = sum(tempData.map((item: AssetCompositionProps) => item.value))
 
@@ -109,6 +113,7 @@ export const useAssetComposition = (
 }
 
 export const useUserVaultList = () => {
+  const { getTokenByAddress } = useToken()
   const { account } = useProfile()
 
   const {
@@ -128,8 +133,8 @@ export const useUserVaultList = () => {
 
     const data: VaultUserListDataProps[] = fundList
       .map((item: any, index: number) => {
-        const fund: VaultProps = calcVaultBaseInfo(item)
-        fund.data = calcVaultUserDetail(detailList[index])
+        const fund: VaultProps = calcVaultBaseInfo(item, getTokenByAddress)
+        fund.data = calcVaultUserDetail(detailList[index], getTokenByAddress)
         fund.address = fund.data.address
         return fund
       })
@@ -144,6 +149,7 @@ export const useUserVaultList = () => {
   return { data: [] as VaultUserListDataProps[], isLoading, isSuccess, refetch }
 }
 export const useVaultList = () => {
+  const { getTokenByAddress } = useToken()
   const { data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
     functionName: 'vaultDetailList',
@@ -151,7 +157,12 @@ export const useVaultList = () => {
   }) as { data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
 
   if (!isLoading && isSuccess) {
-    return { data: data.map((item) => calcVaultDetail(item)), isSuccess, isLoading, refetch }
+    return {
+      data: data.map((item) => calcVaultDetail(item, getTokenByAddress)),
+      isSuccess,
+      isLoading,
+      refetch
+    }
   }
   return { data: [] as VaultDetailProps[], isLoading, isSuccess, refetch }
 }
@@ -180,7 +191,7 @@ export const useVaultBreachDetail = (vaultAddress: AddressType) => {
   return { data: VaultBreachDetailDataDefault, isSuccess, isLoading, refetch }
 }
 
-export const useVaultUpdatingData = (vaultAddress: AddressType, underlyingToken: Token) => {
+export const useVaultUpdatingData = (vaultAddress: AddressType, underlyingToken: TokenTypes) => {
   const { data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
     functionName: 'vaultUpdatingData',

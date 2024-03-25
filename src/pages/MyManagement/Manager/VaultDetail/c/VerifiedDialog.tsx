@@ -1,17 +1,18 @@
-import { FC, useState, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
+
 import { useRequest } from 'ahooks'
 
-import { useManageVaultVerifyList } from '@/hooks/Contracts/useVaultList'
-
-import { getVaultReviewed } from '@/api/vaultList'
 import { useProfile } from '@/hooks/useProfile'
-// import FundFactory, { VaultVerifiedItemTypes } from '@/class/FundFactory'
-import InfoDialog from '@@/common/Dialog/Info'
-import ALink from '@@/common/ALink'
+import { useManageVaultVerifyList } from '@/hooks/useVaultList'
 
-import { CONTACT_US_URL } from '@/config'
 import { AddressType } from '@/types/base'
 import { VaultVerifiedItemTypes } from '@/types/vault'
+
+import { getVaultReviewed } from '@/api/vaultList'
+import { CONTACT_US_URL } from '@/config'
+import ALink from '@@/common/ALink'
+// import FundFactory, { VaultVerifiedItemTypes } from '@/class/FundFactory'
+import InfoDialog from '@@/common/Dialog/Info'
 
 interface Props {
   vaultAddress: AddressType

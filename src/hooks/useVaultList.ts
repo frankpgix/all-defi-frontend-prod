@@ -1,18 +1,18 @@
+import { useEffect } from 'react'
+
+import { useRequest } from 'ahooks'
+
+import { useProfile } from '@/hooks/useProfile'
+
+import { ManageVaultListType, UserVaultListType, VaultListType } from '@/types/vaultListStore'
+
+import { getManageVaultList, getUserVaultList, getVaultList } from '@/api/vaultList'
 import {
   useStoreManageVaultList,
-  useStoreVaultList,
+  useStoreManageVaultVerifyList,
   useStoreUserVaultList,
-  useStoreManageVaultVerifyList
+  useStoreVaultList
 } from '@/stores/useStoreVaultList'
-// import { VaultDetailProps, VaultUserListDataProps } from '@/types/vault'
-import { useProfile } from '@/hooks/useProfile'
-// import { useVaultList, useUserVaultList } from '@/hooks/useVaultReader'
-// import FundReader from '@/class/FundReader'
-import { useRequest } from 'ahooks'
-import { useEffect } from 'react'
-import { getVaultList, getManageVaultList, getUserVaultList } from '@/api/vaultList'
-
-import { ManageVaultListType, VaultListType, UserVaultListType } from '@/types/vaultListStore'
 
 export const useManageVaultListHook = (): ManageVaultListType => {
   const { manageVaultList, loading, update, getData } = useStoreManageVaultList((state: any) => ({

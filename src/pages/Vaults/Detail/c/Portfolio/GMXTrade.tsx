@@ -1,17 +1,18 @@
 import { FC } from 'react'
-import Table from 'rc-table'
 import ContentLoader from 'react-content-loader'
 
-import Token from '@/class/Token'
+import Table from 'rc-table'
+
+import { TokenTypes } from '@/types/base'
+import { GMXTradePositionTypes } from '@/types/vaultPositionDetail'
 
 import { TableNoData } from '@@/common/TableEmpty'
-import TokenValue from '@@/common/TokenValue'
 import { TokenIcon } from '@@/common/TokenUnit'
-import { GMXTradePositionTypes } from '@/types/vaultPositionDetail'
+import TokenValue from '@@/common/TokenValue'
 
 interface Props {
   data: GMXTradePositionTypes[]
-  underlyingToken: Token
+  underlyingToken: TokenTypes
   loading: boolean
 }
 

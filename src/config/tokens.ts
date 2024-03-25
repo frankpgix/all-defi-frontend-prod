@@ -1,12 +1,14 @@
-import { AddressType, TokenKeys } from '@/types/base'
-import { ChainId } from '@/config'
-import Token from '@/class/Token'
 import { toLower } from 'lodash'
 import { zeroAddress } from 'viem'
 
+import { AddressType, TokenKeys, TokenTypes } from '@/types/base'
+
+import Token from '@/class/Token'
+import { ChainId } from '@/config'
+
 export const ZERO_ADDRESS = zeroAddress
 
-export const tokens: { [key in TokenKeys]: Token } = {
+export const tokens: { [key in TokenKeys]: TokenTypes } = {
   USDC: new Token({
     name: 'USDC',
     symbol: 'USDC',

@@ -1,14 +1,16 @@
 import { FC, useMemo } from 'react'
-import { TokenProps } from '@/class/Token'
+
+import { TokenTypes } from '@/types/base'
+
+import { formatNumber } from '@/utils/tools'
 // import classNames from 'classnames'
 import { TokenIcon } from '@@/common/TokenUnit'
-import { formatNumber } from '@/utils/tools'
 
 interface Props {
   size?: string
   format?: string
   value: number
-  token?: TokenProps
+  token?: TokenTypes
   decimal?: number
   shares?: boolean
   noUnit?: boolean

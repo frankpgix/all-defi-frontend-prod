@@ -1,12 +1,15 @@
-import { FC, useState, useEffect, useMemo, useCallback } from 'react'
-import { last, min } from 'lodash'
-import { sum, formatNumber } from '@/utils/tools'
-import { useMiningData } from '@/graphql/useData'
-import { calcMiningData } from '@/graphql/calcGql'
+import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
+import { last, min } from 'lodash'
+
+import { useVaultList } from '@/hooks/useVaultList'
+
+import { calcMiningData } from '@/graphql/calcGql'
+import { useMiningData } from '@/graphql/useData'
+import { formatNumber, sum } from '@/utils/tools'
 import DataItem from '@@/common/DataItem'
 import TimeSelect from '@@/core/ChartTimeSelect'
-import { useVaultList } from '@/hooks/Contracts/useVaultList'
+
 import Chart from './Chart'
 import Counts from './Counts'
 

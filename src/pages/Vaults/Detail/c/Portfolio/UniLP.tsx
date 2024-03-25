@@ -1,21 +1,23 @@
 import { FC } from 'react'
-import Table from 'rc-table'
 import ContentLoader from 'react-content-loader'
-import classNames from 'classnames'
-// import { useRequest } from 'ahooks'
-import Token from '@/class/Token'
 
+import classNames from 'classnames'
+import Table from 'rc-table'
+
+import { TokenTypes } from '@/types/base'
 // import PositionDetail from '@/class/PositionDetail'
 // import { getTokenByAddress } from '@/config/tokens'
 import { UniLPDetailTypes } from '@/types/vaultPositionDetail'
 
+// import { useRequest } from 'ahooks'
 import { TableNoData } from '@@/common/TableEmpty'
-import TokenValue from '@@/common/TokenValue'
 import { IconGroup } from '@@/common/TokenUnit'
+import TokenValue from '@@/common/TokenValue'
+
 // import Button from '@@/common/Button'
 interface Props {
   data: UniLPDetailTypes[]
-  underlyingToken: Token
+  underlyingToken: TokenTypes
   loading: boolean
 }
 

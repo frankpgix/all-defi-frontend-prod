@@ -1,5 +1,8 @@
-import { useEffect, useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
+
 import { useAccount } from 'wagmi'
+
+import { useVaultCountLimit } from '@/hooks/Contracts/useAllProtocol'
 // import { getAccount } from '@wagmi/core'
 // import { config } from '@/config/wagmi'
 // // import { useIsManager, useDerivativeList } from '@/hooks/useAllProtocol'
@@ -8,8 +11,8 @@ import { useAccount } from 'wagmi'
 // // import { useStoreDerivativeList } from '@/stores/useStoreFunds'
 // // import { getJsonRpcProvider } from '@/utils/contractHelpers'
 import { useProfile } from '@/hooks/useProfile'
-import { useVaultCountLimit } from '@/hooks/Contracts/useAllProtocol'
-import { useGetVaultList } from '@/hooks/Contracts/useVaultList'
+import { useGetVaultList } from '@/hooks/useVaultList'
+
 // import { useUpdateBaseTokenPriceInUSD } from '@/hooks/useBaseTokenPrice'
 export default function Global(): null {
   // const { address } = getAccount(config)

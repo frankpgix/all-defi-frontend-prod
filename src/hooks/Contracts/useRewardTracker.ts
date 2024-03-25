@@ -1,16 +1,15 @@
 import { useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 
-import { tokens } from '@/config/tokens'
-
-import { useRewardTrackerContract, useERC20Contract } from '@/hooks/Contracts/useContract'
+import { useERC20Contract, useRewardTrackerContract } from '@/hooks/Contracts/useContract'
+import { useToken } from '@/hooks/Tokens/useToken'
 import { useNotify } from '@/hooks/useNotify'
+
+import { AddressType } from '@/types/base'
+import { PoolItemTypes } from '@/types/rewardTracker'
 
 import { calcPoolItemData } from '@/compute/rewardTracker'
 import { RewardDashboardDataDefault } from '@/data/rewardTracker'
 import { safeInterceptionValues } from '@/utils/tools'
-
-import { AddressType } from '@/types/base'
-import { PoolItemTypes } from '@/types/rewardTracker'
 
 const RewardTrackerContract = useRewardTrackerContract()
 
@@ -30,7 +29,9 @@ export const usePoolList = (account?: AddressType) => {
 }
 
 export const useRewardsALLBalance = () => {
-  const ERC20Contract = useERC20Contract(tokens.ALLTOKEN.address)
+  const { getTokenByName } = useToken()
+  const ALLTOKEN = getTokenByName('ALLTOKEN')
+  const ERC20Contract = useERC20Contract(ALLTOKEN.address)
   const { data, isLoading, isSuccess, refetch } = useReadContract({
     ...ERC20Contract,
     functionName: 'balanceOf',

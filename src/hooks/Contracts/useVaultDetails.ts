@@ -1,29 +1,34 @@
 import { useReadContracts } from 'wagmi'
 
 import {
+  useAllProtocolContract,
   useVaultContract,
-  useVaultReaderContract,
-  useAllProtocolContract
+  useVaultReaderContract
 } from '@/hooks/Contracts/useContract'
-import {
-  calcVaultBaseInfo,
-  calcVaultDetail,
-  calcVaultBreachDetail,
-  calcVaultStakedALL,
-  calcVaultUserDetail,
-  calcShareComposition
-} from '@/compute/vault'
-import {
-  VaultBaseInfoDefault,
-  VaultDetailDefault,
-  VaultBreachDetailDataDefault,
-  VaultStakeDataDefault,
-  VaultUserDetailDefault,
-  ShareCompositionDefault
-} from '@/data/vault'
+import { useToken } from '@/hooks/Tokens/useToken'
+
 import { AddressType } from '@/types/base'
 
+import {
+  calcShareComposition,
+  calcVaultBaseInfo,
+  calcVaultBreachDetail,
+  calcVaultDetail,
+  calcVaultStakedALL,
+  calcVaultUserDetail
+} from '@/compute/vault'
+import {
+  ShareCompositionDefault,
+  VaultBaseInfoDefault,
+  VaultBreachDetailDataDefault,
+  VaultDetailDefault,
+  VaultStakeDataDefault,
+  VaultUserDetailDefault
+} from '@/data/vault'
+
 export const useVaultManageDetails = (vaultAddress: AddressType) => {
+  const { getTokenByAddress } = useToken()
+
   const VaultContract = useVaultContract(vaultAddress)
   const VaultReaderContract = useVaultReaderContract()
   const AllProtocolContract = useAllProtocolContract()
@@ -63,9 +68,13 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
 
   if (!isLoading && isSuccess) {
     const baseInfo =
-      data[0].status === 'success' ? calcVaultBaseInfo(data[0].result) : VaultBaseInfoDefault
+      data[0].status === 'success'
+        ? calcVaultBaseInfo(data[0].result, getTokenByAddress, vaultAddress)
+        : VaultBaseInfoDefault
     const vaultDetail =
-      data[1].status === 'success' ? calcVaultDetail(data[1].result) : VaultDetailDefault
+      data[1].status === 'success'
+        ? calcVaultDetail(data[1].result, getTokenByAddress)
+        : VaultDetailDefault
     const vaultBreachDetail =
       data[2].status === 'success'
         ? calcVaultBreachDetail(data[2].result)
@@ -98,6 +107,7 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
 }
 
 export const useVaultDetails = (vaultAddress: AddressType, account: AddressType) => {
+  const { getTokenByAddress } = useToken()
   // const { account } = useProfile()
   const VaultContract = useVaultContract(vaultAddress)
   const VaultReaderContract = useVaultReaderContract()
@@ -136,11 +146,17 @@ export const useVaultDetails = (vaultAddress: AddressType, account: AddressType)
   }
   if (!isLoading && isSuccess) {
     const baseInfo =
-      data[0].status === 'success' ? calcVaultBaseInfo(data[0].result) : VaultBaseInfoDefault
+      data[0].status === 'success'
+        ? calcVaultBaseInfo(data[0].result, getTokenByAddress, vaultAddress)
+        : VaultBaseInfoDefault
     const vaultDetail =
-      data[1].status === 'success' ? calcVaultDetail(data[1].result) : VaultDetailDefault
+      data[1].status === 'success'
+        ? calcVaultDetail(data[1].result, getTokenByAddress)
+        : VaultDetailDefault
     const vaultUserDetail =
-      data[2].status === 'success' ? calcVaultUserDetail(data[2].result) : VaultUserDetailDefault
+      data[2].status === 'success'
+        ? calcVaultUserDetail(data[2].result, getTokenByAddress)
+        : VaultUserDetailDefault
     const vaultShareComposition =
       data[3].status === 'success' ? calcShareComposition(data[3].result) : ShareCompositionDefault
 

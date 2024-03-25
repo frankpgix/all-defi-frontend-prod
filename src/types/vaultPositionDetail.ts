@@ -1,9 +1,9 @@
-import Token from '@/class/Token'
+import { TokenTypes } from '@/types/base'
 
 export interface UniLPDetailTypes {
   id: string
-  token0: Token
-  token1: Token
+  token0: TokenTypes
+  token1: TokenTypes
   fee: string
   tickLower: string
   tickUpper: string
@@ -16,7 +16,7 @@ export interface UniLPDetailTypes {
 
 export interface AaveV3DetailAssetTypes {
   id: number
-  asset: Token
+  asset: TokenTypes
   blances: number | string
   value: number | string
 }
@@ -28,8 +28,8 @@ export interface AaveV3DetailTypes {
 
 export interface GMXTradePositionTypes {
   id: number
-  collateralToken: Token
-  indexToken: Token
+  collateralToken: TokenTypes
+  indexToken: TokenTypes
   isLong: boolean
   size: string
   collateral: string

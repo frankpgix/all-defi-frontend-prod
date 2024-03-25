@@ -1,21 +1,21 @@
-import { hexToString, decodeAbiParameters } from 'viem'
 import BN from 'bignumber.js'
+import { decodeAbiParameters, hexToString } from 'viem'
 
-import { getTokenByAddress } from '@/config/tokens'
-import { AddressType } from '@/types/base'
-import { safeInterceptionValues } from '@/utils/tools'
+// import { getTokenByAddress } from '@/config/tokens'
+import { AddressType, GetTokenFuncType, TokenTypes } from '@/types/base'
 import {
-  GlobalAssetStatisticProps,
-  VaultBaseInfoProps,
-  VaultDetailProps,
-  VaultUserDetailProps,
-  ShareCompositionProps,
   AssetCompositionProps,
+  GlobalAssetStatisticProps,
+  ShareCompositionProps,
+  VaultBaseInfoProps,
+  VaultBreachDetailProps,
+  VaultDetailProps,
   VaultStakeProps,
-  VaultBreachDetailProps
+  VaultUserDetailProps
 } from '@/types/vault'
-import Token from '@/class/Token'
+
 import { VaultUpdatingDataDefault } from '@/data/vault'
+import { safeInterceptionValues } from '@/utils/tools'
 
 export const calcGlobalAssetStatistic = (item: any): GlobalAssetStatisticProps => {
   return {
@@ -25,7 +25,11 @@ export const calcGlobalAssetStatistic = (item: any): GlobalAssetStatisticProps =
   }
 }
 
-export const calcVaultBaseInfo = (item: any, fundAddress?: AddressType): VaultBaseInfoProps => {
+export const calcVaultBaseInfo = (
+  item: any,
+  getTokenByAddress: GetTokenFuncType,
+  vaultAddress?: AddressType
+): VaultBaseInfoProps => {
   const underlyingToken = getTokenByAddress(item.underlyingToken)
   const decimals = underlyingToken.decimals
   const precision = underlyingToken.precision
@@ -33,7 +37,7 @@ export const calcVaultBaseInfo = (item: any, fundAddress?: AddressType): VaultBa
   return {
     underlyingToken,
     acToken: item.acToken,
-    address: fundAddress ?? '0x',
+    address: vaultAddress ?? '0x',
     createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
     name: item.name,
     symbol: item.symbol,
@@ -53,7 +57,10 @@ export const calcVaultBaseInfo = (item: any, fundAddress?: AddressType): VaultBa
   }
 }
 
-export const calcVaultDetail = (item: any): VaultDetailProps => {
+export const calcVaultDetail = (
+  item: any,
+  getTokenByAddress: GetTokenFuncType
+): VaultDetailProps => {
   // console.log(item, 'test')
   const epochStartTime = Number(safeInterceptionValues(item.epochStartTime, 0, 0)) * 1000
   const underlyingToken = getTokenByAddress(item.underlyingToken)
@@ -106,7 +113,10 @@ export const calcVaultDetail = (item: any): VaultDetailProps => {
   }
 }
 
-export const calcVaultUserDetail = (item: any): VaultUserDetailProps => {
+export const calcVaultUserDetail = (
+  item: any,
+  getTokenByAddress: GetTokenFuncType
+): VaultUserDetailProps => {
   const underlyingToken = getTokenByAddress(item.underlyingToken)
   const decimals = underlyingToken.decimals
   const precision = underlyingToken.precision
@@ -148,7 +158,8 @@ export const calcShareComposition = (item: any): ShareCompositionProps => {
 
 export const calcAssetComposition = (
   item: any,
-  baseTokenAddress: AddressType
+  baseTokenAddress: AddressType,
+  getTokenByAddress: GetTokenFuncType
 ): AssetCompositionProps => {
   const decimals = Number(safeInterceptionValues(item.decimals, 0, 0))
   const token = getTokenByAddress(item.token)
@@ -181,7 +192,7 @@ export const calcVaultBreachDetail = (item: any): VaultBreachDetailProps => {
   }
 }
 
-export const calcVaultUpdatingData = (data: [AddressType, BigInt], underlyingToken: Token) => {
+export const calcVaultUpdatingData = (data: [AddressType, BigInt], underlyingToken: TokenTypes) => {
   const { precision, decimals } = underlyingToken
   const [sData, verifyStatus] = data
   const types = [

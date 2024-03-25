@@ -1,18 +1,18 @@
-import Token from '@/class/Token'
 import { getTokenByAddress } from '@/config/tokens'
-import { safeInterceptionValues } from '@/utils/tools'
 
+import { AddressType, TokenTypes } from '@/types/base'
 import {
-  UniLPDetailTypes,
   AaveV3DetailTypes,
+  GMXEarnDetailTypes,
   GMXTradePositionTypes,
-  GMXEarnDetailTypes
+  UniLPDetailTypes
 } from '@/types/vaultPositionDetail'
-import { AddressType } from '@/types/base'
+
+import { safeInterceptionValues } from '@/utils/tools'
 
 export const calcUniV3NonfungiblePosition = (
   sData: any[],
-  underlyingToken: Token
+  underlyingToken: TokenTypes
 ): UniLPDetailTypes[] => {
   return sData.map((item: any) => {
     const token0 = getTokenByAddress(item.token0)
@@ -39,7 +39,7 @@ export const calcUniV3NonfungiblePosition = (
 
 export const calcAaveV3Position = (
   response: any,
-  underlyingToken: Token
+  underlyingToken: TokenTypes
 ): AaveV3DetailTypes | null => {
   console.log(response, 'response')
   const healthFactor = safeInterceptionValues(response.healthFactor, 4, 4)
@@ -97,7 +97,7 @@ export const calcGMXTradePosition = (response: any[]): GMXTradePositionTypes[] =
 
 export const calcGMXEarnPosition = (
   response: any,
-  underlyingToken: Token
+  underlyingToken: TokenTypes
 ): GMXEarnDetailTypes[] => {
   return [
     {

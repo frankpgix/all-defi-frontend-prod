@@ -1,27 +1,26 @@
 import { useReadContracts } from 'wagmi'
-import Token from '@/class/Token'
-import { getContractAddress } from '@/config/contracts'
-import { AddressType } from '@/types/base'
-// import { safeInterceptionValues } from '@/utils/tools'
-// userVaultPositionDetail
-import UniV3NonfungiblePositionAbi from '@/config/abi/PositionDetail/UniV3NonfungiblePosition.json'
-import AaveV3PositionAbi from '@/config/abi/PositionDetail/AaveV3Position.json'
-import GMXTradePositionAbi from '@/config/abi/PositionDetail/GMXTradePosition.json'
-import GMXEarnPositionAbi from '@/config/abi/PositionDetail/GMXEarnPosition.json'
 
+import AaveV3PositionAbi from '@/config/abi/PositionDetail/AaveV3Position.json'
+import GMXEarnPositionAbi from '@/config/abi/PositionDetail/GMXEarnPosition.json'
+import GMXTradePositionAbi from '@/config/abi/PositionDetail/GMXTradePosition.json'
+import UniV3NonfungiblePositionAbi from '@/config/abi/PositionDetail/UniV3NonfungiblePosition.json'
+import { getContractAddress } from '@/config/contracts'
+
+import { AddressType, TokenTypes } from '@/types/base'
 import {
-  calcUniV3NonfungiblePosition,
-  calcAaveV3Position,
-  calcGMXTradePosition,
-  calcGMXEarnPosition
-} from '@/compute/vaultPositionDetail'
-import {
-  UniLPDetailTypes,
+  GMXEarnDetailTypes,
   GMXTradePositionTypes,
-  GMXEarnDetailTypes
+  UniLPDetailTypes
 } from '@/types/vaultPositionDetail'
 
-export const userVaultPositionDetail = (vaultAddress: AddressType, underlyingToken: Token) => {
+import {
+  calcAaveV3Position,
+  calcGMXEarnPosition,
+  calcGMXTradePosition,
+  calcUniV3NonfungiblePosition
+} from '@/compute/vaultPositionDetail'
+
+export const userVaultPositionDetail = (vaultAddress: AddressType, underlyingToken: TokenTypes) => {
   const { data, isLoading, isSuccess } = useReadContracts({
     contracts: [
       {

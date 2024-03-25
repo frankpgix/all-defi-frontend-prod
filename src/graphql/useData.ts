@@ -1,16 +1,21 @@
-import { useQuery, useLazyQuery } from '@apollo/client'
-import { safeInterceptionValues } from '@/utils/tools'
-import { getTokenByAddress } from '@/config/tokens'
-import { uniq, last } from 'lodash'
-import BN from 'bignumber.js'
-import { calcDecimalsFloor } from '@/utils/tools'
 import { useEffect } from 'react'
-import dayjs from 'dayjs'
-import { calcVaultListGQL, calcVaultMonthDataGql } from './calcGql'
 
-import { removeZeroKeys } from './tools'
+import BN from 'bignumber.js'
+import dayjs from 'dayjs'
+import { last, uniq } from 'lodash'
+
+import { useLazyQuery, useQuery } from '@apollo/client'
+
+import { getTokenByAddress } from '@/config/tokens'
+
+import { TokenTypes } from '@/types/base'
 import { VaultMonthDataType } from '@/types/graphql'
-import Token from '@/class/Token'
+
+import { safeInterceptionValues } from '@/utils/tools'
+import { calcDecimalsFloor } from '@/utils/tools'
+
+import { calcVaultListGQL, calcVaultMonthDataGql } from './calcGql'
+import { removeZeroKeys } from './tools'
 
 export const useVaultData = (gql: any, decimals: number, precision: number) => {
   const { loading, error, data: sData } = useQuery(gql)
@@ -77,7 +82,7 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
   // return { loading: true, error: null, data: [], count: 0 }
 }
 
-export const useVaultDetailChartData = (gql: any, underlyingToken: Token) => {
+export const useVaultDetailChartData = (gql: any, underlyingToken: TokenTypes) => {
   const { loading, error, data: sData } = useQuery(gql)
   console.log(sData, 'sData')
   const data = (sData?.vaultIntervalDatas ?? [])

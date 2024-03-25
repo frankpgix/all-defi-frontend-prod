@@ -59,7 +59,7 @@ export interface TokenConfigTypes {
   decimals: number
   precision: number
   projectLink?: string
-  icon?: string
+  icon: string
 }
 
 export interface TokenTypes {
@@ -69,7 +69,7 @@ export interface TokenTypes {
   decimals: number
   precision: number
   projectLink?: string
-  icon?: string
+  icon: string
 }
 
 export type GetTokenFuncType = (address: AddressType) => TokenTypes

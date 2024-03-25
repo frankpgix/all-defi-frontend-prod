@@ -1,9 +1,11 @@
 import { FC } from 'react'
-import Table from 'rc-table'
-import BN from 'bignumber.js'
 
-import Token from '@/class/Token'
+import BN from 'bignumber.js'
+import Table from 'rc-table'
+
+import { TokenTypes } from '@/types/base'
 import { VaultStakeProps } from '@/types/vault'
+
 import { formatNumber } from '@/utils/tools'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
@@ -12,7 +14,7 @@ interface Props {
   stakeData: VaultStakeProps
   multiple: number
   loading: boolean
-  underlyingToken: Token
+  underlyingToken: TokenTypes
 }
 // 这里是有问题的
 const Record: FC<Props> = ({ stakeData, multiple, loading, underlyingToken }) => {

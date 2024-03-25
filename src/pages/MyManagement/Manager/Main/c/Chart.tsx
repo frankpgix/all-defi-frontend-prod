@@ -1,15 +1,16 @@
-import { FC, useState, useMemo, memo } from 'react'
-import { min } from 'lodash'
-import { formatNumber } from '@/utils/tools'
-import { useManageVaultListHook } from '@/hooks/Contracts/useVaultList'
+import { FC, memo, useMemo, useState } from 'react'
 
-import TimeSelect from '@@/core/ChartTimeSelect'
-import { AreaChart } from '@/components/common/Chart'
-import Loading from '@@/common/Loading'
+import { min } from 'lodash'
 
 import { useProfile } from '@/hooks/useProfile'
+import { useManageVaultListHook } from '@/hooks/useVaultList'
+
+import { AreaChart } from '@/components/common/Chart'
 import { calcManageVaultDatasGql } from '@/graphql/calcGql'
 import { useManageValutDatas } from '@/graphql/useData'
+import { formatNumber } from '@/utils/tools'
+import Loading from '@@/common/Loading'
+import TimeSelect from '@@/core/ChartTimeSelect'
 
 const Chart: FC = () => {
   const { account } = useProfile()

@@ -1,14 +1,16 @@
-import { FC, useState, useMemo, useEffect } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
+
 import { useRequest } from 'ahooks'
 
-import { useManageVaultListHook, useManageVaultVerifyList } from '@/hooks/Contracts/useVaultList'
 import { useProfile } from '@/hooks/useProfile'
-import InfoDialog from '@@/common/Dialog/Info'
-import ALink from '@@/common/ALink'
-import { CONTACT_US_URL } from '@/config'
+import { useManageVaultListHook, useManageVaultVerifyList } from '@/hooks/useVaultList'
 
 import { VaultVerifiedItemTypes } from '@/types/vault'
+
 import { getVaultReviewed } from '@/api/vaultList'
+import { CONTACT_US_URL } from '@/config'
+import ALink from '@@/common/ALink'
+import InfoDialog from '@@/common/Dialog/Info'
 
 const VerifiedDialog: FC = () => {
   const { account } = useProfile()
