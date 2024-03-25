@@ -1,8 +1,8 @@
-import { ChainId, AddressType, TokenKeys } from '@/types/base'
+import { AddressType, TokenKeys } from '@/types/base'
+import { ChainId } from '@/config'
 import Token from '@/class/Token'
 import { toLower } from 'lodash'
 import { zeroAddress } from 'viem'
-// import { AddressType } from './types'
 
 export const ZERO_ADDRESS = zeroAddress
 

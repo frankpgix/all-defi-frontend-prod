@@ -8,8 +8,8 @@ import { baseTokenOptions, tokens } from '@/config/tokens'
 import { formatNumber } from '@/utils/tools'
 import { useProfile } from '@/hooks/useProfile'
 import { useUserBalances } from '@/hooks/useProfile'
-import { useAllTokenPrice } from '@/hooks/useAllProtocol'
-import { useBuyAcToken } from '@/hooks/useACProtocol'
+import { useAllTokenPrice } from '@/hooks/Contracts/useAllProtocol'
+import { useBuyAcToken } from '@/hooks/Contracts/useACProtocol'
 
 import { AddressType } from '@/types/base'
 

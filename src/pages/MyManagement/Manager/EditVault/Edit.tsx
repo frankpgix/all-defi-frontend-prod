@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import { CONTACT_US_URL } from '@/config'
 
 import { useVaultUpdatingData } from '@/hooks/useVaultReader'
-import { useDerivativeList, useUpdateVault } from '@/hooks/useAllProtocol'
+import { useDerivativeList, useUpdateVault } from '@/hooks/Contracts/useAllProtocol'
 import { useProfile } from '@/hooks/useProfile'
 
 import { AddressType } from '@/types/base'

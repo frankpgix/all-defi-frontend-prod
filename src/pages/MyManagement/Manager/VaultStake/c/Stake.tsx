@@ -4,7 +4,7 @@ import BN from 'bignumber.js'
 import { VaultDetailProps, VaultStakeType } from '@/types/vault'
 import { AddressType } from '@/types/base'
 
-import { useVaultUnstakeLimit, useVaultChangeStakeALL } from '@/hooks/useAllProtocol'
+import { useVaultUnstakeLimit, useVaultChangeStakeALL } from '@/hooks/Contracts/useAllProtocol'
 import { useProfile, useUserBalances } from '@/hooks/useProfile'
 
 import { formatNumber } from '@/utils/tools'

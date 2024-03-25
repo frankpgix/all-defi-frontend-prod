@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { useVaultStakedALL, useCalcAUMLimit } from '@/hooks/useAllProtocol'
+import { useVaultStakedALL, useCalcAUMLimit } from '@/hooks/Contracts/useAllProtocol'
 
 import { AddressType } from '@/types/base'
 import { VaultDetailProps, VaultStakeType } from '@/types/vault'

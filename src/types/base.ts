@@ -1,8 +1,6 @@
 // import { Account } from 'viem'
-export enum ChainId {
-  MAINNET = 1,
-  ARBITRUM = 42161
-}
+import { ChainId } from '@/config'
+
 export type ChainIdRec = {
   [ChainId.MAINNET]?: string | Record<string, any>
   [ChainId.ARBITRUM]: string | Record<string, any>
@@ -48,3 +46,28 @@ export type TokenKeys =
   | 'acETH'
   | 'ALLTOKEN'
   | 'sALLTOKEN'
+
+export interface AddressRec {
+  [ChainId.MAINNET]: AddressType
+  [ChainId.ARBITRUM]: AddressType
+}
+
+export interface TokenConfigTypes {
+  name: string
+  symbol: string
+  address: AddressRec
+  decimals: number
+  precision: number
+  projectLink?: string
+  icon?: string
+}
+
+export interface TokenTypes {
+  name: string
+  symbol: string
+  address: AddressType
+  decimals: number
+  precision: number
+  projectLink?: string
+  icon?: string
+}

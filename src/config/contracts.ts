@@ -1,5 +1,6 @@
 import Contract from '@/class/Contract'
-import { ChainId, ContractKeys } from '@/types/base'
+import { ContractKeys } from '@/types/base'
+import { ChainId } from '@/config'
 
 export const contracts: { [key in ContractKeys]: Contract } = {
   ACProtocol: new Contract({

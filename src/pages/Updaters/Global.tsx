@@ -8,7 +8,7 @@ import { useAccount } from 'wagmi'
 // // import { useStoreDerivativeList } from '@/stores/useStoreFunds'
 // // import { getJsonRpcProvider } from '@/utils/contractHelpers'
 import { useProfile } from '@/hooks/useProfile'
-import { useVaultCountLimit } from '@/hooks/useAllProtocol'
+import { useVaultCountLimit } from '@/hooks/Contracts/useAllProtocol'
 import { useGetVaultList } from '@/hooks/useVaultList'
 // import { useUpdateBaseTokenPriceInUSD } from '@/hooks/useBaseTokenPrice'
 export default function Global(): null {
