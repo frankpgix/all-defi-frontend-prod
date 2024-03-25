@@ -1,15 +1,16 @@
 import { FC, ReactNode, useMemo } from 'react'
-import BN from 'bignumber.js'
+
 import { useToggle } from 'ahooks'
+import BN from 'bignumber.js'
 
-import { useProfile } from '@/hooks/useProfile'
 import { useSettleAccount } from '@/hooks/Contracts/useVault'
+import { useProfile } from '@/hooks/useProfile'
 
-import Button, { ButtonProps } from '@@/common/Button'
-
-import Dialog from '@@/common/Dialog/Info'
 import { AddressType } from '@/types/base'
 import { VaultDetailProps } from '@/types/vault'
+
+import Button, { ButtonProps } from '@@/common/Button'
+import Dialog from '@@/common/Dialog/Info'
 
 interface Props extends ButtonProps {
   children: ReactNode
@@ -86,8 +87,7 @@ const ValutSettleButton: FC<Props> = ({
     closeModal2()
     closeModal3()
     if (account && vaultAddress) {
-      await onSettleAccount(account)
-      if (callback) callback()
+      await onSettleAccount(account, callback)
     }
   }
 

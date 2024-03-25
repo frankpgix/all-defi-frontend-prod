@@ -258,7 +258,7 @@ export const useSettleAccount = (vaultAddress: AddressType) => {
   const { writeContractAsync } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
 
-  const onSettleAccount = async (account: AddressType) => {
+  const onSettleAccount = async (account: AddressType, callback?: () => void) => {
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Settle Vault' })
 
@@ -272,6 +272,7 @@ export const useSettleAccount = (vaultAddress: AddressType) => {
         {
           onSuccess: (hash: string) => {
             updateNotifyItem(notifyId, { title: 'Settle Vault', type: 'success', hash })
+            callback?.()
           },
           onError: (error: any) => {
             updateNotifyItem(notifyId, {

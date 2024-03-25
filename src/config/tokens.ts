@@ -1,7 +1,8 @@
 import { zeroAddress } from 'viem'
 
-import { ChainId } from '@/config'
 import { TokenConfigTypes, TokenTypes } from '@/types/base'
+
+import { ChainId } from '@/config'
 
 export const ZERO_ADDRESS = zeroAddress
 
@@ -75,7 +76,7 @@ export const tokens: TokenConfigTypes[] = [
     },
     decimals: 18,
     precision: 4,
-    icon: 'symbol/weth.svg'
+    icon: 'symbol/eth.svg'
   },
   {
     name: 'WBTC',
