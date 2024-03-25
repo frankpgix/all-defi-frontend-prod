@@ -4,8 +4,8 @@ import BN from 'bignumber.js'
 import { isNaN } from 'lodash'
 
 import { useAllocate } from '@/hooks/Contracts/useVault'
-import { useToken, useUserBalances } from '@/hooks/Tokens/useToken'
 import { useProfile } from '@/hooks/useProfile'
+import { useToken, useUserBalances } from '@/hooks/useToken'
 
 import { TokenKeys } from '@/types/base'
 import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'

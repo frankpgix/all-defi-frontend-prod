@@ -2,8 +2,8 @@ import { FC, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useClaim } from '@/hooks/Contracts/useVault'
-import { useToken } from '@/hooks/Tokens/useToken'
 import { useProfile } from '@/hooks/useProfile'
+import { useToken } from '@/hooks/useToken'
 
 import { VaultUserDetailProps } from '@/types/vault'
 

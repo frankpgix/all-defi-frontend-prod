@@ -3,8 +3,8 @@ import { FC, useMemo, useState } from 'react'
 import BN from 'bignumber.js'
 
 import { useVaultChangeStakeALL, useVaultUnstakeLimit } from '@/hooks/Contracts/useAllProtocol'
-import { useUserBalances } from '@/hooks/Tokens/useToken'
 import { useProfile } from '@/hooks/useProfile'
+import { useUserBalances } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { VaultDetailProps, VaultStakeType } from '@/types/vault'

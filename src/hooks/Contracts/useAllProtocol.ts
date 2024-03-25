@@ -4,8 +4,8 @@ import { ZERO_ADDRESS } from '@/config/tokens'
 
 import { useAllProtocolContract } from '@/hooks/Contracts/useContract'
 import { useAssetPrice, useAssetPriceUSD } from '@/hooks/Contracts/useVaultFactory'
-import { useToken } from '@/hooks/Tokens/useToken'
 import { useNotify } from '@/hooks/useNotify'
+import { useToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { CreateVaultDataType, UpdateVaultDataType } from '@/types/createVault'

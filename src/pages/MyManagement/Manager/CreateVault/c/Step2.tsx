@@ -3,7 +3,7 @@ import { FC, useEffect, useMemo, useState } from 'react'
 import classNames from 'classnames'
 import { without } from 'lodash'
 
-import { useBaseTokenOptions, useToken } from '@/hooks/Tokens/useToken'
+import { useBaseTokenOptions, useToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { CreateVaultStep2DataTypes } from '@/types/createVault'

@@ -3,8 +3,8 @@ import { isNaN, sum } from 'lodash'
 import { useReadContract } from 'wagmi'
 
 import { useVaultReaderContract } from '@/hooks/Contracts/useContract'
-import { useToken } from '@/hooks/Tokens/useToken'
 import { useProfile } from '@/hooks/useProfile'
+import { useToken } from '@/hooks/useToken'
 
 import { AddressType, TokenTypes } from '@/types/base'
 import {

@@ -1,8 +1,8 @@
 import { useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 
 import { useERC20Contract, useRewardTrackerContract } from '@/hooks/Contracts/useContract'
-import { useToken } from '@/hooks/Tokens/useToken'
 import { useNotify } from '@/hooks/useNotify'
+import { useToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { PoolItemTypes } from '@/types/rewardTracker'

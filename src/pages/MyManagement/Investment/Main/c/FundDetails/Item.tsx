@@ -4,8 +4,8 @@ import BN from 'bignumber.js'
 import classNames from 'classnames'
 
 import { useCancelAllocate, useCancelWithholding } from '@/hooks/Contracts/useVault'
-import { useToken } from '@/hooks/Tokens/useToken'
 import { useProfile } from '@/hooks/useProfile'
+import { useToken } from '@/hooks/useToken'
 
 import { VaultUserListDataProps } from '@/types/vault'
 

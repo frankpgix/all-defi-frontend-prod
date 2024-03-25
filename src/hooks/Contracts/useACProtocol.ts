@@ -2,8 +2,8 @@ import { zeroAddress } from 'viem'
 import { useWriteContract } from 'wagmi'
 
 import { useACProtocolContract } from '@/hooks/Contracts/useContract'
-import { useToken } from '@/hooks/Tokens/useToken'
 import { useNotify } from '@/hooks/useNotify'
+import { useToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 

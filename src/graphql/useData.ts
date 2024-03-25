@@ -6,7 +6,7 @@ import { last, uniq } from 'lodash'
 
 import { useLazyQuery, useQuery } from '@apollo/client'
 
-import { useToken } from '@/hooks/Tokens/useToken'
+import { useToken } from '@/hooks/useToken'
 
 import { TokenTypes } from '@/types/base'
 import { VaultMonthDataType } from '@/types/graphql'

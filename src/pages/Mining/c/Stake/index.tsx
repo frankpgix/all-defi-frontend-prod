@@ -4,7 +4,7 @@ import BN from 'bignumber.js'
 import { pullAt } from 'lodash'
 
 // import { useTokensData } from '@/store/tokens/hooks'
-import { useUserBalances } from '@/hooks/Tokens/useToken'
+import { useUserBalances } from '@/hooks/useToken'
 
 import { PoolItemTypes, PoolStakeArrayItemTypes, PoolStakeTypes } from '@/types/rewardTracker'
 

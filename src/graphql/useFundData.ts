@@ -2,7 +2,7 @@ import { hexToString } from 'viem'
 
 import { useQuery } from '@apollo/client'
 
-import { useToken } from '@/hooks/Tokens/useToken'
+import { useToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { ACBuyDataTypes, VaultUserActionsItemTypes } from '@/types/graphql'

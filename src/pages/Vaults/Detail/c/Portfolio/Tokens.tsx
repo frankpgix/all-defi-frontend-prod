@@ -4,7 +4,7 @@ import ContentLoader from 'react-content-loader'
 import Table from 'rc-table'
 
 import { useAssetComposition } from '@/hooks/Contracts/useVaultReader'
-import { useToken } from '@/hooks/Tokens/useToken'
+import { useToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { VaultBaseInfoProps } from '@/types/vault'

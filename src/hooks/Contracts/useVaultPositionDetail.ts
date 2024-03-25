@@ -6,7 +6,7 @@ import GMXTradePositionAbi from '@/config/abi/PositionDetail/GMXTradePosition.js
 import UniV3NonfungiblePositionAbi from '@/config/abi/PositionDetail/UniV3NonfungiblePosition.json'
 import { getContractAddress } from '@/config/contracts'
 
-import { useToken } from '@/hooks/Tokens/useToken'
+import { useToken } from '@/hooks/useToken'
 
 import { AddressType, TokenTypes } from '@/types/base'
 import {

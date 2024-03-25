@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react'
 
 import classNames from 'classnames'
 
-import { useToken } from '@/hooks/Tokens/useToken'
+import { useToken } from '@/hooks/useToken'
 
 import { TokenKeys } from '@/types/base'
 

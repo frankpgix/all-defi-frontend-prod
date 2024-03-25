@@ -6,8 +6,8 @@ import {
   useCreateVault,
   useDerivativeList
 } from '@/hooks/Contracts/useAllProtocol'
-import { useBaseTokens } from '@/hooks/Tokens/useToken'
 import { useProfile } from '@/hooks/useProfile'
+import { useBaseTokens } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { CreateVaultStep1DataTypes, CreateVaultStep2DataTypes } from '@/types/createVault'

@@ -5,9 +5,9 @@ import { isNumber } from 'lodash'
 
 import { useBuyAcToken } from '@/hooks/Contracts/useACProtocol'
 import { useAllTokenPrice } from '@/hooks/Contracts/useAllProtocol'
-import { useBaseTokenOptions, useToken } from '@/hooks/Tokens/useToken'
-import { useUserBalances } from '@/hooks/Tokens/useToken'
 import { useProfile } from '@/hooks/useProfile'
+import { useBaseTokenOptions, useToken } from '@/hooks/useToken'
+import { useUserBalances } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 

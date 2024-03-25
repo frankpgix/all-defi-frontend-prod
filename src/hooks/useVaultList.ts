@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 
 import { useRequest } from 'ahooks'
 
-import { useToken } from '@/hooks/Tokens/useToken'
 import { useProfile } from '@/hooks/useProfile'
+import { useToken } from '@/hooks/useToken'
 
 import { ManageVaultListType, UserVaultListType, VaultListType } from '@/types/vaultListStore'
 

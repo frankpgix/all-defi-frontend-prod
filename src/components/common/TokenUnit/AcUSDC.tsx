@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { useToken } from '@/hooks/Tokens/useToken'
+import { useToken } from '@/hooks/useToken'
 
 import Image from '@@/common/Image'
 

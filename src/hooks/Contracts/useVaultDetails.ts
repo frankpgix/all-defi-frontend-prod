@@ -5,7 +5,7 @@ import {
   useVaultContract,
   useVaultReaderContract
 } from '@/hooks/Contracts/useContract'
-import { useToken } from '@/hooks/Tokens/useToken'
+import { useToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 

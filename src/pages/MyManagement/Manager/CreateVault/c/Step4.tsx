@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react'
 
 import BN from 'bignumber.js'
 
-import { useToken } from '@/hooks/Tokens/useToken'
+import { useToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { VaultDerivativesProps } from '@/types/vault'

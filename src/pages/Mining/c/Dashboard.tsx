@@ -4,8 +4,8 @@ import BN from 'bignumber.js'
 
 import { useAllTokenPriceInUSD } from '@/hooks/Contracts/useAllProtocol'
 import { useHarvestAll, useUserRewardDashboard } from '@/hooks/Contracts/useRewardTracker'
-import { useToken } from '@/hooks/Tokens/useToken'
 import { useProfile } from '@/hooks/useProfile'
+import { useToken } from '@/hooks/useToken'
 
 import { STATIC_RESOURCES_URL } from '@/config'
 import Cache from '@/utils/cache'
