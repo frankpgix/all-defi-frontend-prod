@@ -1,9 +1,19 @@
 import { zeroAddress } from 'viem'
 
 import { ChainId } from '@/config'
-import { TokenConfigTypes } from '@/types/base'
+import { TokenConfigTypes, TokenTypes } from '@/types/base'
 
 export const ZERO_ADDRESS = zeroAddress
+
+export const UNKNOWN = {
+  decimals: 18,
+  icon: 'symbol/eth.svg',
+  name: 'UNKNOWN',
+  precision: 4,
+  symbol: 'UNKNOWN',
+  tokenAddress: '',
+  address: ZERO_ADDRESS
+} as TokenTypes
 
 export const ethConfig: TokenConfigTypes = {
   name: 'ETH',
@@ -17,7 +27,7 @@ export const ethConfig: TokenConfigTypes = {
   icon: 'symbol/eth.svg'
 }
 
-export const tokens: TokenConfigTypes[] = [
+export const baseTokens: TokenConfigTypes[] = [
   ethConfig,
   {
     name: 'USDC',
@@ -29,7 +39,11 @@ export const tokens: TokenConfigTypes[] = [
     decimals: 6,
     precision: 2,
     icon: 'symbol/usdc.svg'
-  },
+  }
+]
+
+export const tokens: TokenConfigTypes[] = [
+  ...baseTokens,
   {
     name: 'USDT',
     symbol: 'USDT',

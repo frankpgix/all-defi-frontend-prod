@@ -1,16 +1,18 @@
 import { useWriteContract } from 'wagmi'
+import { zeroAddress } from 'viem'
 import { useACProtocolContract } from '@/hooks/Contracts/useContract'
 import { AddressType } from '@/types/base'
 import { getUnitAmount } from '@/utils/tools'
-import { getTokenByAddress } from '@/config/tokens'
+// import { getTokenByAddress } from '@/config/tokens'
 import { useNotify } from '@/hooks/useNotify'
-import { zeroAddress } from 'viem'
+import { useToken } from '@/hooks/Tokens/useToken'
 
 const ACProtocolContract = useACProtocolContract()
 
 export const useBuyAcToken = () => {
-  const { writeContractAsync } = useWriteContract()
+  const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
+  const { getTokenByAddress } = useToken()
 
   const buyAcToken = async (
     baseTokenAddress: AddressType,
@@ -18,7 +20,7 @@ export const useBuyAcToken = () => {
     account: AddressType
   ) => {
     const baseToken = getTokenByAddress(baseTokenAddress)
-    const _amount = getUnitAmount(String(amount), baseToken.decimals)
+    const _amount = getUnitAmount(String(amount), baseToken?.decimals)
     const notifyId = await createNotify({ content: 'Buy AC Token', type: 'loading' })
 
     const succNotify = (hash: string) => {
@@ -34,24 +36,32 @@ export const useBuyAcToken = () => {
     }
 
     if (baseTokenAddress === zeroAddress) {
-      await writeContractAsync({
-        ...ACProtocolContract,
-        functionName: 'ethBuy',
-        args: [],
-        value: _amount,
-        account
-      })
-        .then((hash: string) => succNotify(hash))
-        .catch((error: any) => errorNotify(error.shortMessage))
+      writeContract(
+        {
+          ...ACProtocolContract,
+          functionName: 'ethBuy',
+          args: [],
+          value: _amount,
+          account
+        },
+        {
+          onSuccess: (hash: string) => succNotify(hash),
+          onError: (error: any) => errorNotify(error.shortMessage)
+        }
+      )
     } else {
-      await writeContractAsync({
-        ...ACProtocolContract,
-        functionName: 'buy',
-        args: [baseTokenAddress, _amount],
-        account
-      })
-        .then((hash: string) => succNotify(hash))
-        .catch((error: any) => errorNotify(error.shortMessage))
+      writeContract(
+        {
+          ...ACProtocolContract,
+          functionName: 'buy',
+          args: [baseTokenAddress, _amount],
+          account
+        },
+        {
+          onSuccess: (hash: string) => succNotify(hash),
+          onError: (error: any) => errorNotify(error.shortMessage)
+        }
+      )
     }
   }
   return { buyAcToken }

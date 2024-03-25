@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { VaultBaseInfoProps } from '@/types/vault'
 import { AddressType } from '@/types/base'
 
-import { userVaultPositionDetail } from '@/hooks/useVaultPositionDetail'
+import { userVaultPositionDetail } from '@/hooks/Contracts/useVaultPositionDetail'
 
 import Tokens from './Tokens'
 import UniLP from './UniLP'

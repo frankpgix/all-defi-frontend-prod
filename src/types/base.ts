@@ -71,3 +71,5 @@ export interface TokenTypes {
   projectLink?: string
   icon?: string
 }
+
+export type GetTokenFuncType = (address: AddressType) => TokenTypes

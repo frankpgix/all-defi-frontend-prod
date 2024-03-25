@@ -1,8 +1,15 @@
-import { tokens, ZERO_ADDRESS, getTokenByAddress } from '@/config/tokens'
-import { getUnitAmount } from '@/utils/tools'
+import { ZERO_ADDRESS } from '@/config/token'
+
+import { AddressType, GetTokenFuncType } from '@/types/base'
 import { CreateVaultDataType, UpdateVaultDataType } from '@/types/createVault'
 
-export const calcCaeateVaultData = (data: CreateVaultDataType) => {
+import { getUnitAmount } from '@/utils/tools'
+
+export const calcCaeateVaultData = (
+  data: CreateVaultDataType,
+  getTokenByAddress: GetTokenFuncType,
+  WETHAddress: AddressType
+) => {
   const {
     name,
     symbol,
@@ -15,7 +22,7 @@ export const calcCaeateVaultData = (data: CreateVaultDataType) => {
   } = data
   let baseTokenAddress = data.baseTokenAddress
   if (baseTokenAddress === ZERO_ADDRESS) {
-    baseTokenAddress = tokens.WETH.address
+    baseTokenAddress = WETHAddress
   }
   const baseToken = getTokenByAddress(baseTokenAddress)
   const stakeAmount = getUnitAmount(String(amount), 18)

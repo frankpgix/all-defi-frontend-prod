@@ -5,7 +5,7 @@ import numeral from 'numeral'
 import duration from 'dayjs/plugin/duration'
 // import { BigNumberish } from '@ethersproject/bignumber'
 // import { formatUnits } from '@ethersproject/units'
-import { formatUnits, parseUnits } from 'viem'
+import { formatUnits as viemFormatUnits, parseUnits } from 'viem'
 
 dayjs.extend(duration)
 
@@ -74,11 +74,22 @@ export const calcDateDuration = (date: string) => {
   return Math.floor(_asDays)
 }
 
+export const formatUnits = (value: bigint, decimal = 18, precision?: number): string => {
+  const result = viemFormatUnits(value, decimal)
+  if (precision != null) {
+    const tempArr = result.split('.')
+    if (tempArr[1]) {
+      return `${tempArr[0]}.${tempArr[1].substring(0, precision)}`
+    }
+  }
+  return result
+}
+
 // split number
 export const safeInterceptionValues = (value: any, precision = 8, decimal = 18): string => {
   const isDecimal = toType(value) === 'object' && String(value).includes('.')
   const regexp = /(?:\.0*|(\.\d+?)0+)$/
-  const _value = isDecimal ? (value as string) : formatUnits(value, decimal)
+  const _value = isDecimal ? (value as string) : viemFormatUnits(value, decimal)
   const _split = _value.split('.')
   const handle = `${_split[0]}.${(_split[1] ?? '0').substring(0, precision)}`
   return handle.replace(regexp, '$1')

@@ -5,36 +5,8 @@ import { tokens, ZERO_ADDRESS } from '@/config/tokens'
 import { useERC20Contract } from '@/hooks/Contracts/useContract'
 import { safeInterceptionValues } from '@/utils/tools'
 import { profileProps } from '@/types/profile'
-// import { useVaultCountLimit } from '@/hooks/useAllProtocol'
 import { TokenKeys } from '@/types/base'
 import { useStoreProfile } from '@/stores/useStoreProfile'
-
-// export const useProfile = (): profileProps => {
-//   const { address: account } = useAccount()
-//   const {
-//     data: maxFundLimit,
-//     isLoading: loading,
-//     isSuccess,
-//     refetch: update
-//   } = useVaultCountLimit(account)
-//   console.log(Boolean(maxFundLimit), maxFundLimit)
-//   if (!loading && isSuccess) {
-//     return {
-//       account,
-//       isManager: Boolean(maxFundLimit),
-//       loading,
-//       maxFundLimit,
-//       update
-//     }
-//   }
-//   return {
-//     account,
-//     isManager: false,
-//     loading: false,
-//     maxFundLimit: 0,
-//     update: () => {}
-//   }
-// }
 
 export const useProfile = (): profileProps => {
   const { account, isManager, loading, update, maxFundLimit } = useStoreProfile((state: any) => ({

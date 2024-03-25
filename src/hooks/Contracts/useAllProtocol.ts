@@ -1,27 +1,38 @@
 import { useReadContract, useWriteContract } from 'wagmi'
-import { tokens, ZERO_ADDRESS, getTokenByAddress } from '@/config/tokens'
+
+import { ZERO_ADDRESS } from '@/config/token'
+
 import { useAllProtocolContract } from '@/hooks/Contracts/useContract'
 import { useAssetPrice, useAssetPriceUSD } from '@/hooks/Contracts/useVaultFactory'
+import { useToken } from '@/hooks/Tokens/useToken'
+import { useNotify } from '@/hooks/useNotify'
+
 import { AddressType } from '@/types/base'
-import { safeInterceptionValues, getUnitAmount } from '@/utils/tools'
-import { calcVaultStakedALL, calcVaultDerivativesInfo } from '@/compute/vault'
-import { calcCaeateVaultData, calcUpdateVaultData } from '@/compute/caeateVault'
-import { VaultStakeDataDefault } from '@/data/vault'
 import { CreateVaultDataType, UpdateVaultDataType } from '@/types/createVault'
 import { VaultStakeType } from '@/types/vault'
-import { useNotify } from '@/hooks/useNotify'
+
+import { calcCaeateVaultData, calcUpdateVaultData } from '@/compute/caeateVault'
+import { calcVaultDerivativesInfo, calcVaultStakedALL } from '@/compute/vault'
+import { VaultStakeDataDefault } from '@/data/vault'
+import { getUnitAmount, safeInterceptionValues } from '@/utils/tools'
 
 const AllProtocolContract = useAllProtocolContract()
 
 export const useAllTokenPrice = (baseToken: AddressType) => {
+  const { getTokenByName } = useToken()
+  const WETH = getTokenByName('WETH')
+  const ALLTOKEN = getTokenByName('ALLTOKEN')
+
   if (baseToken === ZERO_ADDRESS) {
-    baseToken = tokens.WETH.address
+    baseToken = WETH.address
   }
-  return useAssetPrice(tokens.ALLTOKEN.address, baseToken)
+  return useAssetPrice(ALLTOKEN.address, baseToken)
 }
 
 export const useAllTokenPriceInUSD = () => {
-  return useAssetPriceUSD(tokens.ALLTOKEN.address)
+  const { getTokenByName } = useToken()
+  const ALLTOKEN = getTokenByName('ALLTOKEN')
+  return useAssetPriceUSD(ALLTOKEN.address)
 }
 
 export const useVaultCountLimit = (address?: AddressType | '') => {
@@ -67,10 +78,12 @@ export const useDerivativeList = () => {
 }
 
 export const useCalcAUMLimit = (underlyingToken: AddressType) => {
+  const { getTokenByName, getTokenByAddress } = useToken()
+  const WETH = getTokenByName('WETH')
   const _amount = getUnitAmount(String(1), 18)
 
   if (underlyingToken === ZERO_ADDRESS) {
-    underlyingToken = tokens.WETH.address
+    underlyingToken = WETH.address
   }
 
   const { isLoading, isSuccess, data, refetch } = useReadContract({
@@ -78,7 +91,8 @@ export const useCalcAUMLimit = (underlyingToken: AddressType) => {
     functionName: 'calcAUMLimit',
     args: [underlyingToken, _amount]
   }) as { data: bigint; isSuccess: boolean; isLoading: boolean; refetch: () => void }
-  console.log(data, isLoading, isSuccess)
+  // console.log(data, isLoading, isSuccess)
+
   if (!isLoading && isSuccess) {
     const { decimals } = getTokenByAddress(underlyingToken)
 
@@ -93,40 +107,44 @@ export const useCalcAUMLimit = (underlyingToken: AddressType) => {
 }
 
 export const useCreateVault = () => {
-  const { writeContractAsync } = useWriteContract()
+  const { getTokenByAddress, getTokenByName } = useToken()
+  const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
-
+  const WETH = getTokenByName('WETH')
   const onCreateVault = async (
     data: CreateVaultDataType,
     account: AddressType,
     callback: () => void
   ) => {
     const notifyId = await createNotify({ type: 'loading', content: 'Create Vault' })
-    const args = calcCaeateVaultData(data)
-    await writeContractAsync({
-      ...AllProtocolContract,
-      functionName: 'createVault',
-      args,
-      account
-    })
-      .then((hash: string) => {
-        // console.log(hash)
-        updateNotifyItem(notifyId, { title: 'Create Vault', type: 'success', hash })
-        callback()
-      })
-      .catch((error: any) => {
-        updateNotifyItem(notifyId, {
-          title: 'Create Vault',
-          type: 'error',
-          content: error.shortMessage
-        })
-      })
+    const args = calcCaeateVaultData(data, getTokenByAddress, WETH.address)
+    writeContract(
+      {
+        ...AllProtocolContract,
+        functionName: 'createVault',
+        args,
+        account
+      },
+      {
+        onSuccess: (hash: string) => {
+          updateNotifyItem(notifyId, { title: 'Create Vault', type: 'success', hash })
+          callback()
+        },
+        onError: (error: any) => {
+          updateNotifyItem(notifyId, {
+            title: 'Create Vault',
+            type: 'error',
+            content: error.shortMessage
+          })
+        }
+      }
+    )
   }
   return { onCreateVault }
 }
 
 export const useUpdateVault = () => {
-  const { writeContractAsync } = useWriteContract()
+  const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
 
   const onUpdateVault = async (
@@ -137,24 +155,29 @@ export const useUpdateVault = () => {
   ) => {
     const notifyId = await createNotify({ type: 'loading', content: 'Set Vault Base Info' })
     const upData = calcUpdateVaultData(data)
-    await writeContractAsync({
-      ...AllProtocolContract,
-      functionName: 'updateVault',
-      args: [vaultAddress, upData],
-      account
-    })
-      .then((hash: string) => {
-        // console.log(hash)
-        updateNotifyItem(notifyId, { title: 'Set Vault Base Info', type: 'success', hash })
-        callback()
-      })
-      .catch((error: any) => {
-        updateNotifyItem(notifyId, {
-          title: 'Set Vault Base Info',
-          type: 'error',
-          content: error.shortMessage
-        })
-      })
+    writeContract(
+      {
+        ...AllProtocolContract,
+        functionName: 'updateVault',
+        args: [vaultAddress, upData],
+        account
+      },
+      {
+        onSuccess: (hash: string) => {
+          //onSuccess
+          updateNotifyItem(notifyId, { title: 'Set Vault Base Info', type: 'success', hash })
+          callback()
+        },
+        onError: (error: any) => {
+          //onError
+          updateNotifyItem(notifyId, {
+            title: 'Set Vault Base Info',
+            type: 'error',
+            content: error.shortMessage
+          })
+        }
+      }
+    )
   }
   return { onUpdateVault }
 }
@@ -173,7 +196,7 @@ export const useVaultUnstakeLimit = (vaultAddress: AddressType) => {
 }
 
 export const useVaultChangeStakeALL = () => {
-  const { writeContractAsync } = useWriteContract()
+  const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
 
   const onVaultChangeStakeALL = async (
@@ -189,24 +212,32 @@ export const useVaultChangeStakeALL = () => {
       type: 'loading',
       content: 'Change Vault Stake ALL Token'
     })
-    console.log(direction === 'increase' ? 'stake' : 'unstake')
-    await writeContractAsync({
-      ...AllProtocolContract,
-      functionName: direction === 'increase' ? 'stake' : 'unstake',
-      args: [vaultAddress, _amount],
-      account
-    })
-      .then((hash: string) => {
-        updateNotifyItem(notifyId, { title: 'Change Vault Stake ALL Token', type: 'success', hash })
-        callback()
-      })
-      .catch((error: any) => {
-        updateNotifyItem(notifyId, {
-          title: 'Change Vault Stake ALL Token',
-          type: 'error',
-          content: error.shortMessage
-        })
-      })
+    // console.log(direction === 'increase' ? 'stake' : 'unstake')
+    writeContract(
+      {
+        ...AllProtocolContract,
+        functionName: direction === 'increase' ? 'stake' : 'unstake',
+        args: [vaultAddress, _amount],
+        account
+      },
+      {
+        onSuccess: (hash: string) => {
+          updateNotifyItem(notifyId, {
+            title: 'Change Vault Stake ALL Token',
+            type: 'success',
+            hash
+          })
+          callback()
+        },
+        onError: (error: any) => {
+          updateNotifyItem(notifyId, {
+            title: 'Change Vault Stake ALL Token',
+            type: 'error',
+            content: error.shortMessage
+          })
+        }
+      }
+    )
   }
   return { onVaultChangeStakeALL }
 }

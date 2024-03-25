@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import OnceYouBuy from './c/OnceYouBuy'
 import Bench from './c/Bench'
 import ContributionManagement from './c/ContributionManagement'
+import OnceYouBuy from './c/OnceYouBuy'
 
 const BuyAcToken: FC = () => {
   return (
