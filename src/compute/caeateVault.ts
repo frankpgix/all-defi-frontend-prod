@@ -1,4 +1,4 @@
-import { ZERO_ADDRESS } from '@/config/token'
+import { ZERO_ADDRESS } from '@/config/tokens'
 
 import { AddressType, GetTokenFuncType } from '@/types/base'
 import { CreateVaultDataType, UpdateVaultDataType } from '@/types/createVault'

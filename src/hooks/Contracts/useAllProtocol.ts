@@ -1,6 +1,6 @@
 import { useReadContract, useWriteContract } from 'wagmi'
 
-import { ZERO_ADDRESS } from '@/config/token'
+import { ZERO_ADDRESS } from '@/config/tokens'
 
 import { useAllProtocolContract } from '@/hooks/Contracts/useContract'
 import { useAssetPrice, useAssetPriceUSD } from '@/hooks/Contracts/useVaultFactory'

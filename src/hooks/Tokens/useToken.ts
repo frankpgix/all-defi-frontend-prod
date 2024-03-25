@@ -1,7 +1,7 @@
 import { erc20Abi, zeroAddress } from 'viem'
 import { useAccount, useBalance, useReadContracts } from 'wagmi'
 
-import { UNKNOWN, baseTokens, ethConfig, tokens } from '@/config/token'
+import { UNKNOWN, baseTokens, ethConfig, tokens } from '@/config/tokens'
 
 import { AddressType, TokenConfigTypes, TokenTypes } from '@/types/base'
 
