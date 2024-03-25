@@ -1,14 +1,15 @@
-import { getTokenByAddress } from '@/config/tokens'
+import { UNKNOWN } from '@/config/token'
+
 import {
-  GlobalAssetStatisticProps,
-  VaultBaseInfoProps,
-  VaultDetailProps,
-  VaultUserDetailProps,
-  ShareCompositionProps,
   AssetCompositionProps,
-  VaultStakeProps,
+  GlobalAssetStatisticProps,
+  ShareCompositionProps,
+  VaultBaseInfoProps,
   VaultBreachDetailProps,
-  VaultUpdatingDataProps
+  VaultDetailProps,
+  VaultStakeProps,
+  VaultUpdatingDataProps,
+  VaultUserDetailProps
 } from '@/types/vault'
 
 // Vaults Global Asset Statistics Default Data
@@ -19,7 +20,7 @@ export const GlobalAssetStatisticDefault: GlobalAssetStatisticProps = {
 }
 
 export const VaultBaseInfoDefault: VaultBaseInfoProps = {
-  underlyingToken: getTokenByAddress('0x'),
+  underlyingToken: UNKNOWN,
   acToken: '0x',
   address: '0x',
   createTime: 0,
@@ -37,7 +38,7 @@ export const VaultBaseInfoDefault: VaultBaseInfoProps = {
 }
 
 export const VaultDetailDefault: VaultDetailProps = {
-  underlyingToken: getTokenByAddress('0x'),
+  underlyingToken: UNKNOWN,
   address: '0x',
   name: '-',
   manager: '-',
@@ -79,7 +80,7 @@ export const VaultDetailDefault: VaultDetailProps = {
 
 export const VaultUserDetailDefault: VaultUserDetailProps = {
   address: '0x',
-  underlyingToken: getTokenByAddress('0x'),
+  underlyingToken: UNKNOWN,
   status: 1,
   shares: 0,
   aum: 0,

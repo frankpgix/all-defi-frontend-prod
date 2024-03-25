@@ -5,16 +5,12 @@ import classNames from 'classnames'
 import Table from 'rc-table'
 
 import { TokenTypes } from '@/types/base'
-// import PositionDetail from '@/class/PositionDetail'
-// import { getTokenByAddress } from '@/config/tokens'
 import { UniLPDetailTypes } from '@/types/vaultPositionDetail'
 
-// import { useRequest } from 'ahooks'
 import { TableNoData } from '@@/common/TableEmpty'
 import { IconGroup } from '@@/common/TokenUnit'
 import TokenValue from '@@/common/TokenValue'
 
-// import Button from '@@/common/Button'
 interface Props {
   data: UniLPDetailTypes[]
   underlyingToken: TokenTypes
@@ -22,10 +18,6 @@ interface Props {
 }
 
 const UniLP: FC<Props> = ({ data, underlyingToken, loading }) => {
-  // const { getUniV3NonfungiblePosition } = PositionDetail
-  // const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
-
-  // console.log(data)
   const webColumns = [
     {
       title: 'POOL',

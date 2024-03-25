@@ -1,36 +1,45 @@
-import { readContract, getClient } from '@wagmi/core'
-import { getLogs, getBlockNumber } from 'viem/actions'
-import { decodeAbiParameters } from 'viem'
-
 import { AbiEvent } from 'abitype'
-import { config } from '@/config/wagmi'
-import { useVaultReaderContract, useVaultFactoryContract } from '@/hooks/Contracts/useContract'
-import { calcVaultBaseInfo, calcVaultDetail, calcVaultUserDetail } from '@/compute/vault'
+import { decodeAbiParameters } from 'viem'
+import { getBlockNumber, getLogs } from 'viem/actions'
 
-import { VaultProps, VaultDetailProps, VaultUserListDataProps } from '@/types/vault'
+import { getClient, readContract } from '@wagmi/core'
+
+import { config } from '@/config/wagmi'
+
+import { useVaultFactoryContract, useVaultReaderContract } from '@/hooks/Contracts/useContract'
+
+import { AddressType, GetTokenFuncType } from '@/types/base'
+import { VaultDetailProps, VaultProps, VaultUserListDataProps } from '@/types/vault'
 import { VaultVerifiedItemTypes } from '@/types/vault'
-import { AddressType } from '@/types/base'
-import { safeInterceptionValues, getUnitAmount } from '@/utils/tools'
+
+import { calcVaultBaseInfo, calcVaultDetail, calcVaultUserDetail } from '@/compute/vault'
+import { getUnitAmount, safeInterceptionValues } from '@/utils/tools'
 
 const VaultReaderContract = useVaultReaderContract()
 const VaultFactoryContract = useVaultFactoryContract()
 
-export const getVaultList = async (): Promise<VaultDetailProps[]> => {
+export const getVaultList = async (
+  getTokenByAddress: GetTokenFuncType
+): Promise<VaultDetailProps[]> => {
   const result = (await readContract(config, {
     ...VaultReaderContract,
     functionName: 'vaultDetailList',
     args: [0, 999, false]
   })) as any[]
-  return result.map((item) => calcVaultDetail(item))
+  return result.map((item) => calcVaultDetail(item, getTokenByAddress))
 }
 
-export const getManageVaultList = async (account?: AddressType): Promise<VaultDetailProps[]> => {
+export const getManageVaultList = async (
+  getTokenByAddress: GetTokenFuncType,
+  account?: AddressType
+): Promise<VaultDetailProps[]> => {
   if (!account) return []
-  const result = await getVaultList()
+  const result = await getVaultList(getTokenByAddress)
   return result.filter((item) => item.manager.toLowerCase() === account.toLowerCase())
 }
 
 export const getUserVaultList = async (
+  getTokenByAddress: GetTokenFuncType,
   account?: AddressType
 ): Promise<VaultUserListDataProps[]> => {
   if (!account) return []
@@ -43,8 +52,8 @@ export const getUserVaultList = async (
 
   const data: VaultUserListDataProps[] = fundList
     .map((item: any, index: number) => {
-      const fund: VaultProps = calcVaultBaseInfo(item)
-      fund.data = calcVaultUserDetail(detailList[index])
+      const fund: VaultProps = calcVaultBaseInfo(item, getTokenByAddress)
+      fund.data = calcVaultUserDetail(detailList[index], getTokenByAddress)
       fund.address = fund.data.address
       return fund
     })

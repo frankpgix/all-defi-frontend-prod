@@ -1,37 +1,21 @@
 import { FC } from 'react'
-import { useParams } from 'react-router-dom'
 import ContentLoader from 'react-content-loader'
-// import { getTokenByAddress, baseTokens } from '@/config/tokens'
-// import FundPool from '@/class/FundPool'
-// import FundReader from '@/class/FundReader'
-// import AllProtocol from '@/class/AllProtocol'
-// import {
-//   FundBaseProps,
-//   FundBaseDefault,
-//   FundDetailProps,
-//   FundDetailDefault,
-//   FundStakeProps,
-//   FundStakeDefault,
-//   FundBreachDetailProps,
-//   FundBreachDetailDefault
-// } from '@/class/help'
+import { useParams } from 'react-router-dom'
 
-// import { useProfile } from '@/hooks/useProfile'
-// import { useVaultStakedALL } from '@/hooks/useAllProtocol'
 import { useVaultManageDetails } from '@/hooks/Contracts/useVaultDetails'
-// import { useVaultBreachDetail, useVaultUpdatingData } from '@/hooks/useVaultReader'
+
 import { AddressType } from '@/types/base'
+
 import Blank from '@@/common/Blank'
 
-import ManageDetail from './c/ManageDetail'
-import DataTab from './c/DataTab'
 import Dashboard from './c/Dashboard'
+import DataTab from './c/DataTab'
+import ManageDetail from './c/ManageDetail'
 import VerifiedDialog from './c/VerifiedDialog'
 
 const VaultDetail: FC = () => {
   const { vaultAddress } = useParams() as { vaultAddress: AddressType }
 
-  // const { account } = useProfile()
   const {
     data: { baseInfo, vaultDetail, vaultBreachDetail, vaultStakedALL },
     isLoading: loading,

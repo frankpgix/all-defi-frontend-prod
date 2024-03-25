@@ -1,7 +1,6 @@
 import BN from 'bignumber.js'
 import { decodeAbiParameters, hexToString } from 'viem'
 
-// import { getTokenByAddress } from '@/config/tokens'
 import { AddressType, GetTokenFuncType, TokenTypes } from '@/types/base'
 import {
   AssetCompositionProps,

@@ -1,57 +1,40 @@
 import { FC, useMemo } from 'react'
-import dayjs from 'dayjs'
-import BN from 'bignumber.js'
-// import { useRequest } from 'ahooks'
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import ContentLoader from 'react-content-loader'
-// import { getTokenByAddress } from '@/config/tokens'
-// import { lowerCase } from 'lodash'
-// import { floor, isNaN } from 'lodash'
-// import { floor } from 'lodash'
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 
-// import { FundBaseProps, FundDetailProps } from '@/class/Fund'
-// import { FundStakeProps } from '@/class/FundManager'
-import { formatNumber } from '@/utils/tools'
-// import { getTokenByAddress } from '@/config/tokens'
-
-// import { FundBaseProps, FundDetailProps, FundStakeProps, FundBreachDetailProps } from '@/class/help'
-// import FundReader from '@/class/FundReader'
-
-// import BlueLineSection from '@@/web/BlueLineSection'
-// import DataItem from '@@/common/DataItem'
-import Button from '@@/common/Button'
-import Alert from '@@/common/Alert'
-import Blank from '@@/common/Blank'
-// import PercentageLine from '@@/common/PercentageLine'
-// import RoeShow from '@@/common/RoeShow'
-import TokenValue from '@@/common/TokenValue'
-// import Blank from '@@/common/Blank'
-// import Popper from '@@/common/Popper'
-
-import ValutSettleButton from '../../ValutSettleButton'
-import DappTab from './DappTab'
-// import Dapp from '@@/web/Dapp'
-import {
-  VaultBaseInfoProps,
-  VaultDetailProps,
-  VaultStakeProps,
-  VaultBreachDetailProps
-} from '@/types/vault'
-import { AddressType } from '@/types/base'
+import BN from 'bignumber.js'
+import dayjs from 'dayjs'
 
 import { useVaultUpdatingData } from '@/hooks/Contracts/useVaultReader'
 
+import { AddressType } from '@/types/base'
+// import Dapp from '@@/web/Dapp'
 import {
-  CountLayout,
+  VaultBaseInfoProps,
+  VaultBreachDetailProps,
+  VaultDetailProps,
+  VaultStakeProps
+} from '@/types/vault'
+
+import { formatNumber } from '@/utils/tools'
+import Alert from '@@/common/Alert'
+import Blank from '@@/common/Blank'
+import Button from '@@/common/Button'
+import TokenValue from '@@/common/TokenValue'
+
+import ValutSettleButton from '../../ValutSettleButton'
+import {
   CountItem,
-  SectionHeader,
-  SectionLayout,
+  CountLayout,
   SectionBlank,
-  SectionItem,
-  SectionTip,
   SectionButtons,
-  SectionPercentageLine
+  SectionHeader,
+  SectionItem,
+  SectionLayout,
+  SectionPercentageLine,
+  SectionTip
 } from './C'
+import DappTab from './DappTab'
 
 interface Props {
   base: VaultBaseInfoProps

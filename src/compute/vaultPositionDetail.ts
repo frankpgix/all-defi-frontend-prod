@@ -1,6 +1,4 @@
-import { getTokenByAddress } from '@/config/tokens'
-
-import { AddressType, TokenTypes } from '@/types/base'
+import { AddressType, GetTokenFuncType, TokenTypes } from '@/types/base'
 import {
   AaveV3DetailTypes,
   GMXEarnDetailTypes,
@@ -12,7 +10,8 @@ import { safeInterceptionValues } from '@/utils/tools'
 
 export const calcUniV3NonfungiblePosition = (
   sData: any[],
-  underlyingToken: TokenTypes
+  underlyingToken: TokenTypes,
+  getTokenByAddress: GetTokenFuncType
 ): UniLPDetailTypes[] => {
   return sData.map((item: any) => {
     const token0 = getTokenByAddress(item.token0)
@@ -39,7 +38,8 @@ export const calcUniV3NonfungiblePosition = (
 
 export const calcAaveV3Position = (
   response: any,
-  underlyingToken: TokenTypes
+  underlyingToken: TokenTypes,
+  getTokenByAddress: GetTokenFuncType
 ): AaveV3DetailTypes | null => {
   console.log(response, 'response')
   const healthFactor = safeInterceptionValues(response.healthFactor, 4, 4)
@@ -77,7 +77,10 @@ export const calcAaveV3Position = (
   return { collateral, debt, healthFactor }
 }
 
-export const calcGMXTradePosition = (response: any[]): GMXTradePositionTypes[] => {
+export const calcGMXTradePosition = (
+  response: any[],
+  getTokenByAddress: GetTokenFuncType
+): GMXTradePositionTypes[] => {
   return (response ?? []).map((item: any, id) => ({
     id,
     collateralToken: getTokenByAddress(item.collateralToken),

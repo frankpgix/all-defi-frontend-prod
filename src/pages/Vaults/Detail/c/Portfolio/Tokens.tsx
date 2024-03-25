@@ -1,18 +1,18 @@
 import { FC, useMemo } from 'react'
-import Table from 'rc-table'
 import ContentLoader from 'react-content-loader'
 
-import { AddressType } from '@/types/base'
-
-import { getTokenByAddress } from '@/config/tokens'
-import { VaultBaseInfoProps } from '@/types/vault'
+import Table from 'rc-table'
 
 import { useAssetComposition } from '@/hooks/Contracts/useVaultReader'
+import { useToken } from '@/hooks/Tokens/useToken'
+
+import { AddressType } from '@/types/base'
+import { VaultBaseInfoProps } from '@/types/vault'
 
 import PercentageLine from '@@/common/PercentageLine'
 import { TableNoData } from '@@/common/TableEmpty'
-import TokenValue from '@@/common/TokenValue'
 import { TokenIcon } from '@@/common/TokenUnit'
+import TokenValue from '@@/common/TokenValue'
 
 interface Props {
   fundAddress: AddressType
@@ -20,6 +20,7 @@ interface Props {
 }
 
 const Portfolio: FC<Props> = ({ fundAddress, base }) => {
+  const { getTokenByAddress } = useToken()
   const { data, isLoading: loading } = useAssetComposition(
     fundAddress,
     base.underlyingToken.address

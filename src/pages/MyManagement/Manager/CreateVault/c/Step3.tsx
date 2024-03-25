@@ -1,19 +1,20 @@
-import { FC, useMemo, useState, useEffect } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
+
 import BN from 'bignumber.js'
 import { isNaN } from 'lodash'
 
-// import { useTokensData } from '@/store/tokens/hooks'
+import { useToken } from '@/hooks/Tokens/useToken'
 import { useUserBalances } from '@/hooks/useProfile'
-import { getTokenByAddress } from '@/config/tokens'
-import { calcDecimalsFloor } from '@/utils/tools'
-import Cache from '@/utils/cache'
+
 import { AddressType } from '@/types/base'
 
-import BlueLineSection from '@@/web/BlueLineSection'
+import Cache from '@/utils/cache'
+import { calcDecimalsFloor } from '@/utils/tools'
+import Button from '@@/common/Button'
 import { Input, Slider } from '@@/common/Form'
 import { AllTokenUnit } from '@@/common/TokenUnit'
-import Button from '@@/common/Button'
 import { TokenIcon } from '@@/common/TokenUnit'
+import BlueLineSection from '@@/web/BlueLineSection'
 
 interface Props {
   onConfirm: (data: number) => void
@@ -24,6 +25,7 @@ interface Props {
 }
 
 const Step3: FC<Props> = ({ onConfirm, show, onBack, multiple, baseTokenAddress }) => {
+  const { getTokenByAddress } = useToken()
   const { balances } = useUserBalances()
 
   const [amount, setAmount] = useState<string | number>('')

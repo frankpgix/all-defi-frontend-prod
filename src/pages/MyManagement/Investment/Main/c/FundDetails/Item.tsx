@@ -1,29 +1,24 @@
-import { FC, useMemo, useState, useRef, useEffect, useCallback } from 'react'
-import classNames from 'classnames'
-import BN from 'bignumber.js'
-// import { floor } from 'lodash'
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-// import { FundUserListDataProps } from '@/class/help'
-import { formatNumber, sleep } from '@/utils/tools'
-// import { ProductProps } from '@/config/products'
-import { getTokenByAddress } from '@/config/tokens'
-import { VaultUserListDataProps } from '@/types/vault'
+import BN from 'bignumber.js'
+import classNames from 'classnames'
+
 import { useCancelAllocate, useCancelWithholding } from '@/hooks/Contracts/useVault'
+import { useToken } from '@/hooks/Tokens/useToken'
 import { useProfile } from '@/hooks/useProfile'
 
+import { VaultUserListDataProps } from '@/types/vault'
+
 import { SectionItem } from '@/pages/MyManagement/Manager/VaultDetail/c/ManageDetail/C'
-
-import Button from '@@/common/Button'
-import Image from '@@/common/Image'
-import RoeShow from '@@/common/RoeShow'
-// import DataItem from '@@/common/DataItem'
-import InfoDialog from '@@/common/Dialog/Info'
-import FundIcon from '@@/common/FundIcon'
-import TokenValue from '@@/common/TokenValue'
-// import Popper from '@@/common/Popper'
-
+import { formatNumber, sleep } from '@/utils/tools'
 import Alert from '@@/common/Alert'
 import Blank from '@@/common/Blank'
+import Button from '@@/common/Button'
+import InfoDialog from '@@/common/Dialog/Info'
+import FundIcon from '@@/common/FundIcon'
+import Image from '@@/common/Image'
+import RoeShow from '@@/common/RoeShow'
+import TokenValue from '@@/common/TokenValue'
 
 import Claim from './Claim'
 
@@ -35,10 +30,9 @@ interface Props {
   callback: () => void
 }
 
-const FundItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
+const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
+  const { getTokenByAddress } = useToken()
   const { account } = useProfile()
-  // console.log(fund, 22222)
-  // const subscribedAmount = useMemo(() => BN(fund.data.subscribingACUSD ?? 0).toNumber(), [fund.data.subscribingACUSD])
   const { onCancelAllocate } = useCancelAllocate(fund.address)
   const { onCancelWithholding } = useCancelWithholding(fund.address)
   const ref = useRef<HTMLDivElement>(null)
@@ -261,4 +255,4 @@ const FundItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
   )
 }
 
-export default FundItem
+export default VaultItem

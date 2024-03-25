@@ -6,7 +6,7 @@ import { last, uniq } from 'lodash'
 
 import { useLazyQuery, useQuery } from '@apollo/client'
 
-import { getTokenByAddress } from '@/config/tokens'
+import { useToken } from '@/hooks/Tokens/useToken'
 
 import { TokenTypes } from '@/types/base'
 import { VaultMonthDataType } from '@/types/graphql'
@@ -103,6 +103,7 @@ export const useVaultDetailChartData = (gql: any, underlyingToken: TokenTypes) =
 }
 
 export const useVaultListData = (): { loading: boolean; data: any[]; error: any } => {
+  const { getTokenByAddress } = useToken()
   const {
     loading,
     error,

@@ -1,19 +1,17 @@
-import { FC, useState, useMemo } from 'react'
+import { FC, useMemo, useState } from 'react'
+import ContentLoader from 'react-content-loader'
+
 import BN from 'bignumber.js'
 import classNames from 'classnames'
-import ContentLoader from 'react-content-loader'
-// import { FundUserListDataProps } from '@/class/help'
-import { formatNumber } from '@/utils/tools'
-import { PieChart, Pie, Cell, Sector } from 'recharts'
-// import NoData from '@@/common/NoData'
-import TokenValue from '@@/common/TokenValue'
-// import { getTokenByAddress } from '@/config/tokens'
-// import Popper from '@@/common/Popper'
-// import { useUserFundList } from '@/hooks/useFund'
-import { VaultUserListDataProps, baseTokenPriceInUSDTypes } from '@/types/vault'
+import { Cell, Pie, PieChart, Sector } from 'recharts'
+
 import { useBaseTokenPriceUSD } from '@/hooks/Contracts/useVaultFactory'
 
+import { VaultUserListDataProps, baseTokenPriceInUSDTypes } from '@/types/vault'
+
 import { SectionItem } from '@/pages/MyManagement/Manager/VaultDetail/c/ManageDetail/C'
+import { formatNumber } from '@/utils/tools'
+import TokenValue from '@@/common/TokenValue'
 
 const renderActiveShape = (props: any) => {
   const { cx, cy, outerRadius, innerRadius, startAngle, endAngle, fill } = props

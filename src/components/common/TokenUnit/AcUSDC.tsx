@@ -1,7 +1,8 @@
 import { FC, ReactNode } from 'react'
+
+import { useToken } from '@/hooks/Tokens/useToken'
+
 import Image from '@@/common/Image'
-import tokenss from '@/config/tokens'
-import { TokenKeys } from '@/types/base'
 
 interface Props {
   children?: ReactNode
@@ -10,11 +11,11 @@ interface Props {
 }
 
 const AcUSDC: FC<Props> = ({ children, value, name }) => {
+  const { getTokenByName } = useToken()
+  const token = getTokenByName(name ?? '')
   return (
     <div className="web-c-token-unit">
-      <Image
-        src={`${name ? (tokenss[name as TokenKeys] ? tokenss[name as TokenKeys].icon : 'icon/sac-usdc.png') : 'icon/sac-usdc.png'}`}
-      />
+      <Image src={`${name ? token.icon : 'icon/sac-usdc.png'}`} />
       {value != null && <em>{value}</em>}
       {name ? name : children ? children : 'acUSDC'}
     </div>

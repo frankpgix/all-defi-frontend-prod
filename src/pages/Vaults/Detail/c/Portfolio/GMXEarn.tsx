@@ -4,11 +4,8 @@ import ContentLoader from 'react-content-loader'
 import Table from 'rc-table'
 
 import { TokenTypes } from '@/types/base'
-// import PositionDetail from '@/class/PositionDetail'
-// import { getTokenByAddress } from '@/config/tokens'
 import { GMXEarnDetailTypes } from '@/types/vaultPositionDetail'
 
-// import { useRequest } from 'ahooks'
 import { TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
 

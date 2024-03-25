@@ -1,18 +1,22 @@
-import { FC, useMemo, useState, useEffect } from 'react'
-import { without } from 'lodash'
-import classNames from 'classnames'
+import { FC, useEffect, useMemo, useState } from 'react'
 
-import { baseTokenOptions, getTokenByAddress } from '@/config/tokens'
-import { VaultDerivativesProps } from '@/types/vault'
+import classNames from 'classnames'
+import { without } from 'lodash'
+
+import { baseTokenOptions } from '@/config/tokens'
+
+import { useToken } from '@/hooks/Tokens/useToken'
+
 import { AddressType } from '@/types/base'
 import { CreateVaultStep2DataTypes } from '@/types/createVault'
-import { Input, Select } from '@@/common/Form'
-import Cache from '@/utils/cache'
+import { VaultDerivativesProps } from '@/types/vault'
 
-import BlueLineSection from '@@/web/BlueLineSection'
-import { TokenIcon } from '@@/common/TokenUnit'
+import Cache from '@/utils/cache'
 import Button from '@@/common/Button'
+import { Input, Select } from '@@/common/Form'
 import Image from '@@/common/Image'
+import { TokenIcon } from '@@/common/TokenUnit'
+import BlueLineSection from '@@/web/BlueLineSection'
 
 interface Props {
   onConfirm: (data: CreateVaultStep2DataTypes) => void
@@ -22,6 +26,7 @@ interface Props {
 }
 
 const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
+  const { getTokenByAddress } = useToken()
   const [selectIndex, setSelectIndex] = useState<number[]>([])
   const [minAmount, setMinAmount] = useState<string | number>('')
   const [maxAmount, setMaxAmount] = useState<string | number>('')

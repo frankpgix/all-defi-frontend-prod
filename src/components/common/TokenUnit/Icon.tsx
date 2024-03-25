@@ -1,8 +1,12 @@
 import { FC, ReactNode } from 'react'
-import Image from '@@/common/Image'
-import tokenss from '@/config/tokens'
+
 import classNames from 'classnames'
+
+import { useToken } from '@/hooks/Tokens/useToken'
+
 import { TokenKeys } from '@/types/base'
+
+import Image from '@@/common/Image'
 
 interface Props {
   children?: ReactNode
@@ -11,10 +15,12 @@ interface Props {
 }
 
 const Icon: FC<Props> = ({ size, name }) => {
+  const { getTokenByName } = useToken()
+  const token = getTokenByName(name ?? '')
   return (
     <Image
       className={classNames('c-token-icon', `c-token-icon-${size}`)}
-      src={`${name ? (tokenss[name as TokenKeys] ? tokenss[name as TokenKeys].icon : 'icon/sac-usdc.png') : 'icon/sac-usdc.png'}`}
+      src={`${name ? token.icon : 'icon/sac-usdc.png'}`}
       alt={name}
       title={name}
     />

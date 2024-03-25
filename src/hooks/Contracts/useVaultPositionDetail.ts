@@ -6,6 +6,8 @@ import GMXTradePositionAbi from '@/config/abi/PositionDetail/GMXTradePosition.js
 import UniV3NonfungiblePositionAbi from '@/config/abi/PositionDetail/UniV3NonfungiblePosition.json'
 import { getContractAddress } from '@/config/contracts'
 
+import { useToken } from '@/hooks/Tokens/useToken'
+
 import { AddressType, TokenTypes } from '@/types/base'
 import {
   GMXEarnDetailTypes,
@@ -21,6 +23,7 @@ import {
 } from '@/compute/vaultPositionDetail'
 
 export const userVaultPositionDetail = (vaultAddress: AddressType, underlyingToken: TokenTypes) => {
+  const { getTokenByAddress } = useToken()
   const { data, isLoading, isSuccess } = useReadContracts({
     contracts: [
       {
@@ -52,9 +55,13 @@ export const userVaultPositionDetail = (vaultAddress: AddressType, underlyingTok
 
   if (!isLoading && isSuccess) {
     // console.log(data)
-    const uniDetail = calcUniV3NonfungiblePosition(data[0].result as any[], underlyingToken)
-    const avveDetail = calcAaveV3Position(data[1].result as any, underlyingToken)
-    const GMXTradeDetail = calcGMXTradePosition(data[2].result as any[])
+    const uniDetail = calcUniV3NonfungiblePosition(
+      data[0].result as any[],
+      underlyingToken,
+      getTokenByAddress
+    )
+    const avveDetail = calcAaveV3Position(data[1].result as any, underlyingToken, getTokenByAddress)
+    const GMXTradeDetail = calcGMXTradePosition(data[2].result as any[], getTokenByAddress)
     const GMXEarnDetail = calcGMXEarnPosition(data[3].result as any, underlyingToken)
     return { data: { uniDetail, avveDetail, GMXTradeDetail, GMXEarnDetail }, isLoading, isSuccess }
   }

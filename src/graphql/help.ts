@@ -1,14 +1,14 @@
 import dayjs from 'dayjs'
 
-import { safeInterceptionValues } from '@/utils/tools'
-import { getTokenByAddress } from '@/config/tokens'
-
+import { GetTokenFuncType } from '@/types/base'
 import {
-  VaultsSimpleTypes,
-  VaultUserActionsItemTypes,
+  UserVaultHistoryDataProps,
   UserVaultHistorySourceDataProps,
-  UserVaultHistoryDataProps
+  VaultUserActionsItemTypes,
+  VaultsSimpleTypes
 } from '@/types/graphql'
+
+import { safeInterceptionValues } from '@/utils/tools'
 
 export enum ActionType {
   Allocate,
@@ -21,6 +21,7 @@ export enum ActionType {
 
 export const calcActionData = (
   item: VaultUserActionsItemTypes,
+  getTokenByAddress: GetTokenFuncType,
   funds?: VaultsSimpleTypes[]
 ): UserVaultHistoryDataProps => {
   const token = getTokenByAddress(item.underlyingToken)
@@ -49,10 +50,11 @@ export const calcActionData = (
 }
 
 export const calcUserVaultHistoryData = (
-  data: UserVaultHistorySourceDataProps
+  data: UserVaultHistorySourceDataProps,
+  getTokenByAddress: GetTokenFuncType
 ): UserVaultHistoryDataProps[] => {
   const { vaults = [], vaultUserActions = [] } = data ?? []
-  return vaultUserActions.map((item) => calcActionData(item, vaults))
+  return vaultUserActions.map((item) => calcActionData(item, getTokenByAddress, vaults))
 }
 
 export const calcDataTypeAndStartTime = (type: string, startTime: number) => {

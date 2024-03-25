@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 
 import { useRequest } from 'ahooks'
 
+import { useToken } from '@/hooks/Tokens/useToken'
 import { useProfile } from '@/hooks/useProfile'
 
 import { ManageVaultListType, UserVaultListType, VaultListType } from '@/types/vaultListStore'
@@ -31,15 +32,19 @@ export const useManageVaultListHook = (): ManageVaultListType => {
 }
 
 export const useGetManageVaultList = () => {
+  const { getTokenByAddress } = useToken()
   const { account } = useProfile()
   const { update, setGetDataFunc } = useStoreManageVaultList((state: any) => ({
     update: state.update,
     setGetDataFunc: state.setGetDataFunc
   }))
 
-  const { data, loading, run } = useRequest(async () => await getManageVaultList(account), {
-    debounceWait: 300
-  })
+  const { data, loading, run } = useRequest(
+    async () => await getManageVaultList(getTokenByAddress, account),
+    {
+      debounceWait: 300
+    }
+  )
 
   useEffect(() => {
     if (data && !loading) {
@@ -73,12 +78,13 @@ export const useVaultList = (): VaultListType => {
 }
 
 export const useGetVaultList = () => {
+  const { getTokenByAddress } = useToken()
   const { update, setGetDataFunc } = useStoreVaultList((state: any) => ({
     update: state.update,
     setGetDataFunc: state.setGetDataFunc
   }))
 
-  const { data, loading, run } = useRequest(async () => await getVaultList(), {
+  const { data, loading, run } = useRequest(async () => await getVaultList(getTokenByAddress), {
     debounceWait: 300
   })
 
@@ -112,6 +118,7 @@ export const useUserVaultList = (): UserVaultListType => {
 }
 
 export const useGetUserVaultList = () => {
+  const { getTokenByAddress } = useToken()
   const { account } = useProfile()
   const { update, setGetDataFunc } = useStoreUserVaultList((state: any) => ({
     update: state.update,
@@ -120,7 +127,7 @@ export const useGetUserVaultList = () => {
 
   const { data, loading, run } = useRequest(
     async () => {
-      if (account) return await getUserVaultList(account)
+      if (account) return await getUserVaultList(getTokenByAddress, account)
     },
     {
       refreshDeps: [account]

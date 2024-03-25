@@ -1,20 +1,24 @@
-import { useQuery } from '@apollo/client'
 import { hexToString } from 'viem'
 
-import { getTokenByAddress } from '@/config/tokens'
-import { safeInterceptionValues } from '@/utils/tools'
-import {
-  calcVaultAllocationOrWithholdGQL,
-  calcUserVaultHistoryGQL,
-  calcUserACBuyGQL,
-  calcVaultActionAssetGQL
-} from './gqls'
+import { useQuery } from '@apollo/client'
 
-import { calcUserVaultHistoryData, ActionType, calcActionData } from './help'
+import { useToken } from '@/hooks/Tokens/useToken'
+
 import { AddressType } from '@/types/base'
-import { VaultUserActionsItemTypes, ACBuyDataTypes } from '@/types/graphql'
+import { ACBuyDataTypes, VaultUserActionsItemTypes } from '@/types/graphql'
+
+import { safeInterceptionValues } from '@/utils/tools'
+
+import {
+  calcUserACBuyGQL,
+  calcUserVaultHistoryGQL,
+  calcVaultActionAssetGQL,
+  calcVaultAllocationOrWithholdGQL
+} from './gqls'
+import { ActionType, calcActionData, calcUserVaultHistoryData } from './help'
 
 export const useVaultAllocationData = (vaultAddress: string) => {
+  const { getTokenByAddress } = useToken()
   const {
     loading,
     error,
@@ -26,13 +30,14 @@ export const useVaultAllocationData = (vaultAddress: string) => {
     ])
   )
   const data = (sData?.vaultUserActions ?? []).map((item: VaultUserActionsItemTypes) =>
-    calcActionData(item)
+    calcActionData(item, getTokenByAddress)
   )
   // console.log(data, sData?.fundUserActions)
   return { loading, error, data }
 }
 
 export const useVaultWithholdData = (fundAddress: string) => {
+  const { getTokenByAddress } = useToken()
   const {
     loading,
     error,
@@ -44,24 +49,26 @@ export const useVaultWithholdData = (fundAddress: string) => {
     ])
   )
   const data = (sData?.vaultUserActions ?? []).map((item: VaultUserActionsItemTypes) =>
-    calcActionData(item)
+    calcActionData(item, getTokenByAddress)
   )
   // console.log(data, sData?.fundUserActions)
   return { loading, error, data }
 }
 
 export const useUserVaultHistoryData = (userAddress: string, fundAddress?: string) => {
+  const { getTokenByAddress } = useToken()
   const {
     loading,
     error,
     data: sData,
     refetch
   } = useQuery(calcUserVaultHistoryGQL(userAddress, fundAddress))
-  const data = calcUserVaultHistoryData(sData)
+  const data = calcUserVaultHistoryData(sData, getTokenByAddress)
   return { loading, error, data, refetch }
 }
 
 export const useUserACBuyData = (userAddress: string) => {
+  const { getTokenByAddress } = useToken()
   const {
     loading,
     error,
@@ -88,6 +95,7 @@ export const useUserACBuyData = (userAddress: string) => {
 }
 
 export const useVaultActionAssetData = (fundAddress: string) => {
+  const { getTokenByAddress } = useToken()
   const { loading, error, data: sData } = useQuery(calcVaultActionAssetGQL(fundAddress))
   const data = (sData?.vaultActionAssets ?? [])
     .map((item: any) => {

@@ -1,17 +1,18 @@
 import { FC, useMemo } from 'react'
+
 import BN from 'bignumber.js'
 
-import { VaultDerivativesProps } from '@/types/vault'
+import { useToken } from '@/hooks/Tokens/useToken'
+
 import { AddressType } from '@/types/base'
-import { getTokenByAddress } from '@/config/tokens'
+import { VaultDerivativesProps } from '@/types/vault'
 
-import BlueLineSection from '@@/web/BlueLineSection'
 import Button from '@@/common/Button'
-import Image from '@@/common/Image'
-import { Input } from '@@/common/Form'
-import { TokenIcon } from '@@/common/TokenUnit'
-
 import DataItem from '@@/common/DataItem'
+import { Input } from '@@/common/Form'
+import Image from '@@/common/Image'
+import { TokenIcon } from '@@/common/TokenUnit'
+import BlueLineSection from '@@/web/BlueLineSection'
 
 interface Props {
   onConfirm: () => void
@@ -23,6 +24,7 @@ interface Props {
 }
 
 const Step4: FC<Props> = ({ onConfirm, show, onBack, data, multiple, baseTokenAddress }) => {
+  const { getTokenByAddress } = useToken()
   const maxAUM = useMemo(
     () => BN(data.stakeAmount).multipliedBy(multiple).toNumber(),
     [data.stakeAmount, multiple]
