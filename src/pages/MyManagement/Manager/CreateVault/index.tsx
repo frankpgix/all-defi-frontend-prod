@@ -1,31 +1,33 @@
-import { FC, useState, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { baseTokens } from '@/config/tokens'
-import { useProfile } from '@/hooks/useProfile'
 import {
-  useDerivativeList,
   useCalcAUMLimit,
-  useCreateVault
+  useCreateVault,
+  useDerivativeList
 } from '@/hooks/Contracts/useAllProtocol'
-import Cache from '@/utils/cache'
-import { CreateVaultStep1DataDefault } from '@/data/createVault'
+import { useBaseTokens } from '@/hooks/Tokens/useToken'
+import { useProfile } from '@/hooks/useProfile'
 
-import { VaultDerivativesProps } from '@/types/vault'
 import { AddressType } from '@/types/base'
 import { CreateVaultStep1DataTypes, CreateVaultStep2DataTypes } from '@/types/createVault'
+import { VaultDerivativesProps } from '@/types/vault'
 
-import StepLine from './c/StepLine'
+import { CreateVaultStep1DataDefault } from '@/data/createVault'
+import Cache from '@/utils/cache'
+
 import Step1 from './c/Step1'
 import Step2 from './c/Step2'
 import Step3 from './c/Step3'
 import Step4 from './c/Step4'
+import StepLine from './c/StepLine'
 import SuccDialog from './c/SuccDialog'
 
 const CreateFund: FC = () => {
   // const { createFund, calcAUMLimit, getDerivativeList } = AllProtocol
   const { account } = useProfile()
   const navigate = useNavigate()
+  const baseTokens = useBaseTokens()
 
   const { onCreateVault } = useCreateVault()
   // const { createNotify, updateNotifyItem } = useNotify()

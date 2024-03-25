@@ -1,20 +1,20 @@
-import { FC, useState, useMemo } from 'react'
+import { FC, useMemo, useState } from 'react'
+
 import BN from 'bignumber.js'
 import { isNaN } from 'lodash'
 
-import { tokens } from '@/config/tokens'
-import { useProfile, useUserBalances } from '@/hooks/useProfile'
+import { useAllocate } from '@/hooks/Contracts/useVault'
+import { useToken, useUserBalances } from '@/hooks/Tokens/useToken'
+import { useProfile } from '@/hooks/useProfile'
+
+import { TokenKeys } from '@/types/base'
+import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
 
 import { formatNumber } from '@/utils/tools'
-
-import { Input, Slider } from '@@/common/Form'
 import Button from '@@/common/Button'
+import { Input, Slider } from '@@/common/Form'
 import Tip from '@@/common/Tip'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
-import { VaultDetailProps, VaultBaseInfoProps } from '@/types/vault'
-import { TokenKeys } from '@/types/base'
-
-import { useAllocate } from '@/hooks/Contracts/useVault'
 
 interface Props {
   getData: () => void
@@ -23,13 +23,15 @@ interface Props {
 }
 
 const Allocate: FC<Props> = ({ getData, data, base }) => {
+  const { getTokenByName } = useToken()
   const { account } = useProfile()
   const { balances, refetch: reBalances } = useUserBalances()
   const { onAllocate } = useAllocate(data.address)
 
   const baseToken = data.underlyingToken
+
   const acToken = useMemo(
-    () => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}` as TokenKeys]),
+    () => getTokenByName(baseToken.name === 'WETH' ? 'acETH' : `ac${baseToken.name}`),
     [baseToken]
   )
 

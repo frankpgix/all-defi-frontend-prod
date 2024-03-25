@@ -3,9 +3,7 @@ import { FC, useEffect, useMemo, useState } from 'react'
 import classNames from 'classnames'
 import { without } from 'lodash'
 
-import { baseTokenOptions } from '@/config/tokens'
-
-import { useToken } from '@/hooks/Tokens/useToken'
+import { useBaseTokenOptions, useToken } from '@/hooks/Tokens/useToken'
 
 import { AddressType } from '@/types/base'
 import { CreateVaultStep2DataTypes } from '@/types/createVault'
@@ -27,15 +25,13 @@ interface Props {
 
 const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
   const { getTokenByAddress } = useToken()
+  const baseTokenOptions = useBaseTokenOptions()
   const [selectIndex, setSelectIndex] = useState<number[]>([])
   const [minAmount, setMinAmount] = useState<string | number>('')
   const [maxAmount, setMaxAmount] = useState<string | number>('')
   const [baseTokenAddress, setBaseTokenAddress] = useState(baseTokenOptions[0].value)
   const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
-  // const addresss = useMemo(
-  //   () => compact(selectIndex.map((index: number) => derivativeList[index])),
-  //   [selectIndex]
-  // )
+
   const onSelect = (index: number) => {
     if (selectIndex.includes(index)) {
       setSelectIndex(without(selectIndex, index))

@@ -1,4 +1,4 @@
-import { useUserBalances } from '@/hooks/useProfile'
+import { useUserBalances } from '@/hooks/Tokens/useToken'
 
 const Test = () => {
   const balance = useUserBalances()

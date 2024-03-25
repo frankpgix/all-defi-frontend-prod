@@ -1,9 +1,18 @@
 import { AddressType, ChainIdRec, ContractKeys } from '@/types/base'
-import { _getAddress } from './Token'
+
+import { ChainId, VITE_APP_CHAIN_ID } from '@/config'
 
 export interface ContractBuildProps {
   name: ContractKeys
   address: ChainIdRec
+}
+
+export const _getAddress = (address: ChainIdRec): AddressType => {
+  const chainId = VITE_APP_CHAIN_ID ?? ChainId.ARBITRUM
+  // console.log('chainId', chainId)
+  // @ts-ignore
+  const _address = address[chainId] ?? address[ChainId.ARBITRUM]
+  return _address
 }
 
 class Contract {

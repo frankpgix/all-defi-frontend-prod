@@ -1,22 +1,23 @@
 import { FC, useMemo, useState } from 'react'
+
 import BN from 'bignumber.js'
 
-import { VaultDetailProps, VaultStakeType } from '@/types/vault'
-import { AddressType } from '@/types/base'
+import { useVaultChangeStakeALL, useVaultUnstakeLimit } from '@/hooks/Contracts/useAllProtocol'
+import { useUserBalances } from '@/hooks/Tokens/useToken'
+import { useProfile } from '@/hooks/useProfile'
 
-import { useVaultUnstakeLimit, useVaultChangeStakeALL } from '@/hooks/Contracts/useAllProtocol'
-import { useProfile, useUserBalances } from '@/hooks/useProfile'
+import { AddressType } from '@/types/base'
+import { VaultDetailProps, VaultStakeType } from '@/types/vault'
 
 import { formatNumber } from '@/utils/tools'
-
 import Alert from '@@/common/Alert'
 import Blank from '@@/common/Blank'
-import BlueLineSection from '@@/web/BlueLineSection'
-import { Input, Slider } from '@@/common/Form'
 import Button from '@@/common/Button'
 import DataItem from '@@/common/DataItem'
+import { Input, Slider } from '@@/common/Form'
 import { AllTokenUnit } from '@@/common/TokenUnit'
 import TokenValue from '@@/common/TokenValue'
+import BlueLineSection from '@@/web/BlueLineSection'
 
 interface StakeProps {
   direction: VaultStakeType

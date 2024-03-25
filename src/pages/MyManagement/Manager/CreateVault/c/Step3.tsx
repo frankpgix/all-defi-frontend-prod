@@ -3,8 +3,7 @@ import { FC, useEffect, useMemo, useState } from 'react'
 import BN from 'bignumber.js'
 import { isNaN } from 'lodash'
 
-import { useToken } from '@/hooks/Tokens/useToken'
-import { useUserBalances } from '@/hooks/useProfile'
+import { useToken, useUserBalances } from '@/hooks/Tokens/useToken'
 
 import { AddressType } from '@/types/base'
 

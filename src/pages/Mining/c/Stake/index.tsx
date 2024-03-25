@@ -1,15 +1,18 @@
-import { FC, useState, useMemo } from 'react'
+import { FC, useMemo, useState } from 'react'
+
 import BN from 'bignumber.js'
 import { pullAt } from 'lodash'
+
 // import { useTokensData } from '@/store/tokens/hooks'
-import { useUserBalances } from '@/hooks/useProfile'
-import { PoolItemTypes, PoolStakeTypes, PoolStakeArrayItemTypes } from '@/types/rewardTracker'
+import { useUserBalances } from '@/hooks/Tokens/useToken'
+
+import { PoolItemTypes, PoolStakeArrayItemTypes, PoolStakeTypes } from '@/types/rewardTracker'
 
 import Button from '@@/common/Button'
-// import Tip from '@@/common/Tip'
 
+import { StakeFundInput, StakeHeader, StakeSAllInput } from './C'
+// import Tip from '@@/common/Tip'
 import PreView from './PreView'
-import { StakeHeader, StakeFundInput, StakeSAllInput } from './C'
 
 const Stake: FC<PoolStakeTypes> = ({ list, getData }) => {
   const { balances } = useUserBalances()

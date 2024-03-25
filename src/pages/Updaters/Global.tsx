@@ -7,7 +7,6 @@ import { useVaultCountLimit } from '@/hooks/Contracts/useAllProtocol'
 // import { config } from '@/config/wagmi'
 // // import { useIsManager, useDerivativeList } from '@/hooks/useAllProtocol'
 // // import { useBalances } from '@/hooks/useTokens'
-// // import { useStoreProfile, useStoreBalances } from '@/stores/useStoreProfile'
 // // import { useStoreDerivativeList } from '@/stores/useStoreFunds'
 // // import { getJsonRpcProvider } from '@/utils/contractHelpers'
 import { useProfile } from '@/hooks/useProfile'
@@ -39,7 +38,6 @@ export default function Global(): null {
   // useUpdateBaseTokenPriceInUSD()
   // update balance info
   // const balances = useBalances()
-  // const updateBalances = useStoreBalances((state: any) => state.update)
 
   // useEffect(() => {
   //   updateBalances(balances)

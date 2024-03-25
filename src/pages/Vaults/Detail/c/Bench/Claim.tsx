@@ -1,16 +1,16 @@
-import { FC, useState, useMemo } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import tokens from '@/config/tokens'
-import { useProfile } from '@/hooks/useProfile'
-import { Input } from '@@/common/Form'
-import Button from '@@/common/Button'
-import { AcUSDCUnit } from '@@/common/TokenUnit'
-import InfoDialog from '@@/common/Dialog/Info'
-
 import { useClaim } from '@/hooks/Contracts/useVault'
+import { useToken } from '@/hooks/Tokens/useToken'
+import { useProfile } from '@/hooks/useProfile'
+
 import { VaultUserDetailProps } from '@/types/vault'
-import { TokenKeys } from '@/types/base'
+
+import Button from '@@/common/Button'
+import InfoDialog from '@@/common/Dialog/Info'
+import { Input } from '@@/common/Form'
+import { AcUSDCUnit } from '@@/common/TokenUnit'
 
 interface Props {
   userData: VaultUserDetailProps
@@ -18,6 +18,7 @@ interface Props {
 }
 
 const Claim: FC<Props> = ({ userData, getData }) => {
+  const { getTokenByName } = useToken()
   const { onClaim } = useClaim(userData.address)
   const { fundAddress } = useParams()
   const { account } = useProfile()
@@ -26,7 +27,7 @@ const Claim: FC<Props> = ({ userData, getData }) => {
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const baseToken = useMemo(() => userData.underlyingToken, [userData.underlyingToken])
   const acToken = useMemo(
-    () => (baseToken.name === 'WETH' ? tokens.acETH : tokens[`ac${baseToken.name}` as TokenKeys]),
+    () => getTokenByName(baseToken.name === 'WETH' ? 'acETH' : `ac${baseToken.name}`),
     [baseToken]
   )
 

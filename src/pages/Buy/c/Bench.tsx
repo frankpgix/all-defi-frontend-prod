@@ -3,12 +3,11 @@ import { FC, useMemo, useState } from 'react'
 import BN from 'bignumber.js'
 import { isNumber } from 'lodash'
 
-import { baseTokenOptions, tokens } from '@/config/tokens'
-
 import { useBuyAcToken } from '@/hooks/Contracts/useACProtocol'
 import { useAllTokenPrice } from '@/hooks/Contracts/useAllProtocol'
+import { useBaseTokenOptions, useToken } from '@/hooks/Tokens/useToken'
+import { useUserBalances } from '@/hooks/Tokens/useToken'
 import { useProfile } from '@/hooks/useProfile'
-import { useUserBalances } from '@/hooks/useProfile'
 
 import { AddressType } from '@/types/base'
 
@@ -19,9 +18,9 @@ import { Input, Select } from '@@/common/Form'
 import { AcUSDCUnit, AllTokenUnit } from '@@/common/TokenUnit'
 import BlueLineSection from '@@/web/BlueLineSection'
 
-const usdcAddress = tokens.USDC.address
-const ethAddress = tokens.ETH.address
 const Bench: FC = () => {
+  const { getTokenByName } = useToken()
+  const baseTokenOptions = useBaseTokenOptions()
   const { buyAcToken } = useBuyAcToken()
   const { account } = useProfile()
   const { balances } = useUserBalances()
@@ -29,6 +28,9 @@ const Bench: FC = () => {
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>(baseTokenOptions[0].value)
   const { data: allTPrice } = useAllTokenPrice(baseTokenAddress)
+
+  const usdcAddress = getTokenByName('USDC').address
+  const ethAddress = getTokenByName('ETH').address
 
   const preAllValue = useMemo(
     () =>

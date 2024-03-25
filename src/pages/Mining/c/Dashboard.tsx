@@ -1,21 +1,20 @@
-import { FC, useState, useMemo, useEffect } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
+
 import BN from 'bignumber.js'
 
-import { tokens } from '@/config/tokens'
-import { STATIC_RESOURCES_URL } from '@/config'
-
-import { useProfile } from '@/hooks/useProfile'
 import { useAllTokenPriceInUSD } from '@/hooks/Contracts/useAllProtocol'
 import { useHarvestAll, useUserRewardDashboard } from '@/hooks/Contracts/useRewardTracker'
+import { useToken } from '@/hooks/Tokens/useToken'
+import { useProfile } from '@/hooks/useProfile'
 
-import { addTokenToWallet } from '@/utils/wallet'
-import { formatNumber } from '@/utils/tools'
+import { STATIC_RESOURCES_URL } from '@/config'
 import Cache from '@/utils/cache'
-
+import { formatNumber } from '@/utils/tools'
+import { addTokenToWallet } from '@/utils/wallet'
 import Button from '@@/common/Button'
 import DataItem from '@@/common/DataItem'
-import InfoDialog from '@@/common/Dialog/Info'
 import Dialog from '@@/common/Dialog'
+import InfoDialog from '@@/common/Dialog/Info'
 import Image from '@@/common/Image'
 
 interface Props {
@@ -24,6 +23,7 @@ interface Props {
 }
 
 const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
+  const { getTokenByName } = useToken()
   const { account } = useProfile()
   const { onHarvestAll } = useHarvestAll()
   const { data: rewardDashboard, isLoading: sAllLoading } = useUserRewardDashboard(account)
@@ -59,7 +59,7 @@ const Dashboard: FC<Props> = ({ stakeSharesValue, loading }) => {
   }
 
   const addAllTokenToWallet = () => {
-    const { address, decimals, symbol, icon } = tokens.ALLTOKEN
+    const { address, decimals, symbol, icon } = getTokenByName('ALLTOKEN')
     addTokenToWallet(address, decimals, symbol, STATIC_RESOURCES_URL + icon)
   }
 
