@@ -16,8 +16,6 @@ import { calcVaultDerivativesInfo, calcVaultStakedALL } from '@/compute/vault'
 import { VaultStakeDataDefault } from '@/data/vault'
 import { getUnitAmount, safeInterceptionValues } from '@/utils/tools'
 
-const AllProtocolContract = useAllProtocolContract()
-
 export const useAllTokenPrice = (baseToken: AddressType) => {
   const { getTokenByName } = useToken()
   const WETH = getTokenByName('WETH')
@@ -36,6 +34,7 @@ export const useAllTokenPriceInUSD = () => {
 }
 
 export const useVaultCountLimit = (address?: AddressType | '') => {
+  const AllProtocolContract = useAllProtocolContract()
   const { isLoading, isSuccess, data, refetch } = useReadContract({
     ...AllProtocolContract,
     functionName: 'vaultCountLimit',
@@ -48,6 +47,7 @@ export const useVaultCountLimit = (address?: AddressType | '') => {
 }
 
 export const useVaultStakedALL = (vaultAddress: AddressType) => {
+  const AllProtocolContract = useAllProtocolContract()
   const { isLoading, isSuccess, data, refetch } = useReadContract({
     ...AllProtocolContract,
     functionName: 'vaultStakedALL',
@@ -66,6 +66,7 @@ export const useVaultStakedALL = (vaultAddress: AddressType) => {
 }
 
 export const useDerivativeList = () => {
+  const AllProtocolContract = useAllProtocolContract()
   const { isLoading, isSuccess, data, refetch } = useReadContract({
     ...AllProtocolContract,
     functionName: 'derivativeList',
@@ -78,6 +79,7 @@ export const useDerivativeList = () => {
 }
 
 export const useCalcAUMLimit = (underlyingToken: AddressType) => {
+  const AllProtocolContract = useAllProtocolContract()
   const { getTokenByName, getTokenByAddress } = useToken()
   const WETH = getTokenByName('WETH')
   const _amount = getUnitAmount(String(1), 18)
@@ -107,6 +109,7 @@ export const useCalcAUMLimit = (underlyingToken: AddressType) => {
 }
 
 export const useCreateVault = () => {
+  const AllProtocolContract = useAllProtocolContract()
   const { getTokenByAddress, getTokenByName } = useToken()
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
@@ -144,6 +147,7 @@ export const useCreateVault = () => {
 }
 
 export const useUpdateVault = () => {
+  const AllProtocolContract = useAllProtocolContract()
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
 
@@ -184,6 +188,7 @@ export const useUpdateVault = () => {
 
 //vault可取消质押的最大数量
 export const useVaultUnstakeLimit = (vaultAddress: AddressType) => {
+  const AllProtocolContract = useAllProtocolContract()
   const { isLoading, isSuccess, data, refetch } = useReadContract({
     ...AllProtocolContract,
     functionName: 'vaultUnstakeLimit',
@@ -196,6 +201,7 @@ export const useVaultUnstakeLimit = (vaultAddress: AddressType) => {
 }
 
 export const useVaultChangeStakeALL = () => {
+  const AllProtocolContract = useAllProtocolContract()
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
 

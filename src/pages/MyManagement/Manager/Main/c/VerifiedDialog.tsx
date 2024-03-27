@@ -2,6 +2,7 @@ import { FC, useEffect, useMemo, useState } from 'react'
 
 import { useRequest } from 'ahooks'
 
+import { useVaultFactoryContract } from '@/hooks/Contracts/useContract'
 import { useProfile } from '@/hooks/useProfile'
 import { useManageVaultListHook, useManageVaultVerifyList } from '@/hooks/useVaultList'
 
@@ -13,6 +14,7 @@ import ALink from '@@/common/ALink'
 import InfoDialog from '@@/common/Dialog/Info'
 
 const VerifiedDialog: FC = () => {
+  const VaultFactoryContract = useVaultFactoryContract()
   const { account } = useProfile()
   const { manageVaultList = [] } = useManageVaultListHook()
   const { createVerifyList, setCreateVerifyList } = useManageVaultVerifyList()
@@ -23,9 +25,12 @@ const VerifiedDialog: FC = () => {
     [manageVaultList]
   )
 
-  const { loading, data } = useRequest(async () => getVaultReviewed(account ?? '0x', 0), {
-    refreshDeps: [vaultAddressList]
-  })
+  const { loading, data } = useRequest(
+    async () => getVaultReviewed(VaultFactoryContract, account ?? '0x', 0),
+    {
+      refreshDeps: [vaultAddressList]
+    }
+  )
   // console.log(data)
   useEffect(() => {
     if (loading || vaultAddressList.length === 0 || !data) return

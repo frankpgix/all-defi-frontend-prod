@@ -45,7 +45,7 @@ const CreateFund: FC = () => {
 
   const { data: derivativeList } = useDerivativeList()
   const { data: multiple, refetch: reGetMultiple } = useCalcAUMLimit(baseTokenAddress)
-
+  console.log(derivativeList)
   useEffect(() => void reGetMultiple(), [baseTokenAddress])
 
   const onStep1Confirm = (data: CreateVaultStep1DataTypes) => {

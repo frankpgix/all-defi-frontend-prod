@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react'
-import classNames from 'classnames'
 import { useNavigate } from 'react-router-dom'
+
+import classNames from 'classnames'
 
 import { useProfile } from '@/hooks/useProfile'
 
@@ -10,7 +11,7 @@ import ConnectButton from '@@/core/Wallet/ConnectButton'
 const Home: FC = () => {
   const navigate = useNavigate()
   const { account: address, isManager, loading } = useProfile()
-
+  console.log(address, isManager, loading)
   const noAddress = useMemo(() => !Boolean(address), [address])
 
   const goNav = (disabled: boolean, url: string) => {

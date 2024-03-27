@@ -9,9 +9,8 @@ import { AddressType } from '@/types/base'
 
 import { getUnitAmount } from '@/utils/tools'
 
-const ACProtocolContract = useACProtocolContract()
-
 export const useBuyAcToken = () => {
+  const ACProtocolContract = useACProtocolContract()
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
   const { getTokenByAddress } = useToken()

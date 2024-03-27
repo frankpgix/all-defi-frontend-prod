@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react'
 
 import { useRequest } from 'ahooks'
 
+import { useVaultFactoryContract } from '@/hooks/Contracts/useContract'
 import { useProfile } from '@/hooks/useProfile'
 import { useManageVaultVerifyList } from '@/hooks/useVaultList'
 
@@ -20,14 +21,18 @@ interface Props {
 }
 
 const FundDialog: FC<Props> = ({ vaultAddress, name }) => {
+  const VaultFactoryContract = useVaultFactoryContract()
   const { account } = useProfile()
   const { updateVerifyList, setUpdateVerifyList } = useManageVaultVerifyList()
   const [dialogStatus, setDialogStatus] = useState<boolean[]>([])
   const [dialogData, setDialogData] = useState<VaultVerifiedItemTypes[]>([])
 
-  const { loading, data } = useRequest(async () => getVaultReviewed(account ?? '0x', 1, name), {
-    refreshDeps: [vaultAddress]
-  })
+  const { loading, data } = useRequest(
+    async () => getVaultReviewed(VaultFactoryContract, account ?? '0x', 1, name),
+    {
+      refreshDeps: [vaultAddress]
+    }
+  )
 
   useEffect(() => {
     if (loading || !vaultAddress || !data) return

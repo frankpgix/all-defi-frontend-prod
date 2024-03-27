@@ -10,9 +10,8 @@ import { baseTokenPriceInUSDTypes } from '@/types/vault'
 
 import { safeInterceptionValues } from '@/utils/tools'
 
-const VaultFactoryContract = useVaultFactoryContract()
-
 export const useAssetPrice = (baseAsset: AddressType, quoteAsset: AddressType) => {
+  const VaultFactoryContract = useVaultFactoryContract()
   const { data, isLoading, isSuccess } = useReadContract({
     ...VaultFactoryContract,
     functionName: 'assetPrice',
@@ -34,6 +33,7 @@ export const useAssetPrice = (baseAsset: AddressType, quoteAsset: AddressType) =
 }
 
 export const useAssetPriceUSD = (quoteAsset: AddressType) => {
+  const VaultFactoryContract = useVaultFactoryContract()
   const { data, isLoading, isSuccess } = useReadContract({
     ...VaultFactoryContract,
     functionName: 'assetPriceInUSD',
@@ -54,6 +54,7 @@ export const useAssetPriceUSD = (quoteAsset: AddressType) => {
 }
 
 export const useBaseTokenPriceUSD = () => {
+  const VaultFactoryContract = useVaultFactoryContract()
   const baseTokens = useBaseTokens()
   const { getTokenByName } = useToken()
   const WETH = getTokenByName('WETH')

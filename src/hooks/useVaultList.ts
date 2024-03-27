@@ -1,19 +1,19 @@
 import { useEffect } from 'react'
 
-import { useRequest } from 'ahooks'
-
-import { useProfile } from '@/hooks/useProfile'
-import { useToken } from '@/hooks/useToken'
-
 import { ManageVaultListType, UserVaultListType, VaultListType } from '@/types/vaultListStore'
 
-import { getManageVaultList, getUserVaultList, getVaultList } from '@/api/vaultList'
 import {
   useStoreManageVaultList,
   useStoreManageVaultVerifyList,
   useStoreUserVaultList,
   useStoreVaultList
 } from '@/stores/useStoreVaultList'
+
+import {
+  useManageVaultList,
+  useUserVaultList as useUserVaultListHook,
+  useVaultList as useVaultListHook
+} from './Contracts/useVaultReader'
 
 export const useManageVaultListHook = (): ManageVaultListType => {
   const { manageVaultList, loading, update, getData } = useStoreManageVaultList((state: any) => ({
@@ -32,33 +32,14 @@ export const useManageVaultListHook = (): ManageVaultListType => {
 }
 
 export const useGetManageVaultList = () => {
-  const { getTokenByAddress } = useToken()
-  const { account } = useProfile()
-  const { update, setGetDataFunc } = useStoreManageVaultList((state: any) => ({
-    update: state.update,
-    setGetDataFunc: state.setGetDataFunc
+  const { update } = useStoreManageVaultList((state: any) => ({
+    update: state.update
   }))
-
-  const { data, loading, run } = useRequest(
-    async () => await getManageVaultList(getTokenByAddress, account),
-    {
-      debounceWait: 300
-    }
-  )
+  const { data, isLoading } = useManageVaultList()
 
   useEffect(() => {
-    if (data && !loading) {
-      update(data, loading)
-    } else {
-      update([], true)
-    }
-  }, [data, loading])
-
-  useEffect(() => {
-    setGetDataFunc(run)
-  }, [setGetDataFunc, run])
-
-  useEffect(run, [account])
+    update(data, isLoading)
+  }, [isLoading])
 }
 
 export const useVaultList = (): VaultListType => {
@@ -78,27 +59,15 @@ export const useVaultList = (): VaultListType => {
 }
 
 export const useGetVaultList = () => {
-  const { getTokenByAddress } = useToken()
-  const { update, setGetDataFunc } = useStoreVaultList((state: any) => ({
-    update: state.update,
-    setGetDataFunc: state.setGetDataFunc
+  // const { getTokenByAddress } = useToken()
+  const { update } = useStoreVaultList((state: any) => ({
+    update: state.update
   }))
-
-  const { data, loading, run } = useRequest(async () => await getVaultList(getTokenByAddress), {
-    debounceWait: 300
-  })
+  const { data, isLoading } = useVaultListHook()
 
   useEffect(() => {
-    if (data) {
-      update(data, loading)
-    } else {
-      update([], true)
-    }
-  }, [data, loading, update])
-
-  useEffect(() => {
-    setGetDataFunc(run)
-  }, [setGetDataFunc, run])
+    update(data, isLoading)
+  }, [isLoading])
 }
 
 export const useUserVaultList = (): UserVaultListType => {
@@ -118,34 +87,15 @@ export const useUserVaultList = (): UserVaultListType => {
 }
 
 export const useGetUserVaultList = () => {
-  const { getTokenByAddress } = useToken()
-  const { account } = useProfile()
-  const { update, setGetDataFunc } = useStoreUserVaultList((state: any) => ({
-    update: state.update,
-    setGetDataFunc: state.setGetDataFunc
+  const { update } = useStoreUserVaultList((state: any) => ({
+    update: state.update
   }))
 
-  const { data, loading, run } = useRequest(
-    async () => {
-      if (account) return await getUserVaultList(getTokenByAddress, account)
-    },
-    {
-      refreshDeps: [account]
-    }
-  )
-  useEffect(() => {
-    if (data) {
-      update(data, loading)
-    } else {
-      update([], true)
-    }
-  }, [data, loading, update, account])
+  const { data, isLoading } = useUserVaultListHook()
 
   useEffect(() => {
-    setGetDataFunc(run)
-  }, [setGetDataFunc, run])
-
-  useEffect(run, [account])
+    update(data, isLoading)
+  }, [isLoading])
 }
 
 export const useManageVaultVerifyList = () => {

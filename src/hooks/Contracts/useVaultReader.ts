@@ -31,9 +31,8 @@ import {
   VaultUserDetailDefault
 } from '@/data/vault'
 
-const VaultReaderContract = useVaultReaderContract()
-
 export const useVaultDetail = (vaultAddress: AddressType) => {
+  const VaultReaderContract = useVaultReaderContract()
   const { getTokenByAddress } = useToken()
   const { data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
@@ -47,6 +46,7 @@ export const useVaultDetail = (vaultAddress: AddressType) => {
 }
 
 export const useUserVaultDetail = (vaultAddress: AddressType) => {
+  const VaultReaderContract = useVaultReaderContract()
   const { getTokenByAddress } = useToken()
   const { account } = useProfile()
   const { data, isSuccess, isLoading, refetch } = useReadContract({
@@ -61,6 +61,7 @@ export const useUserVaultDetail = (vaultAddress: AddressType) => {
 }
 
 export const useShareCompositionOf = (vaultAddress: AddressType) => {
+  const VaultReaderContract = useVaultReaderContract()
   const { account } = useProfile()
 
   const { data, isSuccess, isLoading, refetch } = useReadContract({
@@ -81,6 +82,7 @@ export const useAssetComposition = (
   vaultAddress: AddressType,
   underlyingTokenAddress: AddressType
 ) => {
+  const VaultReaderContract = useVaultReaderContract()
   const { getTokenByAddress } = useToken()
   const {
     data: sData,
@@ -113,6 +115,7 @@ export const useAssetComposition = (
 }
 
 export const useUserVaultList = () => {
+  const VaultReaderContract = useVaultReaderContract()
   const { getTokenByAddress } = useToken()
   const { account } = useProfile()
 
@@ -149,6 +152,7 @@ export const useUserVaultList = () => {
   return { data: [] as VaultUserListDataProps[], isLoading, isSuccess, refetch }
 }
 export const useVaultList = () => {
+  const VaultReaderContract = useVaultReaderContract()
   const { getTokenByAddress } = useToken()
   const { data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
@@ -179,6 +183,7 @@ export const useManageVaultList = () => {
 }
 
 export const useVaultBreachDetail = (vaultAddress: AddressType) => {
+  const VaultReaderContract = useVaultReaderContract()
   const { data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
     functionName: 'vaultBreachDetail',
@@ -192,6 +197,7 @@ export const useVaultBreachDetail = (vaultAddress: AddressType) => {
 }
 
 export const useVaultUpdatingData = (vaultAddress: AddressType, underlyingToken: TokenTypes) => {
+  const VaultReaderContract = useVaultReaderContract()
   const { data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
     functionName: 'vaultUpdatingData',

@@ -11,9 +11,8 @@ import { calcPoolItemData } from '@/compute/rewardTracker'
 import { RewardDashboardDataDefault } from '@/data/rewardTracker'
 import { safeInterceptionValues } from '@/utils/tools'
 
-const RewardTrackerContract = useRewardTrackerContract()
-
 export const usePoolList = (account?: AddressType) => {
+  const RewardTrackerContract = useRewardTrackerContract()
   const { data, isLoading, isSuccess, refetch } = useReadContract({
     ...RewardTrackerContract,
     functionName: 'poolList',
@@ -29,6 +28,7 @@ export const usePoolList = (account?: AddressType) => {
 }
 
 export const useRewardsALLBalance = () => {
+  const RewardTrackerContract = useRewardTrackerContract()
   const { getTokenByName } = useToken()
   const ALLTOKEN = getTokenByName('ALLTOKEN')
   const ERC20Contract = useERC20Contract(ALLTOKEN.address)
@@ -44,6 +44,7 @@ export const useRewardsALLBalance = () => {
 }
 
 export const useHarvestAll = () => {
+  const RewardTrackerContract = useRewardTrackerContract()
   const { writeContractAsync } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
 
@@ -74,6 +75,7 @@ export const useHarvestAll = () => {
 }
 
 export const useUserRewardDashboard = (account?: AddressType) => {
+  const RewardTrackerContract = useRewardTrackerContract()
   // useReadContracts
   const { data, isLoading, isSuccess, refetch } = useReadContracts({
     contracts: [
@@ -111,6 +113,7 @@ export const useUserRewardDashboard = (account?: AddressType) => {
 }
 
 export const useUserAccClaimedReward = (account?: AddressType) => {
+  const RewardTrackerContract = useRewardTrackerContract()
   const { data, isLoading, isSuccess, refetch } = useReadContract({
     ...RewardTrackerContract,
     functionName: 'userAccClaimedReward',
@@ -128,6 +131,7 @@ export const useUserAccClaimedReward = (account?: AddressType) => {
   return { data: 0, isLoading, isSuccess, refetch }
 }
 export const useUserSALLAmount = (account?: AddressType) => {
+  const RewardTrackerContract = useRewardTrackerContract()
   const { data, isLoading, isSuccess, refetch } = useReadContract({
     ...RewardTrackerContract,
     functionName: 'userSALLAmount',
@@ -147,6 +151,7 @@ export const useUserSALLAmount = (account?: AddressType) => {
 
 // stake
 export const useStake = () => {
+  const RewardTrackerContract = useRewardTrackerContract()
   const { writeContractAsync } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
 
@@ -184,6 +189,7 @@ export const useStake = () => {
 }
 // stake
 export const useUnStake = () => {
+  const RewardTrackerContract = useRewardTrackerContract()
   const { writeContractAsync } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
 

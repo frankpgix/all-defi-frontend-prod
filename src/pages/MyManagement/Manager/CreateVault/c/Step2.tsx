@@ -41,7 +41,8 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
   }
 
   const onNext = () => {
-    const addresss = selectIndex.map((index: number) => derivativeList[index])
+    const addresss = selectIndex.map((index: number) => derivativeList[index]).filter((i) => i)
+    console.log(addresss, 'addresss')
     onConfirm({
       addresss,
       minAmount: Number(minAmount),

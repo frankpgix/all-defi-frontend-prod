@@ -3,12 +3,12 @@ import { useAccount, useBalance, useReadContracts } from 'wagmi'
 
 import { UNKNOWN, baseTokens, ethConfig, tokens } from '@/config/tokens'
 
-import { AddressType, TokenConfigTypes, TokenTypes } from '@/types/base'
+import { AddressType, ChainIdTypes, TokenConfigTypes, TokenTypes } from '@/types/base'
 
 import { DEFAULT_CHAIN_ID } from '@/config'
 import { formatUnits } from '@/utils/tools'
 
-export const useCurrChainID = (): number => {
+export const useCurrChainID = (): ChainIdTypes => {
   const { chainId } = useAccount()
   return chainId ?? DEFAULT_CHAIN_ID
 }

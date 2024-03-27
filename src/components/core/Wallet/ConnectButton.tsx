@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { FC, ReactNode, useMemo } from 'react'
 
 import { useToggle } from 'ahooks'
 import { useAccount } from 'wagmi'
@@ -11,7 +11,18 @@ import Button from '@@/common/Button'
 import Image from '@@/common/Image'
 import AccountDialog from '@@/core/Wallet/Account'
 
-const ConnectBtn = () => {
+function CustomComponent(props: any) {
+  const { as: Component = 'div', ...otherProps } = props
+  return <Component {...otherProps} />
+}
+
+interface Props {
+  simple?: boolean
+  children?: ReactNode
+  as?: string
+}
+
+const ConnectBtn: FC<Props> = ({ simple, children, as }) => {
   const [show, { setLeft: closeDialog, setRight: openDialog }] = useToggle(false)
   const { address } = useAccount()
   const { hasNotify } = useNotify()
@@ -35,6 +46,22 @@ const ConnectBtn = () => {
         return (
           <>
             {(() => {
+              if (simple) {
+                return (
+                  <>
+                    {children ? (
+                      <CustomComponent as={as} onClick={openConnectModal}>
+                        {children}
+                      </CustomComponent>
+                    ) : (
+                      <Button size="medium" onClick={openConnectModal}>
+                        Connect Wallet
+                      </Button>
+                    )}
+                  </>
+                )
+              }
+
               if (!connected) {
                 return <Image src="icon/wallet-btn.svg" onClick={openConnectModal} />
               }
