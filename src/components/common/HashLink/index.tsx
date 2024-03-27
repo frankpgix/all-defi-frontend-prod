@@ -1,8 +1,10 @@
 import { FC } from 'react'
+
 import classNames from 'classnames'
-import { ETH_SCAN_URL } from '@/config'
-import ALink from '@@/common/ALink'
+import { useAccount } from 'wagmi'
+
 import { calcShortHash } from '@/utils/tools'
+import ALink from '@@/common/ALink'
 
 interface Props {
   address: string
@@ -12,11 +14,12 @@ interface Props {
 }
 
 const HashLink: FC<Props> = ({ address, className, prefixLength = 8, suffixLength = 8 }) => {
+  const { chain } = useAccount()
   const type = address.length === 66 ? 'tx' : 'address'
   return (
     <ALink
       className={classNames('outlink', className)}
-      to={`${ETH_SCAN_URL}/${type}/${address}`}
+      to={`${chain?.blockExplorers?.default.url}/${type}/${address}`}
       title={address}
     >
       {calcShortHash(address, prefixLength, suffixLength)}

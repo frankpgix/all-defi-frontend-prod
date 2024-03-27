@@ -1,13 +1,12 @@
 import { FC, useMemo } from 'react'
-import { useDisconnect, useAccount, useBalance } from 'wagmi'
 
-import { ETH_SCAN_URL } from '@/config'
-import { safeInterceptionValues, calcShortHash } from '@/utils/tools'
+import { useAccount, useBalance, useDisconnect } from 'wagmi'
 
-import Dialog from '@/components/common/Dialog'
 import Button from '@/components/common/Button'
-import Image from '@/components/common/Image'
 import CopyText from '@/components/common/CopyText'
+import Dialog from '@/components/common/Dialog'
+import Image from '@/components/common/Image'
+import { calcShortHash, safeInterceptionValues } from '@/utils/tools'
 
 interface Props {
   show: boolean
@@ -15,7 +14,7 @@ interface Props {
 }
 
 const AccountDialog: FC<Props> = ({ show, onClose }) => {
-  const { address: account } = useAccount()
+  const { address: account, chain } = useAccount()
 
   const shortAddress = useMemo(() => calcShortHash(account, 8, 8), [account])
   const { disconnect } = useDisconnect()
@@ -45,7 +44,9 @@ const AccountDialog: FC<Props> = ({ show, onClose }) => {
           <Button outline onClick={disconnectEv}>
             disconnect
           </Button>
-          <Button to={`${ETH_SCAN_URL}/address/${account}`}>VIEW IN BROWSER</Button>
+          <Button to={`${chain?.blockExplorers?.default.url}/address/${account}`}>
+            VIEW IN BROWSER
+          </Button>
         </footer>
       </div>
     </Dialog>

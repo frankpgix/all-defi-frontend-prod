@@ -1,14 +1,19 @@
 import { FC, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
+
 import classNames from 'classnames'
+import { useAccount } from 'wagmi'
+
 // import { useMount } from 'ahooks'
 import { useNotify } from '@/hooks/useNotify'
+
 import type { NotifyStoreItemType } from '@/types/notify'
+
+// import NoData from '@@/common/NoData'
+import { sleep } from '@/utils/tools'
 import ALink from '@@/common/ALink'
 import Button from '@@/common/Button'
-// import NoData from '@@/common/NoData'
-import { ETH_SCAN_URL } from '@/config'
-import { sleep } from '@/utils/tools'
+
 export const Notify: FC = () => {
   return (
     <>
@@ -67,6 +72,7 @@ export const NotifyList: FC = () => {
 }
 
 export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
+  const { chain } = useAccount()
   const { closeNotifyItem, notifyStatus } = useNotify()
   // const [animteType, setAnimteType] = useState('in')
   // const [layoutShow, setLayoutShow] = useState(false)
@@ -107,7 +113,11 @@ export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
         <div className="c-notify-item-detail">
           <h3>{data.title || typeShow}</h3>
           {data.content && <p>{data.content}</p>}
-          {data.hash && <ALink to={`${ETH_SCAN_URL}/tx/${data.hash}`}>View on Arbitrumscan</ALink>}
+          {data.hash && (
+            <ALink to={`${chain?.blockExplorers?.default.url}/tx/${data.hash}`}>
+              View on Arbitrumscan
+            </ALink>
+          )}
         </div>
         {data.type !== 'loading' && <div className="c-notify-item-close" onClick={onClose} />}
         {data.type === 'loading' ? (

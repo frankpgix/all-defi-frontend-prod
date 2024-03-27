@@ -1,27 +1,28 @@
 import { FC, useMemo } from 'react'
-import { useChainId, useSwitchChain, useAccount } from 'wagmi'
-import { VITE_APP_CHAIN_ID } from '@/config'
+
+import { useAccount, useChains, useSwitchChain } from 'wagmi'
 
 import Button from '@@/common/Button'
 
 const ErrorNetworkAlert: FC = () => {
+  const chains = useChains()
   const { chainId } = useAccount()
-  const chain = useChainId()
   const { switchChain } = useSwitchChain()
-  const defaultChainId = Number(VITE_APP_CHAIN_ID)
+  const chanIds = useMemo(() => chains.map(({ id }) => id), [chains])
+
   const isErrorChain = useMemo(() => {
     if (chainId) {
-      return chainId !== defaultChainId
+      return !chanIds.includes(chainId)
     }
     return false
-  }, [chain, chainId])
+  }, [chanIds, chainId])
 
   if (!isErrorChain) return null
   return (
     <div className="web-header-error-alert">
-      App network Arbitrum doesn’t match network selected in wallet. To connect, please switch your
-      wallet network to Arbitrum.
-      <Button text onClick={() => switchChain({ chainId: chain })}>
+      App network doesn’t match network selected in wallet. To connect, please switch your wallet
+      network.
+      <Button text onClick={() => switchChain({ chainId: chanIds[0] })}>
         switch network
       </Button>
     </div>

@@ -1,10 +1,14 @@
 import { useMemo } from 'react'
-import { useAccount } from 'wagmi'
+
 import { useToggle } from 'ahooks'
+import { useAccount } from 'wagmi'
+
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import Image from '@@/common/Image'
-import Button from '@@/common/Button'
+
 import { useNotify } from '@/hooks/useNotify'
+
+import Button from '@@/common/Button'
+import Image from '@@/common/Image'
 import AccountDialog from '@@/core/Wallet/Account'
 
 const ConnectBtn = () => {
@@ -20,7 +24,7 @@ const ConnectBtn = () => {
   }, [address, hasNotify])
   return (
     <ConnectButton.Custom>
-      {({ account, chain, openConnectModal, authenticationStatus, mounted }) => {
+      {({ account, chain, openConnectModal, authenticationStatus, mounted, openChainModal }) => {
         const ready = mounted && authenticationStatus !== 'loading'
         const connected =
           ready &&
@@ -37,6 +41,9 @@ const ConnectBtn = () => {
 
               return (
                 <>
+                  <Button size="medium" gradient onClick={openChainModal}>
+                    Net
+                  </Button>
                   <Button size="medium" gradient round={hasNotify} onClick={openDialog}>
                     {memoAccountHide}
                   </Button>
