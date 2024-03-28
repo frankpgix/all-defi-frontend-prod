@@ -1,6 +1,7 @@
 import { useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 
 import { useERC20Contract, useRewardTrackerContract } from '@/hooks/Contracts/useContract'
+import { useAllowance } from '@/hooks/Contracts/useTools'
 import { useNotify } from '@/hooks/useNotify'
 import { useToken } from '@/hooks/useToken'
 
@@ -9,7 +10,7 @@ import { PoolItemTypes } from '@/types/rewardTracker'
 
 import { calcPoolItemData } from '@/compute/rewardTracker'
 import { RewardDashboardDataDefault } from '@/data/rewardTracker'
-import { safeInterceptionValues } from '@/utils/tools'
+import { getUnitAmount, safeInterceptionValues, sleep } from '@/utils/tools'
 
 export const usePoolList = (account?: AddressType) => {
   const RewardTrackerContract = useRewardTrackerContract()
@@ -152,9 +153,11 @@ export const useUserSALLAmount = (account?: AddressType) => {
 // stake
 export const useStake = () => {
   const RewardTrackerContract = useRewardTrackerContract()
-  const { writeContractAsync } = useWriteContract()
+  const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
-
+  const { onAllowance } = useAllowance()
+  const { getTokenByName } = useToken()
+  const sALLTOKEN = getTokenByName('sALLTOKEN')
   const onStake = async (
     poolKeys: AddressType[],
     amounts: number[],
@@ -165,24 +168,36 @@ export const useStake = () => {
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Stake Shares' })
 
-      await writeContractAsync({
-        ...RewardTrackerContract,
-        functionName: 'stake',
-        args: [poolKeys, amounts, sAllAmount],
-        account
-      })
-        .then((hash: string) => {
-          // console.log(hash)
-          updateNotifyItem(notifyId, { title: 'Stake Shares', type: 'success', hash })
-          if (callback) callback()
-        })
-        .catch((error: any) => {
-          updateNotifyItem(notifyId, {
-            title: 'Stake Shares',
-            type: 'error',
-            content: error.shortMessage
-          })
-        })
+      const allowance = await onAllowance(
+        sALLTOKEN.address,
+        RewardTrackerContract.address,
+        getUnitAmount(sAllAmount, sALLTOKEN.decimals),
+        notifyId
+      )
+      if (!allowance) return
+
+      writeContract(
+        {
+          ...RewardTrackerContract,
+          functionName: 'stake',
+          args: [poolKeys, amounts, sAllAmount],
+          account
+        },
+        {
+          onSuccess: async (hash: string) => {
+            await sleep(5000)
+            updateNotifyItem(notifyId, { title: 'Stake Shares', type: 'success', hash })
+            callback?.()
+          },
+          onError: (error: any) => {
+            updateNotifyItem(notifyId, {
+              title: 'Stake Shares',
+              type: 'error',
+              content: error.shortMessage
+            })
+          }
+        }
+      )
     }
   }
   return { onStake }
@@ -190,7 +205,7 @@ export const useStake = () => {
 // stake
 export const useUnStake = () => {
   const RewardTrackerContract = useRewardTrackerContract()
-  const { writeContractAsync } = useWriteContract()
+  const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
 
   const onUnStake = async (
@@ -202,24 +217,28 @@ export const useUnStake = () => {
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Unstake Shares' })
 
-      await writeContractAsync({
-        ...RewardTrackerContract,
-        functionName: 'unstake',
-        args: [poolKeys, amounts],
-        account
-      })
-        .then((hash: string) => {
-          // console.log(hash)
-          updateNotifyItem(notifyId, { title: 'Unstake Shares', type: 'success', hash })
-          if (callback) callback()
-        })
-        .catch((error: any) => {
-          updateNotifyItem(notifyId, {
-            title: 'Unstake Shares',
-            type: 'error',
-            content: error.shortMessage
-          })
-        })
+      writeContract(
+        {
+          ...RewardTrackerContract,
+          functionName: 'unstake',
+          args: [poolKeys, amounts],
+          account
+        },
+        {
+          onSuccess: async (hash: string) => {
+            await sleep(5000)
+            updateNotifyItem(notifyId, { title: 'Unstake Shares', type: 'success', hash })
+            callback?.()
+          },
+          onError: (error: any) => {
+            updateNotifyItem(notifyId, {
+              title: 'Unstake Shares',
+              type: 'error',
+              content: error.shortMessage
+            })
+          }
+        }
+      )
     }
   }
   return { onUnStake }

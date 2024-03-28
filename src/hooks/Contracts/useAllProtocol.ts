@@ -131,29 +131,28 @@ export const useCreateVault = () => {
       getUnitAmount(data.stakeAmount, ALLTOKEN.decimals),
       notifyId
     )
-    if (allowance) {
-      writeContract(
-        {
-          ...AllProtocolContract,
-          functionName: 'createVault',
-          args,
-          account
+    if (!allowance) return
+    writeContract(
+      {
+        ...AllProtocolContract,
+        functionName: 'createVault',
+        args,
+        account
+      },
+      {
+        onSuccess: (hash: string) => {
+          updateNotifyItem(notifyId, { title: 'Create Vault', type: 'success', hash })
+          callback()
         },
-        {
-          onSuccess: (hash: string) => {
-            updateNotifyItem(notifyId, { title: 'Create Vault', type: 'success', hash })
-            callback()
-          },
-          onError: (error: any) => {
-            updateNotifyItem(notifyId, {
-              title: 'Create Vault',
-              type: 'error',
-              content: error.shortMessage
-            })
-          }
+        onError: (error: any) => {
+          updateNotifyItem(notifyId, {
+            title: 'Create Vault',
+            type: 'error',
+            content: error.shortMessage
+          })
         }
-      )
-    }
+      }
+    )
   }
   return { onCreateVault }
 }
@@ -171,6 +170,7 @@ export const useUpdateVault = () => {
   ) => {
     const notifyId = await createNotify({ type: 'loading', content: 'Set Vault Base Info' })
     const upData = calcUpdateVaultData(data)
+
     writeContract(
       {
         ...AllProtocolContract,

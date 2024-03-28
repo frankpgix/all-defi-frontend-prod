@@ -2,14 +2,13 @@ import { zeroAddress } from 'viem'
 import { useWriteContract } from 'wagmi'
 
 import { useACProtocolContract } from '@/hooks/Contracts/useContract'
+import { useAllowance } from '@/hooks/Contracts/useTools'
 import { useNotify } from '@/hooks/useNotify'
 import { useToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 
 import { getUnitAmount, sleep } from '@/utils/tools'
-
-import { useAllowance } from './useTools'
 
 export const useBuyAcToken = () => {
   const ACProtocolContract = useACProtocolContract()
