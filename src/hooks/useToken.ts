@@ -17,7 +17,6 @@ export const useTokens = (): TokenTypes[] => {
   const chainId = useCurrChainID()
   return tokens.map((token: TokenConfigTypes) => ({
     ...token,
-    // @ts-ignore
     address: token.address[chainId]
   }))
 }
@@ -26,7 +25,6 @@ export const useBaseTokens = () => {
   const chainId = useCurrChainID()
   return baseTokens.map((token: TokenConfigTypes) => ({
     ...token,
-    // @ts-ignore
     address: token.address[chainId]
   }))
 }

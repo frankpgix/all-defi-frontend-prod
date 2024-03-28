@@ -13,7 +13,7 @@ export const calcUniV3NonfungiblePosition = (
   underlyingToken: TokenTypes,
   getTokenByAddress: GetTokenFuncType
 ): UniLPDetailTypes[] => {
-  return sData.map((item: any) => {
+  return (sData ?? []).map((item: any) => {
     const token0 = getTokenByAddress(item.token0)
     const token1 = getTokenByAddress(item.token1)
     return {
@@ -42,25 +42,27 @@ export const calcAaveV3Position = (
   getTokenByAddress: GetTokenFuncType
 ): AaveV3DetailTypes | null => {
   console.log(response, 'response')
-  const healthFactor = safeInterceptionValues(response.healthFactor, 4, 4)
-  const collateral = response.collateralAssets.map((address: AddressType, index: number) => {
-    const asset = getTokenByAddress(address)
-    return {
-      id: index,
-      asset,
-      blances: safeInterceptionValues(
-        response.collateralBlances[index],
-        asset.decimals,
-        asset.decimals
-      ),
-      value: safeInterceptionValues(
-        response.collateralValues[index],
-        underlyingToken.decimals,
-        underlyingToken.decimals
-      )
+  const healthFactor = safeInterceptionValues(response?.healthFactor ?? 1, 4, 4)
+  const collateral = (response?.collateralAssets ?? []).map(
+    (address: AddressType, index: number) => {
+      const asset = getTokenByAddress(address)
+      return {
+        id: index,
+        asset,
+        blances: safeInterceptionValues(
+          response.collateralBlances[index],
+          asset.decimals,
+          asset.decimals
+        ),
+        value: safeInterceptionValues(
+          response.collateralValues[index],
+          underlyingToken.decimals,
+          underlyingToken.decimals
+        )
+      }
     }
-  })
-  const debt = response.debtAssets.map((address: AddressType, index: number) => {
+  )
+  const debt = (response?.debtAssets ?? []).map((address: AddressType, index: number) => {
     const asset = getTokenByAddress(address)
     return {
       id: index,
@@ -105,14 +107,14 @@ export const calcGMXEarnPosition = (
   return [
     {
       id: 0,
-      glpBlance: safeInterceptionValues(response.glpBlance, 6, 18),
+      glpBlance: safeInterceptionValues(response?.glpBlance ?? 0, 6, 18),
       glpValue: safeInterceptionValues(
-        response.glpValue,
+        response?.glpValue ?? 0,
         underlyingToken.decimals,
         underlyingToken.decimals
       ),
       pendingReward: safeInterceptionValues(
-        response.pendingReward,
+        response?.pendingReward ?? 0,
         underlyingToken.decimals,
         underlyingToken.decimals
       )
