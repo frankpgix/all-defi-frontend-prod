@@ -1,3 +1,5 @@
+import { erc20Abi } from 'viem'
+
 import ACProtocolAbi from '@/config/abi/ACProtocol.json'
 import AUMStatsAbi from '@/config/abi/AUMStats.json'
 import AllProtocolAbi from '@/config/abi/AllProtocol.json'
@@ -6,7 +8,7 @@ import UniV3ACLAbi from '@/config/abi/UniV3ACL.json'
 import VaultAbi from '@/config/abi/Vault.json'
 import VaultFactoryAbi from '@/config/abi/VaultFactory.json'
 import VaultReaderAbi from '@/config/abi/VaultReader.json'
-import ERC20Abi from '@/config/abi/erc20.json'
+// import ERC20Abi from '@/config/abi/erc20.json';
 import { contracts } from '@/config/contract'
 
 import { useCurrChainID } from '@/hooks/useToken'
@@ -24,8 +26,16 @@ export const useContract = (address: AddressType, abi: any) => {
 }
 
 export const useERC20Contract = (address: AddressType) => {
-  return useContract(address, ERC20Abi)
+  return useContract(address, erc20Abi)
 }
+
+export const useGetErc20Contract = () => {
+  const getErc20Contract = (address: AddressType) => {
+    return useContract(address, erc20Abi)
+  }
+  return { getErc20Contract }
+}
+
 export const useACProtocolContract = () => {
   const { address } = useContractAddress('ACProtocol')
   return useContract(address, ACProtocolAbi)

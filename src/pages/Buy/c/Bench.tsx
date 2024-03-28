@@ -23,22 +23,20 @@ const Bench: FC = () => {
   const baseTokenOptions = useBaseTokenOptions()
   const { buyAcToken } = useBuyAcToken()
   const { account } = useProfile()
-  const { balances } = useUserBalances()
+  const { balances, refetch } = useUserBalances()
   const [amount, setAmount] = useState<string | number>('')
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>(baseTokenOptions[0].value)
   const { data: allTPrice } = useAllTokenPrice(baseTokenAddress)
-
   const usdcAddress = getTokenByName('USDC').address
   const ethAddress = getTokenByName('ETH').address
-
   const preAllValue = useMemo(
     () =>
       Number(
         formatNumber(
           BN(Number(amount) || 0)
             .multipliedBy(0.1)
-            .div(allTPrice)
+            .div(allTPrice > 0 ? allTPrice : 1)
             .toString(),
           4,
           '0.0000'
@@ -50,7 +48,7 @@ const Bench: FC = () => {
   const buyAndStakeFunc = async () => {
     if (account) {
       // 执行购买和质押
-      await buyAcToken(baseTokenAddress, Number(amount), account)
+      await buyAcToken(baseTokenAddress, Number(amount), account, refetch)
     }
   }
 

@@ -7,23 +7,27 @@ import { useToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 
-import { getUnitAmount } from '@/utils/tools'
+import { getUnitAmount, sleep } from '@/utils/tools'
+
+import { useAllowance } from './useTools'
 
 export const useBuyAcToken = () => {
   const ACProtocolContract = useACProtocolContract()
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
   const { getTokenByAddress } = useToken()
+  const { onAllowance } = useAllowance()
 
   const buyAcToken = async (
     baseTokenAddress: AddressType,
     amount: number,
-    account: AddressType
+    account: AddressType,
+    callback?: () => void
   ) => {
     const baseToken = getTokenByAddress(baseTokenAddress)
     const _amount = getUnitAmount(String(amount), baseToken?.decimals)
-    const notifyId = await createNotify({ content: 'Buy AC Token', type: 'loading' })
 
+    const notifyId = await createNotify({ content: 'Buy AC Token', type: 'loading' })
     const succNotify = (hash: string) => {
       updateNotifyItem(notifyId, { content: 'Buy AC Token', type: 'success', hash })
     }
@@ -46,11 +50,26 @@ export const useBuyAcToken = () => {
           account
         },
         {
-          onSuccess: (hash: string) => succNotify(hash),
+          onSuccess: async (hash: string) => {
+            await sleep(5000)
+            succNotify(hash)
+            callback?.()
+          },
           onError: (error: any) => errorNotify(error.shortMessage)
         }
       )
     } else {
+      const allowance = await onAllowance(
+        baseTokenAddress,
+        ACProtocolContract.address,
+        _amount,
+        notifyId
+      )
+
+      if (!allowance) {
+        errorNotify('Please approve first')
+        return
+      }
       writeContract(
         {
           ...ACProtocolContract,
@@ -59,7 +78,11 @@ export const useBuyAcToken = () => {
           account
         },
         {
-          onSuccess: (hash: string) => succNotify(hash),
+          onSuccess: async (hash: string) => {
+            await sleep(5000)
+            succNotify(hash)
+            callback?.()
+          },
           onError: (error: any) => errorNotify(error.shortMessage)
         }
       )

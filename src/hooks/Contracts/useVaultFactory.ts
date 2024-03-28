@@ -12,6 +12,7 @@ import { safeInterceptionValues } from '@/utils/tools'
 
 export const useAssetPrice = (baseAsset: AddressType, quoteAsset: AddressType) => {
   const VaultFactoryContract = useVaultFactoryContract()
+
   const { data, isLoading, isSuccess } = useReadContract({
     ...VaultFactoryContract,
     functionName: 'assetPrice',

@@ -3,6 +3,7 @@ import { useReadContract, useWriteContract } from 'wagmi'
 import { ZERO_ADDRESS } from '@/config/tokens'
 
 import { useAllProtocolContract } from '@/hooks/Contracts/useContract'
+import { useAllowance } from '@/hooks/Contracts/useTools'
 import { useAssetPrice, useAssetPriceUSD } from '@/hooks/Contracts/useVaultFactory'
 import { useNotify } from '@/hooks/useNotify'
 import { useToken } from '@/hooks/useToken'
@@ -114,6 +115,9 @@ export const useCreateVault = () => {
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
   const WETH = getTokenByName('WETH')
+  const ALLTOKEN = getTokenByName('ALLTOKEN')
+  const { onAllowance } = useAllowance()
+
   const onCreateVault = async (
     data: CreateVaultDataType,
     account: AddressType,
@@ -121,27 +125,35 @@ export const useCreateVault = () => {
   ) => {
     const notifyId = await createNotify({ type: 'loading', content: 'Create Vault' })
     const args = calcCaeateVaultData(data, getTokenByAddress, WETH.address)
-    writeContract(
-      {
-        ...AllProtocolContract,
-        functionName: 'createVault',
-        args,
-        account
-      },
-      {
-        onSuccess: (hash: string) => {
-          updateNotifyItem(notifyId, { title: 'Create Vault', type: 'success', hash })
-          callback()
-        },
-        onError: (error: any) => {
-          updateNotifyItem(notifyId, {
-            title: 'Create Vault',
-            type: 'error',
-            content: error.shortMessage
-          })
-        }
-      }
+    const allowance = await onAllowance(
+      ALLTOKEN.address,
+      AllProtocolContract.address,
+      getUnitAmount(data.stakeAmount, ALLTOKEN.decimals),
+      notifyId
     )
+    if (allowance) {
+      writeContract(
+        {
+          ...AllProtocolContract,
+          functionName: 'createVault',
+          args,
+          account
+        },
+        {
+          onSuccess: (hash: string) => {
+            updateNotifyItem(notifyId, { title: 'Create Vault', type: 'success', hash })
+            callback()
+          },
+          onError: (error: any) => {
+            updateNotifyItem(notifyId, {
+              title: 'Create Vault',
+              type: 'error',
+              content: error.shortMessage
+            })
+          }
+        }
+      )
+    }
   }
   return { onCreateVault }
 }
