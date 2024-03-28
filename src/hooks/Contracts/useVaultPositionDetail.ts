@@ -4,8 +4,8 @@ import AaveV3PositionAbi from '@/config/abi/PositionDetail/AaveV3Position.json'
 import GMXEarnPositionAbi from '@/config/abi/PositionDetail/GMXEarnPosition.json'
 import GMXTradePositionAbi from '@/config/abi/PositionDetail/GMXTradePosition.json'
 import UniV3NonfungiblePositionAbi from '@/config/abi/PositionDetail/UniV3NonfungiblePosition.json'
-import { getContractAddress } from '@/config/contracts'
 
+import { useContractAddress } from '@/hooks/Contracts/useContract'
 import { useToken } from '@/hooks/useToken'
 
 import { AddressType, TokenTypes } from '@/types/base'
@@ -24,28 +24,34 @@ import {
 
 export const userVaultPositionDetail = (vaultAddress: AddressType, underlyingToken: TokenTypes) => {
   const { getTokenByAddress } = useToken()
+
+  const { address: uniAddress } = useContractAddress('UniV3NonfungiblePosition')
+  const { address: aaveAddress } = useContractAddress('AaveV3Position')
+  const { address: GMXTradeAddress } = useContractAddress('GMXTradePosition')
+  const { address: GMXEarnAddress } = useContractAddress('GMXEarnPosition')
+
   const { data, isLoading, isSuccess } = useReadContracts({
     contracts: [
       {
-        address: getContractAddress('UniV3NonfungiblePosition'),
+        address: uniAddress,
         abi: UniV3NonfungiblePositionAbi,
         functionName: 'detail',
         args: [vaultAddress]
       },
       {
-        address: getContractAddress('AaveV3Position'),
+        address: aaveAddress,
         abi: AaveV3PositionAbi,
         functionName: 'detail',
         args: [vaultAddress]
       },
       {
-        address: getContractAddress('GMXTradePosition'),
+        address: GMXTradeAddress,
         abi: GMXTradePositionAbi,
         functionName: 'detail',
         args: [vaultAddress]
       },
       {
-        address: getContractAddress('GMXEarnPosition'),
+        address: GMXEarnAddress,
         abi: GMXEarnPositionAbi,
         functionName: 'detail',
         args: [vaultAddress]

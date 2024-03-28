@@ -1,5 +1,3 @@
-// import { AddressType } from '@/config/types'
-
 export interface PoolItemTypes {
   shareToken: `0x${string}`
   symbol: string

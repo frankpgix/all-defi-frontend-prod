@@ -15,7 +15,7 @@ import { useCurrChainID } from '@/hooks/useToken'
 
 import { AddressType, ContractKeys } from '@/types/base'
 
-const useContractAddress = (name: ContractKeys) => {
+export const useContractAddress = (name: ContractKeys) => {
   const chainID = useCurrChainID()
   const contract = contracts[name]
   return { address: contract[chainID] }

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { AddressType } from '@/config/types'
+import { AddressType } from '@/types/base'
 
 export const useStoreProfile = create((set) => {
   return {
