@@ -2,13 +2,13 @@ import { zeroAddress } from 'viem'
 import { useWriteContract } from 'wagmi'
 
 import { useACProtocolContract } from '@/hooks/Contracts/useContract'
-import { useAllowance } from '@/hooks/Contracts/useTools'
+import { useAllowance, useWaitReceipt } from '@/hooks/Contracts/useTools'
 import { useNotify } from '@/hooks/useNotify'
 import { useToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 
-import { getUnitAmount, sleep } from '@/utils/tools'
+import { getUnitAmount } from '@/utils/tools'
 
 export const useBuyAcToken = () => {
   const ACProtocolContract = useACProtocolContract()
@@ -16,6 +16,7 @@ export const useBuyAcToken = () => {
   const { createNotify, updateNotifyItem } = useNotify()
   const { getTokenByAddress } = useToken()
   const { onAllowance } = useAllowance()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const buyAcToken = async (
     baseTokenAddress: AddressType,
@@ -49,12 +50,12 @@ export const useBuyAcToken = () => {
           account
         },
         {
-          onSuccess: async (hash: string) => {
-            await sleep(5000)
-            succNotify(hash)
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
             callback?.()
+            succNotify(hash)
           },
-          onError: (error: any) => errorNotify(error.shortMessage)
+          onError: (error: any) => errorNotify(error.reason || error.shortMessage)
         }
       )
     } else {
@@ -77,12 +78,12 @@ export const useBuyAcToken = () => {
           account
         },
         {
-          onSuccess: async (hash: string) => {
-            await sleep(5000)
-            succNotify(hash)
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
             callback?.()
+            succNotify(hash)
           },
-          onError: (error: any) => errorNotify(error.shortMessage)
+          onError: (error: any) => errorNotify(error.reason || error.shortMessage)
         }
       )
     }

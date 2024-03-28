@@ -1,7 +1,7 @@
 import { useReadContract, useWriteContract } from 'wagmi'
 
 import { useVaultContract } from '@/hooks/Contracts/useContract'
-import { useAllowance } from '@/hooks/Contracts/useTools'
+import { useAllowance, useWaitReceipt } from '@/hooks/Contracts/useTools'
 import { useNotify } from '@/hooks/useNotify'
 import { useToken } from '@/hooks/useToken'
 
@@ -9,7 +9,7 @@ import { AddressType, TokenTypes } from '@/types/base'
 
 import { calcVaultBaseInfo } from '@/compute/vault'
 import { VaultBaseInfoDefault } from '@/data/vault'
-import { getUnitAmount, sleep } from '@/utils/tools'
+import { getUnitAmount } from '@/utils/tools'
 
 export const useBaseInfo = (vaultAddress: AddressType) => {
   const { getTokenByAddress } = useToken()
@@ -36,6 +36,7 @@ export const useAllocate = (vaultAddress: AddressType) => {
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
   const { onAllowance } = useAllowance()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const onAllocate = async (
     acToken: TokenTypes,
@@ -59,8 +60,8 @@ export const useAllocate = (vaultAddress: AddressType) => {
           account
         },
         {
-          onSuccess: async (hash: string) => {
-            await sleep(5000)
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
             callback?.()
             updateNotifyItem(notifyId, { title: 'Allocate to vault', type: 'success', hash })
           },
@@ -83,6 +84,7 @@ export const useCancelAllocate = (vaultAddress: AddressType) => {
 
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const onCancelAllocate = async (account: AddressType, callback?: () => void) => {
     if (account) {
@@ -96,8 +98,8 @@ export const useCancelAllocate = (vaultAddress: AddressType) => {
           account
         },
         {
-          onSuccess: async (hash: string) => {
-            await sleep(5000)
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
             callback?.()
             updateNotifyItem(notifyId, { title: 'Cancel Allocation', type: 'success', hash })
           },
@@ -120,6 +122,7 @@ export const useWithhold = (vaultAddress: AddressType) => {
 
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const onWithhold = async (amount: number, account: AddressType, callback?: () => void) => {
     const _amount = getUnitAmount(String(amount), 18)
@@ -135,10 +138,10 @@ export const useWithhold = (vaultAddress: AddressType) => {
           account
         },
         {
-          onSuccess: async (hash: string) => {
-            await sleep(5000)
-            updateNotifyItem(notifyId, { title: 'Withhold from vault', type: 'success', hash })
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
             callback?.()
+            updateNotifyItem(notifyId, { title: 'Withhold from vault', type: 'success', hash })
           },
           onError: (error: any) => {
             updateNotifyItem(notifyId, {
@@ -159,6 +162,7 @@ export const useCancelWithholding = (vaultAddress: AddressType) => {
 
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const onCancelWithholding = async (account: AddressType, callback?: () => void) => {
     if (account) {
@@ -172,8 +176,8 @@ export const useCancelWithholding = (vaultAddress: AddressType) => {
           account
         },
         {
-          onSuccess: async (hash: string) => {
-            await sleep(5000)
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
             callback?.()
             updateNotifyItem(notifyId, { title: 'Cancel Withholding', type: 'success', hash })
           },
@@ -194,14 +198,15 @@ export const useCancelWithholding = (vaultAddress: AddressType) => {
 export const useClaim = (vaultAddress: AddressType) => {
   const vaultContract = useVaultContract(vaultAddress)
 
-  const { writeContractAsync } = useWriteContract()
+  const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const onClaim = async (account: AddressType, callback?: () => void) => {
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Claim AC token' })
 
-      await writeContractAsync(
+      writeContract(
         {
           ...vaultContract,
           functionName: 'claim',
@@ -209,8 +214,8 @@ export const useClaim = (vaultAddress: AddressType) => {
           account
         },
         {
-          onSuccess: async (hash: string) => {
-            await sleep(5000)
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
             callback?.()
             updateNotifyItem(notifyId, { title: 'Claim AC token', type: 'success', hash })
           },
@@ -231,14 +236,15 @@ export const useClaim = (vaultAddress: AddressType) => {
 export const useClaimCompensation = (vaultAddress: AddressType) => {
   const vaultContract = useVaultContract(vaultAddress)
 
-  const { writeContractAsync } = useWriteContract()
+  const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const onClaim = async (account: AddressType, callback?: () => void) => {
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Claim ALL Token' })
 
-      await writeContractAsync(
+      writeContract(
         {
           ...vaultContract,
           functionName: 'claimCompensation',
@@ -246,8 +252,8 @@ export const useClaimCompensation = (vaultAddress: AddressType) => {
           account
         },
         {
-          onSuccess: async (hash: string) => {
-            await sleep(5000)
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
             callback?.()
             updateNotifyItem(notifyId, { title: 'Claim ALL Token', type: 'success', hash })
           },
@@ -268,14 +274,15 @@ export const useClaimCompensation = (vaultAddress: AddressType) => {
 export const useSettleAccount = (vaultAddress: AddressType) => {
   const vaultContract = useVaultContract(vaultAddress)
 
-  const { writeContractAsync } = useWriteContract()
+  const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const onSettleAccount = async (account: AddressType, callback?: () => void) => {
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Settle Vault' })
 
-      await writeContractAsync(
+      writeContract(
         {
           ...vaultContract,
           functionName: 'settleAccount',
@@ -283,8 +290,8 @@ export const useSettleAccount = (vaultAddress: AddressType) => {
           account
         },
         {
-          onSuccess: async (hash: string) => {
-            await sleep(5000)
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
             callback?.()
             updateNotifyItem(notifyId, { title: 'Settle Vault', type: 'success', hash })
           },

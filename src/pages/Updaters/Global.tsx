@@ -11,7 +11,6 @@ export default function Global(): null {
 
   const { update: updateProfile } = useProfile()
   const { data: maxFundLimit, isLoading } = useVaultCountLimit(address ?? '')
-  console.log(maxFundLimit)
   useEffect(() => {
     updateProfile(address, Boolean(maxFundLimit), maxFundLimit, isLoading)
   }, [address, maxFundLimit, isLoading])

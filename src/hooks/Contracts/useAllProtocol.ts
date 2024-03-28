@@ -3,7 +3,7 @@ import { useReadContract, useWriteContract } from 'wagmi'
 import { ZERO_ADDRESS } from '@/config/tokens'
 
 import { useAllProtocolContract } from '@/hooks/Contracts/useContract'
-import { useAllowance } from '@/hooks/Contracts/useTools'
+import { useAllowance, useWaitReceipt } from '@/hooks/Contracts/useTools'
 import { useAssetPrice, useAssetPriceUSD } from '@/hooks/Contracts/useVaultFactory'
 import { useNotify } from '@/hooks/useNotify'
 import { useToken } from '@/hooks/useToken'
@@ -117,11 +117,12 @@ export const useCreateVault = () => {
   const WETH = getTokenByName('WETH')
   const ALLTOKEN = getTokenByName('ALLTOKEN')
   const { onAllowance } = useAllowance()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const onCreateVault = async (
     data: CreateVaultDataType,
     account: AddressType,
-    callback: () => void
+    callback?: () => void
   ) => {
     const notifyId = await createNotify({ type: 'loading', content: 'Create Vault' })
     const args = calcCaeateVaultData(data, getTokenByAddress, WETH.address)
@@ -140,9 +141,10 @@ export const useCreateVault = () => {
         account
       },
       {
-        onSuccess: (hash: string) => {
+        onSuccess: async (hash: AddressType) => {
+          await onWaitReceipt(hash)
+          callback?.()
           updateNotifyItem(notifyId, { title: 'Create Vault', type: 'success', hash })
-          callback()
         },
         onError: (error: any) => {
           updateNotifyItem(notifyId, {
@@ -161,12 +163,13 @@ export const useUpdateVault = () => {
   const AllProtocolContract = useAllProtocolContract()
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const onUpdateVault = async (
     vaultAddress: AddressType,
     data: UpdateVaultDataType,
     account: AddressType,
-    callback: () => void
+    callback?: () => void
   ) => {
     const notifyId = await createNotify({ type: 'loading', content: 'Set Vault Base Info' })
     const upData = calcUpdateVaultData(data)
@@ -179,10 +182,10 @@ export const useUpdateVault = () => {
         account
       },
       {
-        onSuccess: (hash: string) => {
-          //onSuccess
+        onSuccess: async (hash: AddressType) => {
+          await onWaitReceipt(hash)
+          callback?.()
           updateNotifyItem(notifyId, { title: 'Set Vault Base Info', type: 'success', hash })
-          callback()
         },
         onError: (error: any) => {
           //onError
@@ -216,13 +219,14 @@ export const useVaultChangeStakeALL = () => {
   const AllProtocolContract = useAllProtocolContract()
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const onVaultChangeStakeALL = async (
     vaultAddress: AddressType,
     amount: number,
     direction: VaultStakeType,
     account: AddressType,
-    callback: () => void
+    callback?: () => void
   ) => {
     const _amount = getUnitAmount(amount, 18)
 
@@ -239,13 +243,14 @@ export const useVaultChangeStakeALL = () => {
         account
       },
       {
-        onSuccess: (hash: string) => {
+        onSuccess: async (hash: AddressType) => {
+          await onWaitReceipt(hash)
+          callback?.()
           updateNotifyItem(notifyId, {
             title: 'Change Vault Stake ALL Token',
             type: 'success',
             hash
           })
-          callback()
         },
         onError: (error: any) => {
           updateNotifyItem(notifyId, {

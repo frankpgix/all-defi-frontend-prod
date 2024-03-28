@@ -1,7 +1,7 @@
 import { useReadContract, useReadContracts, useWriteContract } from 'wagmi'
 
 import { useERC20Contract, useRewardTrackerContract } from '@/hooks/Contracts/useContract'
-import { useAllowance } from '@/hooks/Contracts/useTools'
+import { useAllowance, useWaitReceipt } from '@/hooks/Contracts/useTools'
 import { useNotify } from '@/hooks/useNotify'
 import { useToken } from '@/hooks/useToken'
 
@@ -10,7 +10,7 @@ import { PoolItemTypes } from '@/types/rewardTracker'
 
 import { calcPoolItemData } from '@/compute/rewardTracker'
 import { RewardDashboardDataDefault } from '@/data/rewardTracker'
-import { getUnitAmount, safeInterceptionValues, sleep } from '@/utils/tools'
+import { getUnitAmount, safeInterceptionValues } from '@/utils/tools'
 
 export const usePoolList = (account?: AddressType) => {
   const RewardTrackerContract = useRewardTrackerContract()
@@ -158,6 +158,8 @@ export const useStake = () => {
   const { onAllowance } = useAllowance()
   const { getTokenByName } = useToken()
   const sALLTOKEN = getTokenByName('sALLTOKEN')
+  const { onWaitReceipt } = useWaitReceipt()
+
   const onStake = async (
     poolKeys: AddressType[],
     amounts: number[],
@@ -184,10 +186,10 @@ export const useStake = () => {
           account
         },
         {
-          onSuccess: async (hash: string) => {
-            await sleep(5000)
-            updateNotifyItem(notifyId, { title: 'Stake Shares', type: 'success', hash })
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
             callback?.()
+            updateNotifyItem(notifyId, { title: 'Stake Shares', type: 'success', hash })
           },
           onError: (error: any) => {
             updateNotifyItem(notifyId, {
@@ -207,6 +209,7 @@ export const useUnStake = () => {
   const RewardTrackerContract = useRewardTrackerContract()
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const onUnStake = async (
     poolKeys: AddressType[],
@@ -225,10 +228,10 @@ export const useUnStake = () => {
           account
         },
         {
-          onSuccess: async (hash: string) => {
-            await sleep(5000)
-            updateNotifyItem(notifyId, { title: 'Unstake Shares', type: 'success', hash })
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
             callback?.()
+            updateNotifyItem(notifyId, { title: 'Unstake Shares', type: 'success', hash })
           },
           onError: (error: any) => {
             updateNotifyItem(notifyId, {

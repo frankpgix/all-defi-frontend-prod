@@ -1,7 +1,7 @@
 import { maxUint256 } from 'viem'
 import { useAccount } from 'wagmi'
 
-import { readContract, writeContract } from '@wagmi/core'
+import { readContract, waitForTransactionReceipt, writeContract } from '@wagmi/core'
 
 import { config } from '@/config/wagmi'
 
@@ -9,14 +9,13 @@ import { useNotify } from '@/hooks/useNotify'
 
 import { AddressType } from '@/types/base'
 
-import { sleep } from '@/utils/tools'
-
 import { useGetErc20Contract } from './useContract'
 
 export const useAllowance = () => {
   const { address: account } = useAccount()
   const { getErc20Contract } = useGetErc20Contract()
   const { updateNotifyItem } = useNotify()
+  const { onWaitReceipt } = useWaitReceipt()
 
   const onAllowance = async (
     tokenAddress: AddressType,
@@ -44,10 +43,18 @@ export const useAllowance = () => {
           })
         }
       })
-      await sleep(5000)
+      if (hash) await onWaitReceipt(hash)
       return Boolean(hash)
     }
     return true
   }
   return { onAllowance }
+}
+
+export const useWaitReceipt = () => {
+  const onWaitReceipt = async (hash: AddressType) => {
+    const wait = await waitForTransactionReceipt(config, { hash })
+    return wait
+  }
+  return { onWaitReceipt }
 }
