@@ -1,4 +1,4 @@
-import { ZERO_ADDRESS } from '@/config/tokens'
+import { zeroAddress } from 'viem'
 
 import { AddressType, GetTokenFuncType } from '@/types/base'
 import { CreateVaultDataType, UpdateVaultDataType } from '@/types/createVault'
@@ -21,7 +21,7 @@ export const calcCaeateVaultData = (
     maxAmount
   } = data
   let baseTokenAddress = data.baseTokenAddress
-  if (baseTokenAddress === ZERO_ADDRESS) {
+  if (baseTokenAddress === zeroAddress) {
     baseTokenAddress = WETHAddress
   }
   const baseToken = getTokenByAddress(baseTokenAddress)

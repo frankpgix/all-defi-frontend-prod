@@ -29,8 +29,26 @@ export const ethConfig: TokenConfigTypes = {
   icon: 'symbol/eth.svg'
 }
 
+export const bnbConfig: TokenConfigTypes = {
+  name: 'BNB',
+  symbol: 'BNB',
+  address: {
+    [ChainId.MAINNET]: ZERO_ADDRESS,
+    [ChainId.ARBITRUM]: ZERO_ADDRESS,
+    [ChainId.BSCTEST]: ZERO_ADDRESS
+  },
+  decimals: 18,
+  precision: 4,
+  icon: 'symbol/eth.svg'
+}
+
+export const chainTokens = {
+  [ChainId.MAINNET]: ethConfig,
+  [ChainId.ARBITRUM]: ethConfig,
+  [ChainId.BSCTEST]: bnbConfig
+}
+
 export const baseTokens: TokenConfigTypes[] = [
-  ethConfig,
   {
     name: 'USDC',
     symbol: 'USDC',

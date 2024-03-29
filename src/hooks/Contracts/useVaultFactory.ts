@@ -1,6 +1,5 @@
+import { zeroAddress } from 'viem'
 import { useReadContract, useReadContracts } from 'wagmi'
-
-import { ZERO_ADDRESS } from '@/config/tokens'
 
 import { useVaultFactoryContract } from '@/hooks/Contracts/useContract'
 import { useBaseTokens, useToken } from '@/hooks/useToken'
@@ -63,7 +62,7 @@ export const useBaseTokenPriceUSD = () => {
     contracts: baseTokens.map((baseToken) => ({
       ...VaultFactoryContract,
       functionName: 'assetPriceInUSD',
-      args: [baseToken.address === ZERO_ADDRESS ? WETH?.address : baseToken.address]
+      args: [baseToken.address === zeroAddress ? WETH?.address : baseToken.address]
     }))
   })
   if (!isLoading && isSuccess) {

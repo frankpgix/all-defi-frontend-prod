@@ -1,7 +1,7 @@
 import { erc20Abi, zeroAddress } from 'viem'
 import { useAccount, useBalance, useReadContracts } from 'wagmi'
 
-import { UNKNOWN, baseTokens, ethConfig, tokens } from '@/config/tokens'
+import { UNKNOWN, baseTokens, chainTokens, ethConfig, tokens } from '@/config/tokens'
 
 import { AddressType, ChainIdTypes, TokenConfigTypes, TokenTypes } from '@/types/base'
 
@@ -23,7 +23,8 @@ export const useTokens = (): TokenTypes[] => {
 
 export const useBaseTokens = () => {
   const chainId = useCurrChainID()
-  return baseTokens.map((token: TokenConfigTypes) => ({
+  const chainToken = chainTokens[chainId]
+  return [chainToken, ...baseTokens].map((token: TokenConfigTypes) => ({
     ...token,
     address: token.address[chainId]
   }))

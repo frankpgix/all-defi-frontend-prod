@@ -20,6 +20,7 @@ export const GlobalAssetStatisticDefault: GlobalAssetStatisticProps = {
 }
 
 export const VaultBaseInfoDefault: VaultBaseInfoProps = {
+  hash: '',
   underlyingToken: UNKNOWN,
   acToken: '0x',
   address: '0x',
@@ -38,6 +39,7 @@ export const VaultBaseInfoDefault: VaultBaseInfoProps = {
 }
 
 export const VaultDetailDefault: VaultDetailProps = {
+  hash: '',
   underlyingToken: UNKNOWN,
   address: '0x',
   name: '-',
@@ -79,6 +81,7 @@ export const VaultDetailDefault: VaultDetailProps = {
 }
 
 export const VaultUserDetailDefault: VaultUserDetailProps = {
+  hash: '',
   address: '0x',
   underlyingToken: UNKNOWN,
   status: 1,
@@ -119,6 +122,7 @@ export const VaultStakeDataDefault: VaultStakeProps = {
 }
 
 export const VaultBreachDetailDataDefault: VaultBreachDetailProps = {
+  hash: '',
   address: '0x',
   latestFrozenALL: 0,
   latestConfiscatedALL: 0,

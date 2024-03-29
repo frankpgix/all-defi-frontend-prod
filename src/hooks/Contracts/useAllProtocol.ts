@@ -1,6 +1,5 @@
+import { zeroAddress } from 'viem'
 import { useReadContract, useWriteContract } from 'wagmi'
-
-import { ZERO_ADDRESS } from '@/config/tokens'
 
 import { useAllProtocolContract } from '@/hooks/Contracts/useContract'
 import { useAllowance, useWaitReceipt } from '@/hooks/Contracts/useTools'
@@ -22,7 +21,7 @@ export const useAllTokenPrice = (baseToken: AddressType) => {
   const WETH = getTokenByName('WETH')
   const ALLTOKEN = getTokenByName('ALLTOKEN')
 
-  if (baseToken === ZERO_ADDRESS) {
+  if (baseToken === zeroAddress) {
     baseToken = WETH.address
   }
   return useAssetPrice(ALLTOKEN.address, baseToken)
@@ -85,7 +84,7 @@ export const useCalcAUMLimit = (underlyingToken: AddressType) => {
   const WETH = getTokenByName('WETH')
   const _amount = getUnitAmount(String(1), 18)
 
-  if (underlyingToken === ZERO_ADDRESS) {
+  if (underlyingToken === zeroAddress) {
     underlyingToken = WETH.address
   }
 
