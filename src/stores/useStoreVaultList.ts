@@ -1,7 +1,8 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+
 // import { FundDetailProps, FundUserListDataProps } from '@/class/help'
-import { VaultDetailProps, VaultUserListDataProps } from '@/types/vault'
+import { VaultDetailProps, VaultHashTypes, VaultUserListDataProps } from '@/types/vault'
 
 export const useStoreVaultList = create((set) => ({
   vaultList: [],
@@ -47,3 +48,9 @@ export const useStoreManageVaultVerifyList = create(
     { name: 'StoreManageFundVerifyList' }
   )
 )
+
+export const useStoreVaultHashList = create((set) => ({
+  vaultHashList: [],
+  loading: true,
+  update: (vaultHashList: VaultHashTypes[], loading: boolean) => set({ vaultHashList, loading })
+}))

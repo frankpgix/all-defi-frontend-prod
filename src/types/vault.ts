@@ -9,6 +9,7 @@ export interface GlobalAssetStatisticProps {
 
 // Vault baseInfo Props
 export interface VaultBaseInfoProps {
+  hash: string
   underlyingToken: TokenTypes
   acToken: AddressType
   address: AddressType
@@ -27,6 +28,7 @@ export interface VaultBaseInfoProps {
 }
 
 export interface VaultDetailProps {
+  hash: string
   underlyingToken: TokenTypes
   address: AddressType
   name: string
@@ -68,6 +70,7 @@ export interface VaultDetailProps {
 }
 
 export interface VaultUserDetailProps {
+  hash: string
   address: AddressType
   underlyingToken: TokenTypes
   underlyingTokenPriceInUSD: number
@@ -131,6 +134,7 @@ export interface VaultStakeProps {
 }
 
 export interface VaultBreachDetailProps {
+  hash: string
   address: AddressType //基金id/地址
   latestFrozenALL: number //上轮冻结ALL
   latestConfiscatedALL: number //上轮扣除ALL
@@ -160,4 +164,9 @@ export type VaultStakeType = 'increase' | 'reduce'
 
 export interface DirectionProps {
   direction: VaultStakeType
+}
+
+export interface VaultHashTypes {
+  address: AddressType
+  hash: string
 }

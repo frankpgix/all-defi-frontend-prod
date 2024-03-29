@@ -1,4 +1,5 @@
 import BN from 'bignumber.js'
+import { md5 } from 'js-md5'
 import { decodeAbiParameters, hexToString } from 'viem'
 
 import { AddressType, GetTokenFuncType, TokenTypes } from '@/types/base'
@@ -9,6 +10,7 @@ import {
   VaultBaseInfoProps,
   VaultBreachDetailProps,
   VaultDetailProps,
+  VaultHashTypes,
   VaultStakeProps,
   VaultUserDetailProps
 } from '@/types/vault'
@@ -32,8 +34,9 @@ export const calcVaultBaseInfo = (
   const underlyingToken = getTokenByAddress(item.underlyingToken)
   const decimals = underlyingToken.decimals
   const precision = underlyingToken.precision
-
+  const { hash } = calcVaultHash(vaultAddress ?? '0x')
   return {
+    hash,
     underlyingToken,
     acToken: item.acToken,
     address: vaultAddress ?? '0x',
@@ -65,10 +68,12 @@ export const calcVaultDetail = (
   const underlyingToken = getTokenByAddress(item.underlyingToken)
   const decimals = underlyingToken.decimals
   const status = Number(safeInterceptionValues(item.stage, 0, 0))
+  const { hash } = calcVaultHash(item.vaultId ?? '0x')
   // console.log(epochStartTime, 'test')
   // const precision = baseTokenObj.precision
   return {
     underlyingToken,
+    hash,
     address: item.vaultId,
     name: item.name,
     manager: item.manager,
@@ -125,9 +130,11 @@ export const calcVaultUserDetail = (
   const beginSharePrice = BN(safeInterceptionValues(item.shares, 18, 18))
     .div(BN(safeInterceptionValues(item.roe, 18, 18)).plus(1))
     .toNumber()
+  const { hash } = calcVaultHash(item.vaultId ?? '0x')
 
   return {
     address: item.vaultId,
+    hash,
     underlyingToken,
     status: Number(safeInterceptionValues(item.stage, 0, 0)),
     // aum: Number(safeInterceptionValues(item.beginningAUM, precision, decimals)),
@@ -182,8 +189,10 @@ export const calcVaultStakedALL = (data: bigint[]): VaultStakeProps => {
 }
 
 export const calcVaultBreachDetail = (item: any): VaultBreachDetailProps => {
+  const { hash } = calcVaultHash(item.vaultId ?? '0x')
   return {
     address: item.vaultId,
+    hash,
     latestFrozenALL: Number(safeInterceptionValues(item.lastFrozenALL, 4, 18)),
     latestConfiscatedALL: Number(safeInterceptionValues(item.lastConfiscatedALL, 4, 18)),
     consecutiveBreachCount: Number(safeInterceptionValues(item.consecutiveBreachCount, 0, 0)),
@@ -236,4 +245,11 @@ export const calcVaultDerivativesInfo = (data: AddressType[]) => {
     name: hexToString(value, { size: 32 }),
     value
   }))
+}
+
+export const calcVaultHash = (address: AddressType): VaultHashTypes => {
+  return {
+    address,
+    hash: md5(address.toLocaleLowerCase())
+  }
 }

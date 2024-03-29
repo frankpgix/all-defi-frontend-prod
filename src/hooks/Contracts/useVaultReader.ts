@@ -20,6 +20,7 @@ import {
   calcVaultBaseInfo,
   calcVaultBreachDetail,
   calcVaultDetail,
+  calcVaultHash,
   calcVaultUpdatingData,
   calcVaultUserDetail
 } from '@/compute/vault'
@@ -169,6 +170,19 @@ export const useVaultList = () => {
     }
   }
   return { data: [] as VaultDetailProps[], isLoading, isSuccess, refetch }
+}
+
+export const useVaultHashList = () => {
+  const VaultReaderContract = useVaultReaderContract()
+  const { data, isSuccess, isLoading, refetch } = useReadContract({
+    ...VaultReaderContract,
+    functionName: 'vaultList'
+  }) as { data: AddressType[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
+
+  if (!isLoading && isSuccess) {
+    return { data: data.map((address) => calcVaultHash(address)), isSuccess, isLoading, refetch }
+  }
+  return { data: [], isSuccess, isLoading, refetch }
 }
 
 export const useManageVaultList = () => {

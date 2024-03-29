@@ -1,20 +1,23 @@
 import { FC } from 'react'
-import { AddressType } from '@/types/base'
 import { useParams } from 'react-router-dom'
-import Alert from '@@/common/Alert'
-import Blank from '@@/common/Blank'
 
 import { useVaultDetails } from '@/hooks/Contracts/useVaultDetails'
 import { useProfile } from '@/hooks/useProfile'
+import { useVaultHashHook } from '@/hooks/useVaultList'
 
-import Dashboard from './c/Dashboard'
-import VaultStatus from './c/VaultStatus'
-import Portfolio from './c/Portfolio'
+import { AddressType } from '@/types/base'
+
+import Alert from '@@/common/Alert'
+import Blank from '@@/common/Blank'
+
 import Bench from './c/Bench'
+import Dashboard from './c/Dashboard'
+import Portfolio from './c/Portfolio'
 import RoeHistory from './c/RoeHistory'
+import VaultStatus from './c/VaultStatus'
 
-const Detail: FC = () => {
-  const { fundAddress = '0x' } = useParams() as { fundAddress: AddressType }
+const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
+  // const { fundAddress = '0x' } = useParams() as { fundAddress: AddressType }
   const { account } = useProfile()
 
   const {
@@ -52,4 +55,13 @@ const Detail: FC = () => {
   )
 }
 
-export default Detail
+export const DetailInit = () => {
+  const { fundAddress = '' } = useParams()
+  const { getVaultAddressByHash } = useVaultHashHook()
+  const address = getVaultAddressByHash(fundAddress)
+  if (address) {
+    return <Detail fundAddress={address} />
+  }
+  return null
+}
+export default DetailInit

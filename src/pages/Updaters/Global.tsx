@@ -4,7 +4,7 @@ import { useAccount } from 'wagmi'
 
 import { useVaultCountLimit } from '@/hooks/Contracts/useAllProtocol'
 import { useProfile } from '@/hooks/useProfile'
-import { useGetVaultList } from '@/hooks/useVaultList'
+import { useGetVaultHashList, useGetVaultList } from '@/hooks/useVaultList'
 
 export default function Global(): null {
   const { address } = useAccount()
@@ -16,6 +16,7 @@ export default function Global(): null {
   }, [address, maxFundLimit, isLoading])
 
   useGetVaultList()
+  useGetVaultHashList()
 
   return null
 }

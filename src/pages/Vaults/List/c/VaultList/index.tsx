@@ -1,23 +1,26 @@
 import { FC, useEffect, useMemo, useState } from 'react'
-import Table from 'rc-table'
-import { useNavigate } from 'react-router-dom'
 import ContentLoader from 'react-content-loader'
+import { useNavigate } from 'react-router-dom'
 
+import Table from 'rc-table'
+
+// import { formatNumber } from '@/utils/tools'
+// import { useVaultHashHook } from '@/hooks/useVaultList'
+import { VaultDetailProps } from '@/types/vault'
+
+import { calcVaultHash } from '@/compute/vault'
 // import { VaultDetailProps } from '@/class/help'
 import { useVaultListData } from '@/graphql/useData'
-import { VaultDetailProps } from '@/types/vault'
-// import { formatNumber } from '@/utils/tools'
-
+import { FundName } from '@@/common/FundIcon'
 // import { useAppDispatch } from '@/store'
 // import { updateFundsList } from '@/store/funds'
-
 import RoeShow from '@@/common/RoeShow'
-import { FundName } from '@@/common/FundIcon'
 import { TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
 
 const FundList: FC = () => {
   const navigate = useNavigate()
+  // const { getVaultAddressByHash } = useVaultHashHook()
   // const dispatch = useAppDispatch()
   const { loading, data } = useVaultListData()
   const [isShowEndVault, setIsShowEndVault] = useState(false)
@@ -98,10 +101,13 @@ const FundList: FC = () => {
       align: 'right'
     }
   ]
-
-  const onRow = (record: VaultDetailProps) => ({
-    onClick: () => navigate(`/vaults/detail/${record.address}`)
-  })
+  // calcVaultHash
+  const onRow = (record: VaultDetailProps) => {
+    const { hash } = calcVaultHash(record.address)
+    return {
+      onClick: () => navigate(`/vaults/detail/${hash}`)
+    }
+  }
 
   return (
     <div className="web-fund-list-layout">

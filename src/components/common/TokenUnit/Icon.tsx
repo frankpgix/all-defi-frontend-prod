@@ -33,7 +33,7 @@ export const IconGroup: FC<{ list: TokenKeys[]; size?: string }> = ({ list, size
   return (
     <div className="c-token-icon-group">
       {list.map((item) => (
-        <Icon name={item} size={size} />
+        <Icon name={item} key={item} size={size} />
       ))}
     </div>
   )

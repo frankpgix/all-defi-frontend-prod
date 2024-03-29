@@ -1,17 +1,20 @@
 import { useEffect } from 'react'
 
+import { VaultHashTypes } from '@/types/vault'
 import { ManageVaultListType, UserVaultListType, VaultListType } from '@/types/vaultListStore'
 
 import {
   useStoreManageVaultList,
   useStoreManageVaultVerifyList,
   useStoreUserVaultList,
+  useStoreVaultHashList,
   useStoreVaultList
 } from '@/stores/useStoreVaultList'
 
 import {
   useManageVaultList,
   useUserVaultList as useUserVaultListHook,
+  useVaultHashList,
   useVaultList as useVaultListHook
 } from './Contracts/useVaultReader'
 
@@ -130,4 +133,25 @@ export const useManageVaultVerifyList = () => {
     setUpdateVerifyList,
     lastChangeTime
   }
+}
+
+export const useGetVaultHashList = () => {
+  const { update } = useStoreVaultHashList((state: any) => ({
+    update: state.update
+  }))
+  const { data, isLoading } = useVaultHashList()
+  useEffect(() => {
+    update(data, isLoading)
+  }, [isLoading])
+}
+
+export const useVaultHashHook = () => {
+  const { vaultHashList } = useStoreVaultHashList((state: any) => ({
+    vaultHashList: state.vaultHashList
+  })) as { vaultHashList: VaultHashTypes[] }
+
+  const getVaultAddressByHash = (hash: string) => {
+    return vaultHashList.find((item) => item.hash === hash)?.address
+  }
+  return { vaultHashList, getVaultAddressByHash }
 }
