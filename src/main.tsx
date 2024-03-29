@@ -1,24 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-import { ApolloProvider } from '@apollo/client'
 
 import MobileProvider from '@/context/Mobile/index.tsx'
+import ApolloProvider from '@/providers/ApolloProvider.tsx'
 import DappProvider from '@/providers/DappProvider.tsx'
 
 import App from './App.tsx'
-import { client as ApolloClient } from '@/lib/apollo'
 
 ReactDOM.createRoot(document.getElementById('all-defi')!).render(
   <React.StrictMode>
-    <ApolloProvider client={ApolloClient}>
-      <DappProvider>
+    <DappProvider>
+      <ApolloProvider>
         <BrowserRouter>
           <MobileProvider>
             <App />
           </MobileProvider>
         </BrowserRouter>
-      </DappProvider>
-    </ApolloProvider>
+      </ApolloProvider>
+    </DappProvider>
   </React.StrictMode>
 )

@@ -9,14 +9,6 @@ export const DEFAULT_CHAIN_ID = 42161
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 export const IS_DEV = process.env.NODE_ENV === 'development'
 
-const GRAPHQL_API_PREFIX_SCHEMA: Record<string, string> = {
-  [ChainId.MAINNET]: '',
-  [ChainId.ARBITRUM]: 'https://api.thegraph.com/subgraphs/name/'
-}
-
-export const { VITE_APP_CHAIN_ID } = import.meta.env
-
-export const GRAPHQL_API_PREFIX = GRAPHQL_API_PREFIX_SCHEMA[VITE_APP_CHAIN_ID]
 export const RESOURCES_URL = 'https://all-defi-static.pages.dev/'
 export const STATIC_RESOURCES_URL = RESOURCES_URL + 'image/'
 export const VIDEO_RESOURCES_URL = RESOURCES_URL + 'video/'
