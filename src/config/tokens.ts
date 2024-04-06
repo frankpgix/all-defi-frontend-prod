@@ -6,11 +6,10 @@ import { ChainId } from '@/config'
 
 export const UNKNOWN = {
   decimals: 18,
-  icon: 'symbol/eth.svg',
+  icon: 'symbol/unknown.svg',
   name: 'UNKNOWN',
   precision: 4,
   symbol: 'UNKNOWN',
-  tokenAddress: '',
   address: zeroAddress
 } as TokenTypes
 
@@ -38,7 +37,7 @@ export const bnbConfig: ChainTokenConfigTypes = {
   },
   decimals: 18,
   precision: 4,
-  icon: 'symbol/eth.svg',
+  icon: 'symbol/bnb.svg',
   wTokenName: 'WBNB'
 }
 
@@ -111,7 +110,7 @@ export const tokens: TokenConfigTypes[] = [
     },
     decimals: 18,
     precision: 4,
-    icon: 'symbol/eth.svg'
+    icon: 'symbol/bnb.svg'
   },
   {
     name: 'WBTC',
@@ -147,7 +146,7 @@ export const tokens: TokenConfigTypes[] = [
     },
     decimals: 18,
     precision: 4,
-    icon: 'symbol/eth.svg'
+    icon: 'symbol/bnb.svg'
   },
   {
     name: 'ALLTOKEN',

@@ -1,7 +1,8 @@
+import { toLower } from 'lodash'
 import { erc20Abi, zeroAddress } from 'viem'
 import { useAccount, useBalance, useReadContracts } from 'wagmi'
 
-import { UNKNOWN, baseTokens, chainTokens, ethConfig, tokens } from '@/config/tokens'
+import { UNKNOWN, baseTokens, chainTokens, tokens } from '@/config/tokens'
 
 import { AddressType, ChainIdTypes, TokenConfigTypes, TokenKeys, TokenTypes } from '@/types/base'
 
@@ -23,11 +24,16 @@ export const useTokens = (): TokenTypes[] => {
 
 export const useChainToken = () => {
   const chainId = useCurrChainID()
-  const { getTokenByName } = useToken()
   const chainTokenConfig = chainTokens[chainId]
   const chainToken = { ...chainTokenConfig, address: chainTokenConfig.address[chainId] }
+  return { chainId, chainToken, chainTokenConfig }
+}
+
+export const useWChainToken = () => {
+  const { chainToken } = useChainToken()
+  const { getTokenByName } = useToken()
   const wChainToken = getTokenByName(chainToken.wTokenName)
-  return { chainId, chainToken, wChainToken, chainTokenConfig }
+  return { wChainToken }
 }
 
 export const useBaseTokens = () => {
@@ -49,9 +55,13 @@ export const useBaseTokenOptions = () => {
 
 export const useToken = () => {
   const tokens = useTokens()
-
+  const { chainToken } = useChainToken()
+  // console.log(tokens, 'tokens')
   const getToken = (keywords: string | AddressType, type?: 'address' | 'name' | 'symbol') => {
-    const token = tokens.find((token: TokenTypes) => token[type ?? 'address'] === keywords)
+    if (type === 'address' && keywords === zeroAddress) return chainToken
+    const token = tokens.find(
+      (token: TokenTypes) => toLower(token[type ?? 'address']) === toLower(keywords)
+    )
     return token ?? UNKNOWN
   }
 
@@ -63,10 +73,11 @@ export const useToken = () => {
 }
 
 export const useChainTokenBalance = () => {
+  const { chainToken } = useChainToken()
   const { address } = useAccount()
   const { data } = useBalance({ address })
   if (!address || !data) return 0
-  return Number(formatUnits(data.value, ethConfig.decimals, ethConfig.precision))
+  return Number(formatUnits(data.value, chainToken.decimals, chainToken.precision))
 }
 
 export const useUserBalances = () => {

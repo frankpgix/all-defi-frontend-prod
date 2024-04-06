@@ -1,11 +1,12 @@
 import { FC } from 'react'
-import Table from 'rc-table'
+
 import dayjs from 'dayjs'
+import Table from 'rc-table'
+
+import { useProfile } from '@/hooks/useProfile'
 
 import { useUserACBuyData } from '@/graphql/useFundData'
 import { formatNumber } from '@/utils/tools'
-import { useProfile } from '@/hooks/useProfile'
-
 import HashLink from '@@/common/HashLink'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 
