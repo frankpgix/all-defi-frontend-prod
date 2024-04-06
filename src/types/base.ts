@@ -26,14 +26,19 @@ export type ContractKeys =
 export type AddressType = `0x${string}`
 export type AccountType = AddressType
 
+export type WTokenKeys = 'WETH' | 'WBNB' | 'WBTC'
+
 export type TokenKeys =
   | 'USDC'
   | 'USDT'
   | 'acUSDC'
   | 'WETH'
+  | 'WBNB'
   | 'ETH'
+  | 'BNB'
   | 'WBTC'
   | 'acETH'
+  | 'acBNB'
   | 'ALLTOKEN'
   | 'sALLTOKEN'
 
@@ -44,13 +49,17 @@ export interface AddressRec {
 }
 
 export interface TokenConfigTypes {
-  name: string
+  name: TokenKeys
   symbol: string
   address: AddressRec
   decimals: number
   precision: number
   projectLink?: string
   icon: string
+}
+
+export interface ChainTokenConfigTypes extends TokenConfigTypes {
+  wTokenName: WTokenKeys
 }
 export interface ContractConfigType {
   name: string

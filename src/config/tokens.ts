@@ -1,10 +1,8 @@
 import { zeroAddress } from 'viem'
 
-import { TokenConfigTypes, TokenTypes } from '@/types/base'
+import { ChainTokenConfigTypes, TokenConfigTypes, TokenTypes } from '@/types/base'
 
 import { ChainId } from '@/config'
-
-export const ZERO_ADDRESS = zeroAddress
 
 export const UNKNOWN = {
   decimals: 18,
@@ -13,33 +11,35 @@ export const UNKNOWN = {
   precision: 4,
   symbol: 'UNKNOWN',
   tokenAddress: '',
-  address: ZERO_ADDRESS
+  address: zeroAddress
 } as TokenTypes
 
-export const ethConfig: TokenConfigTypes = {
+export const ethConfig: ChainTokenConfigTypes = {
   name: 'ETH',
   symbol: 'ETH',
   address: {
-    [ChainId.MAINNET]: ZERO_ADDRESS,
-    [ChainId.ARBITRUM]: ZERO_ADDRESS,
-    [ChainId.BSCTEST]: ZERO_ADDRESS
+    [ChainId.MAINNET]: zeroAddress,
+    [ChainId.ARBITRUM]: zeroAddress,
+    [ChainId.BSCTEST]: zeroAddress
   },
   decimals: 18,
   precision: 4,
-  icon: 'symbol/eth.svg'
+  icon: 'symbol/eth.svg',
+  wTokenName: 'WETH'
 }
 
-export const bnbConfig: TokenConfigTypes = {
+export const bnbConfig: ChainTokenConfigTypes = {
   name: 'BNB',
   symbol: 'BNB',
   address: {
-    [ChainId.MAINNET]: ZERO_ADDRESS,
-    [ChainId.ARBITRUM]: ZERO_ADDRESS,
-    [ChainId.BSCTEST]: ZERO_ADDRESS
+    [ChainId.MAINNET]: zeroAddress,
+    [ChainId.ARBITRUM]: zeroAddress,
+    [ChainId.BSCTEST]: zeroAddress
   },
   decimals: 18,
   precision: 4,
-  icon: 'symbol/eth.svg'
+  icon: 'symbol/eth.svg',
+  wTokenName: 'WBNB'
 }
 
 export const chainTokens = {
@@ -69,9 +69,9 @@ export const tokens: TokenConfigTypes[] = [
     name: 'USDT',
     symbol: 'USDT',
     address: {
-      [ChainId.MAINNET]: ZERO_ADDRESS,
+      [ChainId.MAINNET]: zeroAddress,
       [ChainId.ARBITRUM]: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
-      [ChainId.BSCTEST]: ZERO_ADDRESS
+      [ChainId.BSCTEST]: zeroAddress
     },
     decimals: 6,
     precision: 2,
@@ -81,7 +81,7 @@ export const tokens: TokenConfigTypes[] = [
     name: 'acUSDC',
     symbol: 'acUSDC',
     address: {
-      [ChainId.MAINNET]: ZERO_ADDRESS,
+      [ChainId.MAINNET]: zeroAddress,
       [ChainId.ARBITRUM]: '0x9b72b7d67aFC801eE8299B6C34C2a9453607440b',
       [ChainId.BSCTEST]: '0xacEAA0254eC60Ec2aBd344953588453682E5840b'
     },
@@ -95,7 +95,19 @@ export const tokens: TokenConfigTypes[] = [
     address: {
       [ChainId.MAINNET]: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
       [ChainId.ARBITRUM]: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
-      [ChainId.BSCTEST]: ZERO_ADDRESS
+      [ChainId.BSCTEST]: zeroAddress
+    },
+    decimals: 18,
+    precision: 4,
+    icon: 'symbol/eth.svg'
+  },
+  {
+    name: 'WBNB',
+    symbol: 'WBNB',
+    address: {
+      [ChainId.MAINNET]: zeroAddress,
+      [ChainId.ARBITRUM]: zeroAddress,
+      [ChainId.BSCTEST]: '0xc4a79A9a893e363D140cF187878c98f42DF50788'
     },
     decimals: 18,
     precision: 4,
@@ -107,7 +119,7 @@ export const tokens: TokenConfigTypes[] = [
     address: {
       [ChainId.MAINNET]: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
       [ChainId.ARBITRUM]: '0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f',
-      [ChainId.BSCTEST]: ZERO_ADDRESS
+      [ChainId.BSCTEST]: zeroAddress
     },
     decimals: 8,
     precision: 4,
@@ -117,9 +129,21 @@ export const tokens: TokenConfigTypes[] = [
     name: 'acETH',
     symbol: 'acETH',
     address: {
-      [ChainId.MAINNET]: ZERO_ADDRESS,
+      [ChainId.MAINNET]: zeroAddress,
       [ChainId.ARBITRUM]: '0xb22D5DC08C68Bd2c980770b5c90B80386817E20f',
-      [ChainId.BSCTEST]: ZERO_ADDRESS
+      [ChainId.BSCTEST]: zeroAddress
+    },
+    decimals: 18,
+    precision: 4,
+    icon: 'symbol/eth.svg'
+  },
+  {
+    name: 'acBNB',
+    symbol: 'acBNB',
+    address: {
+      [ChainId.MAINNET]: zeroAddress,
+      [ChainId.ARBITRUM]: zeroAddress,
+      [ChainId.BSCTEST]: '0x6f43565b6d643a9684c9f240621abf93238acece'
     },
     decimals: 18,
     precision: 4,
@@ -129,7 +153,7 @@ export const tokens: TokenConfigTypes[] = [
     name: 'ALLTOKEN',
     symbol: 't_ALL',
     address: {
-      [ChainId.MAINNET]: ZERO_ADDRESS,
+      [ChainId.MAINNET]: zeroAddress,
       [ChainId.ARBITRUM]: '0x994D01b43e3F9B54D67aACa35af33ADC0b21ac83',
       [ChainId.BSCTEST]: '0x03ad966980E6F6Ea59F1B2f475d1d7E6F27e4B42'
     },
@@ -141,7 +165,7 @@ export const tokens: TokenConfigTypes[] = [
     name: 'sALLTOKEN',
     symbol: 'sALL',
     address: {
-      [ChainId.MAINNET]: ZERO_ADDRESS,
+      [ChainId.MAINNET]: zeroAddress,
       [ChainId.ARBITRUM]: '0x7897DAF9cA87F8f5C4b8189525adB0c04b993f6c',
       [ChainId.BSCTEST]: '0x6695d5bFa5726B158454dfd9C312758769D955d2'
     },

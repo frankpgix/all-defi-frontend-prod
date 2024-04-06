@@ -3,7 +3,7 @@ import { useAccount, useBalance, useReadContracts } from 'wagmi'
 
 import { UNKNOWN, baseTokens, chainTokens, ethConfig, tokens } from '@/config/tokens'
 
-import { AddressType, ChainIdTypes, TokenConfigTypes, TokenTypes } from '@/types/base'
+import { AddressType, ChainIdTypes, TokenConfigTypes, TokenKeys, TokenTypes } from '@/types/base'
 
 import { DEFAULT_CHAIN_ID } from '@/config'
 import { formatUnits } from '@/utils/tools'
@@ -21,9 +21,16 @@ export const useTokens = (): TokenTypes[] => {
   }))
 }
 
-export const useBaseTokens = () => {
+export const useChainToken = () => {
   const chainId = useCurrChainID()
+  const { getTokenByName } = useToken()
   const chainToken = chainTokens[chainId]
+  const wChainToken = getTokenByName(chainToken.wTokenName)
+  return { chainId, chainToken, wChainToken }
+}
+
+export const useBaseTokens = () => {
+  const { chainId, chainToken } = useChainToken()
   return [chainToken, ...baseTokens].map((token: TokenConfigTypes) => ({
     ...token,
     address: token.address[chainId]
@@ -48,7 +55,7 @@ export const useToken = () => {
   }
 
   const getTokenByAddress = (address: AddressType) => getToken(address, 'address')
-  const getTokenByName = (name: string) => getToken(name, 'name')
+  const getTokenByName = (name: TokenKeys) => getToken(name, 'name')
   const getTokenBySymbol = (symbol: string) => getToken(symbol, 'symbol')
 
   return { tokens, getToken, getTokenByAddress, getTokenByName, getTokenBySymbol }
