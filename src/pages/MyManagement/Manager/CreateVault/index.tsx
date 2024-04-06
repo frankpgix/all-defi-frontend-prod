@@ -7,7 +7,7 @@ import {
   useDerivativeList
 } from '@/hooks/Contracts/useAllProtocol'
 import { useProfile } from '@/hooks/useProfile'
-import { useBaseTokens } from '@/hooks/useToken'
+import { useUnderlyingTokens } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { CreateVaultStep1DataTypes, CreateVaultStep2DataTypes } from '@/types/createVault'
@@ -27,7 +27,7 @@ const CreateFund: FC = () => {
   // const { createFund, calcAUMLimit, getDerivativeList } = AllProtocol
   const { account } = useProfile()
   const navigate = useNavigate()
-  const baseTokens = useBaseTokens()
+  const underlyingTokens = useUnderlyingTokens()
 
   const { onCreateVault } = useCreateVault()
   // const { createNotify, updateNotifyItem } = useNotify()
@@ -37,7 +37,7 @@ const CreateFund: FC = () => {
   const [address, setAddress] = useState<VaultDerivativesProps[]>([])
   const [minAmount, setMinAmount] = useState(0)
   const [maxAmount, setMaxAmount] = useState(0)
-  const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>(baseTokens[0].address)
+  const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>(underlyingTokens[0].address)
   const [stakeAmount, setStakeAmount] = useState<number>(0)
   // const [derivativeList, setDerivativeList] = useState<VaultDerivativesProps[]>([])
   // const [multiple, setMultiple] = useState<number>(0)

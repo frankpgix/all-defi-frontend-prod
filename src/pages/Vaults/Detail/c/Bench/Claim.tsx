@@ -25,10 +25,9 @@ const Claim: FC<Props> = ({ userData, getData }) => {
 
   const value = userData.unclaimedACToken
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
-  const baseToken = useMemo(() => userData.underlyingToken, [userData.underlyingToken])
   const acToken = useMemo(
-    () => getTokenByName(baseToken.name === 'WETH' ? 'acETH' : `ac${baseToken.name}`),
-    [baseToken]
+    () => getTokenByName(userData.underlyingToken.acTokenName),
+    [userData.underlyingToken]
   )
 
   const onRedeem = async () => {
@@ -49,7 +48,7 @@ const Claim: FC<Props> = ({ userData, getData }) => {
             readonly={value > 0}
             onChange={() => null}
             type="number"
-            suffix={<AcUSDCUnit name={acToken?.name} />}
+            suffix={<AcUSDCUnit name={acToken.name} />}
             right
           />
         </div>

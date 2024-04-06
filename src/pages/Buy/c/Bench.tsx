@@ -6,7 +6,7 @@ import { isNumber } from 'lodash'
 import { useBuyAcToken } from '@/hooks/Contracts/useACProtocol'
 import { useAllTokenPrice } from '@/hooks/Contracts/useAllProtocol'
 import { useProfile } from '@/hooks/useProfile'
-import { useBaseTokenOptions, useChainToken, useToken } from '@/hooks/useToken'
+import { useChainToken, useToken, useUnderlyingTokenOptions } from '@/hooks/useToken'
 import { useUserBalances } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
@@ -21,7 +21,7 @@ import BlueLineSection from '@@/web/BlueLineSection'
 const Bench: FC = () => {
   const { getTokenByName } = useToken()
   const { chainToken } = useChainToken()
-  const baseTokenOptions = useBaseTokenOptions()
+  const baseTokenOptions = useUnderlyingTokenOptions()
   const { buyAcToken } = useBuyAcToken()
   const { account } = useProfile()
   const { balances, refetch } = useUserBalances()

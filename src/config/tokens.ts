@@ -1,6 +1,11 @@
 import { zeroAddress } from 'viem'
 
-import { ChainTokenConfigTypes, TokenConfigTypes, TokenTypes } from '@/types/base'
+import {
+  ChainTokenTypes,
+  TokenConfigTypes,
+  TokenTypes,
+  UnderlyingTokenConfigTypes
+} from '@/types/base'
 
 import { ChainId } from '@/config'
 
@@ -13,32 +18,26 @@ export const UNKNOWN = {
   address: zeroAddress
 } as TokenTypes
 
-export const ethConfig: ChainTokenConfigTypes = {
+export const ethConfig: ChainTokenTypes = {
   name: 'ETH',
   symbol: 'ETH',
-  address: {
-    [ChainId.MAINNET]: zeroAddress,
-    [ChainId.ARBITRUM]: zeroAddress,
-    [ChainId.BSCTEST]: zeroAddress
-  },
+  address: zeroAddress,
   decimals: 18,
   precision: 4,
   icon: 'symbol/eth.svg',
-  wTokenName: 'WETH'
+  wTokenName: 'WETH',
+  acTokenName: 'acETH'
 }
 
-export const bnbConfig: ChainTokenConfigTypes = {
+export const bnbConfig: ChainTokenTypes = {
   name: 'BNB',
   symbol: 'BNB',
-  address: {
-    [ChainId.MAINNET]: zeroAddress,
-    [ChainId.ARBITRUM]: zeroAddress,
-    [ChainId.BSCTEST]: zeroAddress
-  },
+  address: zeroAddress,
   decimals: 18,
   precision: 4,
   icon: 'symbol/bnb.svg',
-  wTokenName: 'WBNB'
+  wTokenName: 'WBNB',
+  acTokenName: 'acBNB'
 }
 
 export const chainTokens = {
@@ -47,47 +46,7 @@ export const chainTokens = {
   [ChainId.BSCTEST]: bnbConfig
 }
 
-export const baseTokens: TokenConfigTypes[] = [
-  {
-    name: 'USDC',
-    symbol: 'USDC',
-    address: {
-      [ChainId.MAINNET]: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-      [ChainId.ARBITRUM]: '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',
-      [ChainId.BSCTEST]: '0x42e4D538f2cb4D8BC4dF34786be4032562Cc1C09'
-    },
-    decimals: 6,
-    precision: 2,
-    icon: 'symbol/usdc.svg'
-  }
-]
-
-export const tokens: TokenConfigTypes[] = [
-  ...baseTokens,
-  {
-    name: 'USDT',
-    symbol: 'USDT',
-    address: {
-      [ChainId.MAINNET]: zeroAddress,
-      [ChainId.ARBITRUM]: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
-      [ChainId.BSCTEST]: zeroAddress
-    },
-    decimals: 6,
-    precision: 2,
-    icon: 'symbol/usdc.svg'
-  },
-  {
-    name: 'acUSDC',
-    symbol: 'acUSDC',
-    address: {
-      [ChainId.MAINNET]: zeroAddress,
-      [ChainId.ARBITRUM]: '0x9b72b7d67aFC801eE8299B6C34C2a9453607440b',
-      [ChainId.BSCTEST]: '0xacEAA0254eC60Ec2aBd344953588453682E5840b'
-    },
-    decimals: 6,
-    precision: 2,
-    icon: 'symbol/acusdc.png'
-  },
+export const wChainTokens: UnderlyingTokenConfigTypes[] = [
   {
     name: 'WETH',
     symbol: 'WETH',
@@ -98,7 +57,8 @@ export const tokens: TokenConfigTypes[] = [
     },
     decimals: 18,
     precision: 4,
-    icon: 'symbol/eth.svg'
+    icon: 'symbol/eth.svg',
+    acTokenName: 'acETH'
   },
   {
     name: 'WBNB',
@@ -110,19 +70,38 @@ export const tokens: TokenConfigTypes[] = [
     },
     decimals: 18,
     precision: 4,
-    icon: 'symbol/bnb.svg'
-  },
+    icon: 'symbol/bnb.svg',
+    acTokenName: 'acBNB'
+  }
+]
+export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
   {
-    name: 'WBTC',
-    symbol: 'WBTC',
+    name: 'USDC',
+    symbol: 'USDC',
     address: {
-      [ChainId.MAINNET]: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
-      [ChainId.ARBITRUM]: '0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f',
-      [ChainId.BSCTEST]: zeroAddress
+      [ChainId.MAINNET]: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+      [ChainId.ARBITRUM]: '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',
+      [ChainId.BSCTEST]: '0x42e4D538f2cb4D8BC4dF34786be4032562Cc1C09'
     },
-    decimals: 8,
-    precision: 4,
-    icon: 'symbol/wbtc.png'
+    decimals: 6,
+    precision: 2,
+    icon: 'symbol/usdc.svg',
+    acTokenName: 'acUSDC'
+  }
+]
+
+export const acTokens: TokenConfigTypes[] = [
+  {
+    name: 'acUSDC',
+    symbol: 'acUSDC',
+    address: {
+      [ChainId.MAINNET]: zeroAddress,
+      [ChainId.ARBITRUM]: '0x9b72b7d67aFC801eE8299B6C34C2a9453607440b',
+      [ChainId.BSCTEST]: '0xacEAA0254eC60Ec2aBd344953588453682E5840b'
+    },
+    decimals: 6,
+    precision: 2,
+    icon: 'symbol/acusdc.png'
   },
   {
     name: 'acETH',
@@ -147,6 +126,36 @@ export const tokens: TokenConfigTypes[] = [
     decimals: 18,
     precision: 4,
     icon: 'symbol/bnb.svg'
+  }
+]
+
+export const tokens: TokenConfigTypes[] = [
+  ...underlyingTokens,
+  ...acTokens,
+  ...wChainTokens,
+  {
+    name: 'USDT',
+    symbol: 'USDT',
+    address: {
+      [ChainId.MAINNET]: zeroAddress,
+      [ChainId.ARBITRUM]: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
+      [ChainId.BSCTEST]: zeroAddress
+    },
+    decimals: 6,
+    precision: 2,
+    icon: 'symbol/usdc.svg'
+  },
+  {
+    name: 'WBTC',
+    symbol: 'WBTC',
+    address: {
+      [ChainId.MAINNET]: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+      [ChainId.ARBITRUM]: '0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f',
+      [ChainId.BSCTEST]: zeroAddress
+    },
+    decimals: 8,
+    precision: 4,
+    icon: 'symbol/wbtc.png'
   },
   {
     name: 'ALLTOKEN',

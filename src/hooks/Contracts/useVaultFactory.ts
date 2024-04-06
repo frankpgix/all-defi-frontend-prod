@@ -2,7 +2,7 @@ import { zeroAddress } from 'viem'
 import { useReadContract, useReadContracts } from 'wagmi'
 
 import { useVaultFactoryContract } from '@/hooks/Contracts/useContract'
-import { useBaseTokens, useWChainToken } from '@/hooks/useToken'
+import { useUnderlyingTokens, useWChainToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { baseTokenPriceInUSDTypes } from '@/types/vault'
@@ -55,10 +55,10 @@ export const useAssetPriceUSD = (quoteAsset: AddressType) => {
 
 export const useBaseTokenPriceUSD = () => {
   const VaultFactoryContract = useVaultFactoryContract()
-  const baseTokens = useBaseTokens()
+  const underlyingTokens = useUnderlyingTokens()
   const { wChainToken } = useWChainToken()
   const { data, isLoading, isSuccess, refetch } = useReadContracts({
-    contracts: baseTokens.map((baseToken) => ({
+    contracts: underlyingTokens.map((baseToken) => ({
       ...VaultFactoryContract,
       functionName: 'assetPriceInUSD',
       args: [baseToken.address === zeroAddress ? wChainToken.address : baseToken.address]
@@ -66,7 +66,7 @@ export const useBaseTokenPriceUSD = () => {
   })
   if (!isLoading && isSuccess) {
     return {
-      data: baseTokens.map((baseToken, index) => ({
+      data: underlyingTokens.map((baseToken, index) => ({
         address: baseToken.address,
         tokenName: baseToken.name,
         priceInUSD: Number(safeInterceptionValues(data[index].result, 6, 18))
@@ -78,7 +78,7 @@ export const useBaseTokenPriceUSD = () => {
   }
 
   return {
-    data: baseTokens.map((baseToken) => ({
+    data: underlyingTokens.map((baseToken) => ({
       address: baseToken.address,
       tokenName: baseToken.name,
       priceInUSD: 1

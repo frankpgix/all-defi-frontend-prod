@@ -1,4 +1,4 @@
-import { AddressType, TokenTypes } from '@/types/base'
+import { AddressType, UnderlyingTokenTypes } from '@/types/base'
 
 // Vaults Global Asset Statistics Props
 export interface GlobalAssetStatisticProps {
@@ -10,7 +10,7 @@ export interface GlobalAssetStatisticProps {
 // Vault baseInfo Props
 export interface VaultBaseInfoProps {
   hash: string
-  underlyingToken: TokenTypes
+  underlyingToken: UnderlyingTokenTypes
   acToken: AddressType
   address: AddressType
   createTime: number
@@ -29,7 +29,7 @@ export interface VaultBaseInfoProps {
 
 export interface VaultDetailProps {
   hash: string
-  underlyingToken: TokenTypes
+  underlyingToken: UnderlyingTokenTypes
   address: AddressType
   name: string
   manager: string
@@ -72,7 +72,7 @@ export interface VaultDetailProps {
 export interface VaultUserDetailProps {
   hash: string
   address: AddressType
-  underlyingToken: TokenTypes
+  underlyingToken: UnderlyingTokenTypes
   underlyingTokenPriceInUSD: number
   status: number
   aum: number

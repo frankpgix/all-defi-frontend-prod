@@ -7,7 +7,6 @@ import { useAllocate } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
 import { useToken, useUserBalances } from '@/hooks/useToken'
 
-import { TokenKeys } from '@/types/base'
 import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
 
 import { formatNumber } from '@/utils/tools'
@@ -28,17 +27,12 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
   const { balances, refetch: reBalances } = useUserBalances()
   const { onAllocate } = useAllocate(data.address)
 
-  const baseToken = data.underlyingToken
-
   const acToken = useMemo(
-    () => getTokenByName(baseToken.name === 'WETH' ? 'acETH' : `ac${baseToken.name}`),
-    [baseToken]
+    () => getTokenByName(data.underlyingToken.acTokenName),
+    [data.underlyingToken]
   )
 
-  const acTokenBalance = useMemo(
-    () => balances[acToken?.name as TokenKeys],
-    [balances, acToken?.name]
-  )
+  const acTokenBalance = useMemo(() => balances[acToken.name], [balances, acToken.name])
   const [value, setValue] = useState<number | string>('')
   const [inputValue, setInputValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
@@ -136,16 +130,16 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
           >
             {minAmountError && (
               <p className="fall">
-                Minimum deposit amount {base.subscriptionMinLimit} ac{baseToken.name}
+                Minimum deposit amount {base.subscriptionMinLimit} {acToken.name}
               </p>
             )}
             {maxAmountError && (
               <p className="fall">
-                Maxmum deposit amount {maxValue} ac{baseToken.name}
+                Maxmum deposit amount {maxValue} {acToken.name}
               </p>
             )}
             <p>
-              {acToken?.name} Balance: {acTokenBalance}
+              {acToken.name} Balance: {acTokenBalance}
             </p>
             <p>Capacity Available: {maxAum}</p>
           </Input>

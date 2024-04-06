@@ -2,9 +2,16 @@ import { toLower } from 'lodash'
 import { erc20Abi, zeroAddress } from 'viem'
 import { useAccount, useBalance, useReadContracts } from 'wagmi'
 
-import { UNKNOWN, baseTokens, chainTokens, tokens } from '@/config/tokens'
+import { UNKNOWN, chainTokens, tokens, underlyingTokens } from '@/config/tokens'
 
-import { AddressType, ChainIdTypes, TokenConfigTypes, TokenKeys, TokenTypes } from '@/types/base'
+import {
+  AddressType,
+  ChainIdTypes,
+  TokenConfigTypes,
+  TokenKeys,
+  TokenTypes,
+  UnderlyingTokenConfigTypes
+} from '@/types/base'
 
 import { DEFAULT_CHAIN_ID } from '@/config'
 import { formatUnits } from '@/utils/tools'
@@ -15,18 +22,18 @@ export const useCurrChainID = (): ChainIdTypes => {
 }
 
 export const useTokens = (): TokenTypes[] => {
-  const { chainId, chainTokenConfig } = useChainToken()
-  return [chainTokenConfig, ...tokens].map((token: TokenConfigTypes) => ({
+  const { chainId, chainToken } = useChainToken()
+  const tokenList = tokens.map((token: TokenConfigTypes) => ({
     ...token,
     address: token.address[chainId]
   }))
+  return [chainToken, ...tokenList]
 }
 
 export const useChainToken = () => {
   const chainId = useCurrChainID()
-  const chainTokenConfig = chainTokens[chainId]
-  const chainToken = { ...chainTokenConfig, address: chainTokenConfig.address[chainId] }
-  return { chainId, chainToken, chainTokenConfig }
+  const chainToken = chainTokens[chainId]
+  return { chainId, chainToken }
 }
 
 export const useWChainToken = () => {
@@ -36,17 +43,18 @@ export const useWChainToken = () => {
   return { wChainToken }
 }
 
-export const useBaseTokens = () => {
-  const { chainId, chainTokenConfig } = useChainToken()
-  return [chainTokenConfig, ...baseTokens].map((token: TokenConfigTypes) => ({
+export const useUnderlyingTokens = () => {
+  const { chainId, chainToken } = useChainToken()
+  const tokens = underlyingTokens.map((token: UnderlyingTokenConfigTypes) => ({
     ...token,
     address: token.address[chainId]
   }))
+  return [chainToken, ...tokens]
 }
 
-export const useBaseTokenOptions = () => {
-  const baseTokens = useBaseTokens()
-  return baseTokens.map(({ name, address, icon }) => ({
+export const useUnderlyingTokenOptions = () => {
+  const underlyingTokens = useUnderlyingTokens()
+  return underlyingTokens.map(({ name, address, icon }) => ({
     label: name,
     value: address,
     icon
