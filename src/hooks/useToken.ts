@@ -15,8 +15,8 @@ export const useCurrChainID = (): ChainIdTypes => {
 }
 
 export const useTokens = (): TokenTypes[] => {
-  const chainId = useCurrChainID()
-  return tokens.map((token: TokenConfigTypes) => ({
+  const { chainId, chainTokenConfig } = useChainToken()
+  return [chainTokenConfig, ...tokens].map((token: TokenConfigTypes) => ({
     ...token,
     address: token.address[chainId]
   }))

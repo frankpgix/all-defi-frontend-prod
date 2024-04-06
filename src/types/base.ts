@@ -41,6 +41,7 @@ export type TokenKeys =
   | 'acBNB'
   | 'ALLTOKEN'
   | 'sALLTOKEN'
+  | 'UNKNOWN'
 
 export interface AddressRec {
   [ChainId.MAINNET]: AddressType
@@ -67,7 +68,7 @@ export interface ContractConfigType {
 }
 
 export interface TokenTypes {
-  name: string
+  name: TokenKeys
   symbol: string
   address: AddressType
   decimals: number

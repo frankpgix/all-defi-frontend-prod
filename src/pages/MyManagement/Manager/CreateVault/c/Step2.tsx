@@ -25,13 +25,13 @@ interface Props {
 
 const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
   const { getTokenByAddress } = useToken()
+  // const { chainToken } = useChainToken()
   const baseTokenOptions = useBaseTokenOptions()
   const [selectIndex, setSelectIndex] = useState<number[]>([])
   const [minAmount, setMinAmount] = useState<string | number>('')
   const [maxAmount, setMaxAmount] = useState<string | number>('')
   const [baseTokenAddress, setBaseTokenAddress] = useState(baseTokenOptions[0].value)
   const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
-
   const onSelect = (index: number) => {
     if (selectIndex.includes(index)) {
       setSelectIndex(without(selectIndex, index))
@@ -42,7 +42,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
 
   const onNext = () => {
     const addresss = selectIndex.map((index: number) => derivativeList[index]).filter((i) => i)
-    console.log(addresss, 'addresss')
+    // console.log(addresss, 'addresss')
     onConfirm({
       addresss,
       minAmount: Number(minAmount),
@@ -73,10 +73,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
       minAmountError,
     [selectIndex, minAmount, maxAmount, maxAmountError, minAmountError]
   )
-  const baseTokenName = useMemo(
-    () => (baseToken.name === 'WETH' ? 'ETH' : baseToken.name),
-    [baseToken.name]
-  )
+
   const onBaseTokenChange = (address: number | string) =>
     setBaseTokenAddress(String(address) as AddressType)
 
@@ -122,11 +119,11 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
             min={minAmountNumber}
             error={minAmountError}
             onChange={setMinAmount}
-            innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
+            innerSuffix={<TokenIcon size="small" name={baseToken.name} />}
           >
             {minAmountError && (
               <p className="fall">
-                Minimum deposit amount {minAmountNumber} {baseTokenName}
+                Minimum deposit amount {minAmountNumber} {baseToken.name}
               </p>
             )}
           </Input>
@@ -137,7 +134,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
             onChange={setMaxAmount}
             error={maxAmountError}
             maxNumber={10000000000}
-            innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
+            innerSuffix={<TokenIcon size="small" name={baseToken.name} />}
           />
         </div>
         <h3>select protocol allowed</h3>

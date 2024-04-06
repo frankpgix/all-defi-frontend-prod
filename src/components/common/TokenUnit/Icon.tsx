@@ -11,12 +11,13 @@ import Image from '@@/common/Image'
 interface Props {
   children?: ReactNode
   size?: string
-  name?: string
+  name?: TokenKeys
 }
 
 const Icon: FC<Props> = ({ size, name }) => {
   const { getTokenByName } = useToken()
-  const token = getTokenByName(name ?? '')
+  const token = getTokenByName(name ?? 'UNKNOWN')
+  // console.log(token, name)
   return (
     <Image
       className={classNames('c-token-icon', `c-token-icon-${size}`)}

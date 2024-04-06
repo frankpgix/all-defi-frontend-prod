@@ -5,7 +5,7 @@ import { useAllProtocolContract } from '@/hooks/Contracts/useContract'
 import { useAllowance, useWaitReceipt } from '@/hooks/Contracts/useTools'
 import { useAssetPrice, useAssetPriceUSD } from '@/hooks/Contracts/useVaultFactory'
 import { useNotify } from '@/hooks/useNotify'
-import { useToken } from '@/hooks/useToken'
+import { useToken, useWChainToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { CreateVaultDataType, UpdateVaultDataType } from '@/types/createVault'
@@ -18,11 +18,11 @@ import { getUnitAmount, safeInterceptionValues } from '@/utils/tools'
 
 export const useAllTokenPrice = (baseToken: AddressType) => {
   const { getTokenByName } = useToken()
-  const WETH = getTokenByName('WETH')
+  const { wChainToken } = useWChainToken()
   const ALLTOKEN = getTokenByName('ALLTOKEN')
 
   if (baseToken === zeroAddress) {
-    baseToken = WETH.address
+    baseToken = wChainToken.address
   }
   return useAssetPrice(ALLTOKEN.address, baseToken)
 }
@@ -80,12 +80,12 @@ export const useDerivativeList = () => {
 
 export const useCalcAUMLimit = (underlyingToken: AddressType) => {
   const AllProtocolContract = useAllProtocolContract()
-  const { getTokenByName, getTokenByAddress } = useToken()
-  const WETH = getTokenByName('WETH')
+  const { getTokenByAddress } = useToken()
+  const { wChainToken } = useWChainToken()
   const _amount = getUnitAmount(String(1), 18)
 
   if (underlyingToken === zeroAddress) {
-    underlyingToken = WETH.address
+    underlyingToken = wChainToken.address
   }
 
   const { isLoading, isSuccess, data, refetch } = useReadContract({
@@ -113,7 +113,7 @@ export const useCreateVault = () => {
   const { getTokenByAddress, getTokenByName } = useToken()
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
-  const WETH = getTokenByName('WETH')
+  const { wChainToken } = useWChainToken()
   const ALLTOKEN = getTokenByName('ALLTOKEN')
   const { onAllowance } = useAllowance()
   const { onWaitReceipt } = useWaitReceipt()
@@ -124,7 +124,7 @@ export const useCreateVault = () => {
     callback?: () => void
   ) => {
     const notifyId = await createNotify({ type: 'loading', content: 'Create Vault' })
-    const args = calcCaeateVaultData(data, getTokenByAddress, WETH.address)
+    const args = calcCaeateVaultData(data, getTokenByAddress, wChainToken.address)
     const allowance = await onAllowance(
       ALLTOKEN.address,
       AllProtocolContract.address,

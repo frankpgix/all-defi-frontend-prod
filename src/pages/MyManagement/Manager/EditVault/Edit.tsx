@@ -1,25 +1,24 @@
-import { FC, useState, useMemo, useEffect, useCallback } from 'react'
+import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { without } from 'lodash'
+
 import classNames from 'classnames'
+import { without } from 'lodash'
 
-import { CONTACT_US_URL } from '@/config'
-
-import { useVaultUpdatingData } from '@/hooks/Contracts/useVaultReader'
 import { useDerivativeList, useUpdateVault } from '@/hooks/Contracts/useAllProtocol'
+import { useVaultUpdatingData } from '@/hooks/Contracts/useVaultReader'
 import { useProfile } from '@/hooks/useProfile'
 
 import { AddressType } from '@/types/base'
-import { VaultBaseInfoProps, VaultDerivativesProps } from '@/types/vault'
 import { UpdateVaultDataType } from '@/types/createVault'
+import { VaultBaseInfoProps, VaultDerivativesProps } from '@/types/vault'
 
-import BlueLineSection from '@@/web/BlueLineSection'
+import { CONTACT_US_URL } from '@/config'
+import Button from '@@/common/Button'
+import { Input } from '@@/common/Form'
+import Image from '@@/common/Image'
 import Loading from '@@/common/Loading'
 import { TokenIcon } from '@@/common/TokenUnit'
-
-import Button from '@@/common/Button'
-import Image from '@@/common/Image'
-import { Input } from '@@/common/Form'
+import BlueLineSection from '@@/web/BlueLineSection'
 
 interface Props {
   baseInfo: VaultBaseInfoProps
@@ -52,11 +51,6 @@ const Edit: FC<Props> = ({ baseInfo }) => {
 
   const baseToken = useMemo(() => baseInfo.underlyingToken, [baseInfo.underlyingToken])
   const oldDerivative = useMemo(() => baseInfo.derivatives, [baseInfo.derivatives])
-
-  const baseTokenName = useMemo(
-    () => (baseToken.name === 'WETH' ? 'ETH' : baseToken.name),
-    [baseToken.name]
-  )
 
   const minAmountNumber = useMemo(() => {
     const zero = [...new Array(baseToken.precision - 1)].map(() => '0').join('')
@@ -201,12 +195,12 @@ const Edit: FC<Props> = ({ baseInfo }) => {
             disabled={isDisabled}
             error={minAmountError}
             onChange={setMinAmount}
-            innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
+            innerSuffix={<TokenIcon size="small" name={baseToken.name} />}
             readonly={isLock}
           >
             {minAmountError && (
               <p className="fall">
-                Minimum deposit amount {minAmountNumber} {baseTokenName}
+                Minimum deposit amount {minAmountNumber} {baseToken.name}
               </p>
             )}
           </Input>
@@ -217,7 +211,7 @@ const Edit: FC<Props> = ({ baseInfo }) => {
             error={maxAmountError}
             disabled={isDisabled}
             onChange={setMaxAmount}
-            innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
+            innerSuffix={<TokenIcon size="small" name={baseToken.name} />}
             readonly={isLock}
           />
         </div>

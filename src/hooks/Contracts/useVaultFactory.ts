@@ -2,7 +2,7 @@ import { zeroAddress } from 'viem'
 import { useReadContract, useReadContracts } from 'wagmi'
 
 import { useVaultFactoryContract } from '@/hooks/Contracts/useContract'
-import { useBaseTokens, useToken } from '@/hooks/useToken'
+import { useBaseTokens, useWChainToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { baseTokenPriceInUSDTypes } from '@/types/vault'
@@ -56,13 +56,12 @@ export const useAssetPriceUSD = (quoteAsset: AddressType) => {
 export const useBaseTokenPriceUSD = () => {
   const VaultFactoryContract = useVaultFactoryContract()
   const baseTokens = useBaseTokens()
-  const { getTokenByName } = useToken()
-  const WETH = getTokenByName('WETH')
+  const { wChainToken } = useWChainToken()
   const { data, isLoading, isSuccess, refetch } = useReadContracts({
     contracts: baseTokens.map((baseToken) => ({
       ...VaultFactoryContract,
       functionName: 'assetPriceInUSD',
-      args: [baseToken.address === zeroAddress ? WETH?.address : baseToken.address]
+      args: [baseToken.address === zeroAddress ? wChainToken.address : baseToken.address]
     }))
   })
   if (!isLoading && isSuccess) {
