@@ -6,7 +6,7 @@ import { isNumber } from 'lodash'
 import { useBuyAcToken } from '@/hooks/Contracts/useACProtocol'
 import { useAllTokenPrice } from '@/hooks/Contracts/useAllProtocol'
 import { useProfile } from '@/hooks/useProfile'
-import { useBaseTokenOptions, useToken } from '@/hooks/useToken'
+import { useBaseTokenOptions, useChainToken, useToken } from '@/hooks/useToken'
 import { useUserBalances } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
@@ -20,6 +20,7 @@ import BlueLineSection from '@@/web/BlueLineSection'
 
 const Bench: FC = () => {
   const { getTokenByName } = useToken()
+  const { chainToken } = useChainToken()
   const baseTokenOptions = useBaseTokenOptions()
   const { buyAcToken } = useBuyAcToken()
   const { account } = useProfile()
@@ -29,7 +30,7 @@ const Bench: FC = () => {
   const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>(baseTokenOptions[0].value)
   const { data: allTPrice } = useAllTokenPrice(baseTokenAddress)
   const usdcAddress = getTokenByName('USDC').address
-  const ethAddress = getTokenByName('ETH').address
+  const chainTokenAddress = chainToken.address
   const preAllValue = useMemo(
     () =>
       Number(
@@ -59,9 +60,9 @@ const Bench: FC = () => {
 
   const maxNumber = useMemo(() => {
     if (baseTokenAddress === usdcAddress) return Number(balances.USDC)
-    if (baseTokenAddress === ethAddress) return Number(balances.ETH)
+    if (baseTokenAddress === chainTokenAddress) return Number(balances[chainToken.name])
     return 0
-  }, [balances.USDC, balances.ETH, baseTokenAddress])
+  }, [balances.USDC, balances[chainToken.name], baseTokenAddress])
 
   const onChangeBaseToken = (address: any) => {
     setBaseTokenAddress(address)
@@ -70,9 +71,9 @@ const Bench: FC = () => {
 
   const currBaseTokenName = useMemo(() => {
     if (baseTokenAddress === usdcAddress) return 'USDC'
-    if (baseTokenAddress === ethAddress) return 'ETH'
+    if (baseTokenAddress === chainTokenAddress) return chainToken.name
     return ''
-  }, [balances.USDC, balances.ETH, baseTokenAddress])
+  }, [balances.USDC, balances[chainToken.name], baseTokenAddress])
 
   return (
     <>
@@ -93,10 +94,14 @@ const Bench: FC = () => {
               <p>acUSDC Balance: {balances.acUSDC}</p>
             </>
           )}
-          {baseTokenAddress === ethAddress && (
+          {baseTokenAddress === chainTokenAddress && (
             <>
-              <p>ETH Balance: {balances.ETH}</p>
-              <p>acETH Balance: {balances.acETH}</p>
+              <p>
+                {chainToken.name} Balance: {balances[chainToken.name]}
+              </p>
+              <p>
+                ac{chainToken.name} Balance: {balances[`ac${chainToken.name}`]}
+              </p>
             </>
           )}
 

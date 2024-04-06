@@ -24,14 +24,15 @@ export const useTokens = (): TokenTypes[] => {
 export const useChainToken = () => {
   const chainId = useCurrChainID()
   const { getTokenByName } = useToken()
-  const chainToken = chainTokens[chainId]
+  const chainTokenConfig = chainTokens[chainId]
+  const chainToken = { ...chainTokenConfig, address: chainTokenConfig.address[chainId] }
   const wChainToken = getTokenByName(chainToken.wTokenName)
-  return { chainId, chainToken, wChainToken }
+  return { chainId, chainToken, wChainToken, chainTokenConfig }
 }
 
 export const useBaseTokens = () => {
-  const { chainId, chainToken } = useChainToken()
-  return [chainToken, ...baseTokens].map((token: TokenConfigTypes) => ({
+  const { chainId, chainTokenConfig } = useChainToken()
+  return [chainTokenConfig, ...baseTokens].map((token: TokenConfigTypes) => ({
     ...token,
     address: token.address[chainId]
   }))
@@ -61,7 +62,7 @@ export const useToken = () => {
   return { tokens, getToken, getTokenByAddress, getTokenByName, getTokenBySymbol }
 }
 
-export const useETHBalance = () => {
+export const useChainTokenBalance = () => {
   const { address } = useAccount()
   const { data } = useBalance({ address })
   if (!address || !data) return 0
@@ -70,9 +71,10 @@ export const useETHBalance = () => {
 
 export const useUserBalances = () => {
   const { address } = useAccount()
+  const { chainToken } = useChainToken()
   const tokens = useTokens()
   const balances: Record<string, number> = {}
-  const ethBalances = useETHBalance()
+  const chainTokenBalances = useChainTokenBalance()
 
   const tokenList = tokens.filter((token) => token.address !== zeroAddress)
 
@@ -98,7 +100,7 @@ export const useUserBalances = () => {
           : 0
       balances[token.name] = balance
     })
-    balances.ETH = ethBalances
+    balances[chainToken.name] = chainTokenBalances
     return { balances, refetch }
   }
   return { balances, refetch }
