@@ -1,11 +1,11 @@
-import dayjs from 'dayjs'
 import BN from 'bignumber.js'
-import numeral from 'numeral'
+import dayjs from 'dayjs'
 // import { ethers } from 'ethers'
 import duration from 'dayjs/plugin/duration'
+import numeral from 'numeral'
 // import { BigNumberish } from '@ethersproject/bignumber'
 // import { formatUnits } from '@ethersproject/units'
-import { formatUnits as viemFormatUnits, parseUnits } from 'viem'
+import { parseUnits, formatUnits as viemFormatUnits } from 'viem'
 
 dayjs.extend(duration)
 
@@ -18,6 +18,9 @@ export const toType = (obj: any): string => {
 }
 
 export const copyText = (text: string) => {
+  if (window.isSecureContext && navigator.clipboard) {
+    return navigator.clipboard.writeText(text)
+  }
   return new Promise((resolve, reject) => {
     try {
       const input = document.createElement('textarea')
@@ -31,6 +34,10 @@ export const copyText = (text: string) => {
       reject(e)
     }
   })
+}
+
+export const isOuterLink = (link: string = ''): boolean => {
+  return /^https?:\/\//.test(link) || link.startsWith('data:')
 }
 
 export const isMobile = (): boolean => {

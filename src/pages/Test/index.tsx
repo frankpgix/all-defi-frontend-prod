@@ -1,9 +1,8 @@
-import { useUserBalances } from '@/hooks/useToken'
+// import { useUserBalances } from '@/hooks/useToken'
+import { Icon } from '@@/core/Image'
 
 const Test = () => {
-  const balance = useUserBalances()
-  console.log(balance)
-  return <>222</>
+  return <Icon name="ETH"></Icon>
 }
 
 export default Test
