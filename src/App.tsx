@@ -13,6 +13,7 @@ import Buy from '@/pages/Buy'
 import Home from '@/pages/Home'
 import Mining from '@/pages/Mining'
 import MyManagement from '@/pages/MyManagement'
+import Tasks from '@/pages/Tasks'
 import Global from '@/pages/Updaters/Global'
 import Vaults from '@/pages/Vaults'
 import '@/style/style.scss'
@@ -37,6 +38,7 @@ function App() {
             <Route path="/manage/*" element={<MyManagement />} />
             <Route path="/all-mining" element={<Mining />} />
             <Route path="/test" element={<Test />} />
+            <Route path="/tasks" element={<Tasks />} />
             <Route path="/" element={<Home />} />
           </Routes>
         </Suspense>

@@ -1,8 +1,9 @@
 import { FC } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-import ConnectButton from '@/components/core/Wallet/ConnectButton'
 import { useToPageTop } from '@/hooks/useToPageTop'
+
+import ConnectButton from '@/components/core/Wallet/ConnectButton'
 
 import ErrorNetworkAlert from './ErrorNetworkAlert'
 import NotifyButton from './NotifyButton'
@@ -21,8 +22,9 @@ const Header: FC = () => {
           <nav className="web-header-nav">
             <NavLink to="/buy">Buy AC Token</NavLink>
             <NavLink to="/vaults">Vaults</NavLink>
-            <NavLink to="/manage">my management</NavLink>
-            <NavLink to="/all-mining">ALL MINING</NavLink>
+            <NavLink to="/manage">My Management</NavLink>
+            <NavLink to="/tasks">Tasks</NavLink>
+            {/* <NavLink to="/all-mining">ALL MINING</NavLink> */}
             {/* <NavLink to="/">global data</NavLink> */}
           </nav>
           <div className="web-header-tools">

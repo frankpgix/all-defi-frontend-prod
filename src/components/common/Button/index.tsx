@@ -1,11 +1,13 @@
 import { FC, ReactNode } from 'react'
-import classNames from 'classnames'
 import { useNavigate } from 'react-router-dom'
+
+import classNames from 'classnames'
+
 import Image from '@/components/common/Image'
 
 export interface ButtonProps {
   className?: string
-  size?: 'default' | 'mini' | 'medium' | 'icon'
+  size?: 'default' | 'mini' | 'medium' | 'icon' | 'tiny'
   to?: string
   loading?: boolean
   outline?: boolean

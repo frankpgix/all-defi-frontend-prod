@@ -1,0 +1,82 @@
+.p-task-items {
+  &-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 40px;
+    margin-bottom: 24px;
+    em {
+      font-size: 24px;
+      color: $blue;
+    }
+    span {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+  &-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 40px;
+
+    // & > main {
+    //   & > header {
+    //   }
+    // }
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    p {
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      &:before {
+        content: '';
+        display: block;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        position: relative;
+        z-index: 1;
+        background: $white;
+        box-shadow:
+          0 0 0 6px #d1e0fe inset,
+          0 0 8px rgba($lBlue, 0.4);
+      }
+    }
+
+    &.done p:before {
+      background: rgba($orange, 1);
+      box-shadow:
+        0 0 0 6px lighten($lOrange, 5%) inset,
+        0 0 8px #ffb663;
+    }
+
+    &-more {
+      padding-left: 34px;
+      padding-top: 10px;
+
+      p {
+        color: $dGray;
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  &-invite {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+
+    em {
+      color: $blue;
+    }
+  }
+}

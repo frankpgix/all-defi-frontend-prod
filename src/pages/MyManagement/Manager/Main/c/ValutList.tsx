@@ -21,7 +21,7 @@ import Badge from '@@/core/Badge'
 const FundList: FC = () => {
   const navigate = useNavigate()
   const { manageVaultList, loading, getData } = useManageVaultListHook()
-
+  console.log(manageVaultList, 'manageVaultList')
   const webColumns = [
     {
       title: 'Name',

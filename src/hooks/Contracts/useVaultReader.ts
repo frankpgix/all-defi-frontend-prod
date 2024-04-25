@@ -160,7 +160,7 @@ export const useVaultList = () => {
     functionName: 'vaultDetailList',
     args: [0, 999, false]
   }) as { data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
-
+  // console.log(error, isSuccess, isLoading, 'data, isSuccess, isLoading')
   if (!isLoading && isSuccess) {
     return {
       data: data.map((item) => calcVaultDetail(item, getTokenByAddress)),
