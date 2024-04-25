@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import Dashboard from './c/Dashboard'
+import MyPoints from './c/MyPoints'
 import TaskItem from './c/TaskItem'
 
 const Tasks: FC = () => {
@@ -8,6 +9,7 @@ const Tasks: FC = () => {
     <>
       <Dashboard />
       <TaskItem />
+      <MyPoints />
     </>
   )
 }
