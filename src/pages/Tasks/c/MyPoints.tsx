@@ -5,7 +5,7 @@ import Popper from '@@/common/Popper'
 const MyPoints: FC = () => {
   return (
     <>
-      <header className="p-task-my-points-header">My Points</header>
+      <header className="p-task-header">My Points</header>
       <div className="p-task-my-points">
         <main>
           <div className="p-task-my-points-item-total">

@@ -1,15 +1,15 @@
+.p-task-header {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 40px auto 20px;
+  @extend .web;
+}
+
 .p-task-my-points {
   @extend .web;
   border-radius: 8px;
   padding: 40px;
   @include jb($blue, $orange, 68);
-
-  &-header {
-    font-size: 28px;
-    font-weight: bold;
-    margin: 40px auto 20px;
-    @extend .web;
-  }
 
   & > main {
     width: 640px;
