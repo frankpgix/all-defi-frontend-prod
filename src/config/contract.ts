@@ -8,7 +8,7 @@ export const contracts: { [key in ContractKeys]: AddressRec } = {
   ACProtocol: {
     [ChainId.MAINNET]: zeroAddress,
     [ChainId.ARBITRUM]: '0x1003b275d6368FDB32cAA4bC07fBCb9E313aF8A8',
-    [ChainId.BSCTEST]: '0x7E81B8623ED41932907D0087428a7937860ce54D'
+    [ChainId.BSCTEST]: '0x6Bcb98f1Ae2070695173FE237089EbE234B89CEf'
   },
   AllProtocol: {
     [ChainId.MAINNET]: zeroAddress,
@@ -18,7 +18,7 @@ export const contracts: { [key in ContractKeys]: AddressRec } = {
   VaultReader: {
     [ChainId.MAINNET]: zeroAddress,
     [ChainId.ARBITRUM]: '0x97725a0699a88e4c6C83ed41179c5F413A18B5A0',
-    [ChainId.BSCTEST]: '0xC3dbBa9985B0E74Dd52a16C3F649ea1f8e089FDC'
+    [ChainId.BSCTEST]: '0x914e9043F576F6Be6585495ffA968E3767AE0087'
   },
   AUMStats: {
     [ChainId.MAINNET]: zeroAddress,
@@ -28,7 +28,7 @@ export const contracts: { [key in ContractKeys]: AddressRec } = {
   VaultFactory: {
     [ChainId.MAINNET]: zeroAddress,
     [ChainId.ARBITRUM]: '0x8B215C62DF93dBb46237aC43FDdA5d7b95BaA7cF',
-    [ChainId.BSCTEST]: '0x8A3A6f8F04c96313d8A44C94a629552C61dFBe97'
+    [ChainId.BSCTEST]: '0x88b0b5bFC4e7E885c8575251b090354a2A20643d'
   },
   RewardTracker: {
     [ChainId.MAINNET]: zeroAddress,

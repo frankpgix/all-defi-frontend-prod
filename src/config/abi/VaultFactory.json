@@ -42,17 +42,24 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "vault",
+        "name": "account",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "reason",
-        "type": "string"
       }
     ],
-    "name": "ExecuteUpdateVaultFailed",
+    "name": "DAOAddressSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "keeper",
+        "type": "address"
+      }
+    ],
+    "name": "KeeperSet",
     "type": "event"
   },
   {
@@ -80,63 +87,30 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "manager",
-        "type": "address"
-      }
-    ],
-    "name": "SetDerivativeManager",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "interpreter",
-        "type": "address"
-      }
-    ],
-    "name": "SetValueInterpreter",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "governor",
-        "type": "address"
-      }
-    ],
-    "name": "SetVaultGovernor",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "logic",
-        "type": "address"
-      }
-    ],
-    "name": "SetVaultLogic",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
         "name": "implementation",
         "type": "address"
       }
     ],
     "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "manager",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
+      }
+    ],
+    "name": "VaultCountLimitSet",
     "type": "event"
   },
   {
@@ -151,7 +125,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "underlyingToken",
+        "name": "underlying",
         "type": "address"
       },
       {
@@ -188,229 +162,21 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "manager",
+        "name": "logic",
         "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "vault",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint8",
-        "name": "vType",
-        "type": "uint8"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "pass",
-        "type": "bool"
-      },
-      {
-        "indexed": false,
-        "internalType": "bytes",
-        "name": "data",
-        "type": "bytes"
       }
     ],
-    "name": "VaultReviewed",
+    "name": "VaultLogicSet",
     "type": "event"
   },
   {
     "inputs": [],
-    "name": "WETH",
+    "name": "acProtocol",
     "outputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "activeVaultList",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "vault",
-        "type": "address"
-      }
-    ],
-    "name": "archive",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "baseAsset",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "quoteAsset",
-        "type": "address"
-      }
-    ],
-    "name": "assetPrice",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "asset",
-        "type": "address"
-      }
-    ],
-    "name": "assetPriceInUSD",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "baseAsset",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "baseAssetAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "quoteAsset",
-        "type": "address"
-      }
-    ],
-    "name": "assetValue",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "assetValueInUSD",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "quoteAsset",
-        "type": "address"
-      }
-    ],
-    "name": "balanceValue",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_contract",
-        "type": "address"
-      }
-    ],
-    "name": "contractACL",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "acl",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_contract",
-        "type": "address"
-      }
-    ],
-    "name": "contractDerivative",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "derivative",
-        "type": "bytes32"
       }
     ],
     "stateMutability": "view",
@@ -440,23 +206,13 @@
       },
       {
         "internalType": "address",
-        "name": "manager",
+        "name": "underlying",
         "type": "address"
       },
       {
-        "internalType": "bytes32[]",
-        "name": "derivatives",
-        "type": "bytes32[]"
-      },
-      {
-        "internalType": "uint256[2]",
-        "name": "allocationLimit",
-        "type": "uint256[2]"
-      },
-      {
-        "internalType": "address",
-        "name": "underlyingToken",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "minimumStake",
+        "type": "uint256"
       }
     ],
     "name": "create",
@@ -471,40 +227,8 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "_derivative",
-        "type": "bytes32"
-      }
-    ],
-    "name": "derivativeACL",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "acl",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
-    "name": "derivativeList",
-    "outputs": [
-      {
-        "internalType": "bytes32[]",
-        "name": "",
-        "type": "bytes32[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "derivativeManager",
+    "name": "daoAddress",
     "outputs": [
       {
         "internalType": "address",
@@ -519,12 +243,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_derivativeManager",
+        "name": "_weth",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_valueInterpreter",
+        "name": "_acProtocol",
         "type": "address"
       }
     ],
@@ -534,76 +258,13 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "keeper",
+    "outputs": [
       {
         "internalType": "address",
-        "name": "vault",
+        "name": "",
         "type": "address"
-      }
-    ],
-    "name": "isActiveVault",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "asset",
-        "type": "address"
-      }
-    ],
-    "name": "isSupportedAsset",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "derivative",
-        "type": "bytes32"
-      }
-    ],
-    "name": "isSupportedDerivative",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "vault",
-        "type": "address"
-      }
-    ],
-    "name": "isVault",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -617,7 +278,7 @@
         "type": "address"
       }
     ],
-    "name": "managerVaultCount",
+    "name": "managerVaultCounts",
     "outputs": [
       {
         "internalType": "uint256",
@@ -629,19 +290,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "vault",
-        "type": "address"
-      }
-    ],
-    "name": "onVaultSettleAccount",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "owner",
     "outputs": [
@@ -649,19 +297,6 @@
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "pendingVaultList",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
       }
     ],
     "stateMutability": "view",
@@ -691,26 +326,24 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "vault",
+        "name": "dao",
         "type": "address"
-      },
-      {
-        "internalType": "enum IFactory.ReviewType",
-        "name": "vType",
-        "type": "uint8"
-      },
-      {
-        "internalType": "bool",
-        "name": "pass",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "instantApply",
-        "type": "bool"
       }
     ],
-    "name": "reviewVault",
+    "name": "setDaoAddress",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_keeper",
+        "type": "address"
+      }
+    ],
+    "name": "setKeeper",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -721,35 +354,14 @@
         "internalType": "address",
         "name": "manager",
         "type": "address"
-      }
-    ],
-    "name": "setDerivativeManager",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+      },
       {
-        "internalType": "address",
-        "name": "_valueInterpreter",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
       }
     ],
-    "name": "setValueInterpreter",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "governor",
-        "type": "address"
-      }
-    ],
-    "name": "setVaultGovernor",
+    "name": "setVaultCountLimit",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -768,19 +380,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "supportedAssets",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -791,37 +390,6 @@
     "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "vault",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes",
-        "name": "data",
-        "type": "bytes"
-      }
-    ],
-    "name": "update",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "updatingVaultList",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -856,26 +424,19 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "valueInterpreter",
-    "outputs": [
+    "inputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "vaultGovernor",
+    "name": "vaultCountLimits",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -908,24 +469,13 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "weth",
+    "outputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "name": "vaultUpdatingData",
-    "outputs": [
-      {
-        "internalType": "bytes",
-        "name": "data",
-        "type": "bytes"
-      },
-      {
-        "internalType": "uint8",
-        "name": "reviewStatus",
-        "type": "uint8"
       }
     ],
     "stateMutability": "view",

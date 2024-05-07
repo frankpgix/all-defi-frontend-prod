@@ -27,8 +27,8 @@ export type AddressType = `0x${string}`
 export type AccountType = AddressType
 
 export type ChainTokenKey = 'ETH' | 'BNB'
-export type WTokenKeys = 'WETH' | 'WBNB'
-export type acTokenKeys = 'acETH' | 'acBNB' | 'acUSDC'
+export type WTokenKeys = 'WETH' | 'WBNB' | 'WBTC'
+export type acTokenKeys = 'acETH' | 'acBNB' | 'acUSDC' | 'acBTC'
 
 export type TokenKeys =
   | ChainTokenKey
@@ -36,7 +36,6 @@ export type TokenKeys =
   | acTokenKeys
   | 'USDC'
   | 'USDT'
-  | 'WBTC'
   | 'ALLTOKEN'
   | 'sALLTOKEN'
   | 'UNKNOWN'
