@@ -10,7 +10,8 @@ import { AddressType } from '@/types/base'
 
 import { getUnitAmount } from '@/utils/tools'
 
-export const useBuyAcToken = () => {
+// 申购
+export const useDeposit = () => {
   const ACProtocolContract = useACProtocolContract()
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
@@ -18,34 +19,35 @@ export const useBuyAcToken = () => {
   const { onAllowance } = useAllowance()
   const { onWaitReceipt } = useWaitReceipt()
 
-  const buyAcToken = async (
-    baseTokenAddress: AddressType,
+  const onDeposit = async (
+    underlyingAddress: AddressType,
     amount: number,
+    lockDuration: number,
     account: AddressType,
     callback?: () => void
   ) => {
-    const baseToken = getTokenByAddress(baseTokenAddress)
-    const _amount = getUnitAmount(String(amount), baseToken?.decimals)
+    const underlyingToken = getTokenByAddress(underlyingAddress)
+    const _amount = getUnitAmount(String(amount), underlyingToken?.decimals)
 
-    const notifyId = await createNotify({ content: 'Buy AC Token', type: 'loading' })
+    const notifyId = await createNotify({ content: 'Deposit', type: 'loading' })
     const succNotify = (hash: string) => {
-      updateNotifyItem(notifyId, { content: 'Buy AC Token', type: 'success', hash })
+      updateNotifyItem(notifyId, { content: 'Deposit', type: 'success', hash })
     }
 
     const errorNotify = (msg: any) => {
       updateNotifyItem(notifyId, {
-        title: 'Buy All Token',
+        title: 'Deposit',
         type: 'error',
         content: msg
       })
     }
 
-    if (baseTokenAddress === zeroAddress) {
+    if (underlyingAddress === zeroAddress) {
       writeContract(
         {
           ...ACProtocolContract,
-          functionName: 'ethBuy',
-          args: [],
+          functionName: 'depositETH',
+          args: [lockDuration],
           value: _amount,
           account
         },
@@ -60,7 +62,7 @@ export const useBuyAcToken = () => {
       )
     } else {
       const allowance = await onAllowance(
-        baseTokenAddress,
+        underlyingAddress,
         ACProtocolContract.address,
         _amount,
         notifyId
@@ -73,8 +75,8 @@ export const useBuyAcToken = () => {
       writeContract(
         {
           ...ACProtocolContract,
-          functionName: 'buy',
-          args: [baseTokenAddress, _amount],
+          functionName: 'deposit',
+          args: [underlyingAddress, _amount, lockDuration],
           account
         },
         {
@@ -88,5 +90,70 @@ export const useBuyAcToken = () => {
       )
     }
   }
-  return { buyAcToken }
+  return { onDeposit }
+}
+
+// 赎回
+export const useWithdraw = () => {
+  const ACProtocolContract = useACProtocolContract()
+  const { writeContract } = useWriteContract()
+  const { createNotify, updateNotifyItem } = useNotify()
+  const { onWaitReceipt } = useWaitReceipt()
+
+  const onWithdraw = async (
+    underlyingAddress: AddressType,
+    depositId: number,
+    account: AddressType,
+    callback?: () => void
+  ) => {
+    const notifyId = await createNotify({ content: 'Withdraw', type: 'loading' })
+    const succNotify = (hash: string) => {
+      updateNotifyItem(notifyId, { content: 'Withdraw', type: 'success', hash })
+    }
+
+    const errorNotify = (msg: any) => {
+      updateNotifyItem(notifyId, {
+        title: 'Withdraw',
+        type: 'error',
+        content: msg
+      })
+    }
+
+    if (underlyingAddress === zeroAddress) {
+      writeContract(
+        {
+          ...ACProtocolContract,
+          functionName: 'withdrawETH',
+          args: [depositId],
+          account
+        },
+        {
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
+            callback?.()
+            succNotify(hash)
+          },
+          onError: (error: any) => errorNotify(error.reason || error.shortMessage)
+        }
+      )
+    } else {
+      writeContract(
+        {
+          ...ACProtocolContract,
+          functionName: 'withdraw',
+          args: [underlyingAddress, depositId],
+          account
+        },
+        {
+          onSuccess: async (hash: AddressType) => {
+            await onWaitReceipt(hash)
+            callback?.()
+            succNotify(hash)
+          },
+          onError: (error: any) => errorNotify(error.reason || error.shortMessage)
+        }
+      )
+    }
+  }
+  return { onWithdraw }
 }

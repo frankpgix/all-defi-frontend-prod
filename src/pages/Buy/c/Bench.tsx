@@ -3,7 +3,7 @@ import { FC, useMemo, useState } from 'react'
 import BN from 'bignumber.js'
 import { isNumber } from 'lodash'
 
-import { useBuyAcToken } from '@/hooks/Contracts/useACProtocol'
+import { useDeposit } from '@/hooks/Contracts/useACProtocol'
 import { useAllTokenPrice } from '@/hooks/Contracts/useAllProtocol'
 import { useProfile } from '@/hooks/useProfile'
 import { useChainToken, useToken, useUnderlyingTokenOptions } from '@/hooks/useToken'
@@ -22,7 +22,7 @@ const Bench: FC = () => {
   const { getTokenByName } = useToken()
   const { chainToken } = useChainToken()
   const baseTokenOptions = useUnderlyingTokenOptions()
-  const { buyAcToken } = useBuyAcToken()
+  const { onDeposit } = useDeposit()
   const { account } = useProfile()
   const { balances, refetch } = useUserBalances()
   const [amount, setAmount] = useState<string | number>('')
@@ -49,7 +49,7 @@ const Bench: FC = () => {
   const buyAndStakeFunc = async () => {
     if (account) {
       // 执行购买和质押
-      await buyAcToken(baseTokenAddress, Number(amount), account, refetch)
+      await onDeposit(baseTokenAddress, Number(amount), 30 * 24 * 60 * 60, account, refetch)
     }
   }
 
