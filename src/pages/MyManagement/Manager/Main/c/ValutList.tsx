@@ -54,7 +54,7 @@ const FundList: FC = () => {
         row.status === 0 ? '-' : dayjs(value).format('MMM DD, YYYY hh:mm:ss A')
     },
     {
-      title: 'Confirming Withholding',
+      title: 'Confirming unstaking',
       dataIndex: 'redeemingShares',
       width: 180,
       render: (value: number, row: VaultDetailProps) => (

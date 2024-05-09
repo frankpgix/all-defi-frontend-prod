@@ -75,7 +75,7 @@ const CountLoading: FC = () => {
       </div>
       <div className="web-manage-investment-count-detail">
         <article>
-          <label>Total Allocation NAV</label>
+          <label>Total Staking NAV</label>
           <ContentLoader
             width={200}
             height={40}
@@ -239,12 +239,12 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data: sData, baseTokenPric
       </div>
       <div className="web-manage-investment-count-detail">
         <article>
-          <label>Total Allocation </label>
+          <label>Total Staking </label>
           <em>{formatNumber(totalAsset, 2, '$0,0.00')}</em>
         </article>
         <h3>{data[activeIndex].name}</h3>
         <section>
-          <SectionItem label="Allocation Value" loading={loading}>
+          <SectionItem label="Staking Value" loading={loading}>
             <TokenValue value={activeData.nav} token={baseToken} size="mini" format="0,0.00" />
             {/*{formatNumber(data[activeIndex].data.nav, 2, '$0,0.00')}*/}
           </SectionItem>
@@ -263,7 +263,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data: sData, baseTokenPric
           </SectionItem> */}
           <SectionItem
             label="Shares Holding"
-            popper="Shares Holding includes a total of  Shares in your wallet, withholding from vaults, or staked in the mining pool"
+            popper="Shares Holding includes a total of  Shares in your wallet, Unstaking from vaults."
           >
             <TokenValue
               value={activeData.shares}

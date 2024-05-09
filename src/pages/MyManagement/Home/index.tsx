@@ -24,12 +24,11 @@ const Home: FC = () => {
       <main>
         <hr />
         <h2>
-          Allocation <br />
+          Staking <br />
           Management
         </h2>
         <p>
-          AC Token holders can monitor their allocation performance, manage and adjust their
-          allocation
+          AC Token holders can monitor their staking performance, manage and adjust their staking
         </p>
         <hr />
       </main>

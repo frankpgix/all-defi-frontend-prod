@@ -1,5 +1,7 @@
 import { FC, useState } from 'react'
+
 import classNames from 'classnames'
+
 // import Video from '@/components/common/Video'
 
 // import Button from '@/components/common/Button'
@@ -12,7 +14,7 @@ const features = [
       <>
         AllDeFi allows decentralised DAO <br />
         holders to make independent DAO Treasury <br />
-        allocation decision and <br />
+        staking decision and <br />
         responsible for it.
       </>
     )

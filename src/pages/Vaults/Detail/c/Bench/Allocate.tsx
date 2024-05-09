@@ -112,10 +112,7 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
   return (
     <>
       <section className="web-fund-detail-bench">
-        <h4>
-          Allocate to vault {String(value)}
-          {JSON.stringify(minAmountError)}
-        </h4>
+        <h4>Stake to vault</h4>
         <div className="web-fund-detail-bench-input">
           <Input
             value={value}

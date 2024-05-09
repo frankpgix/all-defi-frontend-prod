@@ -126,7 +126,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
               <ul>
                 <li>
                   <label>
-                    Current Confirming Allocation
+                    Current Confirming Staking
                     {/* <Popper content="Fund's value under subscription">
                       Current Confirming Allocation
                     </Popper> */}
@@ -155,7 +155,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                 </li>
                 <li>
                   <label>
-                    Current Confirming Withholding
+                    Current Confirming Unstaking
                     {/* <Popper content="Amount of Shares under redemption">
                       Current Confirming Withholding
                     </Popper> */}
@@ -179,7 +179,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
               </ul>
             </div>
             <div className="web-manage-investment-fund-item-data">
-              <SectionItem label="Allocation Value">
+              <SectionItem label="Staking Value">
                 <TokenValue value={fund.data.nav} token={acToken} size="mini" format="0,0.00" />
                 {/*{formatNumber(fund.data.navInUSD, 2, '$0,0.00')}*/}
               </SectionItem>
@@ -233,8 +233,8 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
         show={infoStatus}
         onConfirm={() => goCancelAllocate()}
         onClose={() => setInfoStatus(false)}
-        title="Cancel Allocation"
-        msg={`Cancel Allocation Request of ${formatNumber(
+        title="Cancel Staking"
+        msg={`Cancel Staking Request of ${formatNumber(
           fund.data.subscribingACToken,
           4,
           '0,0.0000'
@@ -244,8 +244,8 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
         show={infoStatus2}
         onConfirm={() => goCancelcWithholding()}
         onClose={() => setInfoStatus2(false)}
-        title="Cancel Withholding"
-        msg={`Cancel Withholding Request of ${formatNumber(
+        title="Cancel Unstaking"
+        msg={`Cancel Unstaking Request of ${formatNumber(
           fund.data.redeemingShares,
           4,
           '0,0.0000'

@@ -1,9 +1,9 @@
 import { FC } from 'react'
-// import { useRequest } from 'ahooks'
-import { formatNumber } from '@/utils/tools'
 
 import { useGlobalAssetStats } from '@/hooks/Contracts/useAUMStats'
 
+// import { useRequest } from 'ahooks'
+import { formatNumber } from '@/utils/tools'
 // import AUMStats from '@/class/AUMStats'
 // import { GlobalAssetStatisticDefault } from '@/class/help'
 import { CountItem, CountLayout } from '@@/core/Sestion'
@@ -18,7 +18,7 @@ const Dashboard: FC = () => {
         {/*<h3>WE ARE</h3>*/}
         <h2>
           {/* A Decentralized Asset Management <br /> Platform on Blockchain */}
-          Treasury Allocation Platform <br /> &nbsp;
+          Treasury Staking Platform <br /> &nbsp;
         </h2>
         <CountLayout col="3">
           <CountItem

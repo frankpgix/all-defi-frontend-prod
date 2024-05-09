@@ -1,16 +1,17 @@
-import { FC, useState, useMemo } from 'react'
+import { FC, useMemo, useState } from 'react'
+
 import BN from 'bignumber.js'
 import { isNaN } from 'lodash'
 
-import { useProfile } from '@/hooks/useProfile'
 import { useWithhold } from '@/hooks/Contracts/useVault'
+import { useProfile } from '@/hooks/useProfile'
 
-import { VaultDetailProps, VaultUserDetailProps, ShareCompositionProps } from '@/types/vault'
+import { ShareCompositionProps, VaultDetailProps, VaultUserDetailProps } from '@/types/vault'
 
-import { Input, Slider } from '@@/common/Form'
 import Button from '@@/common/Button'
-import Tip from '@@/common/Tip'
 import InfoDialog from '@@/common/Dialog/Info'
+import { Input, Slider } from '@@/common/Form'
+import Tip from '@@/common/Tip'
 
 interface Props {
   userData: VaultUserDetailProps
@@ -71,7 +72,7 @@ const Withhold: FC<Props> = ({ data, userData, getData, share }) => {
   return (
     <>
       <section className="web-fund-detail-bench">
-        <h4>Withhold from vault</h4>
+        <h4>Unstake from vault</h4>
         <div className="web-fund-detail-bench-input">
           <Input
             value={value}

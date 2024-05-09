@@ -77,7 +77,7 @@ const Bench: FC = () => {
 
   return (
     <>
-      <BlueLineSection title="Contribution" className="web-buy-bench select">
+      <BlueLineSection title="Deposit" className="web-buy-bench select">
         <Input
           className="web-buy-bench-input"
           type="number"

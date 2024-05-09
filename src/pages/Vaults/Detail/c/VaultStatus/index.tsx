@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react'
-import dayjs from 'dayjs'
 import ContentLoader from 'react-content-loader'
+
+import dayjs from 'dayjs'
 
 import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
 
@@ -31,7 +32,7 @@ const VaultStatus: FC<Props> = ({ base, data, loading }) => {
       <footer className="web-fund-detail-status-footer">
         <dl>
           <dt>
-            Allocate to vault:
+            Stake to vault:
             {loading ? (
               <ContentLoader
                 width={120}
@@ -43,7 +44,7 @@ const VaultStatus: FC<Props> = ({ base, data, loading }) => {
                 <rect x="12" y="0" rx="4" ry="4" width="100" height="18" />
               </ContentLoader>
             ) : [0, 1, 2].includes(data.status) ? (
-              <em className="rise">Allowed</em>
+              <em className="rise">Stake</em>
             ) : (
               <em className="fall">Not Allowed</em>
             )}
@@ -52,7 +53,7 @@ const VaultStatus: FC<Props> = ({ base, data, loading }) => {
         </dl>
         <dl>
           <dt>
-            Withhold from vault:
+            Unstake from vault:
             {loading ? (
               <ContentLoader
                 width={120}
@@ -64,7 +65,7 @@ const VaultStatus: FC<Props> = ({ base, data, loading }) => {
                 <rect x="12" y="0" rx="4" ry="4" width="100" height="18" />
               </ContentLoader>
             ) : data.status === 1 ? (
-              <em className="rise">Allowed</em>
+              <em className="rise">Unstake</em>
             ) : (
               <em className="fall">Not Allowed</em>
             )}

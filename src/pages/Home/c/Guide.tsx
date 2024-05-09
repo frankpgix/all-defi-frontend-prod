@@ -1,27 +1,29 @@
 import { FC } from 'react'
+
 import Button from '@/components/common/Button'
+
 // import Image from '@/components/common/Image'
 
 const Guide: FC = () => {
   return (
     <section className="web-home-guide">
       <main>
-        <h2>Allocate to a vault from DAO treasury</h2>
+        <h2>Stake to a vault from DAO treasury</h2>
         <p>
-          AC tokens are the native DAO tokens that allow holders to allocate DAO treasury on AllDeFi
-          platform. They can be obtained through making a contribution to AC DAO or directly
-          purchased from the open market at market price.
+          AC tokens are the native DAO tokens that allow holders to stake DAO treasury on AllDeFi
+          platform. They can be obtained through making a deposit to AC DAO or directly purchased
+          from the open market at market price.
         </p>
         <aside>
           <Button to="/buy" outline>
             Buy AC token
           </Button>
-          <Button to="/fund-market">ALLOCATE TO A VAULT</Button>
+          <Button to="/fund-market">STAKE TO A VAULT</Button>
         </aside>
         <section>
           <dl>
             <dt>1.</dt>
-            <dd>Make sure you have AC tokens to allocate.</dd>
+            <dd>Make sure you have AC tokens to Stake.</dd>
           </dl>
           <dl>
             <dt>2.</dt>
@@ -29,11 +31,11 @@ const Guide: FC = () => {
           </dl>
           <dl>
             <dt>3.</dt>
-            <dd>Allocate to a vault by staking your AC tokens into the strategy's vault.</dd>
+            <dd>Select a vault to a vault by staking your AC tokens into the strategy's vault.</dd>
           </dl>
           <dl>
             <dt>4.</dt>
-            <dd>Allocation is finalized and watch the performance.</dd>
+            <dd>Staking is finalized and watch the performance.</dd>
           </dl>
         </section>
       </main>

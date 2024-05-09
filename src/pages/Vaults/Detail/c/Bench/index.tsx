@@ -1,19 +1,19 @@
 import { FC } from 'react'
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
+
 // import ContentLoader from 'react-content-loader'
-
 // import { FundDetailProps, FundUserDataProps, ShareCompositionProps } from '@/class/help'
-
 import {
+  ShareCompositionProps,
   VaultBaseInfoProps,
   VaultDetailProps,
-  VaultUserDetailProps,
-  ShareCompositionProps
+  VaultUserDetailProps
 } from '@/types/vault'
 
 import Allocate from './Allocate'
-import Withhold from './Withhold'
 import Claim from './Claim'
+import Withhold from './Withhold'
+
 // import DrawShares from './DrawShares'
 
 interface Props {
@@ -31,8 +31,8 @@ const Bench: FC<Props> = ({ userData, data, base, getData, share }) => {
       <section className="web-fund-detail-bench-layout">
         <Tabs>
           <TabList>
-            {!data.isClosed && <Tab>Allocate to vault</Tab>}
-            <Tab>{!data.isClosed && <>Withhold from vault & </>}Claim</Tab>
+            {!data.isClosed && <Tab>Stake to vault</Tab>}
+            <Tab>{!data.isClosed && <>Unstake from vault & </>}Claim</Tab>
           </TabList>
           {!data.isClosed && (
             <TabPanel>
