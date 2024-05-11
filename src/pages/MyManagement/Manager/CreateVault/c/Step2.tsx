@@ -1,18 +1,13 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 
-import classNames from 'classnames'
-import { without } from 'lodash'
-
 import { useToken, useUnderlyingTokenOptions } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 import { CreateVaultStep2DataTypes } from '@/types/createVault'
-import { VaultDerivativesProps } from '@/types/vault'
 
 import Cache from '@/utils/cache'
 import Button from '@@/common/Button'
 import { Input, Select } from '@@/common/Form'
-import Image from '@@/common/Image'
 import { TokenIcon } from '@@/common/TokenUnit'
 import BlueLineSection from '@@/web/BlueLineSection'
 
@@ -20,78 +15,51 @@ interface Props {
   onConfirm: (data: CreateVaultStep2DataTypes) => void
   onBack: () => void
   show: boolean
-  derivativeList: VaultDerivativesProps[]
 }
 
-const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
+const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
   const { getTokenByAddress } = useToken()
-  // const { chainToken } = useChainToken()
   const baseTokenOptions = useUnderlyingTokenOptions()
-  const [selectIndex, setSelectIndex] = useState<number[]>([])
   const [minAmount, setMinAmount] = useState<string | number>('')
-  const [maxAmount, setMaxAmount] = useState<string | number>('')
-  const [baseTokenAddress, setBaseTokenAddress] = useState(baseTokenOptions[0].value)
-  const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
-  const onSelect = (index: number) => {
-    if (selectIndex.includes(index)) {
-      setSelectIndex(without(selectIndex, index))
-    } else {
-      setSelectIndex([...selectIndex, index])
-    }
-  }
+  const [underlyingAddress, setUnderlyingAddress] = useState(baseTokenOptions[0].value)
+  const underlyingToken = useMemo(() => getTokenByAddress(underlyingAddress), [underlyingAddress])
 
   const onNext = () => {
-    const addresss = selectIndex.map((index: number) => derivativeList[index]).filter((i) => i)
-    // console.log(addresss, 'addresss')
     onConfirm({
-      addresss,
-      minAmount: Number(minAmount),
-      maxAmount: Number(maxAmount),
-      baseTokenAddress
+      minimumStake: Number(minAmount),
+      underlying: underlyingAddress
     })
   }
   const minAmountNumber = useMemo(() => {
-    const zero = [...new Array(baseToken.precision - 1)].map(() => '0').join('')
+    const zero = [...new Array(underlyingToken.precision - 1)].map(() => '0').join('')
     return Number(`0.${zero}1`)
-  }, [baseToken.precision])
+  }, [underlyingToken.precision])
 
   const minAmountError = useMemo(
     () => Number(minAmount) < minAmountNumber && minAmount !== '',
     [minAmount, minAmountNumber]
   )
-  const maxAmountError = useMemo(
-    () => Number(maxAmount) <= Number(minAmount) && maxAmount !== '',
-    [minAmount, maxAmount]
-  )
   const isDisabled = useMemo(
-    () =>
-      selectIndex.length === 0 ||
-      !minAmount ||
-      Number(minAmount) === 0 ||
-      !maxAmount ||
-      maxAmountError ||
-      minAmountError,
-    [selectIndex, minAmount, maxAmount, maxAmountError, minAmountError]
+    () => !minAmount || Number(minAmount) === 0 || minAmountError,
+    [minAmount, minAmountError]
   )
 
   const onBaseTokenChange = (address: number | string) =>
-    setBaseTokenAddress(String(address) as AddressType)
+    setUnderlyingAddress(String(address) as AddressType)
 
   useEffect(() => {
-    if (selectIndex.length || minAmount || maxAmount) {
-      Cache.set('CreateFundStep2Temp', { selectIndex, minAmount, maxAmount, baseTokenAddress })
+    if (minAmount) {
+      Cache.set('CreateFundStep2Temp', { minAmount, underlyingAddress })
     }
-  }, [selectIndex, minAmount, maxAmount, baseTokenAddress])
+  }, [minAmount, underlyingAddress])
 
   useEffect(() => {
     const createFundStep2Temp = Cache.get('CreateFundStep2Temp')
     if (createFundStep2Temp) {
-      const { selectIndex, minAmount, maxAmount, baseTokenAddress } = createFundStep2Temp
+      const { minAmount, underlyingAddress } = createFundStep2Temp
 
-      setBaseTokenAddress(baseTokenAddress)
-      setSelectIndex(selectIndex)
+      setUnderlyingAddress(underlyingAddress)
       setMinAmount(minAmount)
-      setMaxAmount(maxAmount)
     }
   }, [])
 
@@ -106,7 +74,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
         <div className="web-manage-create-step-2col">
           <Select
             label="Denomination Assets"
-            value={baseTokenAddress}
+            value={underlyingAddress}
             onChange={onBaseTokenChange}
             objOptions={baseTokenOptions}
           />
@@ -119,25 +87,16 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
             min={minAmountNumber}
             error={minAmountError}
             onChange={setMinAmount}
-            innerSuffix={<TokenIcon size="small" name={baseToken.name} />}
+            innerSuffix={<TokenIcon size="small" name={underlyingToken.name} />}
           >
             {minAmountError && (
               <p className="fall">
-                Minimum deposit amount {minAmountNumber} {baseToken.name}
+                Minimum deposit amount {minAmountNumber} {underlyingToken.name}
               </p>
             )}
           </Input>
-          <Input
-            type="number"
-            label="Maximum Deposit Amount"
-            value={maxAmount}
-            onChange={setMaxAmount}
-            error={maxAmountError}
-            maxNumber={10000000000}
-            innerSuffix={<TokenIcon size="small" name={baseToken.name} />}
-          />
         </div>
-        <h3>select protocol allowed</h3>
+        {/* <h3>select protocol allowed</h3>
         <ul className="web-manage-create-step-product-list">
           {derivativeList.map((item, index: number) => (
             <li
@@ -148,7 +107,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack, derivativeList }) => {
               <Image src={`products/${item.name}.png`} alt={item.name} />
             </li>
           ))}
-        </ul>
+        </ul> */}
         <footer>
           <Button onClick={onBack} outline>
             back

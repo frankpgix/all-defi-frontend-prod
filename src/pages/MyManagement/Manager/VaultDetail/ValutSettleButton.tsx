@@ -3,7 +3,7 @@ import { FC, ReactNode, useMemo } from 'react'
 import { useToggle } from 'ahooks'
 import BN from 'bignumber.js'
 
-import { useSettleAccount } from '@/hooks/Contracts/useVault'
+import { useRequestSettlemen } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
 
 import { AddressType } from '@/types/base'
@@ -28,7 +28,7 @@ const ValutSettleButton: FC<Props> = ({
   callback,
   data
 }) => {
-  const { onSettleAccount } = useSettleAccount(vaultAddress)
+  const { onRequestSettlemen } = useRequestSettlemen(vaultAddress)
   const { account } = useProfile()
 
   const [show, { setLeft: closeModal, setRight: openModal }] = useToggle()
@@ -87,7 +87,7 @@ const ValutSettleButton: FC<Props> = ({
     closeModal2()
     closeModal3()
     if (account && vaultAddress) {
-      await onSettleAccount(account, callback)
+      await onRequestSettlemen(account, callback)
     }
   }
 

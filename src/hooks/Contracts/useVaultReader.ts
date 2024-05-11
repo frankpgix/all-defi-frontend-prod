@@ -155,12 +155,12 @@ export const useUserVaultList = () => {
 export const useVaultList = () => {
   const VaultReaderContract = useVaultReaderContract()
   const { getTokenByAddress } = useToken()
-  const { data, isSuccess, isLoading, refetch } = useReadContract({
+  const { error, data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
     functionName: 'vaultDetailList',
-    args: [0, 999, false]
-  }) as { data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
-  // console.log(error, isSuccess, isLoading, 'data, isSuccess, isLoading')
+    args: [0, 999]
+  }) as { error: any; data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
+  console.log(error, data, isSuccess, isLoading, 'data, isSuccess, isLoading')
   if (!isLoading && isSuccess) {
     return {
       data: data.map((item) => calcVaultDetail(item, getTokenByAddress)),

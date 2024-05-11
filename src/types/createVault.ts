@@ -1,5 +1,4 @@
 import { AddressType } from '@/types/base'
-import { VaultDerivativesProps } from '@/types/vault'
 
 export interface CreateVaultStep1DataTypes {
   name: string
@@ -9,10 +8,8 @@ export interface CreateVaultStep1DataTypes {
 }
 
 export interface CreateVaultStep2DataTypes {
-  addresss: VaultDerivativesProps[]
-  minAmount: number
-  maxAmount: number
-  baseTokenAddress: AddressType
+  minimumStake: number
+  underlying: AddressType
 }
 
 export interface CreateVaultDataType {
@@ -20,11 +17,8 @@ export interface CreateVaultDataType {
   symbol: string
   desc: string
   managerName: string
-  derivatives: AddressType[]
-  stakeAmount: number
-  minAmount: number
-  maxAmount: number
-  baseTokenAddress: AddressType
+  underlying: AddressType
+  minimumStake: number
 }
 
 export interface UpdateVaultDataType {

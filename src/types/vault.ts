@@ -27,6 +27,26 @@ export interface VaultBaseInfoProps {
   subscriptionMaxLimit: number
 }
 
+// beginningAUM: Number(safeInterceptionValues(item.beginningAUM, decimals, decimals)),
+// aum: Number(safeInterceptionValues(item.aum, decimals, decimals)),
+
+// underlyingBalance: Number(safeInterceptionValues(item.underlyingBalance, decimals, decimals)),
+// underlyingPriceInUSD: Number(safeInterceptionValues(item.underlyingPriceInUSD, 4, 18)),
+
+// sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
+// stakingACToken: Number(safeInterceptionValues(item.stakingACToken, decimals, decimals)),
+// unstakingShare: Number(safeInterceptionValues(item.unstakingShare)),
+
+// roe: Number(safeInterceptionValues(item.roe, 4, 16)),
+// historicalReturn: Number(safeInterceptionValues(item.historicalReturn, decimals, decimals)),
+
+// managerFee: Number(safeInterceptionValues(item.managerFee, decimals, decimals)),
+// platFee: Number(safeInterceptionValues(item.platFee, decimals, decimals)),
+// historicalManagerFee: Number(
+//   safeInterceptionValues(item.historicalManagerFee, decimals, decimals)
+// ),
+// historicalPlatFee: Number(safeInterceptionValues(item.historicalPlatFee, decimals, decimals))
+
 export interface VaultDetailProps {
   hash: string
   underlyingToken: UnderlyingTokenTypes
@@ -45,28 +65,23 @@ export interface VaultDetailProps {
   preSettleEndTime: number
   settleEndTime: number
 
-  settleAUMLimit: number
-  realtimeAUMLimit: number
+  beginningAUM: number
   aum: number
-  nav: number
+
+  underlyingBalance: number
+  underlyingPriceInUSD: number
 
   sharePrice: number
-  baseTokenPriceInUSD: number
-  costPrice: number
-  unusedAsset: number
-  subscribingACToken: number
-  redeemingShares: number
-  miningShares: number
+  stakingACToken: number
+  unstakingShare: number
 
   roe: number
-  lastRoe: number
-  historyReturn: number
-  lastRedemptionRatio: number
+  historicalReturn: number
 
   managerFee: number
   platFee: number
-  lastManagerFee: number
-  historyManagerFee: number
+  historicalManagerFee: number
+  historicalPlatFee: number
 }
 
 export interface VaultUserDetailProps {

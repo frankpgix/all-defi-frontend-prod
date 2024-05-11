@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { useAccount } from 'wagmi'
 
-import { useVaultCountLimit } from '@/hooks/Contracts/useAllProtocol'
+import { useVaultCountLimit } from '@/hooks/Contracts/useVaultFactory'
 import { useProfile } from '@/hooks/useProfile'
 import { useGetVaultHashList, useGetVaultList } from '@/hooks/useVaultList'
 

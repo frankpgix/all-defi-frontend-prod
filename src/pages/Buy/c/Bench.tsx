@@ -1,21 +1,18 @@
 import { FC, useMemo, useState } from 'react'
 
-import BN from 'bignumber.js'
 import { isNumber } from 'lodash'
 
 import { useDeposit } from '@/hooks/Contracts/useACProtocol'
-import { useAllTokenPrice } from '@/hooks/Contracts/useAllProtocol'
 import { useProfile } from '@/hooks/useProfile'
 import { useChainToken, useToken, useUnderlyingTokenOptions } from '@/hooks/useToken'
 import { useUserBalances } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 
-import { formatNumber } from '@/utils/tools'
 import Button from '@@/common/Button'
 import InfoDialog from '@@/common/Dialog/Info'
 import { Input, Select } from '@@/common/Form'
-import { AcUSDCUnit, AllTokenUnit } from '@@/common/TokenUnit'
+import { AcUSDCUnit } from '@@/common/TokenUnit'
 import BlueLineSection from '@@/web/BlueLineSection'
 
 const Bench: FC = () => {
@@ -28,23 +25,9 @@ const Bench: FC = () => {
   const [amount, setAmount] = useState<string | number>('')
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>(baseTokenOptions[0].value)
-  const { data: allTPrice } = useAllTokenPrice(baseTokenAddress)
   const usdcAddress = getTokenByName('USDC').address
+  const wbtcAddress = getTokenByName('WBTC').address
   const chainTokenAddress = chainToken.address
-  const preAllValue = useMemo(
-    () =>
-      Number(
-        formatNumber(
-          BN(Number(amount) || 0)
-            .multipliedBy(0.1)
-            .div(allTPrice > 0 ? allTPrice : 1)
-            .toString(),
-          4,
-          '0.0000'
-        )
-      ),
-    [amount, allTPrice]
-  )
 
   const buyAndStakeFunc = async () => {
     if (account) {
@@ -59,6 +42,7 @@ const Bench: FC = () => {
   )
 
   const maxNumber = useMemo(() => {
+    if (baseTokenAddress === wbtcAddress) return Number(balances.WBTC)
     if (baseTokenAddress === usdcAddress) return Number(balances.USDC)
     if (baseTokenAddress === chainTokenAddress) return Number(balances[chainToken.name])
     return 0
@@ -70,6 +54,7 @@ const Bench: FC = () => {
   }
 
   const currBaseTokenName = useMemo(() => {
+    if (baseTokenAddress === wbtcAddress) return 'WBTC'
     if (baseTokenAddress === usdcAddress) return 'USDC'
     if (baseTokenAddress === chainTokenAddress) return chainToken.name
     return ''
@@ -88,6 +73,12 @@ const Bench: FC = () => {
           maxNumber={maxNumber}
           error={Number(amount) === 0 && amount !== ''}
         >
+          {baseTokenAddress === wbtcAddress && (
+            <>
+              <p>WBTC Balance: {balances.WBTC}</p>
+              <p>acBTC Balance: {balances.acBTC}</p>
+            </>
+          )}
           {baseTokenAddress === usdcAddress && (
             <>
               <p>USDC Balance: {balances.USDC}</p>
@@ -124,11 +115,7 @@ const Bench: FC = () => {
           </dl>
           <dl>
             <dt>and an extra</dt>
-            <dd>
-              <AllTokenUnit value={preAllValue} sall>
-                sALL
-              </AllTokenUnit>
-            </dd>
+            <dd></dd>
           </dl>
           <Button disabled={isDisabled} onClick={() => setInfoStatus(true)}>
             confirm
@@ -141,7 +128,7 @@ const Bench: FC = () => {
         onConfirm={buyAndStakeFunc}
         onClose={() => setInfoStatus(false)}
         title="Confirm AC Token Purchase"
-        msg={`You will purchase ${amount} ac${currBaseTokenName}, and you will also recieve ${preAllValue} sALL token, for a total cost of ${amount} ${currBaseTokenName}`}
+        msg={`You will purchase ${amount} ac${currBaseTokenName},  for a total cost of ${amount} ${currBaseTokenName}`}
       />
     </>
   )

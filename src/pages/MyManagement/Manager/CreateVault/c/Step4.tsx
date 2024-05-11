@@ -1,16 +1,11 @@
 import { FC, useMemo } from 'react'
 
-import BN from 'bignumber.js'
-
 import { useToken } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
-import { VaultDerivativesProps } from '@/types/vault'
 
 import Button from '@@/common/Button'
-import DataItem from '@@/common/DataItem'
 import { Input } from '@@/common/Form'
-import Image from '@@/common/Image'
 import { TokenIcon } from '@@/common/TokenUnit'
 import BlueLineSection from '@@/web/BlueLineSection'
 
@@ -23,12 +18,12 @@ interface Props {
   baseTokenAddress: AddressType
 }
 
-const Step4: FC<Props> = ({ onConfirm, show, onBack, data, multiple, baseTokenAddress }) => {
+const Step4: FC<Props> = ({ onConfirm, show, onBack, data, baseTokenAddress }) => {
   const { getTokenByAddress } = useToken()
-  const maxAUM = useMemo(
-    () => BN(data.stakeAmount).multipliedBy(multiple).toNumber(),
-    [data.stakeAmount, multiple]
-  )
+  // const maxAUM = useMemo(
+  //   () => BN(data.stakeAmount).multipliedBy(multiple).toNumber(),
+  //   [data.stakeAmount, multiple]
+  // )
   const baseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
   return (
     <>
@@ -55,15 +50,15 @@ const Step4: FC<Props> = ({ onConfirm, show, onBack, data, multiple, baseTokenAd
             disabled
             innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
           />
-          <Input
+          {/* <Input
             type="number"
             label="Maximum Deposit Amount"
             value={data.maxAmount}
             disabled
             innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
-          />
+          /> */}
         </div>
-        <div className="web-manage-create-step-1col">
+        {/* <div className="web-manage-create-step-1col">
           <DataItem label="selected protocol">
             {data.address.map((item: VaultDerivativesProps, index: number) => (
               <Image key={index} src={`/products/${item.name}.png`} />
@@ -77,7 +72,7 @@ const Step4: FC<Props> = ({ onConfirm, show, onBack, data, multiple, baseTokenAd
             disabled
             innerSuffix={<TokenIcon size="small" name={baseToken?.name} />}
           />
-        </div>
+        </div> */}
         <div className="web-manage-create-step-1col">
           <Input value="20%" label="Incentive Rate" disabled />
         </div>

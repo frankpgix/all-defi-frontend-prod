@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react'
 import ContentLoader from 'react-content-loader'
 
+import { useVaultHashList } from '@/hooks/Contracts/useVaultReader'
 import { useProfile } from '@/hooks/useProfile'
 import { useGetManageVaultList, useManageVaultListHook } from '@/hooks/useVaultList'
 
@@ -17,6 +18,8 @@ const Manager: FC = () => {
   const { loading, manageVaultList } = useManageVaultListHook()
   const { maxFundLimit } = useProfile()
   // const { data: manageFundList, isLoading: loading } = useManageVaultList()
+  const a = useVaultHashList()
+  console.log(a)
   const isInvest = useMemo(
     () => manageVaultList?.length === 0 && !loading,
     [manageVaultList, loading]

@@ -72,19 +72,6 @@ export const wChainTokens: UnderlyingTokenConfigTypes[] = [
     precision: 4,
     icon: 'symbol/bnb.svg',
     acTokenName: 'acBNB'
-  },
-  {
-    name: 'WBTC',
-    symbol: 'WBTC',
-    address: {
-      [ChainId.MAINNET]: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
-      [ChainId.ARBITRUM]: '0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f',
-      [ChainId.BSCTEST]: '0x904AD143C95736d9EEca7C6C0BB1a60dC4f3FE35'
-    },
-    decimals: 8,
-    precision: 4,
-    icon: 'symbol/wbtc.png',
-    acTokenName: 'acBTC'
   }
 ]
 export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
@@ -100,6 +87,19 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
     precision: 2,
     icon: 'symbol/usdc.svg',
     acTokenName: 'acUSDC'
+  },
+  {
+    name: 'WBTC',
+    symbol: 'WBTC',
+    address: {
+      [ChainId.MAINNET]: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+      [ChainId.ARBITRUM]: '0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f',
+      [ChainId.BSCTEST]: '0x904AD143C95736d9EEca7C6C0BB1a60dC4f3FE35'
+    },
+    decimals: 8,
+    precision: 4,
+    icon: 'symbol/wbtc.png',
+    acTokenName: 'acBTC'
   }
 ]
 
@@ -148,9 +148,9 @@ export const acTokens: TokenConfigTypes[] = [
       [ChainId.ARBITRUM]: zeroAddress,
       [ChainId.BSCTEST]: '0xe30F74DB01A9B1a3172cD65CC634B7B513cf7f20'
     },
-    decimals: 18,
+    decimals: 8,
     precision: 4,
-    icon: 'symbol/bnb.svg'
+    icon: 'symbol/wbtc.svg'
   }
 ]
 

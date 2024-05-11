@@ -96,7 +96,6 @@ export const useUserBalances = () => {
   const chainTokenBalances = useChainTokenBalance()
 
   const tokenList = tokens.filter((token) => token.address !== zeroAddress)
-
   const contracts = tokenList.map((token) => ({
     abi: erc20Abi,
     address: token.address,

@@ -18,7 +18,7 @@ export const contracts: { [key in ContractKeys]: AddressRec } = {
   VaultReader: {
     [ChainId.MAINNET]: zeroAddress,
     [ChainId.ARBITRUM]: '0x97725a0699a88e4c6C83ed41179c5F413A18B5A0',
-    [ChainId.BSCTEST]: '0x914e9043F576F6Be6585495ffA968E3767AE0087'
+    [ChainId.BSCTEST]: '0x12eA1321BCdaba402E2E6742bCa34E31F4C1F078'
   },
   AUMStats: {
     [ChainId.MAINNET]: zeroAddress,

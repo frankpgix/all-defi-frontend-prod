@@ -2,7 +2,7 @@ import BN from 'bignumber.js'
 import { md5 } from 'js-md5'
 import { decodeAbiParameters, hexToString } from 'viem'
 
-import { AddressType, GetTokenFuncType, TokenTypes } from '@/types/base'
+import { AddressType, GetTokenFuncType, TokenTypes, UnderlyingTokenTypes } from '@/types/base'
 import {
   AssetCompositionProps,
   GlobalAssetStatisticProps,
@@ -31,7 +31,7 @@ export const calcVaultBaseInfo = (
   getTokenByAddress: GetTokenFuncType,
   vaultAddress?: AddressType
 ): VaultBaseInfoProps => {
-  const underlyingToken = getTokenByAddress(item.underlyingToken)
+  const underlyingToken = getTokenByAddress(item.underlyingToken) as UnderlyingTokenTypes
   const decimals = underlyingToken.decimals
   const precision = underlyingToken.precision
   const { hash } = calcVaultHash(vaultAddress ?? '0x')
@@ -65,16 +65,15 @@ export const calcVaultDetail = (
 ): VaultDetailProps => {
   // console.log(item, 'test')
   const epochStartTime = Number(safeInterceptionValues(item.epochStartTime, 0, 0)) * 1000
-  const underlyingToken = getTokenByAddress(item.underlyingToken)
+  const underlyingToken = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlyingToken.decimals
   const status = Number(safeInterceptionValues(item.stage, 0, 0))
-  const { hash } = calcVaultHash(item.vaultId ?? '0x')
-  // console.log(epochStartTime, 'test')
-  // const precision = baseTokenObj.precision
+  const { hash } = calcVaultHash(item.vaultAddress ?? '0x')
+
   return {
     underlyingToken,
     hash,
-    address: item.vaultId,
+    address: item.vaultAddress,
     name: item.name,
     manager: item.manager,
     createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
@@ -92,28 +91,25 @@ export const calcVaultDetail = (
     settleEndTime:
       epochStartTime + Number(safeInterceptionValues(item.stageDurations[3], 0, 0)) * 1000,
 
-    settleAUMLimit: Number(safeInterceptionValues(item.settlementAUMLimit, decimals, decimals)),
-    realtimeAUMLimit: Number(safeInterceptionValues(item.aumLimit, decimals, decimals)),
-    aum: Number(safeInterceptionValues(item.beginningAUM, decimals, decimals)),
-    nav: Number(safeInterceptionValues(item.aum, decimals, decimals)),
+    beginningAUM: Number(safeInterceptionValues(item.beginningAUM, decimals, decimals)),
+    aum: Number(safeInterceptionValues(item.aum, decimals, decimals)),
+
+    underlyingBalance: Number(safeInterceptionValues(item.underlyingBalance, decimals, decimals)),
+    underlyingPriceInUSD: Number(safeInterceptionValues(item.underlyingPriceInUSD, 4, 18)),
 
     sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
-    baseTokenPriceInUSD: Number(safeInterceptionValues(item.underlyingTokenPriceInUSD, 4, 18)),
-    costPrice: Number(safeInterceptionValues(item.costPrice, 4, 18)),
-    unusedAsset: Number(safeInterceptionValues(item.unusedAsset, decimals, decimals)),
-    subscribingACToken: Number(safeInterceptionValues(item.allocatingACToken, decimals, decimals)),
-    redeemingShares: Number(safeInterceptionValues(item.withholdingShare)),
-    miningShares: Number(safeInterceptionValues(item.miningShare)),
+    stakingACToken: Number(safeInterceptionValues(item.stakingACToken, decimals, decimals)),
+    unstakingShare: Number(safeInterceptionValues(item.unstakingShare)),
 
     roe: Number(safeInterceptionValues(item.roe, 4, 16)),
-    lastRoe: Number(safeInterceptionValues(item.lastRoe, 4, 16)),
-    lastRedemptionRatio: Number(safeInterceptionValues(item.lastWithholdingRatio, 4, 16)),
-    historyReturn: Number(safeInterceptionValues(item.historyReturn, decimals, decimals)),
+    historicalReturn: Number(safeInterceptionValues(item.historicalReturn, decimals, decimals)),
 
     managerFee: Number(safeInterceptionValues(item.managerFee, decimals, decimals)),
     platFee: Number(safeInterceptionValues(item.platFee, decimals, decimals)),
-    lastManagerFee: Number(safeInterceptionValues(item.lastManagerFee, decimals, decimals)),
-    historyManagerFee: Number(safeInterceptionValues(item.historyManagerFee, decimals, decimals))
+    historicalManagerFee: Number(
+      safeInterceptionValues(item.historicalManagerFee, decimals, decimals)
+    ),
+    historicalPlatFee: Number(safeInterceptionValues(item.historicalPlatFee, decimals, decimals))
   }
 }
 
@@ -121,7 +117,7 @@ export const calcVaultUserDetail = (
   item: any,
   getTokenByAddress: GetTokenFuncType
 ): VaultUserDetailProps => {
-  const underlyingToken = getTokenByAddress(item.underlyingToken)
+  const underlyingToken = getTokenByAddress(item.underlyingToken) as UnderlyingTokenTypes
   const decimals = underlyingToken.decimals
   const precision = underlyingToken.precision
 
