@@ -26,18 +26,31 @@ export const calcGlobalAssetStatistic = (item: any): GlobalAssetStatisticProps =
   }
 }
 
+// address underlying;
+// address acToken;
+// uint256 createTime;
+// string name;
+// string symbol;
+// string desc;
+// address manager;
+// string managerName;
+// uint256 minimumStake;
+// uint64[4] stageDurations; // time durations in seconds. [0] stake, [1] unstake, [2] preSettle, [3] settle
+// address factory; // vault factory address
+// address ceffuWallet;
+
 export const calcVaultBaseInfo = (
   item: any,
   getTokenByAddress: GetTokenFuncType,
   vaultAddress?: AddressType
 ): VaultBaseInfoProps => {
-  const underlyingToken = getTokenByAddress(item.underlyingToken) as UnderlyingTokenTypes
-  const decimals = underlyingToken.decimals
-  const precision = underlyingToken.precision
+  const underlying = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
+  const decimals = underlying.decimals
+  const precision = underlying.precision
   const { hash } = calcVaultHash(vaultAddress ?? '0x')
   return {
     hash,
-    underlyingToken,
+    underlying,
     acToken: item.acToken,
     address: vaultAddress ?? '0x',
     createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
@@ -48,14 +61,13 @@ export const calcVaultBaseInfo = (
     managerName: item.managerName,
     managerFeePercent: 0.2,
     platFeePercent: 0.1,
-    derivatives: item.supportedDerivatives,
-    derivativesInfo: calcVaultDerivativesInfo(item.supportedDerivatives ?? []),
-    subscriptionMinLimit: Number(
-      safeInterceptionValues(item.allocationLimits[0], precision, decimals)
-    ),
-    subscriptionMaxLimit: Number(
-      safeInterceptionValues(item.allocationLimits[1], precision, decimals)
-    )
+    minimumStake: Number(safeInterceptionValues(item.minimumStake, precision, decimals)),
+    factory: item.factory,
+    ceffuWallet: item.ceffuWallet,
+    stakeTime: item.stageDurations[0],
+    unStakeTime: item.stageDurations[1],
+    preSettleTime: item.stageDurations[2],
+    settleTime: item.stageDurations[3]
   }
 }
 
@@ -113,25 +125,37 @@ export const calcVaultDetail = (
   }
 }
 
+//  uint256 vaultAddress; //基金id/地址
+// 		address underlying; //底层金库token
+// 		uint256 stage;//当前基金状态阶段
+//     uint256 shares; //持有share的数量，包含余额、赎回中、挖矿中
+// 		uint256 sharePrice; //share价格
+//     uint256 nav;//本期实时投资净值，包括申购中的和赎回未领取的
+//     int256 roe;//收益率
+// 		uint256 stakingACToken;//申购中的acToken数量
+//     uint256 unstakingShare;//赎回中的share数量
+//     uint256 unclaimedACToken;//未领取的赎回资产
+// 		int256 historicalReturn;//历史累计收益
+
 export const calcVaultUserDetail = (
   item: any,
   getTokenByAddress: GetTokenFuncType
 ): VaultUserDetailProps => {
-  const underlyingToken = getTokenByAddress(item.underlyingToken) as UnderlyingTokenTypes
-  const decimals = underlyingToken.decimals
-  const precision = underlyingToken.precision
+  const underlying = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
+  const decimals = underlying.decimals
+  const precision = underlying.precision
 
   const nav = Number(safeInterceptionValues(item.nav, precision, decimals))
   const underlyingTokenPriceInUSD = 1
   const beginSharePrice = BN(safeInterceptionValues(item.shares, 18, 18))
     .div(BN(safeInterceptionValues(item.roe, 18, 18)).plus(1))
     .toNumber()
-  const { hash } = calcVaultHash(item.vaultId ?? '0x')
+  const { hash } = calcVaultHash(item.vaultAddress ?? '0x')
 
   return {
-    address: item.vaultId,
+    address: item.vaultAddress,
     hash,
-    underlyingToken,
+    underlying,
     status: Number(safeInterceptionValues(item.stage, 0, 0)),
     // aum: Number(safeInterceptionValues(item.beginningAUM, precision, decimals)),
     aum: Number(BN(beginSharePrice).times(safeInterceptionValues(item.shares, 18, 18))),
@@ -141,11 +165,10 @@ export const calcVaultUserDetail = (
     underlyingTokenPriceInUSD,
     shares: Number(safeInterceptionValues(item.shares, 4, 18)),
     sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
-    subscribingACToken: Number(safeInterceptionValues(item.allocatingACToken, precision, decimals)),
-    redeemingShares: Number(safeInterceptionValues(item.withholdingShare, 4, 18)),
+    stakingACToken: Number(safeInterceptionValues(item.stakingACToken, precision, decimals)),
+    unstakingShare: Number(safeInterceptionValues(item.unstakingShare, 4, 18)),
     unclaimedACToken: Number(safeInterceptionValues(item.unclaimedACToken, precision, decimals)),
-    unclaimedALL: Number(safeInterceptionValues(item.unclaimedALL, 4, 18)),
-    historyReturn: Number(safeInterceptionValues(item.historyReturn, precision, decimals)),
+    historicalReturn: Number(safeInterceptionValues(item.historicalReturn, precision, decimals)),
     roe: Number(safeInterceptionValues(item.roe, 4, 16))
   }
 }

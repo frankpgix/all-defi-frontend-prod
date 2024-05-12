@@ -21,11 +21,11 @@ const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
   const { account } = useProfile()
 
   const {
-    data: { baseInfo, vaultDetail, vaultUserDetail, vaultShareComposition },
+    data: { baseInfo, vaultDetail, vaultUserDetail },
     isLoading: loading,
     refetch: getData
   } = useVaultDetails(fundAddress, account ?? '0x')
-
+  console.log(baseInfo)
   return (
     <>
       {!loading && vaultDetail.isClosed && (
@@ -46,7 +46,6 @@ const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
           userData={vaultUserDetail}
           base={baseInfo}
           data={vaultDetail}
-          share={vaultShareComposition}
           loading={loading}
           getData={getData}
         />

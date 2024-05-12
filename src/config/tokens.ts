@@ -15,7 +15,8 @@ export const UNKNOWN = {
   name: 'UNKNOWN',
   precision: 4,
   symbol: 'UNKNOWN',
-  address: zeroAddress
+  address: zeroAddress,
+  acTokenName: 'acUNKNOWN'
 } as TokenTypes
 
 export const ethConfig: ChainTokenTypes = {

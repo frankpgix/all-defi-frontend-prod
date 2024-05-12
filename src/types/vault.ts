@@ -8,9 +8,29 @@ export interface GlobalAssetStatisticProps {
 }
 
 // Vault baseInfo Props
+
+// hash,
+// underlying,
+// acToken: item.acToken,
+// address: vaultAddress ?? '0x',
+// createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
+// name: item.name,
+// symbol: item.symbol,
+// desc: item.desc,
+// manager: item.manager,
+// managerName: item.managerName,
+// managerFeePercent: 0.2,
+// platFeePercent: 0.1,
+// minimumStake: Number(safeInterceptionValues(item.minimumStake, precision, decimals)),
+// factory: item.factory,
+// ceffuWallet: item.ceffuWallet,
+// stakeTime: item.stageDurations[0],
+// unStakeTime: item.stageDurations[1],
+// preSettleTime: item.stageDurations[2],
+// settleTime: item.stageDurations[3]
 export interface VaultBaseInfoProps {
   hash: string
-  underlyingToken: UnderlyingTokenTypes
+  underlying: UnderlyingTokenTypes
   acToken: AddressType
   address: AddressType
   createTime: number
@@ -21,31 +41,14 @@ export interface VaultBaseInfoProps {
   managerName: string
   managerFeePercent: number
   platFeePercent: number
-  derivatives: AddressType[]
-  derivativesInfo: { name: string; value: AddressType }[]
-  subscriptionMinLimit: number
-  subscriptionMaxLimit: number
+  minimumStake: number
+  factory: AddressType
+  ceffuWallet: AddressType
+  stakeTime: number
+  unStakeTime: number
+  preSettleTime: number
+  settleTime: number
 }
-
-// beginningAUM: Number(safeInterceptionValues(item.beginningAUM, decimals, decimals)),
-// aum: Number(safeInterceptionValues(item.aum, decimals, decimals)),
-
-// underlyingBalance: Number(safeInterceptionValues(item.underlyingBalance, decimals, decimals)),
-// underlyingPriceInUSD: Number(safeInterceptionValues(item.underlyingPriceInUSD, 4, 18)),
-
-// sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
-// stakingACToken: Number(safeInterceptionValues(item.stakingACToken, decimals, decimals)),
-// unstakingShare: Number(safeInterceptionValues(item.unstakingShare)),
-
-// roe: Number(safeInterceptionValues(item.roe, 4, 16)),
-// historicalReturn: Number(safeInterceptionValues(item.historicalReturn, decimals, decimals)),
-
-// managerFee: Number(safeInterceptionValues(item.managerFee, decimals, decimals)),
-// platFee: Number(safeInterceptionValues(item.platFee, decimals, decimals)),
-// historicalManagerFee: Number(
-//   safeInterceptionValues(item.historicalManagerFee, decimals, decimals)
-// ),
-// historicalPlatFee: Number(safeInterceptionValues(item.historicalPlatFee, decimals, decimals))
 
 export interface VaultDetailProps {
   hash: string
@@ -84,10 +87,27 @@ export interface VaultDetailProps {
   historicalPlatFee: number
 }
 
+// address: item.vaultAddress,
+// hash,
+// underlying,
+// status: Number(safeInterceptionValues(item.stage, 0, 0)),
+// // aum: Number(safeInterceptionValues(item.beginningAUM, precision, decimals)),
+// aum: Number(BN(beginSharePrice).times(safeInterceptionValues(item.shares, 18, 18))),
+// beginSharePrice,
+// nav,
+// navInUSD: BN(nav).times(underlyingTokenPriceInUSD).toNumber(),
+// underlyingTokenPriceInUSD,
+// shares: Number(safeInterceptionValues(item.shares, 4, 18)),
+// sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
+// stakingACToken: Number(safeInterceptionValues(item.stakingACToken, precision, decimals)),
+// unstakingShare: Number(safeInterceptionValues(item.unstakingShare, 4, 18)),
+// unclaimedACToken: Number(safeInterceptionValues(item.unclaimedACToken, precision, decimals)),
+// historicalReturn: Number(safeInterceptionValues(item.historicalReturn, precision, decimals)),
+// roe: Number(safeInterceptionValues(item.roe, 4, 16))
 export interface VaultUserDetailProps {
   hash: string
   address: AddressType
-  underlyingToken: UnderlyingTokenTypes
+  underlying: UnderlyingTokenTypes
   underlyingTokenPriceInUSD: number
   status: number
   aum: number
@@ -95,11 +115,10 @@ export interface VaultUserDetailProps {
   navInUSD: number
   shares: number
   sharePrice: number
-  subscribingACToken: number
-  redeemingShares: number
+  stakingACToken: number
+  unstakingShare: number
   unclaimedACToken: number
-  unclaimedALL: number
-  historyReturn: number
+  historicalReturn: number
   roe: number
   beginSharePrice: number
 }

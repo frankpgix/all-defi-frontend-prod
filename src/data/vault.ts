@@ -21,7 +21,7 @@ export const GlobalAssetStatisticDefault: GlobalAssetStatisticProps = {
 
 export const VaultBaseInfoDefault: VaultBaseInfoProps = {
   hash: '',
-  underlyingToken: UNKNOWN,
+  underlying: UNKNOWN as any,
   acToken: '0x',
   address: '0x',
   createTime: 0,
@@ -32,15 +32,18 @@ export const VaultBaseInfoDefault: VaultBaseInfoProps = {
   managerName: '-',
   managerFeePercent: 0,
   platFeePercent: 0,
-  derivatives: [],
-  derivativesInfo: [],
-  subscriptionMinLimit: 0,
-  subscriptionMaxLimit: 0
+  minimumStake: 0,
+  factory: '0x',
+  ceffuWallet: '0x',
+  stakeTime: 0,
+  unStakeTime: 0,
+  preSettleTime: 0,
+  settleTime: 0
 }
 
 export const VaultDetailDefault: VaultDetailProps = {
   hash: '',
-  underlyingToken: UNKNOWN,
+  underlyingToken: UNKNOWN as any,
   address: '0x',
   name: '-',
   manager: '-',
@@ -56,46 +59,58 @@ export const VaultDetailDefault: VaultDetailProps = {
   preSettleEndTime: 0,
   settleEndTime: 0,
 
-  settleAUMLimit: 0,
-  realtimeAUMLimit: 0,
+  beginningAUM: 0,
   aum: 0,
-  nav: 0,
+
+  underlyingPriceInUSD: 0,
+  underlyingBalance: 0,
 
   sharePrice: 0,
-  baseTokenPriceInUSD: 0,
-  costPrice: 0,
-  unusedAsset: 0,
-  subscribingACToken: 0,
-  redeemingShares: 0,
-  miningShares: 0,
+  stakingACToken: 0,
+  unstakingShare: 0,
 
   roe: 0,
-  lastRoe: 0,
-  historyReturn: 0,
-  lastRedemptionRatio: 0,
+  historicalReturn: 0,
 
   managerFee: 0,
   platFee: 0,
-  lastManagerFee: 0,
-  historyManagerFee: 0
+  historicalManagerFee: 0,
+  historicalPlatFee: 0
 }
+
+// address: item.vaultAddress,
+//   hash,
+//   underlying,
+//   status: Number(safeInterceptionValues(item.stage, 0, 0)),
+//   // aum: Number(safeInterceptionValues(item.beginningAUM, precision, decimals)),
+//   aum: Number(BN(beginSharePrice).times(safeInterceptionValues(item.shares, 18, 18))),
+//   beginSharePrice,
+//   nav,
+//   navInUSD: BN(nav).times(underlyingTokenPriceInUSD).toNumber(),
+//   underlyingTokenPriceInUSD,
+//   shares: Number(safeInterceptionValues(item.shares, 4, 18)),
+//   sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
+//   stakingACToken: Number(safeInterceptionValues(item.stakingACToken, precision, decimals)),
+//   unstakingShare: Number(safeInterceptionValues(item.unstakingShare, 4, 18)),
+//   unclaimedACToken: Number(safeInterceptionValues(item.unclaimedACToken, precision, decimals)),
+//   historicalReturn: Number(safeInterceptionValues(item.historicalReturn, precision, decimals)),
+// roe: Number(safeInterceptionValues(item.roe, 4, 16))
 
 export const VaultUserDetailDefault: VaultUserDetailProps = {
   hash: '',
   address: '0x',
-  underlyingToken: UNKNOWN,
+  underlying: UNKNOWN as any,
   status: 1,
   shares: 0,
   aum: 0,
   sharePrice: 0,
-  subscribingACToken: 0,
-  redeemingShares: 0,
+  stakingACToken: 0,
+  unstakingShare: 0,
   unclaimedACToken: 0,
-  unclaimedALL: 0,
   nav: 0,
   navInUSD: 0,
   underlyingTokenPriceInUSD: 0,
-  historyReturn: 0,
+  historicalReturn: 0,
   roe: 0,
   beginSharePrice: 0
 }

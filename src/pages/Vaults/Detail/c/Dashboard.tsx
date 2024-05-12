@@ -1,24 +1,24 @@
-import { FC, useState, useMemo, ReactNode } from 'react'
-import dayjs from 'dayjs'
-import BN from 'bignumber.js'
+import { FC, ReactNode, useMemo, useState } from 'react'
 // import { floor } from 'lodash'
 import ContentLoader from 'react-content-loader'
+
+import BN from 'bignumber.js'
+import dayjs from 'dayjs'
 
 // import { FundBaseProps, FundDetailProps } from '@/class/help'
 import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
 
 import { calcVaultDetailChartGQL } from '@/graphql/calcGql'
 import { useVaultDetailChartData } from '@/graphql/useData'
-
-import Image from '@@/common/Image'
-import RoeShow from '@@/common/RoeShow'
 // import Loading from '@@/common/Loading'
 import { AreaChart } from '@@/common/Chart'
 import TimeSelect from '@@/common/Chart/TimeSelect'
-import Popper from '@@/common/Popper'
-import FundIcon from '@@/common/FundIcon'
-import TokenValue from '@@/common/TokenValue'
 import Select from '@@/common/Form/Select'
+import FundIcon from '@@/common/FundIcon'
+// import Image from '@@/common/Image'
+import Popper from '@@/common/Popper'
+import RoeShow from '@@/common/RoeShow'
+import TokenValue from '@@/common/TokenValue'
 
 interface Props {
   base: VaultBaseInfoProps
@@ -31,8 +31,8 @@ type optionProps = 'current epoch' | '3 Epochs' | 'all'
 const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
   const [timeType, setTimeType] = useState<optionProps>('all')
   const timeOptions: optionProps[] = ['current epoch', '3 Epochs', 'all']
-  const underlyingToken = useMemo(() => base.underlyingToken, [base.underlyingToken])
-
+  const underlyingToken = useMemo(() => base.underlying, [base.underlying])
+  console.log(underlyingToken, 'underlyingToken')
   const [chartType, setChartType] = useState<number | string>('aum')
 
   const gql = useMemo(
@@ -66,7 +66,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
               <p>{base.desc}</p>
             </article>
           )}
-          <section>
+          {/* <section>
             <h5>Protocols Allowed</h5>
             {loading ? (
               <ContentLoader
@@ -88,10 +88,10 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
                 ))}
               </main>
             )}
-          </section>
+          </section> */}
           <footer>
             <DashboardItem label="Net Asset Value" loading={loading}>
-              <TokenValue value={data.nav} token={underlyingToken} size="mini" format="0,0.00" />
+              <TokenValue value={data.aum} token={underlyingToken} size="mini" format="0,0.00" />
             </DashboardItem>
             <DashboardItem label="Vault Inception Date" loading={loading}>
               {dayjs(data.createTime).format('MMM DD, YYYY')}
@@ -99,10 +99,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
             <DashboardItem label="Capacity Available" loading={loading}>
               <TokenValue
                 value={Math.max(
-                  BN(data.realtimeAUMLimit)
-                    .minus(data.aum)
-                    .minus(data.subscribingACToken)
-                    .toNumber(),
+                  BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber(),
                   0
                 )}
                 token={underlyingToken}
@@ -123,7 +120,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
               loading={loading}
             >
               <TokenValue
-                value={data.historyReturn}
+                value={data.historicalReturn}
                 format="0,0.00"
                 token={underlyingToken}
                 size="mini"

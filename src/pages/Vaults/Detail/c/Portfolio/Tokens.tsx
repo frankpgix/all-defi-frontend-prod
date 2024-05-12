@@ -21,10 +21,7 @@ interface Props {
 
 const Portfolio: FC<Props> = ({ fundAddress, base }) => {
   const { getTokenByAddress } = useToken()
-  const { data, isLoading: loading } = useAssetComposition(
-    fundAddress,
-    base.underlyingToken.address
-  )
+  const { data, isLoading: loading } = useAssetComposition(fundAddress, base.underlying.address)
 
   const list = useMemo(
     () =>

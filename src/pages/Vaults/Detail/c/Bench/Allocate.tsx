@@ -3,7 +3,7 @@ import { FC, useMemo, useState } from 'react'
 import BN from 'bignumber.js'
 import { isNaN } from 'lodash'
 
-import { useAllocate } from '@/hooks/Contracts/useVault'
+import { useStake } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
 import { useToken, useUserBalances } from '@/hooks/useToken'
 
@@ -25,7 +25,7 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
   const { getTokenByName } = useToken()
   const { account } = useProfile()
   const { balances, refetch: reBalances } = useUserBalances()
-  const { onAllocate } = useAllocate(data.address)
+  const { onStake } = useStake(data.address)
 
   const acToken = useMemo(
     () => getTokenByName(data.underlyingToken.acTokenName),
@@ -41,22 +41,16 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
     () =>
       Number(
         formatNumber(
-          Math.max(
-            BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(),
-            0
-          ),
+          Math.max(BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber(), 0),
           4,
           '0.0000'
         )
       ),
-    [data.realtimeAUMLimit, data.aum, data.subscribingACToken]
+    [data.aum, data.beginningAUM, data.stakingACToken]
   )
   // const maxBalance = useMemo(() => BN(acTokenBalance).toNumber(), [acTokenBalance])
-  const maxValue = useMemo(
-    () => Math.min(maxAum, acTokenBalance, base.subscriptionMaxLimit),
-    [maxAum, acTokenBalance, base.subscriptionMaxLimit]
-  )
-  console.log(maxValue, maxAum, acTokenBalance, base.subscriptionMaxLimit)
+  const maxValue = useMemo(() => Math.min(maxAum, acTokenBalance), [maxAum, acTokenBalance])
+  console.log(maxValue, maxAum, acTokenBalance)
   // const maxValue = useMemo(() => 10000, [maxAum, maxBalance])
 
   const isInAllocate = useMemo(() => [0, 1, 2].includes(data.status), [data.status])
@@ -92,7 +86,7 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
 
   const goAllocate = async () => {
     if (account) {
-      await onAllocate(acToken, Number(value), account, () => {
+      await onStake(acToken, Number(value), account, () => {
         reBalances()
         getData()
         setValue(0)
@@ -102,7 +96,7 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
   }
 
   const minAmountError = useMemo(
-    () => inputValue !== '' && Number(inputValue) < base.subscriptionMinLimit,
+    () => inputValue !== '' && Number(inputValue) < base.minimumStake,
     [inputValue]
   )
   const maxAmountError = useMemo(
@@ -127,7 +121,7 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
           >
             {minAmountError && (
               <p className="fall">
-                Minimum deposit amount {base.subscriptionMinLimit} {acToken.name}
+                Minimum deposit amount {base.minimumStake} {acToken.name}
               </p>
             )}
             {maxAmountError && (

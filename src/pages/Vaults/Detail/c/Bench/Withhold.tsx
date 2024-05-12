@@ -3,10 +3,10 @@ import { FC, useMemo, useState } from 'react'
 import BN from 'bignumber.js'
 import { isNaN } from 'lodash'
 
-import { useWithhold } from '@/hooks/Contracts/useVault'
+import { useUnstake } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
 
-import { ShareCompositionProps, VaultDetailProps, VaultUserDetailProps } from '@/types/vault'
+import { VaultDetailProps, VaultUserDetailProps } from '@/types/vault'
 
 import Button from '@@/common/Button'
 import InfoDialog from '@@/common/Dialog/Info'
@@ -16,13 +16,12 @@ import Tip from '@@/common/Tip'
 interface Props {
   userData: VaultUserDetailProps
   data: VaultDetailProps
-  share: ShareCompositionProps
   getData: () => void
 }
 
-const Withhold: FC<Props> = ({ data, userData, getData, share }) => {
+const Withhold: FC<Props> = ({ data, userData, getData }) => {
   const { account } = useProfile()
-  const { onWithhold } = useWithhold(data.address)
+  const { onUnstake } = useUnstake(data.address)
 
   const [value, setValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
@@ -30,8 +29,8 @@ const Withhold: FC<Props> = ({ data, userData, getData, share }) => {
 
   const isInWithhold = useMemo(() => data.status === 1, [data.status])
   const maxValue = useMemo(() => {
-    return BN(userData.shares).minus(userData.redeemingShares).minus(share.mining).toNumber()
-  }, [userData.shares, userData.redeemingShares, share.mining])
+    return BN(userData.shares).minus(userData.unstakingShare).toNumber()
+  }, [userData.shares, userData.unstakingShare])
 
   const onSliderChange = (val: number) => {
     if (maxValue > 0) {
@@ -62,7 +61,7 @@ const Withhold: FC<Props> = ({ data, userData, getData, share }) => {
 
   const goWithhold = async () => {
     if (account) {
-      await onWithhold(Number(value), account)
+      await onUnstake(data.underlyingToken, Number(value), account)
       getData()
       setValue(0)
       setSliderValue(0)

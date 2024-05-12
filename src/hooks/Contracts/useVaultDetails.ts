@@ -126,16 +126,10 @@ export const useVaultDetails = (vaultAddress: AddressType, account: AddressType)
         ...VaultReaderContract,
         functionName: 'userDetail',
         args: [vaultAddress, account]
-      },
-      {
-        ...VaultReaderContract,
-        functionName: 'shareCompositionOf',
-        args: [vaultAddress, account]
       }
     ]
   }) as {
     data: [
-      { result: any; status: string },
       { result: any; status: string },
       { result: any; status: string },
       { result: any; status: string }
@@ -157,11 +151,9 @@ export const useVaultDetails = (vaultAddress: AddressType, account: AddressType)
       data[2].status === 'success'
         ? calcVaultUserDetail(data[2].result, getTokenByAddress)
         : VaultUserDetailDefault
-    const vaultShareComposition =
-      data[3].status === 'success' ? calcShareComposition(data[3].result) : ShareCompositionDefault
 
     return {
-      data: { baseInfo, vaultDetail, vaultUserDetail, vaultShareComposition },
+      data: { baseInfo, vaultDetail, vaultUserDetail },
       isLoading,
       isSuccess,
       refetch
