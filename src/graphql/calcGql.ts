@@ -1,6 +1,9 @@
 import { gql } from '@apollo/client'
-import { createArrayByNumber } from '@/utils/tools'
+
 import { AddressType } from '@/types/base'
+
+import { createArrayByNumber } from '@/utils/tools'
+
 import { calcDataTypeAndStartTime } from './help'
 
 export const calcVaultDatasGql = (vaultAddress: string, type: string, createTime: number) => {
@@ -92,9 +95,9 @@ export const calcVaultListGQL = () => gql`
       id
       # verified
       name
-      underlyingToken
+      underlying
       beginningAUM
-      capacityAvailable
+      # capacityAvailable
       managerName
       dayReturn
       weekReturn
@@ -123,6 +126,28 @@ export const calcVaultMonthDataGql = (vaultAddress: string) => {
         periodStartUnix
         roe
         underlyingToken
+      }
+    }
+  `
+}
+
+export const calcUserDepositDataGql = (userAddress: string) => {
+  return gql`
+    query {
+      deposits(
+        orderBy: timestamp
+        orderDirection: desc
+        where: {
+          user: "${userAddress}"
+        }
+      ) {
+        id
+        user
+        underlying
+        amount
+        lockDuration
+        depositId
+        timestamp
       }
     }
   `

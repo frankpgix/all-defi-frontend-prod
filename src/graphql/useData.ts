@@ -115,18 +115,18 @@ export const useVaultListData = (): { loading: boolean; data: any[]; error: any 
   console.log(sData, 'sData')
   const data = (sData?.vaults ?? [])
     .map((item: any) => {
-      const baseToken = getTokenByAddress(item.underlyingToken)
+      const baseToken = getTokenByAddress(item.underlying)
       return {
         name: item.name,
         managerName: item.managerName,
         epoch: item.epochIndex,
         address: item.id,
         aum: safeInterceptionValues(item.beginningAUM, baseToken.precision, baseToken.decimals),
-        capacityAvailable: safeInterceptionValues(
-          item.capacityAvailable,
-          baseToken.precision,
-          baseToken.decimals
-        ),
+        // capacityAvailable: safeInterceptionValues(
+        //   item.capacityAvailable,
+        //   baseToken.precision,
+        //   baseToken.decimals
+        // ),
         apr: safeInterceptionValues(item.currentAPR.split('.')[0], 4, 18),
         dayReturn: safeInterceptionValues(item.dayReturn, 4, 18),
         weekReturn: safeInterceptionValues(item.weekReturn, 4, 18),
@@ -134,7 +134,7 @@ export const useVaultListData = (): { loading: boolean; data: any[]; error: any 
         yearReturn: safeInterceptionValues(item.yearReturn, 4, 18),
         baseToken,
         status: item.stage,
-        verified: item.stage !== 0
+        verified: true
       }
     })
     .filter((item: any) => item.verified === true)

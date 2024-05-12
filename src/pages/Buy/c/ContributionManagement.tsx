@@ -5,15 +5,15 @@ import Table from 'rc-table'
 
 import { useProfile } from '@/hooks/useProfile'
 
-import { useUserACBuyData } from '@/graphql/useFundData'
+import { useUserDepositData } from '@/graphql/useFundData'
 import { formatNumber } from '@/utils/tools'
 import HashLink from '@@/common/HashLink'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 
 const ContributionManagement: FC = () => {
   const { account: address } = useProfile()
-  const { data, loading } = useUserACBuyData(address ?? '')
-  // console.log(data)
+  const { data, loading } = useUserDepositData(address ?? '')
+  console.log(data, 111)
   const webColumns = [
     {
       title: 'Time',

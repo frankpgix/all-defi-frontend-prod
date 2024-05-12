@@ -57,13 +57,13 @@ const FundList: FC = () => {
         <TokenValue value={value} token={row.baseToken} size="mini" format="0,0.00" />
       )
     },
-    {
-      title: 'Capacity Available',
-      dataIndex: 'capacityAvailable',
-      render: (value: number, row: any) => (
-        <TokenValue value={value} token={row.baseToken} size="mini" format="0,0.00" />
-      )
-    },
+    // {
+    //   title: 'Capacity Available',
+    //   dataIndex: 'capacityAvailable',
+    //   render: (value: number, row: any) => (
+    //     <TokenValue value={value} token={row.baseToken} size="mini" format="0,0.00" />
+    //   )
+    // },
     {
       title: '1 Day',
       dataIndex: 'dayReturn',

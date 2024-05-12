@@ -1,4 +1,5 @@
 import { AddressType } from '@/types/base'
+
 export interface VaultMonthDataType {
   year: number
   month: number
@@ -47,4 +48,14 @@ export interface ACBuyDataTypes {
   investor: string
   sallAmount: string
   underlyingToken: AddressType
+}
+
+export interface UserDepositDataTypes {
+  id: string
+  user: string
+  underlying: AddressType
+  amount: string
+  lockDuration: number
+  depositId: number
+  timestamp: number
 }
