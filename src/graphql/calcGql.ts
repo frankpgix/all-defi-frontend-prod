@@ -138,7 +138,7 @@ export const calcUserDepositDataGql = (userAddress: string) => {
         orderBy: timestamp
         orderDirection: desc
         where: {
-          user: "${userAddress}"
+          user: "${userAddress.toLocaleLowerCase()}"
         }
       ) {
         id

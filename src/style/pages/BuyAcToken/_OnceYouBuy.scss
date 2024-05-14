@@ -199,7 +199,6 @@
     }
     &-arrow {
       &-1,
-      &-2,
       &-3,
       &-4,
       &-5 {
@@ -215,12 +214,11 @@
         left: 222px;
       }
       &-1 {
-        top: 210px;
-        background-image: url($res + 'icon/buy-arrow-1.png');
+        background-image: url($res + 'icon/buy-arrow-0.png');
+        top: 235px;
       }
       &-2 {
-        top: 268px;
-        background-image: url($res + 'icon/buy-arrow-2.png');
+        display: none;
       }
       &-3,
       &-4 {

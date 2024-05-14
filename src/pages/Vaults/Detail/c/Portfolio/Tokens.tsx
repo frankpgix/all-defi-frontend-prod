@@ -66,7 +66,7 @@ const Portfolio: FC<Props> = ({ fundAddress, base }) => {
       dataIndex: 'value',
       width: 240,
       render: (value: number) => (
-        <TokenValue value={value} token={base.underlyingToken} size="mini" format="0,0.00" />
+        <TokenValue value={value} token={base.underlying} size="mini" format="0,0.00" />
       )
     }
   ]
