@@ -10,7 +10,7 @@ interface Props {
 
 const ButtonSelect: FC<Props> = ({ value, onChange, options }) => {
   return (
-    <div className="web-c-time-select">
+    <div className="c-select-button">
       {options.map((item, index) => (
         <span
           key={index}

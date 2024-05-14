@@ -84,7 +84,7 @@ const Bench: FC = () => {
   }, [lockDuration])
   return (
     <>
-      <BlueLineSection title="Contribution">
+      <BlueLineSection title="Contribution" className="web-buy-bench">
         <div className="web-buy-bench-form">
           <h4>Add Token</h4>
           <div className="web-buy-bench-form-item">
@@ -119,8 +119,8 @@ const Bench: FC = () => {
           <h4>You will receive</h4>
           <div className="web-buy-bench-pre-detail">
             <dl>
-              <dt>{amount || 0}</dt>
-              <dd>ac{currBaseToken.name}</dd>
+              <dd>{amount || 0}</dd>
+              <dt>ac{currBaseToken.name}</dt>
             </dl>
             <dl>
               <dt>Token to Be locked</dt>

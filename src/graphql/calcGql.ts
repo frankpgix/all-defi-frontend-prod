@@ -146,8 +146,8 @@ export const calcUserDepositDataGql = (userAddress: string) => {
         underlying
         amount
         lockDuration
-        depositId
         timestamp
+        depositId
       }
     }
   `

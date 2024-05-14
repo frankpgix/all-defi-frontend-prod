@@ -112,12 +112,14 @@ export const useUserDepositData = (userAddress: string) => {
     const token = getTokenByAddress(item.underlying)
     console.log(111, token, item)
     return {
+      id: item.id,
       amount: Number(safeInterceptionValues(item.amount, token.decimals, token.decimals)),
       tokenName: token.name,
       hash: item.id.split('-')[0],
       user: item.user,
       lockDuration: item.lockDuration,
-      timestamp: item.timestamp * 1000
+      timestamp: item.timestamp * 1000,
+      depositId: item.depositId
     }
   })
   return { loading, error, data, refetch }

@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import dayjs from 'dayjs'
+import RelativeTime from 'dayjs/plugin/relativeTime'
 import Table from 'rc-table'
 
 import { useProfile } from '@/hooks/useProfile'
@@ -10,30 +11,43 @@ import { formatNumber } from '@/utils/tools'
 import HashLink from '@@/common/HashLink'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 
+dayjs.extend(RelativeTime)
 const ContributionManagement: FC = () => {
   const { account: address } = useProfile()
   const { data, loading } = useUserDepositData(address ?? '')
   console.log(data, 111)
   const webColumns = [
     {
-      title: 'Time',
+      title: 'Contribution Time',
       dataIndex: 'timestamp',
       render: (value: number) => dayjs(value).format('MMM DD, YYYY hh:mm:ss A')
     },
     {
-      title: 'Contribution Value',
+      title: 'Lock-up Value',
       dataIndex: 'amount',
       render: (value: number, row: any) => `${formatNumber(value, 4, '0,0.0000')} ${row.tokenName}`
     },
     {
-      title: 'sALL Token Amount',
-      dataIndex: 'sallAmount',
-      render: (value: number) => formatNumber(value, 3, '0,0.000')
+      title: 'Locking time',
+      dataIndex: 'lockDuration',
+      render: (value: number) => `${value / 60 / 60 / 24} Days`
     },
     {
-      title: 'Hash',
-      dataIndex: 'hash',
-      render: (value: string) => <HashLink address={value} prefixLength={16} suffixLength={16} />
+      title: 'Projected Rate of Return',
+      dataIndex: 'lockDuration',
+      render: () => `20%`
+    },
+    {
+      title: 'Unlock Countdown',
+      dataIndex: 'timestamp',
+      render: (value: number, row: any) => {
+        return dayjs().to(value + row.lockDuration * 1000)
+      }
+    },
+    {
+      title: 'Action',
+      dataIndex: 'depositId',
+      render: (value: string) => value
     }
   ]
   return (
