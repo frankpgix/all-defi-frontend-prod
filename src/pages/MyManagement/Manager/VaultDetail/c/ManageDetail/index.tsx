@@ -5,8 +5,7 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import BN from 'bignumber.js'
 import dayjs from 'dayjs'
 
-import { useVaultUpdatingData } from '@/hooks/Contracts/useVaultReader'
-
+// import { useVaultUpdatingData } from '@/hooks/Contracts/useVaultReader'
 import { AddressType } from '@/types/base'
 // import Dapp from '@@/web/Dapp'
 import {
@@ -51,22 +50,22 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
   // const { data: upData, loading: upLoading } = useRequest(
   //   async () => await getFundUpdatingData(vaultAddress, base.baseToken)
   // )
-  const { data: upData, isLoading: upLoading } = useVaultUpdatingData(
-    vaultAddress,
-    base.underlyingToken
-  )
+  // const { data: upData, isLoading: upLoading } = useVaultUpdatingData(
+  //   vaultAddress,
+  //   base.underlyingToken
+  // )
   // console.log(upData, data)
 
   const percent = useMemo(
     () =>
       Number(
         formatNumber(
-          Math.min(BN(data.aum).div(data.settleAUMLimit).times(100).toNumber(), 100),
+          Math.min(BN(data.beginningAUM).div(data.aum).times(100).toNumber(), 100),
           2,
           '0.00'
         )
       ),
-    [data.aum, data.settleAUMLimit]
+    [data.aum, data.beginningAUM]
   )
   const remainPercent = useMemo(() => BN(100).minus(percent).toNumber(), [percent])
   // console.log('breach', breach, 'data', data, 'base', base)
@@ -76,26 +75,26 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
   // }, [data.settleAUMLimit, data.aum])
   // console.log(data, base, 12345, floor(-0.123456, 2), floor(0.123456, 2))
 
-  const managerALLStakingRatio = useMemo(() => {
-    if (data.settleAUMLimit >= data.aum) return '100'
-    return formatNumber(BN(data.settleAUMLimit).div(data.aum).toNumber(), 2, '0.00')
-  }, [data.settleAUMLimit, data.aum])
-  const currmanagerALLStakingRatio = useMemo(() => {
-    if (data.settleAUMLimit >= data.nav) return '100'
-    return formatNumber(BN(data.settleAUMLimit).div(data.nav).toNumber(), 2, '0.00')
-  }, [data.settleAUMLimit, data.nav])
+  // const managerALLStakingRatio = useMemo(() => {
+  //   if (data.aum >= data.beginningAUM) return '100'
+  //   return formatNumber(BN(data.aum).div(data.aum).toNumber(), 2, '0.00')
+  // }, [data.settleAUMLimit, data.aum])
+  // const currmanagerALLStakingRatio = useMemo(() => {
+  //   if (data.settleAUMLimit >= data.nav) return '100'
+  //   return formatNumber(BN(data.settleAUMLimit).div(data.nav).toNumber(), 2, '0.00')
+  // }, [data.settleAUMLimit, data.nav])
 
   const nextRoundCash = useMemo(() => {
-    let temp = BN(data.redeemingShares).times(data.sharePrice)
+    let temp = BN(data.unstakingShare).times(data.sharePrice)
     if (data.epochIndex % 6 === 0) {
       temp = temp.plus(data.platFee).plus(data.managerFee)
     }
-    const v = Number(temp.minus(data.subscribingACToken).toFixed(2, BN.ROUND_UP))
+    const v = Number(temp.minus(data.stakingACToken).toFixed(2, BN.ROUND_UP))
     return v >= 0 ? v : 0
   }, [
-    data.redeemingShares,
+    data.unstakingShare,
     data.sharePrice,
-    data.subscribingACToken,
+    data.stakingACToken,
     data.epochIndex,
     data.platFee,
     data.managerFee
@@ -112,7 +111,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
     () => Math.max(BN(data.aum).times(data.roe).times(0.2).div(100).toNumber(), 0),
     [data.aum, data.roe]
   )
-  const baseToken = useMemo(() => base.underlyingToken, [base.underlyingToken])
+  const baseToken = useMemo(() => base.underlying, [base.underlying])
 
   const activeIndex = import.meta.env.NODE_ENV === 'development' ? 0 : 0
   // const acToken = useMemo(() => {
@@ -122,8 +121,9 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
   // 下轮赎回减去下轮申购减去FEE ？？ 大于现金余额
   const isShowCashBalanceLess = useMemo(
     () =>
-      BN(nextRoundCash).minus(data.subscribingACToken).toNumber() > BN(data.unusedAsset).toNumber(),
-    [nextRoundCash, data.subscribingACToken, data.unusedAsset]
+      BN(nextRoundCash).minus(data.stakingACToken).toNumber() >
+      BN(data.underlyingBalance).toNumber(),
+    [nextRoundCash, data.stakingACToken, data.underlyingBalance]
   )
   return (
     <>
@@ -137,7 +137,12 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           label="Cash Balance"
           loading={loading}
           value={
-            <TokenValue value={data.unusedAsset} token={baseToken} size="small" format="0,0.00" />
+            <TokenValue
+              value={data.underlyingBalance}
+              token={baseToken}
+              size="small"
+              format="0,0.00"
+            />
           }
         />
         <CountItem
@@ -172,7 +177,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
         </>
       )}
       {/* 如果本轮盈利，是否会占用可申购余额。 */}
-      {data.settleAUMLimit < data.nav && (
+      {data.aum < data.beginningAUM && (
         <>
           <Alert show type="error">
             The current allocation balance is insufficient, please increase vault max AUM limit
@@ -244,14 +249,14 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               loading={loading}
               value={
                 <TokenValue
-                  value={base.subscriptionMinLimit}
+                  value={base.minimumStake}
                   token={baseToken}
                   size="mini"
                   format="0,0.00"
                 />
               }
             />
-            <SectionItem
+            {/* <SectionItem
               label="Maximum Deposit Amount"
               loading={loading}
               value={
@@ -262,7 +267,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                   format="0,0.00"
                 />
               }
-            />
+            /> */}
             <SectionItem label="Incentive Rate" loading={loading} value="20%" />
           </SectionLayout>
 
@@ -278,39 +283,15 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
             their investment strategy and cause withholding, please modify it carefully.
           </SectionTip>
           <SectionButtons>
-            {upLoading || !upData ? (
-              <ContentLoader
-                width={400}
-                height={56}
-                viewBox="0 0 400 56"
-                backgroundColor="#eaeced"
-                foregroundColor="#ffffff"
-              >
-                <rect x="0" y="0" rx="28" ry="28" width="150" height="56" />
-                <rect x="170" y="0" rx="28" ry="28" width="230" height="56" />
-              </ContentLoader>
-            ) : (
-              <>
-                <ValutSettleButton
-                  disabled={![5, 4, 6].includes(data.status) || data.isClosed}
-                  outline
-                  callback={getData}
-                  vaultAddress={vaultAddress}
-                  data={data}
-                >
-                  settle
-                </ValutSettleButton>
-                <Button
-                  to={`/manage/manager/vault-edit/${vaultAddress}`}
-                  disabled={upData.verifyStatus === 1 || data.isClosed}
-                >
-                  {[-1, 2].includes(upData.verifyStatus) ? 'Reset policies' : 'UNDER REVIEW'}
-                </Button>
-                {/* <Button to={`/manage/manager/dapp/${vaultAddress}?dapp=https://app.uniswap.com/`}>
-                  dapp test
-                </Button> */}
-              </>
-            )}
+            <ValutSettleButton
+              disabled={![5, 4, 6].includes(data.status) || data.isClosed}
+              outline
+              callback={getData}
+              vaultAddress={vaultAddress}
+              data={data}
+            >
+              settle
+            </ValutSettleButton>
           </SectionButtons>
         </TabPanel>
         {/* Revenue TabPanel */}
@@ -411,7 +392,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               loading={loading}
               value={
                 <TokenValue
-                  value={data.lastManagerFee}
+                  value={data.historicalManagerFee}
                   token={baseToken}
                   size="mini"
                   format="0,0.00"
@@ -422,7 +403,8 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               label="Average Price"
               loading={loading}
               value={
-                <TokenValue value={data.costPrice} token={baseToken} size="mini" format="0,0.00" />
+                // data.costPrice
+                <TokenValue value={0} token={baseToken} size="mini" format="0,0.00" />
               }
             />
           </SectionLayout>
@@ -454,7 +436,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               loading={loading}
               value={
                 <TokenValue
-                  value={data.lastManagerFee / 2}
+                  value={data.historicalManagerFee / 2}
                   token={baseToken}
                   size="mini"
                   format="0,0.00"
@@ -483,10 +465,10 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               loading={loading}
               // popper="Total amount of Shares under redemption"
             >
-              {formatNumber(data.redeemingShares, 2, '0,0.00')} Shares ≈{' '}
+              {formatNumber(data.unstakingShare, 2, '0,0.00')} Shares ≈{' '}
               {/*formatNumber(BN(data.redeemingShares).times(data.sharePrice).toNumber(), 2, '$0,0.00')*/}
               <TokenValue
-                value={BN(data.redeemingShares).times(data.sharePrice).toNumber()}
+                value={BN(data.unstakingShare).times(data.sharePrice).toNumber()}
                 token={baseToken}
                 size="mini"
                 format="0,0.00"
@@ -498,7 +480,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               // popper="Total value under subscription"
               value={
                 <TokenValue
-                  value={data.subscribingACToken}
+                  value={data.stakingACToken}
                   token={baseToken}
                   size="mini"
                   format="0,0.00"
@@ -513,10 +495,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               )*/}
               <TokenValue
                 value={Math.max(
-                  BN(data.realtimeAUMLimit)
-                    .minus(data.aum)
-                    .minus(data.subscribingACToken)
-                    .toNumber(),
+                  BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber(),
                   0
                 )}
                 token={baseToken}
@@ -543,14 +522,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               label="Max AUM Limit"
               // popper="Max AUM Limit of the fund"
               loading={loading}
-              value={
-                <TokenValue
-                  value={data.realtimeAUMLimit}
-                  token={baseToken}
-                  size="mini"
-                  format="0,0.00"
-                />
-              }
+              value={<TokenValue value={data.aum} token={baseToken} size="mini" format="0,0.00" />}
             />
           </SectionLayout>
           <SectionPercentageLine percent={percent} remainPercent={remainPercent} />
@@ -585,15 +557,15 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               popper="ALL tokens that are permanently confiscated due to continuous violation of rules"
               value={formatNumber(breach.latestConfiscatedALL, 2, '0,0.00')}
             />
-            <SectionItem
+            {/* <SectionItem
               label="Manager ALL Token Staking Ratio"
               loading={loading}
               popper="Ratio of the vault's Max AUM Limit to the vault's current NAV. If such ratio is less than 100%, manager can not claim all the incentive fee. The Staking Ratio of the Last Epoch is calculated by the vault's Max AUM Limit divided by the vault's NAV in the last Epoch. This ratio decides whether manager can receive 100% of the incentive fee of last Epoch"
               value={`${managerALLStakingRatio}%`}
-            />
+            /> */}
           </SectionLayout>
           <SectionLayout col="3">
-            <SectionItem
+            {/* <SectionItem
               label="Current Manager All Token Staking Ratio"
               popper="The Staking Ratio of the Current Epoch is calculated by the real-time data of the vault's Max AUM Limit divided by the vault's NAV now. Manager can decide whether to stake more ALL Token in order to get 100% of the incentive fee in the next Epoch. When the Staking Ratio of the Current Epoch is less than 100%, please stake more ALL Token before end of current Epoch to sure to receive 100% of the incentive fee during settlement."
               popperWidth="400px"
@@ -605,7 +577,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               loading={loading}
               popper="Withholding Fulfilled Ratio of last Epoch. The ratio less than 100% means there is not enough cash to meet all the withholding requests at last settlement. withholding Fulfilled Ratio: (Available Cash Balance - Fees) / Total withholding Value"
               value={`${data.lastRedemptionRatio}%`}
-            />
+            /> */}
             <SectionItem
               label="Consecutive Default"
               loading={loading}
@@ -614,7 +586,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           </SectionLayout>
         </TabPanel>
         <TabPanel>
-          <DappTab vaultAddress={vaultAddress} derivatives={base.derivatives} />
+          {/* <DappTab vaultAddress={vaultAddress} derivatives={base.derivatives} /> */}
         </TabPanel>
         {/* <TabPanel>2<Dapp base={base} data={data} /></TabPanel> */}
       </Tabs>
