@@ -152,6 +152,7 @@ export const useVaultDetails = (vaultAddress: AddressType, account: AddressType)
         ? calcVaultUserDetail(data[2].result, getTokenByAddress)
         : VaultUserDetailDefault
 
+    console.log(baseInfo, vaultDetail, vaultUserDetail, 'baseInfo, vaultDetail, vaultUserDetail')
     return {
       data: { baseInfo, vaultDetail, vaultUserDetail },
       isLoading,

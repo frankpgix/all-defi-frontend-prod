@@ -4,18 +4,28 @@ import dayjs from 'dayjs'
 import RelativeTime from 'dayjs/plugin/relativeTime'
 import Table from 'rc-table'
 
+import { useWithdraw } from '@/hooks/Contracts/useACProtocol'
 import { useProfile } from '@/hooks/useProfile'
 
 import { useUserDepositData } from '@/graphql/useFundData'
 import { formatNumber } from '@/utils/tools'
-import HashLink from '@@/common/HashLink'
+import Button from '@@/common/Button'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
+
+import { Infinite } from './Bench'
 
 dayjs.extend(RelativeTime)
 const ContributionManagement: FC = () => {
   const { account: address } = useProfile()
-  const { data, loading } = useUserDepositData(address ?? '')
-  console.log(data, 111)
+  const { onWithdraw } = useWithdraw()
+  const { data, loading, refetch } = useUserDepositData(address ?? '')
+  const now = +new Date()
+  console.log(data)
+  const onItemUnLock = (item: any) => {
+    if (address) {
+      onWithdraw(item.underlying, item.depositId, address, refetch)
+    }
+  }
   const webColumns = [
     {
       title: 'Contribution Time',
@@ -30,7 +40,13 @@ const ContributionManagement: FC = () => {
     {
       title: 'Locking time',
       dataIndex: 'lockDuration',
-      render: (value: number) => `${value / 60 / 60 / 24} Days`
+      render: (value: string) => {
+        console.log(value.length, 'value.length')
+        if (value.length === 78) {
+          return <Infinite />
+        }
+        return `${Number(value) / 60 / 60 / 24} Days`
+      }
     },
     {
       title: 'Projected Rate of Return',
@@ -41,13 +57,24 @@ const ContributionManagement: FC = () => {
       title: 'Unlock Countdown',
       dataIndex: 'timestamp',
       render: (value: number, row: any) => {
+        if (row.lockDuration.length === 78) {
+          return <Infinite />
+        }
         return dayjs().to(value + row.lockDuration * 1000)
       }
     },
     {
       title: 'Action',
       dataIndex: 'depositId',
-      render: (value: string) => value
+      render: (_: string, row: any) => {
+        const disabled =
+          row.lockDuration.length === 78 || row.timestamp + row.lockDuration * 1000 > now
+        return (
+          <Button disabled={disabled} onClick={() => onItemUnLock(row)} size="mini" outline>
+            unlock
+          </Button>
+        )
+      }
     }
   ]
   return (

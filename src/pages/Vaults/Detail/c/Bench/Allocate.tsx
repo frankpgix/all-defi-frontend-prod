@@ -9,7 +9,7 @@ import { useToken, useUserBalances } from '@/hooks/useToken'
 
 import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
 
-import { formatNumber } from '@/utils/tools'
+// import { formatNumber } from '@/utils/tools'
 import Button from '@@/common/Button'
 import { Input, Slider } from '@@/common/Form'
 import Tip from '@@/common/Tip'
@@ -37,20 +37,20 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
   const [inputValue, setInputValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
 
-  const maxAum = useMemo(
-    () =>
-      Number(
-        formatNumber(
-          Math.max(BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber(), 0),
-          4,
-          '0.0000'
-        )
-      ),
-    [data.aum, data.beginningAUM, data.stakingACToken]
-  )
+  // const maxAum = useMemo(
+  //   () =>
+  //     Number(
+  //       formatNumber(
+  //         Math.max(BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber(), 0),
+  //         4,
+  //         '0.0000'
+  //       )
+  //     ),
+  //   [data.aum, data.beginningAUM, data.stakingACToken]
+  // )
   // const maxBalance = useMemo(() => BN(acTokenBalance).toNumber(), [acTokenBalance])
-  const maxValue = useMemo(() => Math.min(maxAum, acTokenBalance), [maxAum, acTokenBalance])
-  console.log(maxValue, maxAum, acTokenBalance)
+  const maxValue = useMemo(() => Math.min(acTokenBalance), [acTokenBalance])
+  // console.log(maxValue, maxAum, acTokenBalance)
   // const maxValue = useMemo(() => 10000, [maxAum, maxBalance])
 
   const isInAllocate = useMemo(() => [0, 1, 2].includes(data.status), [data.status])
@@ -132,7 +132,7 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
             <p>
               {acToken.name} Balance: {acTokenBalance}
             </p>
-            <p>Capacity Available: {maxAum}</p>
+            {/* <p>Capacity Available: {maxAum}</p> */}
           </Input>
         </div>
         <div className="web-fund-detail-bench-slider">

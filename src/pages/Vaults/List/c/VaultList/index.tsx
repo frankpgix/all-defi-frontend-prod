@@ -113,12 +113,12 @@ const FundList: FC = () => {
     <div className="web-fund-list-layout">
       <header>
         <h2>Vaults</h2>
-        <aside>
+        {/* <aside>
           <label>
             <input type="checkbox" onChange={(e) => setIsShowEndVault(e.target.checked)} />
             Show closed vaults
           </label>
-        </aside>
+        </aside> */}
       </header>
       <Table
         // @ts-ignore

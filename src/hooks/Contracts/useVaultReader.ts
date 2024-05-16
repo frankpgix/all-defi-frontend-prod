@@ -124,14 +124,15 @@ export const useUserVaultList = () => {
     data: sData,
     isSuccess,
     isLoading,
-    refetch
+    refetch,
+    error
   } = useReadContract({
     ...VaultReaderContract,
     functionName: 'userDetailList',
-    args: [0, 999, false],
+    args: [0, 999],
     account: account || undefined
-  }) as { data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
-
+  }) as { data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void; error: any }
+  console.log(error)
   if (account && !isLoading && isSuccess) {
     const [fundList, detailList] = sData
 
@@ -144,7 +145,7 @@ export const useUserVaultList = () => {
       })
       .filter(
         (item: VaultUserListDataProps) =>
-          item.data.subscribingACToken + item.data.unclaimedACToken + item.data.shares !== 0
+          item.data.stakingACToken + item.data.unclaimedACToken + item.data.shares !== 0
       )
 
     // console.log(data, 222)
@@ -160,7 +161,7 @@ export const useVaultList = () => {
     functionName: 'vaultDetailList',
     args: [0, 999]
   }) as { error: any; data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
-  console.log(error, data, isSuccess, isLoading, 'data, isSuccess, isLoading')
+  // console.log(error, data, isSuccess, isLoading, 'data, isSuccess, isLoading')
   if (!isLoading && isSuccess) {
     return {
       data: data.map((item) => calcVaultDetail(item, getTokenByAddress)),
@@ -223,3 +224,18 @@ export const useVaultUpdatingData = (vaultAddress: AddressType, underlyingToken:
   }
   return { data: VaultUpdatingDataDefault, isSuccess, isLoading, refetch }
 }
+
+// export const useGlobalAUMStats = () => {
+//   const VaultReaderContract = useVaultReaderContract()
+//   const { data, isSuccess, isLoading, refetch, error } = useReadContract({
+//     ...VaultReaderContract,
+//     functionName: 'globalAUMStats',
+//     args: []
+//   }) as { data: any; isSuccess: boolean; isLoading: boolean; refetch: () => void }
+//   console.log(error, isSuccess, 'data')
+//   if (!isLoading && isSuccess) {
+//     console.log(data, 'data')
+//     return { data, isSuccess, isLoading, refetch }
+//   }
+//   return { data, isSuccess, isLoading, refetch }
+// }

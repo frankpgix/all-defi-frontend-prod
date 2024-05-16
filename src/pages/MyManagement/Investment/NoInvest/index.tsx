@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import Image from '@@/common/Image'
 import Button from '@@/common/Button'
+import Image from '@@/common/Image'
 
 const NoInvest: FC = () => {
   return (
@@ -9,7 +9,7 @@ const NoInvest: FC = () => {
       <Image src="asset/investment-tip.png" />
       <h4>Opps, you haven't made an investment yet.</h4>
       <p>In the vault, choose vault to allocate based on data demonstrated by AllDeFi</p>
-      <Button to="/fund-market">invest now</Button>
+      <Button to="/vaults">invest now</Button>
     </div>
   )
 }

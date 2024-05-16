@@ -15,7 +15,7 @@ export const calcVaultDatasGql = (vaultAddress: string, type: string, createTime
         orderDirection: desc
         first: 1000
         where: {
-          vaultId: "${vaultAddress.toLowerCase()}"
+          vaultAddress: "${vaultAddress.toLowerCase()}"
           intervalType: "${dataType}"
           periodStartUnix_gt: ${startTime}
         }
@@ -38,18 +38,18 @@ export const calcMiningData = (vaultAddress: string, type: string, createTime: n
         orderDirection: desc
         first: 1000
         where: {
-          vaultId_in: ${vaultAddress.toLowerCase()}
+          vaultAddress_in: ${vaultAddress.toLowerCase()}
           intervalType: "${dataType}"
           periodStartUnix_gt: ${startTime}
         }
       ) {
-        vaultId
+        vaultAddress
         name
         periodStartUnix
         sharePrice
-        underlyingTokenPriceInUSD
+        underlyingPriceInUSD
         miningShare
-        underlyingToken
+        underlying
       }
     }
   `
@@ -75,7 +75,7 @@ export const calcVaultDetailChartGQL = (vaultAddress: string, epoch: number, tim
         orderDirection: desc
         first: 1000
         where: {
-          vaultId: "${vaultAddress.toLowerCase()}"
+          vaultAddress: "${vaultAddress.toLowerCase()}"
           intervalType: "${dataType}"
           epochIndex_in: ${JSON.stringify(epochs)}
         }
@@ -118,14 +118,14 @@ export const calcVaultMonthDataGql = (vaultAddress: string) => {
         orderBy: periodStartUnix
         orderDirection: desc
         where: {
-          vaultId: "${vaultAddress}"
+          vaultAddress: "${vaultAddress}"
         }
       ) {
-        vaultId
+        vaultAddress
         name
         periodStartUnix
         roe
-        underlyingToken
+        underlying
       }
     }
   `

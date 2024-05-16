@@ -5,8 +5,7 @@ import BN from 'bignumber.js'
 import classNames from 'classnames'
 import { Cell, Pie, PieChart, Sector } from 'recharts'
 
-import { useBaseTokenPriceUSD } from '@/hooks/Contracts/useVaultFactory'
-
+// import { useBaseTokenPriceUSD } from '@/hooks/Contracts/useVaultFactory'
 import { VaultUserListDataProps, baseTokenPriceInUSDTypes } from '@/types/vault'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/VaultDetail/c/ManageDetail/C'
@@ -122,29 +121,27 @@ interface CountProps {
 }
 const Count: FC<CountProps> = ({ loading, data }) => {
   // const { loading, fundList } = useUserFundList()
-  const { data: baseTokenPriceList, isLoading } = useBaseTokenPriceUSD()
-  if (loading || data.length === 0 || isLoading) return <CountLoading />
+  // const { data: baseTokenPriceList, isLoading } = useBaseTokenPriceUSD()
+  if (loading) return <CountLoading />
   return (
     <>
-      <CountDetail {...{ loading, data, baseTokenPriceList }} />
+      <CountDetail {...{ loading, data }} />
     </>
   )
 }
 
-interface CountDetailProps extends CountProps {
-  baseTokenPriceList: baseTokenPriceInUSDTypes[]
-}
+interface CountDetailProps extends CountProps {}
 
-const CountDetail: FC<CountDetailProps> = ({ loading, data: sData, baseTokenPriceList }) => {
+const CountDetail: FC<CountDetailProps> = ({ loading, data: sData }) => {
   const [activeIndex, setActiveIndex] = useState(0)
 
   const data = sData.map((item) => {
     const i = { ...item }
-    const tpo = baseTokenPriceList.find(
-      (tp) => tp.address.toLocaleLowerCase() === i.underlyingToken.address.toLocaleLowerCase()
-    )
-    const tp = tpo ? tpo.priceInUSD : 1
-    i.data.navInUSD = BN(i.data.nav).times(tp).toNumber()
+    // const tpo = baseTokenPriceList.find(
+    //   (tp) => tp.address.toLocaleLowerCase() === i.underlying.address.toLocaleLowerCase()
+    // )
+    // const tp = tpo ? tpo.priceInUSD : 1
+    // i.data.navInUSD = BN(i.data.nav).times(tp).toNumber()
     return i
   })
   const rawData = useMemo(
@@ -163,7 +160,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data: sData, baseTokenPric
     [rawData]
   )
   const activeData = useMemo(() => data[activeIndex]?.data, [data, activeIndex])
-  const baseToken = useMemo(() => activeData?.underlyingToken, [activeData])
+  const baseToken = useMemo(() => activeData?.underlying, [activeData])
 
   const pieData = useMemo(
     () =>

@@ -26,8 +26,8 @@ const Claim: FC<Props> = ({ userData, getData }) => {
   const value = userData.unclaimedACToken
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const acToken = useMemo(
-    () => getTokenByName(userData.underlyingToken.acTokenName),
-    [userData.underlyingToken]
+    () => getTokenByName(userData.underlying.acTokenName),
+    [userData.underlying]
   )
 
   const onRedeem = async () => {

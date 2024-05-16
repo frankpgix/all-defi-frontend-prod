@@ -3,7 +3,7 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import BN from 'bignumber.js'
 import classNames from 'classnames'
 
-import { useCancelAllocate, useCancelWithholding } from '@/hooks/Contracts/useVault'
+import { useCancelStake, useCancelUnstake } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
 import { useToken } from '@/hooks/useToken'
 
@@ -20,7 +20,7 @@ import Image from '@@/common/Image'
 import RoeShow from '@@/common/RoeShow'
 import TokenValue from '@@/common/TokenValue'
 
-import Claim from './Claim'
+// import Claim from './Claim'
 
 interface Props {
   active: boolean
@@ -33,8 +33,8 @@ interface Props {
 const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
   const { getTokenByAddress } = useToken()
   const { account } = useProfile()
-  const { onCancelAllocate } = useCancelAllocate(fund.address)
-  const { onCancelWithholding } = useCancelWithholding(fund.address)
+  const { onCancelStake: onCancelAllocate } = useCancelStake(fund.address)
+  const { onCancelUnstake: onCancelWithholding } = useCancelUnstake(fund.address)
   const ref = useRef<HTMLDivElement>(null)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const [infoStatus2, setInfoStatus2] = useState<boolean>(false)
@@ -115,11 +115,11 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
               <section>
                 <h5>protocol allowed</h5>
                 <main>
-                  {fund.derivativesInfo.map((item, index) => (
+                  {/* {fund.derivativesInfo.map((item, index) => (
                     <p key={index} title={item?.name}>
                       {item && <Image src={`products/${item?.name}.png`} alt={item?.name} />}
                     </p>
-                  ))}
+                  ))} */}
                 </main>
               </section>
               <hr />
@@ -133,7 +133,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   </label>
                   <em>
                     <TokenValue
-                      value={fund.data.subscribingACToken}
+                      value={fund.data.stakingACToken}
                       token={acToken}
                       size="mini"
                       format="0,0.00"
@@ -141,7 +141,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   </em>
                   <Button
                     disabled={
-                      !(fund.data.subscribingACToken > 0 && [0, 1, 2].includes(fund.data.status))
+                      !(fund.data.stakingACToken > 0 && [0, 1, 2].includes(fund.data.status))
                     }
                     onClick={() => setInfoStatus(true)}
                     size="mini"
@@ -149,7 +149,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   >
                     Cancel
                   </Button>
-                  {!(fund.data.subscribingACToken > 0 && [0, 1, 2].includes(fund.data.status)) && (
+                  {!(fund.data.stakingACToken > 0 && [0, 1, 2].includes(fund.data.status)) && (
                     <p>Exceeded the cancellation period</p>
                   )}
                 </li>
@@ -161,18 +161,18 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                     </Popper> */}
                   </label>
                   <em>
-                    {formatNumber(fund.data.redeemingShares, 4, '0,0.0000')}
+                    {formatNumber(fund.data.unstakingShare, 4, '0,0.0000')}
                     {/*<TokenValue value={fund.data.redeemingShares} token={acToken} size="mini" format="0,0.00" />*/}
                   </em>
                   <Button
-                    disabled={!(fund.data.redeemingShares > 0 && fund.data.status === 1)}
+                    disabled={!(fund.data.unstakingShare > 0 && fund.data.status === 1)}
                     size="mini"
                     onClick={() => setInfoStatus2(true)}
                     text
                   >
                     Cancel
                   </Button>
-                  {!(fund.data.redeemingShares > 0 && fund.data.status === 1) && (
+                  {!(fund.data.unstakingShare > 0 && fund.data.status === 1) && (
                     <p>Exceeded the cancellation period</p>
                   )}
                 </li>
@@ -189,7 +189,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   popper="Historic cumulative profit and loss"
                 >
                   <TokenValue
-                    value={fund.data.historyReturn}
+                    value={fund.data.historicalReturn}
                     token={acToken}
                     size="mini"
                     format="0,0.00"
@@ -222,11 +222,11 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
               </footer>
             </div>
           </main>
-          <Claim
+          {/* <Claim
             unclaimedALL={fund.data.unclaimedALL}
             fundAddress={fund.address}
             callback={callback}
-          />
+          /> */}
         </div>
       </section>
       <InfoDialog
@@ -235,7 +235,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
         onClose={() => setInfoStatus(false)}
         title="Cancel Staking"
         msg={`Cancel Staking Request of ${formatNumber(
-          fund.data.subscribingACToken,
+          fund.data.stakingACToken,
           4,
           '0,0.0000'
         )} ${acToken.name}`}
@@ -246,7 +246,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
         onClose={() => setInfoStatus2(false)}
         title="Cancel Unstaking"
         msg={`Cancel Unstaking Request of ${formatNumber(
-          fund.data.redeemingShares,
+          fund.data.unstakingShare,
           4,
           '0,0.0000'
         )} Vault Shares`}

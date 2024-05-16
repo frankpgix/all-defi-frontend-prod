@@ -12,7 +12,7 @@ import Blank from '@@/common/Blank'
 
 import Bench from './c/Bench'
 import Dashboard from './c/Dashboard'
-import Portfolio from './c/Portfolio'
+// import Portfolio from './c/Portfolio'
 import RoeHistory from './c/RoeHistory'
 import VaultStatus from './c/VaultStatus'
 
@@ -40,7 +40,7 @@ const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
       <Dashboard base={baseInfo} fundAddress={fundAddress} data={vaultDetail} loading={loading} />
       <RoeHistory fundAddress={fundAddress} />
       <VaultStatus base={baseInfo} data={vaultDetail} loading={loading} />
-      <Portfolio base={baseInfo} fundAddress={fundAddress} />
+      {/* <Portfolio base={baseInfo} fundAddress={fundAddress} /> */}
       {!loading && (
         <Bench
           userData={vaultUserDetail}

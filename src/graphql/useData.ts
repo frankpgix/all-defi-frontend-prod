@@ -55,7 +55,7 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
           const price = fund ? safeInterceptionValues(fund.sharePrice, 18, 18) : 0
           // console.log(safeInterceptionValues(fund.baseTokenPriceInUSD, 18, 18))
           const baseTokenPriceInUSD = fund
-            ? safeInterceptionValues(fund.underlyingTokenPriceInUSD, 18, 18)
+            ? safeInterceptionValues(fund.underlyingPriceInUSD, 18, 18)
             : 0
           const value = BN(amount).times(price).times(baseTokenPriceInUSD).toString()
           o[name] = Number(calcDecimalsFloor(value, 2))
@@ -82,7 +82,7 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
   // return { loading: true, error: null, data: [], count: 0 }
 }
 
-export const useVaultDetailChartData = (gql: any, underlyingToken: TokenTypes) => {
+export const useVaultDetailChartData = (gql: any, underlying: TokenTypes) => {
   const { loading, error, data: sData } = useQuery(gql)
   console.log(sData, 'sData')
   const data = (sData?.vaultIntervalDatas ?? [])
@@ -90,11 +90,7 @@ export const useVaultDetailChartData = (gql: any, underlyingToken: TokenTypes) =
       time: item.periodStartUnix * 1000,
       value: Number(safeInterceptionValues(String(item.sharePrice), 6, 18)),
       aum: Number(
-        safeInterceptionValues(
-          String(item.aum),
-          underlyingToken.precision,
-          underlyingToken.decimals
-        )
+        safeInterceptionValues(String(item.aum), underlying.precision, underlying.decimals)
       )
     }))
     .reverse()

@@ -119,7 +119,9 @@ export const useUserDepositData = (userAddress: string) => {
       user: item.user,
       lockDuration: item.lockDuration,
       timestamp: item.timestamp * 1000,
-      depositId: item.depositId
+      depositId: item.depositId,
+      underlying: item.underlying,
+      token
     }
   })
   return { loading, error, data, refetch }

@@ -22,7 +22,7 @@ export const useDeposit = () => {
   const onDeposit = async (
     underlyingAddress: AddressType,
     amount: number,
-    lockDuration: number,
+    lockDuration: number | string,
     account: AddressType,
     callback?: () => void
   ) => {
