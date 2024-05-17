@@ -8,6 +8,7 @@ import { CreateVaultStep2DataTypes } from '@/types/createVault'
 import Cache from '@/utils/cache'
 import Button from '@@/common/Button'
 import { Input, Select } from '@@/common/Form'
+import Image from '@@/common/Image'
 import { TokenIcon } from '@@/common/TokenUnit'
 import BlueLineSection from '@@/web/BlueLineSection'
 
@@ -96,6 +97,13 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
             )}
           </Input>
         </div>
+        <h3>select protocol allowed</h3>
+        <ul className="web-manage-create-step-product-list">
+          <li className="active">
+            <Image src={`/products/CEFFU.png`} alt={'CEFFU'} />
+          </li>
+        </ul>
+        {/*  <Image src={`/products/CEFFU.png`} alt={'CEFFU'} /> */}
         {/* <h3>select protocol allowed</h3>
         <ul className="web-manage-create-step-product-list">
           {derivativeList.map((item, index: number) => (

@@ -221,7 +221,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           <Tab>Fees</Tab>
           <Tab>Vault</Tab>
           <Tab>Risk Control</Tab>
-          <Tab disabled={data.isClosed}>Dapp</Tab>
+          {/* <Tab disabled={data.isClosed}>Dapp</Tab> */}
           {/* <Tab>Dapp2</Tab> */}
         </TabList>
         {/* Basic TabPanel */}

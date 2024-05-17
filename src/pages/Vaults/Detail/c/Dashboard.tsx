@@ -15,7 +15,7 @@ import { AreaChart } from '@@/common/Chart'
 import TimeSelect from '@@/common/Chart/TimeSelect'
 import Select from '@@/common/Form/Select'
 import FundIcon from '@@/common/FundIcon'
-// import Image from '@@/common/Image'
+import Image from '@@/common/Image'
 import Popper from '@@/common/Popper'
 import RoeShow from '@@/common/RoeShow'
 import TokenValue from '@@/common/TokenValue'
@@ -66,6 +66,12 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
               <p>{base.desc}</p>
             </article>
           )}
+          <section>
+            <h5>Protocols Allowed</h5>
+            <main>
+              <Image src={`/products/CEFFU.png`} alt={'CEFFU'} />
+            </main>
+          </section>
           {/* <section>
             <h5>Protocols Allowed</h5>
             {loading ? (
