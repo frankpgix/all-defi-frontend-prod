@@ -36,16 +36,16 @@ const ValutSettleButton: FC<Props> = ({
   const [show3, { setLeft: closeModal3, setRight: openModal3 }] = useToggle()
 
   const nextRoundCash = useMemo(() => {
-    let temp = BN(data.redeemingShares).times(data.sharePrice)
+    let temp = BN(data.unstakingShare).times(data.sharePrice)
     if (data.epochIndex % 6 === 0) {
       temp = temp.plus(data.platFee).plus(data.managerFee)
     }
-    const v = Number(temp.minus(data.subscribingACToken).toFixed(2, BN.ROUND_UP))
+    const v = Number(temp.minus(data.stakingACToken).toFixed(2, BN.ROUND_UP))
     return v >= 0 ? v : 0
   }, [
-    data.redeemingShares,
+    data.unstakingShare,
     data.sharePrice,
-    data.subscribingACToken,
+    data.stakingACToken,
     data.epochIndex,
     data.platFee,
     data.managerFee
@@ -54,31 +54,32 @@ const ValutSettleButton: FC<Props> = ({
   // 下轮赎回减去下轮申购减去FEE ？？ 大于现金余额
   const isShowCashBalanceLess = useMemo(
     () =>
-      BN(nextRoundCash).minus(data.subscribingACToken).toNumber() > BN(data.unusedAsset).toNumber(),
-    [nextRoundCash, data.subscribingACToken, data.unusedAsset]
+      BN(nextRoundCash).minus(data.stakingACToken).toNumber() >
+      BN(data.underlyingBalance).toNumber(),
+    [nextRoundCash, data.stakingACToken, data.underlyingBalance]
   )
 
   // 是否还有申购余额
   const isCannotAllocate = useMemo(
-    () => BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber() <= 0,
-    [data.realtimeAUMLimit, data.aum, data.subscribingACToken]
+    () => BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber() <= 0,
+    [data.beginningAUM, data.aum, data.stakingACToken]
   )
 
   // console.log('data', data)
 
   const onButtonClick = () => {
-    if (isShowCashBalanceLess && isCannotAllocate) {
-      openModal3()
-      return
-    }
-    if (isShowCashBalanceLess) {
-      openModal()
-      return
-    }
-    if (isCannotAllocate) {
-      openModal2()
-      return
-    }
+    // if (isShowCashBalanceLess && isCannotAllocate) {
+    //   openModal3()
+    //   return
+    // }
+    // if (isShowCashBalanceLess) {
+    //   openModal()
+    //   return
+    // }
+    // if (isCannotAllocate) {
+    //   openModal2()
+    //   return
+    // }
 
     onSettle()
   }

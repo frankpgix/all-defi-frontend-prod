@@ -16,38 +16,39 @@ interface Props {
 
 const StepLine: FC<Props> = ({ data, loading }) => {
   const activeIndex = data.status === 0 ? 1 : data.status
+  // console.log(data.status, ' data.status')
   const steps = [
     {
       label: 'Open Period',
       popper: "During the vault's open period, you can stake to vault or withhold from it",
       time: data.epochStartTime,
-      status: 1
+      status: -1
     },
     {
       label: data.epochIndex === 0 ? 'Open Period' : 'Semi-open Period',
       time: data.subscribeRedeemEndTime,
       popper:
         "During the vault's semi-open period, you can only stake to strategy and cannot cancel",
-      status: 2
+      status: 0
     },
     {
       label: 'Pre-Settlement Period',
       time: data.subscribeEndTime,
-      status: 3
+      status: 1
     },
     {
       label: 'Settlement Period',
       time: data.preSettleEndTime,
-      status: 4
+      status: 2
     },
     {
       time: data.settleEndTime,
-      status: 5
+      status: 3
     }
   ]
   return (
     <section className="web-fund-detail-status-setpline">
-      <ul className={classNames({ zero: data.epochIndex === 0 })}>
+      <ul className={classNames({ zero: data.epochIndex <= 0 })}>
         {steps.map(({ label, time, status, popper }, index) => (
           <li
             key={index}

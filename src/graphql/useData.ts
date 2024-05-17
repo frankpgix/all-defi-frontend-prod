@@ -84,7 +84,7 @@ export const useMiningData = (gql: any, fundsName: string[], timeType: string) =
 
 export const useVaultDetailChartData = (gql: any, underlying: TokenTypes) => {
   const { loading, error, data: sData } = useQuery(gql)
-  console.log(sData, 'sData')
+  // console.log(sData, 'sData')
   const data = (sData?.vaultIntervalDatas ?? [])
     .map((item: any) => ({
       time: item.periodStartUnix * 1000,

@@ -63,13 +63,13 @@ const FundList: FC = () => {
       // render: (value: number) => `${formatNumber(value, 2, '0,0.00 a')} Shares`
       // align: 'right'
     },
-    {
-      title: "Last Epoch's Return",
-      dataIndex: 'lastRoe',
-      width: 130,
-      render: (value: number) => <RoeShow value={value} />
-      // align: 'right'
-    },
+    // {
+    //   title: "Last Epoch's Return",
+    //   dataIndex: 'lastRoe',
+    //   width: 130,
+    //   render: (value: number) => <RoeShow value={value} />
+    //   // align: 'right'
+    // },
     {
       title: 'Action',
       dataIndex: 'address',
@@ -85,7 +85,7 @@ const FundList: FC = () => {
               </Badge>
             ) : (
               <ValutSettleButton
-                disabled={![5, 4, 6].includes(record.status)}
+                disabled={![3].includes(record.status)}
                 callback={getData}
                 vaultAddress={record.address}
                 outline

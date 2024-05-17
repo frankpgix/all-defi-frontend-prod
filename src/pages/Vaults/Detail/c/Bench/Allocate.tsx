@@ -53,7 +53,7 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
   // console.log(maxValue, maxAum, acTokenBalance)
   // const maxValue = useMemo(() => 10000, [maxAum, maxBalance])
 
-  const isInAllocate = useMemo(() => [0, 1, 2].includes(data.status), [data.status])
+  const isInAllocate = useMemo(() => [0, 1].includes(data.status), [data.status])
 
   const onSliderChange = (val: number) => {
     // console.log()

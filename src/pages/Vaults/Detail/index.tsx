@@ -25,7 +25,7 @@ const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
     isLoading: loading,
     refetch: getData
   } = useVaultDetails(fundAddress, account ?? '0x')
-  console.log(baseInfo)
+  // console.log(123, baseInfo, vaultDetail)
   return (
     <>
       {!loading && vaultDetail.isClosed && (
