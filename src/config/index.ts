@@ -4,7 +4,7 @@ export enum ChainId {
   BSCTEST = 97
 }
 
-export const DEFAULT_CHAIN_ID = 42161
+export const DEFAULT_CHAIN_ID = 97
 
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 export const IS_DEV = process.env.NODE_ENV === 'development'
