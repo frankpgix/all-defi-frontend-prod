@@ -17,9 +17,10 @@ export interface VaultsSimpleTypes {
 export interface VaultUserActionsItemTypes {
   id: string
   investor: string
-  vaultId: string
+  vaultAddress: string
+  vaultName: string
   amount: string
-  underlyingToken: AddressType
+  underlying: AddressType
   actionType: number
   timestamp: number
 }
@@ -31,6 +32,7 @@ export interface UserVaultHistorySourceDataProps {
 
 export interface UserVaultHistoryDataProps {
   name: string
+  vaultName: string
   amount: number
   action: string
   investor: string

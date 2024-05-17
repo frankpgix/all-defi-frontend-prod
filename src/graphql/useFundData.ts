@@ -25,10 +25,7 @@ export const useVaultAllocationData = (vaultAddress: string) => {
     error,
     data: sData
   } = useQuery(
-    calcVaultAllocationOrWithholdGQL(vaultAddress, [
-      ActionType['Allocate'],
-      ActionType['Cancel Allocate']
-    ])
+    calcVaultAllocationOrWithholdGQL(vaultAddress, [ActionType['Stake'], ActionType['CancelStake']])
   )
   const data = (sData?.vaultUserActions ?? []).map((item: VaultUserActionsItemTypes) =>
     calcActionData(item, getTokenByAddress)
@@ -45,8 +42,8 @@ export const useVaultWithholdData = (fundAddress: string) => {
     data: sData
   } = useQuery(
     calcVaultAllocationOrWithholdGQL(fundAddress, [
-      ActionType['Withhold'],
-      ActionType['Cancel Withhold']
+      ActionType['Unstake'],
+      ActionType['CancelUnstake']
     ])
   )
   const data = (sData?.vaultUserActions ?? []).map((item: VaultUserActionsItemTypes) =>

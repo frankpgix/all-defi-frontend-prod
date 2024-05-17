@@ -11,12 +11,11 @@ import {
 import { safeInterceptionValues } from '@/utils/tools'
 
 export enum ActionType {
-  Allocate,
-  'Cancel Allocate',
-  Withhold,
-  'Cancel Withhold',
-  Claim,
-  'Draw Share Token'
+  Stake,
+  CancelStake,
+  Unstake,
+  CancelUnstake,
+  Claim
 }
 
 export const calcActionData = (
@@ -24,11 +23,11 @@ export const calcActionData = (
   getTokenByAddress: GetTokenFuncType,
   funds?: VaultsSimpleTypes[]
 ): UserVaultHistoryDataProps => {
-  const token = getTokenByAddress(item.underlyingToken)
+  const token = getTokenByAddress(item.underlying)
   // console.log(22222, token, item, funds)
   const action = ActionType[item.actionType] ?? '-'
   let amount = 0
-  if (action.includes('Redeem')) {
+  if (action.includes('Unstake')) {
     amount = Number(safeInterceptionValues(item.amount, 4, 18))
   } else {
     amount = Number(safeInterceptionValues(item.amount, token.precision, token.decimals))
@@ -37,13 +36,14 @@ export const calcActionData = (
     amount = -amount
   }
   return {
-    name: (funds ? funds.find((fund) => fund.id === item.vaultId)?.name : '') ?? '',
+    name: item.vaultName,
     amount,
     action,
     hash: item.id.split('-')[0],
     investor: item.investor,
-    baseToken: item.underlyingToken,
+    baseToken: item.underlying,
     tokenName: token.name,
+    vaultName: item.vaultName,
     time: item.timestamp * 1000,
     token
   }

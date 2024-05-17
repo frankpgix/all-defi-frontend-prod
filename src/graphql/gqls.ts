@@ -1,22 +1,24 @@
 import { gql } from '@apollo/client'
 
 export const calcVaultAllocationOrWithholdGQL = (vaultAddress: string, type: number[]) => {
+  console.log('JSON.stringify(type)', JSON.stringify(type))
   return gql`
     query {
       vaultUserActions(
         orderBy: timestamp
         orderDirection: desc
         where: {
-          vaultId: "${vaultAddress.toLowerCase()}"
+          vaultAddress: "${vaultAddress.toLowerCase()}"
           actionType_in: ${JSON.stringify(type)}
         }
       ) {
         id
         investor
-        vaultId
+        vaultAddress
+        vaultName
         amount
         actionType
-        underlyingToken
+        underlying
         timestamp
       }
     }
