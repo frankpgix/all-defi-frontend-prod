@@ -74,10 +74,11 @@ const CreateFund: FC = () => {
         },
         account,
         () => {
-          setSuccDialogStatus(true)
+          // setSuccDialogStatus(true)
           Cache.rm('CreateFundStep1Temp')
           Cache.rm('CreateFundStep2Temp')
           Cache.rm('CreateFundStep3Temp')
+          navigate('/manage/manager')
         }
       )
     }

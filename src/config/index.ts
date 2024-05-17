@@ -21,3 +21,5 @@ export const MANAGER_UPLODAD_HISTORICAL_DATA_URL =
 
 export const CONTACT_US_URL = 'https://twitter.com/Alldefiprotocol'
 export const LIGHT_PAPERS_URL = ''
+
+export const ACTOKEN_LOCK_TIMES = [3 * 60, 9 * 60, 18 * 60, 36 * 60]

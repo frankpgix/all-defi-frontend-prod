@@ -11,7 +11,8 @@ import Blank from '@@/common/Blank'
 import Dashboard from './c/Dashboard'
 import DataTab from './c/DataTab'
 import ManageDetail from './c/ManageDetail'
-import VerifiedDialog from './c/VerifiedDialog'
+
+// import VerifiedDialog from './c/VerifiedDialog'
 
 const VaultDetail: FC = () => {
   const { vaultAddress } = useParams() as { vaultAddress: AddressType }
@@ -53,7 +54,7 @@ const VaultDetail: FC = () => {
       />
 
       <DataTab vaultAddress={vaultAddress} />
-      {!loading && <VerifiedDialog vaultAddress={vaultAddress} name={baseInfo.name} />}
+      {/* {!loading && <VerifiedDialog vaultAddress={vaultAddress} name={baseInfo.name} />} */}
     </div>
   )
 }

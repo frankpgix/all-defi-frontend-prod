@@ -10,6 +10,7 @@ import { useUserBalances } from '@/hooks/useToken'
 
 import { AddressType } from '@/types/base'
 
+import { ACTOKEN_LOCK_TIMES } from '@/config'
 import Button from '@@/common/Button'
 import InfoDialog from '@@/common/Dialog/Info'
 import { Input, Select } from '@@/common/Form'
@@ -33,15 +34,15 @@ const Bench: FC = () => {
   const { account } = useProfile()
   const { balances, refetch } = useUserBalances()
   const [amount, setAmount] = useState<string | number>('')
-  const [lockDuration, setLockDuration] = useState<number | string>(30 * 24 * 60 * 60)
+  const [lockDuration, setLockDuration] = useState<number | string>(ACTOKEN_LOCK_TIMES[0])
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>(baseTokenOptions[0].value)
   const currBaseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
   const lockDurationOptions = [
-    { label: '1 Month', value: 30 * 24 * 60 * 60 },
-    { label: '3 Month', value: 90 * 24 * 60 * 60 },
-    { label: '6 Month', value: 182 * 24 * 60 * 60 },
-    { label: '1 Year', value: 365 * 24 * 60 * 60 },
+    { label: '1 Month', value: ACTOKEN_LOCK_TIMES[0] },
+    { label: '3 Month', value: ACTOKEN_LOCK_TIMES[1] },
+    { label: '6 Month', value: ACTOKEN_LOCK_TIMES[2] },
+    { label: '1 Year', value: ACTOKEN_LOCK_TIMES[3] },
     {
       label: <Infinite white={lockDuration === maxInt256} />,
       value: maxInt256

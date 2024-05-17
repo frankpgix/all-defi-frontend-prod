@@ -585,9 +585,9 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
             />
           </SectionLayout>
         </TabPanel>
-        <TabPanel>
-          {/* <DappTab vaultAddress={vaultAddress} derivatives={base.derivatives} /> */}
-        </TabPanel>
+        {/*<TabPanel>
+           <DappTab vaultAddress={vaultAddress} derivatives={base.derivatives} /> 
+        </TabPanel>*/}
         {/* <TabPanel>2<Dapp base={base} data={data} /></TabPanel> */}
       </Tabs>
     </>
