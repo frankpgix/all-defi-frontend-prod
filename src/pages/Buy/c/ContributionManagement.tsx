@@ -20,7 +20,6 @@ const ContributionManagement: FC = () => {
   const { onWithdraw } = useWithdraw()
   const { data, loading, refetch } = useUserDepositData(address ?? '')
   const now = +new Date()
-  console.log(data)
   const onItemUnLock = (item: any) => {
     if (address) {
       onWithdraw(item.underlying, item.depositId, address, refetch)
@@ -28,33 +27,35 @@ const ContributionManagement: FC = () => {
   }
   const webColumns = [
     {
-      title: 'Contribution Time',
+      title: 'Time',
       dataIndex: 'timestamp',
       render: (value: number) => dayjs(value).format('MMM DD, YYYY hh:mm:ss A')
     },
     {
-      title: 'Lock-up Value',
+      title: 'Value',
       dataIndex: 'amount',
       render: (value: number, row: any) => `${formatNumber(value, 4, '0,0.0000')} ${row.tokenName}`
     },
     {
-      title: 'Locking time',
+      title: 'Lock Duration',
       dataIndex: 'lockDuration',
       render: (value: string) => {
         console.log(value.length, 'value.length')
         if (value.length === 78) {
           return <Infinite />
         }
-        return `${Number(value) / 60 / 60 / 24} Days`
+        const time = Number(value) / 60 / 60 / 24
+
+        return `${time > 1 ? ~~time : '< 1'} Days`
       }
     },
+    // {
+    //   title: 'Projected Rate of Return',
+    //   dataIndex: 'lockDuration',
+    //   render: () => `20%`
+    // },
     {
-      title: 'Projected Rate of Return',
-      dataIndex: 'lockDuration',
-      render: () => `20%`
-    },
-    {
-      title: 'Unlock Countdown',
+      title: 'Unlock time',
       dataIndex: 'timestamp',
       render: (value: number, row: any) => {
         if (row.lockDuration.length === 78) {
@@ -80,7 +81,7 @@ const ContributionManagement: FC = () => {
   return (
     <>
       <div className="web-buy-table-layout">
-        <h2>Contribution Management</h2>
+        <h2>My Deposit</h2>
         <Table
           className="web-buy-table"
           columns={webColumns}

@@ -86,8 +86,6 @@ const Bench: FC = () => {
     }
   }, [lockDuration])
 
-  console.log(isAllowedForDeposit, 'isAllowedForDeposit')
-
   const onConfirm = () => {
     if (isAllowedForDeposit) {
       setInfoStatus(true)
@@ -96,9 +94,9 @@ const Bench: FC = () => {
   }
   return (
     <>
-      <BlueLineSection title="Contribution" className="web-buy-bench">
+      <BlueLineSection title="Deposit" className="web-buy-bench">
         <div className="web-buy-bench-form">
-          <h4>Add Token</h4>
+          <h4>Deposit</h4>
           <div className="web-buy-bench-form-item">
             <Input
               className="web-buy-bench-input"
@@ -138,10 +136,10 @@ const Bench: FC = () => {
               <dt>Token to Be locked</dt>
               <dd>{amount || 0}</dd>
             </dl>
-            <dl>
+            {/* <dl>
               <dt>Estimated ALL Return%</dt>
               <dd>20%</dd>
-            </dl>
+            </dl> */}
             <dl>
               <dt>Duration</dt>
               <dd>{DurationPre.duration}</dd>
@@ -161,8 +159,8 @@ const Bench: FC = () => {
         type="info"
         onConfirm={buyAndStakeFunc}
         onClose={() => setInfoStatus(false)}
-        title="Confirm AC Token Purchase"
-        msg={`You will purchase ${amount} ac${currBaseToken.name}, for a total cost of ${amount} ${currBaseToken.name}`}
+        title="Confirm AC Token Deposit"
+        msg={`You will deposit ${amount} ac${currBaseToken.name}, for a total cost of ${amount} ${currBaseToken.name}`}
       />
     </>
   )
