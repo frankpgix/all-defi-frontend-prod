@@ -1,5 +1,5 @@
 import { zeroAddress } from 'viem'
-import { useWriteContract } from 'wagmi'
+import { useReadContract, useWriteContract } from 'wagmi'
 
 import { useACProtocolContract } from '@/hooks/Contracts/useContract'
 import { useAllowance, useWaitReceipt } from '@/hooks/Contracts/useTools'
@@ -156,4 +156,15 @@ export const useWithdraw = () => {
     }
   }
   return { onWithdraw }
+}
+
+export const useIsAllowedForDeposit = (account?: AddressType) => {
+  const AllProtocolContract = useACProtocolContract()
+  const { isLoading, isSuccess, data, refetch, error } = useReadContract({
+    ...AllProtocolContract,
+    functionName: 'isAllowedForDeposit',
+    args: [account ?? '']
+  })
+  console.log(isLoading, isSuccess, data, error)
+  return { data, isLoading, isSuccess, refetch }
 }

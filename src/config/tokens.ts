@@ -111,7 +111,7 @@ export const acTokens: TokenConfigTypes[] = [
     address: {
       [ChainId.MAINNET]: zeroAddress,
       [ChainId.ARBITRUM]: '0x9b72b7d67aFC801eE8299B6C34C2a9453607440b',
-      [ChainId.BSCTEST]: '0x9A1536a8dDbA10e7B4525EB934B62007044B1332'
+      [ChainId.BSCTEST]: '0x02D34Ad15EDF942fEFF4179Bc65B6F99F2A0f84d'
     },
     decimals: 6,
     precision: 2,
@@ -135,7 +135,7 @@ export const acTokens: TokenConfigTypes[] = [
     address: {
       [ChainId.MAINNET]: zeroAddress,
       [ChainId.ARBITRUM]: zeroAddress,
-      [ChainId.BSCTEST]: '0xD734987C0EAD810827a369f688fD0eD139512413'
+      [ChainId.BSCTEST]: '0xC5114032E8F28A516d27fb353A3eCB66e0078d80'
     },
     decimals: 18,
     precision: 4,
@@ -147,7 +147,7 @@ export const acTokens: TokenConfigTypes[] = [
     address: {
       [ChainId.MAINNET]: zeroAddress,
       [ChainId.ARBITRUM]: zeroAddress,
-      [ChainId.BSCTEST]: '0xe30F74DB01A9B1a3172cD65CC634B7B513cf7f20'
+      [ChainId.BSCTEST]: '0xc21c1E22B5A31ff5bEc9f42b256F8103B369c44B'
     },
     decimals: 8,
     precision: 4,

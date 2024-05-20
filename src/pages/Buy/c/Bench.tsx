@@ -3,7 +3,7 @@ import { FC, useMemo, useState } from 'react'
 import dayjs from 'dayjs'
 import { isNumber } from 'lodash'
 
-import { useDeposit } from '@/hooks/Contracts/useACProtocol'
+import { useDeposit, useIsAllowedForDeposit } from '@/hooks/Contracts/useACProtocol'
 import { useProfile } from '@/hooks/useProfile'
 import { useToken, useUnderlyingTokenOptions } from '@/hooks/useToken'
 import { useUserBalances } from '@/hooks/useToken'
@@ -32,6 +32,7 @@ const Bench: FC = () => {
   const baseTokenOptions = useUnderlyingTokenOptions()
   const { onDeposit } = useDeposit()
   const { account } = useProfile()
+  const { data: isAllowedForDeposit } = useIsAllowedForDeposit(account)
   const { balances, refetch } = useUserBalances()
   const [amount, setAmount] = useState<string | number>('')
   const [lockDuration, setLockDuration] = useState<number | string>(ACTOKEN_LOCK_TIMES[0])
@@ -84,6 +85,15 @@ const Bench: FC = () => {
       unlockOn: dayjs(time).format('MMM DD YYYY HH:mm')
     }
   }, [lockDuration])
+
+  console.log(isAllowedForDeposit, 'isAllowedForDeposit')
+
+  const onConfirm = () => {
+    if (isAllowedForDeposit) {
+      setInfoStatus(true)
+    }
+    alert('You are not authorized for Deposit, Please contact management.')
+  }
   return (
     <>
       <BlueLineSection title="Contribution" className="web-buy-bench">
@@ -141,7 +151,7 @@ const Bench: FC = () => {
               <dd>{DurationPre.unlockOn}</dd>
             </dl>
           </div>
-          <Button disabled={isDisabled} onClick={() => setInfoStatus(true)}>
+          <Button disabled={isDisabled} onClick={onConfirm}>
             confirm
           </Button>
         </div>

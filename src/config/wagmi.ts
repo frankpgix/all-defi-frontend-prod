@@ -24,10 +24,10 @@ const connectors = connectorsForWallets(
 )
 
 export const config = createConfig({
-  chains: [arbitrum, bscTestnet],
+  chains: [bscTestnet, arbitrum],
   connectors,
   transports: {
-    [arbitrum.id]: http(),
-    [bscTestnet.id]: http()
+    [bscTestnet.id]: http(),
+    [arbitrum.id]: http()
   }
 })
