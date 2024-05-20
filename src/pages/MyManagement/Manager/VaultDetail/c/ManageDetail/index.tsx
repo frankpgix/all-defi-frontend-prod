@@ -284,13 +284,13 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           </SectionTip>
           <SectionButtons>
             <ValutSettleButton
-              disabled={![5, 4, 6].includes(data.status) || data.isClosed}
+              disabled={![3, 4].includes(data.status)}
               outline
               callback={getData}
               vaultAddress={vaultAddress}
               data={data}
             >
-              settle
+              {data.status != 4 ? 'settle' : 'Settling'}
             </ValutSettleButton>
           </SectionButtons>
         </TabPanel>

@@ -157,3 +157,10 @@ export const VaultUpdatingDataDefault: VaultUpdatingDataProps = {
     allocationLimits: []
   }
 }
+
+export const GlobalAUMStatsDataDefault = {
+  totalAUM: 0, //平台总AUM
+  vaultsAUM: 0, //基金中的资产规模
+  historicalReturn: 0, //历史累计收益
+  historicalFee: 0 //历史累计费用
+}

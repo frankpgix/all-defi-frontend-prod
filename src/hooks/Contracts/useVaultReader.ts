@@ -16,6 +16,7 @@ import {
 
 import {
   calcAssetComposition,
+  calcGlobalAUMStats,
   calcShareComposition,
   calcVaultBaseInfo,
   calcVaultBreachDetail,
@@ -25,6 +26,7 @@ import {
   calcVaultUserDetail
 } from '@/compute/vault'
 import {
+  GlobalAUMStatsDataDefault,
   ShareCompositionDefault,
   VaultBreachDetailDataDefault,
   VaultDetailDefault,
@@ -225,17 +227,17 @@ export const useVaultUpdatingData = (vaultAddress: AddressType, underlyingToken:
   return { data: VaultUpdatingDataDefault, isSuccess, isLoading, refetch }
 }
 
-// export const useGlobalAUMStats = () => {
-//   const VaultReaderContract = useVaultReaderContract()
-//   const { data, isSuccess, isLoading, refetch, error } = useReadContract({
-//     ...VaultReaderContract,
-//     functionName: 'globalAUMStats',
-//     args: []
-//   }) as { data: any; isSuccess: boolean; isLoading: boolean; refetch: () => void }
-//   console.log(error, isSuccess, 'data')
-//   if (!isLoading && isSuccess) {
-//     console.log(data, 'data')
-//     return { data, isSuccess, isLoading, refetch }
-//   }
-//   return { data, isSuccess, isLoading, refetch }
-// }
+export const useGlobalAUMStats = () => {
+  const VaultReaderContract = useVaultReaderContract()
+  const { data, isSuccess, isLoading, refetch } = useReadContract({
+    ...VaultReaderContract,
+    functionName: 'globalAUMStats',
+    args: []
+  }) as { data: bigint[]; isSuccess: boolean; isLoading: boolean; refetch: () => void; error: any }
+  // console.log(error, isSuccess, 'data')
+  if (!isLoading && isSuccess) {
+    // console.log(data, 'data')
+    return { data: calcGlobalAUMStats(data), isSuccess, isLoading, refetch }
+  }
+  return { data: GlobalAUMStatsDataDefault, isSuccess, isLoading, refetch }
+}

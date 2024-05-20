@@ -272,3 +272,12 @@ export const calcVaultHash = (address: AddressType): VaultHashTypes => {
     hash: md5(address.toLocaleLowerCase())
   }
 }
+
+export const calcGlobalAUMStats = (data: bigint[]) => {
+  return {
+    totalAUM: Number(safeInterceptionValues(data[0], 4, 18)), //平台总AUM
+    vaultsAUM: Number(safeInterceptionValues(data[1], 4, 18)), //基金中的资产规模
+    historicalReturn: Number(safeInterceptionValues(data[2], 4, 18)), //历史累计收益
+    historicalFee: Number(safeInterceptionValues(data[3], 4, 18)) //历史累计费用
+  }
+}

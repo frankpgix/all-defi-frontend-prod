@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
-import { useGlobalAssetStats } from '@/hooks/Contracts/useAUMStats'
+// import { useGlobalAssetStats } from '@/hooks/Contracts/useAUMStats'
+import { useGlobalAUMStats } from '@/hooks/Contracts/useVaultReader'
 
 // import { useRequest } from 'ahooks'
 import { formatNumber } from '@/utils/tools'
@@ -9,7 +10,7 @@ import { formatNumber } from '@/utils/tools'
 import { CountItem, CountLayout } from '@@/core/Sestion'
 
 const Dashboard: FC = () => {
-  const { data, isLoading } = useGlobalAssetStats()
+  const { data, isLoading } = useGlobalAUMStats()
   // const { getGlobalAssetStats } = AUMStats
   // const { data = GlobalAssetStatisticDefault, loading } = useRequest(getGlobalAssetStats)
   return (
@@ -24,19 +25,19 @@ const Dashboard: FC = () => {
           <CountItem
             label="Current Overall AUM"
             popper="Total value of AC DAO, update after settlement"
-            value={formatNumber(data?.overallAUMInUSD ?? 0, 2, '$0,0.00')}
+            value={formatNumber(data?.totalAUM ?? 0, 2, '$0,0.00')}
             loading={isLoading}
           />
           <CountItem
             label="Current Vaults AUM"
             popper="Total AUM of all the Vaults, update after settlement"
-            value={formatNumber(data?.vaultAUMInUSD ?? 0, 2, '$0,0.00')}
+            value={formatNumber(data?.vaultsAUM ?? 0, 2, '$0,0.00')}
             loading={isLoading}
           />
           <CountItem
             label="Gross Profit"
             popper="Total historic profit and loss, update after settlement"
-            value={formatNumber(data?.overallReturnInUSD ?? 0, 2, '$0,0.00')}
+            value={formatNumber(data?.historicalReturn ?? 0, 2, '$0,0.00')}
             loading={isLoading}
           />
         </CountLayout>

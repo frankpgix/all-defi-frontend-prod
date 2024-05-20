@@ -92,7 +92,7 @@ const FundList: FC = () => {
                 size="mini"
                 data={record}
               >
-                settle
+                {record.status != 4 ? 'settle' : 'Settling'}
               </ValutSettleButton>
             )}
           </div>
