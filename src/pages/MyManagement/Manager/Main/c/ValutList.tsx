@@ -9,14 +9,15 @@ import { useManageVaultListHook } from '@/hooks/useVaultList'
 
 import { VaultDetailProps } from '@/types/vault'
 
-import { MANAGER_UPLODAD_HISTORICAL_DATA_URL } from '@/config'
+// import { MANAGER_UPLODAD_HISTORICAL_DATA_URL } from '@/config'
 import ValutSettleButton from '@/pages/MyManagement/Manager/VaultDetail/ValutSettleButton'
-import Button from '@@/common/Button'
+// import Button from '@@/common/Button'
 import { FundName } from '@@/common/FundIcon'
-import RoeShow from '@@/common/RoeShow'
+// import RoeShow from '@@/common/RoeShow'
 import { TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
-import Badge from '@@/core/Badge'
+
+// import Badge from '@@/core/Badge'
 
 const FundList: FC = () => {
   const navigate = useNavigate()
@@ -32,7 +33,7 @@ const FundList: FC = () => {
     },
     {
       title: 'Net Asset Value',
-      dataIndex: 'nav',
+      dataIndex: 'aum',
       width: 120,
       render: (value: number, row: VaultDetailProps) => (
         <TokenValue value={value} token={row.underlyingToken} size="mini" format="0,0.00" />
@@ -40,7 +41,7 @@ const FundList: FC = () => {
     },
     {
       title: 'Cash Balance',
-      dataIndex: 'unusedAsset',
+      dataIndex: 'underlyingBalance',
       width: 120,
       render: (value: number, row: VaultDetailProps) => (
         <TokenValue value={value} token={row.underlyingToken} size="mini" format="0,0.00" />
@@ -77,13 +78,14 @@ const FundList: FC = () => {
       render: (_: string, record: VaultDetailProps) => {
         return (
           <div className="web-buy-table-action">
-            {record.status === 0 ? (
-              <Badge value="Under review">
-                <Button to={MANAGER_UPLODAD_HISTORICAL_DATA_URL} size="mini">
-                  Upload data
-                </Button>
-              </Badge>
-            ) : (
+            {
+              //   record.status === 0 ? (
+              //   <Badge value="Under review">
+              //     <Button to={MANAGER_UPLODAD_HISTORICAL_DATA_URL} size="mini">
+              //       Upload data
+              //     </Button>
+              //   </Badge>
+              // ) : (
               <ValutSettleButton
                 disabled={![3].includes(record.status)}
                 callback={getData}
@@ -94,7 +96,8 @@ const FundList: FC = () => {
               >
                 {record.status != 4 ? 'settle' : 'Settling'}
               </ValutSettleButton>
-            )}
+              // )
+            }
           </div>
         )
       }
