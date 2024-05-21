@@ -78,7 +78,7 @@ const ContributionManagement: FC<Props> = ({ Infinite, data, refetch, loading })
           row.lockDuration.length === 78 || row.timestamp + row.lockDuration * 1000 > now
         return (
           <Button disabled={disabled} onClick={() => onItemUnLock(row)} size="mini" outline>
-            unlock
+            WITHDRAW
           </Button>
         )
       }
