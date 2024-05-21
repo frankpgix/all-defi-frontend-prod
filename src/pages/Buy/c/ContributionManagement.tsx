@@ -9,6 +9,7 @@ import { useProfile } from '@/hooks/useProfile'
 
 import { useUserDepositData } from '@/graphql/useFundData'
 import { formatNumber } from '@/utils/tools'
+import ALink from '@@/common/ALink'
 import Button from '@@/common/Button'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 
@@ -25,6 +26,7 @@ const ContributionManagement: FC = () => {
       onWithdraw(item.underlying, item.depositId, address, refetch)
     }
   }
+  console.log(data, 'data')
   const webColumns = [
     {
       title: 'Time',
@@ -69,7 +71,9 @@ const ContributionManagement: FC = () => {
       dataIndex: 'depositId',
       render: (_: string, row: any) => {
         const disabled =
-          row.lockDuration.length === 78 || row.timestamp + row.lockDuration * 1000 > now
+          row.lockDuration.length === 78 ||
+          row.timestamp + row.lockDuration * 1000 > now ||
+          row.isUnLock
         return (
           <Button disabled={disabled} onClick={() => onItemUnLock(row)} size="mini" outline>
             unlock
@@ -81,12 +85,15 @@ const ContributionManagement: FC = () => {
   return (
     <>
       <div className="web-buy-table-layout">
-        <h2>My Deposit</h2>
+        <h2>
+          My Deposit
+          <ALink to="">Deposit history</ALink>
+        </h2>
         <Table
           className="web-buy-table"
           columns={webColumns}
           emptyText={loading ? <TableLoading /> : <TableNoData />}
-          data={data}
+          data={data.deposits}
           rowKey="hash"
         />
       </div>

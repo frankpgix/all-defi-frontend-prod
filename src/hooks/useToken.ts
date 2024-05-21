@@ -49,7 +49,7 @@ export const useUnderlyingTokens = () => {
     ...token,
     address: token.address[chainId]
   }))
-  return [chainToken, ...tokens]
+  return [...tokens, chainToken]
 }
 
 export const useUnderlyingTokenOptions = () => {

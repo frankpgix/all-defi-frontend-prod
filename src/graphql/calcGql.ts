@@ -149,6 +149,20 @@ export const calcUserDepositDataGql = (userAddress: string) => {
         timestamp
         depositId
       }
+      withdrawals(
+        orderBy: timestamp
+        orderDirection: desc
+        where: {
+          user: "${userAddress.toLocaleLowerCase()}"
+        }
+      ) {
+        id
+        user
+        underlying
+        amount
+        timestamp
+        depositId
+      }
     }
   `
 }
