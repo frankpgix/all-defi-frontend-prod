@@ -11,11 +11,15 @@ import { useUserBalances } from '@/hooks/useToken'
 import { AddressType } from '@/types/base'
 
 import { ACTOKEN_LOCK_TIMES } from '@/config'
+import { useUserDepositData } from '@/graphql/useFundData'
+import { sleep } from '@/utils/tools'
 import Button from '@@/common/Button'
 import InfoDialog from '@@/common/Dialog/Info'
 import { Input, Select } from '@@/common/Form'
 import ButtonSelect from '@@/form/ButtonSelect'
 import BlueLineSection from '@@/web/BlueLineSection'
+
+import MyDeposit from './MyDeposit'
 
 export const Infinite: FC<{ white?: boolean }> = ({ white }) => (
   <svg width="28" height="14" viewBox="0 0 28 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,12 +37,15 @@ const Bench: FC = () => {
   const { onDeposit } = useDeposit()
   const { account } = useProfile()
   const { data: isAllowedForDeposit } = useIsAllowedForDeposit(account)
-  const { balances, refetch } = useUserBalances()
+  const { balances, refetch: reBalance } = useUserBalances()
   const [amount, setAmount] = useState<string | number>('')
   const [lockDuration, setLockDuration] = useState<number | string>(ACTOKEN_LOCK_TIMES[0])
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
+  const [allowedStatus, setAllowedStatus] = useState<boolean>(false)
   const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>(baseTokenOptions[0].value)
   const currBaseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
+  const { data, loading, refetch } = useUserDepositData(account ?? '')
+
   const lockDurationOptions = [
     { label: '1 Month', value: ACTOKEN_LOCK_TIMES[0] },
     { label: '3 Month', value: ACTOKEN_LOCK_TIMES[1] },
@@ -52,7 +59,11 @@ const Bench: FC = () => {
   const buyAndStakeFunc = async () => {
     if (account) {
       // 执行购买和质押
-      await onDeposit(baseTokenAddress, Number(amount), lockDuration, account, refetch)
+      await onDeposit(baseTokenAddress, Number(amount), lockDuration, account, async () => {
+        reBalance()
+        await sleep(2000)
+        await refetch()
+      })
     }
   }
 
@@ -90,7 +101,7 @@ const Bench: FC = () => {
     if (isAllowedForDeposit) {
       setInfoStatus(true)
     } else {
-      alert('You are not authorized for Deposit, Please contact management.')
+      setAllowedStatus(true)
     }
   }
   return (
@@ -163,6 +174,15 @@ const Bench: FC = () => {
         title="Confirm AC Token Deposit"
         msg={`You will deposit ${amount} ac${currBaseToken.name}, for a total cost of ${amount} ${currBaseToken.name}`}
       />
+      <InfoDialog
+        show={allowedStatus}
+        type="info"
+        onConfirm={() => setAllowedStatus(false)}
+        onClose={() => setAllowedStatus(false)}
+        title="Restricted Permissions"
+        msg={`You are not authorized for Deposit, Please contact management.`}
+      />
+      <MyDeposit Infinite={<Infinite />} {...{ data, loading, refetch }} />
     </>
   )
 }

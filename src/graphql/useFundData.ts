@@ -103,7 +103,7 @@ export const useUserDepositData = (userAddress: string) => {
     // 忽略缓存，总是从网络获取数据
     fetchPolicy: 'no-cache'
   })
-  console.log(111222, error, sData)
+  // console.log(111222, error, sData)
   // withdrawals
   const withdrawals = (sData?.withdrawals ?? []).map((item: any) => {
     const token = getTokenByAddress(item.underlying)
@@ -119,23 +119,27 @@ export const useUserDepositData = (userAddress: string) => {
       token
     }
   })
-  const deposits = (sData?.deposits ?? []).map((item: UserDepositDataTypes) => {
-    const token = getTokenByAddress(item.underlying)
-    console.log(111, token, item)
-    return {
-      id: item.id,
-      amount: Number(safeInterceptionValues(item.amount, token.decimals, token.decimals)),
-      tokenName: token.name,
-      hash: item.id.split('-')[0],
-      user: item.user,
-      lockDuration: item.lockDuration,
-      timestamp: item.timestamp * 1000,
-      depositId: item.depositId,
-      underlying: item.underlying,
-      token,
-      isUnLock: Boolean((sData?.withdrawals ?? []).find((w: any) => w.depositId === item.depositId))
-    }
-  })
+  const deposits = (sData?.deposits ?? [])
+    .map((item: UserDepositDataTypes) => {
+      const token = getTokenByAddress(item.underlying)
+      // console.log(111, token, item)
+      return {
+        id: item.id,
+        amount: Number(safeInterceptionValues(item.amount, token.decimals, token.decimals)),
+        tokenName: token.name,
+        hash: item.id.split('-')[0],
+        user: item.user,
+        lockDuration: item.lockDuration,
+        timestamp: item.timestamp * 1000,
+        depositId: item.depositId,
+        underlying: item.underlying,
+        token
+      }
+    })
+    .filter(
+      (item: any) =>
+        !Boolean((sData?.withdrawals ?? []).find((w: any) => w.depositId === item.depositId))
+    )
   return { loading, error, data: { deposits, withdrawals }, refetch }
 }
 

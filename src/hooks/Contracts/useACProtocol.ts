@@ -175,11 +175,11 @@ export const useWithdraw = () => {
 
 export const useIsAllowedForDeposit = (account?: AddressType) => {
   const AllProtocolContract = useACProtocolContract()
-  const { isLoading, isSuccess, data, refetch, error } = useReadContract({
+  const { isLoading, isSuccess, data, refetch } = useReadContract({
     ...AllProtocolContract,
     functionName: 'isAllowedForDeposit',
     args: [account ?? '']
   })
-  console.log(isLoading, isSuccess, data, error)
+  // console.log(isLoading, isSuccess, data, error)
   return { data, isLoading, isSuccess, refetch }
 }

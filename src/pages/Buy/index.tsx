@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import Bench from './c/Bench'
-import ContributionManagement from './c/ContributionManagement'
+// import ContributionManagement from './c/ContributionManagement'
 import OnceYouBuy from './c/OnceYouBuy'
 
 const BuyAcToken: FC = () => {
@@ -9,7 +9,7 @@ const BuyAcToken: FC = () => {
     <div className="web-buy">
       <OnceYouBuy />
       <Bench />
-      <ContributionManagement />
+      {/* <ContributionManagement /> */}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 
 import dayjs from 'dayjs'
 import RelativeTime from 'dayjs/plugin/relativeTime'
@@ -7,26 +7,31 @@ import Table from 'rc-table'
 import { useWithdraw } from '@/hooks/Contracts/useACProtocol'
 import { useProfile } from '@/hooks/useProfile'
 
-import { useUserDepositData } from '@/graphql/useFundData'
+// import { useUserDepositData } from '@/graphql/useFundData'
 import { formatNumber } from '@/utils/tools'
 import ALink from '@@/common/ALink'
 import Button from '@@/common/Button'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 
-import { Infinite } from './Bench'
-
 dayjs.extend(RelativeTime)
-const ContributionManagement: FC = () => {
+
+interface Props {
+  Infinite: ReactNode
+  data: { deposits: any[]; withdrawals: any[] }
+  loading: boolean
+  refetch: () => void
+}
+const ContributionManagement: FC<Props> = ({ Infinite, data, refetch, loading }) => {
   const { account: address } = useProfile()
   const { onWithdraw } = useWithdraw()
-  const { data, loading, refetch } = useUserDepositData(address ?? '')
+  // const { data, loading, refetch } = useUserDepositData(address ?? '')
   const now = +new Date()
   const onItemUnLock = (item: any) => {
     if (address) {
       onWithdraw(item.underlying, item.depositId, address, refetch)
     }
   }
-  console.log(data, 'data')
+  // console.log(data, 'data')
   const webColumns = [
     {
       title: 'Time',
@@ -42,9 +47,9 @@ const ContributionManagement: FC = () => {
       title: 'Lock Duration',
       dataIndex: 'lockDuration',
       render: (value: string) => {
-        console.log(value.length, 'value.length')
+        // console.log(value.length, 'value.length')
         if (value.length === 78) {
-          return <Infinite />
+          return Infinite
         }
         const time = Number(value) / 60 / 60 / 24
 
@@ -61,7 +66,7 @@ const ContributionManagement: FC = () => {
       dataIndex: 'timestamp',
       render: (value: number, row: any) => {
         if (row.lockDuration.length === 78) {
-          return <Infinite />
+          return Infinite
         }
         return dayjs().to(value + row.lockDuration * 1000)
       }
