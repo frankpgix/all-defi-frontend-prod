@@ -89,8 +89,9 @@ const Bench: FC = () => {
   const onConfirm = () => {
     if (isAllowedForDeposit) {
       setInfoStatus(true)
+    } else {
+      alert('You are not authorized for Deposit, Please contact management.')
     }
-    alert('You are not authorized for Deposit, Please contact management.')
   }
   return (
     <>

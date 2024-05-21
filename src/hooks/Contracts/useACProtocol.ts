@@ -6,7 +6,7 @@ import { useAllowance, useWaitReceipt } from '@/hooks/Contracts/useTools'
 import { useNotify } from '@/hooks/useNotify'
 import { useToken } from '@/hooks/useToken'
 
-import { AddressType } from '@/types/base'
+import { AddressType, UnderlyingTokenTypes } from '@/types/base'
 
 import { getUnitAmount } from '@/utils/tools'
 
@@ -99,6 +99,8 @@ export const useWithdraw = () => {
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
   const { onWaitReceipt } = useWaitReceipt()
+  const { onAllowance } = useAllowance()
+  const { getTokenByAddress, getTokenByName } = useToken()
 
   const onWithdraw = async (
     underlyingAddress: AddressType,
@@ -106,10 +108,13 @@ export const useWithdraw = () => {
     account: AddressType,
     callback?: () => void
   ) => {
+    const underlyingToken = getTokenByAddress(underlyingAddress) as UnderlyingTokenTypes
+    const acToken = getTokenByName(underlyingToken?.acTokenName)
     const notifyId = await createNotify({ content: 'Withdraw', type: 'loading' })
     const succNotify = (hash: string) => {
       updateNotifyItem(notifyId, { content: 'Withdraw', type: 'success', hash })
     }
+    console.log(acToken, 'acToken')
 
     const errorNotify = (msg: any) => {
       updateNotifyItem(notifyId, {
@@ -118,7 +123,17 @@ export const useWithdraw = () => {
         content: msg
       })
     }
+    const allowance = await onAllowance(
+      acToken.address,
+      ACProtocolContract.address,
+      999999999n,
+      notifyId
+    )
 
+    if (!allowance) {
+      errorNotify('Please approve first')
+      return
+    }
     if (underlyingAddress === zeroAddress) {
       writeContract(
         {
