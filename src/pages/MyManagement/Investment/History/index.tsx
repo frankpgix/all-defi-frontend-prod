@@ -1,13 +1,14 @@
 import { FC } from 'react'
-import Table from 'rc-table'
-import dayjs from 'dayjs'
 
-import { useUserVaultHistoryData } from '@/graphql/useFundData'
-import { formatNumber } from '@/utils/tools'
+import dayjs from 'dayjs'
+import Table from 'rc-table'
+
 import { useProfile } from '@/hooks/useProfile'
 
 import { UserVaultHistoryDataProps } from '@/types/graphql'
 
+import { useUserVaultHistoryData } from '@/graphql/useFundData'
+import { formatNumber } from '@/utils/tools'
 import HashLink from '@@/common/HashLink'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
@@ -30,7 +31,7 @@ const History: FC = () => {
   // useEffect(() => void refetch(), [refetch])
   const webColumns = [
     {
-      title: 'Fund Name',
+      title: 'Vault Name',
       dataIndex: 'name'
     },
     {

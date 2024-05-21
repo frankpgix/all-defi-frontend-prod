@@ -9,7 +9,6 @@ import { useProfile } from '@/hooks/useProfile'
 
 // import { useUserDepositData } from '@/graphql/useFundData'
 import { formatNumber } from '@/utils/tools'
-import ALink from '@@/common/ALink'
 import Button from '@@/common/Button'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 
@@ -90,7 +89,9 @@ const ContributionManagement: FC<Props> = ({ Infinite, data, refetch, loading })
       <div className="web-buy-table-layout">
         <h2>
           My Deposit
-          <ALink to="">Withdrawal history</ALink>
+          <Button text to="/buy/history">
+            Withdrawal history
+          </Button>
         </h2>
         <Table
           className="web-buy-table"

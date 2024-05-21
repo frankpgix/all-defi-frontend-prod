@@ -10,6 +10,7 @@ import 'rc-dialog/assets/index.css'
 import 'rc-table/assets/index.css'
 
 import Buy from '@/pages/Buy'
+import History from '@/pages/Buy/History'
 import Home from '@/pages/Home'
 import Mining from '@/pages/Mining'
 import MyManagement from '@/pages/MyManagement'
@@ -34,6 +35,7 @@ function App() {
         <Suspense fallback={null}>
           <Routes>
             <Route path="/buy" element={<Buy />} />
+            <Route path="/buy/history" element={<History />} />
             <Route path="/vaults/*" element={<Vaults />} />
             <Route path="/manage/*" element={<MyManagement />} />
             <Route path="/all-mining" element={<Mining />} />

@@ -10,14 +10,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      a {
-        font-size: 12px;
-        white-space: nowrap;
-        text-transform: uppercase;
-        color: $blue;
-        // font-weight: normal;
-        letter-spacing: 4px;
-      }
     }
     & > footer {
       display: flex;
