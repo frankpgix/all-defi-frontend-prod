@@ -5,8 +5,8 @@ import { CountItem, CountLayout } from '@@/core/Sestion'
 
 const Dashboard: FC = () => {
   return (
-    <section className="web-fund-dashboard-layout">
-      <div className="web-fund-dashboard">
+    <section className="web-task-dashboard-layout">
+      <div className="web-task-dashboard">
         {/*<h3>WE ARE</h3>*/}
         <h2>
           Get Points by Completing Tasks <br /> &nbsp;
@@ -36,7 +36,6 @@ const Dashboard: FC = () => {
           />
         </CountLayout>
       </div>
-      <div className="web-fund-dashboard-ball animate__animated animate__slideInRight" />
     </section>
   )
 }

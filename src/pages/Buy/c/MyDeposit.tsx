@@ -90,7 +90,7 @@ const ContributionManagement: FC<Props> = ({ Infinite, data, refetch, loading })
         <h2>
           My Deposit
           <Button text to="/buy/history">
-            Withdrawal history
+            Withdraw history
           </Button>
         </h2>
         <Table
