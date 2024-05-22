@@ -15,14 +15,6 @@
 
     background: linear-gradient(351.42deg, #f7fbff 15.74%, #e8eff9 93.13%);
   }
-  h3 {
-    text-align: center;
-    font-size: 12px;
-    line-height: 22px;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    font-weight: 800;
-  }
   h2 {
     text-align: center;
     font-family: 'Didot';
@@ -31,43 +23,5 @@
     font-size: 40px;
     margin-top: 10px;
     margin-bottom: 20px;
-  }
-  ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 20px;
-    position: relative;
-    z-index: 1;
-    li {
-      // height: 112px;
-      padding: 20px;
-      position: relative;
-      top: 0;
-      color: $white;
-      display: flex;
-      flex-flow: column;
-      background: linear-gradient(134.54deg, #207dff 17.91%, #82b6ff 100%);
-      box-shadow: 0px 16px 32px rgba(49, 48, 48, 0.16);
-      border-radius: 10px;
-      line-height: 1.2;
-      @include dz();
-
-      label {
-        font-size: 14px;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      em {
-        font-size: 32px;
-        font-weight: 800;
-        display: block;
-      }
-      &:hover {
-        top: -5px;
-        box-shadow: 0px 16px 32px rgba(49, 48, 48, 0.3);
-      }
-    }
   }
 }

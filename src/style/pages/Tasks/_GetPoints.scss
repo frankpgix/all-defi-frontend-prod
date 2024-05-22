@@ -1,0 +1,137 @@
+.p-tasks-get-point {
+  display: flex;
+  justify-content: space-between;
+  &-layout {
+    @extend .web;
+  }
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    h3 {
+      font-size: 24px;
+    }
+  }
+
+  &-item {
+    border-radius: 20px;
+    width: 280px;
+    height: 440px;
+    border: 2px solid $white;
+    padding: 40px 20px 30px;
+    @include jb(rgba($white, 0.42), rgba($white, 0.69), 90);
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    position: relative;
+
+    & > header {
+      position: absolute;
+      z-index: 3;
+      width: 306px;
+      height: 26px;
+      top: 15px;
+      left: -15px;
+      background: url($res + 'task/flag-bar.svg') center/100% 100% no-repeat;
+      font-size: 12px;
+      color: #049269;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+    }
+    & > main {
+      position: relative;
+      z-index: 2;
+      & > img {
+        display: block;
+        width: 70px;
+        height: 70px;
+      }
+
+      & > h4 {
+        padding: 20px 0 10px;
+        font-size: 20px;
+        line-height: 28px;
+        height: 86px;
+      }
+
+      & > p {
+        font-size: 14px;
+        line-height: 18px;
+      }
+
+      & > aside {
+        border-radius: 16px;
+        background: #e6edff;
+        padding: 12px 20px;
+        margin-bottom: 10px;
+
+        strong {
+          display: block;
+          font-size: 48px;
+          small {
+            font-size: 18px;
+            padding-left: 5px;
+          }
+        }
+
+        span {
+          font-size: 14px;
+          color: #9b9b9b;
+        }
+      }
+
+      & > .web-button {
+        text-transform: none;
+        letter-spacing: 0;
+        display: flex;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+    }
+
+    & > footer {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    &.fire::before {
+      content: '';
+      display: block;
+      width: 46px;
+      height: 62px;
+      background: url($res + 'task/fire.svg') center/100% 100% no-repeat;
+      position: absolute;
+      z-index: 2;
+      right: 20px;
+      top: 40px;
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      position: absolute;
+      z-index: -1;
+      background: linear-gradient(278.42deg, #ffe7d9 -4.98%, #f9830b 68.19%);
+      filter: blur(40px);
+      transform: rotate(31.07deg);
+      @include dz(0.5s);
+      top: 300px;
+      left: -50px;
+      opacity: 0;
+    }
+
+    &:hover::after {
+      top: 0;
+      left: 100px;
+      opacity: 1;
+    }
+  }
+}
