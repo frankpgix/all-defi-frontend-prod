@@ -30,7 +30,9 @@ export const useDeposit = () => {
     const _amount = getUnitAmount(String(amount), underlyingToken?.decimals)
 
     const notifyId = await createNotify({ content: 'Deposit', type: 'loading' })
+    console.log('notifyId', notifyId)
     const succNotify = (hash: string) => {
+      console.log('notifyId2', notifyId)
       updateNotifyItem(notifyId, { content: 'Deposit', type: 'success', hash })
     }
 

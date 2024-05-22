@@ -42,6 +42,7 @@ const Bench: FC = () => {
   const [lockDuration, setLockDuration] = useState<number | string>(ACTOKEN_LOCK_TIMES[0])
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const [allowedStatus, setAllowedStatus] = useState<boolean>(false)
+  const [depositStatus, setDepositStatus] = useState<boolean>(false)
   const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>(baseTokenOptions[0].value)
   const currBaseToken = useMemo(() => getTokenByAddress(baseTokenAddress), [baseTokenAddress])
   const { data, loading, refetch } = useUserDepositData(account ?? '')
@@ -58,9 +59,12 @@ const Bench: FC = () => {
   ]
   const buyAndStakeFunc = async () => {
     if (account) {
+      setDepositStatus(true)
       // 执行购买和质押
       await onDeposit(baseTokenAddress, Number(amount), lockDuration, account, async () => {
         reBalance()
+        setAmount('')
+        setDepositStatus(false)
         await sleep(2000)
         await refetch()
       })
@@ -68,8 +72,8 @@ const Bench: FC = () => {
   }
 
   const isDisabled = useMemo(
-    () => !amount || !isNumber(Number(amount) || Number(amount) === 0),
-    [amount]
+    () => !amount || !isNumber(Number(amount) || Number(amount) === 0) || depositStatus,
+    [amount, depositStatus]
   )
 
   const maxNumber = useMemo(() => {
