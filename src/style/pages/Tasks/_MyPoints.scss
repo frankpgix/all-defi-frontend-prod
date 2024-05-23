@@ -70,7 +70,13 @@
     display: flex;
     flex-flow: column;
     gap: 5px;
+    position: relative;
+    @include dz();
+    top: 0;
 
+    &:hover {
+      top: -5px;
+    }
     & > label {
       font-size: 14px;
       font-weight: bold;
