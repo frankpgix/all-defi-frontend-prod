@@ -1,3 +1,42 @@
 .p-task-leaderboard {
   @extend .web;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+
+  & > main {
+    border-radius: 10px;
+    padding: 40px 60px;
+    color: $white;
+    & > h3 {
+      display: flex;
+      flex-flow: column;
+      font-size: 32px;
+      align-items: center;
+      margin-bottom: 30px;
+
+      &::before {
+        content: '';
+        display: block;
+        width: 100px;
+        height: 100px;
+        background: center no-repeat;
+      }
+    }
+
+    &:first-child {
+      background: linear-gradient(123.54deg, #1036e6 2.92%, #467aff 97.86%);
+      & > h3::before {
+        background-image: url($res + 'task/points.svg');
+        background-size: 100px 100px;
+      }
+    }
+    &:last-child {
+      background: linear-gradient(130.37deg, #985eff 4.63%, #ccb4ff 100%);
+      & > h3::before {
+        background-image: url($res + 'task/invitation.svg');
+        background-size: 82px 82px;
+      }
+    }
+  }
 }
