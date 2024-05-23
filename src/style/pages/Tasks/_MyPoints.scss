@@ -1,5 +1,5 @@
 .p-task-header {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
   margin: 40px auto 20px;
   @extend .web;
@@ -7,78 +7,110 @@
 
 .p-task-my-points {
   @extend .web;
-  border-radius: 8px;
-  padding: 40px;
-  @include jb($blue, $orange, 68);
-
-  & > main {
-    width: 640px;
+  position: relative;
+  &-layout {
+    @extend .web_;
+    height: 346px;
+    padding: 40px 0;
+    background: linear-gradient(328.9deg, #8ca9fb 25.06%, rgba(237, 240, 251, 0) 105.07%);
+    box-shadow: 10px 10px 20px 0px #81808033;
+    overflow: hidden;
+  }
+  &::after {
+    content: '';
+    display: block;
+    width: 380px;
+    height: 380px;
+    background: linear-gradient(278.42deg, #ffe7d9 -4.98%, #f9830b 68.19%);
+    border-radius: 50%;
+    filter: blur(40px);
+    position: absolute;
+    right: 0;
+    top: -100px;
+    animation: zoom-in-mini 2s linear infinite alternate;
   }
 
-  &-item {
-    &,
-    &-total {
-      background: rgba($white, 0.5);
-      border-radius: 8px;
+  &-total {
+    display: inline-flex;
+    gap: 10px;
+    flex-flow: column;
+    margin-bottom: 40px;
+
+    & > label {
+      font-size: 14px;
+      font-weight: bold;
     }
-    & {
-      padding: 16px 32px;
-      label {
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        font-weight: bold;
-        gap: 10px;
-        opacity: 0.7;
-        margin-bottom: 12px;
-      }
-      em {
-        font-size: 20px;
-        font-weight: bold;
-      }
 
-      &.arrow {
-        position: relative;
-        cursor: pointer;
-        &::after {
-          content: '';
-          background: url($res + 'icon/arrow-right.svg') center/contain no-repeat;
-          width: 24px;
-          height: 24px;
-          display: block;
-          position: absolute;
-          right: 16px;
-          top: 50%;
-          margin-top: -24px * 0.5;
-        }
-      }
+    & > em {
+      font-size: 48px;
+      font-weight: bold;
     }
-    &-total {
-      height: 80px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 32px;
-
-      label {
-        display: flex;
-        align-items: center;
-        font-size: 28px;
-        font-weight: bold;
-        gap: 10px;
-      }
-
-      em {
-        font-size: 28px;
-        font-weight: bold;
-      }
+    & > button.web-button.text {
+      padding-left: 0;
     }
   }
-
   &-details {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
     gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  &-item {
+    width: 220px;
+    height: 114px;
+    background: linear-gradient(
+      90.99deg,
+      rgba(255, 255, 255, 0.69) 1.33%,
+      rgba(255, 255, 255, 0.42) 99.83%
+    );
+    border: 2px solid #ffffff;
+    box-shadow: 7px 10px 9px 0px #8180801a;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-flow: column;
+    gap: 5px;
+
+    & > label {
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 1.4;
+      color: #737373;
+      height: 40px;
+    }
+
+    & > em {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+
+  &-invet {
+    position: absolute;
+    right: 0;
+    top: 8px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    & > p {
+      width: 320px;
+      background: #edf0fb;
+      border-radius: 8px;
+      line-height: 32px;
+      padding: 0 12px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #467aff;
+
+      @include oneline(32px);
+    }
+
+    & > .web-c-copytext {
+      display: block;
+      width: 32px;
+      height: 32px;
+    }
   }
 }
