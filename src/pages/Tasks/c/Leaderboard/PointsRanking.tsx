@@ -17,10 +17,10 @@ const PointsRanking: FC = () => {
           <li>
             <em>{row.rank}</em>
             <HashLink address={row.address} nolink />
-            <span>
+            <strong>
               {row.total}
               <small>pts</small>
-            </span>
+            </strong>
           </li>
         ))}
       </ul>
