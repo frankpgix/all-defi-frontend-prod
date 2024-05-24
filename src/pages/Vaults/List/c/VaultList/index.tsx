@@ -103,9 +103,9 @@ const FundList: FC = () => {
   ]
   // calcVaultHash
   const onRow = (record: VaultDetailProps) => {
-    const { hash } = calcVaultHash(record.address)
+    // const { hash } = calcVaultHash(record.address)
     return {
-      onClick: () => navigate(`/vaults/detail/${hash}`)
+      onClick: () => navigate(`/vaults/detail/${record.address}`)
     }
   }
 

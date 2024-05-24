@@ -25,7 +25,7 @@ const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
     isLoading: loading,
     refetch: getData
   } = useVaultDetails(fundAddress, account ?? '0x')
-  // console.log(123, baseInfo, vaultDetail)
+  console.log(123, fundAddress, baseInfo, vaultDetail)
   return (
     <>
       {!loading && vaultDetail.isClosed && (
@@ -55,12 +55,12 @@ const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
 }
 
 export const DetailInit = () => {
-  const { fundAddress = '' } = useParams()
-  const { getVaultAddressByHash } = useVaultHashHook()
-  const address = getVaultAddressByHash(fundAddress)
-  if (address) {
-    return <Detail fundAddress={address} />
-  }
-  return null
+  const { fundAddress = '0x' } = useParams() as { fundAddress: AddressType }
+  // const { getVaultAddressByHash } = useVaultHashHook()
+  // const address = getVaultAddressByHash(fundAddress)
+  // if (address) {
+  return <Detail fundAddress={fundAddress} />
+  // }
+  // return null
 }
 export default DetailInit
