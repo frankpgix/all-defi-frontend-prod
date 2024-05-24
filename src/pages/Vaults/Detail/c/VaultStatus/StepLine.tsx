@@ -15,8 +15,15 @@ interface Props {
 }
 
 const StepLine: FC<Props> = ({ data, loading }) => {
-  const activeIndex = data.status === 0 ? 1 : data.status
-  console.log(data.status, ' data.status')
+  let activeIndex = data.status === 0 ? 1 : data.status
+  // console.log(data.status, ' data.status')
+  const now = +new Date()
+  if (now > data.settleEndTime && data.status === 3) {
+    activeIndex = 4
+  }
+  if (now < data.settleEndTime && data.status === 4) {
+    activeIndex = 3
+  }
   const steps = [
     {
       label: 'Open Period',

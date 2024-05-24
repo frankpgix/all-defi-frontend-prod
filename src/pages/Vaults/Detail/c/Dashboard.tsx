@@ -102,7 +102,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
             <DashboardItem label="Vault Inception Date" loading={loading}>
               {dayjs(data.createTime).format('MMM DD, YYYY')}
             </DashboardItem>
-            <DashboardItem label="Capacity Available" loading={loading}>
+            {/* <DashboardItem label="Capacity Available" loading={loading}>
               <TokenValue
                 value={Math.max(
                   BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber(),
@@ -112,7 +112,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
                 size="mini"
                 format="0,0.00"
               />
-            </DashboardItem>
+            </DashboardItem> */}
             <DashboardItem
               label="Current Epoch return %"
               popper="The vault's profit and loss on real-time basis, which will be reset to zero after the end of each epoch"
