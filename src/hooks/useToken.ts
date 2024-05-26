@@ -13,12 +13,16 @@ import {
   UnderlyingTokenConfigTypes
 } from '@/types/base'
 
+import { ChainId as ChainIds } from '@/config'
 import { DEFAULT_CHAIN_ID } from '@/config'
 import { formatUnits } from '@/utils/tools'
 
 export const useCurrChainID = (): ChainIdTypes => {
   const { chainId } = useAccount()
-  return chainId ?? DEFAULT_CHAIN_ID
+  console.log(Object.values(ChainIds).includes(chainId ?? DEFAULT_CHAIN_ID))
+  console.log(chainId)
+  if (chainId && Object.values(ChainIds).includes(chainId)) return chainId
+  return DEFAULT_CHAIN_ID
 }
 
 export const useTokens = (): TokenTypes[] => {
@@ -27,7 +31,7 @@ export const useTokens = (): TokenTypes[] => {
     ...token,
     address: token.address[chainId]
   }))
-  return [chainToken, ...tokenList]
+  return [chainToken, ...tokenList].filter((i) => i)
 }
 
 export const useChainToken = () => {
@@ -64,7 +68,7 @@ export const useUnderlyingTokenOptions = () => {
 export const useToken = () => {
   const tokens = useTokens()
   const { chainToken } = useChainToken()
-  // console.log(tokens, 'tokens')
+  console.log(tokens, 'tokens')
   const getToken = (keywords: string | AddressType, type?: 'address' | 'name' | 'symbol') => {
     if (type === 'address' && keywords === zeroAddress) return chainToken
     const token = tokens.find(
