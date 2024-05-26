@@ -28,10 +28,6 @@ export const calcVaultAllocationOrWithholdGQL = (vaultAddress: string, type: num
 export const calcUserVaultHistoryGQL = (userAddress?: string, vaultAddress?: string) => {
   return gql`
     query {
-      vaults {
-        id
-        name
-      }
       vaultUserActions(
         orderBy: timestamp
         orderDirection: desc
@@ -42,10 +38,11 @@ export const calcUserVaultHistoryGQL = (userAddress?: string, vaultAddress?: str
       ) {
         id
         investor
-        vaultId
+        vaultAddress
+        vaultName
         amount
         actionType
-        underlyingToken
+        underlying
         timestamp
       }
     }

@@ -53,8 +53,8 @@ export const calcUserVaultHistoryData = (
   data: UserVaultHistorySourceDataProps,
   getTokenByAddress: GetTokenFuncType
 ): UserVaultHistoryDataProps[] => {
-  const { vaults = [], vaultUserActions = [] } = data ?? []
-  return vaultUserActions.map((item) => calcActionData(item, getTokenByAddress, vaults))
+  const { vaultUserActions = [] } = data ?? []
+  return vaultUserActions.map((item) => calcActionData(item, getTokenByAddress))
 }
 
 export const calcDataTypeAndStartTime = (type: string, startTime: number) => {
