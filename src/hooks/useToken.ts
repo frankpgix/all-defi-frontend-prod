@@ -19,8 +19,8 @@ import { formatUnits } from '@/utils/tools'
 
 export const useCurrChainID = (): ChainIdTypes => {
   const { chainId } = useAccount()
-  console.log(Object.values(ChainIds).includes(chainId ?? DEFAULT_CHAIN_ID))
-  console.log(chainId)
+  // console.log(Object.values(ChainIds).includes(chainId ?? DEFAULT_CHAIN_ID))
+  // console.log(chainId)
   if (chainId && Object.values(ChainIds).includes(chainId)) return chainId
   return DEFAULT_CHAIN_ID
 }
@@ -68,7 +68,7 @@ export const useUnderlyingTokenOptions = () => {
 export const useToken = () => {
   const tokens = useTokens()
   const { chainToken } = useChainToken()
-  console.log(tokens, 'tokens')
+  // console.log(tokens, 'tokens')
   const getToken = (keywords: string | AddressType, type?: 'address' | 'name' | 'symbol') => {
     if (type === 'address' && keywords === zeroAddress) return chainToken
     const token = tokens.find(

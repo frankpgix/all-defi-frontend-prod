@@ -267,6 +267,7 @@ export const useRequestSettlemen = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, { title: 'Settle Vault', type: 'success', hash })
           },
           onError: (error: any) => {
+            callback?.()
             updateNotifyItem(notifyId, {
               title: 'Settle Vault',
               type: 'error',

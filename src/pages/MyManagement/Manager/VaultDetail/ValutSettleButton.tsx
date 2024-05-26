@@ -34,36 +34,37 @@ const ValutSettleButton: FC<Props> = ({
   const [show, { setLeft: closeModal, setRight: openModal }] = useToggle()
   const [show2, { setLeft: closeModal2, setRight: openModal2 }] = useToggle()
   const [show3, { setLeft: closeModal3, setRight: openModal3 }] = useToggle()
+  const [loading, { setLeft: closeLoading, setRight: openLoading }] = useToggle()
 
-  const nextRoundCash = useMemo(() => {
-    let temp = BN(data.unstakingShare).times(data.sharePrice)
-    if (data.epochIndex % 6 === 0) {
-      temp = temp.plus(data.platFee).plus(data.managerFee)
-    }
-    const v = Number(temp.minus(data.stakingACToken).toFixed(2, BN.ROUND_UP))
-    return v >= 0 ? v : 0
-  }, [
-    data.unstakingShare,
-    data.sharePrice,
-    data.stakingACToken,
-    data.epochIndex,
-    data.platFee,
-    data.managerFee
-  ])
+  // const nextRoundCash = useMemo(() => {
+  //   let temp = BN(data.unstakingShare).times(data.sharePrice)
+  //   if (data.epochIndex % 6 === 0) {
+  //     temp = temp.plus(data.platFee).plus(data.managerFee)
+  //   }
+  //   const v = Number(temp.minus(data.stakingACToken).toFixed(2, BN.ROUND_UP))
+  //   return v >= 0 ? v : 0
+  // }, [
+  //   data.unstakingShare,
+  //   data.sharePrice,
+  //   data.stakingACToken,
+  //   data.epochIndex,
+  //   data.platFee,
+  //   data.managerFee
+  // ])
 
   // 下轮赎回减去下轮申购减去FEE ？？ 大于现金余额
-  const isShowCashBalanceLess = useMemo(
-    () =>
-      BN(nextRoundCash).minus(data.stakingACToken).toNumber() >
-      BN(data.underlyingBalance).toNumber(),
-    [nextRoundCash, data.stakingACToken, data.underlyingBalance]
-  )
+  // const isShowCashBalanceLess = useMemo(
+  //   () =>
+  //     BN(nextRoundCash).minus(data.stakingACToken).toNumber() >
+  //     BN(data.underlyingBalance).toNumber(),
+  //   [nextRoundCash, data.stakingACToken, data.underlyingBalance]
+  // )
 
-  // 是否还有申购余额
-  const isCannotAllocate = useMemo(
-    () => BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber() <= 0,
-    [data.beginningAUM, data.aum, data.stakingACToken]
-  )
+  // // 是否还有申购余额
+  // const isCannotAllocate = useMemo(
+  //   () => BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber() <= 0,
+  //   [data.beginningAUM, data.aum, data.stakingACToken]
+  // )
 
   // console.log('data', data)
 
@@ -87,14 +88,24 @@ const ValutSettleButton: FC<Props> = ({
     closeModal()
     closeModal2()
     closeModal3()
+    openLoading()
     if (account && vaultAddress) {
-      await onRequestSettlemen(account, callback)
+      await onRequestSettlemen(account, () => {
+        callback?.()
+        closeLoading()
+      })
     }
   }
 
   return (
     <>
-      <Button outline={outline} disabled={disabled} size={size} onClick={onButtonClick}>
+      <Button
+        outline={outline}
+        loading={loading}
+        disabled={disabled}
+        size={size}
+        onClick={onButtonClick}
+      >
         {children}
       </Button>
       <Dialog

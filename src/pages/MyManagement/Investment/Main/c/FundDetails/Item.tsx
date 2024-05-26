@@ -74,7 +74,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
   }, [active, ref, isInit])
 
   const acToken = useMemo(() => getTokenByAddress(fund.acToken), [fund.acToken])
-
+  const underlyingToken = useMemo(() => fund.underlying, [fund.underlying])
   const ivFinish = useMemo(() => fund.data.status === 6, [fund.data.status])
 
   useEffect(() => {
@@ -137,7 +137,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   <em>
                     <TokenValue
                       value={fund.data.stakingACToken}
-                      token={acToken}
+                      token={underlyingToken}
                       size="mini"
                       format="0,0.00"
                     />
@@ -165,7 +165,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   </label>
                   <em>
                     {formatNumber(fund.data.unstakingShare, 4, '0,0.0000')}
-                    {/*<TokenValue value={fund.data.redeemingShares} token={acToken} size="mini" format="0,0.00" />*/}
+                    {/*<TokenValue value={fund.data.redeemingShares} token={underlyingToken} size="mini" format="0,0.00" />*/}
                   </em>
                   <Button
                     disabled={!(fund.data.unstakingShare > 0 && fund.data.status === 1)}
@@ -183,7 +183,12 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
             </div>
             <div className="web-manage-investment-fund-item-data">
               <SectionItem label="Staking Value">
-                <TokenValue value={fund.data.nav} token={acToken} size="mini" format="0,0.00" />
+                <TokenValue
+                  value={fund.data.nav}
+                  token={underlyingToken}
+                  size="mini"
+                  format="0,0.00"
+                />
                 {/*{formatNumber(fund.data.navInUSD, 2, '$0,0.00')}*/}
               </SectionItem>
               <section>
@@ -193,7 +198,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                 >
                   <TokenValue
                     value={fund.data.historicalReturn}
-                    token={acToken}
+                    token={underlyingToken}
                     size="mini"
                     format="0,0.00"
                   />
@@ -204,7 +209,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                 >
                   <TokenValue
                     value={fund.data.unclaimedACToken}
-                    token={acToken}
+                    token={underlyingToken}
                     size="mini"
                     format="0,0.00"
                   />
@@ -214,7 +219,12 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   <RoeShow value={formatNumber(fund.data.roe, 2, '0.00')} subArrow />
                 </SectionItem>
                 <SectionItem label="Current Epoch return">
-                  <TokenValue value={currReturn} token={acToken} size="mini" format="0,0.00" />
+                  <TokenValue
+                    value={currReturn}
+                    token={underlyingToken}
+                    size="mini"
+                    format="0,0.00"
+                  />
                   {/*{formatNumber(currReturn, 2, '$0,0.00')}*/}
                 </SectionItem>
               </section>

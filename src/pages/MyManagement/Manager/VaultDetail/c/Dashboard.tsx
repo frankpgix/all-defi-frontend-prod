@@ -1,16 +1,15 @@
-import { FC, useState, useMemo } from 'react'
+import { FC, useMemo, useState } from 'react'
 
-import TimeSelect from '@@/core/ChartTimeSelect'
+import { AddressType } from '@/types/base'
+import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
+
 import { AreaChart } from '@/components/common/Chart'
-import Loading from '@@/common/Loading'
-import TokenValue, { formatTokenValueString } from '@@/common/TokenValue'
-import Select from '@@/common/Form/Select'
-
 import { calcVaultDatasGql } from '@/graphql/calcGql'
 import { useVaultData } from '@/graphql/useData'
-
-import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
-import { AddressType } from '@/types/base'
+import Select from '@@/common/Form/Select'
+import Loading from '@@/common/Loading'
+import TokenValue, { formatTokenValueString } from '@@/common/TokenValue'
+import TimeSelect from '@@/core/ChartTimeSelect'
 
 interface Props {
   vaultAddress: AddressType
@@ -37,7 +36,7 @@ const Dashboard: FC<Props> = ({ vaultAddress, data, base, loading }) => {
     baseToken.decimals,
     baseToken.precision
   )
-  console.log(123, data)
+  console.log(123, data, base)
   if (loading) {
     return (
       <div className="web-manage-manager-dashboard">
@@ -74,7 +73,7 @@ const Dashboard: FC<Props> = ({ vaultAddress, data, base, loading }) => {
         <h4>{chartType === 'nav' ? 'Net Asset Value' : 'Share Price'}</h4>
         <em>
           <TokenValue
-            value={chartType === 'nav' ? data.nav : data.sharePrice}
+            value={chartType === 'nav' ? data.aum : data.sharePrice}
             token={baseToken}
             format="0,0.00"
           />

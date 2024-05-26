@@ -177,7 +177,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           <Blank />
         </>
       )}
-      {/* 如果本轮盈利，是否会占用可申购余额。 */}
+      {/* 如果本轮盈利，是否会占用可申购余额。 
       {data.aum < data.beginningAUM && (
         <>
           <Alert show type="error">
@@ -195,7 +195,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           </Alert>
           <Blank />
         </>
-      )}
+      )}*/}
       {/* {data.aum > data.realtimeAUMLimit && (
         <>
           <Alert show type="error">
@@ -285,7 +285,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           </SectionTip> */}
           <SectionButtons>
             <ValutSettleButton
-              disabled={![3, 4].includes(data.status)}
+              disabled={![3].includes(data.status)}
               outline
               callback={getData}
               vaultAddress={vaultAddress}
@@ -377,17 +377,6 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                 <TokenValue value={currManagerFee} token={baseToken} size="mini" format="0,0.00" />
               }
             />
-            {/* min 0 (aum * roe) * 20%  */}
-            <SectionItem
-              label="Unsettled Manager Fee"
-              loading={loading}
-              value={
-                <TokenValue value={data.managerFee} token={baseToken} size="mini" format="0,0.00" />
-              }
-            />
-          </SectionLayout>
-
-          <SectionLayout col="2">
             <SectionItem
               label="Previous Epoch Settled Manager Fee"
               loading={loading}
@@ -400,15 +389,37 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                 />
               }
             />
+            {/* min 0 (aum * roe) * 20%  */}
+            {/* <SectionItem
+              label="Unsettled Manager Fee"
+              loading={loading}
+              value={
+                <TokenValue value={data.managerFee} token={baseToken} size="mini" format="0,0.00" />
+              }
+            /> */}
+          </SectionLayout>
+
+          {/*<SectionLayout col="2">
             <SectionItem
+              label="Previous Epoch Settled Manager Fee"
+              loading={loading}
+              value={
+                <TokenValue
+                  value={data.historicalManagerFee}
+                  token={baseToken}
+                  size="mini"
+                  format="0,0.00"
+                />
+              }
+            /> <SectionItem
               label="Average Price"
               loading={loading}
               value={
                 // data.costPrice
                 <TokenValue value={0} token={baseToken} size="mini" format="0,0.00" />
               }
-            />
-          </SectionLayout>
+            /> 
+          </SectionLayout>*/}
           <SectionBlank />
           <SectionHeader name="Platform Fee" />
           <SectionLayout col="3">
@@ -460,7 +471,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               value={dayjs(data.subscribeRedeemEndTime).format('MMM DD, YYYY hh:mm:ss A')}
             />
           </SectionLayout>
-          <SectionLayout col="3">
+          <SectionLayout col="2">
             <SectionItem
               label="Confirming Withholding Amount"
               loading={loading}
@@ -488,12 +499,37 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                 />
               }
             />
+          </SectionLayout>
+          {/* <SectionLayout col="3">
+            <SectionItem
+              label="Confirming Withholding Amount"
+              loading={loading}
+              // popper="Total amount of Shares under redemption"
+            >
+              {formatNumber(data.unstakingShare, 2, '0,0.00')} Shares ≈{' '}
+              {/*formatNumber(BN(data.redeemingShares).times(data.sharePrice).toNumber(), 2, '$0,0.00')
+              /}
+              <TokenValue
+                value={BN(data.unstakingShare).times(data.sharePrice).toNumber()}
+                token={baseToken}
+                size="mini"
+                format="0,0.00"
+              />
+            </SectionItem>
+            <SectionItem
+              label="Confirming Allocation Amount"
+              loading={loading}
+              // popper="Total value under subscription"
+              value={
+                <TokenValue
+                  value={data.stakingACToken}
+                  token={baseToken}
+                  size="mini"
+                  format="0,0.00"
+                />
+              }
+            />
             <SectionItem loading={loading} label="Capacity Available">
-              {/*formatNumber(
-                Math.max(BN(data.realtimeAUMLimit).minus(data.aum).minus(data.subscribingACToken).toNumber(), 0),
-                2,
-                '$0,0.00'
-              )*/}
               <TokenValue
                 value={Math.max(
                   BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber(),
@@ -504,8 +540,8 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                 format="0,0.00"
               />
             </SectionItem>
-          </SectionLayout>
-          <SectionLayout col="3">
+          </SectionLayout> */}
+          {/* <SectionLayout col="3">
             <SectionItem
               label="ALL Token Staking Value"
               loading={loading}
@@ -525,7 +561,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               loading={loading}
               value={<TokenValue value={data.aum} token={baseToken} size="mini" format="0,0.00" />}
             />
-          </SectionLayout>
+          </SectionLayout> */}
           {/* <SectionPercentageLine percent={percent} remainPercent={remainPercent} />
           <SectionButtons>
             <Button
