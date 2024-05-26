@@ -33,7 +33,8 @@ import {
   SectionPercentageLine,
   SectionTip
 } from './C'
-import DappTab from './DappTab'
+
+// import DappTab from './DappTab'
 
 interface Props {
   base: VaultBaseInfoProps
@@ -220,7 +221,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           {/* <Tab>Revenue</Tab> */}
           <Tab>Fees</Tab>
           <Tab>Vault</Tab>
-          <Tab>Risk Control</Tab>
+          {/* <Tab>Risk Control</Tab> */}
           {/* <Tab disabled={data.isClosed}>Dapp</Tab> */}
           {/* <Tab>Dapp2</Tab> */}
         </TabList>
@@ -277,11 +278,11 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
             <SectionItem label="Current cumulative slippage" value="No Data" />
           </SectionLayout>*/}
 
-          <SectionTip>
+          {/* <SectionTip>
             Reset the policy requires an audit, and it will take effect in the next Epoch after the
             audit is passed. Please note that changing the Vault policy may cause users to change
             their investment strategy and cause withholding, please modify it carefully.
-          </SectionTip>
+          </SectionTip> */}
           <SectionButtons>
             <ValutSettleButton
               disabled={![3, 4].includes(data.status)}
@@ -525,7 +526,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               value={<TokenValue value={data.aum} token={baseToken} size="mini" format="0,0.00" />}
             />
           </SectionLayout>
-          <SectionPercentageLine percent={percent} remainPercent={remainPercent} />
+          {/* <SectionPercentageLine percent={percent} remainPercent={remainPercent} />
           <SectionButtons>
             <Button
               to={`/manage/manager/vault-stake/${vaultAddress}/increase`}
@@ -540,9 +541,9 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
             >
               REDUCE VAULT MAX AUM LIMIT
             </Button>
-          </SectionButtons>
+          </SectionButtons> */}
         </TabPanel>
-        {/* Risk Control TabPanel */}
+        {/* Risk Control TabPanel 
         <TabPanel>
           <SectionLayout col="3">
             <SectionItem
@@ -562,7 +563,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               loading={loading}
               popper="Ratio of the vault's Max AUM Limit to the vault's current NAV. If such ratio is less than 100%, manager can not claim all the incentive fee. The Staking Ratio of the Last Epoch is calculated by the vault's Max AUM Limit divided by the vault's NAV in the last Epoch. This ratio decides whether manager can receive 100% of the incentive fee of last Epoch"
               value={`${managerALLStakingRatio}%`}
-            /> */}
+            /> 
           </SectionLayout>
           <SectionLayout col="3">
             {/* <SectionItem
@@ -577,14 +578,14 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               loading={loading}
               popper="Withholding Fulfilled Ratio of last Epoch. The ratio less than 100% means there is not enough cash to meet all the withholding requests at last settlement. withholding Fulfilled Ratio: (Available Cash Balance - Fees) / Total withholding Value"
               value={`${data.lastRedemptionRatio}%`}
-            /> */}
+            /> 
             <SectionItem
               label="Consecutive Default"
               loading={loading}
               value={breach.consecutiveBreachCount}
             />
           </SectionLayout>
-        </TabPanel>
+        </TabPanel>*/}
         {/*<TabPanel>
            <DappTab vaultAddress={vaultAddress} derivatives={base.derivatives} /> 
         </TabPanel>*/}
