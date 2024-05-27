@@ -27,7 +27,7 @@ const Withhold: FC<Props> = ({ data, userData, getData }) => {
   const [sliderValue, setSliderValue] = useState(0)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
 
-  const isInWithhold = useMemo(() => data.status === 1, [data.status])
+  const isInWithhold = useMemo(() => data.status === 0, [data.status])
   const maxValue = useMemo(() => {
     return BN(userData.shares).minus(userData.unstakingShare).toNumber()
   }, [userData.shares, userData.unstakingShare])

@@ -43,7 +43,7 @@ const VaultStatus: FC<Props> = ({ base, data, loading }) => {
               >
                 <rect x="12" y="0" rx="4" ry="4" width="100" height="18" />
               </ContentLoader>
-            ) : [0, 1, 2].includes(data.status) ? (
+            ) : [0, 1].includes(data.status) ? (
               <em className="rise">Stake</em>
             ) : (
               <em className="fall">Not Allowed</em>
