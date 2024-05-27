@@ -64,7 +64,7 @@ const VaultStatus: FC<Props> = ({ base, data, loading }) => {
               >
                 <rect x="12" y="0" rx="4" ry="4" width="100" height="18" />
               </ContentLoader>
-            ) : data.status === 1 ? (
+            ) : data.status === 0 ? (
               <em className="rise">Unstake</em>
             ) : (
               <em className="fall">Not Allowed</em>
