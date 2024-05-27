@@ -378,7 +378,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               }
             />
             <SectionItem
-              label="Previous Epoch Settled Manager Fee"
+              label="Historical Epoch  Manager Fee"
               loading={loading}
               value={
                 <TokenValue
@@ -444,7 +444,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               }
             />
             <SectionItem
-              label="Previous Epoch Settled Platform Fee"
+              label="Historical Epoch  Platform Fee"
               loading={loading}
               value={
                 <TokenValue

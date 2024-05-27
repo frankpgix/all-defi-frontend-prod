@@ -147,7 +147,7 @@ export const calcVaultUserDetail = (
 
   const nav = Number(safeInterceptionValues(item.nav, precision, decimals))
   const underlyingTokenPriceInUSD = 1
-  const beginSharePrice = BN(safeInterceptionValues(item.shares, 18, 18))
+  const beginSharePrice = BN(safeInterceptionValues(item.sharePrice, 18, 18))
     .div(BN(safeInterceptionValues(item.roe, 18, 18)).plus(1))
     .toNumber()
   const { hash } = calcVaultHash(item.vaultAddress ?? '0x')

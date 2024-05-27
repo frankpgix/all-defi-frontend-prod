@@ -32,7 +32,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
   const [timeType, setTimeType] = useState<optionProps>('all')
   const timeOptions: optionProps[] = ['current epoch', '3 Epochs', 'all']
   const underlyingToken = useMemo(() => base.underlying, [base.underlying])
-  console.log(underlyingToken, 'underlyingToken')
+  // console.log(underlyingToken, 'underlyingToken')
   const [chartType, setChartType] = useState<number | string>('aum')
 
   const gql = useMemo(
@@ -40,7 +40,13 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
     [fundAddress, data.epochIndex, timeType]
   )
   const { loading: chartLoading, data: chartData } = useVaultDetailChartData(gql, underlyingToken)
-  console.log(chartData, 'data.historyReturn')
+  // console.log(chartData, 'data.historyReturn')
+  const currentEpochReturn = useMemo(() => BN(data.roe).times(10).div(7).toNumber(), [data.roe])
+  // data.historicalReturn + data.platFee + data.managerFee
+  const historicalReturn = useMemo(
+    () => BN(data.historicalReturn).plus(data.platFee).plus(data.managerFee).toNumber(),
+    [data.historicalReturn, data.platFee, data.managerFee]
+  )
   return (
     <>
       <header className="web-fund-detail-header">Vault Overview</header>
@@ -118,15 +124,17 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
               popper="The vault's profit and loss on real-time basis, which will be reset to zero after the end of each epoch"
               loading={loading}
             >
-              <RoeShow value={data.roe} subArrow />
+              {/* demo */}
+              <RoeShow value={currentEpochReturn} subArrow />
             </DashboardItem>
             <DashboardItem
               label="Historical return"
               popper="Cumulated profit and loss since the inception of this vault"
               loading={loading}
             >
+              {/* demo */}
               <TokenValue
-                value={data.historicalReturn}
+                value={historicalReturn}
                 format="0,0.00"
                 token={underlyingToken}
                 size="mini"
