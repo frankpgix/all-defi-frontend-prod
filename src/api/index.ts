@@ -1,5 +1,6 @@
-import { get } from '@/utils/http'
 import { VaultMonthDataType } from '@/types/graphql'
+
+import { get } from '@/utils/http'
 
 export const getDefiChartData = async () => {
   return [
@@ -38,14 +39,14 @@ export const getDefiChartData = async () => {
 
 export const getBtcIndexData = async () => {
   const res = await get(
-    'https://www.binance.com/api/v3/uiKlines?limit=30&symbol=BTCBUSD&interval=1d'
+    'https://www.binance.com/api/v3/uiKlines?limit=30&symbol=BTCUSDT&interval=1d'
   )
   const data = res.map((item: any) => ({ time: item[6] + 1000, value: Number(item[4]) }))
   return data
 }
 export const getEthIndexData = async () => {
   const res = await get(
-    'https://www.binance.com/api/v3/uiKlines?limit=30&symbol=ETHBUSD&interval=1d'
+    'https://www.binance.com/api/v3/uiKlines?limit=30&symbol=ETHUSDT&interval=1d'
   )
   const data = res.map((item: any) => ({ time: item[6] + 1000, value: Number(item[4]) }))
   return data
