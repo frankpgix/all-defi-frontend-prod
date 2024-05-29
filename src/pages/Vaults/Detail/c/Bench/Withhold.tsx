@@ -19,7 +19,7 @@ interface Props {
   getData: () => void
 }
 
-const Withhold: FC<Props> = ({ data, userData, getData }) => {
+const Unstake: FC<Props> = ({ data, userData, getData }) => {
   const { account } = useProfile()
   const { onUnstake } = useUnstake(data.address)
 
@@ -27,7 +27,7 @@ const Withhold: FC<Props> = ({ data, userData, getData }) => {
   const [sliderValue, setSliderValue] = useState(0)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
 
-  const isInWithhold = useMemo(() => data.status === 0, [data.status])
+  const isInUnstake = useMemo(() => data.status === 0, [data.status])
   const maxValue = useMemo(() => {
     return BN(userData.shares).minus(userData.unstakingShare).toNumber()
   }, [userData.shares, userData.unstakingShare])
@@ -59,7 +59,7 @@ const Withhold: FC<Props> = ({ data, userData, getData }) => {
     }
   }
 
-  const goWithhold = async () => {
+  const goUnstake = async () => {
     if (account) {
       await onUnstake(data.underlyingToken, Number(value), account)
       getData()
@@ -97,24 +97,24 @@ const Withhold: FC<Props> = ({ data, userData, getData }) => {
           <footer>
             <Button
               onClick={() => setInfoStatus(true)}
-              disabled={Number(value) <= 0 || !isInWithhold}
+              disabled={Number(value) <= 0 || !isInUnstake}
             >
               confirm
             </Button>
-            {!isInWithhold && <Tip>Unauthorized operation</Tip>}
+            {!isInUnstake && <Tip>Unauthorized operation</Tip>}
           </footer>
         </div>
         <hr />
       </section>
       <InfoDialog
         show={infoStatus}
-        onConfirm={goWithhold}
+        onConfirm={goUnstake}
         onClose={() => setInfoStatus(false)}
-        title="Withhold From Vault"
-        msg={`Will withhold ${value} vault Share, you can claim your AC tokens anytime after final settlement of current epoch`}
+        title="Unstake From Vault"
+        msg={`Will Unstake ${value} vault Share, you can claim your AC tokens anytime after final settlement of current epoch`}
       />
     </>
   )
 }
 
-export default Withhold
+export default Unstake

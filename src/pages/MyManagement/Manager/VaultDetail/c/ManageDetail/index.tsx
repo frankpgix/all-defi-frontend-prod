@@ -422,7 +422,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           </SectionLayout>*/}
           <SectionBlank />
           <SectionHeader name="Platform Fee" />
-          <SectionLayout col="3">
+          <SectionLayout col="2">
             <SectionItem
               label="Current Epoch Platform Fee"
               loading={loading}
@@ -435,14 +435,14 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                 />
               }
             />
-            <SectionItem
+            {/* <SectionItem
               label="Unsettled Platform Fee"
               loading={loading}
               popper="Unsettled fee to platform can be claimed when investors withhold or after 6 Epochs"
               value={
                 <TokenValue value={data.platFee} token={baseToken} size="mini" format="0,0.00" />
               }
-            />
+            /> */}
             <SectionItem
               label="Historical Epoch  Platform Fee"
               loading={loading}
