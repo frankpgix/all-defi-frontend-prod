@@ -111,7 +111,7 @@ export const calcVaultDetail = (
 
     sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
     stakingACToken: Number(safeInterceptionValues(item.stakingACToken, decimals, decimals)),
-    unstakingShare: Number(safeInterceptionValues(item.unstakingShare)),
+    unstakingShare: Number(safeInterceptionValues(item.unstakingShare, 4, 18)),
 
     roe: Number(safeInterceptionValues(item.roe, 4, 16)),
     historicalReturn: Number(safeInterceptionValues(item.historicalReturn, decimals, decimals)),

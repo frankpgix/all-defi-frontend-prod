@@ -131,7 +131,7 @@ export const useUnstake = (vaultAddress: AddressType) => {
     account: AddressType,
     callback?: () => void
   ) => {
-    const _amount = getUnitAmount(String(amount), acToken.decimals)
+    const _amount = getUnitAmount(String(amount), 18)
 
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Unstake from vault' })

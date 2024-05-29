@@ -107,7 +107,8 @@ const FundList: FC = () => {
   // cup
   const onRow = (record: VaultDetailProps) => ({
     onClick: (e: any) => {
-      if (e.target?.tagName !== 'BUTTON' && record.status !== 0) {
+      //  && record.status !== 0
+      if (e.target?.tagName !== 'BUTTON') {
         navigate(`/manage/manager/vault/${record.address}`)
       }
     }
