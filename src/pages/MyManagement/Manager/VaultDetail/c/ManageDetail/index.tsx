@@ -87,9 +87,10 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
 
   const nextRoundCash = useMemo(() => {
     let temp = BN(data.unstakingShare).times(data.sharePrice)
-    if (data.epochIndex % 6 === 0) {
-      temp = temp.plus(data.platFee).plus(data.managerFee)
-    }
+    temp = temp.plus(data.platFee).plus(data.managerFee)
+    // if (data.epochIndex % 6 === 0) {
+    //   temp = temp.plus(data.platFee).plus(data.managerFee)
+    // }
     const v = Number(temp.minus(data.stakingACToken).toFixed(2, BN.ROUND_UP))
     return v >= 0 ? v : 0
   }, [
