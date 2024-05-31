@@ -137,7 +137,7 @@ export const useUserVaultList = () => {
   console.log(error)
   if (account && !isLoading && isSuccess) {
     const [fundList, detailList] = sData
-
+    console.log(sData)
     const data: VaultUserListDataProps[] = fundList
       .map((item: any, index: number) => {
         const fund: VaultProps = calcVaultBaseInfo(item, getTokenByAddress)

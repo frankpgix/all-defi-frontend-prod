@@ -76,7 +76,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
   const acToken = useMemo(() => getTokenByAddress(fund.acToken), [fund.acToken])
   const underlyingToken = useMemo(() => fund.underlying, [fund.underlying])
   const ivFinish = useMemo(() => fund.data.status === 6, [fund.data.status])
-
+  console.log(fund)
   useEffect(() => {
     void inView()
   }, [inView])

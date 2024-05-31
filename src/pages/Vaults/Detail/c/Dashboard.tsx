@@ -40,11 +40,16 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
     [fundAddress, data.epochIndex, timeType]
   )
   const { loading: chartLoading, data: chartData } = useVaultDetailChartData(gql, underlyingToken)
-  // console.log(chartData, 'data.historyReturn')
+  // console.log(data.roe, 'data.data.roe')
   const currentEpochReturn = useMemo(() => BN(data.roe).times(10).div(7).toNumber(), [data.roe])
   // data.historicalReturn + data.platFee + data.managerFee
+  // console.log(data.historicalReturn)
   const historicalReturn = useMemo(
-    () => BN(data.historicalReturn).plus(data.platFee).plus(data.managerFee).toNumber(),
+    () =>
+      BN(data.historicalReturn)
+        .plus(data.historicalPlatFee)
+        .plus(data.historicalManagerFee)
+        .toNumber(),
     [data.historicalReturn, data.platFee, data.managerFee]
   )
   return (

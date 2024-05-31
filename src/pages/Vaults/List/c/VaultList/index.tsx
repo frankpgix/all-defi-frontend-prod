@@ -67,22 +67,22 @@ const FundList: FC = () => {
     {
       title: '1 Day',
       dataIndex: 'dayReturn',
-      render: (value: number) => <RoeShow value={value * 100} />
+      render: (value: number) => <RoeShow value={(value * 1000) / 7} />
     },
     {
       title: '1 Week',
       dataIndex: 'weekReturn',
-      render: (value: number) => <RoeShow value={value * 100} />
+      render: (value: number) => <RoeShow value={(value * 1000) / 7} />
     },
     {
       title: '1 Month',
       dataIndex: 'monthReturn',
-      render: (value: number) => <RoeShow value={value * 100} />
+      render: (value: number) => <RoeShow value={(value * 1000) / 7} />
     },
     {
       title: '1 Year',
       dataIndex: 'yearReturn',
-      render: (value: number) => <RoeShow value={value * 100} />
+      render: (value: number) => <RoeShow value={(value * 1000) / 7} />
     },
     // {
     //   title: 'APR',
