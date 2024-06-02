@@ -32,7 +32,7 @@ const Chart: FC = () => {
       <section className="web-manage-manager-chart">
         <Loading show={true} type="float" />
         <header>
-          <label>Total NAV</label>
+          <label>Total AUM</label>
           <em>{formatNumber(count, 2, '$0,0.00')}</em>
           <TimeSelect
             value={timeType}
@@ -57,7 +57,7 @@ const Chart: FC = () => {
     <section className="web-manage-manager-chart">
       <Loading show={loading} type="float" />
       <header>
-        <label>Total NAV</label>
+        <label>Total AUM</label>
         <em>{formatNumber(count, 2, '$0,0.00')}</em>
         <TimeSelect
           value={timeType}

@@ -148,7 +148,9 @@ export const useValutMonthData = (fundAddress: string) => {
       return {
         year,
         month,
-        roe: safeInterceptionValues(String(item.roe), 2, 16) + '%'
+        // roe: safeInterceptionValues(String(item.roe), 2, 16) + '%'
+        roe:
+          safeInterceptionValues(String(item.roe > 0 ? (item.roe * 10) / 7 : item.roe), 2, 16) + '%'
       }
     })
     .reverse()
@@ -166,6 +168,6 @@ export const useManageValutDatas = (gql: any) => {
 
   // @ts-ignore
   const count = last(data)?.value ?? 0
-
+  console.log(112, sData)
   return { loading, error, data, count }
 }

@@ -68,9 +68,9 @@ const ConnectBtn: FC<Props> = ({ simple, children, as }) => {
 
               return (
                 <>
-                  <Button size="medium" gradient onClick={openChainModal}>
+                  {/* <Button size="medium" gradient onClick={openChainModal}>
                     Net
-                  </Button>
+                  </Button> */}
                   <Button size="medium" gradient round={hasNotify} onClick={openDialog}>
                     {memoAccountHide}
                   </Button>

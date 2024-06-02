@@ -109,10 +109,6 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
 
   // console.log('nextRoundCash', nextRoundCash)
   // min 0 (aum * roe) * 20%
-  const currManagerFee = useMemo(
-    () => Math.max(BN(data.aum).times(data.roe).times(0.2).div(100).toNumber(), 0),
-    [data.aum, data.roe]
-  )
   const baseToken = useMemo(() => base.underlying, [base.underlying])
 
   const activeIndex = import.meta.env.NODE_ENV === 'development' ? 0 : 0
@@ -131,9 +127,11 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
     <>
       <CountLayout>
         <CountItem
-          label="Last Epoch NAV"
+          label="Epoch beginning AUM"
           loading={loading}
-          value={<TokenValue value={data.aum} token={baseToken} size="small" format="0,0.00" />}
+          value={
+            <TokenValue value={data.beginningAUM} token={baseToken} size="small" format="0,0.00" />
+          }
         />
         <CountItem
           label="Cash Balance"
@@ -375,7 +373,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               label="Current Epoch Manager Fee"
               loading={loading}
               value={
-                <TokenValue value={currManagerFee} token={baseToken} size="mini" format="0,0.00" />
+                <TokenValue value={data.managerFee} token={baseToken} size="mini" format="0,0.00" />
               }
             />
             <SectionItem
@@ -428,12 +426,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               label="Current Epoch Platform Fee"
               loading={loading}
               value={
-                <TokenValue
-                  value={currManagerFee / 2}
-                  token={baseToken}
-                  size="mini"
-                  format="0,0.00"
-                />
+                <TokenValue value={data.platFee} token={baseToken} size="mini" format="0,0.00" />
               }
             />
             {/* <SectionItem

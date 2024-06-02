@@ -56,7 +56,7 @@ const FundList: FC = () => {
     },
     {
       title: 'Confirming unstaking',
-      dataIndex: 'redeemingShares',
+      dataIndex: 'unstakingShare',
       width: 180,
       render: (value: number, row: VaultDetailProps) => (
         <TokenValue value={value} token={row.underlyingToken} shares size="mini" format="0,0.00" />
@@ -114,10 +114,10 @@ const FundList: FC = () => {
     }
   })
 
-  const calcTableRowClassName = (record: VaultDetailProps) => {
-    if (record.status !== 0) return 'cup'
-    return ''
-  }
+  // const calcTableRowClassName = (record: VaultDetailProps) => {
+  //   if (record.status !== 0) return 'cup'
+  //   return ''
+  // }
   return (
     <>
       <div className="web-buy-table-layout">
@@ -129,7 +129,7 @@ const FundList: FC = () => {
           emptyText={loading ? <TableLoading /> : <TableNoData />}
           data={manageVaultList}
           rowKey="address"
-          rowClassName={calcTableRowClassName}
+          rowClassName={'cup'}
           onRow={onRow}
         />
       </div>

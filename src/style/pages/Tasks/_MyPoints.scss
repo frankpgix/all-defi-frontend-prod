@@ -6,12 +6,15 @@
 }
 
 .p-task-my-points {
-  @extend .web;
+  // @extend .web;
   position: relative;
+  // padding: 0 40px;
+  border-radius: 12px;
   &-layout {
-    @extend .web_;
+    @extend .web;
     height: 346px;
-    padding: 40px 0;
+    padding: 40px;
+    border-radius: 12px;
     background: linear-gradient(328.9deg, #8ca9fb 25.06%, rgba(237, 240, 251, 0) 105.07%);
     box-shadow: 10px 10px 20px 0px #81808033;
     overflow: hidden;

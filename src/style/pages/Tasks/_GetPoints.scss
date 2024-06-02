@@ -24,6 +24,9 @@
     flex-flow: column;
     justify-content: space-between;
     position: relative;
+    box-shadow:
+      7px 10px 9px 0px #8180801a,
+      0 0 0 200px rgba(#818080, 0.05) inset;
 
     & > header {
       position: absolute;
