@@ -64,10 +64,10 @@ export const calcVaultBaseInfo = (
     minimumStake: Number(safeInterceptionValues(item.minimumStake, precision, decimals)),
     factory: item.factory,
     ceffuWallet: item.ceffuWallet,
-    stakeTime: item.stageDurations[0],
-    unStakeTime: item.stageDurations[1],
-    preSettleTime: item.stageDurations[2],
-    settleTime: item.stageDurations[3]
+    stakeTime: 0,
+    unStakeTime: 0,
+    preSettleTime: 0,
+    settleTime: 0
   }
 }
 
@@ -79,7 +79,7 @@ export const calcVaultDetail = (
   const epochStartTime = Number(safeInterceptionValues(item.epochStartTime, 0, 0)) * 1000
   const underlyingToken = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlyingToken.decimals
-  const status = Number(safeInterceptionValues(item.stage, 0, 0))
+  const status = Number(safeInterceptionValues(item.stage, 0, 0)) - 1
   const { hash } = calcVaultHash(item.vaultAddress ?? '0x')
 
   return {
@@ -93,15 +93,18 @@ export const calcVaultDetail = (
     epochStartTime,
     status,
     isClosed: status === 6,
-
-    subscribeRedeemEndTime:
+    zeroSubscribeEndTime:
       epochStartTime + Number(safeInterceptionValues(item.stageDurations[0], 0, 0)) * 1000,
-    subscribeEndTime:
+    subscribeRedeemEndTime:
       epochStartTime + Number(safeInterceptionValues(item.stageDurations[1], 0, 0)) * 1000,
-    preSettleEndTime:
+    subscribeEndTime:
       epochStartTime + Number(safeInterceptionValues(item.stageDurations[2], 0, 0)) * 1000,
-    settleEndTime:
+    preSettleEndTime:
       epochStartTime + Number(safeInterceptionValues(item.stageDurations[3], 0, 0)) * 1000,
+    settleEndTime:
+      epochStartTime +
+      Number(safeInterceptionValues(item.stageDurations[3], 0, 0)) * 1000 +
+      10 * 60 * 1000,
 
     beginningAUM: Number(safeInterceptionValues(item.beginningAUM, decimals, decimals)),
     aum: Number(safeInterceptionValues(item.aum, decimals, decimals)),

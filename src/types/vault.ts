@@ -63,6 +63,7 @@ export interface VaultDetailProps {
   status: number
   isClosed: boolean
 
+  zeroSubscribeEndTime: number
   subscribeRedeemEndTime: number
   subscribeEndTime: number
   preSettleEndTime: number

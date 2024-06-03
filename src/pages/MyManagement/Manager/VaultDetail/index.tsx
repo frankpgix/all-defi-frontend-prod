@@ -22,7 +22,7 @@ const VaultDetail: FC = () => {
     isLoading: loading,
     refetch: getData
   } = useVaultManageDetails(vaultAddress)
-  console.log(baseInfo, vaultDetail, vaultBreachDetail, vaultStakedALL)
+  console.log(1111, baseInfo, vaultDetail, vaultBreachDetail, vaultStakedALL)
 
   return (
     <div className="web-manage">

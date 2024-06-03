@@ -54,6 +54,7 @@ export const VaultDetailDefault: VaultDetailProps = {
   status: -2,
   isClosed: false,
 
+  zeroSubscribeEndTime: 0,
   subscribeRedeemEndTime: 0,
   subscribeEndTime: 0,
   preSettleEndTime: 0,

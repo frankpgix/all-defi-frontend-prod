@@ -33,14 +33,14 @@ const StepLine: FC<Props> = ({ data, loading }) => {
     },
     {
       label: data.epochIndex === 0 ? 'Open Period' : 'Semi-open Period',
-      time: data.subscribeRedeemEndTime,
+      time: data.epochIndex === 0 ? data.epochStartTime : data.subscribeRedeemEndTime,
       popper:
         "During the vault's semi-open period, you can only stake to strategy and cannot cancel",
       status: 1
     },
     {
       label: 'Pre-Settlement Period',
-      time: data.subscribeEndTime,
+      time: data.epochIndex === 0 ? data.zeroSubscribeEndTime : data.subscribeEndTime,
       status: 2
     },
     {

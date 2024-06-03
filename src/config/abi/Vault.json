@@ -6,6 +6,12 @@
   },
   {
     "anonymous": false,
+    "inputs": [],
+    "name": "Activated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
     "inputs": [
       {
         "indexed": true,
@@ -78,9 +84,21 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "epochIndex",
+        "type": "uint256"
+      },
+      {
         "indexed": false,
         "internalType": "uint256",
-        "name": "valueId",
+        "name": "totalValue",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "reserveNeeded",
         "type": "uint256"
       }
     ],
@@ -92,19 +110,6 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "uint64[4]",
-        "name": "stageEndTime",
-        "type": "uint64[4]"
-      }
-    ],
-    "name": "StageDurationsSet",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
         "internalType": "uint256",
         "name": "valueId",
         "type": "uint256"
@@ -136,9 +141,9 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "updateTime",
-        "type": "uint256"
+        "internalType": "bytes32",
+        "name": "updateId",
+        "type": "bytes32"
       }
     ],
     "name": "TotalValueUpdated",
@@ -218,6 +223,13 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "activate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -352,11 +364,6 @@
             "type": "uint256"
           },
           {
-            "internalType": "uint64[4]",
-            "name": "stageDurations",
-            "type": "uint64[4]"
-          },
-          {
             "internalType": "address",
             "name": "factory",
             "type": "address"
@@ -373,19 +380,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "assetAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "bridgeToCeffu",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -513,21 +507,21 @@
   },
   {
     "inputs": [],
-    "name": "historyStats",
+    "name": "historicalStats",
     "outputs": [
       {
         "internalType": "int256",
-        "name": "historyReturn",
+        "name": "historicalReturn",
         "type": "int256"
       },
       {
         "internalType": "uint256",
-        "name": "historyManagerFee",
+        "name": "historicalManagerFee",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "historyPlatFee",
+        "name": "historicalPlatFee",
         "type": "uint256"
       }
     ],
@@ -610,7 +604,37 @@
   },
   {
     "inputs": [],
-    "name": "lastestValueId",
+    "name": "latestTotalValue",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "updateTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "canceled",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct IVault.ValueRecord",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "latestValueId",
     "outputs": [
       {
         "internalType": "uint256",
@@ -683,25 +707,25 @@
   {
     "inputs": [
       {
-        "internalType": "uint64[4]",
-        "name": "durations",
-        "type": "uint64[4]"
-      }
-    ],
-    "name": "setStageDurations",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
     ],
     "name": "settlementPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "settlingValueId",
     "outputs": [
       {
         "internalType": "uint256",
@@ -733,6 +757,19 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "stageDurations",
+    "outputs": [
+      {
+        "internalType": "uint64[4]",
+        "name": "",
+        "type": "uint64[4]"
+      }
+    ],
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -905,6 +942,11 @@
         "internalType": "uint256",
         "name": "value",
         "type": "uint256"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "updateId",
+        "type": "bytes32"
       }
     ],
     "name": "updateTotalValue",
@@ -993,19 +1035,6 @@
         "internalType": "enum IVault.Stage",
         "name": "stage",
         "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "verifingValueId",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",

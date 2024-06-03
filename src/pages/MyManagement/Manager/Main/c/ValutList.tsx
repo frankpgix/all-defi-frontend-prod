@@ -22,7 +22,7 @@ import TokenValue from '@@/common/TokenValue'
 const FundList: FC = () => {
   const navigate = useNavigate()
   const { manageVaultList, loading, getData } = useManageVaultListHook()
-  console.log(manageVaultList, 'manageVaultList')
+  console.log(12345, manageVaultList, 'manageVaultList')
   const webColumns = [
     {
       title: 'Name',
@@ -108,16 +108,16 @@ const FundList: FC = () => {
   const onRow = (record: VaultDetailProps) => ({
     onClick: (e: any) => {
       //  && record.status !== 0
-      if (e.target?.tagName !== 'BUTTON') {
+      if (e.target?.tagName !== 'BUTTON' && record.status !== -1) {
         navigate(`/manage/manager/vault/${record.address}`)
       }
     }
   })
 
-  // const calcTableRowClassName = (record: VaultDetailProps) => {
-  //   if (record.status !== 0) return 'cup'
-  //   return ''
-  // }
+  const calcTableRowClassName = (record: VaultDetailProps) => {
+    if (record.status !== -1) return 'cup'
+    return ''
+  }
   return (
     <>
       <div className="web-buy-table-layout">
@@ -129,7 +129,7 @@ const FundList: FC = () => {
           emptyText={loading ? <TableLoading /> : <TableNoData />}
           data={manageVaultList}
           rowKey="address"
-          rowClassName={'cup'}
+          rowClassName={calcTableRowClassName}
           onRow={onRow}
         />
       </div>
