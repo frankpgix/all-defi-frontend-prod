@@ -14,24 +14,24 @@ const Dashboard: FC = () => {
         <CountLayout col="4">
           <CountItem
             label="Total number of points distributed"
-            value={formatNumber(12344.78, 2, '$0,0.00')}
-            unit="Points"
+            value={formatNumber(12344.78, 2, '0,0.00')}
+            unit="Pts"
             loading={false}
           />
           <CountItem
             label="Today number of points distributed"
-            value={formatNumber(234567.89, 2, '$0,0.00')}
-            unit="Points"
+            value={formatNumber(234567.89, 2, '0,0.00')}
+            unit="Pts"
             loading={false}
           />
           <CountItem
             label="Number of all addresses"
-            value={formatNumber(2, 2, '$0,0.00')}
+            value={formatNumber(2, 2, '0,0.00')}
             loading={false}
           />
           <CountItem
             label="Number of new addresses today"
-            value={formatNumber(3, 2, '$0,0.00')}
+            value={formatNumber(3, 2, '0,0.00')}
             loading={false}
           />
         </CountLayout>

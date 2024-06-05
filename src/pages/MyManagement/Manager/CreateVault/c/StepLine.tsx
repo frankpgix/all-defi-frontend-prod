@@ -1,4 +1,5 @@
 import { FC } from 'react'
+
 import classNames from 'classnames'
 
 interface Props {
@@ -6,7 +7,8 @@ interface Props {
 }
 
 const StepLine: FC<Props> = ({ activeIndex = 0 }) => {
-  const list = ['Basic Info', 'Strategy Select', 'ALL Token Stake', 'Review']
+  // const list = ['Basic Info', 'Strategy Select', 'ALL Token Stake', 'Review']
+  const list = ['Basic Info', 'Strategy Select', 'Review']
   return (
     <div className="web-manage-create-step-line">
       <ul>
