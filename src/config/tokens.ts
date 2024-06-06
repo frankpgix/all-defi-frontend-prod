@@ -151,7 +151,7 @@ export const acTokens: TokenConfigTypes[] = [
     },
     decimals: 8,
     precision: 4,
-    icon: 'symbol/wbtc.svg'
+    icon: 'symbol/wbtc.png'
   }
 ]
 
