@@ -31,7 +31,7 @@ const FundList: FC = () => {
       )
     },
     {
-      title: 'Net Asset Value',
+      title: 'AUM',
       dataIndex: 'aum',
       width: 120,
       render: (value: number, row: VaultDetailProps) => (

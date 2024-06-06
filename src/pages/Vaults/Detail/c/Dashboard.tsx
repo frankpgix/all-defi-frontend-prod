@@ -107,7 +107,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
             )}
           </section> */}
           <footer>
-            <DashboardItem label="Net Asset Value" loading={loading}>
+            <DashboardItem label="AUM" loading={loading}>
               <TokenValue value={data.aum} token={underlyingToken} size="mini" format="0,0.00" />
             </DashboardItem>
             <DashboardItem label="Vault Inception Date" loading={loading}>

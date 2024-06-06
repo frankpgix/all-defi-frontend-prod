@@ -41,7 +41,7 @@ const Dashboard: FC<Props> = ({ vaultAddress, data, base, loading }) => {
     return (
       <div className="web-manage-manager-dashboard">
         <header>
-          <h4>Net Asset Value</h4>
+          <h4>Asset Under Management</h4>
           <em>
             <TokenValue value={0} token={baseToken} format="0,0.00" />
           </em>
@@ -70,7 +70,7 @@ const Dashboard: FC<Props> = ({ vaultAddress, data, base, loading }) => {
   return (
     <div className="web-manage-manager-dashboard">
       <header>
-        <h4>{chartType === 'nav' ? 'Net Asset Value' : 'Share Price'}</h4>
+        <h4>{chartType === 'nav' ? 'Asset Under Management' : 'Share Price'}</h4>
         <em>
           <TokenValue
             value={chartType === 'nav' ? data.aum : data.sharePrice}
@@ -89,7 +89,7 @@ const Dashboard: FC<Props> = ({ vaultAddress, data, base, loading }) => {
         value={chartType}
         onChange={setChartType}
         objOptions={[
-          { label: 'NAV', value: 'nav' },
+          { label: 'AUM', value: 'nav' },
           { label: 'Share Price', value: 'price' }
         ]}
       />

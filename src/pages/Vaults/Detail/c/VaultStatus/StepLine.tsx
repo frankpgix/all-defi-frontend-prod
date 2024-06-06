@@ -24,18 +24,19 @@ const StepLine: FC<Props> = ({ data, loading }) => {
   if (now < data.settleEndTime && data.status === 4) {
     activeIndex = 3
   }
+  const step1Popper = "During the vault's open period, you can stake to vault or unstake from it"
+  const step2Popper = "During the vault's semi-open period, you can only stake to vault"
   const steps = [
     {
       label: 'Open Period',
-      popper: "During the vault's open period, you can stake to vault or withhold from it",
+      popper: step1Popper,
       time: data.epochStartTime,
       status: 0
     },
     {
       label: data.epochIndex === 0 ? 'Open Period' : 'Semi-open Period',
       time: data.epochIndex === 0 ? data.epochStartTime : data.subscribeRedeemEndTime,
-      popper:
-        "During the vault's semi-open period, you can only stake to strategy and cannot cancel",
+      popper: data.epochIndex === 0 ? step1Popper : step2Popper,
       status: 1
     },
     {
