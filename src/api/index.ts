@@ -58,10 +58,12 @@ export const getDefiTvlData = async () => {
     const { xaxis, series } = await get(
       'https://api-proxy.jimmyllee098.workers.dev/api/ethereum/history/month?currency=USD'
     )
-    return xaxis.map((time: number, index: number) => ({
-      time: time,
-      value: Number(series[0].data[index])
-    }))
+    return xaxis
+      .map((time: number, index: number) => ({
+        time: time,
+        value: Number(series[0].data[index])
+      }))
+      .filter((item: any) => item.value !== 0)
   } catch (error) {
     return await getDefiChartData()
   }
