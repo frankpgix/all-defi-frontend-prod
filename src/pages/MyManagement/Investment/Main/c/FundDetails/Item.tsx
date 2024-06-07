@@ -150,9 +150,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   >
                     Cancel
                   </Button>
-                  {!(fund.data.stakingACToken > 0 && [0, 1].includes(fund.data.status)) && (
-                    <p>Exceeded the cancellation period</p>
-                  )}
+                  {![0, 1].includes(fund.data.status) && <p>Exceeded the cancellation period</p>}
                 </li>
                 <li>
                   <label>
@@ -166,16 +164,14 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                     {/*<TokenValue value={fund.data.redeemingShares} token={underlyingToken} size="mini" format="0,0.00" />*/}
                   </em>
                   <Button
-                    disabled={!(fund.data.unstakingShare > 0 && fund.data.status === 0)}
+                    disabled={!(fund.data.unstakingShare > 0 && [0, 1].includes(fund.data.status))}
                     size="mini"
                     onClick={() => setInfoStatus2(true)}
                     text
                   >
                     Cancel
                   </Button>
-                  {!(fund.data.unstakingShare > 0 && fund.data.status === 0) && (
-                    <p>Exceeded the cancellation period</p>
-                  )}
+                  {![0, 1].includes(fund.data.status) && <p>Exceeded the cancellation period</p>}
                 </li>
               </ul>
             </div>

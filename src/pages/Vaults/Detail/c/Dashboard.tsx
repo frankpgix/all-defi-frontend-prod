@@ -41,7 +41,10 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
   )
   const { loading: chartLoading, data: chartData } = useVaultDetailChartData(gql, underlyingToken)
   // console.log(data.roe, 'data.data.roe')
-  const currentEpochReturn = useMemo(() => BN(data.roe).times(10).div(7).toNumber(), [data.roe])
+  const currentEpochReturn = useMemo(
+    () => (data.roe > 0 ? BN(data.roe).times(10).div(7).toNumber() : data.roe),
+    [data.roe]
+  )
   // data.historicalReturn + data.platFee + data.managerFee
   // console.log(data.historicalReturn)
   const historicalReturn = useMemo(

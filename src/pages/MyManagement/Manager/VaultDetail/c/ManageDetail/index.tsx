@@ -91,7 +91,9 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
     // if (data.epochIndex % 6 === 0) {
     //   temp = temp.plus(data.platFee).plus(data.managerFee)
     // }
-    const v = Number(temp.minus(data.stakingACToken).toFixed(2, BN.ROUND_UP))
+    const v = Number(
+      temp.minus(data.stakingACToken).toFixed(data.underlyingToken.precision, BN.ROUND_UP)
+    )
     return v >= 0 ? v : 0
   }, [
     data.unstakingShare,

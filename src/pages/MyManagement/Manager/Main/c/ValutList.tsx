@@ -51,7 +51,7 @@ const FundList: FC = () => {
       dataIndex: 'preSettleEndTime',
       width: 200,
       render: (value: number, row: VaultDetailProps) =>
-        row.status === 0 ? '-' : dayjs(value).format('MMM DD, YYYY hh:mm:ss A')
+        row.status === -1 ? '-' : dayjs(value).format('MMM DD, YYYY hh:mm:ss A')
     },
     {
       title: 'Confirming unstaking',
