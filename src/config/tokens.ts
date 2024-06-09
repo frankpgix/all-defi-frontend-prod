@@ -99,7 +99,7 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
     },
     decimals: 8,
     precision: 4,
-    icon: 'symbol/wbtc.png',
+    icon: 'symbol/wbtc.svg',
     acTokenName: 'acBTC'
   }
 ]
@@ -151,7 +151,7 @@ export const acTokens: TokenConfigTypes[] = [
     },
     decimals: 8,
     precision: 4,
-    icon: 'symbol/wbtc.png'
+    icon: 'symbol/wbtc.svg'
   }
 ]
 

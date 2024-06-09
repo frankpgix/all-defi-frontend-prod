@@ -1,6 +1,7 @@
 import { FC, memo, useMemo, useState } from 'react'
 
-import { min } from 'lodash'
+import BN from 'bignumber.js'
+import { min, sum } from 'lodash'
 
 import { useProfile } from '@/hooks/useProfile'
 import { useManageVaultListHook } from '@/hooks/useVaultList'
@@ -24,9 +25,13 @@ const Chart: FC = () => {
     () => calcManageVaultDatasGql(account ?? '0x', timeType, startTime ?? 0),
     [account, timeType, startTime]
   )
-
+  const totalAum = useMemo(() => {
+    return sum(
+      manageVaultList.map((item) => BN(item.aum).times(item.underlyingPriceInUSD).toNumber())
+    )
+  }, [manageVaultList])
   const { loading, data, count } = useManageValutDatas(gql)
-  // console.log(11, data)
+  // console.log(11, manageVaultList)
   if (manageVaultList.length === 0) {
     return (
       <section className="web-manage-manager-chart">
@@ -58,7 +63,7 @@ const Chart: FC = () => {
       <Loading show={loading} type="float" />
       <header>
         <label>Total AUM</label>
-        <em>{formatNumber(count, 2, '$0,0.00')}</em>
+        <em>{formatNumber(totalAum, 2, '$0,0.00')}</em>
         <TimeSelect
           value={timeType}
           onChange={(val) => setTimeType(val)}

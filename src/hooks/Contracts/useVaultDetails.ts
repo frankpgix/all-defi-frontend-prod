@@ -7,10 +7,10 @@ import {
 } from '@/hooks/Contracts/useContract'
 import { useToken } from '@/hooks/useToken'
 
+// import { useVaultList as useVaultListHook } from '@/hooks/useVaultList'
 import { AddressType } from '@/types/base'
 
 import {
-  calcShareComposition,
   calcVaultBaseInfo,
   calcVaultBreachDetail,
   calcVaultDetail,
@@ -111,6 +111,7 @@ export const useVaultDetails = (vaultAddress: AddressType, account: AddressType)
   // const { account } = useProfile()
   const VaultContract = useVaultContract(vaultAddress)
   const VaultReaderContract = useVaultReaderContract()
+
   const { data, isLoading, isSuccess, refetch } = useReadContracts({
     contracts: [
       {
@@ -149,7 +150,7 @@ export const useVaultDetails = (vaultAddress: AddressType, account: AddressType)
         : VaultDetailDefault
     const vaultUserDetail =
       data[2].status === 'success'
-        ? calcVaultUserDetail(data[2].result, getTokenByAddress)
+        ? calcVaultUserDetail(data[2].result, getTokenByAddress, vaultDetail.underlyingPriceInUSD)
         : VaultUserDetailDefault
 
     console.log(baseInfo, vaultDetail, vaultUserDetail, 'baseInfo, vaultDetail, vaultUserDetail')

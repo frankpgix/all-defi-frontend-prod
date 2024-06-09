@@ -5,6 +5,7 @@ import { useReadContract } from 'wagmi'
 import { useVaultReaderContract } from '@/hooks/Contracts/useContract'
 import { useProfile } from '@/hooks/useProfile'
 import { useToken } from '@/hooks/useToken'
+import { useVaultList as useVaultListHook } from '@/hooks/useVaultList'
 
 import { AddressType, TokenTypes } from '@/types/base'
 import {
@@ -52,13 +53,23 @@ export const useUserVaultDetail = (vaultAddress: AddressType) => {
   const VaultReaderContract = useVaultReaderContract()
   const { getTokenByAddress } = useToken()
   const { account } = useProfile()
+  const { vaultList } = useVaultListHook()
+  // console.log('vaultList', vaultList)
   const { data, isSuccess, isLoading, refetch } = useReadContract({
     ...VaultReaderContract,
     functionName: 'userDetail',
     args: [vaultAddress, account ?? '0x']
   })
   if (!isLoading && isSuccess && account) {
-    return { data: calcVaultUserDetail(data, getTokenByAddress), isLoading, isSuccess, refetch }
+    const valut = vaultList.find(
+      (vault) => vault.address.toLocaleLowerCase() === vaultAddress.toLocaleLowerCase()
+    )
+    return {
+      data: calcVaultUserDetail(data, getTokenByAddress, valut?.underlyingPriceInUSD ?? 1),
+      isLoading,
+      isSuccess,
+      refetch
+    }
   }
   return { data: VaultUserDetailDefault, isLoading, isSuccess, refetch }
 }
@@ -122,6 +133,8 @@ export const useUserVaultList = () => {
   const { getTokenByAddress } = useToken()
   const { account } = useProfile()
 
+  const { vaultList } = useVaultListHook()
+  console.log('vaultList', vaultList)
   const {
     data: sData,
     isSuccess,
@@ -134,14 +147,27 @@ export const useUserVaultList = () => {
     args: [0, 999],
     account: account || undefined
   }) as { data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void; error: any }
-  console.log(error)
+  // console.log(error)
+  if (error) {
+    console.error(error)
+  }
   if (account && !isLoading && isSuccess) {
     const [fundList, detailList] = sData
-    console.log(sData)
+    // console.log(sData)
     const data: VaultUserListDataProps[] = fundList
       .map((item: any, index: number) => {
         const fund: VaultProps = calcVaultBaseInfo(item, getTokenByAddress)
-        fund.data = calcVaultUserDetail(detailList[index], getTokenByAddress)
+        // console.log(item, 'item')
+        const valut = vaultList.find(
+          (vault) =>
+            vault.underlyingToken.address.toLocaleLowerCase() ===
+            item.underlying.toLocaleLowerCase()
+        )
+        fund.data = calcVaultUserDetail(
+          detailList[index],
+          getTokenByAddress,
+          valut?.underlyingPriceInUSD ?? 1
+        )
         fund.address = fund.data.address
         return fund
       })
@@ -164,6 +190,9 @@ export const useVaultList = () => {
     args: [0, 999]
   }) as { error: any; data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
   // console.log(error, data, isSuccess, isLoading, 'data, isSuccess, isLoading')
+  if (error) {
+    console.error(error)
+  }
   if (!isLoading && isSuccess) {
     return {
       data: data.map((item) => calcVaultDetail(item, getTokenByAddress)),

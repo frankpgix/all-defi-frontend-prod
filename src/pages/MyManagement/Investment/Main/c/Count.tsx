@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import { Cell, Pie, PieChart, Sector } from 'recharts'
 
 // import { useBaseTokenPriceUSD } from '@/hooks/Contracts/useVaultFactory'
-import { VaultUserListDataProps, baseTokenPriceInUSDTypes } from '@/types/vault'
+import { VaultUserListDataProps } from '@/types/vault'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/VaultDetail/c/ManageDetail/C'
 import { formatNumber } from '@/utils/tools'
@@ -161,7 +161,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data: sData }) => {
   )
   const activeData = useMemo(() => data[activeIndex]?.data, [data, activeIndex])
   const baseToken = useMemo(() => activeData?.underlying, [activeData])
-  console.log(activeData, data)
+  // console.log(activeData, data)
   const pieData = useMemo(
     () =>
       rawData

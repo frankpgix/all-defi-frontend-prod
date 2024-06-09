@@ -75,7 +75,7 @@ export const calcVaultDetail = (
   item: any,
   getTokenByAddress: GetTokenFuncType
 ): VaultDetailProps => {
-  console.log(item, 'test')
+  // console.log(item, 'test')
   const epochStartTime = Number(safeInterceptionValues(item.epochStartTime, 0, 0)) * 1000
   const underlyingToken = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlyingToken.decimals
@@ -142,14 +142,15 @@ export const calcVaultDetail = (
 
 export const calcVaultUserDetail = (
   item: any,
-  getTokenByAddress: GetTokenFuncType
+  getTokenByAddress: GetTokenFuncType,
+  underlyingTokenPriceInUSD: number
 ): VaultUserDetailProps => {
   const underlying = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlying.decimals
   const precision = underlying.precision
 
   const nav = Number(safeInterceptionValues(item.nav, precision, decimals))
-  const underlyingTokenPriceInUSD = 1
+  // const underlyingTokenPriceInUSD = 1
   const beginSharePrice = BN(safeInterceptionValues(item.sharePrice, 18, 18))
     .div(BN(safeInterceptionValues(item.roe, 18, 18)).plus(1))
     .toNumber()
