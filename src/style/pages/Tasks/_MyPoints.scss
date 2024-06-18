@@ -91,6 +91,9 @@
     & > em {
       font-size: 24px;
       font-weight: bold;
+      & > small {
+        font-size: 16px;
+      }
     }
   }
 

@@ -5,6 +5,8 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import BN from 'bignumber.js'
 import dayjs from 'dayjs'
 
+import { underlyingTokens } from '@/config/tokens'
+
 // import { useVaultUpdatingData } from '@/hooks/Contracts/useVaultReader'
 import { AddressType } from '@/types/base'
 // import Dapp from '@@/web/Dapp'
@@ -125,11 +127,12 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
       BN(data.underlyingBalance).toNumber(),
     [nextRoundCash, data.stakingACToken, data.underlyingBalance]
   )
+  console.log(nextRoundCash, data.stakingACToken, data.underlyingBalance)
   return (
     <>
       <CountLayout>
         <CountItem
-          label="Epoch beginning AUM"
+          label="Epoch Beginning AUM"
           loading={loading}
           value={
             <TokenValue value={data.beginningAUM} token={baseToken} size="small" format="0,0.00" />
@@ -237,8 +240,8 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
             />
             {/* <SectionItem label="当前用户数量" value="No Data" /> */}
             <SectionItem
-              popper="Number of Epochs since inception"
-              label=" Round Duration"
+              // popper="Number of Epochs since inception"
+              label="Round Duration"
               loading={loading}
               value={data.epochIndex}
             />

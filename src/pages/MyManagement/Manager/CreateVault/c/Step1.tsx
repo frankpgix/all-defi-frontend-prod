@@ -1,11 +1,11 @@
-import { FC, useMemo, useState, useEffect } from 'react'
-
-import BlueLineSection from '@@/web/BlueLineSection'
-import { Input } from '@@/common/Form'
-import Button from '@@/common/Button'
-import Cache from '@/utils/cache'
+import { FC, useEffect, useMemo, useState } from 'react'
 
 import { CreateVaultStep1DataTypes } from '@/types/createVault'
+
+import Cache from '@/utils/cache'
+import Button from '@@/common/Button'
+import { Input } from '@@/common/Form'
+import BlueLineSection from '@@/web/BlueLineSection'
 
 interface Props {
   onConfirm: (data: CreateVaultStep1DataTypes) => void
@@ -65,7 +65,7 @@ const Step1: FC<Props> = ({ onConfirm, show }) => {
             label="manager name"
             count
             maxLength={20}
-            placeholder="Enter Manager Namel"
+            placeholder="Enter Manager Name"
           />
         </div>
         <Input

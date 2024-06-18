@@ -34,7 +34,7 @@ const GetPoints: FC = () => {
           </footer>
         </div>
         <div className="p-tasks-get-point-item fire">
-          <header>Token worth $1,000 USD deposit can get 100pts. </header>
+          {/* <header>Token worth $1,000 USD deposit can get 100pts. </header> */}
           <main>
             <Image src="task/actoken.svg" />
             <h4>Deposit token and get AC Token</h4>
@@ -52,7 +52,7 @@ const GetPoints: FC = () => {
           </footer>
         </div>
         <div className="p-tasks-get-point-item fire">
-          <header>Token worth $1,000 USD deposit can get 100pts. </header>
+          {/* <header>Token worth $1,000 USD deposit can get 100pts. </header> */}
           <main>
             <Image src="task/value.svg" />
             <h4>Stake to vault</h4>

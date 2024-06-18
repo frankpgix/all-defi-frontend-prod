@@ -53,7 +53,7 @@ const Claim: FC<Props> = ({ userData, getData }) => {
           />
         </div>
         <div className="web-fund-detail-bench-action">
-          <Button onClick={() => setInfoStatus(true)} disabled={value <= 0}>
+          <Button onClick={onRedeem} disabled={value <= 0}>
             confirm
           </Button>
         </div>

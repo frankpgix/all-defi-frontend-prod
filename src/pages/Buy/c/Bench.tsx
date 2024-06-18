@@ -157,7 +157,7 @@ const Bench: FC = () => {
               <dd>20%</dd>
             </dl> */}
             <dl>
-              <dt>Duration</dt>
+              <dt>Lock Duration</dt>
               <dd>{DurationPre.duration}</dd>
             </dl>
             <dl>
@@ -176,7 +176,7 @@ const Bench: FC = () => {
         onConfirm={buyAndStakeFunc}
         onClose={() => setInfoStatus(false)}
         title="Confirm Deposit"
-        msg={`You will deposit ${amount} ac${currBaseToken.name}, for a total cost of ${amount} ${currBaseToken.name}`}
+        msg={`You will receive ${amount} ac${currBaseToken.name}, for a total cost of ${amount} ${currBaseToken.name}`}
       />
       <InfoDialog
         show={allowedStatus}

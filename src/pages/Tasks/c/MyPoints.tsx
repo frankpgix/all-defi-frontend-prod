@@ -17,15 +17,21 @@ const MyPoints: FC = () => {
           <div className="p-task-my-points-details">
             <div className="p-task-my-points-item">
               <label>Deposit Token and Get AC Token</label>
-              <em>123,123</em>
+              <em>
+                123,123 <small>Pts</small>
+              </em>
             </div>
             <div className="p-task-my-points-item">
               <label>Stake to vault</label>
-              <em>123,123</em>
+              <em>
+                123,123 <small>Pts</small>
+              </em>
             </div>
             <div className="p-task-my-points-item arrow">
               <label>Invitation Points</label>
-              <em>123,123</em>
+              <em>
+                123,123 <small>Pts</small>
+              </em>
             </div>
             <div className="p-task-my-points-item arrow">
               <label>Number of Invitations</label>

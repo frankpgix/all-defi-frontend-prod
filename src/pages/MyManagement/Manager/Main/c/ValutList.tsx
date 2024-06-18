@@ -31,9 +31,9 @@ const FundList: FC = () => {
       )
     },
     {
-      title: 'AUM',
+      title: 'Asset Under Management',
       dataIndex: 'aum',
-      width: 120,
+      width: 200,
       render: (value: number, row: VaultDetailProps) => (
         <TokenValue value={value} token={row.underlyingToken} size="mini" format="0,0.00" />
       )
