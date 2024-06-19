@@ -4,7 +4,9 @@ import { useSignMessage } from 'wagmi'
 
 import { useProfile } from '@/hooks/useProfile'
 
-import { getProfile, login } from '@/api/tasks'
+import { TaskProfileState } from '@/types/tasks'
+
+import { getDashboard, getProfile, login } from '@/api/tasks'
 import { useStoreTasks } from '@/stores/useStoreTasks'
 import cache from '@/utils/cache'
 import { sleep } from '@/utils/tools'
@@ -47,19 +49,21 @@ export const useLogin = () => {
 }
 
 export const useTaskProfile = () => {
-  const { user, update } = useStoreTasks((state: any) => ({
+  const { user, dashboard, update } = useStoreTasks((state: TaskProfileState) => ({
     user: state.user,
-    update: state.update
+    update: state.update,
+    dashboard: state.dashboard
   }))
   const { goLogin, isLogin } = useLogin()
   const getData = useCallback(async () => {
     const { code, data } = await getProfile()
+    const { data: dashboard } = await getDashboard()
 
-    if (code === 20003) {
+    if (code === 0) {
+      update(data, dashboard)
+    } else if (code === 20003 || code === 20002) {
       cache.rm('Authorization')
       goLogin()
-    } else {
-      update(data)
     }
   }, [isLogin])
   useEffect(() => {
@@ -70,5 +74,21 @@ export const useTaskProfile = () => {
     }
   }, [isLogin])
 
-  return { user, isLogin }
+  return { user, dashboard, isLogin }
 }
+
+// export const useTaskDashboard = () => {
+//   const { dashboard, update } = useStoreTasks((state: any) => ({
+//     dashboard: state.dashboard,
+//     update: state.update
+//   }))
+//   const getData = useCallback(async () => {
+//     const { data } = await getDashboard()
+//     update(data)
+//   }, [])
+//   useEffect(() => {
+//     getData()
+//   }, [])
+
+//   return { dashboard }
+// }

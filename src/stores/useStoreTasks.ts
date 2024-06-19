@@ -1,8 +1,8 @@
 import { create } from 'zustand'
 
-import { taskUserProps } from '@/types/tasks'
+import { TaskProfileState, taskDashboardProps, taskUserProps } from '@/types/tasks'
 
-export const useStoreTasks = create((set) => {
+export const useStoreTasks = create<TaskProfileState>((set) => {
   return {
     user: {
       discordAvatarUrl: '',
@@ -15,8 +15,22 @@ export const useStoreTasks = create((set) => {
       twitterDisplayName: '',
       twitterName: ''
     },
-    update: (user: taskUserProps) => {
-      set({ user })
+    dashboard: {
+      totalUsers: 0,
+      newUsersToday: 0,
+      totalPoints: 0,
+      pointsToday: 0,
+      topUsers: [
+        { userAddress: '0x...', totalPoints: 1000 },
+        { userAddress: '0x...', totalPoints: 950 }
+      ],
+      topReferrers: [
+        { userAddress: '0x...', inviteeCount: 20 },
+        { userAddress: '0x...', inviteeCount: 18 }
+      ]
+    },
+    update: (user: taskUserProps, dashboard: taskDashboardProps) => {
+      set({ user, dashboard })
     }
   }
 })

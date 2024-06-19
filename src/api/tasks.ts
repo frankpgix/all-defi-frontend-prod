@@ -6,3 +6,4 @@ export const login = async (params: any) => {
 
 export const getProfile = async () => await get('profile')
 export const getInviteCode = async () => await get('inviteCode')
+export const getDashboard = async () => await get('dashboard')

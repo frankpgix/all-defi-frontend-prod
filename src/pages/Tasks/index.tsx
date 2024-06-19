@@ -10,7 +10,8 @@ import MyPoints from './c/MyPoints'
 // import TaskItem from './c/TaskItem'
 
 const Tasks: FC = () => {
-  useTaskProfile()
+  const { user, dashboard } = useTaskProfile()
+  console.log(user, dashboard)
   return (
     <>
       <Dashboard />
