@@ -1,9 +1,13 @@
 import { FC } from 'react'
 
+import { useConnectTwitter, useTaskProfile } from '@/hooks/useTasks'
+
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'
 
 const GetPoints: FC = () => {
+  const { user } = useTaskProfile()
+  const { goConnectTwitter, loading: twitterLoading } = useConnectTwitter()
   return (
     <section className="p-tasks-get-point-layout">
       <header className="p-tasks-get-point-header">
@@ -20,7 +24,14 @@ const GetPoints: FC = () => {
             </p>
           </main>
           <footer>
-            <Button size="medium">connect</Button>
+            <Button
+              size="medium"
+              loading={twitterLoading}
+              disabled={Boolean(user.twitterDisplayName)}
+              onClick={goConnectTwitter}
+            >
+              connect
+            </Button>
           </footer>
         </div>
         <div className="p-tasks-get-point-item">

@@ -1,18 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { useSignMessage } from 'wagmi'
-
-import { useProfile } from '@/hooks/useProfile'
+import { useAccount, useSignMessage } from 'wagmi'
 
 import { TaskProfileState } from '@/types/tasks'
 
-import { getDashboard, getProfile, login } from '@/api/tasks'
+import { connectTwitter, getDashboard, getPoint, getProfile, login } from '@/api/tasks'
 import { useStoreTasks } from '@/stores/useStoreTasks'
 import cache from '@/utils/cache'
 import { sleep } from '@/utils/tools'
 
 export const useLogin = () => {
-  const { account: userAddress } = useProfile()
+  const { address: userAddress } = useAccount()
   const { signMessage } = useSignMessage()
   const [isLogin, setIsLogin] = useState(false)
   const goLogin = useCallback(async () => {
@@ -20,6 +18,8 @@ export const useLogin = () => {
     await sleep(1000)
 
     if (userAddress && !isLogin && !token) {
+      if (window.isInTaskSign) return
+      window.isInTaskSign = true
       const timestamp = ~~(+new Date() / 1000)
       const message = JSON.stringify({ userAddress, timestamp })
       signMessage(
@@ -33,6 +33,9 @@ export const useLogin = () => {
           },
           onError: (error) => {
             console.log(error)
+          },
+          onSettled: () => {
+            window.isInTaskSign = false
           }
         }
       )
@@ -44,6 +47,13 @@ export const useLogin = () => {
   useEffect(() => {
     goLogin()
   }, [goLogin])
+
+  useEffect(() => {
+    if (!userAddress) {
+      cache.rm('Authorization')
+      setIsLogin(false)
+    }
+  }, [userAddress])
 
   return { goLogin, isLogin }
 }
@@ -58,9 +68,10 @@ export const useTaskProfile = () => {
   const getData = useCallback(async () => {
     const { code, data } = await getProfile()
     const { data: dashboard } = await getDashboard()
+    const { data: point } = await getPoint()
 
     if (code === 0) {
-      update(data, dashboard)
+      update(data, dashboard, point)
     } else if (code === 20003 || code === 20002) {
       cache.rm('Authorization')
       goLogin()
@@ -77,18 +88,15 @@ export const useTaskProfile = () => {
   return { user, dashboard, isLogin }
 }
 
-// export const useTaskDashboard = () => {
-//   const { dashboard, update } = useStoreTasks((state: any) => ({
-//     dashboard: state.dashboard,
-//     update: state.update
-//   }))
-//   const getData = useCallback(async () => {
-//     const { data } = await getDashboard()
-//     update(data)
-//   }, [])
-//   useEffect(() => {
-//     getData()
-//   }, [])
+export const useConnectTwitter = () => {
+  const [loading, setLoading] = useState(false)
+  const goConnectTwitter = async () => {
+    setLoading(true)
+    const { data } = await connectTwitter()
+    window.open(data.authUrl)
+    setLoading(false)
+    console.log(data)
+  }
 
-//   return { dashboard }
-// }
+  return { goConnectTwitter, loading }
+}

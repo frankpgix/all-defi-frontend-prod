@@ -19,8 +19,17 @@ export interface taskDashboardProps {
   topReferrers: { userAddress: string; inviteeCount: number }[]
 }
 
+export interface taskUserPointProps {
+  totalDepositPoints: number
+  totalStakePoints: number
+  todayDepositPoints: number
+  todayStakePoints: number
+  todayInvitePoints: number
+}
+
 export type TaskProfileState = {
   user: taskUserProps
   dashboard: taskDashboardProps
-  update: (user: taskUserProps, dashboard: taskDashboardProps) => void
+  point: taskUserPointProps
+  update: (user: taskUserProps, dashboard: taskDashboardProps, point: taskUserPointProps) => void
 }
