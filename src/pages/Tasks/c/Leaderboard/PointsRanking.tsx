@@ -13,8 +13,8 @@ const PointsRanking: FC = () => {
     <main>
       <h3>Points Ranking</h3>
       <ul>
-        {data.map((row) => (
-          <li>
+        {data.map((row, index) => (
+          <li key={index}>
             <em>{row.rank}</em>
             <HashLink address={row.address} nolink />
             <strong>

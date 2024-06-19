@@ -13,8 +13,8 @@ const InvitationRanking: FC = () => {
     <main>
       <h3>Invitation Ranking</h3>
       <ul>
-        {data.map((row) => (
-          <li>
+        {data.map((row, index) => (
+          <li key={index}>
             <em>{row.rank}</em>
             <HashLink address={row.address} nolink />
             <span>{row.total}</span>

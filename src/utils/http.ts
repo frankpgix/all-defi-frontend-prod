@@ -1,5 +1,7 @@
 import { isEmpty } from 'lodash'
+
 import { API_PREFIX_URL } from '@/config'
+import cache from '@/utils/cache'
 
 interface HttpResponse extends Response {
   data: any
@@ -40,9 +42,13 @@ const combineUrl = (url: string, params: Record<string, unknown> | undefined) =>
 // }
 
 // whether it is an external link
-export const externalLink = (url: string): string => {
+export const externalLink = (url: string): { pathUrl: string; isExternal: boolean } => {
   const host = /^https?:\/\/([a-zA-Z]*)(\w)+/
-  return host.test(url) ? url : `${API_PREFIX_URL}${url}`
+  const isExternal = host.test(url)
+  return {
+    pathUrl: isExternal ? url : `${API_PREFIX_URL}${url}`,
+    isExternal
+  }
 }
 
 export async function http(request: Request): Promise<HttpResponse> {
@@ -64,8 +70,13 @@ export async function get(
   params?: Record<string, unknown>,
   args?: RequestInit
 ): Promise<HttpResponse> {
-  const _path = combineUrl(externalLink(path), params)
-  return await http(new Request(_path, { ...args, method: 'get' }))
+  const { pathUrl, isExternal } = externalLink(path)
+  const _path = combineUrl(pathUrl, params)
+  const headers = new Headers()
+  if (!isExternal) {
+    headers.append('Authorization', `${cache.get('Authorization')}`)
+  }
+  return await http(new Request(_path, { ...args, method: 'get', headers }))
 }
 
 export async function post(
@@ -73,11 +84,15 @@ export async function post(
   body?: Record<string, unknown>,
   args?: RequestInit
 ): Promise<HttpResponse> {
+  const { pathUrl, isExternal } = externalLink(path)
   const headers = new Headers()
   const _body = isEmpty(body) ? '' : JSON.stringify(body)
   headers.append('Content-Type', 'application/json;charset=UTF-8')
+  if (!isExternal) {
+    headers.append('Authorization', `${cache.get('Authorization')}`)
+  }
   return await http(
-    new Request(externalLink(path), {
+    new Request(pathUrl, {
       ...args,
       method: 'post',
       mode: 'cors',
@@ -98,7 +113,7 @@ export async function formDataPost(
   })
 
   return await http(
-    new Request(externalLink(path), {
+    new Request(externalLink(path).pathUrl, {
       ...args,
       method: 'post',
       mode: 'cors',

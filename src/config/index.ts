@@ -14,7 +14,7 @@ export const STATIC_RESOURCES_URL = RESOURCES_URL + 'image/'
 export const VIDEO_RESOURCES_URL = RESOURCES_URL + 'video/'
 export const WEBSITE_URL = 'https://alldefi.finance/'
 export const LANG_CACHE_KEY = 'LANG'
-export const API_PREFIX_URL = ''
+export const API_PREFIX_URL = 'https://api.alldefi.finance/'
 
 export const MANAGER_UPLODAD_HISTORICAL_DATA_URL =
   'https://docs.google.com/forms/d/1xEGMAC4VAnMWNIlCA75LasU0aG353tS5AWAJh1T4XX0/edit'
