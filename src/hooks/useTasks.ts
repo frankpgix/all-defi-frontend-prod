@@ -4,7 +4,14 @@ import { useAccount, useSignMessage } from 'wagmi'
 
 import { TaskProfileState } from '@/types/tasks'
 
-import { connectTwitter, getDashboard, getPoint, getProfile, login } from '@/api/tasks'
+import {
+  connectDiscord,
+  connectTwitter,
+  getDashboard,
+  getPoint,
+  getProfile,
+  login
+} from '@/api/tasks'
 import { useStoreTasks } from '@/stores/useStoreTasks'
 import cache from '@/utils/cache'
 import { sleep } from '@/utils/tools'
@@ -108,8 +115,20 @@ export const useConnectTwitter = () => {
     const { data } = await connectTwitter()
     window.open(data.authUrl)
     setLoading(false)
-    console.log(data)
   }
 
   return { goConnectTwitter, loading }
+}
+
+export const useConnectDiscord = () => {
+  const [loading, setLoading] = useState(false)
+  const goConnectDiscord = async () => {
+    setLoading(true)
+    const { data } = await connectDiscord()
+    window.open(data.authUrl)
+    setLoading(false)
+    console.log(data)
+  }
+
+  return { goConnectDiscord, loading }
 }

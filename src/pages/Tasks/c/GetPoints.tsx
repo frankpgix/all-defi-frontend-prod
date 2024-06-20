@@ -1,13 +1,15 @@
 import { FC } from 'react'
 
-import { useConnectTwitter, useTaskProfile } from '@/hooks/useTasks'
+import { useConnectDiscord, useConnectTwitter, useTaskProfile } from '@/hooks/useTasks'
 
+import { formatNumber } from '@/utils/tools'
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'
 
 const GetPoints: FC = () => {
-  const { user } = useTaskProfile()
+  const { user, point } = useTaskProfile()
   const { goConnectTwitter, loading: twitterLoading } = useConnectTwitter()
+  const { goConnectDiscord, loading: discordLoading } = useConnectDiscord()
   return (
     <section className="p-tasks-get-point-layout">
       <header className="p-tasks-get-point-header">
@@ -41,7 +43,14 @@ const GetPoints: FC = () => {
             <p>Copy invitation link, join AllDefi Discord and get multiplier points.</p>
           </main>
           <footer>
-            <Button size="medium">join</Button>
+            <Button
+              loading={discordLoading}
+              disabled={Boolean(user.discordName)}
+              onClick={goConnectDiscord}
+              size="medium"
+            >
+              join
+            </Button>
           </footer>
         </div>
         <div className="p-tasks-get-point-item fire">
@@ -51,7 +60,7 @@ const GetPoints: FC = () => {
             <h4>Deposit token and get AC Token</h4>
             <aside>
               <strong>
-                32
+                {formatNumber(point.todayDepositPoints, 2, '0,0.00')}
                 <small>pts</small>
               </strong>
               <span>You have received today.</span>
@@ -69,7 +78,7 @@ const GetPoints: FC = () => {
             <h4>Stake to vault</h4>
             <aside>
               <strong>
-                32
+                {formatNumber(point.todayStakePoints, 2, '0,0.00')}
                 <small>pts</small>
               </strong>
               <span>You have received today.</span>
