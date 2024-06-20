@@ -59,13 +59,25 @@ export const useLogin = () => {
 }
 
 export const useTaskProfile = () => {
-  const { user, dashboard, update } = useStoreTasks((state: TaskProfileState) => ({
+  const { user, dashboard, point } = useStoreTasks((state: TaskProfileState) => ({
+    user: state.user,
+    update: state.update,
+    dashboard: state.dashboard,
+    point: state.point
+  }))
+  const { isLogin } = useLogin()
+
+  return { user, dashboard, isLogin, point }
+}
+
+export const useGetTaskProfile = () => {
+  const { update } = useStoreTasks((state: TaskProfileState) => ({
     user: state.user,
     update: state.update,
     dashboard: state.dashboard
   }))
   const { goLogin, isLogin } = useLogin()
-  const getData = useCallback(async () => {
+  const getTaskProfile = useCallback(async () => {
     const { code, data } = await getProfile()
     const { data: dashboard } = await getDashboard()
     const { data: point } = await getPoint()
@@ -78,14 +90,15 @@ export const useTaskProfile = () => {
     }
   }, [isLogin])
   useEffect(() => {
+    console.log(111, isLogin)
     if (!isLogin) {
       goLogin()
     } else {
-      getData()
+      getTaskProfile()
     }
   }, [isLogin])
 
-  return { user, dashboard, isLogin }
+  return { getTaskProfile }
 }
 
 export const useConnectTwitter = () => {

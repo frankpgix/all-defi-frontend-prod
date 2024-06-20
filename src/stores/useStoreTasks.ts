@@ -1,6 +1,11 @@
 import { create } from 'zustand'
 
-import { TaskProfileState, taskDashboardProps, taskUserProps } from '@/types/tasks'
+import {
+  TaskProfileState,
+  taskDashboardProps,
+  taskUserPointProps,
+  taskUserProps
+} from '@/types/tasks'
 
 export const useStoreTasks = create<TaskProfileState>((set) => {
   return {
@@ -29,8 +34,15 @@ export const useStoreTasks = create<TaskProfileState>((set) => {
         { userAddress: '0x...', inviteeCount: 18 }
       ]
     },
-    update: (user: taskUserProps, dashboard: taskDashboardProps) => {
-      set({ user, dashboard })
+    point: {
+      todayDepositPoints: 0,
+      todayInvitePoints: 0,
+      todayStakePoints: 0,
+      totalDepositPoints: 0,
+      totalStakePoints: 0
+    },
+    update: (user: taskUserProps, dashboard: taskDashboardProps, point: taskUserPointProps) => {
+      set({ user, dashboard, point })
     }
   }
 })

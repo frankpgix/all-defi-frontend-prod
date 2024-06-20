@@ -43,11 +43,13 @@
       display: grid;
       gap: 20px;
       & > li {
-        display: flex;
+        display: grid;
+        grid-template-columns: 100px auto 150px;
         justify-content: space-between;
         align-items: center;
         font-size: 16px;
-        em {
+        gap: 20px;
+        strong {
           background: linear-gradient(
             90.99deg,
             rgba(255, 255, 255, 0.552) 1.33%,
@@ -69,24 +71,22 @@
           font-size: 16px;
           font-weight: bold;
         }
-        strong {
-          small {
-            font-weight: normal;
-            padding-left: 5px;
-          }
+
+        em {
+          text-align: right;
         }
 
-        &:nth-child(1) em {
+        &:nth-child(1) strong {
           color: #e47200;
           background: linear-gradient(180deg, #ffdf74 0%, #ffcf31 100%);
           border: none;
         }
-        &:nth-child(2) em {
+        &:nth-child(2) strong {
           color: #4974b1;
           background: linear-gradient(180deg, #ddeaf7 0%, #9fb7cf 100%);
           border: none;
         }
-        &:nth-child(3) em {
+        &:nth-child(3) strong {
           color: #954b01;
           background: linear-gradient(180deg, #d3b4a1 0%, #986f5c 100%);
           border: none;

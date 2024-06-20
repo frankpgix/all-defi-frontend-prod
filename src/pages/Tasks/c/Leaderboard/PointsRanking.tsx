@@ -1,26 +1,20 @@
 import { FC } from 'react'
 
+import { useTaskProfile } from '@/hooks/useTasks'
+
 import HashLink from '@@/common/HashLink'
 
 const PointsRanking: FC = () => {
-  const data = [...new Array(10)].map((_, index) => ({
-    rank: index + 1,
-    address: '0x1234567890123456789012345678901234567890',
-    total: 1234
-  }))
-  // console.log(1211, data)
+  const { dashboard } = useTaskProfile()
   return (
     <main>
       <h3>Points Ranking</h3>
       <ul>
-        {data.map((row, index) => (
+        {(dashboard.topUsers ?? []).map((row, index) => (
           <li key={index}>
-            <em>{row.rank}</em>
-            <HashLink address={row.address} nolink />
-            <strong>
-              {row.total}
-              <small>pts</small>
-            </strong>
+            <strong>{index + 1}</strong>
+            <HashLink address={row.userAddress ?? ''} nolink />
+            <em>{row.totalPoints}</em>
           </li>
         ))}
       </ul>
