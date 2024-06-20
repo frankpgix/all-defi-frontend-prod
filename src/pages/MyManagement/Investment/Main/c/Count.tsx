@@ -161,11 +161,11 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data: sData }) => {
   )
   const activeData = useMemo(() => data[activeIndex]?.data, [data, activeIndex])
   const baseToken = useMemo(() => activeData?.underlying, [activeData])
-  // console.log(activeData, data)
+  // console.log(data, rawData)
   const pieData = useMemo(
     () =>
       rawData
-        .filter((item) => item.value !== 0)
+        // .filter((item) => item.value !== 0)
         .map((item) => ({
           ...item,
           percent: `${Math.round(BN(item.value).div(totalAsset).times(100).toNumber())}%`
@@ -187,6 +187,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data: sData }) => {
     '#FEA036',
     '#467AFF'
   ]
+  // console.log(pieData, 'pieData')
 
   return (
     <div className="web-manage-investment-count">
@@ -216,7 +217,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data: sData }) => {
           </PieChart>
           <section>
             <em>{formatNumber(data[activeIndex].data.navInUSD, 2, '$0,0.00')}</em>
-            <span>{pieData[activeIndex].percent}</span>
+            <span>{pieData[activeIndex]?.percent}</span>
           </section>
         </div>
         <div className="web-manage-investment-count-chart-labels">

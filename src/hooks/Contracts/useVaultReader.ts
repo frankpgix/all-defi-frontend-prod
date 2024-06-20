@@ -134,7 +134,8 @@ export const useUserVaultList = () => {
   const { account } = useProfile()
 
   const { vaultList } = useVaultListHook()
-  console.log('vaultList', vaultList)
+  const vaultLists = vaultList.filter((item) => item.status !== -1)
+  // console.log('vaultList', vaultList)
   const {
     data: sData,
     isSuccess,
@@ -157,18 +158,18 @@ export const useUserVaultList = () => {
     const data: VaultUserListDataProps[] = fundList
       .map((item: any, index: number) => {
         const fund: VaultProps = calcVaultBaseInfo(item, getTokenByAddress)
-        // console.log(item, 'item')
-        const valut = vaultList.find(
+        const valut = vaultLists.find(
           (vault) =>
             vault.underlyingToken.address.toLocaleLowerCase() ===
             item.underlying.toLocaleLowerCase()
         )
+        // console.log(111122, vaultLists, item, valut, 'item')
         fund.data = calcVaultUserDetail(
           detailList[index],
           getTokenByAddress,
           valut?.underlyingPriceInUSD ?? 1
         )
-        fund.address = fund.data.address
+        // fund.address = fund.data.address
         return fund
       })
       .filter(

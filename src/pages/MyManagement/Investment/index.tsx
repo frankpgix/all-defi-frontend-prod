@@ -13,7 +13,7 @@ const Investment: FC = () => {
   const { data: fundList, isLoading, refetch } = useUserVaultList()
   const isInvest = useMemo(() => fundList.length === 0 && !isLoading, [fundList, isLoading])
 
-  console.log('fundList', fundList)
+  // console.log('fundList', fundList)
   return (
     <div className="web-manage">
       <h2>Staking Management</h2>

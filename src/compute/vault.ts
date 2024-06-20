@@ -145,6 +145,7 @@ export const calcVaultUserDetail = (
   getTokenByAddress: GetTokenFuncType,
   underlyingTokenPriceInUSD: number
 ): VaultUserDetailProps => {
+  // console.log(underlyingTokenPriceInUSD, 'underlyingTokenPriceInUSD')
   const underlying = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlying.decimals
   const precision = underlying.precision
