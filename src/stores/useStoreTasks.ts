@@ -39,10 +39,17 @@ export const useStoreTasks = create<TaskProfileState>((set) => {
       todayInvitePoints: 0,
       todayStakePoints: 0,
       totalDepositPoints: 0,
+      totalInvitePoints: 0,
       totalStakePoints: 0
     },
-    update: (user: taskUserProps, dashboard: taskDashboardProps, point: taskUserPointProps) => {
-      set({ user, dashboard, point })
+    discordFollowed: false,
+    update: (
+      user: taskUserProps,
+      dashboard: taskDashboardProps,
+      point: taskUserPointProps,
+      discordFollowed: boolean
+    ) => {
+      set({ user, dashboard, point, discordFollowed })
     }
   }
 })

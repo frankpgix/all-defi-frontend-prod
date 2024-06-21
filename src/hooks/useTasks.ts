@@ -5,6 +5,7 @@ import { useAccount, useSignMessage } from 'wagmi'
 import { TaskProfileState } from '@/types/tasks'
 
 import {
+  checkDiscordFollow,
   connectDiscord,
   connectTwitter,
   getDashboard,
@@ -88,9 +89,12 @@ export const useGetTaskProfile = () => {
     const { code, data } = await getProfile()
     const { data: dashboard } = await getDashboard()
     const { data: point } = await getPoint()
+    const {
+      data: { isMember }
+    } = await checkDiscordFollow()
 
     if (code === 0) {
-      update(data, dashboard, point)
+      update(data, dashboard, point, Boolean(isMember))
     } else if (code === 20003 || code === 20002) {
       cache.rm('Authorization')
       goLogin()

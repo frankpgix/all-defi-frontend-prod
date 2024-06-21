@@ -32,5 +32,11 @@ export type TaskProfileState = {
   user: taskUserProps
   dashboard: taskDashboardProps
   point: taskUserPointProps
-  update: (user: taskUserProps, dashboard: taskDashboardProps, point: taskUserPointProps) => void
+  discordFollowed: boolean
+  update: (
+    user: taskUserProps,
+    dashboard: taskDashboardProps,
+    point: taskUserPointProps,
+    discordFollowed: boolean
+  ) => void
 }
