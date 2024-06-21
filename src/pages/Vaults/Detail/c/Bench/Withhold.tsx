@@ -46,7 +46,7 @@ const Unstake: FC<Props> = ({ data, userData, getData }) => {
   const onInputChange = (val: number | string) => {
     val = Number(val)
     if (isNaN(val)) val = 0
-    if (val > maxValue) val = maxValue
+    // if (val > maxValue) val = maxValue
     if (val < 0) val = 0
     if (maxValue > 0) {
       const currSliderValue = BN(Number(val))
@@ -84,6 +84,9 @@ const Unstake: FC<Props> = ({ data, userData, getData }) => {
             error={value !== '' && Number(value) === 0}
             // disabled={!isInRedeem}
           >
+            {value !== '' && Number(value) < 0.0001 && (
+              <p className="fall">Minimum unstake amount 0.0001 Shares</p>
+            )}
             <p>Available Shares: {maxValue}</p>
             {/* <p>Shares in wallet: {share.balance}</p>
             <p>Shares in fund: {share.reserve}</p>

@@ -71,7 +71,7 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
     val = Number(val)
     setInputValue(val)
     if (isNaN(val)) val = 0
-    if (val > maxValue) val = maxValue
+    // if (val > maxValue) val = maxValue
     if (val < 0) val = 0
     if (maxValue > 0) {
       const currSliderValue = BN(Number(val))
@@ -121,14 +121,14 @@ const Allocate: FC<Props> = ({ getData, data, base }) => {
           >
             {minAmountError && (
               <p className="fall">
-                Minimum deposit amount {base.minimumStake} {acToken.name}
+                Minimum stake amount {base.minimumStake} {acToken.name}
               </p>
             )}
-            {maxAmountError && (
+            {/* {maxAmountError && (
               <p className="fall">
-                Maxmum deposit amount {maxValue} {acToken.name}
+                Maxmum stake amount {maxValue} {acToken.name}
               </p>
-            )}
+            )} */}
             <p>
               {acToken.name} Balance: {acTokenBalance}
             </p>

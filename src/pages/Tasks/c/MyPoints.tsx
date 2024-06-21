@@ -20,7 +20,9 @@ const MyPoints: FC = () => {
         <div className="p-task-my-points">
           <div className="p-task-my-points-total">
             <label>Total Points</label>
-            <em>{formatNumber(point.totalDepositPoints, 2, '0,0.00')}</em>
+            <em>
+              {formatNumber(point.totalDepositPoints + point.totalDepositPoints, 2, '0,0.00')}
+            </em>
             <Button text>points rules</Button>
           </div>
           <div className="p-task-my-points-details">
