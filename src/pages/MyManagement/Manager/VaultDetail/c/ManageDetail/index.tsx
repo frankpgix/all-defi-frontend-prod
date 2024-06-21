@@ -122,9 +122,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
 
   // 下轮赎回减去下轮申购减去FEE ？？ 大于现金余额
   const isShowCashBalanceLess = useMemo(
-    () =>
-      BN(nextRoundCash).minus(data.stakingACToken).toNumber() >
-      BN(data.underlyingBalance).toNumber(),
+    () => BN(nextRoundCash).toNumber() > BN(data.underlyingBalance).toNumber(),
     [nextRoundCash, data.stakingACToken, data.underlyingBalance]
   )
   console.log(nextRoundCash, data.stakingACToken, data.underlyingBalance)

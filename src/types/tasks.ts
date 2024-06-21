@@ -22,6 +22,7 @@ export interface taskDashboardProps {
 export interface taskUserPointProps {
   totalDepositPoints: number
   totalStakePoints: number
+  totalInvitePoints: number
   todayDepositPoints: number
   todayStakePoints: number
   todayInvitePoints: number

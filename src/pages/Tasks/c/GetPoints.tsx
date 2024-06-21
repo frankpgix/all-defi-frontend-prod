@@ -32,7 +32,7 @@ const GetPoints: FC = () => {
               disabled={Boolean(user.twitterDisplayName)}
               onClick={goConnectTwitter}
             >
-              connect
+              {Boolean(user.twitterDisplayName) ? 'Followed' : 'connect'}
             </Button>
           </footer>
         </div>
@@ -49,7 +49,7 @@ const GetPoints: FC = () => {
               onClick={goConnectDiscord}
               size="medium"
             >
-              join
+              {Boolean(user.discordName) ? 'Joined' : 'join'}
             </Button>
           </footer>
         </div>
