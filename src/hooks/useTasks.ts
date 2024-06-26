@@ -53,7 +53,7 @@ export const useLogin = () => {
     }
   }, [userAddress, isLogin])
   useEffect(() => {
-    goLogin()
+    // goLogin()
   }, [goLogin])
 
   useEffect(() => {
@@ -97,19 +97,19 @@ export const useGetTaskProfile = () => {
       update(data, dashboard, point, Boolean(isMember))
     } else if (code === 20003 || code === 20002) {
       cache.rm('Authorization')
-      goLogin()
+      // goLogin()
     }
   }, [isLogin])
   useEffect(() => {
     console.log(111, isLogin)
     if (!isLogin) {
-      goLogin()
+      // goLogin()
     } else {
       getTaskProfile()
     }
   }, [isLogin])
 
-  return { getTaskProfile }
+  return { getTaskProfile, isLogin, goLogin }
 }
 
 export const useConnectTwitter = () => {
