@@ -39,4 +39,5 @@ export type TaskProfileState = {
     point: taskUserPointProps,
     discordFollowed: boolean
   ) => void
+  init: () => void
 }

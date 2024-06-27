@@ -1,12 +1,33 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 
-import { useConnectDiscord, useConnectTwitter, useTaskProfile } from '@/hooks/useTasks'
+import { useConnectDiscord, useConnectTwitter, useLogin, useTaskProfile } from '@/hooks/useTasks'
 
 import { formatNumber } from '@/utils/tools'
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'
+import ConnectHelpButton from '@@/core/Wallet/ConnectHelpButton'
+
+const SignHelpButton: FC<{ children: ReactNode; isLogin: boolean; goLogin: () => void }> = ({
+  children,
+  isLogin,
+  goLogin
+}) => {
+  return (
+    <ConnectHelpButton size="mini">
+      {isLogin ? (
+        children
+      ) : (
+        <Button size="mini" onClick={goLogin}>
+          GO Sign
+        </Button>
+      )}
+    </ConnectHelpButton>
+  )
+}
 
 const GetPoints: FC = () => {
+  const { isLogin, goLogin } = useLogin()
+
   const { user, point } = useTaskProfile()
   const { goConnectTwitter, loading: twitterLoading } = useConnectTwitter()
   const { goConnectDiscord, loading: discordLoading } = useConnectDiscord()
@@ -26,14 +47,16 @@ const GetPoints: FC = () => {
             </p>
           </main>
           <footer>
-            <Button
-              size="medium"
-              loading={twitterLoading}
-              disabled={Boolean(user.twitterDisplayName)}
-              onClick={goConnectTwitter}
-            >
-              {Boolean(user.twitterDisplayName) ? 'Followed' : 'connect'}
-            </Button>
+            <SignHelpButton {...{ isLogin, goLogin }}>
+              <Button
+                size="medium"
+                loading={twitterLoading}
+                disabled={Boolean(user.twitterDisplayName)}
+                onClick={goConnectTwitter}
+              >
+                {Boolean(user.twitterDisplayName) ? 'Followed' : 'connect'}
+              </Button>
+            </SignHelpButton>
           </footer>
         </div>
         <div className="p-tasks-get-point-item">
@@ -41,16 +64,20 @@ const GetPoints: FC = () => {
             <Image src="task/m.svg" />
             <h4>Join AllDefi Discord and get more points</h4>
             <p>Copy invitation link, join AllDefi Discord and get multiplier points.</p>
+            <br />
+            <Button text>DISCORD</Button>
           </main>
           <footer>
-            <Button
-              loading={discordLoading}
-              disabled={Boolean(user.discordName)}
-              onClick={goConnectDiscord}
-              size="medium"
-            >
-              {Boolean(user.discordName) ? 'Joined' : 'join'}
-            </Button>
+            <SignHelpButton {...{ isLogin, goLogin }}>
+              <Button
+                loading={discordLoading}
+                disabled={Boolean(user.discordName)}
+                onClick={goConnectDiscord}
+                size="medium"
+              >
+                {Boolean(user.discordName) ? 'Joined' : 'join'}
+              </Button>
+            </SignHelpButton>
           </footer>
         </div>
         <div className="p-tasks-get-point-item fire">
@@ -68,7 +95,9 @@ const GetPoints: FC = () => {
             <Button text>KYC Entrance</Button>
           </main>
           <footer>
-            <Button size="medium">deposit</Button>
+            <SignHelpButton {...{ isLogin, goLogin }}>
+              <Button size="medium">deposit</Button>
+            </SignHelpButton>
           </footer>
         </div>
         <div className="p-tasks-get-point-item fire">
@@ -87,7 +116,9 @@ const GetPoints: FC = () => {
             <Button text>Buy acBTC</Button>
           </main>
           <footer>
-            <Button size="medium">stake</Button>
+            <SignHelpButton {...{ isLogin, goLogin }}>
+              <Button size="medium">stake</Button>
+            </SignHelpButton>
           </footer>
         </div>
       </section>

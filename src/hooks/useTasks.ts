@@ -23,7 +23,7 @@ export const useLogin = () => {
   const [isLogin, setIsLogin] = useState(false)
   const goLogin = useCallback(async () => {
     const token = cache.get('Authorization')
-    await sleep(1000)
+    await sleep(200)
 
     if (userAddress && !isLogin && !token) {
       if (window.isInTaskSign) return
@@ -60,6 +60,10 @@ export const useLogin = () => {
     if (!userAddress) {
       cache.rm('Authorization')
       setIsLogin(false)
+    } else {
+      if (cache.get('Authorization')) {
+        setIsLogin(true)
+      }
     }
   }, [userAddress])
 
@@ -79,10 +83,9 @@ export const useTaskProfile = () => {
 }
 
 export const useGetTaskProfile = () => {
-  const { update } = useStoreTasks((state: TaskProfileState) => ({
-    user: state.user,
-    update: state.update,
-    dashboard: state.dashboard
+  const { update, init } = useStoreTasks((state: TaskProfileState) => ({
+    init: state.init,
+    update: state.update
   }))
   const { goLogin, isLogin } = useLogin()
   const getTaskProfile = useCallback(async () => {
@@ -97,12 +100,14 @@ export const useGetTaskProfile = () => {
       update(data, dashboard, point, Boolean(isMember))
     } else if (code === 20003 || code === 20002) {
       cache.rm('Authorization')
+      init()
       // goLogin()
     }
   }, [isLogin])
   useEffect(() => {
     console.log(111, isLogin)
     if (!isLogin) {
+      init()
       // goLogin()
     } else {
       getTaskProfile()

@@ -20,9 +20,10 @@ interface Props {
   simple?: boolean
   children?: ReactNode
   as?: string
+  size?: 'default' | 'mini' | 'medium' | 'icon' | 'tiny'
 }
 
-const ConnectBtn: FC<Props> = ({ simple, children, as }) => {
+const ConnectBtn: FC<Props> = ({ simple, children, as, size = 'medium' }) => {
   const [show, { setLeft: closeDialog, setRight: openDialog }] = useToggle(false)
   const { address } = useAccount()
   const { hasNotify } = useNotify()
@@ -35,7 +36,7 @@ const ConnectBtn: FC<Props> = ({ simple, children, as }) => {
   }, [address, hasNotify])
   return (
     <ConnectButton.Custom>
-      {({ account, chain, openConnectModal, authenticationStatus, mounted, openChainModal }) => {
+      {({ account, chain, openConnectModal, authenticationStatus, mounted }) => {
         const ready = mounted && authenticationStatus !== 'loading'
         const connected =
           ready &&
@@ -54,7 +55,7 @@ const ConnectBtn: FC<Props> = ({ simple, children, as }) => {
                         {children}
                       </CustomComponent>
                     ) : (
-                      <Button size="medium" onClick={openConnectModal}>
+                      <Button size={size} onClick={openConnectModal}>
                         Connect Wallet
                       </Button>
                     )}
@@ -71,7 +72,7 @@ const ConnectBtn: FC<Props> = ({ simple, children, as }) => {
                   {/* <Button size="medium" gradient onClick={openChainModal}>
                     Net
                   </Button> */}
-                  <Button size="medium" gradient round={hasNotify} onClick={openDialog}>
+                  <Button size={size} gradient round={hasNotify} onClick={openDialog}>
                     {memoAccountHide}
                   </Button>
                   <AccountDialog show={show} onClose={closeDialog} />
