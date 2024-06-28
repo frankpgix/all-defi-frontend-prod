@@ -45,6 +45,10 @@ const GetPoints: FC = () => {
             <p>
               Copy invitation link, connect and follow us on Twitter, and get multiplier points.
             </p>
+            <br />
+            <Button text to="https://twitter.com/intent/follow?screen_name=Alldefiprotocol">
+              Twitter
+            </Button>
           </main>
           <footer>
             <SignHelpButton {...{ isLogin, goLogin }}>
@@ -65,7 +69,9 @@ const GetPoints: FC = () => {
             <h4>Join AllDefi Discord and get more points</h4>
             <p>Copy invitation link, join AllDefi Discord and get multiplier points.</p>
             <br />
-            <Button text>DISCORD</Button>
+            <Button text to="https://discord.gg/KfnPe9kb">
+              DISCORD
+            </Button>
           </main>
           <footer>
             <SignHelpButton {...{ isLogin, goLogin }}>

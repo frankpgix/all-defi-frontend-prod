@@ -52,9 +52,8 @@ export const useLogin = () => {
       setIsLogin(true)
     }
   }, [userAddress, isLogin])
-  useEffect(() => {
-    // goLogin()
-  }, [goLogin])
+
+  const logout = () => setIsLogin(false)
 
   useEffect(() => {
     if (!userAddress) {
@@ -67,7 +66,7 @@ export const useLogin = () => {
     }
   }, [userAddress])
 
-  return { goLogin, isLogin }
+  return { goLogin, isLogin, logout }
 }
 
 export const useTaskProfile = () => {
@@ -83,6 +82,7 @@ export const useTaskProfile = () => {
 }
 
 export const useGetTaskProfile = () => {
+  const { logout } = useLogin()
   const { update, init } = useStoreTasks((state: TaskProfileState) => ({
     init: state.init,
     update: state.update
@@ -92,23 +92,21 @@ export const useGetTaskProfile = () => {
     const { code, data } = await getProfile()
     const { data: dashboard } = await getDashboard()
     const { data: point } = await getPoint()
-    const {
-      data: { isMember }
-    } = await checkDiscordFollow()
+    const { data: checkDiscord } = await checkDiscordFollow()
 
     if (code === 0) {
-      update(data, dashboard, point, Boolean(isMember))
+      update(data, dashboard, point, Boolean(checkDiscord?.isMember))
     } else if (code === 20003 || code === 20002) {
       cache.rm('Authorization')
       init()
-      // goLogin()
+      logout()
     }
+    console.log(1112222)
   }, [isLogin])
   useEffect(() => {
     console.log(111, isLogin)
     if (!isLogin) {
       init()
-      // goLogin()
     } else {
       getTaskProfile()
     }
