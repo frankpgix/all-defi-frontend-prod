@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 
 import {
+  TaskLoginProps,
   TaskProfileState,
   taskDashboardProps,
   taskUserPointProps,
@@ -31,5 +32,16 @@ export const useStoreTasks = create<TaskProfileState>((set) => {
         discordFollowed: false
       })
     }
+  }
+})
+
+export const useStoreTaskLogin = create<TaskLoginProps>((set) => {
+  return {
+    isLogin: false,
+    outTime: 0,
+    update: (isLogin: boolean, outTime?: number) => {
+      set({ isLogin, outTime })
+    },
+    logout: () => set({ isLogin: false, outTime: 0 })
   }
 })

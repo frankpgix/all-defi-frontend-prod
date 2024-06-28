@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { useAccount, useSignMessage } from 'wagmi'
 
-import { TaskProfileState } from '@/types/tasks'
+import { TaskLoginProps, TaskProfileState } from '@/types/tasks'
 
 import {
   checkDiscordFollow,
@@ -14,19 +14,26 @@ import {
   getProfile,
   login
 } from '@/api/tasks'
-import { useStoreTasks } from '@/stores/useStoreTasks'
+import { useStoreTaskLogin, useStoreTasks } from '@/stores/useStoreTasks'
 import cache from '@/utils/cache'
 import { sleep } from '@/utils/tools'
 
 export const useLogin = () => {
+  const { isLogin, outTime, update, logout } = useStoreTaskLogin((state: TaskLoginProps) => ({
+    isLogin: state.isLogin,
+    outTime: state.outTime,
+    update: state.update,
+    logout: state.logout
+  }))
+
   const { address: userAddress } = useAccount()
   const { signMessage } = useSignMessage()
-  const [isLogin, setIsLogin] = useState(false)
+  // const [isLogin, setIsLogin] = useState(false)
   const goLogin = useCallback(async () => {
-    const token = cache.get('Authorization')
+    const tokenCache = cache.get('Authorization')
     await sleep(200)
 
-    if (userAddress && !isLogin && !token) {
+    if (userAddress && !isLogin && !tokenCache) {
       if (window.isInTaskSign) return
       window.isInTaskSign = true
       const timestamp = ~~(+new Date() / 1000)
@@ -36,8 +43,11 @@ export const useLogin = () => {
         {
           onSuccess: async (signature) => {
             const { data } = await login({ message, signature })
-            cache.set('Authorization', `Bearer ${data.token}`)
-            setIsLogin(true)
+            cache.set('Authorization', {
+              token: `Bearer ${data.token}`,
+              outTime: data.expiresIn ?? 0 * 1000
+            })
+            update(true, data.expiresIn ?? 0 * 1000)
             console.log(data)
           },
           onError: (error) => {
@@ -49,21 +59,24 @@ export const useLogin = () => {
         }
       )
     }
-    if (token) {
-      setIsLogin(true)
+    if (tokenCache) {
+      if (tokenCache.outTime < Date.now()) {
+        update(false, 0)
+      }
+      update(true, tokenCache.outTime)
     }
   }, [userAddress, isLogin])
-
-  const logout = () => setIsLogin(false)
 
   useEffect(() => {
     if (!userAddress) {
       cache.rm('Authorization')
-      setIsLogin(false)
+      logout()
     } else {
-      if (cache.get('Authorization')) {
-        setIsLogin(true)
+      const tokenCache = cache.get('Authorization')
+      if (tokenCache.outTime < Date.now()) {
+        update(false, 0)
       }
+      update(true, tokenCache.outTime)
     }
   }, [userAddress])
 

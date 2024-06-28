@@ -74,7 +74,7 @@ export async function get(
   const _path = combineUrl(pathUrl, params)
   const headers = new Headers()
   if (!isExternal) {
-    headers.append('Authorization', `${cache.get('Authorization')}`)
+    headers.append('Authorization', `${cache.get('Authorization')?.token}`)
   }
   return await http(new Request(_path, { ...args, method: 'get', headers }))
 }
@@ -89,7 +89,7 @@ export async function post(
   const _body = isEmpty(body) ? '' : JSON.stringify(body)
   headers.append('Content-Type', 'application/json;charset=UTF-8')
   if (!isExternal) {
-    headers.append('Authorization', `${cache.get('Authorization')}`)
+    headers.append('Authorization', `${cache.get('Authorization')?.token}`)
   }
   return await http(
     new Request(pathUrl, {
