@@ -28,7 +28,7 @@ const SignHelpButton: FC<{ children: ReactNode; isLogin: boolean; goLogin: () =>
 const GetPoints: FC = () => {
   const { isLogin, goLogin } = useLogin()
 
-  const { user, point } = useTaskProfile()
+  const { user, point, discordFollowed } = useTaskProfile()
   const { goConnectTwitter, loading: twitterLoading } = useConnectTwitter()
   const { goConnectDiscord, loading: discordLoading } = useConnectDiscord()
   return (
@@ -77,11 +77,11 @@ const GetPoints: FC = () => {
             <SignHelpButton {...{ isLogin, goLogin }}>
               <Button
                 loading={discordLoading}
-                disabled={Boolean(user.discordName)}
+                disabled={Boolean(user.discordName) && discordFollowed}
                 onClick={goConnectDiscord}
                 size="medium"
               >
-                {Boolean(user.discordName) ? 'Joined' : 'join'}
+                {Boolean(user.discordName) ? (discordFollowed ? 'Joined' : 'join') : 'Accredit'}
               </Button>
             </SignHelpButton>
           </footer>

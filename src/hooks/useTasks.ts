@@ -9,6 +9,7 @@ import {
   connectDiscord,
   connectTwitter,
   getDashboard,
+  getInviteCode,
   getPoint,
   getProfile,
   login
@@ -70,29 +71,34 @@ export const useLogin = () => {
 }
 
 export const useTaskProfile = () => {
-  const { user, dashboard, point } = useStoreTasks((state: TaskProfileState) => ({
+  const { user, dashboard, point, discordFollowed } = useStoreTasks((state: TaskProfileState) => ({
     user: state.user,
     update: state.update,
     dashboard: state.dashboard,
-    point: state.point
+    point: state.point,
+    discordFollowed: state.discordFollowed
   }))
   const { isLogin } = useLogin()
 
-  return { user, dashboard, isLogin, point }
+  return { user, dashboard, isLogin, point, discordFollowed }
 }
 
 export const useGetTaskProfile = () => {
-  const { logout } = useLogin()
   const { update, init } = useStoreTasks((state: TaskProfileState) => ({
     init: state.init,
     update: state.update
   }))
-  const { goLogin, isLogin } = useLogin()
+  const { goLogin, isLogin, logout } = useLogin()
   const getTaskProfile = useCallback(async () => {
     const { code, data } = await getProfile()
     const { data: dashboard } = await getDashboard()
     const { data: point } = await getPoint()
     const { data: checkDiscord } = await checkDiscordFollow()
+    if (checkDiscord?.isMember && !data?.inviteCode) {
+      await getInviteCode()
+      getTaskProfile()
+      return
+    }
 
     if (code === 0) {
       update(data, dashboard, point, Boolean(checkDiscord?.isMember))
@@ -101,7 +107,6 @@ export const useGetTaskProfile = () => {
       init()
       logout()
     }
-    console.log(1112222)
   }, [isLogin])
   useEffect(() => {
     console.log(111, isLogin)

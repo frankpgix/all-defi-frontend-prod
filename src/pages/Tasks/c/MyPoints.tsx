@@ -33,7 +33,7 @@ const MyPoints: FC = () => {
             <div className="p-task-my-points-item">
               <label>Deposit Token and Get AC Token</label>
               <em>
-                {formatNumber(point.todayDepositPoints, 2, '0,0.00')} <small>Pts</small>
+                {formatNumber(point.totalDepositPoints, 2, '0,0.00')} <small>Pts</small>
               </em>
             </div>
             <div className="p-task-my-points-item">
