@@ -38,10 +38,11 @@ export const useStoreTasks = create<TaskProfileState>((set) => {
 export const useStoreTaskLogin = create<TaskLoginProps>((set) => {
   return {
     isLogin: false,
+    loginLoading: true,
     outTime: 0,
-    update: (isLogin: boolean, outTime?: number) => {
-      set({ isLogin, outTime })
+    update: (isLogin: boolean, loginLoading: boolean, outTime?: number) => {
+      set({ isLogin, outTime, loginLoading })
     },
-    logout: () => set({ isLogin: false, outTime: 0 })
+    logout: () => set({ isLogin: false, outTime: 0, loginLoading: false })
   }
 })

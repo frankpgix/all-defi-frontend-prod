@@ -42,9 +42,10 @@ export type TaskProfileState = {
   init: () => void
 }
 
-export type TaskLoginProps = {
+export interface TaskLoginProps {
   isLogin: boolean
+  loginLoading: boolean
   outTime: number
-  update: (isLogin: boolean, outTime: number) => void
+  update: (isLogin: boolean, loginLoading: boolean, outTime: number) => void
   logout: () => void
 }

@@ -13,11 +13,11 @@ import Leaderboard from './c/Leaderboard'
 import MyPoints from './c/MyPoints'
 
 const Tasks: FC = () => {
-  const { isLogin, goLogin } = useGetTaskProfile()
+  const { isLogin, goLogin, loginLoading } = useGetTaskProfile()
   return (
     <>
       <Dashboard />
-      {!isLogin && (
+      {!isLogin && !loginLoading && (
         <div className="web">
           <Alert show type="error">
             To access personal points data, you need to sign with your wallet first{' '}

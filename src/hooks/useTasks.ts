@@ -19,17 +19,21 @@ import cache from '@/utils/cache'
 import { sleep } from '@/utils/tools'
 
 export const useLogin = () => {
-  const { isLogin, outTime, update, logout } = useStoreTaskLogin((state: TaskLoginProps) => ({
-    isLogin: state.isLogin,
-    outTime: state.outTime,
-    update: state.update,
-    logout: state.logout
-  }))
+  const { isLogin, outTime, loginLoading, update, logout } = useStoreTaskLogin(
+    (state: TaskLoginProps) => ({
+      isLogin: state.isLogin,
+      loginLoading: state.loginLoading,
+      outTime: state.outTime,
+      update: state.update,
+      logout: state.logout
+    })
+  )
 
   const { address: userAddress } = useAccount()
   const { signMessage } = useSignMessage()
   // const [isLogin, setIsLogin] = useState(false)
   const goLogin = useCallback(async () => {
+    update(false, false, 0)
     const tokenCache = cache.get('Authorization')
     await sleep(200)
 
@@ -47,7 +51,7 @@ export const useLogin = () => {
               token: `Bearer ${data.token}`,
               outTime: data.expiresIn ?? 0 * 1000
             })
-            update(true, data.expiresIn ?? 0 * 1000)
+            update(true, false, data.expiresIn ?? 0 * 1000)
             console.log(data)
           },
           onError: (error) => {
@@ -61,9 +65,9 @@ export const useLogin = () => {
     }
     if (tokenCache) {
       if (tokenCache.outTime < Date.now()) {
-        update(false, 0)
+        update(false, false, 0)
       }
-      update(true, tokenCache.outTime)
+      update(true, false, tokenCache.outTime)
     }
   }, [userAddress, isLogin])
 
@@ -73,14 +77,14 @@ export const useLogin = () => {
       logout()
     } else {
       const tokenCache = cache.get('Authorization')
-      if (tokenCache.outTime < Date.now()) {
-        update(false, 0)
+      if (tokenCache?.outTime ?? 0 < Date.now()) {
+        update(false, false, 0)
       }
-      update(true, tokenCache.outTime)
+      update(true, false, tokenCache?.outTime)
     }
   }, [userAddress])
 
-  return { goLogin, isLogin, logout }
+  return { goLogin, isLogin, logout, loginLoading }
 }
 
 export const useTaskProfile = () => {
@@ -101,7 +105,7 @@ export const useGetTaskProfile = () => {
     init: state.init,
     update: state.update
   }))
-  const { goLogin, isLogin, logout } = useLogin()
+  const { goLogin, isLogin, logout, loginLoading } = useLogin()
   const getTaskProfile = useCallback(async () => {
     const { code, data } = await getProfile()
     const { data: dashboard } = await getDashboard()
@@ -115,7 +119,7 @@ export const useGetTaskProfile = () => {
 
     if (code === 0) {
       update(data, dashboard, point, Boolean(checkDiscord?.isMember))
-    } else if (code === 20003 || code === 20002) {
+    } else {
       cache.rm('Authorization')
       init()
       logout()
@@ -130,7 +134,7 @@ export const useGetTaskProfile = () => {
     }
   }, [isLogin])
 
-  return { getTaskProfile, isLogin, goLogin }
+  return { getTaskProfile, isLogin, goLogin, loginLoading }
 }
 
 export const useConnectTwitter = () => {
