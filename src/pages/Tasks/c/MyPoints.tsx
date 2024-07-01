@@ -1,5 +1,7 @@
 import { FC, useMemo } from 'react'
 
+import BN from 'bignumber.js'
+
 import { useTaskProfile } from '@/hooks/useTasks'
 
 import { formatNumber } from '@/utils/tools'
@@ -13,6 +15,16 @@ const MyPoints: FC = () => {
     () => (user.inviteCode ? `https://alldefi.io/invite?code=${user.inviteCode}` : ''),
     [user.inviteCode]
   )
+
+  const total = useMemo(
+    () =>
+      BN(point.totalDepositPoints)
+        .plus(point.todayStakePoints)
+        .plus(point.totalInvitePoints)
+        .toNumber(),
+    [point]
+  )
+
   return (
     <>
       <header className="p-task-header">My Points</header>
@@ -20,13 +32,7 @@ const MyPoints: FC = () => {
         <div className="p-task-my-points">
           <div className="p-task-my-points-total">
             <label>Total Points</label>
-            <em>
-              {formatNumber(
-                point.totalDepositPoints + point.totalDepositPoints + point.totalInvitePoints,
-                2,
-                '0,0.00'
-              )}
-            </em>
+            <em>{formatNumber(total, 2, '0,0.00')}</em>
             <Button text>points rules</Button>
           </div>
           <div className="p-task-my-points-details">
