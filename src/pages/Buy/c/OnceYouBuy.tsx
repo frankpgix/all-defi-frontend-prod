@@ -2,13 +2,14 @@ import { FC } from 'react'
 
 import Button from '@/components/common/Button'
 import Image from '@/components/common/Image'
+import { WHITEPAPER_URL } from '@/config'
 
 const OnceYouBuy: FC = () => {
   return (
     <section className="c-buy-once">
       <header>
         <h2>What can you do with AC token… </h2>
-        <Button text to="https://pythagoras-group.gitbook.io/alldefi-whitepaper/">
+        <Button text to={WHITEPAPER_URL}>
           read more
         </Button>
       </header>

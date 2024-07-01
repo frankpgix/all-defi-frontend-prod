@@ -1,15 +1,17 @@
 import { FC, useState } from 'react'
+
+import 'swiper/css'
+import 'swiper/css/pagination'
+import { Autoplay, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination, Autoplay } from 'swiper/modules'
+
 import Dialog from '@/components/common/Dialog'
-import FundIcon from '@@/common/FundIcon'
+import { MANAGER_UPLODAD_HISTORICAL_DATA_URL, WHITEPAPER_URL } from '@/config'
 import ALink from '@@/common/ALink'
 import Button from '@@/common/Button'
 // import Image from '@@/common/Image'
 import CheckBox from '@@/common/Form/CheckBox'
-import 'swiper/css'
-import 'swiper/css/pagination'
-import { MANAGER_UPLODAD_HISTORICAL_DATA_URL } from '@/config'
+import FundIcon from '@@/common/FundIcon'
 
 interface Props {
   onConfirm: () => void
@@ -18,9 +20,8 @@ interface Props {
 }
 
 const SuccDialog: FC<Props> = ({ onConfirm, show, data }) => {
-  // const docUrl = 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/'
   const formUrl = MANAGER_UPLODAD_HISTORICAL_DATA_URL
-  const termsUrl = 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/'
+  const termsUrl = WHITEPAPER_URL
 
   const [isChecked, setIsChecked] = useState(false)
   if (!show) return null

@@ -1,5 +1,8 @@
 import { FC } from 'react'
+
+import { WHITEPAPER_URL } from '@/config'
 import Button from '@@/common/Button'
+
 const Help: FC = () => {
   return (
     <section className="web-mining-help">
@@ -10,7 +13,7 @@ const Help: FC = () => {
           Subscribe to various funds offered by AllDeFi to get shares credentials, participate in
           mining and earn ALL rewards.
         </p>
-        <Button text to="https://pythagoras-group.gitbook.io/alldefi-whitepaper/">
+        <Button text to={WHITEPAPER_URL}>
           read more
         </Button>
       </article>

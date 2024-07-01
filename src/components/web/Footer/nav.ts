@@ -1,8 +1,10 @@
+import { WHITEPAPER_URL } from '@/config'
+
 const nav: { name: string; list: { name: string; url: string; checkManage?: boolean }[] }[] = [
   {
     name: 'users',
     list: [
-      { name: 'Docs', url: 'https://pythagoras-group.gitbook.io/alldefi-whitepaper/' },
+      { name: 'Docs', url: WHITEPAPER_URL },
       // { name: 'Lightpaper', url: 'https://app.alldefi.finance/' },
       { name: 'Buy AC Token', url: '/buy' },
       { name: 'Vaults', url: '/fund-market' },

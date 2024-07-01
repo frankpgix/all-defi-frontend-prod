@@ -1,6 +1,6 @@
 // base by fungleo
 html {
-  background-color: #F7FAFF;
+  background-color: #f7faff;
   color: $black;
   &.dark {
     // background: $c22;
@@ -9,7 +9,8 @@ html {
 }
 body {
   line-height: 1;
-  font-family: 'Proxima Nova', 'PingFang SC', 'Heiti SC', 'Droidsansfallback', Helvetica, 'Droid Sans';
+  font-family: 'Proxima Nova', 'PingFang SC', 'Heiti SC', 'Droidsansfallback', Helvetica,
+    'Droid Sans';
   font-size: 16px;
 
   & > iframe {
@@ -18,7 +19,6 @@ body {
     position: static !important;
   }
 }
-
 
 // html,body {overflow: hidden;}
 .block {
@@ -64,10 +64,22 @@ body {
 }
 
 .web {
-  width: 1200px;margin-left: auto;margin-right: auto;
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
   &_ {
-    min-width: 1200px;margin-left: auto;margin-right: auto;
+    min-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
   }
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+.gap20 {
+  gap: 20px;
 }
 // 滚动条
 ::-webkit-scrollbar {
@@ -78,7 +90,7 @@ body {
 ::-webkit-scrollbar-thumb {
   background: $ce7;
   border-radius: 5px;
-  border: 2px solid rgba($ce7, .5);
+  border: 2px solid rgba($ce7, 0.5);
 }
 ::-webkit-scrollbar-track-piece {
   background: $cff;

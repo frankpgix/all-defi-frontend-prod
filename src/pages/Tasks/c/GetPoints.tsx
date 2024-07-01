@@ -1,7 +1,10 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useMemo } from 'react'
+
+import classNames from 'classnames'
 
 import { useConnectDiscord, useConnectTwitter, useLogin, useTaskProfile } from '@/hooks/useTasks'
 
+import { WHITEPAPER_URL } from '@/config'
 import { formatNumber } from '@/utils/tools'
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'
@@ -31,11 +34,18 @@ const GetPoints: FC = () => {
   const { user, point, discordFollowed } = useTaskProfile()
   const { goConnectTwitter, loading: twitterLoading } = useConnectTwitter()
   const { goConnectDiscord, loading: discordLoading } = useConnectDiscord()
+  const isBaseTaskFinish = useMemo(
+    () => Boolean(user.twitterDisplayName) && Boolean(user.discordName) && discordFollowed,
+    [user.twitterDisplayName, user.discordName, discordFollowed]
+  )
+
   return (
     <section className="p-tasks-get-point-layout">
       <header className="p-tasks-get-point-header">
         <h3>Get Points Immediately</h3>
-        <Button text>need helps?</Button>
+        <Button text to={WHITEPAPER_URL}>
+          need helps?
+        </Button>
       </header>
       <section className="p-tasks-get-point">
         <div className="p-tasks-get-point-item">
@@ -70,7 +80,7 @@ const GetPoints: FC = () => {
             <p>Copy invitation link, join AllDefi Discord and get multiplier points.</p>
             <br />
             <Button text to="https://discord.gg/KfnPe9kb">
-              DISCORD
+              Discord
             </Button>
           </main>
           <footer>
@@ -86,7 +96,7 @@ const GetPoints: FC = () => {
             </SignHelpButton>
           </footer>
         </div>
-        <div className="p-tasks-get-point-item fire">
+        <div className={classNames('p-tasks-get-point-item', { fire: isBaseTaskFinish })}>
           {/* <header>Token worth $1,000 USD deposit can get 100pts. </header> */}
           <main>
             <Image src="task/actoken.svg" />
@@ -102,11 +112,13 @@ const GetPoints: FC = () => {
           </main>
           <footer>
             <SignHelpButton {...{ isLogin, goLogin }}>
-              <Button size="medium">deposit</Button>
+              <Button size="medium" to="/buy">
+                deposit
+              </Button>
             </SignHelpButton>
           </footer>
         </div>
-        <div className="p-tasks-get-point-item fire">
+        <div className={classNames('p-tasks-get-point-item', { fire: isBaseTaskFinish })}>
           {/* <header>Token worth $1,000 USD deposit can get 100pts. </header> */}
           <main>
             <Image src="task/value.svg" />
@@ -123,7 +135,9 @@ const GetPoints: FC = () => {
           </main>
           <footer>
             <SignHelpButton {...{ isLogin, goLogin }}>
-              <Button size="medium">stake</Button>
+              <Button size="medium" to="/vaults">
+                stake
+              </Button>
             </SignHelpButton>
           </footer>
         </div>

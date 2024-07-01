@@ -20,12 +20,14 @@ const Tasks: FC = () => {
       {!isLogin && !loginLoading && (
         <div className="web">
           <Alert show type="error">
-            To access personal points data, you need to sign with your wallet first{' '}
-            <ConnectHelpButton size="mini">
-              <Button size="mini" onClick={goLogin}>
-                Go Sign
-              </Button>
-            </ConnectHelpButton>
+            <span className="flex gap20">
+              To access personal points data, you need to sign with your wallet first
+              <ConnectHelpButton size="mini">
+                <Button size="mini" onClick={goLogin}>
+                  Go Sign
+                </Button>
+              </ConnectHelpButton>
+            </span>
           </Alert>
           <Blank />
         </div>
