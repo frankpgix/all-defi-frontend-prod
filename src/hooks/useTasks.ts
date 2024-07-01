@@ -101,6 +101,8 @@ export const useTaskProfile = () => {
 }
 
 export const useGetTaskProfile = () => {
+  const { address: userAddress } = useAccount()
+
   const { update, init } = useStoreTasks((state: TaskProfileState) => ({
     init: state.init,
     update: state.update
@@ -124,15 +126,14 @@ export const useGetTaskProfile = () => {
       init()
       logout()
     }
-  }, [isLogin])
+  }, [isLogin, userAddress])
   useEffect(() => {
-    console.log(111, isLogin)
     if (!isLogin) {
       init()
     } else {
       getTaskProfile()
     }
-  }, [isLogin])
+  }, [isLogin, userAddress])
 
   return { getTaskProfile, isLogin, goLogin, loginLoading }
 }
