@@ -19,7 +19,7 @@ const MyPoints: FC = () => {
   const total = useMemo(
     () =>
       BN(point.totalDepositPoints)
-        .plus(point.todayStakePoints)
+        .plus(point.totalStakePoints)
         .plus(point.totalInvitePoints)
         .toNumber(),
     [point]
