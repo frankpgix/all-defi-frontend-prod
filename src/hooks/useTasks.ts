@@ -49,7 +49,8 @@ export const useLogin = () => {
             const { data } = await login({ message, signature })
             cache.set('Authorization', {
               token: `Bearer ${data.token}`,
-              outTime: data.expiresIn ?? 0 * 1000
+              outTime: data.expiresIn ?? 0 * 1000,
+              userAddress
             })
             update(true, false, data.expiresIn ?? 0 * 1000)
             console.log(data)
@@ -128,6 +129,15 @@ export const useGetTaskProfile = () => {
     }
   }, [isLogin, userAddress])
   useEffect(() => {
+    const cacheUser = cache.get('Authorization')?.userAddress ?? ''
+    // console.log(1122333, cacheUser, userAddress)
+    if (cacheUser !== userAddress) {
+      cache.rm('Authorization')
+      init()
+      if (userAddress) {
+        getTaskProfile()
+      }
+    }
     if (!isLogin) {
       init()
     } else {

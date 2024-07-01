@@ -6,7 +6,7 @@ import HashLink from '@@/common/HashLink'
 
 const InvitationRanking: FC = () => {
   const { dashboard } = useTaskProfile()
-  console.log(dashboard)
+  // console.log(dashboard)
   return (
     <main>
       <h3>Invitation Ranking</h3>
