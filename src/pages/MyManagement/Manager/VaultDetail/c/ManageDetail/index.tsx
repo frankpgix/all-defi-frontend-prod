@@ -1,12 +1,11 @@
 import { FC, useMemo } from 'react'
-import ContentLoader from 'react-content-loader'
+// import ContentLoader from 'react-content-loader'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 
 import BN from 'bignumber.js'
 import dayjs from 'dayjs'
 
-import { underlyingTokens } from '@/config/tokens'
-
+// import { underlyingTokens } from '@/config/tokens'
 // import { useVaultUpdatingData } from '@/hooks/Contracts/useVaultReader'
 import { AddressType } from '@/types/base'
 // import Dapp from '@@/web/Dapp'
@@ -20,20 +19,20 @@ import {
 import { formatNumber } from '@/utils/tools'
 import Alert from '@@/common/Alert'
 import Blank from '@@/common/Blank'
-import Button from '@@/common/Button'
+// import Button from '@@/common/Button'
 import TokenValue from '@@/common/TokenValue'
+import { CountItem, CountLayout } from '@@/core/Sestion'
 
 import ValutSettleButton from '../../ValutSettleButton'
 import {
-  CountItem,
-  CountLayout,
+  // CountItem,
+  // CountLayout,
   SectionBlank,
   SectionButtons,
   SectionHeader,
   SectionItem,
-  SectionLayout,
-  SectionPercentageLine,
-  SectionTip
+  SectionLayout // SectionPercentageLine,
+  // SectionTip
 } from './C'
 
 // import DappTab from './DappTab'

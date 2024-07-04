@@ -4,7 +4,7 @@ import { FC } from 'react'
 import { useGlobalAUMStats } from '@/hooks/Contracts/useVaultReader'
 
 // import { useRequest } from 'ahooks'
-import { formatNumber } from '@/utils/tools'
+// import { formatNumber } from '@/utils/tools'
 // import AUMStats from '@/class/AUMStats'
 // import { GlobalAssetStatisticDefault } from '@/class/help'
 import { CountItem, CountLayout } from '@@/core/Sestion'
@@ -25,19 +25,19 @@ const Dashboard: FC = () => {
           <CountItem
             label="Current Overall AUM"
             popper="Total value of AC DAO, update after settlement"
-            value={formatNumber(data?.totalAUM ?? 0, 2, '$0,0.00')}
+            countUp={{ value: data?.totalAUM ?? 0, prefix: '$', decimals: 2 }}
             loading={isLoading}
           />
           <CountItem
             label="Current Vaults AUM"
             popper="Total AUM of all the Vaults, update after settlement"
-            value={formatNumber(data?.vaultsAUM ?? 0, 2, '$0,0.00')}
+            countUp={{ value: data?.vaultsAUM ?? 0, prefix: '$', decimals: 2 }}
             loading={isLoading}
           />
           <CountItem
             label="Gross Profit"
             popper="Total historic profit and loss, update after settlement"
-            value={formatNumber(data?.historicalReturn ?? 0, 2, '$0,0.00')}
+            countUp={{ value: data?.historicalReturn ?? 0, prefix: '$', decimals: 2 }}
             loading={isLoading}
           />
         </CountLayout>

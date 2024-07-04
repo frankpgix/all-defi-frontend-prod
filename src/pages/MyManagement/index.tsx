@@ -1,11 +1,15 @@
 import { FC, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-const Home = lazy(() => import('./Home'))
-const Investment = lazy(() => import('./Investment'))
+import Home from './Home'
+import Investment from './Investment'
+import Manager from './Manager'
+
+// const Home = lazy(() => import('./Home'))
+// const Investment = lazy(() => import('./Investment'))
 const InvestmentHistory = lazy(() => import('./Investment/History'))
 
-const Manager = lazy(() => import('./Manager'))
+// const Manager = lazy(() => import('./Manager'))
 const CreateVault = lazy(() => import('./Manager/CreateVault'))
 const VaultDetail = lazy(() => import('./Manager/VaultDetail'))
 const VaultStake = lazy(() => import('./Manager/VaultStake'))

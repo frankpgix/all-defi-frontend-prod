@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react'
 import ContentLoader from 'react-content-loader'
+import CountUp from 'react-countup'
 
 import PercentageLine from '@@/common/PercentageLine'
 import Popper from '@@/common/Popper'
@@ -10,12 +11,13 @@ export const CountLayout: FC<{ children: ReactNode; col?: string }> = ({ childre
 
 export const CountItem: FC<{
   label: string
-  value: string | ReactNode
+  value?: string | ReactNode
   popper?: string
   popperWidth?: string
   unit?: string
   loading?: boolean
-}> = ({ label, value, popper, popperWidth, unit, loading }) => {
+  countUp?: { value: number; prefix?: string; decimals: number }
+}> = ({ label, value, popper, popperWidth, unit, loading, countUp }) => {
   return (
     <div className="c-section-count-item">
       <label>
@@ -40,7 +42,14 @@ export const CountItem: FC<{
         </ContentLoader>
       ) : (
         <span>
-          {value}
+          {value && value}
+          {countUp && (
+            <CountUp
+              end={countUp.value}
+              decimals={countUp.decimals ?? 2}
+              prefix={countUp.prefix ?? ''}
+            ></CountUp>
+          )}
           {unit && <small>{unit}</small>}
         </span>
       )}
