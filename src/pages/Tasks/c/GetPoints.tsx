@@ -79,7 +79,7 @@ const GetPoints: FC = () => {
             <h4>Join AllDefi Discord and get more points</h4>
             <p>Copy invitation link, join AllDefi Discord and get multiplier points.</p>
             <br />
-            <Button text to="https://discord.gg/KfnPe9kb">
+            <Button text to="https://discord.gg/BQbzfRkH">
               Discord
             </Button>
           </main>
@@ -88,7 +88,8 @@ const GetPoints: FC = () => {
               <Button
                 loading={discordLoading}
                 disabled={Boolean(user.discordName) && discordFollowed}
-                onClick={goConnectDiscord}
+                onClick={!Boolean(user.discordName) ? goConnectDiscord : undefined}
+                to={Boolean(user.discordName) ? 'https://discord.gg/BQbzfRkH' : undefined}
                 size="medium"
               >
                 {Boolean(user.discordName) ? (discordFollowed ? 'Joined' : 'join') : 'Accredit'}
