@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { useTaskProfile } from '@/hooks/useTasks'
 
-import { formatNumber } from '@/utils/tools'
+// import { formatNumber } from '@/utils/tools'
 import { CountItem, CountLayout } from '@@/core/Sestion'
 
 const Dashboard: FC = () => {
@@ -17,24 +17,24 @@ const Dashboard: FC = () => {
         <CountLayout col="4">
           <CountItem
             label="Total number of points distributed"
-            value={formatNumber(dashboard.totalPoints, 2, '0,0.00')}
+            countUp={{ value: dashboard.totalPoints, decimals: 2 }}
             unit="Pts"
             loading={false}
           />
           <CountItem
             label="Today number of points distributed"
-            value={formatNumber(dashboard.pointsToday, 2, '0,0.00')}
+            countUp={{ value: dashboard.pointsToday, decimals: 2 }}
             unit="Pts"
             loading={false}
           />
           <CountItem
             label="Number of all addresses"
-            value={formatNumber(dashboard.totalUsers, 0, '0,0')}
+            countUp={{ value: dashboard.totalUsers, decimals: 0 }}
             loading={false}
           />
           <CountItem
             label="Number of new addresses today"
-            value={formatNumber(dashboard.newUsersToday, 0, '0,0')}
+            countUp={{ value: dashboard.newUsersToday, decimals: 0 }}
             loading={false}
           />
         </CountLayout>

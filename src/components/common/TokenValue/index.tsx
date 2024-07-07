@@ -1,4 +1,5 @@
 import { FC, useMemo } from 'react'
+import CountUp from 'react-countup'
 
 import { TokenTypes } from '@/types/base'
 
@@ -14,6 +15,7 @@ interface Props {
   decimal?: number
   shares?: boolean
   noUnit?: boolean
+  countUp?: boolean
 }
 
 const TokenValue: FC<Props> = ({
@@ -23,7 +25,8 @@ const TokenValue: FC<Props> = ({
   format,
   decimal,
   shares,
-  noUnit
+  noUnit,
+  countUp
 }) => {
   const { precision, name } = token || {}
   const precisionNumber = useMemo(() => decimal ?? precision ?? 2, [decimal, precision])
@@ -38,9 +41,10 @@ const TokenValue: FC<Props> = ({
     return value
   }, [value, precisionNumber, formatString])
   // console.log(value, formatString)
+
   return (
     <span className="c-token-value" title={`${valueShow} ${name}`}>
-      {valueShow}
+      {countUp ? <CountUp end={value} decimals={precisionNumber}></CountUp> : valueShow}
       {!noUnit && (shares ? ' Shares' : <TokenIcon size={size} name={name} />)}
     </span>
   )

@@ -58,18 +58,18 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
   // )
   // console.log(upData, data)
 
-  const percent = useMemo(
-    () =>
-      Number(
-        formatNumber(
-          Math.min(BN(data.beginningAUM).div(data.aum).times(100).toNumber(), 100),
-          2,
-          '0.00'
-        )
-      ),
-    [data.aum, data.beginningAUM]
-  )
-  const remainPercent = useMemo(() => BN(100).minus(percent).toNumber(), [percent])
+  // const percent = useMemo(
+  //   () =>
+  //     Number(
+  //       formatNumber(
+  //         Math.min(BN(data.beginningAUM).div(data.aum).times(100).toNumber(), 100),
+  //         2,
+  //         '0.00'
+  //       )
+  //     ),
+  //   [data.aum, data.beginningAUM]
+  // )
+  // const remainPercent = useMemo(() => BN(100).minus(percent).toNumber(), [percent])
   // console.log('breach', breach, 'data', data, 'base', base)
   // const allPledgeRate = useMemo(() => {
   //   const val = BN(data.settleAUMLimit).div(data.aum).times(100).toNumber()
@@ -132,7 +132,13 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           label="Epoch Beginning AUM"
           loading={loading}
           value={
-            <TokenValue value={data.beginningAUM} token={baseToken} size="small" format="0,0.00" />
+            <TokenValue
+              value={data.beginningAUM}
+              token={baseToken}
+              size="small"
+              format="0,0.00"
+              countUp
+            />
           }
         />
         <CountItem
@@ -144,6 +150,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               token={baseToken}
               size="small"
               format="0,0.00"
+              countUp
             />
           }
         />
@@ -157,6 +164,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               token={baseToken}
               size="small"
               format="0,0.00"
+              countUp
             />
           }
         />
@@ -165,7 +173,13 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           label="Current Share Price"
           loading={loading}
           value={
-            <TokenValue value={data.sharePrice} token={baseToken} size="small" format="0,0.00" />
+            <TokenValue
+              value={data.sharePrice}
+              token={baseToken}
+              size="small"
+              format="0,0.00"
+              countUp
+            />
           }
         />
       </CountLayout>
