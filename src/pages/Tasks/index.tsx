@@ -9,6 +9,7 @@ import ConnectHelpButton from '@@/core/Wallet/ConnectHelpButton'
 
 import Dashboard from './c/Dashboard'
 import GetPoints from './c/GetPoints'
+import InfoTip from './c/InfoTip'
 import Leaderboard from './c/Leaderboard'
 import MyPoints from './c/MyPoints'
 
@@ -35,6 +36,7 @@ const Tasks: FC = () => {
       <GetPoints />
       <MyPoints />
       <Leaderboard />
+      <InfoTip />
     </>
   )
 }
