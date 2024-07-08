@@ -1,8 +1,8 @@
-import { FC, lazy } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { FC } from 'react'
+import { Route, Routes } from 'react-router-dom'
 
-const List = lazy(() => import('./List'))
-const Detail = lazy(() => import('./Detail'))
+import Detail from './Detail'
+import List from './List'
 
 const FundMarket: FC = () => {
   return (

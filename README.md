@@ -1,1 +1,8 @@
-This is a [Vite](https://vitejs.dev) project bootstrapped with [`create-wagmi`](https://github.com/wevm/wagmi/tree/main/packages/create-wagmi).
+```
+/tasks?twitter=success
+/tasks?twitter=fail&message=xxxx
+/tasks?discord-auth=success
+/tasks?discord-auth=fail&message=xxxx
+/tasks?discord-join=success
+/tasks?discord-join=fail&message=xxxx
+```

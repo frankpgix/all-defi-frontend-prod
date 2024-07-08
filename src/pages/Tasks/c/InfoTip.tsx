@@ -3,14 +3,14 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useToggle } from 'ahooks'
 
-import { useConnectDiscord, useConnectTwitter, useLogin, useTaskProfile } from '@/hooks/useTasks'
+import { useConnectDiscord, useConnectTwitter, useTaskProfile } from '@/hooks/useTasks'
 
 import InfoDialog from '@@/common/Dialog/Info'
 
 const InfoTip: FC = () => {
   const { goConnectTwitter } = useConnectTwitter()
   const { goConnectDiscord } = useConnectDiscord()
-  const { user, point, discordFollowed, isLogin } = useTaskProfile()
+  const { isLogin } = useTaskProfile()
 
   const [show, { setLeft, setRight }] = useToggle(false)
   const navigate = useNavigate()
@@ -18,7 +18,7 @@ const InfoTip: FC = () => {
   const param = new URLSearchParams(location.search)
   const twitter = param.get('twitter')
   const discordAuth = param.get('discord-auth')
-  const discordJoin = param.get('discord-join')
+  // const discordJoin = param.get('discord-join')
   const message = param.get('message')
   useEffect(() => {
     console.log(discordAuth)
@@ -35,9 +35,9 @@ const InfoTip: FC = () => {
     window.open('https://discord.gg/BQbzfRkH')
     navigate('/tasks')
   }
-  const onDiscordJoinConfirm = () => {
-    navigate('/tasks')
-  }
+  // const onDiscordJoinConfirm = () => {
+  //   navigate('/tasks')
+  // }
 
   if (!isLogin) {
     return null
@@ -68,7 +68,7 @@ const InfoTip: FC = () => {
         onClose={setLeft}
         onConfirm={goConnectTwitter}
       >
-        {message ? message : 'Twitter 授权失败！请尝试重新授权！'}
+        {message ? decodeURIComponent(message) : 'Twitter 授权失败！请尝试重新授权！'}
       </InfoDialog>
     )
   }
@@ -97,38 +97,38 @@ const InfoTip: FC = () => {
         onClose={setLeft}
         onConfirm={goConnectDiscord}
       >
-        {message ? message : 'Discord 授权失败！请尝试重新授权！'}
+        {message ? decodeURIComponent(message) : 'Discord 授权失败！请尝试重新授权！'}
       </InfoDialog>
     )
   }
-  if (discordJoin === 'success') {
-    return (
-      <InfoDialog
-        show={show}
-        type="succ"
-        title="Discord 加入群组成功！"
-        hideCancelButton
-        onClose={setLeft}
-        onConfirm={onDiscordJoinConfirm}
-      >
-        Discord 加入群组成功！
-      </InfoDialog>
-    )
-  }
-  if (discordJoin === 'fail') {
-    return (
-      <InfoDialog
-        show={show}
-        type="fail"
-        title="Discord 加入群组失败！"
-        hideCancelButton
-        onClose={setLeft}
-        onConfirm={onDiscordAuthConfirm}
-      >
-        {message ? message : 'Discord 加入群组失败！请尝试重新加入群组！'}
-      </InfoDialog>
-    )
-  }
+  // if (discordJoin === 'success') {
+  //   return (
+  //     <InfoDialog
+  //       show={show}
+  //       type="succ"
+  //       title="Discord 加入群组成功！"
+  //       hideCancelButton
+  //       onClose={setLeft}
+  //       onConfirm={onDiscordJoinConfirm}
+  //     >
+  //       Discord 加入群组成功！
+  //     </InfoDialog>
+  //   )
+  // }
+  // if (discordJoin === 'fail') {
+  //   return (
+  //     <InfoDialog
+  //       show={show}
+  //       type="fail"
+  //       title="Discord 加入群组失败！"
+  //       hideCancelButton
+  //       onClose={setLeft}
+  //       onConfirm={onDiscordAuthConfirm}
+  //     >
+  //       {message ? message : 'Discord 加入群组失败！请尝试重新加入群组！'}
+  //     </InfoDialog>
+  //   )
+  // }
 
   return null
 }
