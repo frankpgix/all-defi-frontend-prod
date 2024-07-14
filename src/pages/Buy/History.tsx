@@ -41,7 +41,7 @@ const History: FC = () => {
   return (
     <div className="web-manage-investment-history">
       <header>
-        <h2>View Withdrawal History</h2>
+        <h2>View Deposit History</h2>
       </header>
       <Table
         className="web-buy-table"

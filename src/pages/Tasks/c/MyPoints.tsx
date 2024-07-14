@@ -32,26 +32,26 @@ const MyPoints: FC = () => {
         <div className="p-task-my-points">
           <div className="p-task-my-points-total">
             <label>Total Points</label>
-            <em>{formatNumber(total, 2, '0,0.00')}</em>
+            <em>{formatNumber(total, 2, '0,0')}</em>
             <Button text>points rules</Button>
           </div>
           <div className="p-task-my-points-details">
             <div className="p-task-my-points-item">
               <label>Deposit Token and Get AC Token</label>
               <em>
-                {formatNumber(point.totalDepositPoints, 2, '0,0.00')} <small>Pts</small>
+                {formatNumber(point.totalDepositPoints, 0, '0,0')} <small>Pts</small>
               </em>
             </div>
             <div className="p-task-my-points-item">
               <label>Stake to vault</label>
               <em>
-                {formatNumber(point.totalStakePoints, 2, '0,0.00')} <small>Pts</small>
+                {formatNumber(point.totalStakePoints, 0, '0,0')} <small>Pts</small>
               </em>
             </div>
             <div className="p-task-my-points-item arrow">
               <label>Invitation Points</label>
               <em>
-                {formatNumber(point.totalInvitePoints, 2, '0,0.00')} <small>Pts</small>
+                {formatNumber(point.totalInvitePoints, 0, '0,0')} <small>Pts</small>
               </em>
             </div>
             <div className="p-task-my-points-item arrow">

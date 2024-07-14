@@ -104,7 +104,7 @@ const GetPoints: FC = () => {
             <h4>Deposit token and get AC Token</h4>
             <aside>
               <strong>
-                {formatNumber(point.todayDepositPoints, 2, '0,0.00')}
+                {formatNumber(point.todayDepositPoints, 0, '0,0')}
                 <small>pts</small>
               </strong>
               <span>You have received today.</span>
@@ -113,7 +113,7 @@ const GetPoints: FC = () => {
           </main>
           <footer>
             <SignHelpButton {...{ isLogin, goLogin }}>
-              <Button size="medium" to="/buy">
+              <Button size="medium" to="/buy" disabled={!isBaseTaskFinish}>
                 deposit
               </Button>
             </SignHelpButton>
@@ -126,7 +126,7 @@ const GetPoints: FC = () => {
             <h4>Stake to vault</h4>
             <aside>
               <strong>
-                {formatNumber(point.todayStakePoints, 2, '0,0.00')}
+                {formatNumber(point.todayStakePoints, 0, '0,0')}
                 <small>pts</small>
               </strong>
               <span>You have received today.</span>
@@ -136,7 +136,7 @@ const GetPoints: FC = () => {
           </main>
           <footer>
             <SignHelpButton {...{ isLogin, goLogin }}>
-              <Button size="medium" to="/vaults">
+              <Button size="medium" to="/vaults" disabled={!isBaseTaskFinish}>
                 stake
               </Button>
             </SignHelpButton>

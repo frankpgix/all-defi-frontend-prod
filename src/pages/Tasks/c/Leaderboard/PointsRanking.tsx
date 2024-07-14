@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { useTaskProfile } from '@/hooks/useTasks'
 
+import { formatNumber } from '@/utils/tools'
 import HashLink from '@@/common/HashLink'
 
 const PointsRanking: FC = () => {
@@ -14,7 +15,7 @@ const PointsRanking: FC = () => {
           <li key={index}>
             <strong>{index + 1}</strong>
             <HashLink address={row.userAddress ?? ''} nolink />
-            <em>{row.totalPoints}</em>
+            <em>{formatNumber(row.totalPoints, 0, '0,0')}</em>
           </li>
         ))}
       </ul>
