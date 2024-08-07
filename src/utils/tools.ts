@@ -52,6 +52,10 @@ export const px2rem = (px: number | string): string => {
   return `${String(Number(px) / 100)}rem`
 }
 
+export const calcCssNumber = (value: number | string): string => {
+  return toType(value) === 'number' ? `${value}px` : String(value)
+}
+
 export const num2size = (num: number | string): string => {
   return isMobile() ? px2rem(num) : `${String(num)}px`
 }
