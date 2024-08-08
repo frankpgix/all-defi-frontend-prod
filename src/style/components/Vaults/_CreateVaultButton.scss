@@ -169,6 +169,7 @@
     border-radius: 8px;
     background: $bgBlue;
     min-height: 128px;
+    width: 100%;
     @extend .cf;
     li {
       position: relative;
@@ -195,6 +196,46 @@
           top: -6px;
           background: url($res + 'icon/select.svg') center/contain no-repeat;
         }
+      }
+    }
+  }
+
+  &-tip {
+    margin-bottom: 24px;
+    & > h3 {
+      font-size: 16px;
+      margin-bottom: 18px;
+    }
+
+    & > main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 24px;
+      article {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        &:before {
+          content: '';
+          display: block;
+          width: 32px;
+          height: 32px;
+          background: center/contain no-repeat;
+          background-image: url($res + 'icon/warning.svg');
+        }
+      }
+      p {
+        font-size: 14px;
+        flex: 1;
+        background: $line;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        border-radius: 8px;
       }
     }
   }

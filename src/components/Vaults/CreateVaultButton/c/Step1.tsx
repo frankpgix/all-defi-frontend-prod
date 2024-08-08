@@ -98,7 +98,7 @@ const Step1: FC<Props> = ({ onConfirm, show }) => {
             disabled={isDisabled}
             onClick={() => onConfirm({ name, symbol, managerName, desc })}
           >
-            next
+            Next
           </Button>
         </footer>
       </BlueLineSection>

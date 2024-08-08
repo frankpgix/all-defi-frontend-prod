@@ -73,7 +73,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
         title="Step 2 Protocol Selection"
       >
         {/*<h2>Deposit Limits</h2>*/}
-        <div className="web-manage-create-step-2col">
+        <div className="c-create-step-2col">
           <Select
             label="Denomination Assets"
             disabled
@@ -82,7 +82,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
             objOptions={baseTokenOptions}
           />
         </div>
-        <div className="web-manage-create-step-2col">
+        <div className="c-create-step-2col">
           <Input
             type="number"
             label="Minimum Deposit Amount"
@@ -100,14 +100,14 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
           </Input>
         </div>
         <h3>select protocol allowed</h3>
-        <ul className="web-manage-create-step-product-list">
+        <ul className="c-create-step-product-list">
           <li className="active">
             <Image src={`/products/CEFFU.png`} alt={'CEFFU'} />
           </li>
         </ul>
         {/*  <Image src={`/products/CEFFU.png`} alt={'CEFFU'} /> */}
         {/* <h3>select protocol allowed</h3>
-        <ul className="web-manage-create-step-product-list">
+        <ul className="c-create-step-product-list">
           {derivativeList.map((item, index: number) => (
             <li
               key={index}

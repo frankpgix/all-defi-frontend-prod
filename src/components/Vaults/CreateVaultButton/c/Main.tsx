@@ -11,6 +11,7 @@ import { CreateVaultStep1DataTypes, CreateVaultStep2DataTypes } from '@/types/cr
 import { CreateVaultStep1DataDefault } from '@/data/createVault'
 import Cache from '@/utils/cache'
 
+import Step0 from './Step0'
 import Step1 from './Step1'
 import Step2 from './Step2'
 import Step4 from './Step4'
@@ -24,11 +25,12 @@ const CreateFund: FC<{ onConfirm: () => void }> = ({ onConfirm }) => {
   const { onCreateVault } = useCreateVault()
 
   const [stepStatus, setStepStatus] = useState([false, false, false])
-  const [stepIndex, setStepIndex] = useState(0)
+  const [stepIndex, setStepIndex] = useState(-1)
   const [step1Data, setStep1Data] = useState<CreateVaultStep1DataTypes>(CreateVaultStep1DataDefault)
   const [minAmount, setMinAmount] = useState(0)
   const [baseTokenAddress, setBaseTokenAddress] = useState<AddressType>(underlyingTokens[0].address)
 
+  const onStep0Confirm = () => setStepIndex(0)
   const onStep1Confirm = (data: CreateVaultStep1DataTypes) => {
     setStep1Data(data)
     const statusArr = [...stepStatus]
@@ -72,6 +74,7 @@ const CreateFund: FC<{ onConfirm: () => void }> = ({ onConfirm }) => {
   return (
     <>
       <StepLine activeIndex={stepIndex} stepStatus={stepStatus} setStepIndex={setStepIndex} />
+      <Step0 show={stepIndex === -1} onConfirm={onStep0Confirm} />
       <Step1 show={stepIndex === 0} onConfirm={onStep1Confirm} />
       <Step2 show={stepIndex === 1} onBack={onBack} onConfirm={onStep2Confirm} />
       <Step4
