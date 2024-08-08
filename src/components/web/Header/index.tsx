@@ -20,7 +20,7 @@ const Header: FC = () => {
             All Defi
           </h1>
           <nav className="web-header-nav">
-            <NavLink to="/buy">Buy AC Token</NavLink>
+            {/* <NavLink to="/buy">Buy AC Token</NavLink> */}
             <NavLink to="/vaults">Vaults</NavLink>
             <NavLink to="/manage">My Management</NavLink>
             <NavLink to="/tasks">Tasks</NavLink>

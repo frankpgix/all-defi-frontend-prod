@@ -1,6 +1,6 @@
 import { Suspense, lazy } from 'react'
 // import { Switch, Route } from '@/components/common/Route'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -9,8 +9,8 @@ import 'rc-collapse/assets/index.css'
 import 'rc-dialog/assets/index.css'
 import 'rc-table/assets/index.css'
 
-import Buy from '@/pages/Buy'
-import History from '@/pages/Buy/History'
+// import Buy from '@/pages/Buy';
+// import History from '@/pages/Buy/History';
 import Home from '@/pages/Home'
 import Mining from '@/pages/Mining'
 import MyManagement from '@/pages/MyManagement'
@@ -34,8 +34,9 @@ function App() {
         {/* <LoopData /> */}
         <Suspense fallback={null}>
           <Routes>
-            <Route path="/buy" element={<Buy />} />
-            <Route path="/buy/history" element={<History />} />
+            <Route path="/buy" element={<Navigate to="/" />} />
+            {/* <Route path="/buy" element={<Buy />} />
+            <Route path="/buy/history" element={<History />} /> */}
             <Route path="/vaults/*" element={<Vaults />} />
             <Route path="/manage/*" element={<MyManagement />} />
             <Route path="/all-mining" element={<Mining />} />
