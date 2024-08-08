@@ -1,6 +1,8 @@
-import { FC, ChangeEvent, ReactNode, useEffect } from 'react'
-import { NumericFormat, NumberFormatValues } from 'react-number-format'
+import { ChangeEvent, FC, ReactNode, useEffect } from 'react'
+import { NumberFormatValues, NumericFormat } from 'react-number-format'
+
 import classNames from 'classnames'
+
 interface InputProps {
   type?: string
   value: number | string
@@ -108,7 +110,6 @@ const Input: FC<InputProps> = ({
               value={value}
               readOnly={readonly}
               disabled={disabled}
-              max={1000000000000000}
               maxLength={maxLength}
               onChange={changeFunc}
               placeholder={placeholder}

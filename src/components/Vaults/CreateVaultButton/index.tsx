@@ -11,6 +11,8 @@ import Button from '@@/common/Button'
 import Popper from '@@/common/Popper'
 import Modal from '@@/core/Modal'
 
+import Create from './c/Main'
+
 const CreateVaultButton: FC = () => {
   useGetManageVaultList()
   const { loading, manageVaultList } = useManageVaultListHook()
@@ -40,7 +42,7 @@ const CreateVaultButton: FC = () => {
     return (
       <Button to="/manage/manager/create" size="mini" disabled>
         <Popper content="The number of vaults you have created has reached the maximum limit">
-          CREATE VAULTS
+          Create Vaults
         </Popper>
       </Button>
     )
@@ -48,10 +50,10 @@ const CreateVaultButton: FC = () => {
   return (
     <>
       <Button onClick={setRight} size="mini">
-        {isCacheCreate ? 'UNFINISHED EDITS' : 'CREATE VAULTS'}
+        {isCacheCreate ? 'Unfinished Edits' : 'Create Vaults'}
       </Button>
       <Modal show={show} onClose={setLeft} title="Create Vault">
-        22
+        <Create onConfirm={setLeft} />
       </Modal>
     </>
   )

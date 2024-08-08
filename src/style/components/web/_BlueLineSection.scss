@@ -1,18 +1,28 @@
 .web-c-blue-line-section {
   background: $white;
-  @extend .web;position: relative;
+  // @extend .web;
+  position: relative;
 
   &.hide {
     display: none;
   }
   &-header {
-    height: 88px;display: flex;justify-content: space-between;align-items: center;
-    font-size: 20px;color: #7FA2FF;font-weight: 800;
+    height: 88px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    color: #7fa2ff;
+    font-weight: 800;
     h2 {
-      font-size: 20px;color: $blue;font-weight: 800;text-transform: capitalize;
+      font-size: 20px;
+      color: $blue;
+      font-weight: 800;
+      text-transform: capitalize;
     }
     &.first {
-      padding: 0 40px;border-top: 4px solid rgba($blue, .8);
+      padding: 0 40px;
+      border-top: 4px solid rgba($blue, 0.8);
     }
   }
   &-main {

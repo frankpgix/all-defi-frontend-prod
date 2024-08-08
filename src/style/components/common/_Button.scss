@@ -6,7 +6,7 @@
   @include dz();
   opacity: 1;
   cursor: pointer;
-  text-transform: uppercase;
+  text-transform: capitalize;
   box-sizing: border-box;
   background: $blue;
   color: $cff;
@@ -117,9 +117,9 @@
       height: 56px;
       border-radius: 28px;
       padding: 0 40px;
-      font-size: 12px;
+      font-size: 18px;
       font-weight: bold;
-      letter-spacing: 4px;
+      letter-spacing: 1px;
       &.outline {
         border-width: 2px;
       }
@@ -142,9 +142,9 @@
       height: 48px;
       border-radius: 24px;
       padding: 0 32px;
-      font-size: 10px;
+      font-size: 15px;
       font-weight: bold;
-      letter-spacing: 4px;
+      letter-spacing: 1px;
       &.outline {
         border-width: 2px;
       }
@@ -166,9 +166,9 @@
       height: 40px;
       border-radius: 20px;
       padding: 0 24px;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: bold;
-      letter-spacing: 4px;
+      letter-spacing: 1px;
       &.outline {
         border-width: 1px;
       }

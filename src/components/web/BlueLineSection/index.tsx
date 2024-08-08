@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react'
+
 import classNames from 'classnames'
 
 interface HeaderProps {
@@ -23,11 +24,19 @@ interface Props {
   children: ReactNode
   headerRight?: ReactNode
   hide?: boolean
+  web?: boolean
 }
 
-const BlueLineSection: FC<Props> = ({ title, className, children, headerRight, hide }) => {
+const BlueLineSection: FC<Props> = ({
+  title,
+  className,
+  children,
+  headerRight,
+  hide,
+  web = true
+}) => {
   return (
-    <section className={classNames('web-c-blue-line-section', { hide })}>
+    <section className={classNames('web-c-blue-line-section', { hide, web })}>
       <BlueLineSectionHeader title={title} headerRight={headerRight} first />
       <main className={classNames('web-c-blue-line-section-main', className)}>{children}</main>
     </section>

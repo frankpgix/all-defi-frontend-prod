@@ -1,6 +1,8 @@
-import { FC, useRef, useState, useMemo } from 'react'
+import { FC, useMemo, useRef, useState } from 'react'
+
 import { useClickAway } from 'ahooks'
 import classNames from 'classnames'
+
 // import { toType } from '@/utils/tools'
 import Image from '@@/common/Image'
 
@@ -18,6 +20,7 @@ export interface SelectProps {
   objOptions?: OptionProps[]
   className?: string
   mini?: boolean
+  disabled?: boolean
 }
 
 const Select: FC<SelectProps> = ({
@@ -27,7 +30,8 @@ const Select: FC<SelectProps> = ({
   onChange,
   objOptions = [],
   className,
-  mini
+  mini,
+  disabled
 }) => {
   const ref = useRef(null)
   const [showOptions, setShowOptions] = useState(false)
@@ -48,11 +52,15 @@ const Select: FC<SelectProps> = ({
     setShowOptions(false)
   }
 
+  const onSelect = () => {
+    if (disabled) return
+    setShowOptions(!showOptions)
+  }
   return (
     <div className={classNames('web-select', { show: showOptions, mini }, className)} ref={ref}>
       {label && <label>{label}</label>}
       <div className="web-select-show">
-        <button onClick={() => setShowOptions(!showOptions)}>
+        <button onClick={onSelect}>
           {calcCurrLabelIcon && <Image src={calcCurrLabelIcon} />}
           {calcCurrLabel}
         </button>
