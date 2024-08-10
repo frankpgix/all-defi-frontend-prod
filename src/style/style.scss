@@ -9,6 +9,7 @@ $res: '//all-defi-static.pages.dev/image/';
   新增 scss 文件后，执行 npm run style 命令 更新 src/style/style.scss 文件
 */
 @import "components/Vaults/_CreateVaultButton.scss";
+@import "components/Vaults/_StakeValueButton.scss";
 @import "components/common/Chart/_KLine.scss";
 @import "components/common/Chart/_Loading.scss";
 @import "components/common/Chart/_TimeSelect.scss";

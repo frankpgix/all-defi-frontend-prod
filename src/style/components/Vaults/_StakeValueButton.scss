@@ -1,0 +1,44 @@
+.c-vault-stake {
+  display: grid;
+  gap: 32px;
+  & > h4 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 800;
+    color: $blue;
+    display: flex;
+    align-items: center;
+    .c-popper {
+      margin-left: 10px;
+    }
+  }
+
+  &-input {
+    .web-form-input-base {
+      width: 400px;
+    }
+  }
+
+  &-action {
+    display: flex;
+    justify-content: flex-end;
+    footer {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      height: 80px;
+      justify-content: space-between;
+    }
+  }
+
+  &-tip {
+    font-size: 16px;
+    color: rgba($c00, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    p {
+      flex: 1;
+    }
+  }
+}

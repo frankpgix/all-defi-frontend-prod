@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom'
 
 import { useVaultDetails } from '@/hooks/Contracts/useVaultDetails'
 import { useProfile } from '@/hooks/useProfile'
-import { useVaultHashHook } from '@/hooks/useVaultList'
 
+// import { useVaultHashHook } from '@/hooks/useVaultList'
 import { AddressType } from '@/types/base'
 
+import StakeButton from '@@/Vaults/StakeButton'
 import Alert from '@@/common/Alert'
 import Blank from '@@/common/Blank'
 
@@ -25,7 +26,7 @@ const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
     isLoading: loading,
     refetch: getData
   } = useVaultDetails(fundAddress, account ?? '0x')
-  console.log(123, fundAddress, baseInfo, vaultDetail)
+  // console.log(123, fundAddress, baseInfo, vaultDetail)
   return (
     <>
       {!loading && vaultDetail.isClosed && (
@@ -40,6 +41,7 @@ const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
       <Dashboard base={baseInfo} fundAddress={fundAddress} data={vaultDetail} loading={loading} />
       <RoeHistory fundAddress={fundAddress} />
       <VaultStatus base={baseInfo} data={vaultDetail} loading={loading} />
+      <StakeButton getData={getData} data={vaultDetail} base={baseInfo} />
       {/* <Portfolio base={baseInfo} fundAddress={fundAddress} /> */}
       {!loading && (
         <Bench
