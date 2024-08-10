@@ -8,6 +8,7 @@ import { useProfile } from '@/hooks/useProfile'
 import { AddressType } from '@/types/base'
 
 import StakeButton from '@@/Vaults/StakeButton'
+import UnStakeButton from '@@/Vaults/UnStakeButton'
 import Alert from '@@/common/Alert'
 import Blank from '@@/common/Blank'
 
@@ -40,10 +41,12 @@ const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
       )}
       <Dashboard base={baseInfo} fundAddress={fundAddress} data={vaultDetail} loading={loading} />
       <RoeHistory fundAddress={fundAddress} />
-      <VaultStatus base={baseInfo} data={vaultDetail} loading={loading} />
-      <StakeButton getData={getData} data={vaultDetail} base={baseInfo} />
+      <VaultStatus base={baseInfo} data={vaultDetail} loading={loading}>
+        <StakeButton getData={getData} data={vaultDetail} base={baseInfo} />
+        <UnStakeButton getData={getData} data={vaultDetail} userData={vaultUserDetail} />
+      </VaultStatus>
       {/* <Portfolio base={baseInfo} fundAddress={fundAddress} /> */}
-      {!loading && (
+      {/* {!loading && (
         <Bench
           userData={vaultUserDetail}
           base={baseInfo}
@@ -51,7 +54,7 @@ const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
           loading={loading}
           getData={getData}
         />
-      )}
+      )} */}
     </>
   )
 }

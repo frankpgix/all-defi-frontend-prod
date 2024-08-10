@@ -31,6 +31,13 @@
     }
   }
 
+  & > hr {
+    border: none;
+    width: 100%;
+    height: 1px;
+    background: #a7bfff;
+  }
+
   &-tip {
     font-size: 16px;
     color: rgba($c00, 0.5);

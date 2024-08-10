@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC, ReactNode, useMemo } from 'react'
 import ContentLoader from 'react-content-loader'
 
 import dayjs from 'dayjs'
@@ -13,9 +13,10 @@ interface Props {
   base: VaultBaseInfoProps
   data: VaultDetailProps
   loading: boolean
+  children: ReactNode
 }
 
-const VaultStatus: FC<Props> = ({ base, data, loading }) => {
+const VaultStatus: FC<Props> = ({ base, data, loading, children }) => {
   const currEpoch = useMemo(
     () => `${dayjs(data.epochStartTime).format('MMM DD, YYYY')} #${data.epochIndex}`,
     [data.epochStartTime, data.epochIndex]
@@ -30,48 +31,49 @@ const VaultStatus: FC<Props> = ({ base, data, loading }) => {
       {/* <Loading show={loading} type="float" /> */}
       <StepLine base={base} data={data} loading={loading} />
       <footer className="web-fund-detail-status-footer">
-        <dl>
-          <dt>
-            Stake to vault:
-            {loading ? (
-              <ContentLoader
-                width={120}
-                height={18}
-                viewBox="0 0 120 18"
-                backgroundColor="#eaeced"
-                foregroundColor="#ffffff"
-              >
-                <rect x="12" y="0" rx="4" ry="4" width="100" height="18" />
-              </ContentLoader>
-            ) : [0, 1].includes(data.status) ? (
-              <em className="rise">Allowed</em>
-            ) : (
-              <em className="fall">Not Allowed</em>
-            )}
-          </dt>
-          {/*<dd>{currEpoch}</dd>*/}
-        </dl>
-        <dl>
-          <dt>
-            Unstake from vault:
-            {loading ? (
-              <ContentLoader
-                width={120}
-                height={18}
-                viewBox="0 0 120 18"
-                backgroundColor="#eaeced"
-                foregroundColor="#ffffff"
-              >
-                <rect x="12" y="0" rx="4" ry="4" width="100" height="18" />
-              </ContentLoader>
-            ) : data.status === 0 ? (
-              <em className="rise">Allowed</em>
-            ) : (
-              <em className="fall">Not Allowed</em>
-            )}
-          </dt>
-          {/*<dd>{currEpoch}</dd>*/}
-        </dl>
+        <main>
+          <dl>
+            <dt>
+              Stake to vault:
+              {loading ? (
+                <ContentLoader
+                  width={120}
+                  height={18}
+                  viewBox="0 0 120 18"
+                  backgroundColor="#eaeced"
+                  foregroundColor="#ffffff"
+                >
+                  <rect x="12" y="0" rx="4" ry="4" width="100" height="18" />
+                </ContentLoader>
+              ) : [0, 1].includes(data.status) ? (
+                <em className="rise">Allowed</em>
+              ) : (
+                <em className="fall">Not Allowed</em>
+              )}
+            </dt>
+          </dl>
+          <dl>
+            <dt>
+              Unstake from vault:
+              {loading ? (
+                <ContentLoader
+                  width={120}
+                  height={18}
+                  viewBox="0 0 120 18"
+                  backgroundColor="#eaeced"
+                  foregroundColor="#ffffff"
+                >
+                  <rect x="12" y="0" rx="4" ry="4" width="100" height="18" />
+                </ContentLoader>
+              ) : data.status === 0 ? (
+                <em className="rise">Allowed</em>
+              ) : (
+                <em className="fall">Not Allowed</em>
+              )}
+            </dt>
+          </dl>
+        </main>
+        <aside>{children}</aside>
       </footer>
     </BlueLineSection>
   )
