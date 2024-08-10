@@ -1,10 +1,10 @@
 import { useState, useCallback } from 'react'
 import type { Methods } from '@safe-global/safe-apps-sdk'
-import type {
-  Permission,
-  PermissionCaveat,
-  PermissionRequest
-} from '@safe-global/safe-apps-sdk/dist/src/types/permissions'
+// import type {
+//   Permission,
+//   PermissionCaveat,
+//   PermissionRequest
+// } from '@safe-global/safe-apps-sdk/dist/esm/types/permissions.d.ts'
 
 import { PermissionStatus } from '../../utils/types'
 import useLocalStorage from '../../services/local-storage/useLocalStorage'
@@ -13,26 +13,26 @@ import { trimTrailingSlash } from '@/utils/url'
 const SAFE_PERMISSIONS = 'SafeApps__safePermissions'
 const USER_RESTRICTED = 'userRestricted'
 
-export type SafePermissions = { [origin: string]: Permission[] }
+export type SafePermissions = { [origin: string]: any[] }
 
 export type SafePermissionsRequest = {
   origin: string
   requestId: string
-  request: PermissionRequest[]
+  request: any[]
 }
 
 type SafePermissionChangeSet = { capability: string; selected: boolean }[]
 
 type UseSafePermissionsReturnType = {
   permissions: SafePermissions
-  getPermissions: (origin: string) => Permission[]
+  getPermissions: (origin: string) => any[]
   updatePermission: (origin: string, changeset: SafePermissionChangeSet) => void
   removePermissions: (origin: string) => void
   permissionsRequest: SafePermissionsRequest | undefined
   setPermissionsRequest: (permissionsRequest?: SafePermissionsRequest) => void
-  confirmPermissionRequest: (result: PermissionStatus) => Permission[]
+  confirmPermissionRequest: (result: PermissionStatus) => any[]
   hasPermission: (origin: string, permission: Methods) => boolean
-  isUserRestricted: (caveats?: PermissionCaveat[]) => boolean
+  isUserRestricted: (caveats?: any[]) => boolean
 }
 
 const useSafePermissions = (): UseSafePermissionsReturnType => {
@@ -61,7 +61,7 @@ const useSafePermissions = (): UseSafePermissionsReturnType => {
           if (change) {
             if (change.selected) {
               permission.caveats =
-                permission.caveats?.filter((caveat) => caveat.type !== USER_RESTRICTED) || []
+                permission.caveats?.filter((caveat: any) => caveat.type !== USER_RESTRICTED) || []
             } else if (!isUserRestricted(permission.caveats)) {
               permission.caveats = [
                 ...(permission.caveats || []),
@@ -119,7 +119,7 @@ const useSafePermissions = (): UseSafePermissionsReturnType => {
               if (isUserRestricted(permission.caveats)) {
                 if (result === PermissionStatus.GRANTED) {
                   permission.caveats =
-                    permission.caveats?.filter((caveat) => caveat.type !== USER_RESTRICTED) || []
+                    permission.caveats?.filter((caveat:any) => caveat.type !== USER_RESTRICTED) || []
                 }
               } else {
                 if (result === PermissionStatus.DENIED) {
@@ -160,7 +160,7 @@ const useSafePermissions = (): UseSafePermissionsReturnType => {
     [permissionsRequest, permissions, setPermissions, hasCapability]
   )
 
-  const isUserRestricted = (caveats?: PermissionCaveat[]) =>
+  const isUserRestricted = (caveats?: any[]) =>
     !!caveats?.some((caveat) => caveat.type === USER_RESTRICTED && caveat.value === true)
 
   return {

@@ -7,10 +7,11 @@ import type {
   ChainInfo as WebCoreChainInfo,
   TransactionDetails
 } from '@safe-global/safe-gateway-typescript-sdk'
-import type {
-  Permission,
-  PermissionRequest
-} from '@safe-global/safe-apps-sdk/dist/src/types/permissions'
+// import type {
+//   Permission,
+//   PermissionRequest
+// // } from '@safe-global/safe-apps-sdk/dist/esm/types/permissions'
+// } from '@safe-global/safe-apps-sdk/dist/esm/types/permissions'
 import type {
   AddressBookItem,
   BaseTransaction,
@@ -29,7 +30,7 @@ import type {
   SafeBalances
 } from '@safe-global/safe-apps-sdk'
 import { Methods } from '@safe-global/safe-apps-sdk'
-import { RPC_CALLS } from '@safe-global/safe-apps-sdk/dist/src/eth/constants'
+// import { RPC_CALLS } from '@safe-global/safe-apps-sdk/dist/esm/eth/constants'
 import type { SafeSettings } from '@safe-global/safe-apps-sdk'
 import AppCommunicator from '../services/AppCommunicator'
 import { Errors, logError } from '../exceptions'
@@ -67,7 +68,7 @@ export type UseAppCommunicatorHandlers = {
   onGetSafeBalances: (currency: string) => Promise<SafeBalances>
   onGetSafeInfo: () => SafeInfo
   onGetChainInfo: () => ChainInfo | undefined
-  onGetPermissions: (origin: string) => Permission[]
+  onGetPermissions: (origin: string) => any[]
   onSetPermissions: (permissionsRequest?: any) => void
   onRequestAddressBook: (origin: string) => AddressBookItem[]
   onSetSafeSettings: (settings: SafeSettings) => SafeSettings
@@ -162,10 +163,10 @@ export const useAppCommunicator = (
     communicator?.on(Methods.rpcCall, async (msg) => {
       const params = msg.data.params as RPCPayload
 
-      if (params.call === RPC_CALLS.safe_setSettings) {
-        const settings = params.params[0] as SafeSettings
-        return handlers.onSetSafeSettings(settings)
-      }
+      // if (params.call === RPC_CALLS.safe_setSettings) {
+      //   const settings = params.params[0] as SafeSettings
+      //   return handlers.onSetSafeSettings(settings)
+      // }
 
       if (!safeAppWeb3Provider) {
         throw new Error('SafeAppWeb3Provider is not initialized')
@@ -218,7 +219,7 @@ export const useAppCommunicator = (
     communicator?.on(Methods.wallet_requestPermissions, (msg) => {
       handlers.onSetPermissions({
         origin: msg.origin,
-        request: msg.data.params as PermissionRequest[],
+        request: msg.data.params as any[],
         requestId: msg.data.id
       })
     })
