@@ -23,15 +23,16 @@ export const useCreateVault = () => {
     account: AddressType,
     callback?: () => void
   ) => {
-    const { name, symbol, desc, managerName, underlying, minimumStake } = data
+    const { name, symbol, managerName, underlying, minimumStake } = data
     const underlyingToken = getTokenByAddress(underlying)
     const notifyId = await createNotify({ type: 'loading', content: 'Create Vault' })
-    const miniStake = getUnitAmount(minimumStake, underlyingToken.decimals)
+    const minStake = getUnitAmount(minimumStake, underlyingToken.decimals)
+    const maxStake = getUnitAmount(10000000, underlyingToken.decimals)
     writeContract(
       {
         ...VaultFactoryContract,
         functionName: 'create',
-        args: [name, symbol, desc, managerName, underlying, miniStake],
+        args: [name, symbol, managerName, underlying, [minStake, maxStake]],
         account
       },
       {

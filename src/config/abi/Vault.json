@@ -5,9 +5,97 @@
     "type": "constructor"
   },
   {
-    "anonymous": false,
     "inputs": [],
-    "name": "Activated",
+    "name": "AmountTooLarge",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AmountTooSmall",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AssetFrobiden",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "CallerNotKeeper",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "CallerNotManager",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ERC20TransferExceedsBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InsufficientReserve",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InsufficientShares",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidStage",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidTotalValue",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NothingToCancel",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NothingToClaim",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "StrategyNotStarted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "VaultPaused",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ZeroAddress",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "previousAdmin",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "AdminChanged",
     "type": "event"
   },
   {
@@ -41,17 +129,30 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "target",
+        "name": "beacon",
         "type": "address"
+      }
+    ],
+    "name": "BeaconUpgraded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "enum IVault.ConfigParam",
+        "name": "param",
+        "type": "uint8"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "bytes",
         "name": "value",
-        "type": "uint256"
+        "type": "bytes"
       }
     ],
-    "name": "Bridged",
+    "name": "Configured",
     "type": "event"
   },
   {
@@ -60,11 +161,30 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "wallet",
+        "name": "keeper",
         "type": "address"
       }
     ],
-    "name": "CeffuWalletSet",
+    "name": "KeeperSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
     "type": "event"
   },
   {
@@ -94,28 +214,9 @@
         "internalType": "uint256",
         "name": "totalValue",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "reserveNeeded",
-        "type": "uint256"
       }
     ],
     "name": "SettlementRequested",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "valueId",
-        "type": "uint256"
-      }
-    ],
-    "name": "TotalValueCanceled",
     "type": "event"
   },
   {
@@ -130,19 +231,13 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "valueId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
         "name": "value",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "bytes32",
-        "name": "updateId",
+        "name": "extraData",
         "type": "bytes32"
       }
     ],
@@ -178,18 +273,30 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "bytes",
-        "name": "data",
-        "type": "bytes"
+        "indexed": true,
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
       }
     ],
-    "name": "Updated",
+    "name": "Upgraded",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "epochIndex",
+        "type": "uint256"
+      },
       {
         "indexed": true,
         "internalType": "enum IVault.ActionType",
@@ -205,32 +312,6 @@
     ],
     "name": "UserAction",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "_unmintedBalanceOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "shares",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "activate",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [
@@ -286,7 +367,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "_aum",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -305,7 +386,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "balance",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -325,8 +406,13 @@
           },
           {
             "internalType": "address",
-            "name": "acToken",
+            "name": "interimAsset",
             "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "underlyingDecimals",
+            "type": "uint8"
           },
           {
             "internalType": "uint256",
@@ -344,11 +430,6 @@
             "type": "string"
           },
           {
-            "internalType": "string",
-            "name": "desc",
-            "type": "string"
-          },
-          {
             "internalType": "address",
             "name": "manager",
             "type": "address"
@@ -359,18 +440,23 @@
             "type": "string"
           },
           {
-            "internalType": "uint256",
-            "name": "minimumStake",
-            "type": "uint256"
+            "internalType": "uint64[4]",
+            "name": "stageDurations",
+            "type": "uint64[4]"
+          },
+          {
+            "internalType": "uint256[2]",
+            "name": "stakeLimits",
+            "type": "uint256[2]"
           },
           {
             "internalType": "address",
-            "name": "factory",
+            "name": "platFeeTo",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "ceffuWallet",
+            "name": "custodian",
             "type": "address"
           }
         ],
@@ -390,23 +476,34 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "valueId",
-        "type": "uint256"
-      }
-    ],
-    "name": "cancelTotalValue",
+    "inputs": [],
+    "name": "cancelUnstake",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "cancelUnstake",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "name": "checkUpkeep",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "upkeepNeeded",
+        "type": "bool"
+      },
+      {
+        "internalType": "bytes",
+        "name": "performData",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -476,18 +573,23 @@
           },
           {
             "internalType": "uint256",
-            "name": "stakingACToken",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "unstakingShare",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
             "name": "beginningAUM",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pendingStake",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pendingUnstake",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historicalReturn",
+            "type": "int256"
           }
         ],
         "internalType": "struct IVault.Epoch",
@@ -503,29 +605,6 @@
     "name": "executeSettlement",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "historicalStats",
-    "outputs": [
-      {
-        "internalType": "int256",
-        "name": "historicalReturn",
-        "type": "int256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "historicalManagerFee",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "historicalPlatFee",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -555,46 +634,54 @@
   {
     "inputs": [
       {
-        "components": [
-          {
-            "internalType": "string",
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "symbol",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "desc",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "managerName",
-            "type": "string"
-          },
-          {
-            "internalType": "address",
-            "name": "manager",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "underlying",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "minimumStake",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IVault.InitParams",
-        "name": "params",
-        "type": "tuple"
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "symbol",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "managerName",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "manager",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "underlying",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "interimAsset",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "stakeLimits",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "address",
+        "name": "platFeeTo",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_silo",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_assetTransmuter",
+        "type": "address"
       }
     ],
     "name": "initialize",
@@ -604,29 +691,12 @@
   },
   {
     "inputs": [],
-    "name": "latestTotalValue",
+    "name": "interimAssetTransmuter",
     "outputs": [
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "value",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "updateTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "canceled",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct IVault.ValueRecord",
+        "internalType": "contract IAssetTransmuter",
         "name": "",
-        "type": "tuple"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -634,12 +704,12 @@
   },
   {
     "inputs": [],
-    "name": "latestValueId",
+    "name": "keeper",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "address",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -660,6 +730,19 @@
   },
   {
     "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "paused",
     "outputs": [
       {
@@ -672,6 +755,62 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "name": "performUpkeep",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proxiableUUID",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "recoverToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "requestSettlement",
     "outputs": [],
@@ -679,14 +818,27 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "reserveNeeded",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
-        "name": "_wallet",
+        "name": "_keeper",
         "type": "address"
       }
     ],
-    "name": "setCeffuWallet",
+    "name": "setKeeper",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -725,19 +877,6 @@
   },
   {
     "inputs": [],
-    "name": "settlingValueId",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "sharePriceAndFee",
     "outputs": [
       {
@@ -761,15 +900,15 @@
   },
   {
     "inputs": [],
-    "name": "stageDurations",
+    "name": "silo",
     "outputs": [
       {
-        "internalType": "uint64[4]",
+        "internalType": "contract IVaultSilo",
         "name": "",
-        "type": "uint64[4]"
+        "type": "address"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -806,35 +945,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "totalValues",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "updateTime",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "canceled",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -896,8 +1006,21 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "shares",
         "type": "uint256"
       }
     ],
@@ -909,29 +1032,17 @@
   {
     "inputs": [
       {
-        "components": [
-          {
-            "internalType": "string",
-            "name": "desc",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "managerName",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "minimumStake",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IVault.UpdateParams",
-        "name": "_params",
-        "type": "tuple"
+        "internalType": "enum IVault.ConfigParam",
+        "name": "_param",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_value",
+        "type": "bytes"
       }
     ],
-    "name": "update",
+    "name": "updateConfig",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -945,13 +1056,44 @@
       },
       {
         "internalType": "bytes32",
-        "name": "updateId",
+        "name": "extraData",
         "type": "bytes32"
       }
     ],
     "name": "updateTotalValue",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      }
+    ],
+    "name": "upgradeTo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -966,61 +1108,27 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "stakingACToken",
+        "name": "shares",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "unstakingShare",
+        "name": "pendingStake",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "unclaimedACToken",
+        "name": "pendingUnstake",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "unclaimedUnderlying",
         "type": "uint256"
       },
       {
         "internalType": "int256",
-        "name": "accumulatedACToken",
-        "type": "int256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "userStorage",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "lastUpdateEpoch",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "stakingACToken",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "unstakingShare",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "unclaimedACToken",
-        "type": "uint256"
-      },
-      {
-        "internalType": "int256",
-        "name": "accumulatedACToken",
+        "name": "accumulatedUnderlying",
         "type": "int256"
       }
     ],
@@ -1033,7 +1141,7 @@
     "outputs": [
       {
         "internalType": "enum IVault.Stage",
-        "name": "stage",
+        "name": "",
         "type": "uint8"
       }
     ],
@@ -1041,44 +1149,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "withdrawEther",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "withdrawTokens",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "stateMutability": "payable",
+    "type": "receive"
   }
 ]

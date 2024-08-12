@@ -58,8 +58,8 @@ export const wChainTokens: UnderlyingTokenConfigTypes[] = [
     },
     decimals: 18,
     precision: 4,
-    icon: 'symbol/eth.svg',
-    acTokenName: 'acETH'
+    icon: 'symbol/eth.svg'
+    // acTokenName: 'acETH'
   },
   {
     name: 'WBNB',
@@ -71,8 +71,8 @@ export const wChainTokens: UnderlyingTokenConfigTypes[] = [
     },
     decimals: 18,
     precision: 4,
-    icon: 'symbol/bnb.svg',
-    acTokenName: 'acBNB'
+    icon: 'symbol/bnb.svg'
+    // acTokenName: 'acBNB'
   }
 ]
 export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
@@ -86,8 +86,8 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
     },
     decimals: 6,
     precision: 2,
-    icon: 'symbol/usdc.svg',
-    acTokenName: 'acUSDC'
+    icon: 'symbol/usdc.svg'
+    // acTokenName: 'acUSDC'
   },
   {
     name: 'WBTC',
@@ -99,8 +99,8 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
     },
     decimals: 8,
     precision: 4,
-    icon: 'symbol/wbtc.svg',
-    acTokenName: 'acBTC'
+    icon: 'symbol/wbtc.svg'
+    // acTokenName: 'acBTC'
   }
 ]
 

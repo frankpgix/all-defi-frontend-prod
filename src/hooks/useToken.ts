@@ -2,7 +2,8 @@ import { toLower } from 'lodash'
 import { erc20Abi, zeroAddress } from 'viem'
 import { useAccount, useBalance, useReadContracts } from 'wagmi'
 
-import { UNKNOWN, chainTokens, tokens, underlyingTokens } from '@/config/tokens'
+// import { UNKNOWN, chainTokens, tokens, underlyingTokens } from '@/config/tokens'
+import { UNKNOWN, chainTokens, tokens, underlyingTokens } from '@/config/token'
 
 import {
   AddressType,
@@ -53,7 +54,7 @@ export const useUnderlyingTokens = () => {
     ...token,
     address: token.address[chainId]
   }))
-  return [...tokens, chainToken]
+  return [...tokens]
 }
 
 export const useUnderlyingTokenOptions = () => {

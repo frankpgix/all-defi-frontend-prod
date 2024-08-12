@@ -56,6 +56,8 @@ const Select: FC<SelectProps> = ({
     if (disabled) return
     setShowOptions(!showOptions)
   }
+
+  console.log(value, objOptions)
   return (
     <div className={classNames('web-select', { show: showOptions, mini }, className)} ref={ref}>
       {label && <label>{label}</label>}

@@ -16,12 +16,12 @@ export type ContractKeys =
   | 'VaultReader'
   | 'AUMStats'
   | 'VaultFactory'
-  | 'RewardTracker'
-  | 'UniV3ACL'
-  | 'UniV3NonfungiblePosition'
-  | 'AaveV3Position'
-  | 'GMXTradePosition'
-  | 'GMXEarnPosition'
+// | 'RewardTracker'
+// | 'UniV3ACL'
+// | 'UniV3NonfungiblePosition'
+// | 'AaveV3Position'
+// | 'GMXTradePosition'
+// | 'GMXEarnPosition'
 
 export type AddressType = `0x${string}`
 export type AccountType = AddressType
@@ -38,6 +38,7 @@ export type TokenKeys =
   | 'USDT'
   | 'ALLTOKEN'
   | 'sALLTOKEN'
+  | 'sBITU'
   | 'UNKNOWN'
 
 export interface AddressRec {
@@ -56,7 +57,7 @@ export interface TokenConfigTypes {
 }
 
 export interface UnderlyingTokenConfigTypes extends TokenConfigTypes {
-  acTokenName: acTokenKeys
+  acTokenName?: acTokenKeys
 }
 export interface ChainTokenTypes {
   name: TokenKeys
@@ -65,7 +66,7 @@ export interface ChainTokenTypes {
   precision: number
   icon: string
   wTokenName: WTokenKeys
-  acTokenName: acTokenKeys
+  acTokenName?: acTokenKeys
   address: AddressType
 }
 export interface ContractConfigType {

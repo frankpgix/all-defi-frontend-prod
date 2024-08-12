@@ -70,19 +70,6 @@
   },
   {
     "inputs": [],
-    "name": "activeVaultList",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "vaults",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "factory",
     "outputs": [
       {
@@ -95,43 +82,10 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "globalAUMStats",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "totalAUM",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "vaultsAUM",
-        "type": "uint256"
-      },
-      {
-        "internalType": "int256",
-        "name": "historicalReturn",
-        "type": "int256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "historicalFee",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
         "name": "_factory",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_priceAggregator",
         "type": "address"
       }
     ],
@@ -146,19 +100,6 @@
     "outputs": [
       {
         "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "priceAggregator",
-    "outputs": [
-      {
-        "internalType": "contract IPriceAggregator",
         "name": "",
         "type": "address"
       }
@@ -234,7 +175,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "vault",
+        "name": "_vault",
         "type": "address"
       },
       {
@@ -274,27 +215,22 @@
           },
           {
             "internalType": "uint256",
-            "name": "nav",
-            "type": "uint256"
-          },
-          {
-            "internalType": "int256",
-            "name": "roe",
-            "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "stakingACToken",
+            "name": "beginningSharePrice",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "unstakingShare",
+            "name": "pendingStake",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "unclaimedACToken",
+            "name": "pendingUnstake",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unclaimedUnderlying",
             "type": "uint256"
           },
           {
@@ -330,68 +266,6 @@
         "components": [
           {
             "internalType": "address",
-            "name": "underlying",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "acToken",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "createTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "symbol",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "desc",
-            "type": "string"
-          },
-          {
-            "internalType": "address",
-            "name": "manager",
-            "type": "address"
-          },
-          {
-            "internalType": "string",
-            "name": "managerName",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "minimumStake",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "factory",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "ceffuWallet",
-            "type": "address"
-          }
-        ],
-        "internalType": "struct IVault.BaseInfo[]",
-        "name": "_vaults",
-        "type": "tuple[]"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
             "name": "vaultAddress",
             "type": "address"
           },
@@ -417,27 +291,22 @@
           },
           {
             "internalType": "uint256",
-            "name": "nav",
-            "type": "uint256"
-          },
-          {
-            "internalType": "int256",
-            "name": "roe",
-            "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "stakingACToken",
+            "name": "beginningSharePrice",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "unstakingShare",
+            "name": "pendingStake",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "unclaimedACToken",
+            "name": "pendingUnstake",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "unclaimedUnderlying",
             "type": "uint256"
           },
           {
@@ -458,7 +327,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "vault",
+        "name": "_vault",
         "type": "address"
       }
     ],
@@ -527,9 +396,9 @@
             "type": "uint256"
           },
           {
-            "internalType": "int256",
-            "name": "roe",
-            "type": "int256"
+            "internalType": "uint256",
+            "name": "beginningSharePrice",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -538,17 +407,12 @@
           },
           {
             "internalType": "uint256",
-            "name": "underlyingPriceInUSD",
+            "name": "pendingStake",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "stakingACToken",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "unstakingShare",
+            "name": "pendingUnstake",
             "type": "uint256"
           },
           {
@@ -565,16 +429,6 @@
             "internalType": "int256",
             "name": "historicalReturn",
             "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "historicalManagerFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "historicalPlatFee",
-            "type": "uint256"
           }
         ],
         "internalType": "struct VaultReader.VaultDetail",
@@ -663,9 +517,9 @@
             "type": "uint256"
           },
           {
-            "internalType": "int256",
-            "name": "roe",
-            "type": "int256"
+            "internalType": "uint256",
+            "name": "beginningSharePrice",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -674,17 +528,12 @@
           },
           {
             "internalType": "uint256",
-            "name": "underlyingPriceInUSD",
+            "name": "pendingStake",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "stakingACToken",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "unstakingShare",
+            "name": "pendingUnstake",
             "type": "uint256"
           },
           {
@@ -701,16 +550,6 @@
             "internalType": "int256",
             "name": "historicalReturn",
             "type": "int256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "historicalManagerFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "historicalPlatFee",
-            "type": "uint256"
           }
         ],
         "internalType": "struct VaultReader.VaultDetail[]",

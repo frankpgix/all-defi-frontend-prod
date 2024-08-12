@@ -22,7 +22,7 @@ export const GlobalAssetStatisticDefault: GlobalAssetStatisticProps = {
 export const VaultBaseInfoDefault: VaultBaseInfoProps = {
   hash: '',
   underlying: UNKNOWN as any,
-  acToken: '0x',
+  // acToken: '0x',
   address: '0x',
   createTime: 0,
   name: '-',
@@ -33,13 +33,52 @@ export const VaultBaseInfoDefault: VaultBaseInfoProps = {
   managerFeePercent: 0,
   platFeePercent: 0,
   minimumStake: 0,
-  factory: '0x',
-  ceffuWallet: '0x',
+  // factory: '0x',
+  // ceffuWallet: '0x',
   stakeTime: 0,
   unStakeTime: 0,
   preSettleTime: 0,
   settleTime: 0
 }
+
+// export interface VaultDetailProps {
+//   hash: string
+//   underlyingToken: UnderlyingTokenTypes
+//   address: AddressType
+//   name: string
+//   manager: string
+//   createTime: number
+//   epochIndex: number
+//   epochStartTime: number
+//   // stageEndTime: [number, number, number, number] //阶段截止时间。0申购赎回，1申购，2预结算 3结算
+//   status: number
+//   isClosed: boolean
+
+//   zeroSubscribeEndTime: number
+//   subscribeRedeemEndTime: number
+//   subscribeEndTime: number
+//   preSettleEndTime: number
+//   settleEndTime: number
+
+//   beginningAUM: number
+//   aum: number
+
+//   underlyingBalance: number
+//   underlyingPriceInUSD: number
+
+//   sharePrice: number
+//   beginningSharePrice: number
+//   // stakingACToken: number
+//   unstakingShare: number
+
+//   roe: number
+//   historicalReturn: number
+
+//   managerFee: number
+//   platFee: number
+//   // historicalManagerFee: number
+//   // historicalPlatFee: number
+// }
 
 export const VaultDetailDefault: VaultDetailProps = {
   hash: '',
@@ -67,35 +106,36 @@ export const VaultDetailDefault: VaultDetailProps = {
   underlyingBalance: 0,
 
   sharePrice: 0,
-  stakingACToken: 0,
+  beginningSharePrice: 0,
   unstakingShare: 0,
 
   roe: 0,
   historicalReturn: 0,
 
   managerFee: 0,
-  platFee: 0,
-  historicalManagerFee: 0,
-  historicalPlatFee: 0
+  platFee: 0
+  // historicalManagerFee: 0,
+  // historicalPlatFee: 0
 }
 
-// address: item.vaultAddress,
-//   hash,
-//   underlying,
-//   status: Number(safeInterceptionValues(item.stage, 0, 0)),
-//   // aum: Number(safeInterceptionValues(item.beginningAUM, precision, decimals)),
-//   aum: Number(BN(beginSharePrice).times(safeInterceptionValues(item.shares, 18, 18))),
-//   beginSharePrice,
-//   nav,
-//   navInUSD: BN(nav).times(underlyingTokenPriceInUSD).toNumber(),
-//   underlyingTokenPriceInUSD,
-//   shares: Number(safeInterceptionValues(item.shares, 4, 18)),
-//   sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
-//   stakingACToken: Number(safeInterceptionValues(item.stakingACToken, precision, decimals)),
-//   unstakingShare: Number(safeInterceptionValues(item.unstakingShare, 4, 18)),
-//   unclaimedACToken: Number(safeInterceptionValues(item.unclaimedACToken, precision, decimals)),
-//   historicalReturn: Number(safeInterceptionValues(item.historicalReturn, precision, decimals)),
-// roe: Number(safeInterceptionValues(item.roe, 4, 16))
+// export interface VaultUserDetailProps {
+//   hash: string
+//   address: AddressType
+//   underlying: UnderlyingTokenTypes
+//   underlyingTokenPriceInUSD: number
+//   status: number
+//   aum: number
+//   nav: number
+//   navInUSD: number
+//   shares: number
+//   sharePrice: number
+//   pendingStake: number
+//   unstakingShare: number
+//   unclaimedUnderlying: number
+//   historicalReturn: number
+//   roe: number
+//   beginSharePrice: number
+// }
 
 export const VaultUserDetailDefault: VaultUserDetailProps = {
   hash: '',
@@ -105,9 +145,9 @@ export const VaultUserDetailDefault: VaultUserDetailProps = {
   shares: 0,
   aum: 0,
   sharePrice: 0,
-  stakingACToken: 0,
+  pendingStake: 0,
   unstakingShare: 0,
-  unclaimedACToken: 0,
+  unclaimedUnderlying: 0,
   nav: 0,
   navInUSD: 0,
   underlyingTokenPriceInUSD: 0,

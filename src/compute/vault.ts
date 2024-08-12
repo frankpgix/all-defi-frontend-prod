@@ -26,18 +26,20 @@ export const calcGlobalAssetStatistic = (item: any): GlobalAssetStatisticProps =
   }
 }
 
-// address underlying;
-// address acToken;
-// uint256 createTime;
-// string name;
-// string symbol;
-// string desc;
-// address manager;
-// string managerName;
-// uint256 minimumStake;
-// uint64[4] stageDurations; // time durations in seconds. [0] stake, [1] unstake, [2] preSettle, [3] settle
-// address factory; // vault factory address
-// address ceffuWallet;
+// struct BaseInfo {
+//     address underlying;
+//     address interimAsset;
+//     uint8 underlyingDecimals;
+//     uint256 createTime;
+//     string name;
+//     string symbol;
+//     address manager;
+//     string managerName;
+//     uint64[4] stageDurations;
+//     uint256[2] stakeLimits;
+//     address platFeeTo;
+//     address custodian;
+// }
 
 export const calcVaultBaseInfo = (
   item: any,
@@ -51,25 +53,51 @@ export const calcVaultBaseInfo = (
   return {
     hash,
     underlying,
-    acToken: item.acToken,
+    // acToken: item.acToken,
     address: vaultAddress ?? '0x',
     createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
     name: item.name,
     symbol: item.symbol,
-    desc: item.desc,
+    desc: '',
+    // desc: item.desc,
     manager: item.manager,
     managerName: item.managerName,
     managerFeePercent: 0.2,
     platFeePercent: 0.1,
-    minimumStake: Number(safeInterceptionValues(item.minimumStake, precision, decimals)),
-    factory: item.factory,
-    ceffuWallet: item.ceffuWallet,
+    minimumStake: Number(safeInterceptionValues(item.stakeLimits[0], precision, decimals)),
+    // factory: item.factory,
+    // ceffuWallet: item.ceffuWallet,
     stakeTime: 0,
     unStakeTime: 0,
     preSettleTime: 0,
     settleTime: 0
   }
 }
+
+// struct VaultDetail {
+//     address vaultAddress;
+//     address underlying;
+//     string name;
+//     address manager;
+//     uint64 createTime;
+//     uint64 epochStartTime;
+//     uint128 epochIndex;
+//     uint64[4] stageDurations;
+//     uint256 stage;
+//     uint256 beginningAUM;
+//     uint256 aum;
+//     uint256 sharePrice;
+//     uint256 beginningSharePrice; // 本轮开始的价格
+//     uint256 underlyingBalance;
+//     uint256 pendingStake; //本期申购的underlying
+//     uint256 pendingUnstake; // 本期赎回的share
+//     uint256 managerFee; //本轮经理费
+//     uint256 platFee; //本轮平台费
+//     int256 historicalReturn;
+
+//     // 1、原roe = (sharePrice - beginningSharePrice) / beginningSharePrice;
+//     // 2、原underlyingPriceInUSD，需要独立读取PriceAggregator合约的priceInUSD函数
+// }
 
 export const calcVaultDetail = (
   item: any,
@@ -81,7 +109,8 @@ export const calcVaultDetail = (
   const decimals = underlyingToken.decimals
   const status = Number(safeInterceptionValues(item.stage, 0, 0)) - 1
   const { hash } = calcVaultHash(item.vaultAddress ?? '0x')
-
+  const sharePrice = Number(safeInterceptionValues(item.sharePrice, 4, 18))
+  const beginningSharePrice = Number(safeInterceptionValues(item.beginningSharePrice, 4, 18))
   return {
     underlyingToken,
     hash,
@@ -110,35 +139,41 @@ export const calcVaultDetail = (
     aum: Number(safeInterceptionValues(item.aum, decimals, decimals)),
 
     underlyingBalance: Number(safeInterceptionValues(item.underlyingBalance, decimals, decimals)),
-    underlyingPriceInUSD: Number(safeInterceptionValues(item.underlyingPriceInUSD, 4, 18)),
+    // todo: 读取PriceAggregator合约的priceInUSD函数
+    underlyingPriceInUSD: 0,
 
-    sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
-    stakingACToken: Number(safeInterceptionValues(item.stakingACToken, decimals, decimals)),
-    unstakingShare: Number(safeInterceptionValues(item.unstakingShare, 4, 18)),
+    sharePrice,
+    beginningSharePrice,
+    // stakingACToken: Number(safeInterceptionValues(item.stakingACToken, decimals, decimals)),
+    unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 4, 18)),
 
-    roe: Number(safeInterceptionValues(item.roe, 4, 16)),
+    roe: BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber(),
     historicalReturn: Number(safeInterceptionValues(item.historicalReturn, decimals, decimals)),
 
     managerFee: Number(safeInterceptionValues(item.managerFee, decimals, decimals)),
-    platFee: Number(safeInterceptionValues(item.platFee, decimals, decimals)),
-    historicalManagerFee: Number(
-      safeInterceptionValues(item.historicalManagerFee, decimals, decimals)
-    ),
-    historicalPlatFee: Number(safeInterceptionValues(item.historicalPlatFee, decimals, decimals))
+    platFee: Number(safeInterceptionValues(item.platFee, decimals, decimals))
+    // historicalManagerFee: Number(
+    //   safeInterceptionValues(item.historicalManagerFee, decimals, decimals)
+    // ),
+    // historicalPlatFee: Number(safeInterceptionValues(item.historicalPlatFee, decimals, decimals))
   }
 }
 
-//  uint256 vaultAddress; //基金id/地址
-// 		address underlying; //底层金库token
-// 		uint256 stage;//当前基金状态阶段
-//     uint256 shares; //持有share的数量，包含余额、赎回中、挖矿中
-// 		uint256 sharePrice; //share价格
-//     uint256 nav;//本期实时投资净值，包括申购中的和赎回未领取的
-//     int256 roe;//收益率
-// 		uint256 stakingACToken;//申购中的acToken数量
-//     uint256 unstakingShare;//赎回中的share数量
-//     uint256 unclaimedACToken;//未领取的赎回资产
-// 		int256 historicalReturn;//历史累计收益
+// struct UserDetail {
+//     address vaultAddress; //基金id/地址
+//     address underlying; //底层token
+//     uint256 stage; // 当前基金状态阶段
+//     uint256 shares; // 持有share的数量
+//     uint256 sharePrice; //share价格
+//     uint256 beginningSharePrice; //本轮初始价格
+//     uint256 pendingStake; // 申购中的underlying数量
+//     uint256 pendingUnstake; // 赎回中的share数量
+//     uint256 unclaimedUnderlying; // 未领取的underlying数量
+//     int256 historicalReturn; //历史累计收益
+
+//     // 1、原nav = shares * sharePrice + pendingStake + unclaimedUnderlying;
+//     // 2、原roe = (sharePrice - beginningSharePrice) / beginningSharePrice;
+// }
 
 export const calcVaultUserDetail = (
   item: any,
@@ -150,10 +185,22 @@ export const calcVaultUserDetail = (
   const decimals = underlying.decimals
   const precision = underlying.precision
 
-  const nav = Number(safeInterceptionValues(item.nav, precision, decimals))
+  const shares = Number(safeInterceptionValues(item.shares, 4, 18))
+  const sharePrice = Number(safeInterceptionValues(item.sharePrice, 4, 18))
+  const pendingStake = Number(safeInterceptionValues(item.pendingStake, 4, 18))
+  const unclaimedUnderlying = Number(
+    safeInterceptionValues(item.unclaimedUnderlying, precision, decimals)
+  )
+
+  const nav = BN(shares).times(sharePrice).plus(pendingStake).plus(unclaimedUnderlying).toNumber()
+
+  const beginningSharePrice = Number(safeInterceptionValues(item.beginningSharePrice, 4, 18))
+
+  const roe = BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber()
+
   // const underlyingTokenPriceInUSD = 1
   const beginSharePrice = BN(safeInterceptionValues(item.sharePrice, 18, 18))
-    .div(BN(safeInterceptionValues(item.roe, 18, 18)).plus(1))
+    .div(BN(roe).plus(1))
     .toNumber()
   const { hash } = calcVaultHash(item.vaultAddress ?? '0x')
 
@@ -162,19 +209,20 @@ export const calcVaultUserDetail = (
     hash,
     underlying,
     status: Number(safeInterceptionValues(item.stage, 0, 0)),
-    // aum: Number(safeInterceptionValues(item.beginningAUM, precision, decimals)),
     aum: Number(BN(beginSharePrice).times(safeInterceptionValues(item.shares, 18, 18))),
     beginSharePrice,
     nav,
     navInUSD: BN(nav).times(underlyingTokenPriceInUSD).toNumber(),
     underlyingTokenPriceInUSD,
-    shares: Number(safeInterceptionValues(item.shares, 4, 18)),
-    sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
-    stakingACToken: Number(safeInterceptionValues(item.stakingACToken, precision, decimals)),
-    unstakingShare: Number(safeInterceptionValues(item.unstakingShare, 4, 18)),
-    unclaimedACToken: Number(safeInterceptionValues(item.unclaimedACToken, precision, decimals)),
+    shares,
+    sharePrice,
+    pendingStake,
+    unclaimedUnderlying,
+    // stakingACToken: Number(safeInterceptionValues(item.stakingACToken, precision, decimals)),
+    unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 4, 18)),
+    // unclaimedACToken: Number(safeInterceptionValues(item.unclaimedACToken, precision, decimals)),
     historicalReturn: Number(safeInterceptionValues(item.historicalReturn, precision, decimals)),
-    roe: Number(safeInterceptionValues(item.roe, 4, 16))
+    roe
   }
 }
 

@@ -5,6 +5,46 @@
     "type": "constructor"
   },
   {
+    "inputs": [],
+    "name": "CannotCreateMoreVaults",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UnderlyingNotAllowed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UnderlyingNotExist",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "VaultHasShares",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "VaultInitializationFailed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "VaultLogicNotSet",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "VaultNotExist",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ZeroAddress",
+    "type": "error"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -40,38 +80,6 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "DAOAddressSet",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "keeper",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      }
-    ],
-    "name": "KeeperSet",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": true,
         "internalType": "address",
         "name": "previousOwner",
@@ -91,13 +99,51 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
-        "name": "account",
+        "name": "newPlatFeeTo",
         "type": "address"
       }
     ],
-    "name": "PlatFeeSet",
+    "name": "PlatFeeToSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "underlying",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "interim",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "transmuters",
+        "type": "uint256"
+      }
+    ],
+    "name": "UnderlyingAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "underlying",
+        "type": "address"
+      }
+    ],
+    "name": "UnderlyingRemoved",
     "type": "event"
   },
   {
@@ -111,25 +157,6 @@
       }
     ],
     "name": "Upgraded",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "vault",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      }
-    ],
-    "name": "VaultActivated",
     "type": "event"
   },
   {
@@ -174,7 +201,7 @@
         "type": "address"
       },
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
         "name": "underlying",
         "type": "address"
@@ -202,6 +229,12 @@
         "internalType": "address",
         "name": "manager",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[2]",
+        "name": "stakeLimits",
+        "type": "uint256[2]"
       }
     ],
     "name": "VaultCreated",
@@ -221,50 +254,29 @@
     "type": "event"
   },
   {
-    "inputs": [],
-    "name": "acProtocol",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
-        "name": "vault",
+        "name": "underlying",
         "type": "address"
       },
       {
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
+        "internalType": "address",
+        "name": "interim",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "transmuters",
+        "type": "uint256"
       }
     ],
-    "name": "activate",
+    "name": "addUnderlying",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "activeVaultList",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -272,7 +284,7 @@
         "type": "address"
       }
     ],
-    "name": "archive",
+    "name": "archiveVault",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -291,11 +303,6 @@
       },
       {
         "internalType": "string",
-        "name": "desc",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
         "name": "managerName",
         "type": "string"
       },
@@ -305,9 +312,9 @@
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "minimumStake",
-        "type": "uint256"
+        "internalType": "uint256[2]",
+        "name": "stakeLimits",
+        "type": "uint256[2]"
       }
     ],
     "name": "create",
@@ -323,30 +330,6 @@
   },
   {
     "inputs": [],
-    "name": "daoAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_weth",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_acProtocol",
-        "type": "address"
-      }
-    ],
     "name": "initialize",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -356,29 +339,45 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_keeper",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "isKeeper",
+    "name": "interimAssets",
     "outputs": [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
+        "internalType": "address",
+        "name": "interim",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "transmuters",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "keeperList",
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "manager",
+        "type": "address"
+      }
+    ],
+    "name": "managerInfo",
     "outputs": [
       {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
+        "internalType": "uint256",
+        "name": "count",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -443,6 +442,19 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "underlying",
+        "type": "address"
+      }
+    ],
+    "name": "removeUnderlying",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
@@ -453,38 +465,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "dao",
-        "type": "address"
-      }
-    ],
-    "name": "setDaoAddress",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_keeper",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "enable",
-        "type": "bool"
-      }
-    ],
-    "name": "setKeeper",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
+        "name": "newPlatFeeTo",
         "type": "address"
       }
     ],
@@ -522,6 +503,19 @@
     "name": "setVaultLogic",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "supportedUnderlyings",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -603,19 +597,6 @@
   {
     "inputs": [],
     "name": "vaultLogic",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "weth",
     "outputs": [
       {
         "internalType": "address",

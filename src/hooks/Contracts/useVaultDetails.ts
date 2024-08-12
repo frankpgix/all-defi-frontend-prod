@@ -1,7 +1,7 @@
 import { useReadContracts } from 'wagmi'
 
 import {
-  useAllProtocolContract,
+  // useAllProtocolContract,
   useVaultContract,
   useVaultReaderContract
 } from '@/hooks/Contracts/useContract'
@@ -13,8 +13,7 @@ import { AddressType } from '@/types/base'
 import {
   calcVaultBaseInfo,
   calcVaultBreachDetail,
-  calcVaultDetail,
-  calcVaultStakedALL,
+  calcVaultDetail, // calcVaultStakedALL,
   calcVaultUserDetail
 } from '@/compute/vault'
 import {
@@ -31,7 +30,7 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
 
   const VaultContract = useVaultContract(vaultAddress)
   const VaultReaderContract = useVaultReaderContract()
-  const AllProtocolContract = useAllProtocolContract()
+  // const AllProtocolContract = useAllProtocolContract()
   const { data, isLoading, isSuccess, refetch } = useReadContracts({
     contracts: [
       {
@@ -47,19 +46,19 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
         ...VaultReaderContract,
         functionName: 'vaultBreachDetail',
         args: [vaultAddress]
-      },
-      {
-        ...AllProtocolContract,
-        functionName: 'vaultStakedALL',
-        args: [vaultAddress]
+        // },
+        // {
+        //   ...AllProtocolContract,
+        //   functionName: 'vaultStakedALL',
+        //   args: [vaultAddress]
       }
     ]
   }) as {
     data: [
       { result: any; status: string },
       { result: any; status: string },
-      { result: any; status: string },
-      { result: bigint[]; status: string }
+      { result: any; status: string }
+      // { result: bigint[]; status: string }
     ]
     isLoading: boolean
     isSuccess: boolean
@@ -79,8 +78,8 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
       data[2].status === 'success'
         ? calcVaultBreachDetail(data[2].result)
         : VaultBreachDetailDataDefault
-    const vaultStakedALL =
-      data[3].status === 'success' ? calcVaultStakedALL(data[3].result) : VaultStakeDataDefault
+    const vaultStakedALL = VaultStakeDataDefault
+    // data[3].status === 'success' ? calcVaultStakedALL(data[3].result) : VaultStakeDataDefault
     return {
       data: {
         baseInfo,

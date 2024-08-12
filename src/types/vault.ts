@@ -31,7 +31,7 @@ export interface GlobalAssetStatisticProps {
 export interface VaultBaseInfoProps {
   hash: string
   underlying: UnderlyingTokenTypes
-  acToken: AddressType
+  // acToken: AddressType
   address: AddressType
   createTime: number
   name: string
@@ -42,8 +42,8 @@ export interface VaultBaseInfoProps {
   managerFeePercent: number
   platFeePercent: number
   minimumStake: number
-  factory: AddressType
-  ceffuWallet: AddressType
+  // factory: AddressType
+  // ceffuWallet: AddressType
   stakeTime: number
   unStakeTime: number
   preSettleTime: number
@@ -76,7 +76,8 @@ export interface VaultDetailProps {
   underlyingPriceInUSD: number
 
   sharePrice: number
-  stakingACToken: number
+  beginningSharePrice: number
+  // stakingACToken: number
   unstakingShare: number
 
   roe: number
@@ -84,27 +85,29 @@ export interface VaultDetailProps {
 
   managerFee: number
   platFee: number
-  historicalManagerFee: number
-  historicalPlatFee: number
+  // historicalManagerFee: number
+  // historicalPlatFee: number
 }
 
-// address: item.vaultAddress,
-// hash,
-// underlying,
-// status: Number(safeInterceptionValues(item.stage, 0, 0)),
-// // aum: Number(safeInterceptionValues(item.beginningAUM, precision, decimals)),
-// aum: Number(BN(beginSharePrice).times(safeInterceptionValues(item.shares, 18, 18))),
-// beginSharePrice,
-// nav,
-// navInUSD: BN(nav).times(underlyingTokenPriceInUSD).toNumber(),
-// underlyingTokenPriceInUSD,
-// shares: Number(safeInterceptionValues(item.shares, 4, 18)),
-// sharePrice: Number(safeInterceptionValues(item.sharePrice, 4, 18)),
-// stakingACToken: Number(safeInterceptionValues(item.stakingACToken, precision, decimals)),
-// unstakingShare: Number(safeInterceptionValues(item.unstakingShare, 4, 18)),
-// unclaimedACToken: Number(safeInterceptionValues(item.unclaimedACToken, precision, decimals)),
-// historicalReturn: Number(safeInterceptionValues(item.historicalReturn, precision, decimals)),
-// roe: Number(safeInterceptionValues(item.roe, 4, 16))
+// /return {
+//     address: item.vaultAddress,
+//     hash,
+//     underlying,
+//     status: Number(safeInterceptionValues(item.stage, 0, 0)),
+//     aum: Number(BN(beginSharePrice).times(safeInterceptionValues(item.shares, 18, 18))),
+//     beginSharePrice,
+//     nav,
+//     navInUSD: BN(nav).times(underlyingTokenPriceInUSD).toNumber(),
+//     underlyingTokenPriceInUSD,
+//     shares,
+//     sharePrice,
+//     pendingStake,
+//     // stakingACToken: Number(safeInterceptionValues(item.stakingACToken, precision, decimals)),
+//     unstakingShare: Number(safeInterceptionValues(item.unstakingShare, 4, 18)),
+//     // unclaimedACToken: Number(safeInterceptionValues(item.unclaimedACToken, precision, decimals)),
+//     historicalReturn: Number(safeInterceptionValues(item.historicalReturn, precision, decimals)),
+//     roe
+//   }
 export interface VaultUserDetailProps {
   hash: string
   address: AddressType
@@ -116,9 +119,9 @@ export interface VaultUserDetailProps {
   navInUSD: number
   shares: number
   sharePrice: number
-  stakingACToken: number
+  pendingStake: number
   unstakingShare: number
-  unclaimedACToken: number
+  unclaimedUnderlying: number
   historicalReturn: number
   roe: number
   beginSharePrice: number
