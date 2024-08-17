@@ -73,7 +73,6 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
     }
   }, [active, ref, isInit])
 
-  const acToken = useMemo(() => fund.base.underlying, [fund.base.underlying])
   const underlyingToken = useMemo(() => fund.base.underlying, [fund.base.underlying])
   const ivFinish = useMemo(() => fund.detail.status === 6, [fund.detail.status])
   // console.log(fund)
@@ -136,7 +135,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   </label>
                   <em>
                     <TokenValue
-                      value={fund.detail.pendingStake}
+                      value={fund.userDetail.pendingStake}
                       token={underlyingToken}
                       size="mini"
                       format="0,0.00"
@@ -144,7 +143,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   </em>
                   <Button
                     disabled={
-                      !(fund.detail.pendingStake > 0 && [0, 1].includes(fund.detail.status))
+                      !(fund.userDetail.pendingStake > 0 && [0, 1].includes(fund.detail.status))
                     }
                     onClick={() => setInfoStatus(true)}
                     size="mini"
@@ -246,10 +245,10 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
         onClose={() => setInfoStatus(false)}
         title="Cancel Staking"
         msg={`Cancel Staking Request of ${formatNumber(
-          fund.detail.pendingStake,
+          fund.userDetail.pendingStake,
           4,
           '0,0.0000'
-        )} ${acToken.name}`}
+        )} ${fund.base.underlying.name}`}
       />
       <InfoDialog
         show={infoStatus2}

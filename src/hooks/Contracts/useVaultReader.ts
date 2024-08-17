@@ -1,6 +1,6 @@
 import BN from 'bignumber.js'
 import { isNaN, sum } from 'lodash'
-import { base } from 'viem/chains'
+// import { base } from 'viem/chains'
 import { useReadContract, useReadContracts } from 'wagmi'
 
 import VaultABI from '@/config/abi/VaultSimple.json'
@@ -14,13 +14,12 @@ import { AddressType, TokenTypes } from '@/types/base'
 import {
   AssetCompositionProps,
   VaultDetailProps, // VaultUserDetailProps,
-  VaultProps,
+  // VaultProps,
   VaultUserListDataProps
 } from '@/types/vault'
 
 import {
-  calcAssetComposition,
-  calcGlobalAUMStats,
+  calcAssetComposition, // calcGlobalAUMStats,
   calcShareComposition,
   calcVaultBaseInfo,
   calcVaultBreachDetail,
@@ -30,7 +29,7 @@ import {
   calcVaultUserDetail
 } from '@/compute/vault'
 import {
-  GlobalAUMStatsDataDefault,
+  // GlobalAUMStatsDataDefault,
   ShareCompositionDefault,
   VaultBreachDetailDataDefault,
   VaultDetailDefault,
@@ -307,17 +306,17 @@ export const useVaultUpdatingData = (vaultAddress: AddressType, underlyingToken:
   return { data: VaultUpdatingDataDefault, isSuccess, isLoading, refetch }
 }
 
-export const useGlobalAUMStats = () => {
-  const VaultReaderContract = useVaultReaderContract()
-  const { data, isSuccess, isLoading, refetch } = useReadContract({
-    ...VaultReaderContract,
-    functionName: 'globalAUMStats',
-    args: []
-  }) as { data: bigint[]; isSuccess: boolean; isLoading: boolean; refetch: () => void; error: any }
-  // console.log(error, isSuccess, 'data')
-  if (!isLoading && isSuccess) {
-    // console.log(data, 'data')
-    return { data: calcGlobalAUMStats(data), isSuccess, isLoading, refetch }
-  }
-  return { data: GlobalAUMStatsDataDefault, isSuccess, isLoading, refetch }
-}
+// export const useGlobalAUMStats = () => {
+//   const VaultReaderContract = useVaultReaderContract()
+//   const { data, isSuccess, isLoading, refetch } = useReadContract({
+//     ...VaultReaderContract,
+//     functionName: 'globalAUMStats',
+//     args: []
+//   }) as { data: bigint[]; isSuccess: boolean; isLoading: boolean; refetch: () => void; error: any }
+//   // console.log(error, isSuccess, 'data')
+//   if (!isLoading && isSuccess) {
+//     // console.log(data, 'data')
+//     return { data: calcGlobalAUMStats(data), isSuccess, isLoading, refetch }
+//   }
+//   return { data: GlobalAUMStatsDataDefault, isSuccess, isLoading, refetch }
+// }

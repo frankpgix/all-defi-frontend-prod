@@ -1,13 +1,15 @@
 import { FC } from 'react'
-import Table from 'rc-table'
+
 import dayjs from 'dayjs'
+import Table from 'rc-table'
+
+import { AddressType } from '@/types/base'
 
 import { useVaultWithholdData } from '@/graphql/useFundData'
 // import { formatNumber } from '@/utils/tools'
 import HashLink from '@@/common/HashLink'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
 import TokenValue from '@@/common/TokenValue'
-import { AddressType } from '@/types/base'
 
 interface Props {
   vaultAddress: AddressType
@@ -29,6 +31,10 @@ const Withholding: FC<Props> = ({ vaultAddress }) => {
       )
     },
     {
+      title: 'Action',
+      dataIndex: 'action'
+    },
+    {
       title: 'Address',
       dataIndex: 'investor',
       render: (value: string) => <HashLink address={value} />
@@ -41,6 +47,7 @@ const Withholding: FC<Props> = ({ vaultAddress }) => {
   ]
 
   const { loading, data } = useVaultWithholdData(vaultAddress)
+  // console.log(data, '123')
 
   return (
     <Table
