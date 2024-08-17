@@ -26,8 +26,8 @@ const StakeButton: FC<Props> = ({ getData, data, userData }) => {
       </Button>
       <Modal show={show} onClose={setLeft} title="Unstake from Vault" width={1000}>
         <section className="c-vault-stake">
-          <UnStake {...{ getData, data, userData }} />
-          <Claim {...{ getData, userData }} />
+          <UnStake {...{ getData, data, userData }} onClose={setLeft} />
+          <Claim {...{ getData, userData }} onClose={setLeft} />
         </section>
       </Modal>
     </>

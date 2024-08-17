@@ -132,25 +132,26 @@ const Count: FC<CountProps> = ({ loading, data }) => {
 
 interface CountDetailProps extends CountProps {}
 
-const CountDetail: FC<CountDetailProps> = ({ loading, data: sData }) => {
+const CountDetail: FC<CountDetailProps> = ({ loading, data }) => {
   const [activeIndex, setActiveIndex] = useState(0)
+  // console.log(sData)
 
-  const data = sData.map((item) => {
-    const i = { ...item }
-    // const tpo = baseTokenPriceList.find(
-    //   (tp) => tp.address.toLocaleLowerCase() === i.underlying.address.toLocaleLowerCase()
-    // )
-    // const tp = tpo ? tpo.priceInUSD : 1
-    // i.data.navInUSD = BN(i.data.nav).times(tp).toNumber()
-    return i
-  })
+  // const data = sData.map((item) => {
+  //   const i = { ...item }
+  //   // const tpo = baseTokenPriceList.find(
+  //   //   (tp) => tp.address.toLocaleLowerCase() === i.underlying.address.toLocaleLowerCase()
+  //   // )
+  //   // const tp = tpo ? tpo.priceInUSD : 1
+  //   // i.data.navInUSD = BN(i.data.nav).times(tp).toNumber()
+  //   return i
+  // })
   const rawData = useMemo(
     () =>
-      data.map(({ name, data }) => ({
-        name,
+      data.map(({ base, userDetail }) => ({
+        name: base.name,
         // value: data.shares || data.navInUSD,
-        value: data.navInUSD,
-        nav: data.navInUSD
+        value: userDetail.navInUSD,
+        nav: userDetail.navInUSD
       })),
     [data]
   )
@@ -159,7 +160,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data: sData }) => {
     () => rawData.map(({ nav }) => nav).reduce((a, b) => a + b, 0),
     [rawData]
   )
-  const activeData = useMemo(() => data[activeIndex]?.data, [data, activeIndex])
+  const activeData = useMemo(() => data[activeIndex]?.userDetail, [data, activeIndex])
   const baseToken = useMemo(() => activeData?.underlying, [activeData])
   // console.log(data, rawData)
   const pieData = useMemo(
@@ -216,7 +217,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data: sData }) => {
             </Pie>
           </PieChart>
           <section>
-            <em>{formatNumber(data[activeIndex].data.navInUSD, 2, '$0,0.00')}</em>
+            <em>{formatNumber(data[activeIndex].userDetail.navInUSD, 2, '$0,0.00')}</em>
             <span>{pieData[activeIndex]?.percent}</span>
           </section>
         </div>
@@ -240,7 +241,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data: sData }) => {
           <label>Total Staking </label>
           <em>{formatNumber(totalAsset, 2, '$0,0.00')}</em>
         </article>
-        <h3>{data[activeIndex].name}</h3>
+        <h3>{data[activeIndex].base.name}</h3>
         <section>
           <SectionItem label="Staking Value" loading={loading}>
             <TokenValue value={activeData.nav} token={baseToken} size="mini" format="0,0.00" />

@@ -16,17 +16,18 @@ import Tip from '@@/common/Tip'
 interface Props {
   userData: VaultUserDetailProps
   data: VaultDetailProps
+  onClose: () => void
   getData: () => void
 }
 
-const Unstake: FC<Props> = ({ data, userData, getData }) => {
+const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
   const { account } = useProfile()
   const { onUnstake } = useUnstake(data.address)
 
   const [value, setValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
-
+  console.log(data)
   const isInUnstake = useMemo(() => data.status === 0, [data.status])
   const maxValue = useMemo(() => {
     return BN(userData.shares).minus(userData.unstakingShare).toNumber()
@@ -65,6 +66,7 @@ const Unstake: FC<Props> = ({ data, userData, getData }) => {
       getData()
       setValue(0)
       setSliderValue(0)
+      onClose()
     }
   }
 

@@ -1,0 +1,77 @@
+[
+  {
+    "inputs": [],
+    "name": "baseInfo",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "underlying",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "interimAsset",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "underlyingDecimals",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "createTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "managerName",
+            "type": "string"
+          },
+          {
+            "internalType": "uint64[4]",
+            "name": "stageDurations",
+            "type": "uint64[4]"
+          },
+          {
+            "internalType": "uint256[2]",
+            "name": "stakeLimits",
+            "type": "uint256[2]"
+          },
+          {
+            "internalType": "address",
+            "name": "platFeeTo",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "custodian",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IVault.BaseInfo",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

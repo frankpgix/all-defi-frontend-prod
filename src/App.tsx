@@ -12,7 +12,6 @@ import 'rc-table/assets/index.css'
 // import Buy from '@/pages/Buy';
 // import History from '@/pages/Buy/History';
 import Home from '@/pages/Home'
-import Mining from '@/pages/Mining'
 import MyManagement from '@/pages/MyManagement'
 import Tasks from '@/pages/Tasks'
 import Global from '@/pages/Updaters/Global'
@@ -39,7 +38,6 @@ function App() {
             <Route path="/buy/history" element={<History />} /> */}
             <Route path="/vaults/*" element={<Vaults />} />
             <Route path="/manage/*" element={<MyManagement />} />
-            <Route path="/all-mining" element={<Mining />} />
             <Route path="/test" element={<Test />} />
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/" element={<Home />} />

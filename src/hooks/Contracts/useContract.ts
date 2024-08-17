@@ -1,10 +1,10 @@
 import { erc20Abi } from 'viem'
 
-import ACProtocolAbi from '@/config/abi/ACProtocol.json'
-import AUMStatsAbi from '@/config/abi/AUMStats.json'
-import AllProtocolAbi from '@/config/abi/AllProtocol.json'
-import RewardTrackerAbi from '@/config/abi/RewardTracker.json'
-import UniV3ACLAbi from '@/config/abi/UniV3ACL.json'
+// import ACProtocolAbi from '@/config/abi/ACProtocol.json'
+// import AUMStatsAbi from '@/config/abi/AUMStats.json'
+// import AllProtocolAbi from '@/config/abi/AllProtocol.json'
+// import RewardTrackerAbi from '@/config/abi/RewardTracker.json'
+// import UniV3ACLAbi from '@/config/abi/UniV3ACL.json'
 import VaultAbi from '@/config/abi/Vault.json'
 import VaultFactoryAbi from '@/config/abi/VaultFactory.json'
 import VaultReaderAbi from '@/config/abi/VaultReader.json'
@@ -36,23 +36,23 @@ export const useGetErc20Contract = () => {
   return { getErc20Contract }
 }
 
-export const useACProtocolContract = () => {
-  const { address } = useContractAddress('ACProtocol')
-  return useContract(address, ACProtocolAbi)
-}
-export const useAllProtocolContract = () => {
-  const { address } = useContractAddress('AllProtocol')
-  return useContract(address, AllProtocolAbi)
-}
+// export const useACProtocolContract = () => {
+//   const { address } = useContractAddress('ACProtocol')
+//   return useContract(address, ACProtocolAbi)
+// }
+// export const useAllProtocolContract = () => {
+//   const { address } = useContractAddress('AllProtocol')
+//   return useContract(address, AllProtocolAbi)
+// }
 export const useVaultFactoryContract = () => {
   const { address } = useContractAddress('VaultFactory')
   return useContract(address, VaultFactoryAbi)
 }
 
-export const useAUMStatsContract = () => {
-  const { address } = useContractAddress('AUMStats')
-  return useContract(address, AUMStatsAbi)
-}
+// export const useAUMStatsContract = () => {
+//   const { address } = useContractAddress('AUMStats')
+//   return useContract(address, AUMStatsAbi)
+// }
 export const useVaultContract = (address: AddressType) => {
   return useContract(address, VaultAbi)
 }
@@ -61,11 +61,11 @@ export const useVaultReaderContract = () => {
   return useContract(address, VaultReaderAbi)
 }
 
-export const useUniV3ACLContract = () => {
-  const { address } = useContractAddress('VaultReader')
-  return useContract(address, UniV3ACLAbi)
-}
-export const useRewardTrackerContract = () => {
-  const { address } = useContractAddress('RewardTracker')
-  return useContract(address, RewardTrackerAbi)
-}
+// export const useUniV3ACLContract = () => {
+//   const { address } = useContractAddress('VaultReader')
+//   return useContract(address, UniV3ACLAbi)
+// }
+// export const useRewardTrackerContract = () => {
+//   const { address } = useContractAddress('RewardTracker')
+//   return useContract(address, RewardTrackerAbi)
+// }

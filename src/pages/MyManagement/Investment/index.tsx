@@ -7,7 +7,6 @@ import Main from './Main'
 import NoInvest from './NoInvest'
 
 const Investment: FC = () => {
-  // useGetUserFundList()
   // const { loading, fundList, getData } = useUserFundList()
   // // console.log(loading)
   const { data: fundList, isLoading, refetch } = useUserVaultList()

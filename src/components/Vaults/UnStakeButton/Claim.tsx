@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 
 import { useClaim } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
-import { useToken } from '@/hooks/useToken'
 
 import { VaultUserDetailProps } from '@/types/vault'
 
@@ -15,31 +14,29 @@ import { AcUSDCUnit } from '@@/common/TokenUnit'
 interface Props {
   userData: VaultUserDetailProps
   getData: () => void
+  onClose: () => void
 }
 
-const Claim: FC<Props> = ({ userData, getData }) => {
-  const { getTokenByName } = useToken()
+const Claim: FC<Props> = ({ userData, getData, onClose }) => {
   const { onClaim } = useClaim(userData.address)
   const { fundAddress } = useParams()
   const { account } = useProfile()
 
-  const value = userData.unclaimedACToken
+  const value = userData.unclaimedUnderlying
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
-  const acToken = useMemo(
-    () => getTokenByName(userData.underlying.acTokenName),
-    [userData.underlying]
-  )
+  const acToken = useMemo(() => userData.underlying, [userData.underlying])
 
   const onRedeem = async () => {
     if (account && fundAddress) {
       await onClaim(account)
       getData()
+      onClose()
     }
   }
 
   return (
     <>
-      <h4>Claim AC token</h4>
+      <h4>Claim</h4>
       <div className="c-vault-stake-input">
         <Input
           value={value}
@@ -61,7 +58,7 @@ const Claim: FC<Props> = ({ userData, getData }) => {
         onConfirm={onRedeem}
         onClose={() => setInfoStatus(false)}
         title="Claim AC token"
-        msg={`${userData.unclaimedACToken} acUSDC will be claimed`}
+        msg={`${userData.unclaimedUnderlying} acUSDC will be claimed`}
       />
     </>
   )

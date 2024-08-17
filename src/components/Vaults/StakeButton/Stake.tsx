@@ -6,7 +6,7 @@ import { isNaN } from 'lodash'
 
 import { useStake } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
-import { useToken, useUserBalances } from '@/hooks/useToken'
+import { useUserBalances } from '@/hooks/useToken'
 
 import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
 
@@ -19,21 +19,19 @@ import { AcUSDCUnit } from '@@/common/TokenUnit'
 
 interface Props {
   getData: () => void
+  onClose: () => void
   data: VaultDetailProps
   base: VaultBaseInfoProps
 }
 
-const Stake: FC<Props> = ({ getData, data, base }) => {
-  const { getTokenByName } = useToken()
+const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
+  // const { getTokenByName } = useToken()
   const { account } = useProfile()
   const { balances, refetch: reBalances } = useUserBalances()
   const { onStake } = useStake(data.address)
   const [accredit, { toggle }] = useBoolean(false)
 
-  const acToken = useMemo(
-    () => getTokenByName(data.underlyingToken.acTokenName),
-    [data.underlyingToken]
-  )
+  const acToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
 
   const acTokenBalance = useMemo(() => balances[acToken.name], [balances, acToken.name])
   const [value, setValue] = useState<number | string>('')
@@ -94,6 +92,7 @@ const Stake: FC<Props> = ({ getData, data, base }) => {
         getData()
         setValue(0)
         setSliderValue(0)
+        onClose()
       })
     }
   }

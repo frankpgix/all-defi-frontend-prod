@@ -1,6 +1,9 @@
 import BN from 'bignumber.js'
 import { isNaN, sum } from 'lodash'
-import { useReadContract } from 'wagmi'
+import { base } from 'viem/chains'
+import { useReadContract, useReadContracts } from 'wagmi'
+
+import VaultABI from '@/config/abi/VaultSimple.json'
 
 import { useVaultReaderContract } from '@/hooks/Contracts/useContract'
 import { useProfile } from '@/hooks/useProfile'
@@ -47,6 +50,42 @@ export const useVaultDetail = (vaultAddress: AddressType) => {
     return { data: calcVaultDetail(data, getTokenByAddress), isLoading, isSuccess, refetch }
   }
   return { data: VaultDetailDefault, isLoading, isSuccess, refetch }
+}
+
+export const useVaultBaseAddressList = () => {
+  // vaultList
+  const VaultReaderContract = useVaultReaderContract()
+  const { data, isSuccess, isLoading } = useReadContract({
+    ...VaultReaderContract,
+    functionName: 'vaultList'
+  }) as { data: AddressType[]; isSuccess: boolean; isLoading: boolean }
+  if (!isLoading && isSuccess) {
+    return { data, isLoading, isSuccess }
+  }
+  return { data: [], isLoading, isSuccess }
+}
+
+export const useVaultBaseList = () => {
+  // vaultList
+  const { data: address, isLoading: loading, isSuccess: success } = useVaultBaseAddressList()
+  const { getTokenByAddress } = useToken()
+  const contracts = address.map((item) => ({
+    address: item,
+    abi: VaultABI as any,
+    functionName: 'baseInfo'
+  }))
+  // console.log(11122, contracts)
+  const { data, isSuccess, isLoading } = useReadContracts({ contracts })
+  console.log(11122, data, isSuccess, isLoading)
+  if (!isLoading && isSuccess && !loading && success) {
+    // console.log(data, 1234, isSuccess, isLoading)
+    const res = data.map((item, index) =>
+      calcVaultBaseInfo(item.result, getTokenByAddress, contracts[index].address)
+    )
+    // console.log(res)
+    return { data: res, isLoading, isSuccess }
+  }
+  return { data: [], isLoading, isSuccess }
 }
 
 export const useUserVaultDetail = (vaultAddress: AddressType) => {
@@ -131,11 +170,12 @@ export const useAssetComposition = (
 export const useUserVaultList = () => {
   const VaultReaderContract = useVaultReaderContract()
   const { getTokenByAddress } = useToken()
+  const { data: baseList, isLoading: baseLoading, isSuccess: baseSuccess } = useVaultBaseList()
   const { account } = useProfile()
-
-  const { vaultList } = useVaultListHook()
+  // const { vaultList } = useVaultListHook()
+  const { data: vaultList, isLoading: isListLoading } = useVaultList()
   const vaultLists = vaultList.filter((item) => item.status !== -1)
-  // console.log('vaultList', vaultList)
+  console.log('baseList', baseList)
   const {
     data: sData,
     isSuccess,
@@ -152,30 +192,40 @@ export const useUserVaultList = () => {
   if (error) {
     console.error(error)
   }
-  if (account && !isLoading && isSuccess) {
-    const [fundList, detailList] = sData
+  if (account && !isLoading && isSuccess && !isListLoading && !baseLoading && baseSuccess) {
+    // console.log('vaultList', vaultLists, sData)
+    const data = sData.map((item: any) => {
+      // console.log(item)
+      const base = baseList.find((base) => base.address === item.vaultAddress)
+      if (!base) return null
+      // console.log(fund)
+      const detail = vaultLists.find((vault) => vault.address === item.vaultAddress)
+      // console.log(fund, detail)
+      const userDetail = calcVaultUserDetail(item, getTokenByAddress, 1)
+      console.log(base, detail, userDetail)
+      return { base, detail, userDetail }
+    })
+    // const [fundList, detailList] = sData
     // console.log(sData)
-    const data: VaultUserListDataProps[] = fundList
-      .map((item: any, index: number) => {
-        const fund: VaultProps = calcVaultBaseInfo(item, getTokenByAddress)
-        const valut = vaultLists.find(
-          (vault) =>
-            vault.underlyingToken.address.toLocaleLowerCase() ===
-            item.underlying.toLocaleLowerCase()
-        )
-        // console.log(111122, vaultLists, item, valut, 'item')
-        fund.data = calcVaultUserDetail(
-          detailList[index],
-          getTokenByAddress,
-          valut?.underlyingPriceInUSD ?? 1
-        )
-        // fund.address = fund.data.address
-        return fund
-      })
-      .filter(
-        (item: VaultUserListDataProps) =>
-          item.data.stakingACToken + item.data.unclaimedACToken + item.data.shares !== 0
-      )
+    // const data: VaultUserListDataProps[] = sData
+    //   .map((item: any) => {
+    //     console.log(item)
+    //     const fund: VaultProps = calcVaultBaseInfo(item, getTokenByAddress)
+    //     const valut = vaultLists.find(
+    //       (vault) =>
+    //         vault.underlyingToken.address.toLocaleLowerCase() ===
+    //         item.underlying.toLocaleLowerCase()
+    //     )
+    //     // console.log(111122, vaultLists, item, valut, 'item')
+    //     // const detail = detailList.find((item) => item.address === fund.address)
+    //     fund.data = calcVaultUserDetail({}, getTokenByAddress, valut?.underlyingPriceInUSD ?? 1)
+    //     // fund.address = fund.data.address
+    //     return fund
+    //   })
+    // .filter(
+    //   (item: VaultUserListDataProps) =>
+    //     item.data.pendingStake + item.data.unclaimedUnderlying + item.data.shares !== 0
+    // )
 
     // console.log(data, 222)
     return { data, isSuccess, isLoading, refetch }
@@ -190,7 +240,6 @@ export const useVaultList = () => {
     functionName: 'vaultDetailList',
     args: [0, 999]
   }) as { error: any; data: any[]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
-  // console.log(error, data, isSuccess, isLoading, 'data, isSuccess, isLoading')
   if (error) {
     console.error(error)
   }
@@ -202,6 +251,7 @@ export const useVaultList = () => {
       refetch
     }
   }
+
   return { data: [] as VaultDetailProps[], isLoading, isSuccess, refetch }
 }
 

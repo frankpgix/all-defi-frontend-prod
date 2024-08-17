@@ -103,11 +103,11 @@ export const calcVaultDetail = (
   item: any,
   getTokenByAddress: GetTokenFuncType
 ): VaultDetailProps => {
-  // console.log(item, 'test')
+  console.log(item.stage, 'item.stage')
   const epochStartTime = Number(safeInterceptionValues(item.epochStartTime, 0, 0)) * 1000
   const underlyingToken = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlyingToken.decimals
-  const status = Number(safeInterceptionValues(item.stage, 0, 0)) - 1
+  const status = Number(safeInterceptionValues(item.stage, 0, 0))
   const { hash } = calcVaultHash(item.vaultAddress ?? '0x')
   const sharePrice = Number(safeInterceptionValues(item.sharePrice, 4, 18))
   const beginningSharePrice = Number(safeInterceptionValues(item.beginningSharePrice, 4, 18))

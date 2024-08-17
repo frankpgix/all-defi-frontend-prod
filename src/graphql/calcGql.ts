@@ -91,7 +91,7 @@ export const calcVaultDetailChartGQL = (vaultAddress: string, epoch: number, tim
 
 export const calcVaultListGQL = () => gql`
   query {
-    vaults(where: { stage: 1 }) {
+    vaults {
       id
       # verified
       name

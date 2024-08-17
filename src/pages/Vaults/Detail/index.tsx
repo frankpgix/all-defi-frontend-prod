@@ -12,7 +12,7 @@ import UnStakeButton from '@@/Vaults/UnStakeButton'
 import Alert from '@@/common/Alert'
 import Blank from '@@/common/Blank'
 
-import Bench from './c/Bench'
+// import Bench from './c/Bench'
 import Dashboard from './c/Dashboard'
 // import Portfolio from './c/Portfolio'
 import RoeHistory from './c/RoeHistory'

@@ -25,7 +25,7 @@ const StakeButton: FC<Props> = ({ getData, data, base }) => {
         Stake
       </Button>
       <Modal show={show} onClose={setLeft} title="Stake to Vault" width={1000}>
-        <Stake {...{ getData, data, base }} />
+        <Stake {...{ getData, data, base }} onClose={setLeft} />
       </Modal>
     </>
   )

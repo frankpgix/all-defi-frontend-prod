@@ -8,7 +8,7 @@ import Table from 'rc-table'
 // import { useVaultHashHook } from '@/hooks/useVaultList'
 import { VaultDetailProps } from '@/types/vault'
 
-import { calcVaultHash } from '@/compute/vault'
+// import { calcVaultHash } from '@/compute/vault'
 // import { VaultDetailProps } from '@/class/help'
 import { useVaultListData } from '@/graphql/useData'
 import { FundName } from '@@/common/FundIcon'
