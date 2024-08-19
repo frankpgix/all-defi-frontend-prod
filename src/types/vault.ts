@@ -78,6 +78,8 @@ export interface VaultDetailProps {
   sharePrice: number
   beginningSharePrice: number
   // stakingACToken: number
+  pendingStake: number
+  pendingUnstake: number
   unstakingShare: number
 
   roe: number

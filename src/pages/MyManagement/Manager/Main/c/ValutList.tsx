@@ -85,14 +85,14 @@ const FundList: FC = () => {
               </Badge>
             ) : (
               <ValutSettleButton
-                disabled={![3].includes(record.status)}
+                disabled={record.status >= 4}
                 callback={getData}
                 vaultAddress={record.address}
                 outline
                 size="mini"
                 data={record}
               >
-                {record.status != 4 ? 'settle' : 'Settling'}
+                {record.status < 4 ? 'settle' : 'Settling'}
               </ValutSettleButton>
             )}
           </div>

@@ -48,12 +48,8 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
   // data.historicalReturn + data.platFee + data.managerFee
   // console.log(data.historicalReturn)
   const historicalReturn = useMemo(
-    () =>
-      BN(data.historicalReturn)
-        .plus(data.historicalPlatFee)
-        .plus(data.historicalManagerFee)
-        .toNumber(),
-    [data.historicalReturn, data.platFee, data.managerFee]
+    () => BN(data.historicalReturn).toNumber(),
+    [data.historicalReturn]
   )
   return (
     <>

@@ -145,6 +145,8 @@ export const calcVaultDetail = (
     sharePrice,
     beginningSharePrice,
     // stakingACToken: Number(safeInterceptionValues(item.stakingACToken, decimals, decimals)),
+    pendingStake: Number(safeInterceptionValues(item.pendingStake, 4, 18)),
+    pendingUnstake: Number(safeInterceptionValues(item.pendingUnstake, 4, 18)),
     unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 4, 18)),
 
     roe: BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber(),

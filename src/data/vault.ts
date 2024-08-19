@@ -109,6 +109,8 @@ export const VaultDetailDefault: VaultDetailProps = {
   beginningSharePrice: 0,
   unstakingShare: 0,
 
+  pendingStake: 0,
+  pendingUnstake: 0,
   roe: 0,
   historicalReturn: 0,
 

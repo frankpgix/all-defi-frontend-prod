@@ -48,6 +48,7 @@ interface Props {
 }
 
 const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getData, loading }) => {
+  console.log(data, 'data')
   // const { getFundUpdatingData } = FundReader
   // const { data: upData, loading: upLoading } = useRequest(
   //   async () => await getFundUpdatingData(vaultAddress, base.baseToken)
@@ -87,19 +88,19 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
   // }, [data.settleAUMLimit, data.nav])
 
   const nextRoundCash = useMemo(() => {
-    let temp = BN(data.unstakingShare).times(data.sharePrice)
+    let temp = BN(data.pendingUnstake).times(data.sharePrice)
     temp = temp.plus(data.platFee).plus(data.managerFee)
     // if (data.epochIndex % 6 === 0) {
     //   temp = temp.plus(data.platFee).plus(data.managerFee)
     // }
     const v = Number(
-      temp.minus(data.stakingACToken).toFixed(data.underlyingToken.precision, BN.ROUND_UP)
+      temp.minus(data.pendingStake).toFixed(data.underlyingToken.precision, BN.ROUND_UP)
     )
     return v >= 0 ? v : 0
   }, [
-    data.unstakingShare,
+    data.pendingUnstake,
     data.sharePrice,
-    data.stakingACToken,
+    data.pendingStake,
     data.epochIndex,
     data.platFee,
     data.managerFee
@@ -122,9 +123,9 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
   // 下轮赎回减去下轮申购减去FEE ？？ 大于现金余额
   const isShowCashBalanceLess = useMemo(
     () => BN(nextRoundCash).toNumber() > BN(data.underlyingBalance).toNumber(),
-    [nextRoundCash, data.stakingACToken, data.underlyingBalance]
+    [nextRoundCash, data.pendingStake, data.underlyingBalance]
   )
-  console.log(nextRoundCash, data.stakingACToken, data.underlyingBalance)
+  console.log(nextRoundCash, data.pendingStake, data.underlyingBalance)
   return (
     <>
       <CountLayout>
@@ -300,13 +301,13 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           </SectionTip> */}
           <SectionButtons>
             <ValutSettleButton
-              disabled={![3].includes(data.status)}
+              disabled={data.status > 3}
               outline
               callback={getData}
               vaultAddress={vaultAddress}
               data={data}
             >
-              {data.status != 4 ? 'settle' : 'Settling'}
+              {data.status < 4 ? 'settle' : 'Settling'}
             </ValutSettleButton>
           </SectionButtons>
         </TabPanel>
@@ -393,7 +394,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               }
             />
             <SectionItem
-              label="Historical Epoch  Manager Fee"
+              label="Historical Epoch  Manager Fee (待定)"
               loading={loading}
               value={
                 <TokenValue
@@ -454,7 +455,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               }
             /> */}
             <SectionItem
-              label="Historical Epoch  Platform Fee"
+              label="Historical Epoch  Platform Fee(待定)"
               loading={loading}
               value={
                 <TokenValue
@@ -487,10 +488,10 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               loading={loading}
               // popper="Total amount of Shares under redemption"
             >
-              {formatNumber(data.unstakingShare, 2, '0,0.00')} Shares ≈{' '}
+              {formatNumber(data.pendingUnstake, 2, '0,0.00')} Shares ≈{' '}
               {/*formatNumber(BN(data.redeemingShares).times(data.sharePrice).toNumber(), 2, '$0,0.00')*/}
               <TokenValue
-                value={BN(data.unstakingShare).times(data.sharePrice).toNumber()}
+                value={BN(data.pendingUnstake).times(data.sharePrice).toNumber()}
                 token={baseToken}
                 size="mini"
                 format="0,0.00"
@@ -502,7 +503,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               // popper="Total value under subscription"
               value={
                 <TokenValue
-                  value={data.stakingACToken}
+                  value={data.pendingStake}
                   token={baseToken}
                   size="mini"
                   format="0,0.00"
@@ -516,11 +517,11 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               loading={loading}
               // popper="Total amount of Shares under redemption"
             >
-              {formatNumber(data.unstakingShare, 2, '0,0.00')} Shares ≈{' '}
+              {formatNumber(data.pendingUnstake, 2, '0,0.00')} Shares ≈{' '}
               {/*formatNumber(BN(data.redeemingShares).times(data.sharePrice).toNumber(), 2, '$0,0.00')
               /}
               <TokenValue
-                value={BN(data.unstakingShare).times(data.sharePrice).toNumber()}
+                value={BN(data.pendingUnstake).times(data.sharePrice).toNumber()}
                 token={baseToken}
                 size="mini"
                 format="0,0.00"
@@ -532,7 +533,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               // popper="Total value under subscription"
               value={
                 <TokenValue
-                  value={data.stakingACToken}
+                  value={data.pendingStake}
                   token={baseToken}
                   size="mini"
                   format="0,0.00"
@@ -542,7 +543,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
             <SectionItem loading={loading} label="Capacity Available">
               <TokenValue
                 value={Math.max(
-                  BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber(),
+                  BN(data.aum).minus(data.beginningAUM).minus(data.pendingStake).toNumber(),
                   0
                 )}
                 token={baseToken}
