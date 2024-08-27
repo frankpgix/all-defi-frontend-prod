@@ -23,7 +23,13 @@ const Step0: FC<Props> = ({ onConfirm, show }) => {
 
   return (
     <>
-      <BlueLineSection hide={!show} web={false} className="c-create-step" title="Before You Start">
+      <BlueLineSection
+        hide={!show}
+        web={false}
+        className="c-create-step"
+        titleIcon="icon/section-tip.svg"
+        title="Before You Start"
+      >
         <div className="c-create-step-tip">
           <h3>The first epoch of the vault</h3>
           <main>

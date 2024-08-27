@@ -1,6 +1,8 @@
 import { FC, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { useBoolean } from 'ahooks'
+
 import { useClaim } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
 
@@ -22,15 +24,18 @@ const Claim: FC<Props> = ({ userData, getData, onClose }) => {
   const { fundAddress } = useParams()
   const { account } = useProfile()
 
+  const [submiting, { toggle: toggleSubmiting }] = useBoolean(false)
   const value = userData.unclaimedUnderlying
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
   const acToken = useMemo(() => userData.underlying, [userData.underlying])
 
   const onRedeem = async () => {
     if (account && fundAddress) {
+      toggleSubmiting()
       await onClaim(account)
       getData()
       onClose()
+      toggleSubmiting()
     }
   }
 
@@ -49,7 +54,7 @@ const Claim: FC<Props> = ({ userData, getData, onClose }) => {
         />
       </div>
       <div className="c-vault-stake-action">
-        <Button onClick={onRedeem} disabled={value <= 0}>
+        <Button onClick={onRedeem} disabled={value <= 0 || submiting}>
           confirm
         </Button>
       </div>
@@ -57,8 +62,8 @@ const Claim: FC<Props> = ({ userData, getData, onClose }) => {
         show={infoStatus}
         onConfirm={onRedeem}
         onClose={() => setInfoStatus(false)}
-        title="Claim AC token"
-        msg={`${userData.unclaimedUnderlying} acUSDC will be claimed`}
+        title="Claim"
+        msg={`${userData.unclaimedUnderlying} ${userData.underlying.name} will be claimed`}
       />
     </>
   )

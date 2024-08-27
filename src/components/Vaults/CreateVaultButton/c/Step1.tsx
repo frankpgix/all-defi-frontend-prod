@@ -54,7 +54,6 @@ const Step1: FC<Props> = ({ onConfirm, show }) => {
             value={name}
             onChange={(val) => setName(val)}
             label="Vault name"
-            count
             maxLength={20}
             placeholder="Enter Vault Name"
             error={nameError}
@@ -65,7 +64,6 @@ const Step1: FC<Props> = ({ onConfirm, show }) => {
             value={symbol}
             onChange={(val) => setSymbol(val)}
             label="Vault symbol"
-            count
             maxLength={10}
             placeholder="Enter Vault Symbol"
             error={symbolError}
@@ -76,7 +74,6 @@ const Step1: FC<Props> = ({ onConfirm, show }) => {
             value={managerName}
             onChange={(val) => setManagerName(val)}
             label="manager name"
-            count
             maxLength={20}
             placeholder="Enter Manager Name"
             error={managerNameError}
@@ -88,9 +85,9 @@ const Step1: FC<Props> = ({ onConfirm, show }) => {
           type="textarea"
           value={desc}
           onChange={(val) => setDesc(val)}
-          label="manager introduction"
+          label="Manager & Vault introduction"
           count
-          maxLength={200}
+          maxLength={500}
           placeholder="Enter Introduction"
         />
         <footer>

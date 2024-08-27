@@ -21,7 +21,7 @@ interface Props {
 const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
   const { getTokenByAddress } = useToken()
   const baseTokenOptions = useUnderlyingTokenOptions()
-  console.log(baseTokenOptions, baseTokenOptions[0].value)
+  // console.log(baseTokenOptions, baseTokenOptions[0].value)
   const [minAmount, setMinAmount] = useState<string | number>('')
   const [underlyingAddress, setUnderlyingAddress] = useState(baseTokenOptions[0].value)
   const underlyingToken = useMemo(() => getTokenByAddress(underlyingAddress), [underlyingAddress])
@@ -74,8 +74,8 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
         title="Step 2 Protocol Selection"
       >
         {/*<h2>Deposit Limits</h2>*/}
-        {underlyingAddress}
-        <div className="c-create-step-2col">
+        {/* {underlyingAddress} */}
+        <div className="c-create-step-1col">
           <Select
             label="Denomination Assets"
             disabled
@@ -83,6 +83,10 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
             onChange={onBaseTokenChange}
             objOptions={baseTokenOptions}
           />
+          <p className="c-create-step-text">
+            The denomination asset is the asset in which depositors deposit into your vault and
+            earnings are distributed in that asset
+          </p>
         </div>
         <div className="c-create-step-2col">
           <Input
@@ -103,8 +107,10 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
         </div>
         <h3>select protocol allowed</h3>
         <ul className="c-create-step-product-list">
-          <li className="active">
-            <Image src={`/products/CEFFU.png`} alt={'CEFFU'} />
+          {/* <li className="active">
+           */}
+          <li>
+            <Image src={`/symbol/bnb.svg`} alt={'CEFFU'} />
           </li>
         </ul>
         {/*  <Image src={`/products/CEFFU.png`} alt={'CEFFU'} /> */}

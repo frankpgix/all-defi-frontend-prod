@@ -1,5 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
+import { useBoolean } from 'ahooks'
 import BN from 'bignumber.js'
 import { isNaN } from 'lodash'
 
@@ -24,6 +25,7 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
   const { account } = useProfile()
   const { onUnstake } = useUnstake(data.address)
 
+  const [submiting, { toggle: toggleSubmiting }] = useBoolean(false)
   const [value, setValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
@@ -55,18 +57,20 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
         .multipliedBy(100)
         .integerValue()
         .toNumber()
-      setValue(Number(val))
+      setValue(Number(val) || '')
       setSliderValue(currSliderValue)
     }
   }
 
   const goUnstake = async () => {
     if (account) {
+      toggleSubmiting()
       await onUnstake(data.underlyingToken, Number(value), account)
       getData()
       setValue(0)
       setSliderValue(0)
       onClose()
+      toggleSubmiting()
     }
   }
 
@@ -105,7 +109,7 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
       </div>
       <div className="c-vault-stake-action">
         <footer>
-          <Button onClick={goUnstake} disabled={Number(value) <= 0 || !isInUnstake}>
+          <Button onClick={goUnstake} disabled={Number(value) <= 0 || !isInUnstake || submiting}>
             confirm
           </Button>
           {!isInUnstake && <Tip>Unauthorized operation</Tip>}

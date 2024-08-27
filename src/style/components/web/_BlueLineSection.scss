@@ -19,6 +19,15 @@
       color: $blue;
       font-weight: 800;
       text-transform: capitalize;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      & > img {
+        display: block;
+        width: 30px;
+        height: 30px;
+      }
     }
     &.first {
       padding: 0 40px;

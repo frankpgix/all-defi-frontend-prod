@@ -45,6 +45,7 @@ const CreateFund: FC<{ onConfirm: () => void }> = ({ onConfirm }) => {
     setBaseTokenAddress(underlying)
     const statusArr = [...stepStatus]
     statusArr[1] = true
+    statusArr[2] = true
     setStepStatus(statusArr)
     setStepIndex(2)
   }

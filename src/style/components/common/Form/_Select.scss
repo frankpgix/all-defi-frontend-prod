@@ -95,6 +95,16 @@
       }
     }
   }
+  &.disabled &-show button {
+    border-color: $gray;
+    // color: $dGray;
+    cursor: not-allowed;
+    background: $bgBlue;
+    &:after {
+      border-color: $gray;
+    }
+    // opacity: 0.7;
+  }
   &.show &-show {
     z-index: 2;
   }

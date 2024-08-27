@@ -2,17 +2,28 @@ import { FC, ReactNode } from 'react'
 
 import classNames from 'classnames'
 
+import Image from '@/components/common/Image'
+
 interface HeaderProps {
   title?: string
+  titleIcon?: string
   headerRight?: ReactNode
   first?: boolean
 }
 
-export const BlueLineSectionHeader: FC<HeaderProps> = ({ title, headerRight, first }) => {
+export const BlueLineSectionHeader: FC<HeaderProps> = ({
+  title,
+  titleIcon,
+  headerRight,
+  first
+}) => {
   if (!title) return null
   return (
     <header className={classNames('web-c-blue-line-section-header', { first })}>
-      <h2>{title}</h2>
+      <h2>
+        {titleIcon && <Image src={titleIcon} />}
+        {title}
+      </h2>
       {headerRight && headerRight}
     </header>
   )
@@ -20,6 +31,7 @@ export const BlueLineSectionHeader: FC<HeaderProps> = ({ title, headerRight, fir
 
 interface Props {
   title?: string
+  titleIcon?: string
   className?: string
   children: ReactNode
   headerRight?: ReactNode
@@ -29,6 +41,7 @@ interface Props {
 
 const BlueLineSection: FC<Props> = ({
   title,
+  titleIcon,
   className,
   children,
   headerRight,
@@ -37,7 +50,7 @@ const BlueLineSection: FC<Props> = ({
 }) => {
   return (
     <section className={classNames('web-c-blue-line-section', { hide, web })}>
-      <BlueLineSectionHeader title={title} headerRight={headerRight} first />
+      <BlueLineSectionHeader title={title} titleIcon={titleIcon} headerRight={headerRight} first />
       <main className={classNames('web-c-blue-line-section-main', className)}>{children}</main>
     </section>
   )

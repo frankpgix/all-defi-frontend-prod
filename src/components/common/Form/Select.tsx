@@ -59,7 +59,10 @@ const Select: FC<SelectProps> = ({
 
   console.log(value, objOptions)
   return (
-    <div className={classNames('web-select', { show: showOptions, mini }, className)} ref={ref}>
+    <div
+      className={classNames('web-select', { show: showOptions, mini, disabled }, className)}
+      ref={ref}
+    >
       {label && <label>{label}</label>}
       <div className="web-select-show">
         <button onClick={onSelect}>

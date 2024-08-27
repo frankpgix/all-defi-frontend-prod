@@ -260,7 +260,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
 
             <SectionItem label="Denomination Asset" loading={loading} value={baseToken.name} />
           </SectionLayout>
-          <SectionLayout col="3">
+          <SectionLayout col="2">
             <SectionItem
               label="Minimum Deposit Amount"
               loading={loading}
@@ -393,7 +393,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                 <TokenValue value={data.managerFee} token={baseToken} size="mini" format="0,0.00" />
               }
             />
-            <SectionItem
+            {/* <SectionItem
               label="Historical Epoch  Manager Fee (待定)"
               loading={loading}
               value={
@@ -404,7 +404,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                   format="0,0.00"
                 />
               }
-            />
+            /> */}
             {/* min 0 (aum * roe) * 20%  */}
             {/* <SectionItem
               label="Unsettled Manager Fee"
@@ -454,7 +454,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                 <TokenValue value={data.platFee} token={baseToken} size="mini" format="0,0.00" />
               }
             /> */}
-            <SectionItem
+            {/* <SectionItem
               label="Historical Epoch  Platform Fee(待定)"
               loading={loading}
               value={
@@ -465,7 +465,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                   format="0,0.00"
                 />
               }
-            />
+            /> */}
           </SectionLayout>
         </TabPanel>
         {/* Fund TabPanel */}

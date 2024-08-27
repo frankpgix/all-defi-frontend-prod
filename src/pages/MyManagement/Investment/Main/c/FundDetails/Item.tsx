@@ -226,7 +226,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                 </SectionItem>
               </section>
               <footer>
-                <Button size="medium" to={`/fund-market/detail/${fund.detail.address}`}>
+                <Button size="medium" to={`/vaults/detail/${fund.detail.address}`}>
                   view details
                 </Button>
               </footer>

@@ -30,6 +30,7 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
   const { balances, refetch: reBalances } = useUserBalances()
   const { onStake } = useStake(data.address)
   const [accredit, { toggle }] = useBoolean(false)
+  const [submiting, { toggle: toggleSubmiting }] = useBoolean(false)
 
   const acToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
 
@@ -70,7 +71,7 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
 
   const onInputChange = (val: number | string) => {
     val = Number(val)
-    setInputValue(val)
+    setInputValue(val || '')
     if (isNaN(val)) val = 0
     // if (val > maxValue) val = maxValue
     if (val < 0) val = 0
@@ -80,20 +81,22 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
         .multipliedBy(100)
         .integerValue()
         .toNumber()
-      setValue(Number(val))
+      setValue(Number(val) || '')
       setSliderValue(currSliderValue)
     }
   }
 
   const goAllocate = async () => {
     if (account) {
+      toggleSubmiting()
       await onStake(acToken, Number(value), account, () => {
         reBalances()
         getData()
-        setValue(0)
+        setValue('')
         setSliderValue(0)
         onClose()
       })
+      toggleSubmiting()
     }
   }
 
@@ -155,7 +158,7 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
         </div>
         <div className="c-vault-stake-action">
           <footer>
-            <Button onClick={goAllocate} disabled={Number(value) <= 0 || !accredit}>
+            <Button onClick={goAllocate} disabled={Number(value) <= 0 || !accredit || submiting}>
               confirm
             </Button>
             {!isInAllocate && <Tip>Unauthorized operation</Tip>}

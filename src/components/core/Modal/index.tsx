@@ -1,11 +1,12 @@
 import { FC, ReactNode } from 'react'
 import ReactModal from 'react-modal'
 
+import { useBoolean } from 'ahooks'
 import classNames from 'classnames'
 
 import { useMobile } from '@/hooks/useMobile'
 
-import { calcCssNumber, px2rem } from '@/utils/tools'
+import { calcCssNumber, px2rem, sleep } from '@/utils/tools'
 
 interface Props {
   children: ReactNode
@@ -34,22 +35,32 @@ const Modal: FC<Props> = ({
   bodyClassName
 }) => {
   const { mobile } = useMobile()
+  const [status, { toggle }] = useBoolean(false)
   const modalWidth = { width: !mobile ? calcCssNumber(width) : px2rem(343) }
   const removeBodyClass = () => {
     document.body.classList.remove('c-react-modal-noscroll')
   }
-  if (!show) return null
+
+  const handleClose = async () => {
+    toggle()
+    await sleep(250)
+    onClose()
+    toggle()
+  }
+  // if (!show) return null
   return (
     <ReactModal
       isOpen={Boolean(show)}
       portalClassName="c-react-modal-portal"
       overlayClassName="c-react-modal-overlay"
       bodyOpenClassName="c-react-modal-noscroll"
-      className={classNames('c-react-modal-content', className)}
+      className={classNames('c-react-modal-content', className, 'animate__animated', {
+        animate__fadeOut: status
+      })}
       // bodyOpenClassName={null}
       shouldCloseOnEsc={false}
       shouldCloseOnOverlayClick={Boolean(closeOnOverlayClick)}
-      onRequestClose={onClose}
+      onRequestClose={handleClose}
       style={{ content: modalWidth }}
       ariaHideApp={false}
       preventScroll={true}
@@ -57,7 +68,7 @@ const Modal: FC<Props> = ({
     >
       <header className="c-react-modal-header">
         <h4>{title && title}</h4>
-        <button onClick={onClose} />
+        <button onClick={handleClose} />
       </header>
       <section className={classNames('c-react-modal-body', bodyClassName)}>{children}</section>
     </ReactModal>

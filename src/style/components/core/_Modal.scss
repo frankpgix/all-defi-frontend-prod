@@ -79,6 +79,11 @@
   }
 }
 
+.ReactModal__Overlay {
+  opacity: 0;
+  @include dz();
+}
+
 .ReactModal__Overlay--after-open {
   opacity: 1;
 }
