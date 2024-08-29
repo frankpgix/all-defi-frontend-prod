@@ -74,6 +74,7 @@ const CreateFund: FC<{ onConfirm: () => void }> = ({ onConfirm }) => {
 
   return (
     <>
+      {/* <button onClick={onConfirm}>222</button> */}
       <StepLine activeIndex={stepIndex} stepStatus={stepStatus} setStepIndex={setStepIndex} />
       <Step0 show={stepIndex === -1} onConfirm={onStep0Confirm} />
       <Step1 show={stepIndex === 0} onConfirm={onStep1Confirm} />

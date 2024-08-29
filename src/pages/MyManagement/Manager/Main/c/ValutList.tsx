@@ -75,6 +75,7 @@ const FundList: FC = () => {
       dataIndex: 'address',
       width: 180,
       render: (_: string, record: VaultDetailProps) => {
+        console.log(record, 'record')
         return (
           <div className="web-buy-table-action">
             {record.status === -1 ? (
@@ -85,7 +86,7 @@ const FundList: FC = () => {
               </Badge>
             ) : (
               <ValutSettleButton
-                disabled={record.status >= 4}
+                disabled={record.status > 3}
                 callback={getData}
                 vaultAddress={record.address}
                 outline

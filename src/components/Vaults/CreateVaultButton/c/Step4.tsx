@@ -51,8 +51,8 @@ const Step4: FC<Props> = ({ onConfirm, show, onBack, data, baseTokenAddress }) =
         <div className="c-create-step-1col">
           <DataItem label="selected protocol">
             <ul className="c-create-step-product-list">
-              <li className="active">
-                <Image src={`/products/CEFFU.png`} alt={'CEFFU'} />
+              <li>
+                <Image src={`/symbol/bnb.svg`} alt={'CEFFU'} />
               </li>
             </ul>
           </DataItem>

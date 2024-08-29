@@ -46,7 +46,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
     [data.roe]
   )
   // data.historicalReturn + data.platFee + data.managerFee
-  // console.log(data.historicalReturn)
+  console.log(currentEpochReturn, data.roe)
   const historicalReturn = useMemo(
     () => BN(data.historicalReturn).toNumber(),
     [data.historicalReturn]

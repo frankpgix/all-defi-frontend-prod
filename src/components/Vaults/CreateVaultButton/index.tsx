@@ -7,6 +7,7 @@ import { useProfile } from '@/hooks/useProfile'
 import { useGetManageVaultList, useManageVaultListHook } from '@/hooks/useVaultList'
 
 import Cache from '@/utils/cache'
+import { sleep } from '@/utils/tools'
 import Button from '@@/common/Button'
 import Popper from '@@/common/Popper'
 import Modal from '@@/core/Modal'
@@ -24,6 +25,11 @@ const CreateVaultButton: FC = () => {
     Cache.get('CreateFundStep2Temp') ||
     Cache.get('CreateFundStep3Temp')
 
+  const onConfirm = async () => {
+    await sleep(1000)
+    setLeft()
+    window.location.reload()
+  }
   if (loading) {
     return (
       <ContentLoader
@@ -53,7 +59,7 @@ const CreateVaultButton: FC = () => {
         {isCacheCreate ? 'Unfinished Edits' : 'Create Vaults'}
       </Button>
       <Modal show={show} onClose={setLeft} title="Create Vault">
-        <Create onConfirm={setLeft} />
+        <Create onConfirm={onConfirm} />
       </Modal>
     </>
   )

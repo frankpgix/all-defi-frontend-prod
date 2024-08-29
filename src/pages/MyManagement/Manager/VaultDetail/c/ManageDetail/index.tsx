@@ -299,6 +299,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
             audit is passed. Please note that changing the Vault policy may cause users to change
             their investment strategy and cause withholding, please modify it carefully.
           </SectionTip> */}
+          <br />
           <SectionButtons>
             <ValutSettleButton
               disabled={data.status > 3}

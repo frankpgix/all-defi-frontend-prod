@@ -15,10 +15,10 @@ const Guide: FC = () => {
           from the open market at market price.
         </p>
         <aside>
-          <Button to="/buy" outline>
+          {/* <Button to="/buy" outline>
             Buy AC token
-          </Button>
-          <Button to="/fund-market">STAKE TO A VAULT</Button>
+          </Button> */}
+          <Button to="/vaults">STAKE TO A VAULT</Button>
         </aside>
         <section>
           <dl>

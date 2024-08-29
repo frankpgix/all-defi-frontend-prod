@@ -38,11 +38,13 @@ export const useGetManageVaultList = () => {
   const { update } = useStoreManageVaultList((state: any) => ({
     update: state.update
   }))
-  const { data, isLoading } = useManageVaultList()
-  // console.log(data, isLoading, 'data, isLoading')
+  const { data, isLoading, refetch } = useManageVaultList()
+  console.log(data, isLoading, 'data, isLoading')
   useEffect(() => {
     update(data, isLoading)
   }, [isLoading])
+
+  return { refetch }
 }
 
 export const useVaultList = (): VaultListType => {

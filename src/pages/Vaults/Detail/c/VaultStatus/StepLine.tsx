@@ -16,7 +16,7 @@ interface Props {
 
 const StepLine: FC<Props> = ({ data, loading }) => {
   let activeIndex = data.status
-  // console.log(data.status, ' data.status')
+  console.log(data.status, ' data.status', data)
   const now = +new Date()
   if (now > data.settleEndTime && data.status === 3) {
     activeIndex = 4
@@ -41,12 +41,12 @@ const StepLine: FC<Props> = ({ data, loading }) => {
     },
     {
       label: 'Pre-Settlement Period',
-      time: data.epochIndex === 0 ? data.zeroSubscribeEndTime : data.subscribeEndTime,
+      time: data.subscribeEndTime,
       status: 2
     },
     {
       label: 'Settlement Period',
-      time: data.preSettleEndTime,
+      time: data.epochIndex === 0 ? data.zeroSubscribeEndTime : data.preSettleEndTime,
       status: 3
     },
     {
