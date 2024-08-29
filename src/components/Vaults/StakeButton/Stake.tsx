@@ -158,7 +158,10 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
         </div>
         <div className="c-vault-stake-action">
           <footer>
-            <Button onClick={goAllocate} disabled={Number(value) <= 0 || !accredit || submiting}>
+            <Button
+              onClick={goAllocate}
+              disabled={Number(value) <= 0 || !accredit || submiting || data.status > 1}
+            >
               confirm
             </Button>
             {!isInAllocate && <Tip>Unauthorized operation</Tip>}

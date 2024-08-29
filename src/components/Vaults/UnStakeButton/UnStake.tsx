@@ -109,7 +109,10 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
       </div>
       <div className="c-vault-stake-action">
         <footer>
-          <Button onClick={goUnstake} disabled={Number(value) <= 0 || !isInUnstake || submiting}>
+          <Button
+            onClick={goUnstake}
+            disabled={Number(value) <= 0 || !isInUnstake || submiting || data.status > 0}
+          >
             confirm
           </Button>
           {!isInUnstake && <Tip>Unauthorized operation</Tip>}
@@ -121,7 +124,7 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
         onConfirm={goUnstake}
         onClose={() => setInfoStatus(false)}
         title="Unstake From Vault"
-        msg={`Will Unstake ${value} vault Share, you can claim your AC tokens anytime after final settlement of current epoch`}
+        msg={`Will Unstake ${value} vault Share, you can claim your tokens anytime after final settlement of current epoch`}
       />
     </>
   )

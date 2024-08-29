@@ -302,7 +302,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           <br />
           <SectionButtons>
             <ValutSettleButton
-              disabled={data.status > 3}
+              disabled={data.status !== 3}
               outline
               callback={getData}
               vaultAddress={vaultAddress}

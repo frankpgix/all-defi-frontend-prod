@@ -109,8 +109,8 @@ export const calcVaultDetail = (
   const decimals = underlyingToken.decimals
   const status = Number(safeInterceptionValues(item.stage, 0, 0))
   const { hash } = calcVaultHash(item.vaultAddress ?? '0x')
-  const sharePrice = Number(safeInterceptionValues(item.sharePrice, 4, 18))
-  const beginningSharePrice = Number(safeInterceptionValues(item.beginningSharePrice, 4, 18))
+  const sharePrice = Number(safeInterceptionValues(item.sharePrice, 18, 18))
+  const beginningSharePrice = Number(safeInterceptionValues(item.beginningSharePrice, 18, 18))
   return {
     underlyingToken,
     hash,
