@@ -133,7 +133,7 @@ export const useVaultListData = (): { loading: boolean; data: any[]; error: any 
         verified: true
       }
     })
-    .filter((item: any) => item.verified === true)
+    .filter((item: any) => item.status >= 0)
   return { loading, data, error }
 }
 
