@@ -213,7 +213,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   {/*{formatNumber(fund.data.unclaimedACToken, 2, '$0,0.00')}*/}
                 </SectionItem>
                 <SectionItem label="Current Epoch return %">
-                  <RoeShow value={formatNumber(fund.detail.roe, 2, '0.00')} subArrow />
+                  <RoeShow value={formatNumber(fund.detail.roe * 100, 2, '0.00')} subArrow />
                 </SectionItem>
                 <SectionItem label="Current Epoch return">
                   <TokenValue
