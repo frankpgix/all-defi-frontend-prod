@@ -65,6 +65,7 @@ const Button: FC<ButtonProps> = ({
         text,
         round,
         orange,
+        icon,
         nohand
       })}
       disabled={disabled}

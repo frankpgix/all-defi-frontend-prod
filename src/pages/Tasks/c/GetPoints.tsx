@@ -131,8 +131,8 @@ const GetPoints: FC = () => {
               </strong>
               <span>You have received today.</span>
             </aside>
-            <Button text>Buy acFDUSD</Button>
-            <Button text>Buy acBTC</Button>
+            {/* <Button text>Buy acFDUSD</Button>
+            <Button text>Buy acBTC</Button> */}
           </main>
           <footer>
             <SignHelpButton {...{ isLogin, goLogin }}>

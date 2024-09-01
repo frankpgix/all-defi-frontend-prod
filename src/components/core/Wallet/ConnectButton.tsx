@@ -69,9 +69,7 @@ const ConnectBtn: FC<Props> = ({ simple, children, as, size = 'medium' }) => {
 
               return (
                 <>
-                  <Button size="medium" gradient onClick={openChainModal}>
-                    Net
-                  </Button>
+                  <Button size="medium" icon="icon/net.svg" gradient onClick={openChainModal} />
                   <Button size={size} gradient round={hasNotify} onClick={openDialog}>
                     {memoAccountHide}
                   </Button>

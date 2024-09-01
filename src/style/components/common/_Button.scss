@@ -161,6 +161,16 @@
         width: 48px;
         padding: 0;
       }
+      &.icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 28px;
+        padding: 0;
+        img {
+          width: 32px;
+          height: 32px;
+        }
+      }
     }
     &-mini {
       height: 40px;
