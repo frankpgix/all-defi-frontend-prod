@@ -485,7 +485,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           </SectionLayout>
           <SectionLayout col="2">
             <SectionItem
-              label="Confirming Withholding Amount"
+              label="Confirming Stake Amount"
               loading={loading}
               // popper="Total amount of Shares under redemption"
             >
@@ -499,7 +499,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               />
             </SectionItem>
             <SectionItem
-              label="Confirming Allocation Amount"
+              label="Confirming Unstake Amount"
               loading={loading}
               // popper="Total value under subscription"
               value={

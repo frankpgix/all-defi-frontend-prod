@@ -60,14 +60,15 @@ export const calcVaultDetailChartGQL = (vaultAddress: string, epoch: number, tim
   const calcEpochs = (): number[] => {
     if (timeType === 'current epoch') return [epoch]
     if (timeType === '3 Epochs') {
-      dataType = '6h'
+      dataType = '1h'
       return Array.from(new Set([Math.max(epoch - 2, 0), Math.max(epoch - 1, 0), epoch]))
     }
-    dataType = '1d'
+    dataType = '6h'
     return createArrayByNumber(epoch)
   }
 
   const epochs = calcEpochs()
+  console.log(epochs, 'epochs')
   return gql`
     query {
       vaultIntervalDatas(

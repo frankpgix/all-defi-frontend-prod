@@ -13,6 +13,7 @@ import { useVaultDetailChartData } from '@/graphql/useData'
 // import Loading from '@@/common/Loading'
 import { AreaChart } from '@@/common/Chart'
 import TimeSelect from '@@/common/Chart/TimeSelect'
+import CopyText from '@@/common/CopyText'
 import Select from '@@/common/Form/Select'
 import FundIcon from '@@/common/FundIcon'
 import Image from '@@/common/Image'
@@ -32,13 +33,14 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
   const [timeType, setTimeType] = useState<optionProps>('all')
   const timeOptions: optionProps[] = ['current epoch', '3 Epochs', 'all']
   const underlyingToken = useMemo(() => base.underlying, [base.underlying])
-  // console.log(underlyingToken, 'underlyingToken')
+  console.log(timeType, 'timeType')
   const [chartType, setChartType] = useState<number | string>('aum')
 
   const gql = useMemo(
     () => calcVaultDetailChartGQL(fundAddress, data.epochIndex, timeType),
     [fundAddress, data.epochIndex, timeType]
   )
+  console.log(JSON.stringify(gql), 'gql')
   const { loading: chartLoading, data: chartData } = useVaultDetailChartData(gql, underlyingToken)
   // console.log(data.roe, 'data.data.roe')
   const currentEpochReturn = useMemo(
@@ -72,7 +74,9 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
           ) : (
             <article>
               <FundIcon name={base.name} size="large" />
-              <h4>{base.name}</h4>
+              <h4>
+                {base.name} <CopyText text={base.address} />
+              </h4>
               <p>{base.desc}</p>
             </article>
           )}
