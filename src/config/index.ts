@@ -1,7 +1,8 @@
 export enum ChainId {
   MAINNET = 1,
-  ARBITRUM = 42161,
-  BSCTEST = 97
+  // ARBITRUM = 42161,
+  BSCTEST = 97,
+  BSC = 56
 }
 
 export const DEFAULT_CHAIN_ID = 97

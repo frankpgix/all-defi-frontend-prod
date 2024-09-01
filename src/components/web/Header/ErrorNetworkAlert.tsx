@@ -6,6 +6,7 @@ import Button from '@@/common/Button'
 
 const ErrorNetworkAlert: FC = () => {
   const chains = useChains()
+  console.log(chains)
   const { chainId } = useAccount()
   const { switchChain } = useSwitchChain()
   const chanIds = useMemo(() => chains.map(({ id }) => id), [chains])

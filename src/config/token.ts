@@ -40,7 +40,7 @@ export const bnbConfig: ChainTokenTypes = {
 
 export const chainTokens = {
   [ChainId.MAINNET]: ethConfig,
-  [ChainId.ARBITRUM]: ethConfig,
+  [ChainId.BSC]: bnbConfig,
   [ChainId.BSCTEST]: bnbConfig
 }
 
@@ -50,7 +50,7 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
     symbol: 'sBITU',
     address: {
       [ChainId.MAINNET]: zeroAddress,
-      [ChainId.ARBITRUM]: zeroAddress,
+      [ChainId.BSC]: '0x61183a27ab5FDaCC4D46F5aF9Eb9E6A93afd76d4',
       [ChainId.BSCTEST]: '0x08E261bFB7f347842EA71F77A315BA773aB60A87'
     },
     decimals: 18,

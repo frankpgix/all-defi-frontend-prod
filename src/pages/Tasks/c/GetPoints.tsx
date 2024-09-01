@@ -97,8 +97,8 @@ const GetPoints: FC = () => {
             </SignHelpButton>
           </footer>
         </div>
-        <div className={classNames('p-tasks-get-point-item', { fire: isBaseTaskFinish })}>
-          {/* <header>Token worth $1,000 USD deposit can get 100pts. </header> */}
+        {/* <div className={classNames('p-tasks-get-point-item', { fire: isBaseTaskFinish })}>
+          {/* <header>Token worth $1,000 USD deposit can get 100pts. </header>
           <main>
             <Image src="task/actoken.svg" />
             <h4>Deposit token and get AC Token</h4>
@@ -118,7 +118,7 @@ const GetPoints: FC = () => {
               </Button>
             </SignHelpButton>
           </footer>
-        </div>
+        </div> */}
         <div className={classNames('p-tasks-get-point-item', { fire: isBaseTaskFinish })}>
           {/* <header>Token worth $1,000 USD deposit can get 100pts. </header> */}
           <main>

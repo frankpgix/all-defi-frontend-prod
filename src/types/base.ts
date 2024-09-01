@@ -1,11 +1,11 @@
 // import { Account } from 'viem'
 import { ChainId } from '@/config'
 
-export type ChainIdTypes = ChainId.MAINNET | ChainId.ARBITRUM | ChainId.BSCTEST
+export type ChainIdTypes = ChainId.MAINNET | ChainId.BSC | ChainId.BSCTEST
 
 export type ChainIdRec = {
   [ChainId.MAINNET]?: string | Record<string, any>
-  [ChainId.ARBITRUM]: string | Record<string, any>
+  [ChainId.BSC]: string | Record<string, any>
 }
 
 export type MultiCallResponse<T> = T | null
@@ -43,7 +43,7 @@ export type TokenKeys =
 
 export interface AddressRec {
   [ChainId.MAINNET]: AddressType
-  [ChainId.ARBITRUM]: AddressType
+  [ChainId.BSC]: AddressType
   [ChainId.BSCTEST]: AddressType
 }
 

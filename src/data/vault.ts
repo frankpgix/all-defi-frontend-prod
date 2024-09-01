@@ -1,4 +1,4 @@
-import { UNKNOWN } from '@/config/tokens'
+import { UNKNOWN } from '@/config/token'
 
 import {
   AssetCompositionProps,

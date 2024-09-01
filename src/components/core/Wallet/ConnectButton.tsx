@@ -36,7 +36,7 @@ const ConnectBtn: FC<Props> = ({ simple, children, as, size = 'medium' }) => {
   }, [address, hasNotify])
   return (
     <ConnectButton.Custom>
-      {({ account, chain, openConnectModal, authenticationStatus, mounted }) => {
+      {({ account, chain, openConnectModal, authenticationStatus, mounted, openChainModal }) => {
         const ready = mounted && authenticationStatus !== 'loading'
         const connected =
           ready &&
@@ -69,9 +69,9 @@ const ConnectBtn: FC<Props> = ({ simple, children, as, size = 'medium' }) => {
 
               return (
                 <>
-                  {/* <Button size="medium" gradient onClick={openChainModal}>
+                  <Button size="medium" gradient onClick={openChainModal}>
                     Net
-                  </Button> */}
+                  </Button>
                   <Button size={size} gradient round={hasNotify} onClick={openDialog}>
                     {memoAccountHide}
                   </Button>
