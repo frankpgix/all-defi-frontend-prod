@@ -19,8 +19,8 @@ interface AmountShowProps {
   row: UserVaultHistoryDataProps
 }
 const AmountShow: FC<AmountShowProps> = ({ value, action, row }) => {
-  // console.log(row.token, 222)
-  if (action.includes('Redeem')) return <>{formatNumber(value, 4, '0,0.0000')} Shares</>
+  console.log(action, 222)
+  if (action.includes('Unstake')) return <>{formatNumber(value, 4, '0,0.0000')} Shares</>
   return <TokenValue value={value} token={row.token} size="mini" format="0,0.00" />
 }
 

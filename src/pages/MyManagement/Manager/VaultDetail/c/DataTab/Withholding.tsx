@@ -6,10 +6,11 @@ import Table from 'rc-table'
 import { AddressType } from '@/types/base'
 
 import { useVaultWithholdData } from '@/graphql/useFundData'
-// import { formatNumber } from '@/utils/tools'
+import { formatNumber } from '@/utils/tools'
 import HashLink from '@@/common/HashLink'
 import { TableLoading, TableNoData } from '@@/common/TableEmpty'
-import TokenValue from '@@/common/TokenValue'
+
+// import TokenValue from '@@/common/TokenValue'
 
 interface Props {
   vaultAddress: AddressType
@@ -25,10 +26,10 @@ const Withholding: FC<Props> = ({ vaultAddress }) => {
     {
       title: 'Amount',
       dataIndex: 'amount',
-      // render: (value: number) => <span>{formatNumber(value, 2, '0,0.00')} USDC</span>
-      render: (value: number, row: any) => (
-        <TokenValue value={value} token={row.token} size="mini" format="0,0.00" />
-      )
+      render: (value: number) => <span>{formatNumber(value, 2, '0,0.00')} Share</span>
+      // render: (value: number, row: any) => (
+      //   <TokenValue value={value} token={row.token} size="mini" format="0,0.00" />
+      // )
     },
     {
       title: 'Action',

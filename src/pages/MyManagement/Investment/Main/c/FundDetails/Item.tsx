@@ -5,8 +5,8 @@ import classNames from 'classnames'
 
 import { useCancelStake, useCancelUnstake } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
-import { useToken } from '@/hooks/useToken'
 
+// import { useToken } from '@/hooks/useToken'
 import { VaultUserListDataProps } from '@/types/vault'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/VaultDetail/c/ManageDetail/C'
@@ -31,7 +31,7 @@ interface Props {
 }
 
 const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
-  const { getTokenByAddress } = useToken()
+  // const { getTokenByAddress } = useToken()
   const { account } = useProfile()
   const { onCancelStake: onCancelAllocate } = useCancelStake(fund.detail.address)
   const { onCancelUnstake: onCancelWithholding } = useCancelUnstake(fund.detail.address)
@@ -43,10 +43,10 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
     // () => BN(fund.data.roe).times(fund.data.aum).div(100).toNumber(),
     // () => BN(fund.data.roe).times(fund.data.aum).div(100).toNumber(),
     () =>
-      BN(fund.detail.roe)
+      BN(fund.userDetail.roe)
         .times(fund.detail.beginSharePrice)
-        .times(fund.detail.shares)
-        .div(100)
+        .times(fund.userDetail.shares)
+        // .div(100)
         .toNumber(),
     [fund.detail.roe, fund.detail.beginSharePrice, fund.detail.shares]
   )
@@ -75,7 +75,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
 
   const underlyingToken = useMemo(() => fund.base.underlying, [fund.base.underlying])
   const ivFinish = useMemo(() => fund.detail.status === 6, [fund.detail.status])
-  // console.log(fund)
+  console.log(fund, 'fund')
   useEffect(() => {
     void inView()
   }, [inView])
@@ -181,7 +181,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
             <div className="web-manage-investment-fund-item-data">
               <SectionItem label="Staking Value">
                 <TokenValue
-                  value={fund.detail.nav}
+                  value={fund.userDetail.nav}
                   token={underlyingToken}
                   size="mini"
                   format="0,0.00"
@@ -194,18 +194,18 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   popper="Historic cumulative profit and loss"
                 >
                   <TokenValue
-                    value={fund.detail.historicalReturn}
+                    value={fund.userDetail.historicalReturn}
                     token={underlyingToken}
                     size="mini"
                     format="0,0.00"
                   />
                 </SectionItem>
                 <SectionItem
-                  label="Claimable AC Tokens"
+                  label="Claimable Assets"
                   // popper="Please use redemption function to claim your AC token"
                 >
                   <TokenValue
-                    value={fund.detail.unclaimedUnderlying}
+                    value={fund.userDetail.unclaimedUnderlying}
                     token={underlyingToken}
                     size="mini"
                     format="0,0.00"
@@ -213,7 +213,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   {/*{formatNumber(fund.data.unclaimedACToken, 2, '$0,0.00')}*/}
                 </SectionItem>
                 <SectionItem label="Current Epoch return %">
-                  <RoeShow value={formatNumber(fund.detail.roe * 100, 2, '0.00')} subArrow />
+                  <RoeShow value={formatNumber(fund.userDetail.roe * 100, 2, '0.00')} subArrow />
                 </SectionItem>
                 <SectionItem label="Current Epoch return">
                   <TokenValue
