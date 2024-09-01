@@ -2,6 +2,8 @@ import { FC, useMemo } from 'react'
 
 import { useAccount, useBalance, useDisconnect } from 'wagmi'
 
+import { useChainToken } from '@/hooks/useToken'
+
 import Button from '@/components/common/Button'
 import CopyText from '@/components/common/CopyText'
 import Dialog from '@/components/common/Dialog'
@@ -15,6 +17,7 @@ interface Props {
 
 const AccountDialog: FC<Props> = ({ show, onClose }) => {
   const { address: account, chain } = useAccount()
+  const { chainToken } = useChainToken()
 
   const shortAddress = useMemo(() => calcShortHash(account, 8, 8), [account])
   const { disconnect } = useDisconnect()
@@ -35,9 +38,12 @@ const AccountDialog: FC<Props> = ({ show, onClose }) => {
         <ul className="web-account-dialog-blance">
           <li>
             <i>
-              <Image src="icon/eth.svg" />
+              <Image src={chainToken.icon} />
             </i>
-            <span>{safeInterceptionValues(data?.value ?? '', 6, 18)} ETH</span>
+            <span>
+              {safeInterceptionValues(data?.value ?? '', chainToken.precision, chainToken.decimals)}{' '}
+              {chainToken.name}
+            </span>
           </li>
         </ul>
         <footer>

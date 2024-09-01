@@ -49,7 +49,7 @@ export const useWChainToken = () => {
 }
 
 export const useUnderlyingTokens = () => {
-  const { chainId, chainToken } = useChainToken()
+  const { chainId } = useChainToken()
   const tokens = underlyingTokens.map((token: UnderlyingTokenConfigTypes) => ({
     ...token,
     address: token.address[chainId]
