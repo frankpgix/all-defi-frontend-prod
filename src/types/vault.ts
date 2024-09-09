@@ -138,7 +138,7 @@ export interface VaultProps extends VaultBaseInfoProps {
 // }
 export interface VaultUserListDataProps {
   base: VaultBaseInfoProps
-  detail: VaultUserDetailProps
+  detail: VaultDetailProps
   userDetail: VaultUserDetailProps
 }
 

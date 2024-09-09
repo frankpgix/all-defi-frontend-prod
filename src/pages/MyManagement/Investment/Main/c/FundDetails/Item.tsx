@@ -45,11 +45,18 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
     // () => BN(fund.data.roe).times(fund.data.aum).div(100).toNumber(),
     () =>
       BN(fund.userDetail.roe)
-        .times(fund.detail.beginSharePrice)
+        .times(fund.detail.beginningSharePrice)
         .times(fund.userDetail.shares)
         // .div(100)
         .toNumber(),
-    [fund.detail.roe, fund.detail.beginSharePrice, fund.detail.shares]
+    [fund.userDetail.roe, fund.detail.beginningSharePrice, fund.userDetail.shares]
+  )
+
+  console.log(
+    fund.userDetail.roe,
+    fund.detail.beginningSharePrice,
+    fund.userDetail.shares,
+    'currReturn'
   )
 
   const goCancelAllocate = async () => {

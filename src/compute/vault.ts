@@ -145,9 +145,9 @@ export const calcVaultDetail = (
     sharePrice,
     beginningSharePrice,
     // stakingACToken: Number(safeInterceptionValues(item.stakingACToken, decimals, decimals)),
-    pendingStake: Number(safeInterceptionValues(item.pendingStake, 4, 18)),
-    pendingUnstake: Number(safeInterceptionValues(item.pendingUnstake, 4, 18)),
-    unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 4, 18)),
+    pendingStake: Number(safeInterceptionValues(item.pendingStake, 18, 18)),
+    pendingUnstake: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
+    unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
 
     roe: BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber(),
     historicalReturn: Number(safeInterceptionValues(item.historicalReturn, decimals, decimals)),
@@ -185,18 +185,19 @@ export const calcVaultUserDetail = (
   // console.log(underlyingTokenPriceInUSD, 'underlyingTokenPriceInUSD')
   const underlying = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlying.decimals
-  const precision = underlying.precision
 
-  const shares = Number(safeInterceptionValues(item.shares, 4, 18))
-  const sharePrice = Number(safeInterceptionValues(item.sharePrice, 4, 18))
-  const pendingStake = Number(safeInterceptionValues(item.pendingStake, 4, 18))
+  const shares = Number(safeInterceptionValues(item.shares, 18, 18))
+  const sharePrice = Number(safeInterceptionValues(item.sharePrice, 18, 18))
+  const pendingStake = Number(safeInterceptionValues(item.pendingStake, 18, 18))
   const unclaimedUnderlying = Number(
-    safeInterceptionValues(item.unclaimedUnderlying, precision, decimals)
+    safeInterceptionValues(item.unclaimedUnderlying, decimals, decimals)
   )
 
-  const nav = BN(shares).times(sharePrice).plus(pendingStake).plus(unclaimedUnderlying).toNumber()
+  const nav = BN(shares).times(sharePrice).plus(unclaimedUnderlying).toNumber()
+  // const nav = BN(shares).times(sharePrice).plus(pendingStake).plus(unclaimedUnderlying).toNumber()
+  // const
 
-  const beginningSharePrice = Number(safeInterceptionValues(item.beginningSharePrice, 4, 18))
+  const beginningSharePrice = Number(safeInterceptionValues(item.beginningSharePrice, 18, 18))
 
   const roe = BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber()
 
@@ -221,18 +222,18 @@ export const calcVaultUserDetail = (
     pendingStake,
     unclaimedUnderlying,
     // stakingACToken: Number(safeInterceptionValues(item.stakingACToken, precision, decimals)),
-    unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 4, 18)),
+    unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
     // unclaimedACToken: Number(safeInterceptionValues(item.unclaimedACToken, precision, decimals)),
-    historicalReturn: Number(safeInterceptionValues(item.historicalReturn, precision, decimals)),
+    historicalReturn: Number(safeInterceptionValues(item.historicalReturn, decimals, decimals)),
     roe
   }
 }
 
 export const calcShareComposition = (item: any): ShareCompositionProps => {
   return {
-    balance: Number(safeInterceptionValues(item[0], 4, 18)),
-    withholding: Number(safeInterceptionValues(item[1], 4, 18)),
-    mining: Number(safeInterceptionValues(item[2], 4, 18))
+    balance: Number(safeInterceptionValues(item[0], 18, 18)),
+    withholding: Number(safeInterceptionValues(item[1], 18, 18)),
+    mining: Number(safeInterceptionValues(item[2], 18, 18))
   }
 }
 
@@ -249,8 +250,8 @@ export const calcAssetComposition = (
     symbol: item.symbol,
     decimals,
     precision: token.precision,
-    amount: Number(safeInterceptionValues(item.amount, token.precision, decimals)),
-    value: Number(safeInterceptionValues(item.value, baseToken.precision, baseToken.decimals)),
+    amount: Number(safeInterceptionValues(item.amount, decimals, decimals)),
+    value: Number(safeInterceptionValues(item.value, baseToken.decimals, baseToken.decimals)),
     percentage: 0
   }
 }

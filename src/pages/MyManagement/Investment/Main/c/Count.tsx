@@ -134,7 +134,7 @@ interface CountDetailProps extends CountProps {}
 
 const CountDetail: FC<CountDetailProps> = ({ loading, data }) => {
   const [activeIndex, setActiveIndex] = useState(0)
-  // console.log(sData)
+  console.log(data, 'data')
 
   // const data = sData.map((item) => {
   //   const i = { ...item }

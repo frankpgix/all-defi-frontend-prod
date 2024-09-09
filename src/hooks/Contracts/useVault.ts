@@ -213,7 +213,7 @@ export const useClaim = (vaultAddress: AddressType) => {
 
   const onClaim = async (account: AddressType, callback?: () => void) => {
     if (account) {
-      const notifyId = await createNotify({ type: 'loading', content: 'Claim AC token' })
+      const notifyId = await createNotify({ type: 'loading', content: 'Claim Asset' })
 
       writeContract(
         {
@@ -226,11 +226,11 @@ export const useClaim = (vaultAddress: AddressType) => {
           onSuccess: async (hash: AddressType) => {
             await onWaitReceipt(hash)
             callback?.()
-            updateNotifyItem(notifyId, { title: 'Claim AC token', type: 'success', hash })
+            updateNotifyItem(notifyId, { title: 'Claim Asset', type: 'success', hash })
           },
           onError: (error: any) => {
             updateNotifyItem(notifyId, {
-              title: 'Claim AC token',
+              title: 'Claim Asset',
               type: 'error',
               content: error.shortMessage
             })

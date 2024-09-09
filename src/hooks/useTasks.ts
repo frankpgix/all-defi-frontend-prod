@@ -37,6 +37,7 @@ export const useLogin = () => {
     const tokenCache = cache.get('Authorization')
     await sleep(200)
 
+    console.log(1122, userAddress && !isLogin && !tokenCache)
     if (userAddress && !isLogin && !tokenCache) {
       if (window.isInTaskSign) return
       window.isInTaskSign = true
@@ -109,6 +110,7 @@ export const useGetTaskProfile = () => {
     update: state.update
   }))
   const { goLogin, isLogin, logout, loginLoading } = useLogin()
+
   const getTaskProfile = useCallback(async () => {
     const { code, data } = await getProfile()
     const { data: dashboard } = await getDashboard()
@@ -128,9 +130,10 @@ export const useGetTaskProfile = () => {
       logout()
     }
   }, [isLogin, userAddress])
+
   useEffect(() => {
     const cacheUser = cache.get('Authorization')?.userAddress ?? ''
-    // console.log(1122333, cacheUser, userAddress)
+    console.log(1122333, cacheUser, userAddress)
     if (cacheUser !== userAddress) {
       cache.rm('Authorization')
       init()

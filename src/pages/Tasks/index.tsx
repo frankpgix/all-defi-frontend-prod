@@ -15,6 +15,7 @@ import MyPoints from './c/MyPoints'
 
 const Tasks: FC = () => {
   const { isLogin, goLogin, loginLoading } = useGetTaskProfile()
+  console.log(!isLogin, 'goLogin', loginLoading)
   return (
     <>
       <Dashboard />
