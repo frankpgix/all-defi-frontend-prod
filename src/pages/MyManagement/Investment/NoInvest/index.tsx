@@ -1,9 +1,19 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 
+import { sleep } from '@/utils/tools'
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'
 
 const NoInvest: FC = () => {
+  const [show, setShow] = useState(false)
+  const goShow = async () => {
+    await sleep(500)
+    setShow(true)
+  }
+  useEffect(() => {
+    void goShow()
+  }, [])
+  if (!show) return null
   return (
     <div className="web-manage-no-invest">
       <Image src="asset/investment-tip.png" />

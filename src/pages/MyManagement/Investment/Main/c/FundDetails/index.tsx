@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 // import { FundUserListDataProps } from '@/class/help'
 // import FundPool from '@/class/FundPool'
@@ -8,10 +8,10 @@ import { FC, useState } from 'react'
 // import { useCancelAllocate } from '@/hooks/useVault'
 import { VaultUserListDataProps } from '@/types/vault'
 
+import Cache from '@/utils/cache'
+import HistoryButton from '@@/Vaults/TransactionHistoryButton'
+
 // import { notify } from '@@/common/Toast'
-
-import Button from '@@/common/Button'
-
 import FundItem from './Item'
 
 interface Props {
@@ -63,17 +63,23 @@ const FundDetails: FC<Props> = ({ data, callback }) => {
 
   const onActiveChange = (index: number) => {
     setActiveIndex(index)
+    Cache.set('UserInvestmentViewIndex', index)
     if (isInit) setisInit(false)
   }
+
+  useEffect(() => {
+    const cacheIndex = Cache.get('UserInvestmentViewIndex')
+    if (cacheIndex) {
+      setActiveIndex(cacheIndex)
+      setisInit(false)
+    }
+  }, [])
 
   return (
     <>
       <div className="web-manage-investment-fund">
         <h2>
-          Vault Details
-          <Button text to="/manage/investment/history">
-            view transaction history
-          </Button>
+          Vault Details <HistoryButton />
         </h2>
         {data.map((item, index) => (
           <FundItem

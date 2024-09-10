@@ -2,10 +2,11 @@ import { FC } from 'react'
 import ContentLoader from 'react-content-loader'
 import { useNavigate } from 'react-router-dom'
 
+import { useInterval } from 'ahooks'
 import dayjs from 'dayjs'
 import Table from 'rc-table'
 
-import { useManageVaultListHook } from '@/hooks/useVaultList'
+import { useGetManageVaultList, useManageVaultListHook } from '@/hooks/useVaultList'
 
 import { VaultDetailProps } from '@/types/vault'
 
@@ -20,8 +21,14 @@ import Badge from '@@/core/Badge'
 
 const FundList: FC = () => {
   const navigate = useNavigate()
-  const { manageVaultList, loading, getData } = useManageVaultListHook()
+  const { refetch: getData } = useGetManageVaultList()
+  const { manageVaultList, loading } = useManageVaultListHook()
   // console.log(12345, manageVaultList, 'manageVaultList')
+  useInterval(() => {
+    console.log('20秒更新数据')
+    getData()
+  }, 20000)
+
   const webColumns = [
     {
       title: 'Name',

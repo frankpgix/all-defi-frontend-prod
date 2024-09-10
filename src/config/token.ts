@@ -11,7 +11,7 @@ import { ChainId } from '@/config'
 
 export const UNKNOWN = {
   decimals: 18,
-  icon: 'symbol/unknown.svg',
+  icon: 'symbol/bnb.svg',
   name: 'UNKNOWN',
   precision: 4,
   symbol: 'UNKNOWN',

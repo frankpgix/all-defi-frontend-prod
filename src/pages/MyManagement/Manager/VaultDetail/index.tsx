@@ -2,6 +2,8 @@ import { FC } from 'react'
 import ContentLoader from 'react-content-loader'
 import { useParams } from 'react-router-dom'
 
+import { useInterval } from 'ahooks'
+
 import { useVaultManageDetails } from '@/hooks/Contracts/useVaultDetails'
 
 import { AddressType } from '@/types/base'
@@ -23,7 +25,10 @@ const VaultDetail: FC = () => {
     refetch: getData
   } = useVaultManageDetails(vaultAddress)
   console.log(1111, baseInfo, vaultDetail, vaultBreachDetail, vaultStakedALL)
-
+  useInterval(() => {
+    console.log('1分钟更新数据')
+    getData()
+  }, 60000)
   return (
     <div className="web-manage">
       <h2>

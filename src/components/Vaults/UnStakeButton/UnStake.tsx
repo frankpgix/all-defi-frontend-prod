@@ -65,12 +65,13 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
   const goUnstake = async () => {
     if (account) {
       toggleSubmiting()
-      await onUnstake(data.underlyingToken, Number(value), account)
-      getData()
-      setValue(0)
-      setSliderValue(0)
-      onClose()
-      toggleSubmiting()
+      await onUnstake(data.underlyingToken, Number(value), account, () => {
+        getData()
+        setValue(0)
+        setSliderValue(0)
+        onClose()
+        toggleSubmiting()
+      })
     }
   }
 

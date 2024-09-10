@@ -1,6 +1,8 @@
 import { FC } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { useInterval } from 'ahooks'
+
 import { useVaultDetails } from '@/hooks/Contracts/useVaultDetails'
 import { useProfile } from '@/hooks/useProfile'
 
@@ -27,6 +29,11 @@ const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
     isLoading: loading,
     refetch: getData
   } = useVaultDetails(fundAddress, account ?? '0x')
+
+  useInterval(() => {
+    console.log('1分钟更新数据')
+    getData()
+  }, 60000)
   // console.log(123, fundAddress, baseInfo, vaultDetail)
   return (
     <>

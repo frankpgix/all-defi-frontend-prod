@@ -204,29 +204,7 @@ export const useUserVaultList = () => {
       console.log(base, detail, userDetail)
       return { base, detail, userDetail }
     })
-    // const [fundList, detailList] = sData
-    // console.log(sData)
-    // const data: VaultUserListDataProps[] = sData
-    //   .map((item: any) => {
-    //     console.log(item)
-    //     const fund: VaultProps = calcVaultBaseInfo(item, getTokenByAddress)
-    //     const valut = vaultLists.find(
-    //       (vault) =>
-    //         vault.underlyingToken.address.toLocaleLowerCase() ===
-    //         item.underlying.toLocaleLowerCase()
-    //     )
-    //     // console.log(111122, vaultLists, item, valut, 'item')
-    //     // const detail = detailList.find((item) => item.address === fund.address)
-    //     fund.data = calcVaultUserDetail({}, getTokenByAddress, valut?.underlyingPriceInUSD ?? 1)
-    //     // fund.address = fund.data.address
-    //     return fund
-    //   })
-    // .filter(
-    //   (item: VaultUserListDataProps) =>
-    //     item.data.pendingStake + item.data.unclaimedUnderlying + item.data.shares !== 0
-    // )
 
-    // console.log(data, 222)
     return { data, isSuccess, isLoading, refetch }
   }
   return { data: [] as VaultUserListDataProps[], isLoading, isSuccess, refetch }

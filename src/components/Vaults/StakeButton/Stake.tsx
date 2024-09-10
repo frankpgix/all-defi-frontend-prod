@@ -95,8 +95,8 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
         setValue('')
         setSliderValue(0)
         onClose()
+        toggleSubmiting()
       })
-      toggleSubmiting()
     }
   }
 
