@@ -42,7 +42,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
   )
   console.log(JSON.stringify(gql), 'gql')
   const { loading: chartLoading, data: chartData } = useVaultDetailChartData(gql, underlyingToken)
-  // console.log(data.roe, 'data.data.roe')
+  console.log(data.roe, 'data.data.roe')
   const currentEpochReturn = useMemo(
     () => (data.roe > 0 ? BN(data.roe).times(10).div(7).toNumber() : data.roe) * 100,
     [data.roe]
@@ -83,7 +83,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
           <section>
             <h5>Protocols Allowed</h5>
             <main>
-              <Image src={`/products/CEFFU.png`} alt={'CEFFU'} />
+              <Image src={`/products/BINANCE.png`} alt={'BINANCE'} />
             </main>
           </section>
           {/* <section>

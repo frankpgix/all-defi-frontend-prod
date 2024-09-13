@@ -111,6 +111,8 @@ export const calcVaultDetail = (
   const { hash } = calcVaultHash(item.vaultAddress ?? '0x')
   const sharePrice = Number(safeInterceptionValues(item.sharePrice, 18, 18))
   const beginningSharePrice = Number(safeInterceptionValues(item.beginningSharePrice, 18, 18))
+
+  console.log(sharePrice, beginningSharePrice, 'beginningSharePrice')
   return {
     underlyingToken,
     hash,
