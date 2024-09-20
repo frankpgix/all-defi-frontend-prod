@@ -46,7 +46,7 @@ export const calcVaultBaseInfo = (
   getTokenByAddress: GetTokenFuncType,
   vaultAddress?: AddressType
 ): VaultBaseInfoProps => {
-  console.log(item, 112)
+  // console.log(item, 112)
   const underlying = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlying.decimals
   const precision = underlying.precision
@@ -113,7 +113,7 @@ export const calcVaultDetail = (
   const sharePrice = Number(safeInterceptionValues(item.sharePrice, 18, 18))
   const beginningSharePrice = Number(safeInterceptionValues(item.beginningSharePrice, 18, 18))
 
-  console.log(sharePrice, beginningSharePrice, 'beginningSharePrice')
+  // console.log(sharePrice, beginningSharePrice, 'beginningSharePrice')
   return {
     underlyingToken,
     hash,

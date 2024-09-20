@@ -39,8 +39,8 @@ export const useGetManageVaultList = () => {
     update: state.update
   }))
   const { data, isLoading, refetch } = useManageVaultList()
-  console.log(data, isLoading, 'data, isLoading')
   useEffect(() => {
+    console.log(data, isLoading, 'data, isLoading', 123456)
     update(data, isLoading)
   }, [isLoading])
 
