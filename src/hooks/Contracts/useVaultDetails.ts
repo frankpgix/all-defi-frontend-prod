@@ -31,7 +31,7 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
   const VaultContract = useVaultContract(vaultAddress)
   const VaultReaderContract = useVaultReaderContract()
   // const AllProtocolContract = useAllProtocolContract()
-  const { data, isLoading, isSuccess, refetch } = useReadContracts({
+  const { data, isLoading, isSuccess, refetch, isRefetching } = useReadContracts({
     contracts: [
       {
         ...VaultContract,
@@ -62,10 +62,11 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
     ]
     isLoading: boolean
     isSuccess: boolean
+    isRefetching: boolean
     refetch: () => {}
   }
 
-  if (!isLoading && isSuccess) {
+  if (!isLoading && isSuccess && !isRefetching) {
     const baseInfo =
       data[0].status === 'success'
         ? calcVaultBaseInfo(data[0].result, getTokenByAddress, vaultAddress)
@@ -87,7 +88,7 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
         vaultBreachDetail,
         vaultStakedALL
       },
-      isLoading,
+      isLoading: isLoading || isRefetching,
       isSuccess,
       refetch
     }
@@ -99,7 +100,7 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
       vaultBreachDetail: VaultBreachDetailDataDefault,
       vaultStakedALL: VaultStakeDataDefault
     },
-    isLoading,
+    isLoading: isLoading || isRefetching,
     isSuccess,
     refetch
   }
@@ -111,7 +112,7 @@ export const useVaultDetails = (vaultAddress: AddressType, account: AddressType)
   const VaultContract = useVaultContract(vaultAddress)
   const VaultReaderContract = useVaultReaderContract()
   console.log(vaultAddress, 'vaultAddress', account, 'account', VaultContract, VaultReaderContract)
-  const { data, isLoading, isSuccess, refetch } = useReadContracts({
+  const { data, isLoading, isSuccess, refetch, isRefetching } = useReadContracts({
     contracts: [
       {
         ...VaultContract,
@@ -136,9 +137,10 @@ export const useVaultDetails = (vaultAddress: AddressType, account: AddressType)
     ]
     isLoading: boolean
     isSuccess: boolean
+    isRefetching: boolean
     refetch: () => {}
   }
-  if (!isLoading && isSuccess) {
+  if (!isLoading && isSuccess && !isRefetching) {
     const baseInfo =
       data[0].status === 'success'
         ? calcVaultBaseInfo(data[0].result, getTokenByAddress, vaultAddress)
@@ -156,7 +158,7 @@ export const useVaultDetails = (vaultAddress: AddressType, account: AddressType)
     console.log(data, data, data, 'baseInfo, vaultDetail, vaultUserDetail')
     return {
       data: { baseInfo, vaultDetail, vaultUserDetail },
-      isLoading,
+      isLoading: isLoading || isRefetching,
       isSuccess,
       refetch
     }
