@@ -46,6 +46,7 @@ export const calcVaultBaseInfo = (
   getTokenByAddress: GetTokenFuncType,
   vaultAddress?: AddressType
 ): VaultBaseInfoProps => {
+  console.log(item, 112)
   const underlying = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlying.decimals
   const precision = underlying.precision

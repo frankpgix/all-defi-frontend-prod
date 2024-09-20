@@ -171,6 +171,7 @@ export const useUserVaultList = () => {
   const VaultReaderContract = useVaultReaderContract()
   const { getTokenByAddress } = useToken()
   const { data: baseList, isLoading: baseLoading, isSuccess: baseSuccess } = useVaultBaseList()
+  console.log('baseList', baseList)
   const { account } = useProfile()
   // const { vaultList } = useVaultListHook()
   const { data: vaultList, isLoading: isListLoading } = useVaultList()

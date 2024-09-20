@@ -11,11 +11,6 @@
             "type": "address"
           },
           {
-            "internalType": "address",
-            "name": "interimAsset",
-            "type": "address"
-          },
-          {
             "internalType": "uint8",
             "name": "underlyingDecimals",
             "type": "uint8"
