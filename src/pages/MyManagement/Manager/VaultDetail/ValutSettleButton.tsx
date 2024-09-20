@@ -1,14 +1,15 @@
-import { FC, ReactNode, useMemo } from 'react'
+import { FC, ReactNode } from 'react'
 
 import { useToggle } from 'ahooks'
-import BN from 'bignumber.js'
 
+// import BN from 'bignumber.js'
 import { useRequestSettlemen } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
 
 import { AddressType } from '@/types/base'
 import { VaultDetailProps } from '@/types/vault'
 
+import { sleep } from '@/utils/tools'
 import Button, { ButtonProps } from '@@/common/Button'
 import Dialog from '@@/common/Dialog/Info'
 
@@ -25,8 +26,7 @@ const ValutSettleButton: FC<Props> = ({
   outline,
   size,
   disabled,
-  callback,
-  data
+  callback
 }) => {
   const { onRequestSettlemen } = useRequestSettlemen(vaultAddress)
   const { account } = useProfile()
@@ -90,7 +90,8 @@ const ValutSettleButton: FC<Props> = ({
     closeModal3()
     openLoading()
     if (account && vaultAddress) {
-      await onRequestSettlemen(account, () => {
+      await onRequestSettlemen(account, async () => {
+        await sleep(2000)
         callback?.()
         closeLoading()
       })
