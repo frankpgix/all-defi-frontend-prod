@@ -33,22 +33,22 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
   const [timeType, setTimeType] = useState<optionProps>('all')
   const timeOptions: optionProps[] = ['current epoch', '3 Epochs', 'all']
   const underlyingToken = useMemo(() => base.underlying, [base.underlying])
-  console.log(timeType, 'timeType')
+  // console.log(timeType, 'timeType')
   const [chartType, setChartType] = useState<number | string>('aum')
 
   const gql = useMemo(
     () => calcVaultDetailChartGQL(fundAddress, data.epochIndex, timeType),
     [fundAddress, data.epochIndex, timeType]
   )
-  console.log(JSON.stringify(gql), 'gql')
+  // console.log(JSON.stringify(gql), 'gql')
   const { loading: chartLoading, data: chartData } = useVaultDetailChartData(gql, underlyingToken)
-  console.log(data.roe, 'data.data.roe')
+  // console.log(data.roe, 'data.data.roe')
   const currentEpochReturn = useMemo(
     () => (data.roe > 0 ? BN(data.roe).times(10).div(7).toNumber() : data.roe) * 100,
     [data.roe]
   )
   // data.historicalReturn + data.platFee + data.managerFee
-  console.log(currentEpochReturn, data.roe)
+  // console.log(currentEpochReturn, data.roe)
   const historicalReturn = useMemo(
     () => BN(data.historicalReturn).toNumber(),
     [data.historicalReturn]

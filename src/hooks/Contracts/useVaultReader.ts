@@ -45,6 +45,7 @@ export const useVaultDetail = (vaultAddress: AddressType) => {
     functionName: 'vaultDetail',
     args: [vaultAddress]
   })
+  console.log(data, 'useVaultDetail')
   if (!isLoading && isSuccess) {
     return { data: calcVaultDetail(data, getTokenByAddress), isLoading, isSuccess, refetch }
   }

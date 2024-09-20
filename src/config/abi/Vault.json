@@ -204,6 +204,55 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "epochIndex",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "totalValue",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "aum",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "sharePrice",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "pendingStake",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "pendingUnstake",
+        "type": "uint256"
+      }
+    ],
+    "name": "Settled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "uint256",
         "name": "epochIndex",
@@ -405,11 +454,6 @@
             "type": "address"
           },
           {
-            "internalType": "address",
-            "name": "interimAsset",
-            "type": "address"
-          },
-          {
             "internalType": "uint8",
             "name": "underlyingDecimals",
             "type": "uint8"
@@ -601,13 +645,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "executeSettlement",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -659,11 +696,6 @@
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "interimAsset",
-        "type": "address"
-      },
-      {
         "internalType": "uint256[2]",
         "name": "stakeLimits",
         "type": "uint256[2]"
@@ -677,11 +709,6 @@
         "internalType": "address",
         "name": "_silo",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_assetTransmuter",
-        "type": "address"
       }
     ],
     "name": "initialize",
@@ -694,7 +721,7 @@
     "name": "interimAssetTransmuter",
     "outputs": [
       {
-        "internalType": "contract IAssetTransmuter",
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -903,7 +930,7 @@
     "name": "silo",
     "outputs": [
       {
-        "internalType": "contract IVaultSilo",
+        "internalType": "address",
         "name": "",
         "type": "address"
       }

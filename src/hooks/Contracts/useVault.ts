@@ -19,6 +19,8 @@ export const useBaseInfo = (vaultAddress: AddressType) => {
     functionName: 'baseInfo'
   })
 
+  // console.log(error, 'error')
+
   if (!isLoading && isSuccess) {
     return {
       data: calcVaultBaseInfo(data, getTokenByAddress, vaultAddress),

@@ -23,7 +23,7 @@ import VaultStatus from './c/VaultStatus'
 const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
   // const { fundAddress = '0x' } = useParams() as { fundAddress: AddressType }
   const { account } = useProfile()
-
+  console.log(fundAddress, 'fundAddress', account, 'account')
   const {
     data: { baseInfo, vaultDetail, vaultUserDetail },
     isLoading: loading,
@@ -34,7 +34,7 @@ const Detail: FC<{ fundAddress: AddressType }> = ({ fundAddress }) => {
     console.log('1分钟更新数据')
     getData()
   }, 60000)
-  // console.log(123, fundAddress, baseInfo, vaultDetail)
+  console.log(123, fundAddress, baseInfo, vaultDetail)
   return (
     <>
       {!loading && vaultDetail.isClosed && (
