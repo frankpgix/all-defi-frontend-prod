@@ -14,7 +14,10 @@ import Modal from '@@/core/Modal'
 
 import Create from './c/Main'
 
-const CreateVaultButton: FC = () => {
+interface Props {
+  large?: boolean
+}
+const CreateVaultButton: FC<Props> = ({ large }) => {
   useGetManageVaultList()
   const { loading, manageVaultList } = useManageVaultListHook()
   const { maxFundLimit } = useProfile()
@@ -55,8 +58,8 @@ const CreateVaultButton: FC = () => {
   }
   return (
     <>
-      <Button onClick={setRight} size="mini">
-        {isCacheCreate ? 'Unfinished Edits' : 'Create Vaults'}
+      <Button onClick={setRight} size={large ? 'default' : 'mini'}>
+        {isCacheCreate ? 'Unfinished Edits' : large ? 'Create a Vault now' : 'Create Vaults'}
       </Button>
       <Modal show={show} onClose={setLeft} title="Create Vault">
         <Create onConfirm={onConfirm} />

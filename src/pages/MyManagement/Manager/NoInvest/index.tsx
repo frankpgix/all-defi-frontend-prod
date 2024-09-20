@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import Button from '@@/common/Button'
+import CreateVaultButton from '@@/Vaults/CreateVaultButton'
 import Image from '@@/common/Image'
 
 const NoInvest: FC = () => {
@@ -12,7 +12,7 @@ const NoInvest: FC = () => {
         Click the button below and follow the steps to complete the establishment of your first
         vault
       </p>
-      <Button to="/manage/manager/create">create a Vault now</Button>
+      <CreateVaultButton large />
     </div>
   )
 }
