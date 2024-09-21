@@ -123,7 +123,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                 <h5>protocol allowed</h5>
                 <main>
                   <p>
-                    <Image src={`/products/CEFFU.png`} alt={'CEFFU'} />
+                    <Image src={`/symbol/bnb.svg`} alt={'BNB'} />
                   </p>
                   {/* {fund.derivativesInfo.map((item, index) => (
                     <p key={index} title={item?.name}>
