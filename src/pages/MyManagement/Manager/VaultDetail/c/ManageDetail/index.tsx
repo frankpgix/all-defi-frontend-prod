@@ -487,30 +487,30 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
             <SectionItem
               label="Confirming Stake Amount"
               loading={loading}
-              // popper="Total amount of Shares under redemption"
-            >
-              {formatNumber(data.pendingStake, 2, '0,0.00')} Shares ≈{' '}
-              {/*formatNumber(BN(data.redeemingShares).times(data.sharePrice).toNumber(), 2, '$0,0.00')*/}
-              <TokenValue
-                value={BN(data.pendingStake).times(data.sharePrice).toNumber()}
-                token={baseToken}
-                size="mini"
-                format="0,0.00"
-              />
-            </SectionItem>
-            <SectionItem
-              label="Confirming Unstake Amount"
-              loading={loading}
               // popper="Total value under subscription"
               value={
                 <TokenValue
-                  value={data.pendingUnstake}
+                  value={data.pendingStake}
                   token={baseToken}
                   size="mini"
                   format="0,0.00"
                 />
               }
             />
+            <SectionItem
+              label="Confirming Unstake Amount"
+              loading={loading}
+              // popper="Total amount of Shares under redemption"
+            >
+              {formatNumber(data.pendingUnstake, 2, '0,0.00')} Shares ≈{' '}
+              {/*formatNumber(BN(data.redeemingShares).times(data.sharePrice).toNumber(), 2, '$0,0.00')*/}
+              <TokenValue
+                value={BN(data.pendingUnstake).times(data.sharePrice).toNumber()}
+                token={baseToken}
+                size="mini"
+                format="0,0.00"
+              />
+            </SectionItem>
           </SectionLayout>
           {/* <SectionLayout col="3">
             <SectionItem
