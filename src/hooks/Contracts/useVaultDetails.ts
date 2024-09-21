@@ -1,4 +1,4 @@
-import { useReadContracts } from 'wagmi'
+import { UseReadContractsReturnType, useReadContracts } from 'wagmi'
 
 import {
   // useAllProtocolContract,
@@ -53,18 +53,19 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
         //   args: [vaultAddress]
       }
     ]
-  }) as {
-    data: [
-      { result: any; status: string },
-      { result: any; status: string },
-      { result: any; status: string }
-      // { result: bigint[]; status: string }
-    ]
-    isLoading: boolean
-    isSuccess: boolean
-    isRefetching: boolean
-    refetch: () => {}
-  }
+  }) as UseReadContractsReturnType
+  // {
+  //   data: [
+  //     { result: any; status: string },
+  //     { result: any; status: string },
+  //     { result: any; status: string }
+  //     // { result: bigint[]; status: string }
+  //   ]
+  //   isLoading: boolean
+  //   isSuccess: boolean
+  //   isRefetching: boolean
+  //   refetch: () => {}
+  // }
 
   if (!isLoading && isSuccess && !isRefetching) {
     const baseInfo =

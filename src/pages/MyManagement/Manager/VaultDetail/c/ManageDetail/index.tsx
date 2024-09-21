@@ -489,10 +489,10 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               loading={loading}
               // popper="Total amount of Shares under redemption"
             >
-              {formatNumber(data.pendingUnstake, 2, '0,0.00')} Shares ≈{' '}
+              {formatNumber(data.pendingStake, 2, '0,0.00')} Shares ≈{' '}
               {/*formatNumber(BN(data.redeemingShares).times(data.sharePrice).toNumber(), 2, '$0,0.00')*/}
               <TokenValue
-                value={BN(data.pendingUnstake).times(data.sharePrice).toNumber()}
+                value={BN(data.pendingStake).times(data.sharePrice).toNumber()}
                 token={baseToken}
                 size="mini"
                 format="0,0.00"
@@ -504,7 +504,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               // popper="Total value under subscription"
               value={
                 <TokenValue
-                  value={data.pendingStake}
+                  value={data.pendingUnstake}
                   token={baseToken}
                   size="mini"
                   format="0,0.00"
