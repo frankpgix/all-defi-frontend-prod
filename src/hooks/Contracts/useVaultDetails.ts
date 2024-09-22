@@ -67,7 +67,9 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
   //   refetch: () => {}
   // }
 
-  if (!isLoading && isSuccess && !isRefetching) {
+  console.log(isRefetching, 'data')
+
+  if (!isLoading && isSuccess) {
     const baseInfo =
       data[0].status === 'success'
         ? calcVaultBaseInfo(data[0].result, getTokenByAddress, vaultAddress)
@@ -89,7 +91,7 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
         vaultBreachDetail,
         vaultStakedALL
       },
-      isLoading: isLoading || isRefetching,
+      isLoading: isLoading,
       isSuccess,
       refetch
     }
@@ -101,7 +103,7 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
       vaultBreachDetail: VaultBreachDetailDataDefault,
       vaultStakedALL: VaultStakeDataDefault
     },
-    isLoading: isLoading || isRefetching,
+    isLoading: isLoading,
     isSuccess,
     refetch
   }

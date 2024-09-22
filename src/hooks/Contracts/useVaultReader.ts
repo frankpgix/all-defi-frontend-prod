@@ -231,7 +231,7 @@ export const useVaultList = () => {
   if (error) {
     console.error(error)
   }
-  if (!isLoading && !isRefetching && isSuccess) {
+  if (!isLoading && isSuccess) {
     console.log(123456, data, isLoading, isSuccess, isRefetching, 'isRefetching')
     return {
       data: data.map((item) => calcVaultDetail(item, getTokenByAddress)),
@@ -243,7 +243,7 @@ export const useVaultList = () => {
 
   return {
     data: [] as VaultDetailProps[],
-    isLoading: isLoading || isRefetching,
+    isLoading: isLoading,
     isSuccess,
     refetch
   }
