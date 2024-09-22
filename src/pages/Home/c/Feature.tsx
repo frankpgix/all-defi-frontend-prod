@@ -8,43 +8,46 @@ import classNames from 'classnames'
 
 const features = [
   {
-    name: 'Decentralized',
-    subName: 'DAO TREASURY MANAGEMENT IS TRUELY',
+    name: 'Secure',
+    subName: 'Assets remain secure.',
     intro: (
       <>
-        AllDeFi allows decentralised DAO <br />
-        holders to make independent DAO Treasury <br />
-        staking decision and <br />
-        responsible for it.
+        Staked assets are held in a <br />
+        multi-signature wallet, safeguarded by <br />
+        off-exchange custody solution, <br />
+        ensuring top-tier security for users.
       </>
     )
   },
   {
     name: 'Professional',
-    subName: 'OUR TEAM IS ',
+    subName: 'Managers are professional.',
     intro: (
       <>
-        We bring top-tier hedge fund managers to
-        <br /> the platform to serve DAO treasury. <br />
-        All managers have to pass due diligence <br />
-        (including real name and identity verification),
-        <br /> and prove their expertise with a real,
-        <br /> verified track record.
+        We showcase only premier managers <br />
+        who pass stringent due diligence and <br />
+        validate their expertise with established, <br />
+        verified track records.
       </>
     )
   },
   {
-    name: 'Easy to Use',
-    subName: 'our platform is',
-    intro:
-      'Any DAO holder can choose a vault that they think will best grow DAO treasury with only a few clicks.'
-  },
-  {
     name: 'Transparent',
-    subName: 'PERFORMACES ARE',
+    subName: 'Performance metrics are transparent.',
     intro: (
       <>
-        Vault managers' transactions and performance are kept completely transparent, in real time.
+        Vault performance is updated every hour using leading exchange APIs and oracle technology.
+        Vault is settled every 28 days.
+      </>
+    )
+  },
+  {
+    name: 'Diversified',
+    subName: 'Vaults are diversified.',
+    intro: (
+      <>
+        The platform offers an extensive selection of managers and strategy types, accommodating all
+        levels of risk tolerance.
       </>
     )
   }

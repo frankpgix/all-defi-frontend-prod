@@ -1,4 +1,5 @@
 import { FC } from 'react'
+
 import Button from '@/components/common/Button'
 
 // import { useProfile } from '@/hooks/useProfile'
@@ -10,14 +11,14 @@ const About: FC = () => {
     <section className="web-home-about">
       <main>
         <h4>
-          AllDeFi welcomes all professional fund managers to list their own strategies on the
+          AllDeFi invites all professional fund managers to showcase their strategies on our
           platform.
         </h4>
         <p>
-          To ensure the quality of the service and protect investors, the fund managers need to
-          participate with a real name and prove his proficiency beforehand. Rather than a pure
-          on-chain approach, AllDeFi chooses to apply more strict due diligence in an off-chain
-          fashion.
+          To maintain service quality and safeguard investors, fund managers must participate using
+          their real names and demonstrate their expertise in advance. Instead of relying solely on
+          an on-chain approach, AllDeFi implements stringent due diligence off-chain for enhanced
+          security.
         </p>
         <Button to="/manage/manager/create" disabled={true}>
           CREATE A VAULT
