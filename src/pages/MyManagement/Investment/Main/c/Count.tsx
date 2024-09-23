@@ -162,7 +162,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data }) => {
   )
   const activeData = useMemo(() => data[activeIndex]?.userDetail, [data, activeIndex])
   const baseToken = useMemo(() => activeData?.underlying, [activeData])
-  // console.log(data, rawData)
+  console.log(data, rawData)
   const pieData = useMemo(
     () =>
       rawData

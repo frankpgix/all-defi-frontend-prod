@@ -38,11 +38,11 @@ export const useGetManageVaultList = () => {
   const { update } = useStoreManageVaultList((state: any) => ({
     update: state.update
   }))
-  const { data, isLoading, refetch } = useManageVaultList()
+  const { data, isLoading, refetch, isRefetching } = useManageVaultList()
   useEffect(() => {
-    console.log(data, isLoading, 'data, isLoading', 123456)
+    // console.log(data, isLoading, 'data, isLoading', 123456)
     update(data, isLoading)
-  }, [isLoading])
+  }, [isLoading, isRefetching])
 
   return { refetch }
 }
@@ -68,11 +68,11 @@ export const useGetVaultList = () => {
   const { update } = useStoreVaultList((state: any) => ({
     update: state.update
   }))
-  const { data, isLoading } = useVaultListHook()
+  const { data, isLoading, isRefetching } = useVaultListHook()
 
   useEffect(() => {
     update(data, isLoading)
-  }, [isLoading])
+  }, [isLoading, isRefetching])
 }
 
 export const useUserVaultList = (): UserVaultListType => {

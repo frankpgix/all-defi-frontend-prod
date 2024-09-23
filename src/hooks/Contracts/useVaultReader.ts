@@ -94,7 +94,7 @@ export const useUserVaultDetail = (vaultAddress: AddressType) => {
   const { account } = useProfile()
   const { vaultList } = useVaultListHook()
   // console.log('vaultList', vaultList)
-  const { data, isSuccess, isLoading, refetch } = useReadContract({
+  const { data, isSuccess, isLoading, refetch, isRefetching } = useReadContract({
     ...VaultReaderContract,
     functionName: 'userDetail',
     args: [vaultAddress, account ?? '0x']
@@ -107,10 +107,11 @@ export const useUserVaultDetail = (vaultAddress: AddressType) => {
       data: calcVaultUserDetail(data, getTokenByAddress, valut?.underlyingPriceInUSD ?? 1),
       isLoading,
       isSuccess,
+      isRefetching,
       refetch
     }
   }
-  return { data: VaultUserDetailDefault, isLoading, isSuccess, refetch }
+  return { data: VaultUserDetailDefault, isLoading, isSuccess, isRefetching, refetch }
 }
 
 export const useShareCompositionOf = (vaultAddress: AddressType) => {
@@ -203,7 +204,7 @@ export const useUserVaultList = () => {
       const detail = vaultLists.find((vault) => vault.address === item.vaultAddress)
       // console.log(fund, detail)
       const userDetail = calcVaultUserDetail(item, getTokenByAddress, 1)
-      console.log(base, detail, userDetail)
+      // console.log(base, detail, userDetail)
       return { base, detail, userDetail }
     })
 
@@ -226,25 +227,27 @@ export const useVaultList = () => {
     isRefetching: boolean
     refetch: () => void
   }
-  console.log(123456, data, isLoading, isSuccess, isRefetching, 'isRefetching')
+  // console.log(123456, data, isLoading, isSuccess, isRefetching, 'isRefetching')
 
   if (error) {
     console.error(error)
   }
   if (!isLoading && isSuccess) {
-    console.log(123456, data, isLoading, isSuccess, isRefetching, 'isRefetching')
+    // console.log(123456, data, isLoading, isSuccess, isRefetching, 'isRefetching')
     return {
       data: data.map((item) => calcVaultDetail(item, getTokenByAddress)),
       isSuccess,
       isLoading,
+      isRefetching,
       refetch
     }
   }
 
   return {
     data: [] as VaultDetailProps[],
-    isLoading: isLoading,
+    isLoading,
     isSuccess,
+    isRefetching,
     refetch
   }
 }
@@ -264,11 +267,12 @@ export const useVaultHashList = () => {
 
 export const useManageVaultList = () => {
   const { account = '' } = useProfile()
-  const { data, isSuccess, isLoading, refetch } = useVaultList()
+  const { data, isSuccess, isLoading, refetch, isRefetching } = useVaultList()
   return {
     data: data.filter((item) => item.manager.toLowerCase() === account.toLowerCase()),
     isSuccess,
     isLoading,
+    isRefetching,
     refetch: () => {
       console.log('refetch')
       refetch()

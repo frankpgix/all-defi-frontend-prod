@@ -21,7 +21,7 @@ const CreateFund: FC<{ onConfirm: () => void }> = ({ onConfirm }) => {
   const { account } = useProfile()
   const navigate = useNavigate()
   const underlyingTokens = useUnderlyingTokens()
-
+  const [inConfirm, setInConfirm] = useState(false)
   const { onCreateVault } = useCreateVault()
 
   const [stepStatus, setStepStatus] = useState([false, false, false])
@@ -52,6 +52,7 @@ const CreateFund: FC<{ onConfirm: () => void }> = ({ onConfirm }) => {
 
   const onStep4Confirm = async () => {
     if (account) {
+      setInConfirm(true)
       await onCreateVault(
         {
           ...step1Data,
@@ -64,6 +65,7 @@ const CreateFund: FC<{ onConfirm: () => void }> = ({ onConfirm }) => {
           Cache.rm('CreateFundStep2Temp')
           Cache.rm('CreateFundStep3Temp')
           onConfirm()
+          setInConfirm(false)
           navigate('/manage/manager')
         }
       )
@@ -84,6 +86,7 @@ const CreateFund: FC<{ onConfirm: () => void }> = ({ onConfirm }) => {
         data={{ ...step1Data, minAmount }}
         onBack={onBack}
         onConfirm={onStep4Confirm}
+        disabled={inConfirm}
         baseTokenAddress={baseTokenAddress}
         multiple={1}
       />

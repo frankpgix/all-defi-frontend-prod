@@ -15,12 +15,13 @@ interface Props {
   onConfirm: () => void
   onBack: () => void
   show: boolean
+  disabled: boolean
   data: Record<string, any>
   multiple: number
   baseTokenAddress: AddressType
 }
 
-const Step4: FC<Props> = ({ onConfirm, show, onBack, data, baseTokenAddress }) => {
+const Step4: FC<Props> = ({ onConfirm, show, onBack, data, disabled, baseTokenAddress }) => {
   const { getTokenByAddress } = useToken()
   // const maxAUM = useMemo(
   //   () => BN(data.stakeAmount).multipliedBy(multiple).toNumber(),
@@ -73,7 +74,9 @@ const Step4: FC<Props> = ({ onConfirm, show, onBack, data, baseTokenAddress }) =
           <Button onClick={onBack} outline>
             back
           </Button>
-          <Button onClick={() => onConfirm()}>Create</Button>
+          <Button disabled={disabled} onClick={() => onConfirm()}>
+            Create
+          </Button>
         </footer>
       </BlueLineSection>
     </>
