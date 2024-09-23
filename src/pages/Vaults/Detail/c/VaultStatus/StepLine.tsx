@@ -37,7 +37,7 @@ const StepLine: FC<Props> = ({ data, loading }) => {
       label: data.epochIndex === 0 ? 'Open Period' : 'Semi-open Period',
       time: data.epochIndex === 0 ? data.epochStartTime : data.subscribeRedeemEndTime,
       popper: data.epochIndex === 0 ? step1Popper : step2Popper,
-      status: 1
+      status: data.epochIndex === 0 ? 0 : 1
     },
     {
       label: 'Pre-Settlement Period',
