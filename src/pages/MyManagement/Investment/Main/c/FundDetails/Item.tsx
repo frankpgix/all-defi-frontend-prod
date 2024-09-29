@@ -38,6 +38,8 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
   const { onCancelUnstake: onCancelWithholding } = useCancelUnstake(fund.detail.address)
   const ref = useRef<HTMLDivElement>(null)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
+  const [onCancelAllocateStatus, setOnCancelAllocateStatus] = useState<boolean>(false)
+  const [onCancelcWithholdingStatus, setOnCancelcWithholdingStatus] = useState<boolean>(false)
   const [infoStatus2, setInfoStatus2] = useState<boolean>(false)
   const currReturn = useMemo(
     // () => BN(fund.data.nav).minus(fund.data.aum).toNumber(),
@@ -61,15 +63,21 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
 
   const goCancelAllocate = async () => {
     if (account) {
-      await onCancelAllocate(account)
-      callback()
+      setOnCancelAllocateStatus(true)
+      await onCancelAllocate(account, () => {
+        callback()
+        setOnCancelAllocateStatus(false)
+      })
     }
   }
 
   const goCancelcWithholding = async () => {
     if (account) {
-      await onCancelWithholding(account)
-      callback()
+      setOnCancelcWithholdingStatus(true)
+      await onCancelWithholding(account, () => {
+        callback()
+        setOnCancelcWithholdingStatus(false)
+      })
     }
   }
   const inView = useCallback(async () => {
@@ -151,7 +159,8 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   </em>
                   <Button
                     disabled={
-                      !(fund.userDetail.pendingStake > 0 && [0, 1].includes(fund.detail.status))
+                      !(fund.userDetail.pendingStake > 0 && [0, 1].includes(fund.detail.status)) ||
+                      onCancelAllocateStatus
                     }
                     onClick={() => setInfoStatus(true)}
                     size="mini"
@@ -174,7 +183,8 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   </em>
                   <Button
                     disabled={
-                      !(fund.detail.unstakingShare > 0 && [0, 1].includes(fund.detail.status))
+                      !(fund.detail.unstakingShare > 0 && [0, 1].includes(fund.detail.status)) ||
+                      onCancelcWithholdingStatus
                     }
                     size="mini"
                     onClick={() => setInfoStatus2(true)}

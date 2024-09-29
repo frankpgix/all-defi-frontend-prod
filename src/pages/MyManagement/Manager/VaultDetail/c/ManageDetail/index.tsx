@@ -187,8 +187,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
       {isShowCashBalanceLess && (
         <>
           <Alert show type="error">
-            The current cash balance value of the vault is less than the confirming withholding
-            value
+            The current cash balance value of the vault is less than the confirming unstake value
           </Alert>
           <Blank />
         </>

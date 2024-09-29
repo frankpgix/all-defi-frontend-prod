@@ -68,6 +68,7 @@ export const useStake = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, { title: 'Stake to vault', type: 'success', hash })
           },
           onError: (error: any) => {
+            callback?.()
             updateNotifyItem(notifyId, {
               title: 'Stake to vault',
               type: 'error',
@@ -106,6 +107,7 @@ export const useCancelStake = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, { title: 'Cancel Stake', type: 'success', hash })
           },
           onError: (error: any) => {
+            callback?.()
             updateNotifyItem(notifyId, {
               title: 'Cancel Stake',
               type: 'error',
@@ -155,6 +157,7 @@ export const useUnstake = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, { title: 'Unstake from vault', type: 'success', hash })
           },
           onError: (error: any) => {
+            callback?.()
             updateNotifyItem(notifyId, {
               title: 'Unstake from vault',
               type: 'error',
@@ -193,6 +196,7 @@ export const useCancelUnstake = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, { title: 'Cancel Unstake', type: 'success', hash })
           },
           onError: (error: any) => {
+            callback?.()
             updateNotifyItem(notifyId, {
               title: 'Cancel Unstake',
               type: 'error',
@@ -231,6 +235,7 @@ export const useClaim = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, { title: 'Claim Asset', type: 'success', hash })
           },
           onError: (error: any) => {
+            callback?.()
             updateNotifyItem(notifyId, {
               title: 'Claim Asset',
               type: 'error',

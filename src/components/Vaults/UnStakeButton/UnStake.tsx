@@ -29,9 +29,10 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
   const [value, setValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
-  console.log(data)
+  // console.log(data)
   const isInUnstake = useMemo(() => data.status === 0, [data.status])
   const maxValue = useMemo(() => {
+    // return 0
     return BN(userData.shares).minus(userData.unstakingShare).toNumber()
   }, [userData.shares, userData.unstakingShare])
 
