@@ -34,7 +34,7 @@ const Claim: FC<Props> = ({ userData, getData, onClose }) => {
       toggleSubmiting()
       await onClaim(account, () => {
         getData()
-        onClose()
+        // onClose()
         toggleSubmiting()
       })
     }
@@ -61,10 +61,11 @@ const Claim: FC<Props> = ({ userData, getData, onClose }) => {
       </div>
       <InfoDialog
         show={infoStatus}
-        onConfirm={onRedeem}
+        onConfirm={() => setInfoStatus(false)}
         onClose={() => setInfoStatus(false)}
-        title="Claim"
-        msg={`${userData.unclaimedUnderlying} ${userData.underlying.name} will be claimed`}
+        title="Claim Successful"
+        type="succ"
+        hideCancelButton
       />
     </>
   )

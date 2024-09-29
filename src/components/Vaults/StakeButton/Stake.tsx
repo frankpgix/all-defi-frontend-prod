@@ -12,6 +12,7 @@ import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
 
 // import { formatNumber } from '@/utils/tools'
 import Button from '@@/common/Button'
+import InfoDialog from '@@/common/Dialog/Info'
 import { Input, Slider } from '@@/common/Form'
 import CheckBox from '@@/common/Form/CheckBox'
 import Tip from '@@/common/Tip'
@@ -31,6 +32,7 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
   const { onStake } = useStake(data.address)
   const [accredit, { toggle }] = useBoolean(false)
   const [submiting, { toggle: toggleSubmiting }] = useBoolean(false)
+  const [infoStatus, setInfoStatus] = useState<boolean>(false)
 
   const acToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
 
@@ -94,7 +96,8 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
         getData()
         setValue('')
         setSliderValue(0)
-        onClose()
+        setInfoStatus(true)
+        // onClose()
         toggleSubmiting()
       })
     }
@@ -168,6 +171,14 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
           </footer>
         </div>
       </section>
+      <InfoDialog
+        show={infoStatus}
+        onConfirm={() => setInfoStatus(false)}
+        onClose={() => setInfoStatus(false)}
+        title="Stake Successful"
+        type="succ"
+        hideCancelButton
+      />
     </>
   )
 }

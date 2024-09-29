@@ -70,7 +70,8 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
         getData()
         setValue(0)
         setSliderValue(0)
-        onClose()
+        setInfoStatus(true)
+        // onClose()
         toggleSubmiting()
       })
     }
@@ -123,10 +124,11 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
       <hr />
       <InfoDialog
         show={infoStatus}
-        onConfirm={goUnstake}
+        onConfirm={() => setInfoStatus(false)}
         onClose={() => setInfoStatus(false)}
-        title="Unstake From Vault"
-        msg={`Will Unstake ${value} vault Share, you can claim your tokens anytime after final settlement of current epoch`}
+        title="Unstake Successful"
+        type="succ"
+        hideCancelButton
       />
     </>
   )
