@@ -5,11 +5,10 @@ import { useAccount, useSignMessage } from 'wagmi'
 import { TaskLoginProps, TaskProfileState } from '@/types/tasks'
 
 import {
-  checkDiscordFollow,
+  // checkDiscordFollow,
   connectDiscord,
   connectTwitter,
-  getDashboard,
-  getInviteCode,
+  getDashboard, // getInviteCode,
   getPoint,
   getProfile,
   login
@@ -90,46 +89,49 @@ export const useLogin = () => {
 }
 
 export const useTaskProfile = () => {
-  const { user, dashboard, point, discordFollowed } = useStoreTasks((state: TaskProfileState) => ({
+  const { user, dashboard, point } = useStoreTasks((state: TaskProfileState) => ({
     user: state.user,
     update: state.update,
     dashboard: state.dashboard,
-    point: state.point,
-    discordFollowed: state.discordFollowed
+    point: state.point
   }))
   const { isLogin } = useLogin()
 
-  return { user, dashboard, isLogin, point, discordFollowed }
+  return { user, dashboard, isLogin, point }
 }
 
-export const useGetTaskProfile = () => {
-  const { address: userAddress } = useAccount()
-
+export const useTaskProfileInit = () => {
   const { update, init } = useStoreTasks((state: TaskProfileState) => ({
     init: state.init,
     update: state.update
   }))
-  const { goLogin, isLogin, logout, loginLoading } = useLogin()
-
-  const getTaskProfile = useCallback(async () => {
+  const { logout } = useLogin()
+  const getTaskProfile = async () => {
     const { code, data } = await getProfile()
     const { data: dashboard } = await getDashboard()
     const { data: point } = await getPoint()
-    const { data: checkDiscord } = await checkDiscordFollow()
-    if (checkDiscord?.isMember && !data?.inviteCode) {
-      await getInviteCode()
-      getTaskProfile()
-      return
-    }
-
     if (code === 0) {
-      update(data, dashboard, point, Boolean(checkDiscord?.isMember))
+      update(data, dashboard, point)
     } else {
       cache.rm('Authorization')
       init()
       logout()
     }
-  }, [isLogin, userAddress])
+  }
+  return { getTaskProfile }
+}
+
+export const useGetTaskProfile = () => {
+  const { address: userAddress } = useAccount()
+
+  const { getTaskProfile } = useTaskProfileInit()
+
+  const { init } = useStoreTasks((state: TaskProfileState) => ({
+    init: state.init
+  }))
+  const { goLogin, isLogin, loginLoading } = useLogin()
+
+  const getData = useCallback(async () => getTaskProfile(), [isLogin, userAddress])
 
   useEffect(() => {
     const cacheUser = cache.get('Authorization')?.userAddress ?? ''
@@ -138,13 +140,13 @@ export const useGetTaskProfile = () => {
       cache.rm('Authorization')
       init()
       if (userAddress) {
-        getTaskProfile()
+        getData()
       }
     }
     if (!isLogin) {
       init()
     } else {
-      getTaskProfile()
+      getData()
     }
   }, [isLogin, userAddress])
 
@@ -152,11 +154,12 @@ export const useGetTaskProfile = () => {
 }
 
 export const useConnectTwitter = () => {
+  const { getTaskProfile } = useTaskProfileInit()
   const [loading, setLoading] = useState(false)
   const goConnectTwitter = async () => {
     setLoading(true)
-    const { data } = await connectTwitter()
-    window.open(data.authUrl)
+    await connectTwitter()
+    await getTaskProfile()
     setLoading(false)
   }
 
@@ -164,13 +167,13 @@ export const useConnectTwitter = () => {
 }
 
 export const useConnectDiscord = () => {
+  const { getTaskProfile } = useTaskProfileInit()
   const [loading, setLoading] = useState(false)
   const goConnectDiscord = async () => {
     setLoading(true)
-    const { data } = await connectDiscord()
-    window.open(data.authUrl)
+    await connectDiscord()
+    await getTaskProfile()
     setLoading(false)
-    console.log(data)
   }
 
   return { goConnectDiscord, loading }

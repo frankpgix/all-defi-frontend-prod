@@ -48,9 +48,8 @@ const Button: FC<ButtonProps> = ({
     if (!disabled && !loading) {
       if (to) {
         ;/^https?:\/\//.test(to ?? '') ? window.open(to) : navigate(to)
-      } else {
-        onClick?.(e)
       }
+      onClick?.(e)
     }
   }
   return (

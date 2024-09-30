@@ -1,13 +1,9 @@
 export interface taskUserProps {
-  discordAvatarUrl: string
-  discordDisplayName: string
-  discordName: string
+  referrer: string
   inviteCode: string
   inviteeCount: number
-  referrer: string
-  twitterAvatarUrl: string
-  twitterDisplayName: string
-  twitterName: string
+  twitterFollowed: boolean
+  discordJoined: boolean
 }
 
 export interface taskDashboardProps {
@@ -32,13 +28,7 @@ export type TaskProfileState = {
   user: taskUserProps
   dashboard: taskDashboardProps
   point: taskUserPointProps
-  discordFollowed: boolean
-  update: (
-    user: taskUserProps,
-    dashboard: taskDashboardProps,
-    point: taskUserPointProps,
-    discordFollowed: boolean
-  ) => void
+  update: (user: taskUserProps, dashboard: taskDashboardProps, point: taskUserPointProps) => void
   init: () => void
 }
 

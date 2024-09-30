@@ -1,13 +1,9 @@
 export const taskUserDefault = {
-  discordAvatarUrl: '',
-  discordDisplayName: '',
-  discordName: '',
+  referrer: '',
   inviteCode: '',
   inviteeCount: 0,
-  referrer: '',
-  twitterAvatarUrl: '',
-  twitterDisplayName: '',
-  twitterName: ''
+  twitterFollowed: false,
+  discordJoined: false
 }
 
 export const taskDashboardDefault = {

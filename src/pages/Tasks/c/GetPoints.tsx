@@ -31,12 +31,12 @@ const SignHelpButton: FC<{ children: ReactNode; isLogin: boolean; goLogin: () =>
 const GetPoints: FC = () => {
   const { isLogin, goLogin } = useLogin()
 
-  const { user, point, discordFollowed } = useTaskProfile()
+  const { user, point } = useTaskProfile()
   const { goConnectTwitter, loading: twitterLoading } = useConnectTwitter()
   const { goConnectDiscord, loading: discordLoading } = useConnectDiscord()
   const isBaseTaskFinish = useMemo(
-    () => Boolean(user.twitterDisplayName) && Boolean(user.discordName) && discordFollowed,
-    [user.twitterDisplayName, user.discordName, discordFollowed]
+    () => user.twitterFollowed && user.discordJoined,
+    [user.twitterFollowed, user.discordJoined]
   )
 
   return (
@@ -65,10 +65,11 @@ const GetPoints: FC = () => {
               <Button
                 size="medium"
                 loading={twitterLoading}
-                disabled={Boolean(user.twitterDisplayName)}
+                disabled={user.twitterFollowed}
+                to="https://twitter.com/intent/follow?screen_name=Alldefiprotocol"
                 onClick={goConnectTwitter}
               >
-                {Boolean(user.twitterDisplayName) ? 'Followed' : 'connect'}
+                {user.twitterFollowed ? 'Followed' : 'Follow'}
               </Button>
             </SignHelpButton>
           </footer>
@@ -87,12 +88,12 @@ const GetPoints: FC = () => {
             <SignHelpButton {...{ isLogin, goLogin }}>
               <Button
                 loading={discordLoading}
-                disabled={Boolean(user.discordName) && discordFollowed}
-                onClick={!Boolean(user.discordName) ? goConnectDiscord : undefined}
-                to={Boolean(user.discordName) ? 'https://discord.gg/BQbzfRkH' : undefined}
+                disabled={Boolean(user.discordJoined)}
+                onClick={goConnectDiscord}
+                to="https://discord.gg/BQbzfRkH"
                 size="medium"
               >
-                {Boolean(user.discordName) ? (discordFollowed ? 'Joined' : 'join') : 'Accredit'}
+                {user.discordJoined ? 'Joined' : 'join'}
               </Button>
             </SignHelpButton>
           </footer>

@@ -15,22 +15,15 @@ export const useStoreTasks = create<TaskProfileState>((set) => {
     user: taskUserDefault,
     dashboard: taskDashboardDefault,
     point: taskPointDefault,
-    discordFollowed: false,
-    update: (
-      user: taskUserProps,
-      dashboard: taskDashboardProps,
-      point: taskUserPointProps,
-      discordFollowed: boolean
-    ) => {
-      set({ user, dashboard, point, discordFollowed })
+    update: (user: taskUserProps, dashboard: taskDashboardProps, point: taskUserPointProps) => {
+      set({ user, dashboard, point })
     },
     init: () => {
       console.log(12345, '这里init 了数据')
       set({
         user: taskUserDefault,
         dashboard: taskDashboardDefault,
-        point: taskPointDefault,
-        discordFollowed: false
+        point: taskPointDefault
       })
     }
   }
