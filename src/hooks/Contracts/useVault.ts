@@ -1,3 +1,4 @@
+import { WriteContractErrorType } from 'viem'
 import { useReadContract, useWriteContract } from 'wagmi'
 
 import { useVaultContract } from '@/hooks/Contracts/useContract'
@@ -278,7 +279,7 @@ export const useRequestSettlemen = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, {
               title: 'Settle Vault',
               type: 'error',
-              content: error.shortMessage
+              content: error.metaMessages[0] || error.shortMessage
             })
           }
         }
