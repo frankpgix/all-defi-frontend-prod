@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import ContentLoader from 'react-content-loader'
 
 import { useToggle } from 'ahooks'
@@ -16,8 +16,9 @@ import Create from './c/Main'
 
 interface Props {
   large?: boolean
+  children?: ReactNode
 }
-const CreateVaultButton: FC<Props> = ({ large }) => {
+const CreateVaultButton: FC<Props> = ({ large, children }) => {
   useGetManageVaultList()
   const { loading, manageVaultList } = useManageVaultListHook()
   const { maxFundLimit } = useProfile()
@@ -49,7 +50,7 @@ const CreateVaultButton: FC<Props> = ({ large }) => {
 
   if (maxFundLimit === manageVaultList?.length) {
     return (
-      <Button to="/manage/manager/create" size="mini" disabled>
+      <Button size="mini" disabled>
         <Popper content="The number of vaults you have created has reached the maximum limit">
           Create Vaults
         </Popper>
@@ -59,7 +60,13 @@ const CreateVaultButton: FC<Props> = ({ large }) => {
   return (
     <>
       <Button onClick={setRight} size={large ? 'default' : 'mini'}>
-        {isCacheCreate ? 'Unfinished Edits' : large ? 'Create a Vault now' : 'Create Vaults'}
+        {children
+          ? children
+          : isCacheCreate
+            ? 'Unfinished Edits'
+            : large
+              ? 'Create a Vault now'
+              : 'Create Vaults'}
       </Button>
       <Modal show={show} onClose={setLeft} title="Create Vault">
         <Create onConfirm={onConfirm} />

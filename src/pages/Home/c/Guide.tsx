@@ -8,17 +8,16 @@ const Guide: FC = () => {
   return (
     <section className="web-home-guide">
       <main>
-        <h2>Stake to a vault from DAO treasury</h2>
+        <h2>Choose a vault to stake your asset</h2>
         <p>
-          AC tokens are the native DAO tokens that allow holders to stake DAO treasury on AllDeFi
-          platform. They can be obtained through making a deposit to AC DAO or directly purchased
-          from the open market at market price.
+          Vaults can be filtered by strategy type and staking asset. Explore and select the vault
+          that aligns with your asset type and risk-return profile.
         </p>
         <aside>
           {/* <Button to="/buy" outline>
             Buy AC token
           </Button> */}
-          <Button to="/vaults">RESTAKE TO A VAULT</Button>
+          <Button to="/vaults">STAKE TO A VAULT</Button>
         </aside>
         <section>
           <dl>

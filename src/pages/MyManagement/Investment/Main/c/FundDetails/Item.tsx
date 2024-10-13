@@ -207,10 +207,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                 {/*{formatNumber(fund.data.navInUSD, 2, '$0,0.00')}*/}
               </SectionItem>
               <section>
-                <SectionItem
-                  label="Accumulated Investment Profit"
-                  popper="Historic cumulative profit and loss"
-                >
+                <SectionItem label="Historical return">
                   <TokenValue
                     value={fund.userDetail.historicalReturn}
                     token={underlyingToken}

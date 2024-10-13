@@ -1,4 +1,4 @@
-import { WriteContractErrorType } from 'viem'
+// import { WriteContractErrorType } from 'viem'
 import { useReadContract, useWriteContract } from 'wagmi'
 
 import { useVaultContract } from '@/hooks/Contracts/useContract'
@@ -45,7 +45,7 @@ export const useStake = (vaultAddress: AddressType) => {
     acToken: TokenTypes,
     amount: number,
     account: AddressType,
-    callback?: () => void
+    callback?: (isError?: boolean) => void
   ) => {
     const _amount = getUnitAmount(String(amount), acToken.decimals)
 
@@ -69,7 +69,7 @@ export const useStake = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, { title: 'Stake to vault', type: 'success', hash })
           },
           onError: (error: any) => {
-            callback?.()
+            callback?.(true)
             updateNotifyItem(notifyId, {
               title: 'Stake to vault',
               type: 'error',
@@ -90,7 +90,7 @@ export const useCancelStake = (vaultAddress: AddressType) => {
   const { createNotify, updateNotifyItem } = useNotify()
   const { onWaitReceipt } = useWaitReceipt()
 
-  const onCancelStake = async (account: AddressType, callback?: () => void) => {
+  const onCancelStake = async (account: AddressType, callback?: (isError?: boolean) => void) => {
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Cancel Stake' })
 
@@ -108,7 +108,7 @@ export const useCancelStake = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, { title: 'Cancel Stake', type: 'success', hash })
           },
           onError: (error: any) => {
-            callback?.()
+            callback?.(true)
             updateNotifyItem(notifyId, {
               title: 'Cancel Stake',
               type: 'error',
@@ -134,7 +134,7 @@ export const useUnstake = (vaultAddress: AddressType) => {
     acToken: TokenTypes,
     amount: number,
     account: AddressType,
-    callback?: () => void
+    callback?: (isError?: boolean) => void
   ) => {
     const _amount = getUnitAmount(String(amount), 18)
 
@@ -158,7 +158,7 @@ export const useUnstake = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, { title: 'Unstake from vault', type: 'success', hash })
           },
           onError: (error: any) => {
-            callback?.()
+            callback?.(true)
             updateNotifyItem(notifyId, {
               title: 'Unstake from vault',
               type: 'error',
@@ -179,7 +179,7 @@ export const useCancelUnstake = (vaultAddress: AddressType) => {
   const { createNotify, updateNotifyItem } = useNotify()
   const { onWaitReceipt } = useWaitReceipt()
 
-  const onCancelUnstake = async (account: AddressType, callback?: () => void) => {
+  const onCancelUnstake = async (account: AddressType, callback?: (isError?: boolean) => void) => {
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Cancel Unstake' })
 
@@ -197,7 +197,7 @@ export const useCancelUnstake = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, { title: 'Cancel Unstake', type: 'success', hash })
           },
           onError: (error: any) => {
-            callback?.()
+            callback?.(true)
             updateNotifyItem(notifyId, {
               title: 'Cancel Unstake',
               type: 'error',
@@ -218,7 +218,7 @@ export const useClaim = (vaultAddress: AddressType) => {
   const { createNotify, updateNotifyItem } = useNotify()
   const { onWaitReceipt } = useWaitReceipt()
 
-  const onClaim = async (account: AddressType, callback?: () => void) => {
+  const onClaim = async (account: AddressType, callback?: (isError?: boolean) => void) => {
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Claim Asset' })
 
@@ -236,7 +236,7 @@ export const useClaim = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, { title: 'Claim Asset', type: 'success', hash })
           },
           onError: (error: any) => {
-            callback?.()
+            callback?.(true)
             updateNotifyItem(notifyId, {
               title: 'Claim Asset',
               type: 'error',
@@ -257,7 +257,10 @@ export const useRequestSettlemen = (vaultAddress: AddressType) => {
   const { createNotify, updateNotifyItem } = useNotify()
   const { onWaitReceipt } = useWaitReceipt()
 
-  const onRequestSettlemen = async (account: AddressType, callback?: () => void) => {
+  const onRequestSettlemen = async (
+    account: AddressType,
+    callback?: (isError?: boolean) => void
+  ) => {
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Settle Vault' })
 
@@ -275,7 +278,7 @@ export const useRequestSettlemen = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, { title: 'Settle Vault', type: 'success', hash })
           },
           onError: (error: any) => {
-            callback?.()
+            callback?.(true)
             updateNotifyItem(notifyId, {
               title: 'Settle Vault',
               type: 'error',

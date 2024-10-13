@@ -384,13 +384,20 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
         {/* </TabPanel> */}
         {/* Fees TabPanel */}
         <TabPanel>
-          <SectionHeader name="Manager Fee" />
+          {/* <SectionHeader name="Manager Fee" /> */}
           <SectionLayout col="2">
             <SectionItem
               label="Current Epoch Manager Fee"
               loading={loading}
               value={
                 <TokenValue value={data.managerFee} token={baseToken} size="mini" format="0,0.00" />
+              }
+            />
+            <SectionItem
+              label="Current Epoch Platform Fee"
+              loading={loading}
+              value={
+                <TokenValue value={data.platFee} token={baseToken} size="mini" format="0,0.00" />
               }
             />
             {/* <SectionItem
@@ -436,17 +443,17 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
               }
             /> 
           </SectionLayout>*/}
-          <SectionBlank />
-          <SectionHeader name="Platform Fee" />
-          <SectionLayout col="2">
+          {/* <SectionBlank />
+          <SectionHeader name="Platform Fee" /> */}
+          {/* <SectionLayout col="2">
             <SectionItem
               label="Current Epoch Platform Fee"
               loading={loading}
               value={
                 <TokenValue value={data.platFee} token={baseToken} size="mini" format="0,0.00" />
               }
-            />
-            {/* <SectionItem
+            /> */}
+          {/* <SectionItem
               label="Unsettled Platform Fee"
               loading={loading}
               popper="Unsettled fee to platform can be claimed when investors withhold or after 6 Epochs"
@@ -454,7 +461,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                 <TokenValue value={data.platFee} token={baseToken} size="mini" format="0,0.00" />
               }
             /> */}
-            {/* <SectionItem
+          {/* <SectionItem
               label="Historical Epoch  Platform Fee(待定)"
               loading={loading}
               value={
@@ -466,7 +473,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
                 />
               }
             /> */}
-          </SectionLayout>
+          {/* </SectionLayout> */}
         </TabPanel>
         {/* Fund TabPanel */}
         <TabPanel>

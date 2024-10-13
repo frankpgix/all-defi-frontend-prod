@@ -91,14 +91,16 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
   const goAllocate = async () => {
     if (account) {
       toggleSubmiting()
-      await onStake(acToken, Number(value), account, () => {
+      await onStake(acToken, Number(value), account, (isError) => {
         reBalances()
         getData()
         setValue('')
         setSliderValue(0)
-        setInfoStatus(true)
-        // onClose()
         toggleSubmiting()
+        if (!isError) {
+          setInfoStatus(true)
+        }
+        // onClose()
       })
     }
   }
@@ -116,8 +118,8 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
       <section className="c-vault-stake">
         <div className="c-vault-stake-tip">
           <p>
-            The Denomination Assets of this vault is BITU. Please enter the amount you wish to stake
-            in the input box below.
+            The Denomination Assets of this vault is sBITU. Please enter the amount you wish to
+            stake in the input box below.
           </p>
         </div>
         <div className="c-vault-stake-input">
