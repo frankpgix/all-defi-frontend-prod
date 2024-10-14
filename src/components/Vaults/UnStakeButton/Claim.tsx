@@ -32,10 +32,13 @@ const Claim: FC<Props> = ({ userData, getData, onClose }) => {
   const onRedeem = async () => {
     if (account && fundAddress) {
       toggleSubmiting()
-      await onClaim(account, () => {
+      await onClaim(account, (isError) => {
         getData()
         // onClose()
         toggleSubmiting()
+        if (!isError) {
+          setInfoStatus(true)
+        }
       })
     }
   }
