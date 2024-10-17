@@ -19,22 +19,44 @@ const Guide: FC = () => {
           </Button> */}
           <Button to="/vaults">STAKE TO A VAULT</Button>
         </aside>
-        <section>
+        <section className="web-home-guide-map">
           <dl>
-            <dt>1.</dt>
-            <dd>Make sure you have AC tokens to Stake.</dd>
+            <dd>
+              <button className="btn">Stake Asset</button>
+            </dd>
+            <dd>
+              <button className="btn">Strategy Vault</button>
+            </dd>
+            <dd></dd>
           </dl>
           <dl>
-            <dt>2.</dt>
-            <dd>Choose one of several vaults listed.</dd>
+            <dd>
+              <button className="text top">As collateral to borrow</button>
+            </dd>
+            <dd>
+              <button className="btn">Multi-Sig Wallet</button>
+            </dd>
+            <dd>
+              <button className="text bottom">Sette P&L</button>
+            </dd>
           </dl>
           <dl>
-            <dt>3.</dt>
-            <dd>Select a vault to a vault by staking your AC tokens into the strategy's vault.</dd>
+            <dd>
+              <button className="btn">Trading Asset</button>
+            </dd>
+            <dd></dd>
+            <dd>
+              <button className="btn">Custody</button>
+            </dd>
           </dl>
           <dl>
-            <dt>4.</dt>
-            <dd>Staking is finalized and watch the performance.</dd>
+            <dd></dd>
+            <dd>
+              <button className="btn">Centralized Exchange</button>
+            </dd>
+            <dd>
+              <button className="text bottom">Mirror</button>
+            </dd>
           </dl>
         </section>
       </main>

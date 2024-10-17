@@ -48,100 +48,59 @@ const GetPoints: FC = () => {
         </Button>
       </header>
       <section className="p-tasks-get-point">
-        <div className="p-tasks-get-point-item">
-          <main>
-            <Image src="task/x.svg" />
-            <h4>Connect and follow AllDefi on Twitter</h4>
-            <p>
-              Copy invitation link, connect and follow us on Twitter, and get multiplier points.
-            </p>
-            <br />
-            <Button text to="https://twitter.com/intent/follow?screen_name=Alldefiprotocol">
-              Twitter
-            </Button>
-          </main>
-          <footer>
-            <SignHelpButton {...{ isLogin, goLogin }}>
-              <Button
-                size="medium"
-                loading={twitterLoading}
-                disabled={user.twitterFollowed}
-                to="https://twitter.com/intent/follow?screen_name=Alldefiprotocol"
-                onClick={goConnectTwitter}
-              >
-                {user.twitterFollowed ? 'Followed' : 'Follow'}
-              </Button>
-            </SignHelpButton>
-          </footer>
-        </div>
-        <div className="p-tasks-get-point-item">
-          <main>
-            <Image src="task/m.svg" />
-            <h4>Join AllDefi Discord and get more points</h4>
-            <p>Copy invitation link, join AllDefi Discord and get multiplier points.</p>
-            <br />
-            <Button text to="https://discord.gg/BQbzfRkH">
-              Discord
-            </Button>
-          </main>
-          <footer>
-            <SignHelpButton {...{ isLogin, goLogin }}>
-              <Button
-                loading={discordLoading}
-                disabled={Boolean(user.discordJoined)}
-                onClick={goConnectDiscord}
-                to="https://discord.gg/BQbzfRkH"
-                size="medium"
-              >
-                {user.discordJoined ? 'Joined' : 'join'}
-              </Button>
-            </SignHelpButton>
-          </footer>
-        </div>
-        {/* <div className={classNames('p-tasks-get-point-item', { fire: isBaseTaskFinish })}>
-          {/* <header>Token worth $1,000 USD deposit can get 100pts. </header>
-          <main>
-            <Image src="task/actoken.svg" />
-            <h4>Deposit token and get AC Token</h4>
-            <aside>
-              <strong>
-                {formatNumber(point.todayDepositPoints, 0, '0,0')}
-                <small>pts</small>
-              </strong>
-              <span>You have received today.</span>
-            </aside>
-            <Button text>KYC Entrance</Button>
-          </main>
-          <footer>
-            <SignHelpButton {...{ isLogin, goLogin }}>
-              <Button size="medium" to="/buy" disabled={!isBaseTaskFinish}>
-                deposit
-              </Button>
-            </SignHelpButton>
-          </footer>
-        </div> */}
-        <div className={classNames('p-tasks-get-point-item', { fire: isBaseTaskFinish })}>
-          {/* <header>Token worth $1,000 USD deposit can get 100pts. </header> */}
-          <main>
+        <div className={classNames('p-tasks-get-point-item')}>
+          <section>
             <Image src="task/value.svg" />
-            <h4>Stake to vault</h4>
-            <aside>
-              <strong>
-                {formatNumber(point.todayStakePoints, 0, '0,0')}
-                <small>pts</small>
-              </strong>
-              <span>You have received today.</span>
-            </aside>
-            {/* <Button text>Buy acFDUSD</Button>
-            <Button text>Buy acBTC</Button> */}
-          </main>
-          <footer>
-            <SignHelpButton {...{ isLogin, goLogin }}>
-              <Button size="medium" to="/vaults" disabled={!isBaseTaskFinish}>
-                stake
-              </Button>
-            </SignHelpButton>
-          </footer>
+            <main>
+              <h4>Stake to vault</h4>
+              <p>{formatNumber(point.todayStakePoints, 0, '0,0')} pts rewards / day</p>
+            </main>
+          </section>
+          <SignHelpButton {...{ isLogin, goLogin }}>
+            <Button size="mini" to="/vaults" disabled={!isBaseTaskFinish}>
+              stake
+            </Button>
+          </SignHelpButton>
+        </div>
+        <div className="p-tasks-get-point-item">
+          <section>
+            <Image src="task/x.svg" />
+            <main>
+              <h4>Follow us on X</h4>
+              <p>2x rewards / day</p>
+            </main>
+          </section>
+          <SignHelpButton {...{ isLogin, goLogin }}>
+            <Button
+              size="mini"
+              loading={twitterLoading}
+              disabled={user.twitterFollowed}
+              to="https://twitter.com/intent/follow?screen_name=Alldefiprotocol"
+              onClick={goConnectTwitter}
+            >
+              {user.twitterFollowed ? 'Followed' : 'Follow'}
+            </Button>
+          </SignHelpButton>
+        </div>
+        <div className="p-tasks-get-point-item">
+          <section>
+            <Image src="task/m.svg" />
+            <main>
+              <h4>JJoin us on Discord</h4>
+              <p>2x rewards / day</p>
+            </main>
+          </section>
+          <SignHelpButton {...{ isLogin, goLogin }}>
+            <Button
+              loading={discordLoading}
+              disabled={Boolean(user.discordJoined)}
+              onClick={goConnectDiscord}
+              to="https://discord.gg/BQbzfRkH"
+              size="mini"
+            >
+              {user.discordJoined ? 'Joined' : 'join'}
+            </Button>
+          </SignHelpButton>
         </div>
       </section>
     </section>

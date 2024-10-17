@@ -7,17 +7,20 @@
 
 .p-task-my-points {
   // @extend .web;
-  position: relative;
   // padding: 0 40px;
   border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   &-layout {
     @extend .web;
-    height: 346px;
+    height: 256px;
     padding: 40px;
     border-radius: 12px;
     background: linear-gradient(328.9deg, #8ca9fb 25.06%, rgba(237, 240, 251, 0) 105.07%);
     box-shadow: 10px 10px 20px 0px #81808033;
     overflow: hidden;
+    position: relative;
   }
   &::after {
     content: '';
@@ -37,7 +40,6 @@
     display: inline-flex;
     gap: 10px;
     flex-flow: column;
-    margin-bottom: 40px;
 
     & > label {
       font-size: 14px;
@@ -99,8 +101,8 @@
 
   &-invet {
     position: absolute;
-    right: 0;
-    top: 8px;
+    right: 40px;
+    bottom: 40px;
     z-index: 1;
     display: flex;
     align-items: center;
