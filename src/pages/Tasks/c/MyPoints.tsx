@@ -4,6 +4,7 @@ import BN from 'bignumber.js'
 
 import { useTaskProfile } from '@/hooks/useTasks'
 
+import { WHITEPAPER_URL } from '@/config'
 import { formatNumber } from '@/utils/tools'
 import Button from '@@/common/Button'
 import CopyText from '@@/common/CopyText'
@@ -33,7 +34,9 @@ const MyPoints: FC = () => {
           <div className="p-task-my-points-total">
             <label>Total Points</label>
             <em>{formatNumber(total, 2, '0,0')}</em>
-            <Button text>points rules</Button>
+            <Button to={WHITEPAPER_URL} text>
+              points rules
+            </Button>
           </div>
           <div className="p-task-my-points-details">
             <div className="p-task-my-points-item">

@@ -6,6 +6,7 @@ import { useToggle } from 'ahooks'
 import { useProfile } from '@/hooks/useProfile'
 import { useGetManageVaultList, useManageVaultListHook } from '@/hooks/useVaultList'
 
+import ALink from '@/components/common/ALink'
 import Cache from '@/utils/cache'
 import { sleep } from '@/utils/tools'
 import Button from '@@/common/Button'
@@ -17,8 +18,9 @@ import Create from './c/Main'
 interface Props {
   large?: boolean
   children?: ReactNode
+  text?: boolean
 }
-const CreateVaultButton: FC<Props> = ({ large, children }) => {
+const CreateVaultButton: FC<Props> = ({ large, children, text }) => {
   useGetManageVaultList()
   const { loading, manageVaultList } = useManageVaultListHook()
   const { maxFundLimit } = useProfile()
@@ -59,15 +61,18 @@ const CreateVaultButton: FC<Props> = ({ large, children }) => {
   }
   return (
     <>
-      <Button onClick={setRight} size={large ? 'default' : 'mini'}>
-        {children
-          ? children
-          : isCacheCreate
-            ? 'Unfinished Edits'
-            : large
-              ? 'Create a Vault now'
-              : 'Create Vaults'}
-      </Button>
+      {text && <ALink onClick={setRight}>{children || 'Create Vaults'}</ALink>}
+      {!text && (
+        <Button onClick={setRight} size={large ? 'default' : 'mini'}>
+          {children
+            ? children
+            : isCacheCreate
+              ? 'Unfinished Edits'
+              : large
+                ? 'Create a Vault now'
+                : 'Create Vaults'}
+        </Button>
+      )}
       <Modal show={show} onClose={setLeft} title="Create Vault">
         <Create onConfirm={onConfirm} />
       </Modal>

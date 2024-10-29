@@ -1,7 +1,9 @@
 import { FC } from 'react'
 
 import { useProfile } from '@/hooks/useProfile'
+
 import ALink from '@@/common/ALink'
+
 import nav from './nav'
 
 const Footer: FC = () => {
@@ -14,9 +16,11 @@ const Footer: FC = () => {
           {nav.map(({ name, list }, index) => (
             <dl key={index}>
               <dt>{name}</dt>
-              {list.map(({ name, url, checkManage }, key) => (
+              {list.map(({ name, url, checkManage, component }, key) => (
                 <dd key={`${index}-${key}`}>
-                  {checkManage ? (
+                  {component ? (
+                    component
+                  ) : checkManage ? (
                     <ALink to={url} disabled={!isManager}>
                       {name}
                     </ALink>

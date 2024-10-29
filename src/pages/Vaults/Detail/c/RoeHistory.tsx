@@ -39,7 +39,6 @@ const calcYearReturn = (arr: VaultMonthDataType[]) => {
   if (arr[0].year === year) {
     arr.length = arr.length - 1
   }
-
   const res = BN.sum
     .apply(
       null,
@@ -85,7 +84,7 @@ const RoeHistory: FC<Props> = ({ fundAddress }) => {
 
       if (item.month === 13) {
         const arr = [...data, ...oldData].filter((dat) => dat.year === item.year)
-        // console.log(1111122222, arr)
+        console.log(1111122222, arr)
         const yearReturn = calcYearReturn(arr)
         // console.log([...data, ...oldData].filter((dat) => dat.year === item.year))
         if (yearReturn) {
