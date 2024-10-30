@@ -55,13 +55,7 @@ const CreateVaultButton: FC<Props> = ({ large, children, text }) => {
 
   if (maxFundLimit === manageVaultList?.length) {
     if (text) {
-      return (
-        <ALink disabled>
-          <Popper content="The number of vaults you have created has reached the maximum limit">
-            Create Vaults
-          </Popper>
-        </ALink>
-      )
+      return <ALink disabled>Create Vaults</ALink>
     }
     return (
       <Button size="mini" disabled>
