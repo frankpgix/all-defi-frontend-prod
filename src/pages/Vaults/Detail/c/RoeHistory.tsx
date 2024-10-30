@@ -35,10 +35,10 @@ const calcBaseRoeData = () => {
 
 const calcYearReturn = (arr: VaultMonthDataType[]) => {
   if (!arr.length) return null
-  const year = dayjs().year()
-  if (arr[0].year === year) {
-    arr.length = arr.length - 1
-  }
+  // const year = dayjs().year()
+  // if (arr[0].year === year) {
+  //   arr.length = arr.length - 1
+  // }
   const res = BN.sum
     .apply(
       null,

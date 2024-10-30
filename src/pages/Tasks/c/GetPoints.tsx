@@ -1,4 +1,4 @@
-import { FC, ReactNode, useMemo } from 'react'
+import { FC, ReactNode } from 'react'
 
 import classNames from 'classnames'
 
@@ -34,10 +34,6 @@ const GetPoints: FC = () => {
   const { user, point } = useTaskProfile()
   const { goConnectTwitter, loading: twitterLoading } = useConnectTwitter()
   const { goConnectDiscord, loading: discordLoading } = useConnectDiscord()
-  const isBaseTaskFinish = useMemo(
-    () => user.twitterFollowed && user.discordJoined,
-    [user.twitterFollowed, user.discordJoined]
-  )
 
   return (
     <section className="p-tasks-get-point-layout">
@@ -57,7 +53,7 @@ const GetPoints: FC = () => {
             </main>
           </section>
           <SignHelpButton {...{ isLogin, goLogin }}>
-            <Button size="mini" to="/vaults" disabled={!isBaseTaskFinish}>
+            <Button size="mini" to="/vaults">
               stake
             </Button>
           </SignHelpButton>
