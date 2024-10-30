@@ -37,6 +37,9 @@ const CreateVaultButton: FC<Props> = ({ large, children, text }) => {
     window.location.reload()
   }
   if (loading) {
+    if (text) {
+      return <ALink disabled>Create Vaults</ALink>
+    }
     return (
       <ContentLoader
         width={160}
@@ -51,6 +54,15 @@ const CreateVaultButton: FC<Props> = ({ large, children, text }) => {
   }
 
   if (maxFundLimit === manageVaultList?.length) {
+    if (text) {
+      return (
+        <ALink disabled>
+          <Popper content="The number of vaults you have created has reached the maximum limit">
+            Create Vaults
+          </Popper>
+        </ALink>
+      )
+    }
     return (
       <Button size="mini" disabled>
         <Popper content="The number of vaults you have created has reached the maximum limit">
