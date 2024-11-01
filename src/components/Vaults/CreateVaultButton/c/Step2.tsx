@@ -21,7 +21,6 @@ interface Props {
 const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
   const { getTokenByAddress } = useToken()
   const baseTokenOptions = useUnderlyingTokenOptions()
-  // console.log(baseTokenOptions, baseTokenOptions[0].value)
   const [minAmount, setMinAmount] = useState<string | number>('')
   const [underlyingAddress, setUnderlyingAddress] = useState(baseTokenOptions[0].value)
   const underlyingToken = useMemo(() => getTokenByAddress(underlyingAddress), [underlyingAddress])
@@ -74,7 +73,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
         title="Step 2 Protocol Selection"
       >
         {/*<h2>Deposit Limits</h2>*/}
-        {/* {underlyingAddress} */}
+        {JSON.stringify(baseTokenOptions)}
         <div className="c-create-step-1col">
           <Select
             label="Denomination Assets"

@@ -14,7 +14,6 @@ interface Props {
 const Step0: FC<Props> = ({ onConfirm, show }) => {
   const [status, setStatus] = useState<boolean[]>([false, false, false, false, false])
   const isDisabled = useMemo(() => status.includes(false), [status])
-
   const onSetStatus = (index: number) => {
     const newStatus = [...status]
     newStatus[index] = !newStatus[index]

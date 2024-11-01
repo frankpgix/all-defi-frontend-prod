@@ -51,7 +51,19 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
     address: {
       [ChainId.MAINNET]: zeroAddress,
       [ChainId.BSC]: '0x61183a27ab5FDaCC4D46F5aF9Eb9E6A93afd76d4',
-      [ChainId.BSCTEST]: '0x08E261bFB7f347842EA71F77A315BA773aB60A87'
+      [ChainId.BSCTEST]: zeroAddress
+    },
+    decimals: 18,
+    precision: 4,
+    icon: 'symbol/sbitu.svg'
+  },
+  {
+    name: 'stETH',
+    symbol: 'stETH',
+    address: {
+      [ChainId.MAINNET]: zeroAddress,
+      [ChainId.BSC]: zeroAddress,
+      [ChainId.BSCTEST]: '0xDaF4579d8DD758fC9cb21927CA095736af16B10A'
     },
     decimals: 18,
     precision: 4,

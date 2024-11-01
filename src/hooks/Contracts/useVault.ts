@@ -267,7 +267,7 @@ export const useRequestSettlemen = (vaultAddress: AddressType) => {
       writeContract(
         {
           ...vaultContract,
-          functionName: 'requestSettlement',
+          functionName: 'proposeSettlement',
           args: [],
           account
         },
