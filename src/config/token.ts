@@ -67,7 +67,7 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
     },
     decimals: 18,
     precision: 4,
-    icon: 'symbol/sbitu.svg'
+    icon: 'symbol/steth.svg'
   }
 ]
 export const tokens: TokenConfigTypes[] = [...underlyingTokens]
