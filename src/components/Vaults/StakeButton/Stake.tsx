@@ -118,8 +118,8 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
       <section className="c-vault-stake">
         <div className="c-vault-stake-tip">
           <p>
-            The Denomination Assets of this vault is sBITU. Please enter the amount you wish to
-            stake in the input box below.
+            The Denomination Assets of this vault is {acToken.name}. Please enter the amount you
+            wish to stake in the input box below.
           </p>
         </div>
         <div className="c-vault-stake-input">

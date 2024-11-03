@@ -34,7 +34,7 @@ const Step0: FC<Props> = ({ onConfirm, show }) => {
           <main>
             <article>
               <p>
-                The length of the first epoch varies for different funds. Please check with AllDeFi
+                The length of the first epoch varies for different vaults. Please check with AllDeFi
                 for details.
               </p>
             </article>

@@ -114,7 +114,7 @@ export const useVaultDetails = (vaultAddress: AddressType, account: AddressType)
   // const { account } = useProfile()
   const VaultContract = useVaultContract(vaultAddress)
   const VaultReaderContract = useVaultReaderContract()
-  console.log(vaultAddress, 'vaultAddress', account, 'account', VaultContract, VaultReaderContract)
+  // console.log(vaultAddress, 'vaultAddress', account, 'account', VaultContract, VaultReaderContract)
   const { data, isLoading, isSuccess, refetch, isRefetching } = useReadContracts({
     contracts: [
       {
@@ -157,8 +157,14 @@ export const useVaultDetails = (vaultAddress: AddressType, account: AddressType)
         ? calcVaultUserDetail(data[2].result, getTokenByAddress, vaultDetail.underlyingPriceInUSD)
         : VaultUserDetailDefault
 
-    console.log(baseInfo, vaultDetail, vaultUserDetail, 'baseInfo, vaultDetail, vaultUserDetail')
-    console.log(data, data, data, 'baseInfo, vaultDetail, vaultUserDetail')
+    // console.log(
+    //   1111111,
+    //   baseInfo,
+    //   vaultDetail,
+    //   vaultUserDetail,
+    //   'baseInfo, vaultDetail, vaultUserDetail'
+    // )
+    console.log(111111, data, 'baseInfo, vaultDetail, vaultUserDetail')
     return {
       data: { baseInfo, vaultDetail, vaultUserDetail },
       isLoading: isLoading || isRefetching,

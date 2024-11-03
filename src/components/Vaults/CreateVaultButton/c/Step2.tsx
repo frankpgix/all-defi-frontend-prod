@@ -58,8 +58,9 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
     const createFundStep2Temp = Cache.get('CreateFundStep2Temp')
     if (createFundStep2Temp) {
       const { minAmount, underlyingAddress } = createFundStep2Temp
-
-      setUnderlyingAddress(underlyingAddress)
+      if (baseTokenOptions.map((item) => item.value).includes(underlyingAddress)) {
+        setUnderlyingAddress(underlyingAddress)
+      }
       setMinAmount(minAmount)
     }
   }, [])
@@ -73,7 +74,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
         title="Step 2 Protocol Selection"
       >
         {/*<h2>Deposit Limits</h2>*/}
-        {JSON.stringify(baseTokenOptions)}
+        {/* {JSON.stringify(baseTokenOptions)} */}
         <div className="c-create-step-1col">
           <Select
             label="Denomination Assets"
