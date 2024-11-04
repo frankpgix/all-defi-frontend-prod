@@ -83,7 +83,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
           <section>
             <h5>Protocols Allowed</h5>
             <main>
-              <Image src={`/products/BINANCE.png`} alt={'BINANCE'} />
+              <Image src={`/products/BRINGTRADE.svg`} alt={'BRINGTRADE'} />
             </main>
           </section>
           {/* <section>

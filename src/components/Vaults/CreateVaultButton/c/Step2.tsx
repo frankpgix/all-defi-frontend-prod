@@ -110,7 +110,7 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
           {/* <li className="active">
            */}
           <li>
-            <Image src={`/symbol/bnb.svg`} alt={'BNB'} />
+            <Image src={`/products/BRINGTRADE.svg`} alt={'BRINGTRADE'} />
           </li>
         </ul>
         {/*  <Image src={`/products/CEFFU.png`} alt={'CEFFU'} /> */}
