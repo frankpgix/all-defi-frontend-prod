@@ -12,6 +12,7 @@ import 'rc-table/assets/index.css'
 // import Buy from '@/pages/Buy';
 // import History from '@/pages/Buy/History';
 import Home from '@/pages/Home'
+import Invite from '@/pages/Invite'
 import MyManagement from '@/pages/MyManagement'
 import Tasks from '@/pages/Tasks'
 import Global from '@/pages/Updaters/Global'
@@ -40,6 +41,7 @@ function App() {
             <Route path="/manage/*" element={<MyManagement />} />
             <Route path="/test" element={<Test />} />
             <Route path="/tasks" element={<Tasks />} />
+            <Route path="/invite" element={<Invite />} />
             <Route path="/" element={<Home />} />
           </Routes>
         </Suspense>

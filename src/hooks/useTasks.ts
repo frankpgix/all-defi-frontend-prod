@@ -34,6 +34,7 @@ export const useLogin = () => {
   const goLogin = useCallback(async () => {
     update(false, false, 0)
     const tokenCache = cache.get('Authorization')
+    const referrer = cache.get('inviteCode')
     await sleep(200)
 
     console.log(1122, userAddress && !isLogin && !tokenCache)
@@ -46,7 +47,11 @@ export const useLogin = () => {
         { message },
         {
           onSuccess: async (signature) => {
-            const { data } = await login({ message, signature })
+            const param = { message, signature } as any
+            if (referrer) {
+              param.referrer = referrer
+            }
+            const { data } = await login(param)
             cache.set('Authorization', {
               token: `Bearer ${data.token}`,
               outTime: data.expiresIn ?? 0 * 1000,

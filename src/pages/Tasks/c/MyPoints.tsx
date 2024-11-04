@@ -11,9 +11,8 @@ import CopyText from '@@/common/CopyText'
 
 const MyPoints: FC = () => {
   const { point, user } = useTaskProfile()
-
   const invetUrl = useMemo(
-    () => (user.inviteCode ? `https://alldefi.io/invite?code=${user.inviteCode}` : ''),
+    () => (user.inviteCode ? `${location.origin}/invite?code=${user.inviteCode}` : ''),
     [user.inviteCode]
   )
 
