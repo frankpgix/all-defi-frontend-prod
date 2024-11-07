@@ -68,6 +68,18 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
     decimals: 18,
     precision: 4,
     icon: 'symbol/steth.svg'
+  },
+  {
+    name: 'sUSDe',
+    symbol: 'sUSDe',
+    address: {
+      [ChainId.MAINNET]: zeroAddress,
+      [ChainId.BSC]: zeroAddress,
+      [ChainId.BSCTEST]: '0x8794957E5506780664e94ad6475c05DF8c6fE55D'
+    },
+    decimals: 18,
+    precision: 4,
+    icon: 'symbol/susde.png'
   }
 ]
 export const tokens: TokenConfigTypes[] = [...underlyingTokens]

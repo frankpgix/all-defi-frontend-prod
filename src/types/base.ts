@@ -40,6 +40,7 @@ export type TokenKeys =
   | 'sALLTOKEN'
   | 'sBITU'
   | 'stETH'
+  | 'sUSDe'
   | 'UNKNOWN'
 
 export interface AddressRec {

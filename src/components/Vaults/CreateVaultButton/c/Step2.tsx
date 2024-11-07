@@ -78,7 +78,6 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
         <div className="c-create-step-1col">
           <Select
             label="Denomination Assets"
-            disabled
             value={underlyingAddress}
             onChange={onBaseTokenChange}
             objOptions={baseTokenOptions}
