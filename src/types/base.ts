@@ -40,6 +40,7 @@ export type TokenKeys =
   | 'sALLTOKEN'
   | 'sBITU'
   | 'stETH'
+  | 'wstETH'
   | 'sUSDe'
   | 'UNKNOWN'
 
