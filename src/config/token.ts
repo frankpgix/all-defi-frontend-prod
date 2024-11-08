@@ -61,7 +61,7 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
     name: 'stETH',
     symbol: 'stETH',
     address: {
-      [ChainId.MAINNET]: zeroAddress,
+      [ChainId.MAINNET]: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
       [ChainId.BSC]: zeroAddress,
       [ChainId.BSCTEST]: '0xDaF4579d8DD758fC9cb21927CA095736af16B10A'
     },
@@ -73,7 +73,7 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
     name: 'sUSDe',
     symbol: 'sUSDe',
     address: {
-      [ChainId.MAINNET]: zeroAddress,
+      [ChainId.MAINNET]: '0x9D39A5DE30e57443BfF2A8307A4256c8797A3497',
       [ChainId.BSC]: zeroAddress,
       [ChainId.BSCTEST]: '0x8794957E5506780664e94ad6475c05DF8c6fE55D'
     },
