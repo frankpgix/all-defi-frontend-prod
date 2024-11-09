@@ -1,5 +1,6 @@
 import { erc20Abi } from 'viem'
 
+import PriceAggregatorAbi from '@/config/abi/PriceAggregator.json'
 // import ACProtocolAbi from '@/config/abi/ACProtocol.json'
 // import AUMStatsAbi from '@/config/abi/AUMStats.json'
 // import AllProtocolAbi from '@/config/abi/AllProtocol.json'
@@ -59,6 +60,10 @@ export const useVaultContract = (address: AddressType) => {
 export const useVaultReaderContract = () => {
   const { address } = useContractAddress('VaultReader')
   return useContract(address, VaultReaderAbi)
+}
+export const usePriceAggregatorContract = () => {
+  const { address } = useContractAddress('PriceAggregator')
+  return useContract(address, PriceAggregatorAbi)
 }
 
 // export const useUniV3ACLContract = () => {

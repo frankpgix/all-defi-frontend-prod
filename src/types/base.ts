@@ -16,6 +16,7 @@ export type ContractKeys =
   | 'VaultReader'
   | 'AUMStats'
   | 'VaultFactory'
+  | 'PriceAggregator'
 // | 'RewardTracker'
 // | 'UniV3ACL'
 // | 'UniV3NonfungiblePosition'
@@ -87,7 +88,7 @@ export interface TokenTypes {
 }
 
 export interface UnderlyingTokenTypes extends TokenTypes {
-  acTokenName: acTokenKeys
+  acTokenName?: acTokenKeys
 }
 
 export type GetTokenFuncType = (address: AddressType) => TokenTypes

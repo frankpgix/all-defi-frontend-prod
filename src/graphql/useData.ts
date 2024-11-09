@@ -108,7 +108,7 @@ export const useVaultListData = (): { loading: boolean; data: any[]; error: any 
     fetchPolicy: 'no-cache'
   })
 
-  // console.log(sData, 'sData')
+  console.log(sData, 'sData', loading, error)
   const data = (sData?.vaults ?? [])
     .map((item: any) => {
       const baseToken = getTokenByAddress(item.underlying)

@@ -1,20 +1,41 @@
 import { useReadContract } from 'wagmi'
 
-import { useVaultFactoryContract } from '@/hooks/Contracts/useContract'
+import { usePriceAggregatorContract } from '@/hooks/Contracts/useContract'
 
-import { AddressType } from '@/types/base'
+import { AddressType, UnderlyingTokenTypes } from '@/types/base'
 
 import { safeInterceptionValues } from '@/utils/tools'
 
-export const useVaultCountLimit = (address?: AddressType | '') => {
-  const VaultFactoryContract = useVaultFactoryContract()
+export const useAssetLatestPrice = (assetAddress?: AddressType | '') => {
+  const PriceAggregatorContract = usePriceAggregatorContract()
   const { isLoading, isSuccess, data, refetch } = useReadContract({
-    ...VaultFactoryContract,
-    functionName: 'vaultCountLimits',
-    args: [address ?? '']
+    ...PriceAggregatorContract,
+    functionName: 'latestPrice',
+    args: [assetAddress ?? '']
   })
-  if (address && !isLoading && isSuccess) {
-    return { data: Number(safeInterceptionValues(data, 0, 0)), isLoading, isSuccess, refetch }
+  if (assetAddress && !isLoading && isSuccess) {
+    return { data: Number(safeInterceptionValues(data, 18, 18)), isLoading, isSuccess, refetch }
   }
   return { data: 0, isLoading, isSuccess, refetch }
+}
+
+export const useAssetLatestPrices = (AssetTokens: UnderlyingTokenTypes[]) => {
+  const PriceAggregatorContract = usePriceAggregatorContract()
+  const assetAddress: AddressType[] = AssetTokens.map((asset) => asset.address)
+  const { isLoading, isSuccess, data, refetch, error } = useReadContract({
+    ...PriceAggregatorContract,
+    functionName: 'latestPrices',
+    args: [assetAddress]
+  })
+  const prices: Record<string, number> = {}
+  AssetTokens.forEach((asset) => (prices[asset.address] = 0))
+  console.log(error)
+  if (assetAddress && !isLoading && isSuccess) {
+    ;(data as string[]).forEach(
+      (item: string, index: number) =>
+        (prices[AssetTokens[index].address] = Number(safeInterceptionValues(item, 18, 18)))
+    )
+    return { data: prices, isLoading, isSuccess, refetch }
+  }
+  return { data: prices, isLoading, isSuccess, refetch }
 }
