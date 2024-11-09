@@ -23,11 +23,12 @@ const connectors = connectorsForWallets(
   }
 )
 
+console.log(mainnet, 'mainnet')
 export const config = createConfig({
   chains: [mainnet, bscTestnet],
   connectors,
   transports: {
-    [mainnet.id]: http(),
+    [mainnet.id]: http('https://eth.llamarpc.com'),
     // [bsc.id]: http(),
     [bscTestnet.id]: http()
   }
