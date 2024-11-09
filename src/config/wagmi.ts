@@ -28,7 +28,7 @@ export const config = createConfig({
   chains: [mainnet, bscTestnet],
   connectors,
   transports: {
-    [mainnet.id]: http('https://eth.llamarpc.com'),
+    [mainnet.id]: http('https://eth.drpc.org'),
     // [bsc.id]: http(),
     [bscTestnet.id]: http()
   }
