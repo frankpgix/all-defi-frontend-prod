@@ -3,9 +3,11 @@ import ContentLoader from 'react-content-loader'
 
 import BN from 'bignumber.js'
 import classNames from 'classnames'
+import { isNaN } from 'lodash'
 import { Cell, Pie, PieChart, Sector } from 'recharts'
 
 // import { useBaseTokenPriceUSD } from '@/hooks/Contracts/useVaultFactory'
+// import { useUnderlyingTokens } from '@/hooks/useToken'
 import { VaultUserListDataProps } from '@/types/vault'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/VaultDetail/c/ManageDetail/C'
@@ -134,6 +136,12 @@ interface CountDetailProps extends CountProps {}
 
 const CountDetail: FC<CountDetailProps> = ({ loading, data }) => {
   const [activeIndex, setActiveIndex] = useState(0)
+  // const underlyingTokens = useUnderlyingTokens()
+  // const {
+  //   data: price,
+  //   isSuccess: priceSuccess,
+  //   isLoading: priceLoading
+  // } = useAssetLatestPrices(underlyingTokens)
   console.log(data, 'data')
 
   // const data = sData.map((item) => {
@@ -162,15 +170,18 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data }) => {
   )
   const activeData = useMemo(() => data[activeIndex]?.userDetail, [data, activeIndex])
   const baseToken = useMemo(() => activeData?.underlying, [activeData])
-  console.log(data, rawData)
+  // console.log(data, rawData)
   const pieData = useMemo(
     () =>
       rawData
         // .filter((item) => item.value !== 0)
-        .map((item) => ({
-          ...item,
-          percent: `${Math.round(BN(item.value).div(totalAsset).times(100).toNumber())}%`
-        })),
+        .map((item) => {
+          const p = Math.round(BN(item.value).div(totalAsset).times(100).toNumber())
+          return {
+            ...item,
+            percent: `${isNaN(p) ? 0 : p}%`
+          }
+        }),
     [rawData, totalAsset]
   )
 
@@ -189,7 +200,14 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data }) => {
     '#467AFF'
   ]
   // console.log(pieData, 'pieData')
-
+  const navInUSD = useMemo(() => {
+    const v = data[activeIndex].userDetail.navInUSD
+    if (v >= 0.01 || v === 0) {
+      return formatNumber(v, 2, '$0,0.00')
+    } else {
+      return '< $0.01'
+    }
+  }, [data, activeIndex])
   return (
     <div className="web-manage-investment-count">
       <div className="web-manage-investment-count-chart">
@@ -217,7 +235,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data }) => {
             </Pie>
           </PieChart>
           <section>
-            <em>{formatNumber(data[activeIndex].userDetail.navInUSD, 2, '$0,0.00')}</em>
+            <em>{navInUSD}</em>
             <span>{pieData[activeIndex]?.percent}</span>
           </section>
         </div>

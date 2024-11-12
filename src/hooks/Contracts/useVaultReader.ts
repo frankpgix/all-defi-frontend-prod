@@ -6,8 +6,9 @@ import { useReadContract, useReadContracts } from 'wagmi'
 import VaultABI from '@/config/abi/VaultSimple.json'
 
 import { useVaultReaderContract } from '@/hooks/Contracts/useContract'
+import { useAssetLatestPrices } from '@/hooks/Contracts/usePriceAggregator'
 import { useProfile } from '@/hooks/useProfile'
-import { useToken } from '@/hooks/useToken'
+import { useToken, useUnderlyingTokens } from '@/hooks/useToken'
 import { useVaultList as useVaultListHook } from '@/hooks/useVaultList'
 
 import { AddressType, TokenTypes } from '@/types/base'
@@ -171,13 +172,19 @@ export const useAssetComposition = (
 export const useUserVaultList = () => {
   const VaultReaderContract = useVaultReaderContract()
   const { getTokenByAddress } = useToken()
+  const underlyingTokens = useUnderlyingTokens()
   const { data: baseList, isLoading: baseLoading, isSuccess: baseSuccess } = useVaultBaseList()
   // console.log('baseList', baseList)
   const { account } = useProfile()
   // const { vaultList } = useVaultListHook()
   const { data: vaultList, isLoading: isListLoading } = useVaultList()
   const vaultLists = vaultList.filter((item) => item.status !== -1)
-  // console.log('baseList', baseList)
+  const {
+    data: price,
+    isSuccess: priceSuccess,
+    isLoading: priceLoading
+  } = useAssetLatestPrices(underlyingTokens)
+  console.log('baseList', price, priceSuccess, priceLoading)
   const {
     data: sData,
     isSuccess,
@@ -203,7 +210,11 @@ export const useUserVaultList = () => {
       // console.log(fund)
       const detail = vaultLists.find((vault) => vault.address === item.vaultAddress)
       // console.log(fund, detail)
-      const userDetail = calcVaultUserDetail(item, getTokenByAddress, 1)
+      const userDetail = calcVaultUserDetail(
+        item,
+        getTokenByAddress,
+        price[base.underlying.address] ?? 1
+      )
       // console.log(base, detail, userDetail)
       return { base, detail, userDetail }
     })
