@@ -62,7 +62,7 @@ const Dashboard: FC = () => {
             loading={isLoading || priceLoading}
           />
           <CountItem
-            label="Current Vaults"
+            label="Number of vaults"
             popper="Total value of AC DAO, update after settlement"
             countUp={{ value: data.length, prefix: '', decimals: 0 }}
             loading={isLoading}

@@ -24,7 +24,7 @@ const Manager: FC = () => {
     <div className="web-manage">
       <h2>
         <span>Strategy Management</span>
-        <CreateVaultButton />
+        {!isInvest && <CreateVaultButton />}
       </h2>
       {isInvest ? <NoInvest /> : <Main />}
     </div>

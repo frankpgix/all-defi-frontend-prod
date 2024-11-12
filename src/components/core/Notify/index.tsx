@@ -114,7 +114,9 @@ export const NotifyItem: FC<{ data: NotifyStoreItemType }> = ({ data }) => {
           <h3>{data.title || typeShow}</h3>
           {data.content && <p>{data.content}</p>}
           {data.hash && (
-            <ALink to={`${chain?.blockExplorers?.default.url}/tx/${data.hash}`}>View on BSC</ALink>
+            <ALink to={`${chain?.blockExplorers?.default.url}/tx/${data.hash}`}>
+              View on Explorers
+            </ALink>
           )}
         </div>
         {data.type !== 'loading' && <div className="c-notify-item-close" onClick={onClose} />}

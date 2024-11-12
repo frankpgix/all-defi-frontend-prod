@@ -1,12 +1,15 @@
 import { FC, useState } from 'react'
-import { Input } from '@@/common/Form'
-import Button from '@@/common/Button'
-import FundIcon from '@@/common/FundIcon'
-import ComingSoon from '@@/common/Dialog/ComingSoon'
-import { useNotify } from '@/hooks/useNotify'
-import Toasts from './Toasts'
-import { sleep } from '@/utils/tools'
 
+import { useNotify } from '@/hooks/useNotify'
+
+import { sleep } from '@/utils/tools'
+import CreateVaultButton from '@@/Vaults/CreateVaultButton'
+import Button from '@@/common/Button'
+import ComingSoon from '@@/common/Dialog/ComingSoon'
+import { Input } from '@@/common/Form'
+import FundIcon from '@@/common/FundIcon'
+
+import Toasts from './Toasts'
 import { useTools } from './useTools'
 
 const Test: FC = () => {
@@ -32,6 +35,7 @@ const Test: FC = () => {
 
   return (
     <div className="web-home">
+      <CreateVaultButton></CreateVaultButton>
       <Button onClick={() => createNotify({ type: 'success', content: '创建一个消息成功了' })}>
         创建消息
       </Button>

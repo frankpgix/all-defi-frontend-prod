@@ -2,7 +2,7 @@ import { FC, useMemo, useState } from 'react'
 
 import { useBoolean } from 'ahooks'
 import BN from 'bignumber.js'
-import { isNaN } from 'lodash'
+import { floor, isNaN } from 'lodash'
 
 import { useUnstake } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
@@ -29,11 +29,12 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
   const [value, setValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
+  const underlyingToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
   // console.log(data)
   const isInUnstake = useMemo(() => data.status === 0, [data.status])
   const maxValue = useMemo(() => {
-    // return 0
-    return BN(userData.shares).minus(userData.unstakingShare).toNumber()
+    // to do 保留4位向下取整
+    return floor(BN(userData.shares).minus(userData.unstakingShare).toNumber(), 4)
   }, [userData.shares, userData.unstakingShare])
 
   const onSliderChange = (val: number) => {
@@ -68,7 +69,7 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
       toggleSubmiting()
       await onUnstake(data.underlyingToken, Number(value), account, (isError) => {
         getData()
-        setValue(0)
+        setValue('')
         setSliderValue(0)
         // onClose()
         toggleSubmiting()
@@ -83,9 +84,9 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
     <>
       <div className="c-vault-stake-tip">
         <p>
-          Please enter the quantity of Shares you wish to unstake as BITU in the input box below.
-          Please note that the final amount of BITUs you receive depends on the Share price at the
-          time of settlement.
+          Please enter the quantity of Shares you wish to unstake as {underlyingToken.name} in the
+          input box below. Please note that the final amount of {underlyingToken.name} you receive
+          depends on the Share price at the time of settlement.
         </p>
       </div>
       <div className="c-vault-stake-input">

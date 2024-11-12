@@ -163,7 +163,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
         </section>
         <section className="web-fund-detail-dashboard-chart">
           <header>
-            <h3>{chartType === 'aum' ? 'Asset Under Management' : 'Share Price'}</h3>
+            <h3>{chartType === 'aum' ? 'AUM' : 'Share Price'}</h3>
             <aside>
               <TimeSelect
                 value={timeType}

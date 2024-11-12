@@ -55,19 +55,19 @@ const CreateVaultButton: FC<Props> = ({ large, children, text }) => {
 
   if (maxFundLimit === manageVaultList?.length) {
     if (text) {
-      return <ALink disabled>Create Vaults</ALink>
+      return <ALink disabled>Create a Vault</ALink>
     }
     return (
       <Button size="mini" disabled>
         <Popper content="The number of vaults you have created has reached the maximum limit">
-          Create Vaults
+          Create a Vault
         </Popper>
       </Button>
     )
   }
   return (
     <>
-      {text && <ALink onClick={setRight}>{children || 'Create Vaults'}</ALink>}
+      {text && <ALink onClick={setRight}>{children || 'Create a Vault'}</ALink>}
       {!text && (
         <Button onClick={setRight} size={large ? 'default' : 'mini'}>
           {children
@@ -76,10 +76,10 @@ const CreateVaultButton: FC<Props> = ({ large, children, text }) => {
               ? 'Unfinished Edits'
               : large
                 ? 'Create a Vault now'
-                : 'Create Vaults'}
+                : 'Create a Vault'}
         </Button>
       )}
-      <Modal show={show} onClose={setLeft} title="Create Vault">
+      <Modal show={show} onClose={setLeft} title="Create a Vault">
         <Create onConfirm={onConfirm} />
       </Modal>
     </>

@@ -45,7 +45,7 @@ const calcYearReturn = (arr: VaultMonthDataType[]) => {
       arr.map((dat) => BN(dat.roe.replace('%', '')))
     )
     .div(arr.length)
-    .times(12)
+    // .times(12)
     .toNumber()
   return `${calcDecimalsFloor(!isNaN(res) ? res : 0, 2)}%`
 }

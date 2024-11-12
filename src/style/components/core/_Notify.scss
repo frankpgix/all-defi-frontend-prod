@@ -13,7 +13,7 @@
     opacity: 0;
 
     &.show {
-      z-index: 22;
+      z-index: 30;
       opacity: 1;
     }
   }
@@ -23,7 +23,7 @@
     top: 94px;
     bottom: 0;
     width: 350px;
-    z-index: 22;
+    z-index: 30;
     right: -350px;
     @include dz();
     // pointer-events: none;

@@ -245,7 +245,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           {/* <SectionHeader name="Basic" /> */}
           <SectionLayout col="3">
             <SectionItem
-              label="Founded time"
+              label="Vault Inception Date"
               loading={loading}
               value={dayjs(data.subscribeEndTime).format('MMM DD, YYYY hh:mm:ss A')}
             />

@@ -37,7 +37,7 @@ const Guide: FC = () => {
               <button className="btn">Multi-Sig Wallet</button>
             </dd>
             <dd>
-              <button className="text bottom">Sette P&L</button>
+              <button className="text bottom">Settl P&L</button>
             </dd>
           </dl>
           <dl>

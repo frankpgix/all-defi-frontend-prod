@@ -12,7 +12,7 @@ const NoInvest: FC = () => {
         Click the button below and follow the steps to complete the establishment of your first
         vault
       </p>
-      <CreateVaultButton large />
+      <CreateVaultButton large children="Create a Vault" />
     </div>
   )
 }
