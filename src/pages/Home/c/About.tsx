@@ -1,7 +1,8 @@
 import { FC } from 'react'
 
 import CreateVaultButton from '@/components/Vaults/CreateVaultButton'
-import Button from '@/components/common/Button'
+
+// import Button from '@/components/common/Button'
 
 // import { useProfile } from '@/hooks/useProfile'
 
@@ -21,7 +22,7 @@ const About: FC = () => {
           an on-chain approach, AllDeFi implements stringent due diligence off-chain for enhanced
           security.
         </p>
-        <CreateVaultButton large>CREATE A STRATEGY</CreateVaultButton>
+        <CreateVaultButton large>CREATE A VAULT</CreateVaultButton>
       </main>
     </section>
   )
