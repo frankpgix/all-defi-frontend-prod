@@ -19,7 +19,7 @@ interface Props {
 const calcBaseRoeData = () => {
   const year = dayjs().year()
   const years = [year - 2, year - 1, year]
-  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   const baseRoe: VaultMonthDataType[] = []
   years.forEach((year) => {
     months.forEach((month) => {
@@ -117,7 +117,7 @@ const RoeHistory: FC<Props> = ({ fundAddress }) => {
         <span>OCT</span>
         <span>NOV</span>
         <span>DEC</span>
-        <span>1 Year Return</span>
+        {/* <span>1 Year Return</span> */}
       </header>
 
       <section>
