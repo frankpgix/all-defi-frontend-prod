@@ -30,7 +30,7 @@ const SignHelpButton: FC<{ children: ReactNode; isLogin: boolean; goLogin: () =>
 
 const GetPoints: FC = () => {
   const { isLogin, goLogin } = useLogin()
-
+  console.log(isLogin, 'isLogin')
   const { user, point } = useTaskProfile()
   const { goConnectTwitter, loading: twitterLoading } = useConnectTwitter()
   const { goConnectDiscord, loading: discordLoading } = useConnectDiscord()

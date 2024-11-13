@@ -1,0 +1,10 @@
+.p-task-bind {
+  display: flex;
+  flex-flow: column;
+  gap: 24px;
+
+  footer {
+    display: flex;
+    gap: 24px;
+  }
+}

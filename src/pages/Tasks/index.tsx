@@ -12,10 +12,11 @@ import GetPoints from './c/GetPoints'
 import InfoTip from './c/InfoTip'
 import Leaderboard from './c/Leaderboard'
 import MyPoints from './c/MyPoints'
+import Register from './c/Register'
 
 const Tasks: FC = () => {
   const { isLogin, goLogin, loginLoading } = useGetTaskProfile()
-  console.log(!isLogin, 'goLogin', loginLoading)
+  console.log(isLogin, 'goLogin', loginLoading)
   return (
     <>
       <Dashboard />
@@ -38,6 +39,7 @@ const Tasks: FC = () => {
       <MyPoints />
       <Leaderboard />
       <InfoTip />
+      <Register />
     </>
   )
 }
