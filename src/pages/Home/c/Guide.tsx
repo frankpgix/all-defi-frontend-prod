@@ -17,7 +17,7 @@ const Guide: FC = () => {
           {/* <Button to="/buy" outline>
             Buy AC token
           </Button> */}
-          <Button to="/vaults">STAKE TO A VAULT</Button>
+          <Button to="/vaults">STAKE TO VAULT</Button>
         </aside>
         <section className="web-home-guide-map">
           <dl>
