@@ -82,7 +82,7 @@ const GetPoints: FC = () => {
           <section>
             <Image src="task/m.svg" />
             <main>
-              <h4>JJoin us on Discord</h4>
+              <h4>Join us on Discord</h4>
               <p>2x rewards / day</p>
             </main>
           </section>
