@@ -178,6 +178,7 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
         onConfirm={() => setInfoStatus(false)}
         onClose={() => setInfoStatus(false)}
         title="Stake Successful"
+        msg="Staking will take effect after this epoch of settlement."
         type="succ"
         hideCancelButton
       />

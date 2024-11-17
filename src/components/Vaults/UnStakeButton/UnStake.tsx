@@ -130,6 +130,7 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
         onConfirm={() => setInfoStatus(false)}
         onClose={() => setInfoStatus(false)}
         title="Unstake Successful"
+        msg="Unstaking will take effect after this epoch of settlement."
         type="succ"
         hideCancelButton
       />

@@ -66,12 +66,17 @@ export const useStake = (vaultAddress: AddressType) => {
           onSuccess: async (hash: AddressType) => {
             await onWaitReceipt(hash)
             callback?.()
-            updateNotifyItem(notifyId, { title: 'Stake to vault', type: 'success', hash })
+            updateNotifyItem(notifyId, {
+              title: 'Operation successful',
+              content: 'Stake to vault',
+              type: 'success',
+              hash
+            })
           },
           onError: (error: any) => {
             callback?.(true)
             updateNotifyItem(notifyId, {
-              title: 'Stake to vault',
+              title: 'Operation failed',
               type: 'error',
               content: error.shortMessage
             })
@@ -105,12 +110,17 @@ export const useCancelStake = (vaultAddress: AddressType) => {
           onSuccess: async (hash: AddressType) => {
             await onWaitReceipt(hash)
             callback?.()
-            updateNotifyItem(notifyId, { title: 'Cancel Stake', type: 'success', hash })
+            updateNotifyItem(notifyId, {
+              title: 'Operation successful',
+              content: 'Cancel Stake',
+              type: 'success',
+              hash
+            })
           },
           onError: (error: any) => {
             callback?.(true)
             updateNotifyItem(notifyId, {
-              title: 'Cancel Stake',
+              title: 'Operation failed',
               type: 'error',
               content: error.shortMessage
             })
@@ -155,12 +165,17 @@ export const useUnstake = (vaultAddress: AddressType) => {
           onSuccess: async (hash: AddressType) => {
             await onWaitReceipt(hash)
             callback?.()
-            updateNotifyItem(notifyId, { title: 'Unstake from vault', type: 'success', hash })
+            updateNotifyItem(notifyId, {
+              title: 'Operation successful',
+              content: 'Unstake from vault',
+              type: 'success',
+              hash
+            })
           },
           onError: (error: any) => {
             callback?.(true)
             updateNotifyItem(notifyId, {
-              title: 'Unstake from vault',
+              title: 'Operation failed',
               type: 'error',
               content: error.shortMessage
             })
@@ -194,12 +209,17 @@ export const useCancelUnstake = (vaultAddress: AddressType) => {
           onSuccess: async (hash: AddressType) => {
             await onWaitReceipt(hash)
             callback?.()
-            updateNotifyItem(notifyId, { title: 'Cancel Unstake', type: 'success', hash })
+            updateNotifyItem(notifyId, {
+              title: 'Operation successful',
+              content: 'Cancel Unstake',
+              type: 'success',
+              hash
+            })
           },
           onError: (error: any) => {
             callback?.(true)
             updateNotifyItem(notifyId, {
-              title: 'Cancel Unstake',
+              title: 'Operation failed',
               type: 'error',
               content: error.shortMessage
             })
@@ -233,12 +253,17 @@ export const useClaim = (vaultAddress: AddressType) => {
           onSuccess: async (hash: AddressType) => {
             await onWaitReceipt(hash)
             callback?.()
-            updateNotifyItem(notifyId, { title: 'Claim Asset', type: 'success', hash })
+            updateNotifyItem(notifyId, {
+              title: 'Operation successful',
+              content: 'Claim Asset',
+              type: 'success',
+              hash
+            })
           },
           onError: (error: any) => {
             callback?.(true)
             updateNotifyItem(notifyId, {
-              title: 'Claim Asset',
+              title: 'Operation failed',
               type: 'error',
               content: error.shortMessage
             })
@@ -275,12 +300,17 @@ export const useRequestSettlemen = (vaultAddress: AddressType) => {
           onSuccess: async (hash: AddressType) => {
             await onWaitReceipt(hash)
             callback?.()
-            updateNotifyItem(notifyId, { title: 'Settle Vault', type: 'success', hash })
+            updateNotifyItem(notifyId, {
+              title: 'Operation successful',
+              content: 'Settle Vault',
+              type: 'success',
+              hash
+            })
           },
           onError: (error: any) => {
             callback?.(true)
             updateNotifyItem(notifyId, {
-              title: 'Settle Vault',
+              title: 'Operation failed',
               type: 'error',
               content: error.metaMessages[0] || error.shortMessage
             })

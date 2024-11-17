@@ -37,7 +37,7 @@ export const useAllowance = () => {
       }).catch(() => {
         if (notifyId) {
           updateNotifyItem(notifyId, {
-            title: 'Approve',
+            title: 'Operation failed',
             type: 'error',
             content: 'approve failed.'
           })

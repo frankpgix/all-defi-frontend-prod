@@ -39,12 +39,16 @@ export const useCreateVault = () => {
         onSuccess: async (hash: AddressType) => {
           await onWaitReceipt(hash)
           callback?.()
-          updateNotifyItem(notifyId, { title: 'Create Vault', type: 'success', hash })
+          updateNotifyItem(notifyId, {
+            title: 'Operation successful',
+            content: 'Create Vault',
+            type: 'success',
+            hash
+          })
         },
         onError: (error: any) => {
-          console.log([error])
           updateNotifyItem(notifyId, {
-            title: 'Create Vault',
+            title: 'Operation failed',
             type: 'error',
             content: error.shortMessage
           })
