@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import Dashboard from './c/Dashboard'
 import Charts from './c/Charts'
-import VaultList from './c/VaultList'
+import Dashboard from './c/Dashboard'
+import VaultList from './c/VaultList/V2'
 
 const FundMarket: FC = () => {
   return (

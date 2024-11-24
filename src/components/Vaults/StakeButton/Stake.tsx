@@ -6,7 +6,7 @@ import { isNaN } from 'lodash'
 
 import { useStake } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
-import { useUserBalances } from '@/hooks/useToken'
+import { useUnderlyingTokens, useUserBalances } from '@/hooks/useToken'
 
 import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
 
@@ -17,6 +17,7 @@ import { Input, Slider } from '@@/common/Form'
 import CheckBox from '@@/common/Form/CheckBox'
 import Tip from '@@/common/Tip'
 import { AcUSDCUnit } from '@@/common/TokenUnit'
+import { DropdownSelect, DropdownSelectItemProps } from '@@/core/Dropdown'
 
 interface Props {
   getData: () => void
@@ -33,7 +34,18 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
   const [accredit, { toggle }] = useBoolean(false)
   const [submiting, { toggle: toggleSubmiting }] = useBoolean(false)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
-
+  const underlyingTokens = useUnderlyingTokens()
+  const underlyingTokenOptions = useMemo(() => {
+    return underlyingTokens.map(({ name, address, icon }) => ({
+      label: name,
+      value: address,
+      icon
+    }))
+  }, [underlyingTokens])
+  // console.log(underlyingTokenOptions)
+  const [currentToken, setCurrentToken] = useState<DropdownSelectItemProps>(
+    underlyingTokenOptions[0]
+  )
   const acToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
 
   const acTokenBalance = useMemo(() => balances[acToken.name], [balances, acToken.name])
@@ -116,18 +128,24 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
   return (
     <>
       <section className="c-vault-stake">
-        <div className="c-vault-stake-tip">
+        {/* <div className="c-vault-stake-tip">
           <p>
             The Denomination Assets of this vault is {acToken.name}. Please enter the amount you
             wish to stake in the input box below.
           </p>
-        </div>
+        </div> */}
         <div className="c-vault-stake-input">
           <Input
             value={value}
             onChange={(val) => onInputChange(val)}
             maxNumber={maxValue}
-            suffix={<AcUSDCUnit name={acToken?.name} />}
+            suffix={
+              <DropdownSelect
+                value={currentToken}
+                onChange={setCurrentToken}
+                options={underlyingTokenOptions}
+              />
+            }
             right
             placeholder="0"
             type="number"

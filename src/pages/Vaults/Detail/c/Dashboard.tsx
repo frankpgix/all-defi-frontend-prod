@@ -149,9 +149,9 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
               />
             </DashboardItem>
 
-            <DashboardItem label="Denomination Asset" loading={loading}>
+            {/* <DashboardItem label="Denomination Asset" loading={loading}>
               {underlyingToken.name}
-            </DashboardItem>
+            </DashboardItem> */}
             {/* <DashboardItem
               label="Incentive Rate"
               popper="Highest incentive fee ratio managers can get"
@@ -172,7 +172,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
                 onChange={(val) => setTimeType(val)}
               />
             </aside>
-            <Select
+            {/* <Select
               value={chartType}
               onChange={setChartType}
               objOptions={[
@@ -180,7 +180,7 @@ const Dashboard: FC<Props> = ({ base, data, loading, fundAddress }) => {
                 { label: 'Share Price', value: 'price' }
               ]}
               mini
-            />
+            /> */}
           </header>
           <section>
             <AreaChart

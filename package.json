@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.5",
+    "@emotion/css": "^11.13.5",
     "@rainbow-me/rainbowkit": "^2.0.2",
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "@safe-global/safe-core-sdk": "^3.3.5",

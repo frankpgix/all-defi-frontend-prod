@@ -197,16 +197,27 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
               </ul>
             </div>
             <div className="web-manage-investment-fund-item-data">
-              <SectionItem label="Staking Value">
+              {/* <SectionItem label="Staking Value">
                 <TokenValue
                   value={fund.userDetail.nav}
                   token={underlyingToken}
                   size="mini"
                   format="0,0.00"
                 />
-                {/*{formatNumber(fund.data.navInUSD, 2, '$0,0.00')}*/}
-              </SectionItem>
+              </SectionItem> */}
               <section>
+                <SectionItem label="Current Epoch return %">
+                  <RoeShow value={formatNumber(fund.userDetail.roe * 100, 2, '0.00')} subArrow />
+                </SectionItem>
+                <SectionItem label="Current Epoch return">
+                  <TokenValue
+                    value={currReturn}
+                    token={underlyingToken}
+                    size="mini"
+                    format="0,0.00"
+                  />
+                  {/*{formatNumber(currReturn, 2, '$0,0.00')}*/}
+                </SectionItem>
                 <SectionItem label="Historical return">
                   <TokenValue
                     value={fund.userDetail.historicalReturn}
@@ -227,17 +238,12 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   />
                   {/*{formatNumber(fund.data.unclaimedACToken, 2, '$0,0.00')}*/}
                 </SectionItem>
-                <SectionItem label="Current Epoch return %">
-                  <RoeShow value={formatNumber(fund.userDetail.roe * 100, 2, '0.00')} subArrow />
+
+                <SectionItem label="Total Proprtion">
+                  <RoeShow value={formatNumber(fund.userDetail.roe * 100, 2, '0.00')} />
                 </SectionItem>
-                <SectionItem label="Current Epoch return">
-                  <TokenValue
-                    value={currReturn}
-                    token={underlyingToken}
-                    size="mini"
-                    format="0,0.00"
-                  />
-                  {/*{formatNumber(currReturn, 2, '$0,0.00')}*/}
+                <SectionItem label="Current Proprtion">
+                  <RoeShow value={formatNumber(fund.userDetail.roe * 100, 2, '0.00')} />
                 </SectionItem>
               </section>
               <footer>
