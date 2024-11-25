@@ -11,8 +11,8 @@ import Stake from './Stake'
 
 interface Props {
   getData: () => void
-  data: VaultDetailProps
-  base: VaultBaseInfoProps
+  data: VaultDetailProps[]
+  base?: VaultBaseInfoProps
 }
 
 const StakeButton: FC<Props> = ({ getData, data, base }) => {

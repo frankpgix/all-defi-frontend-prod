@@ -111,9 +111,10 @@ export const calcVaultDetail = (
   const status = Number(safeInterceptionValues(item.stage, 0, 0))
   const { hash } = calcVaultHash(item.vaultAddress ?? '0x')
   const sharePrice = Number(safeInterceptionValues(item.sharePrice, 18, 18))
-  const beginningSharePrice = Number(safeInterceptionValues(item.beginningSharePrice, 18, 18))
-
-  // console.log(sharePrice, beginningSharePrice, 'beginningSharePrice')
+  const custodianBalance = Number(safeInterceptionValues(item.custodianBalance ?? 0, 18, 18))
+  const beginningAUM = Number(safeInterceptionValues(item.beginningAUM, decimals, decimals))
+  const beginningSharePrice = BN(sharePrice).div(beginningAUM).toNumber()
+  console.log(beginningAUM, sharePrice, beginningSharePrice, 'beginningSharePrice')
   return {
     underlyingToken,
     hash,
@@ -132,27 +133,30 @@ export const calcVaultDetail = (
     subscribeEndTime:
       epochStartTime + Number(safeInterceptionValues(item.stageDurations[2], 0, 0)) * 1000,
     preSettleEndTime:
-      epochStartTime + Number(safeInterceptionValues(item.stageDurations[3], 0, 0)) * 1000,
+      epochStartTime + Number(safeInterceptionValues(item.stageDurations[3] ?? 0, 0, 0)) * 1000,
     settleEndTime:
       epochStartTime +
       Number(safeInterceptionValues(item.stageDurations[3], 0, 0)) * 1000 +
       10 * 60 * 1000,
 
-    beginningAUM: Number(safeInterceptionValues(item.beginningAUM, decimals, decimals)),
+    beginningAUM,
+    beginningSharePrice,
     aum: Number(safeInterceptionValues(item.aum, decimals, decimals)),
+    epochStartBlock: item.epochStartBlock,
 
-    underlyingBalance: Number(safeInterceptionValues(item.underlyingBalance, decimals, decimals)),
+    cashBalance: Number(safeInterceptionValues(item.cashBalance, decimals, decimals)),
     // todo: 读取PriceAggregator合约的priceInUSD函数
     underlyingPriceInUSD: 0,
 
     sharePrice,
-    beginningSharePrice,
+    custodianBalance,
     // stakingACToken: Number(safeInterceptionValues(item.stakingACToken, decimals, decimals)),
     pendingStake: Number(safeInterceptionValues(item.pendingStake, 18, 18)),
     pendingUnstake: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
     unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
 
     roe: BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber(),
+    // roe: BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber(),
     historicalReturn: Number(safeInterceptionValues(item.historicalReturn, decimals, decimals)),
 
     managerFee: Number(safeInterceptionValues(item.managerFee, decimals, decimals)),

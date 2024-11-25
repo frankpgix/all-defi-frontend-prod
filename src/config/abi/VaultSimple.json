@@ -11,11 +11,6 @@
             "type": "address"
           },
           {
-            "internalType": "uint256",
-            "name": "createTime",
-            "type": "uint256"
-          },
-          {
             "internalType": "string",
             "name": "name",
             "type": "string"
@@ -36,9 +31,14 @@
             "type": "string"
           },
           {
-            "internalType": "uint64[4]",
+            "internalType": "uint64",
+            "name": "createTime",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64[3]",
             "name": "stageDurations",
-            "type": "uint64[4]"
+            "type": "uint64[3]"
           },
           {
             "internalType": "uint256[2]",

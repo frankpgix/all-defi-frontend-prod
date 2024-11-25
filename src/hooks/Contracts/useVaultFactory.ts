@@ -28,6 +28,7 @@ export const useCreateVault = () => {
     const notifyId = await createNotify({ type: 'loading', content: 'Create Vault' })
     const minStake = getUnitAmount(minimumStake, underlyingToken.decimals)
     const maxStake = getUnitAmount(10000000, underlyingToken.decimals)
+    console.log('CreateVaultArgs', [name, symbol, managerName, underlying, [minStake, maxStake]])
     writeContract(
       {
         ...VaultFactoryContract,

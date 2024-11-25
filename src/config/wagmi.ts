@@ -30,6 +30,7 @@ export const config = createConfig({
   transports: {
     [mainnet.id]: http('https://eth.drpc.org'),
     // [bsc.id]: http(),
-    [bscTestnet.id]: http()
+    [bscTestnet.id]: http('https://bnb-testnet.g.alchemy.com/v2/1GPvRmtzSoeMkS_HKx-bPKEegF4BkODX')
+    // [bscTestnet.id]: http()
   }
 })

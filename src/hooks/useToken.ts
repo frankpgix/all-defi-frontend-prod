@@ -61,7 +61,8 @@ export const useUnderlyingTokens = () => {
 
 export const useUnderlyingTokenOptions = () => {
   const underlyingTokens = useUnderlyingTokens()
-  return underlyingTokens.map(({ name, address, icon }) => ({
+  const { chainToken } = useChainToken()
+  return [...underlyingTokens, chainToken].map(({ name, address, icon }) => ({
     label: name,
     value: address,
     icon

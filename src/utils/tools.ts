@@ -98,6 +98,7 @@ export const formatUnits = (value: bigint, decimal = 18, precision?: number): st
 
 // split number
 export const safeInterceptionValues = (value: any, precision = 8, decimal = 18): string => {
+  if (!value) return '0'
   const isDecimal = toType(value) === 'object' && String(value).includes('.')
   const regexp = /(?:\.0*|(\.\d+?)0+)$/
   const _value = isDecimal ? (value as string) : viemFormatUnits(value, decimal)

@@ -35,7 +35,6 @@ export const useBaseInfo = (vaultAddress: AddressType) => {
 
 export const useStake = (vaultAddress: AddressType) => {
   const vaultContract = useVaultContract(vaultAddress)
-
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
   const { onAllowance } = useAllowance()

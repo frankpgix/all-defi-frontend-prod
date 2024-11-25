@@ -21,17 +21,7 @@
   },
   {
     "inputs": [],
-    "name": "VaultHasShares",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "VaultInitializationFailed",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "VaultLogicNotSet",
+    "name": "VaultImplNotSet",
     "type": "error"
   },
   {
@@ -80,6 +70,38 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "version",
+        "type": "uint8"
+      }
+    ],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "manager",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "limit",
+        "type": "uint256"
+      }
+    ],
+    "name": "ManagerWhitelistSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "previousOwner",
@@ -116,18 +138,6 @@
         "internalType": "address",
         "name": "underlying",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "interim",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "transmuters",
-        "type": "uint256"
       }
     ],
     "name": "UnderlyingAdded",
@@ -170,25 +180,6 @@
       }
     ],
     "name": "VaultArchived",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "manager",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "limit",
-        "type": "uint256"
-      }
-    ],
-    "name": "VaultCountLimitSet",
     "type": "event"
   },
   {
@@ -250,7 +241,7 @@
         "type": "address"
       }
     ],
-    "name": "VaultLogicSet",
+    "name": "VaultImplSet",
     "type": "event"
   },
   {
@@ -259,16 +250,6 @@
         "internalType": "address",
         "name": "underlying",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "interim",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "transmuters",
-        "type": "uint256"
       }
     ],
     "name": "addUnderlying",
@@ -329,34 +310,16 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "initialize",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "_vaultImpl",
         "type": "address"
       }
     ],
-    "name": "interimAssets",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "interim",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "transmuters",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -465,19 +428,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "newPlatFeeTo",
-        "type": "address"
-      }
-    ],
-    "name": "setPlatFeeTo",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "manager",
         "type": "address"
       },
@@ -487,7 +437,7 @@
         "type": "uint256"
       }
     ],
-    "name": "setVaultCountLimit",
+    "name": "setManagerWhitelist",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -496,11 +446,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "logic",
+        "name": "newPlatFeeTo",
         "type": "address"
       }
     ],
-    "name": "setVaultLogic",
+    "name": "setPlatFeeTo",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -566,6 +516,32 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "newVaultImpl",
+        "type": "address"
+      }
+    ],
+    "name": "upgradeVaultImpl",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "vaultBeacon",
+    "outputs": [
+      {
+        "internalType": "contract UpgradeableBeacon",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -583,12 +559,12 @@
   },
   {
     "inputs": [],
-    "name": "vaultList",
+    "name": "vaultImpl",
     "outputs": [
       {
-        "internalType": "address[]",
+        "internalType": "address",
         "name": "",
-        "type": "address[]"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -596,12 +572,12 @@
   },
   {
     "inputs": [],
-    "name": "vaultLogic",
+    "name": "vaultList",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "address[]",
         "name": "",
-        "type": "address"
+        "type": "address[]"
       }
     ],
     "stateMutability": "view",

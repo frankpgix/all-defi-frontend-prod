@@ -72,11 +72,13 @@ export interface VaultDetailProps {
   beginningAUM: number
   aum: number
 
-  underlyingBalance: number
+  cashBalance: number
   underlyingPriceInUSD: number
 
   sharePrice: number
   beginningSharePrice: number
+  custodianBalance: number
+  epochStartBlock: bigint
   // stakingACToken: number
   pendingStake: number
   pendingUnstake: number

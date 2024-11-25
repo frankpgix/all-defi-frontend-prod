@@ -228,11 +228,6 @@
           },
           {
             "internalType": "uint256",
-            "name": "beginningSharePrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
             "name": "pendingStake",
             "type": "uint256"
           },
@@ -304,11 +299,6 @@
           },
           {
             "internalType": "uint256",
-            "name": "beginningSharePrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
             "name": "pendingStake",
             "type": "uint256"
           },
@@ -375,22 +365,32 @@
           },
           {
             "internalType": "uint64",
+            "name": "epochIndex",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "epochStartBlock",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
             "name": "epochStartTime",
             "type": "uint64"
           },
           {
-            "internalType": "uint128",
-            "name": "epochIndex",
-            "type": "uint128"
+            "internalType": "uint64[3]",
+            "name": "stageDurations",
+            "type": "uint64[3]"
           },
           {
-            "internalType": "uint64[4]",
-            "name": "stageDurations",
-            "type": "uint64[4]"
+            "internalType": "uint64",
+            "name": "stage",
+            "type": "uint64"
           },
           {
             "internalType": "uint256",
-            "name": "stage",
+            "name": "totalShares",
             "type": "uint256"
           },
           {
@@ -410,12 +410,12 @@
           },
           {
             "internalType": "uint256",
-            "name": "beginningSharePrice",
+            "name": "cashBalance",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "underlyingBalance",
+            "name": "custodianBalance",
             "type": "uint256"
           },
           {
@@ -496,22 +496,32 @@
           },
           {
             "internalType": "uint64",
+            "name": "epochIndex",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "epochStartBlock",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
             "name": "epochStartTime",
             "type": "uint64"
           },
           {
-            "internalType": "uint128",
-            "name": "epochIndex",
-            "type": "uint128"
+            "internalType": "uint64[3]",
+            "name": "stageDurations",
+            "type": "uint64[3]"
           },
           {
-            "internalType": "uint64[4]",
-            "name": "stageDurations",
-            "type": "uint64[4]"
+            "internalType": "uint64",
+            "name": "stage",
+            "type": "uint64"
           },
           {
             "internalType": "uint256",
-            "name": "stage",
+            "name": "totalShares",
             "type": "uint256"
           },
           {
@@ -531,12 +541,138 @@
           },
           {
             "internalType": "uint256",
-            "name": "beginningSharePrice",
+            "name": "cashBalance",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "underlyingBalance",
+            "name": "custodianBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pendingStake",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pendingUnstake",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "managerFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "platFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "historicalReturn",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct VaultReader.VaultDetail[]",
+        "name": "_details",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "vaults",
+        "type": "address[]"
+      }
+    ],
+    "name": "vaultDetails",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "vaultAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "underlying",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          },
+          {
+            "internalType": "uint64",
+            "name": "createTime",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "epochIndex",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "epochStartBlock",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "epochStartTime",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64[3]",
+            "name": "stageDurations",
+            "type": "uint64[3]"
+          },
+          {
+            "internalType": "uint64",
+            "name": "stage",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalShares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "beginningAUM",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "aum",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharePrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cashBalance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "custodianBalance",
             "type": "uint256"
           },
           {

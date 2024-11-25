@@ -67,9 +67,9 @@ export const useVaultManageDetails = (vaultAddress: AddressType) => {
   //   refetch: () => {}
   // }
 
-  console.log(isRefetching, 'data')
+  // console.log(isRefetching, 'data')
 
-  if (!isLoading && isSuccess) {
+  if (!isLoading && !isRefetching && isSuccess) {
     const baseInfo =
       data[0].status === 'success'
         ? calcVaultBaseInfo(data[0].result, getTokenByAddress, vaultAddress)

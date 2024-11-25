@@ -6,7 +6,7 @@ import { isNaN } from 'lodash'
 
 import { useStake } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
-import { useUnderlyingTokens, useUserBalances } from '@/hooks/useToken'
+import { useUserBalances } from '@/hooks/useToken'
 
 import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
 
@@ -16,36 +16,41 @@ import InfoDialog from '@@/common/Dialog/Info'
 import { Input, Slider } from '@@/common/Form'
 import CheckBox from '@@/common/Form/CheckBox'
 import Tip from '@@/common/Tip'
-import { AcUSDCUnit } from '@@/common/TokenUnit'
 import { DropdownSelect, DropdownSelectItemProps } from '@@/core/Dropdown'
 
 interface Props {
   getData: () => void
   onClose: () => void
-  data: VaultDetailProps
-  base: VaultBaseInfoProps
+  data: VaultDetailProps[]
+  base?: VaultBaseInfoProps
 }
 
-const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
+const Stake: FC<Props> = ({ getData, data: list }) => {
   // const { getTokenByName } = useToken()
   const { account } = useProfile()
+  const underlyingTokenOptions = useMemo(() => {
+    return list.map(({ underlyingToken: { name, address, icon } }) => ({
+      label: name,
+      value: address,
+      icon
+    }))
+  }, [list])
+
+  const [currentToken, setCurrentToken] = useState<DropdownSelectItemProps>(
+    underlyingTokenOptions[0]
+  )
+  const data = useMemo(
+    () => list.find((item) => item.underlyingToken.address === currentToken.value) ?? list[0],
+    [list, currentToken.value]
+  )
   const { balances, refetch: reBalances } = useUserBalances()
   const { onStake } = useStake(data.address)
   const [accredit, { toggle }] = useBoolean(false)
   const [submiting, { toggle: toggleSubmiting }] = useBoolean(false)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
-  const underlyingTokens = useUnderlyingTokens()
-  const underlyingTokenOptions = useMemo(() => {
-    return underlyingTokens.map(({ name, address, icon }) => ({
-      label: name,
-      value: address,
-      icon
-    }))
-  }, [underlyingTokens])
+
   // console.log(underlyingTokenOptions)
-  const [currentToken, setCurrentToken] = useState<DropdownSelectItemProps>(
-    underlyingTokenOptions[0]
-  )
+
   const acToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
 
   const acTokenBalance = useMemo(() => balances[acToken.name], [balances, acToken.name])
@@ -53,22 +58,8 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
   const [inputValue, setInputValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
 
-  // const maxAum = useMemo(
-  //   () =>
-  //     Number(
-  //       formatNumber(
-  //         Math.max(BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber(), 0),
-  //         4,
-  //         '0.0000'
-  //       )
-  //     ),
-  //   [data.aum, data.beginningAUM, data.stakingACToken]
-  // )
-  // const maxBalance = useMemo(() => BN(acTokenBalance).toNumber(), [acTokenBalance])
   const maxValue = useMemo(() => Math.min(acTokenBalance), [acTokenBalance])
-  // console.log(maxValue, maxAum, acTokenBalance)
-  // const maxValue = useMemo(() => 10000, [maxAum, maxBalance])
-
+  const minimumStake = 0.01
   const isInAllocate = useMemo(() => [0, 1].includes(data.status), [data.status])
 
   const onSliderChange = (val: number) => {
@@ -103,7 +94,7 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
   const goAllocate = async () => {
     if (account) {
       toggleSubmiting()
-      await onStake(acToken, Number(value), account, (isError) => {
+      await onStake(data.underlyingToken, Number(value), account, (isError) => {
         reBalances()
         getData()
         setValue('')
@@ -118,7 +109,7 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
   }
 
   const minAmountError = useMemo(
-    () => inputValue !== '' && Number(inputValue) < base.minimumStake,
+    () => inputValue !== '' && Number(inputValue) < minimumStake,
     [inputValue]
   )
   const maxAmountError = useMemo(
@@ -128,12 +119,6 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
   return (
     <>
       <section className="c-vault-stake">
-        {/* <div className="c-vault-stake-tip">
-          <p>
-            The Denomination Assets of this vault is {acToken.name}. Please enter the amount you
-            wish to stake in the input box below.
-          </p>
-        </div> */}
         <div className="c-vault-stake-input">
           <Input
             value={value}
@@ -144,28 +129,23 @@ const Stake: FC<Props> = ({ getData, data, base, onClose }) => {
                 value={currentToken}
                 onChange={setCurrentToken}
                 options={underlyingTokenOptions}
+                disabled={list.length <= 1}
               />
             }
             right
             placeholder="0"
             type="number"
             error={(value !== '' && Number(value) === 0) || minAmountError || maxAmountError}
-            // disabled={!isInSubscribe}
           >
             {minAmountError && (
               <p className="fall">
-                Minimum stake amount {base.minimumStake} {acToken.name}
+                Minimum stake amount {minimumStake} {acToken.name}
               </p>
             )}
-            {/* {maxAmountError && (
-              <p className="fall">
-                Maxmum stake amount {maxValue} {acToken.name}
-              </p>
-            )} */}
+
             <p>
               {acToken.name} Balance: {acTokenBalance}
             </p>
-            {/* <p>Capacity Available: {maxAum}</p> */}
           </Input>
         </div>
         <div className="c-vault-stake-slider">

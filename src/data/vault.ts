@@ -103,10 +103,11 @@ export const VaultDetailDefault: VaultDetailProps = {
   aum: 0,
 
   underlyingPriceInUSD: 0,
-  underlyingBalance: 0,
+  custodianBalance: 0,
+  cashBalance: 0,
 
   sharePrice: 0,
-  beginningSharePrice: 0,
+  epochStartBlock: 0n,
   unstakingShare: 0,
 
   pendingStake: 0,

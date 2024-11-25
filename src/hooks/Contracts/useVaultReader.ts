@@ -56,14 +56,14 @@ export const useVaultDetail = (vaultAddress: AddressType) => {
 export const useVaultBaseAddressList = () => {
   // vaultList
   const VaultReaderContract = useVaultReaderContract()
-  const { data, isSuccess, isLoading } = useReadContract({
+  const { data, isSuccess, isLoading, isRefetching } = useReadContract({
     ...VaultReaderContract,
     functionName: 'vaultList'
-  }) as { data: AddressType[]; isSuccess: boolean; isLoading: boolean }
+  }) as { data: AddressType[]; isSuccess: boolean; isLoading: boolean; isRefetching: boolean }
   if (!isLoading && isSuccess) {
-    return { data, isLoading, isSuccess }
+    return { data, isLoading, isSuccess, isRefetching }
   }
-  return { data: [], isLoading, isSuccess }
+  return { data: [], isLoading, isSuccess, isRefetching }
 }
 
 export const useVaultBaseList = () => {
@@ -238,7 +238,7 @@ export const useVaultList = () => {
     isRefetching: boolean
     refetch: () => void
   }
-  // console.log(123456, data, isLoading, isSuccess, isRefetching, 'isRefetching')
+  console.log(123456, data, isLoading, isSuccess, isRefetching, 'isRefetching')
 
   if (error) {
     console.error(error)
@@ -246,7 +246,7 @@ export const useVaultList = () => {
   if (!isLoading && isSuccess) {
     // console.log(123456, data, isLoading, isSuccess, isRefetching, 'isRefetching')
     return {
-      data: data.map((item) => calcVaultDetail(item, getTokenByAddress)),
+      data: (data ?? []).map((item) => calcVaultDetail(item, getTokenByAddress)),
       isSuccess,
       isLoading,
       isRefetching,

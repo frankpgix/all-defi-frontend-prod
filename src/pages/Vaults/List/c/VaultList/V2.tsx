@@ -1,6 +1,11 @@
-import { FC, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 
 import classNames from 'classnames'
+
+import { useAssetLatestPrices } from '@/hooks/Contracts/usePriceAggregator'
+import { useVaultList } from '@/hooks/Contracts/useVaultReader'
+
+import { VaultDetailProps } from '@/types/vault'
 
 import { VaultBaseInfoDefault, VaultDetailDefault } from '@/data/vault'
 import { formatNumber } from '@/utils/tools'
@@ -21,6 +26,10 @@ const VaultList: FC = () => {
     temp[index] = !temp[index]
     setRollStatus(temp)
   }
+
+  const { data, isLoading } = useVaultList()
+  console.log(data)
+  if (isLoading || data.length === 0) return null
   return (
     <div className="p-vault-list">
       <header className="p-vault-list-header">
@@ -35,61 +44,14 @@ const VaultList: FC = () => {
           <strong>Active</strong>
         </header>
         <section className="table-body">
-          {[1, 2].map((_, index) => (
-            <dl>
-              <dt>
-                <VaultName name={"The Vault's Name"} managerName="Frank" status={0} />
-                <span>{formatNumber(12345.12233, 2, '$0,0.00')}</span>
-                <FlexBox center gap={5}>
-                  <RoeShow value={11} />
-                  <Tag name="Bring +++" />
-                </FlexBox>
-                <span>8</span>
-                <FlexBox center gap={5}>
-                  <Button size="mini">Details</Button>
-                  <button
-                    className={classNames('vault-arrow', { show: rollStatus[index] })}
-                    onClick={() => onRollChange(index)}
-                  >
-                    <Image src="icon/arrow-down-blue.svg" />
-                  </button>
-                </FlexBox>
-              </dt>
-              <dd className={classNames({ show: rollStatus[index] })}>
-                <div className="vault-item">
-                  <VaultName name={"The Vault's Name"} size="mini" />
-                  <span>{formatNumber(12345.12233, 2, '$0,0.00')}</span>
-                  <FlexBox center gap={5}>
-                    <RoeShow value={11} />
-                    <Tag name="Bring +++" />
-                  </FlexBox>
-                  <span>8</span>
-                  <span>
-                    <StakeButton
-                      getData={() => null}
-                      data={VaultDetailDefault}
-                      base={VaultBaseInfoDefault}
-                    />
-                  </span>
-                </div>
-                <div className="vault-item">
-                  <VaultName name={"The Vault's Name"} size="mini" />
-                  <span>{formatNumber(12345.12233, 2, '$0,0.00')}</span>
-                  <FlexBox center gap={5}>
-                    <RoeShow value={11} />
-                    <Tag name="Bring +++" />
-                  </FlexBox>
-                  <span>8</span>
-                  <span>
-                    <StakeButton
-                      getData={() => null}
-                      data={VaultDetailDefault}
-                      base={VaultBaseInfoDefault}
-                    />
-                  </span>
-                </div>
-              </dd>
-            </dl>
+          {[1].map((_, index) => (
+            <VaultGroup
+              key={index}
+              rollIndex={index}
+              show={rollStatus[index]}
+              onRollChange={onRollChange}
+              list={data}
+            />
           ))}
         </section>
       </main>
@@ -97,3 +59,67 @@ const VaultList: FC = () => {
   )
 }
 export default VaultList
+
+interface VaultGroupProps {
+  onRollChange: (index: number) => void
+  show: boolean
+  rollIndex: number
+  list: VaultDetailProps[]
+}
+
+const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }) => {
+  const assetTokenList = useMemo(() => list.map((item) => item.underlyingToken), [list])
+  const {
+    data: price,
+    isLoading,
+    isSuccess
+  } = useAssetLatestPrices(assetTokenList, list[0]?.epochStartBlock)
+  const aum = useMemo(() => {
+    return list
+      .map((item) => item.aum * (price[item.underlyingToken.address] ?? 1))
+      .reduce((acc, cur) => acc + cur, 0)
+  }, [list, price])
+  console.log(price, isLoading, isSuccess)
+  return (
+    <dl>
+      <dt>
+        <VaultName name={'AllDeFi Vault'} managerName={'Kevin'} status={list[0]?.status ?? 0} />
+        <span>{formatNumber(aum, 2, '$0,0.00')}</span>
+        <FlexBox center gap={5}>
+          <RoeShow value={11} />
+          <Tag name="Bring +++" />
+        </FlexBox>
+        <span>{list[0].epochIndex}</span>
+        <FlexBox center gap={5}>
+          <Button size="mini" to="/vaults/group">
+            Details
+          </Button>
+          <button
+            className={classNames('vault-arrow', { show })}
+            onClick={() => onRollChange(rollIndex)}
+          >
+            <Image src="icon/arrow-down-blue.svg" />
+          </button>
+        </FlexBox>
+      </dt>
+      <dd className={classNames({ show })}>
+        {list.map((item) => (
+          <div className="vault-item" key={item.address}>
+            <VaultName name={item.name} size="mini" />
+            <span>
+              {formatNumber(item.aum * (price[item.underlyingToken.address] ?? 1), 2, '$0,0.00')}
+            </span>
+            <FlexBox center gap={5}>
+              <RoeShow value={11} />
+              <Tag name="Bring +++" />
+            </FlexBox>
+            <span>{item.epochIndex}</span>
+            <span>
+              <StakeButton getData={() => null} data={[item]} />
+            </span>
+          </div>
+        ))}
+      </dd>
+    </dl>
+  )
+}
