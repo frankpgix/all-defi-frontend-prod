@@ -1,5 +1,8 @@
 // import { WriteContractErrorType } from 'viem'
+import { parseEther } from 'viem'
 import { useReadContract, useWriteContract } from 'wagmi'
+
+import { nativeAddress } from '@/config/token'
 
 import { useVaultContract } from '@/hooks/Contracts/useContract'
 import { useAllowance, useWaitReceipt } from '@/hooks/Contracts/useTools'
@@ -50,16 +53,18 @@ export const useStake = (vaultAddress: AddressType) => {
 
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Stake to vault' })
-
-      const allowance = await onAllowance(acToken.address, vaultAddress, _amount, notifyId)
-      if (!allowance) return
+      if (acToken.address !== nativeAddress) {
+        const allowance = await onAllowance(acToken.address, vaultAddress, _amount, notifyId)
+        if (!allowance) return
+      }
 
       writeContract(
         {
           ...vaultContract,
           functionName: 'stake',
           args: [_amount],
-          account
+          account,
+          value: nativeAddress === acToken.address ? parseEther(String(amount)) : undefined
         },
         {
           onSuccess: async (hash: AddressType) => {
