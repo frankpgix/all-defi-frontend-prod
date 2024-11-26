@@ -104,7 +104,7 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
       <dd className={classNames({ show })}>
         {list.map((item) => (
           <div className="vault-item" key={item.address}>
-            <VaultName name={item.name} size="mini" />
+            <VaultName icon={item.underlyingToken.icon} name={item.name} size="mini" />
             <span>
               {formatNumber(item.aum * (price[item.underlyingToken.address] ?? 1), 2, '$0,0.00')}
             </span>

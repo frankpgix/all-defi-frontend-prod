@@ -10,39 +10,54 @@
   // background:radial-gradient($red,$red,$cff);
   &-size {
     &-default {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      font-size: 32px;
-      padding-top: 3px;
+      &,
+      img {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        font-size: 32px;
+        padding-top: 3px;
+      }
     }
     &-big {
-      width: 64px;
-      height: 64px;
-      border-radius: 10px;
-      font-size: 44px;
-      padding-top: 4px;
+      &,
+      img {
+        width: 64px;
+        height: 64px;
+        border-radius: 10px;
+        font-size: 44px;
+        padding-top: 4px;
+      }
     }
     &-large {
-      width: 90px;
-      height: 90px;
-      border-radius: 16px;
-      font-size: 64px;
-      padding-top: 5px;
+      &,
+      img {
+        width: 90px;
+        height: 90px;
+        border-radius: 16px;
+        font-size: 64px;
+        padding-top: 5px;
+      }
     }
     &-medium {
-      width: 36px;
-      height: 36px;
-      border-radius: 6px;
-      font-size: 28px;
-      padding-top: 2px;
+      &,
+      img {
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        font-size: 28px;
+        padding-top: 2px;
+      }
     }
     &-mini {
-      width: 32px;
-      height: 32px;
-      border-radius: 4px;
-      font-size: 18px;
-      padding-top: 1px;
+      &,
+      img {
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        font-size: 18px;
+        padding-top: 1px;
+      }
     }
   }
   &.round {
@@ -52,6 +67,9 @@
     &.style-#{$i} {
       background-image: url($res + 'asset/fung-icon-' + $i + '.png');
     }
+  }
+  &.icon {
+    background-image: none;
   }
 }
 
