@@ -93,5 +93,13 @@
         }
       }
     }
+    &.new-zero {
+      grid-template-columns: 0.5fr 1fr 1fr 0.5fr;
+      li {
+        &:nth-child(2) {
+          display: none;
+        }
+      }
+    }
   }
 }

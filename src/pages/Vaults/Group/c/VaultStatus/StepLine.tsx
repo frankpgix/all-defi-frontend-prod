@@ -38,10 +38,10 @@ const StepLine: FC<Props> = ({ data, loading }) => {
       status: 0
     },
     {
-      label: data.epochIndex === 0 ? 'Open Period' : 'Semi-open Period',
-      time: data.epochIndex === 0 ? data.epochStartTime : data.subscribeRedeemEndTime,
-      popper: data.epochIndex === 0 ? step1Popper : step2Popper,
-      status: data.epochIndex === 0 ? 0 : 1
+      label: 'Semi-open Period',
+      time: data.subscribeRedeemEndTime,
+      popper: step2Popper,
+      status: 1
     },
     {
       label: 'Pre-Settlement Period',
@@ -50,7 +50,7 @@ const StepLine: FC<Props> = ({ data, loading }) => {
     },
     {
       label: 'Settlement Period',
-      time: data.epochIndex === 0 ? data.zeroSubscribeEndTime : data.preSettleEndTime,
+      time: data.preSettleEndTime,
       status: 3
     },
     {
@@ -60,7 +60,7 @@ const StepLine: FC<Props> = ({ data, loading }) => {
   ]
   return (
     <section className="web-fund-detail-status-setpline">
-      <ul className={classNames({ zero: data.epochIndex <= 0 })}>
+      <ul className={classNames({ 'new-zero': data.epochIndex <= 0 })}>
         {steps.map(({ label, time, status, popper }, index) => (
           <li
             key={index}
