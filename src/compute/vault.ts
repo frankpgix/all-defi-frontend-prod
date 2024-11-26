@@ -114,7 +114,7 @@ export const calcVaultDetail = (
   const custodianBalance = Number(safeInterceptionValues(item.custodianBalance ?? 0, 18, 18))
   const beginningAUM = Number(safeInterceptionValues(item.beginningAUM, decimals, decimals))
   const beginningSharePrice = beginningAUM === 0 ? 1 : BN(sharePrice).div(beginningAUM).toNumber()
-  console.log(beginningAUM, sharePrice, beginningSharePrice, 'beginningSharePrice')
+  // console.log(beginningAUM, sharePrice, beginningSharePrice, 'beginningSharePrice')
   return {
     underlyingToken,
     hash,
@@ -195,7 +195,7 @@ export const calcVaultUserDetail = (
 
   const shares = Number(safeInterceptionValues(item.shares, 18, 18))
   const sharePrice = Number(safeInterceptionValues(item.sharePrice, 18, 18))
-  const pendingStake = Number(safeInterceptionValues(item.pendingStake, 18, 18))
+  const pendingStake = Number(safeInterceptionValues(item.pendingStake, decimals, decimals))
   const unclaimedUnderlying = Number(
     safeInterceptionValues(item.unclaimedUnderlying, decimals, decimals)
   )
@@ -206,7 +206,10 @@ export const calcVaultUserDetail = (
 
   const beginningSharePrice = Number(safeInterceptionValues(item.beginningSharePrice, 18, 18))
 
-  const roe = BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber()
+  const roe =
+    beginningSharePrice === 0
+      ? 0
+      : BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber()
 
   // const underlyingTokenPriceInUSD = 1
   const beginSharePrice = BN(safeInterceptionValues(item.sharePrice, 18, 18))

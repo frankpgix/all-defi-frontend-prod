@@ -6,8 +6,6 @@ import classNames from 'classnames'
 import { isNaN } from 'lodash'
 import { Cell, Pie, PieChart, Sector } from 'recharts'
 
-// import { useBaseTokenPriceUSD } from '@/hooks/Contracts/useVaultFactory'
-// import { useUnderlyingTokens } from '@/hooks/useToken'
 import { VaultUserListDataProps } from '@/types/vault'
 
 import { SectionItem } from '@/pages/MyManagement/Manager/VaultDetail/c/ManageDetail/C'
@@ -136,27 +134,10 @@ interface CountDetailProps extends CountProps {}
 
 const CountDetail: FC<CountDetailProps> = ({ loading, data }) => {
   const [activeIndex, setActiveIndex] = useState(0)
-  // const underlyingTokens = useUnderlyingTokens()
-  // const {
-  //   data: price,
-  //   isSuccess: priceSuccess,
-  //   isLoading: priceLoading
-  // } = useAssetLatestPrices(underlyingTokens)
-  console.log(data, 'data')
-
-  // const data = sData.map((item) => {
-  //   const i = { ...item }
-  //   // const tpo = baseTokenPriceList.find(
-  //   //   (tp) => tp.address.toLocaleLowerCase() === i.underlying.address.toLocaleLowerCase()
-  //   // )
-  //   // const tp = tpo ? tpo.priceInUSD : 1
-  //   // i.data.navInUSD = BN(i.data.nav).times(tp).toNumber()
-  //   return i
-  // })
   const rawData = useMemo(
     () =>
       data.map(({ base, userDetail }) => ({
-        name: base.name,
+        name: base.underlying.name,
         // value: data.shares || data.navInUSD,
         value: userDetail.navInUSD,
         nav: userDetail.navInUSD
@@ -259,7 +240,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data }) => {
           <label>Total Staking </label>
           <em>{formatNumber(totalAsset, 2, '$0,0.00')}</em>
         </article>
-        <h3>{data[activeIndex].base.name}</h3>
+        <h3>{data[activeIndex].base.underlying.name}</h3>
         <section>
           <SectionItem label="Staking Value" loading={loading}>
             <TokenValue value={activeData.nav} token={baseToken} size="mini" format="0,0.00" />

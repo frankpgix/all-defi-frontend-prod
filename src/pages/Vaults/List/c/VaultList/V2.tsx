@@ -68,17 +68,13 @@ interface VaultGroupProps {
 
 const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }) => {
   const assetTokenList = useMemo(() => list.map((item) => item.underlyingToken), [list])
-  const {
-    data: price,
-    isLoading,
-    isSuccess
-  } = useAssetLatestPrices(assetTokenList, list[0]?.epochStartBlock)
+  const { data: price } = useAssetLatestPrices(assetTokenList, list[0]?.epochStartBlock)
   const aum = useMemo(() => {
     return list
       .map((item) => item.aum * (price[item.underlyingToken.address] ?? 1))
       .reduce((acc, cur) => acc + cur, 0)
   }, [list, price])
-  console.log(price, isLoading, isSuccess)
+  // console.log(price, isLoading, isSuccess)
   return (
     <dl>
       <dt>
@@ -86,7 +82,6 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
         <span>{formatNumber(aum, 2, '$0,0.00')}</span>
         <FlexBox center gap={5}>
           <RoeShow value={11} />
-          <Tag name="Bring +++" />
         </FlexBox>
         <span>{list[0].epochIndex}</span>
         <FlexBox center gap={5}>
@@ -109,10 +104,9 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
               {formatNumber(item.aum * (price[item.underlyingToken.address] ?? 1), 2, '$0,0.00')}
             </span>
             <FlexBox center gap={5}>
-              <RoeShow value={11} />
               <Tag name="Bring +++" />
             </FlexBox>
-            <span>{item.epochIndex}</span>
+            <span></span>
             <span>
               <StakeButton data={[item]} />
             </span>

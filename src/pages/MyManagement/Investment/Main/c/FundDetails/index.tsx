@@ -20,46 +20,8 @@ interface Props {
 }
 
 const FundDetails: FC<Props> = ({ data, callback }) => {
-  // const { account } = useProfile()
-  // const { createNotify, updateNotifyItem } = useNotify()
-
-  // const { cancelRedeem, cancelSubscribe } = FundPool
-  // const { getDerivativeList } = AllProtocol
-
-  // const [derivativeList, setDerivativeList] = useState<ProductProps[]>([])
   const [activeIndex, setActiveIndex] = useState<number>(0)
   const [isInit, setisInit] = useState<boolean>(true)
-
-  // const onCancelRedeem = async (address: string) => {
-  //   if (account && address) {
-  // const notifyId = await createNotify({ type: 'loading', content: 'Cancel Withhold' })
-  // const { status, msg, hash } = await cancelRedeem(address, signer)
-  // if (status) {
-  //   await callback(true)
-  //   updateNotifyItem(notifyId, { type: 'success', hash })
-  // } else {
-  //   updateNotifyItem(notifyId, { type: 'error', title: 'Cancel Withhold', content: msg, hash })
-  // }
-  //   }
-  // }
-
-  // const onCancelSubscribe = async (address: string) => {
-  //   if (account && address) {
-  // const notifyId = await createNotify({ type: 'loading', content: 'Cancel Allocation' })
-  // const { status, msg, hash } = await cancelSubscribe(address, signer)
-  // if (status) {
-  //   await callback(true)
-  //   updateNotifyItem(notifyId, { type: 'success', hash })
-  // } else {
-  //   updateNotifyItem(notifyId, {
-  //     type: 'error',
-  //     title: 'Cancel Allocation',
-  //     content: msg,
-  //     hash
-  //   })
-  // }
-  //   }
-  // }
 
   const onActiveChange = (index: number) => {
     setActiveIndex(index)

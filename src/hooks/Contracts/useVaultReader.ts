@@ -8,7 +8,7 @@ import VaultABI from '@/config/abi/VaultSimple.json'
 import { useVaultReaderContract } from '@/hooks/Contracts/useContract'
 import { useAssetLatestPrices } from '@/hooks/Contracts/usePriceAggregator'
 import { useProfile } from '@/hooks/useProfile'
-import { useToken, useUnderlyingTokens } from '@/hooks/useToken'
+import { useChainToken, useToken, useUnderlyingTokens } from '@/hooks/useToken'
 import { useVaultList as useVaultListHook } from '@/hooks/useVaultList'
 
 import { AddressType, TokenTypes } from '@/types/base'
@@ -77,7 +77,7 @@ export const useVaultBaseList = () => {
   }))
   // console.log(11122, contracts)
   const { data, isSuccess, isLoading } = useReadContracts({ contracts })
-  console.log(11122, data, isSuccess, isLoading)
+  // console.log(11122, data, isSuccess, isLoading)
   if (!isLoading && isSuccess && !loading && success) {
     // console.log(data, 1234, isSuccess, isLoading)
     const res = data.map((item, index) =>
@@ -173,6 +173,7 @@ export const useUserVaultList = () => {
   const VaultReaderContract = useVaultReaderContract()
   const { getTokenByAddress } = useToken()
   const underlyingTokens = useUnderlyingTokens()
+  const { chainToken } = useChainToken()
   const { data: baseList, isLoading: baseLoading, isSuccess: baseSuccess } = useVaultBaseList()
   // console.log('baseList', baseList)
   const { account } = useProfile()
@@ -183,8 +184,8 @@ export const useUserVaultList = () => {
     data: price,
     isSuccess: priceSuccess,
     isLoading: priceLoading
-  } = useAssetLatestPrices(underlyingTokens)
-  console.log('baseList', price, priceSuccess, priceLoading)
+  } = useAssetLatestPrices([...underlyingTokens, chainToken])
+  // console.log('baseList', underlyingTokens, price, priceSuccess, priceLoading)
   const {
     data: sData,
     isSuccess,
@@ -201,7 +202,16 @@ export const useUserVaultList = () => {
   if (error) {
     console.error(error)
   }
-  if (account && !isLoading && isSuccess && !isListLoading && !baseLoading && baseSuccess) {
+  if (
+    account &&
+    !isLoading &&
+    isSuccess &&
+    !isListLoading &&
+    !baseLoading &&
+    baseSuccess &&
+    priceSuccess &&
+    !priceLoading
+  ) {
     // console.log('vaultList', vaultLists, sData)
     const data = sData.map((item: any) => {
       // console.log(item)
@@ -210,13 +220,10 @@ export const useUserVaultList = () => {
       // console.log(fund)
       const detail = vaultLists.find((vault) => vault.address === item.vaultAddress)
       // console.log(fund, detail)
-      const userDetail = calcVaultUserDetail(
-        item,
-        getTokenByAddress,
-        price[base.underlying.address] ?? 1
-      )
+      const underlyingPrice = price[base.underlying.address] ?? 1
+      const userDetail = calcVaultUserDetail(item, getTokenByAddress, underlyingPrice)
       // console.log(base, detail, userDetail)
-      return { base, detail, userDetail }
+      return { base, detail, userDetail, underlyingPrice }
     })
 
     return { data, isSuccess, isLoading, refetch }
@@ -238,7 +245,7 @@ export const useVaultList = () => {
     isRefetching: boolean
     refetch: () => void
   }
-  console.log(123456, data, isLoading, isSuccess, isRefetching, 'isRefetching')
+  // console.log(123456, data, isLoading, isSuccess, isRefetching, 'isRefetching')
 
   if (error) {
     console.error(error)

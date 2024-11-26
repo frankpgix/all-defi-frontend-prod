@@ -142,6 +142,7 @@ export interface VaultUserListDataProps {
   base: VaultBaseInfoProps
   detail: VaultDetailProps
   userDetail: VaultUserDetailProps
+  underlyingPrice: number
 }
 
 export interface ShareCompositionProps {

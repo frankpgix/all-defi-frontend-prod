@@ -1,17 +1,10 @@
 import { FC } from 'react'
 import ContentLoader from 'react-content-loader'
 
-import { VaultUserListDataProps } from '@/types/vault'
-
-// import { FundUserListDataProps } from '@/class/help'
 import Button from '@@/common/Button'
 
-// import Loading from '@@/common/Loading'
-// import Dashboard from './c/Dashboard'
 import Count from './c/Count'
 import FundDetails from './c/FundDetails'
-
-// import ContributionManagement from '@/pages/Buy/c/ContributionManagement'
 
 interface Props {
   loading: boolean

@@ -31,7 +31,7 @@ export const useAssetLatestPrices = (AssetTokens: UnderlyingTokenTypes[], blockN
   })
   const prices: Record<string, number> = {}
   AssetTokens.forEach((asset) => (prices[asset.address] = 0))
-  console.log(error)
+  if (error) console.log(error)
   if (assetAddress && !isLoading && isSuccess) {
     ;(data as string[]).forEach(
       (item: string, index: number) =>
