@@ -8,7 +8,7 @@ import { useStake } from '@/hooks/Contracts/useVault'
 import { useProfile } from '@/hooks/useProfile'
 import { useUserBalances } from '@/hooks/useToken'
 
-import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
+import { VaultDetailProps } from '@/types/vault'
 
 // import { formatNumber } from '@/utils/tools'
 import Button from '@@/common/Button'
@@ -19,13 +19,11 @@ import Tip from '@@/common/Tip'
 import { DropdownSelect, DropdownSelectItemProps } from '@@/core/Dropdown'
 
 interface Props {
-  getData: () => void
   onClose: () => void
   data: VaultDetailProps[]
-  base?: VaultBaseInfoProps
 }
 
-const Stake: FC<Props> = ({ getData, data: list }) => {
+const Stake: FC<Props> = ({ data: list }) => {
   // const { getTokenByName } = useToken()
   const { account } = useProfile()
   const underlyingTokenOptions = useMemo(() => {
@@ -96,7 +94,6 @@ const Stake: FC<Props> = ({ getData, data: list }) => {
       toggleSubmiting()
       await onStake(data.underlyingToken, Number(value), account, (isError) => {
         reBalances()
-        getData()
         setValue('')
         setSliderValue(0)
         toggleSubmiting()

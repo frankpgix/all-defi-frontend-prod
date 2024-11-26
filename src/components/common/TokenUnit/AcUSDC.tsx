@@ -16,6 +16,9 @@ const AcUSDC: FC<Props> = ({ children, value, name }) => {
   const { getTokenByName } = useToken()
   const token = getTokenByName((name ?? '') as TokenKeys)
   console.log(token, 'token')
+  if (!name) {
+    return null
+  }
   return (
     <div className="web-c-token-unit">
       <Image src={`${name ? token.icon : 'icon/sac-usdc.png'}`} />

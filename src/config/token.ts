@@ -15,7 +15,7 @@ export const UNKNOWN = {
   icon: 'symbol/bnb.svg',
   name: 'UNKNOWN',
   precision: 4,
-  symbol: 'UNKNOWN',
+  symbol: '',
   address: zeroAddress
 } as TokenTypes
 

@@ -19,7 +19,7 @@ interface Props {
   onClose: () => void
 }
 
-const Claim: FC<Props> = ({ userData, getData, onClose }) => {
+const Claim: FC<Props> = ({ userData, getData }) => {
   const { onClaim } = useClaim(userData.address)
   const { fundAddress } = useParams()
   const { account } = useProfile()
@@ -53,7 +53,7 @@ const Claim: FC<Props> = ({ userData, getData, onClose }) => {
           readonly={value > 0}
           onChange={() => null}
           type="number"
-          suffix={<AcUSDCUnit name={acToken.name} />}
+          suffix={<AcUSDCUnit name={acToken.symbol} />}
           right
         />
       </div>

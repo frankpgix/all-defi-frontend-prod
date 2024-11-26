@@ -4,12 +4,11 @@ import ContentLoader from 'react-content-loader'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 
-import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
+import { VaultDetailProps } from '@/types/vault'
 
 import Popper from '@@/common/Popper'
 
 interface Props {
-  base: VaultBaseInfoProps
   data: VaultDetailProps
   loading?: boolean
 }

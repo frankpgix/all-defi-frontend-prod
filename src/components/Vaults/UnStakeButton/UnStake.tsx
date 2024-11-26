@@ -9,6 +9,7 @@ import { useProfile } from '@/hooks/useProfile'
 
 import { VaultDetailProps, VaultUserDetailProps } from '@/types/vault'
 
+import { DropdownSelect, DropdownSelectItemProps } from '@/components/core/Dropdown'
 import Button from '@@/common/Button'
 import InfoDialog from '@@/common/Dialog/Info'
 import { Input, Slider } from '@@/common/Form'
@@ -19,9 +20,19 @@ interface Props {
   data: VaultDetailProps
   onClose: () => void
   getData: () => void
+  currentToken: DropdownSelectItemProps
+  setCurrentToken: (val: DropdownSelectItemProps) => void
+  underlyingTokenOptions: DropdownSelectItemProps[]
 }
 
-const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
+const Unstake: FC<Props> = ({
+  data,
+  userData,
+  getData,
+  currentToken,
+  setCurrentToken,
+  underlyingTokenOptions
+}) => {
   const { account } = useProfile()
   const { onUnstake } = useUnstake(data.address)
 
@@ -29,7 +40,7 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
   const [value, setValue] = useState<number | string>('')
   const [sliderValue, setSliderValue] = useState(0)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
-  const underlyingToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
+  // const underlyingToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
   // console.log(data)
   const isInUnstake = useMemo(() => data.status === 0, [data.status])
   const maxValue = useMemo(() => {
@@ -82,14 +93,20 @@ const Unstake: FC<Props> = ({ data, userData, getData, onClose }) => {
 
   return (
     <>
-      <div className="c-vault-stake-tip">
+      {/* <div className="c-vault-stake-tip">
         <p>
           Please enter the quantity of Shares you wish to unstake as {underlyingToken.name} in the
           input box below. Please note that the final amount of {underlyingToken.name} you receive
           depends on the Share price at the time of settlement.
         </p>
-      </div>
+      </div> */}
+      {data.address}
       <div className="c-vault-stake-input">
+        <DropdownSelect
+          value={currentToken}
+          onChange={setCurrentToken}
+          options={underlyingTokenOptions}
+        />
         <Input
           value={value}
           onChange={(val) => onInputChange(val)}

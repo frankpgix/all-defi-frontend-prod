@@ -14,6 +14,8 @@
   }
 
   &-input {
+    display: flex;
+    gap: 20px;
     .web-form-input-base {
       width: 400px;
     }

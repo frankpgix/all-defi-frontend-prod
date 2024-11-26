@@ -7,7 +7,6 @@ import { useVaultList } from '@/hooks/Contracts/useVaultReader'
 
 import { VaultDetailProps } from '@/types/vault'
 
-import { VaultBaseInfoDefault, VaultDetailDefault } from '@/data/vault'
 import { formatNumber } from '@/utils/tools'
 import StakeButton from '@@/Vaults/StakeButton'
 import Button from '@@/common/Button'
@@ -115,7 +114,7 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
             </FlexBox>
             <span>{item.epochIndex}</span>
             <span>
-              <StakeButton getData={() => null} data={[item]} />
+              <StakeButton data={[item]} />
             </span>
           </div>
         ))}

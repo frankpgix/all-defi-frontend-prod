@@ -3,20 +3,19 @@ import ContentLoader from 'react-content-loader'
 
 import dayjs from 'dayjs'
 
-import { VaultBaseInfoProps, VaultDetailProps } from '@/types/vault'
+import { VaultDetailProps } from '@/types/vault'
 
 import BlueLineSection from '@@/web/BlueLineSection'
 
 import StepLine from './StepLine'
 
 interface Props {
-  base: VaultBaseInfoProps
   data: VaultDetailProps
   loading: boolean
   children: ReactNode
 }
 
-const VaultStatus: FC<Props> = ({ base, data, loading, children }) => {
+const VaultStatus: FC<Props> = ({ data, loading, children }) => {
   const currEpoch = useMemo(
     () => `${dayjs(data.epochStartTime).format('MMM DD, YYYY')} #${data.epochIndex}`,
     [data.epochStartTime, data.epochIndex]
@@ -29,7 +28,7 @@ const VaultStatus: FC<Props> = ({ base, data, loading, children }) => {
       // headerRight={`Next Epoch: ${dayjs(data.settleEndTime).format('MMM DD, YYYY')} #${data.epochIndex + 1}`}
     >
       {/* <Loading show={loading} type="float" /> */}
-      <StepLine base={base} data={data} loading={loading} />
+      <StepLine data={data} loading={loading} />
       <footer className="web-fund-detail-status-footer">
         <main>
           <dl>
