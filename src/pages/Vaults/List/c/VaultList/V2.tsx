@@ -68,13 +68,18 @@ interface VaultGroupProps {
 
 const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }) => {
   const assetTokenList = useMemo(() => list.map((item) => item.underlyingToken), [list])
-  const { data: price } = useAssetLatestPrices(assetTokenList, list[0]?.epochStartBlock)
+  // const { data: price } = useAssetLatestPrices(assetTokenList, list[0]?.epochStartBlock)
+  const { data: price } = useAssetLatestPrices(assetTokenList)
   const aum = useMemo(() => {
     return list
       .map((item) => item.aum * (price[item.underlyingToken.address] ?? 1))
       .reduce((acc, cur) => acc + cur, 0)
   }, [list, price])
   // console.log(price, isLoading, isSuccess)
+  // 单个子基金, 有自己的 begninAUM * roe = 利润 * 当前资产价格 = usd 利润
+  // 所有子基金, usd 利润 求和 = 总利润
+  // 总利润 / 总aum = 总收益率
+  // 年化收益率 = 总收益率 / 365 * 100%
   return (
     <dl>
       <dt>
@@ -99,7 +104,11 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
       <dd className={classNames({ show })}>
         {list.map((item) => (
           <div className="vault-item" key={item.address}>
-            <VaultName icon={item.underlyingToken.icon} name={item.name} size="mini" />
+            <VaultName
+              icon={item.underlyingToken.icon}
+              name={item.underlyingToken.name}
+              size="mini"
+            />
             <span>
               {formatNumber(item.aum * (price[item.underlyingToken.address] ?? 1), 2, '$0,0.00')}
             </span>

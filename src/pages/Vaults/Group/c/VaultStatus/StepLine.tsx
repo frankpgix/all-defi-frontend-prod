@@ -33,7 +33,7 @@ const StepLine: FC<Props> = ({ data, loading }) => {
     {
       label: 'Open Period',
       popper: step1Popper,
-      time: data.epochStartTime,
+      time: data.epochIndex === 0 ? data.subscribeRedeemEndTime : data.epochStartTime,
       status: 0
     },
     {

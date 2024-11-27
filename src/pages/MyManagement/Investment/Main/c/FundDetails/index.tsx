@@ -1,4 +1,6 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
+
+import BN from 'bignumber.js'
 
 // import { FundUserListDataProps } from '@/class/help'
 // import FundPool from '@/class/FundPool'
@@ -36,7 +38,26 @@ const FundDetails: FC<Props> = ({ data, callback }) => {
       setisInit(false)
     }
   }, [])
+  {
+    /* (beginningAUM * underlyingPrice) / sum(beginningAUM * underlyingPrice)  start price */
+  }
 
+  const beginningValue = useMemo(
+    () =>
+      BN.sum(
+        ...data.map((item) =>
+          BN(item.detail.beginningAUM).times(item.underlyingbeginningPrice).toNumber()
+        )
+      ).toNumber(),
+    [data]
+  )
+  const currentValue = useMemo(
+    () =>
+      BN.sum(
+        ...data.map((item) => BN(item.detail.beginningAUM).times(item.underlyingPrice).toNumber())
+      ).toNumber(),
+    [data]
+  )
   return (
     <>
       <div className="web-manage-investment-fund">
@@ -49,6 +70,8 @@ const FundDetails: FC<Props> = ({ data, callback }) => {
             active={activeIndex === index}
             isInit={isInit}
             fund={item}
+            beginningValue={beginningValue}
+            currentValue={currentValue}
             onChange={() => onActiveChange(index)}
             callback={callback}
           />

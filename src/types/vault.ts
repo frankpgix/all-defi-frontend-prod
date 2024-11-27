@@ -69,6 +69,7 @@ export interface VaultDetailProps {
   preSettleEndTime: number
   settleEndTime: number
 
+  totalShares: number
   beginningAUM: number
   aum: number
 
@@ -85,6 +86,7 @@ export interface VaultDetailProps {
   unstakingShare: number
 
   roe: number
+  grossRoe: number
   historicalReturn: number
 
   managerFee: number
@@ -143,6 +145,7 @@ export interface VaultUserListDataProps {
   detail: VaultDetailProps
   userDetail: VaultUserDetailProps
   underlyingPrice: number
+  underlyingbeginningPrice: number
 }
 
 export interface ShareCompositionProps {

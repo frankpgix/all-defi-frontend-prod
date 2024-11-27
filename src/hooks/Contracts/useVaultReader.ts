@@ -185,7 +185,13 @@ export const useUserVaultList = () => {
     isSuccess: priceSuccess,
     isLoading: priceLoading
   } = useAssetLatestPrices([...underlyingTokens, chainToken])
+  const {
+    data: beginningPrice,
+    isSuccess: beginningPriceSuccess,
+    isLoading: beginningPriceLoading
+  } = useAssetLatestPrices([...underlyingTokens, chainToken], vaultList[0]?.epochStartBlock)
   // console.log('baseList', underlyingTokens, price, priceSuccess, priceLoading)
+  // console.log(beginningPrice)
   const {
     data: sData,
     isSuccess,
@@ -210,7 +216,9 @@ export const useUserVaultList = () => {
     !baseLoading &&
     baseSuccess &&
     priceSuccess &&
-    !priceLoading
+    !priceLoading &&
+    beginningPriceSuccess &&
+    !beginningPriceLoading
   ) {
     // console.log('vaultList', vaultLists, sData)
     const data = sData.map((item: any) => {
@@ -221,9 +229,10 @@ export const useUserVaultList = () => {
       const detail = vaultLists.find((vault) => vault.address === item.vaultAddress)
       // console.log(fund, detail)
       const underlyingPrice = price[base.underlying.address] ?? 1
+      const underlyingbeginningPrice = beginningPrice[base.underlying.address] ?? 1
       const userDetail = calcVaultUserDetail(item, getTokenByAddress, underlyingPrice)
       // console.log(base, detail, userDetail)
-      return { base, detail, userDetail, underlyingPrice }
+      return { base, detail, userDetail, underlyingPrice, underlyingbeginningPrice }
     })
 
     return { data, isSuccess, isLoading, refetch }

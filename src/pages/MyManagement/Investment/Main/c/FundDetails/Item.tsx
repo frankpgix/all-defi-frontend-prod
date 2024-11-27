@@ -27,11 +27,21 @@ interface Props {
   active: boolean
   isInit: boolean
   fund: VaultUserListDataProps
+  beginningValue: number
+  currentValue: number
   onChange: () => void
   callback: () => void
 }
 
-const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
+const VaultItem: FC<Props> = ({
+  active,
+  isInit,
+  onChange,
+  fund,
+  callback,
+  beginningValue,
+  currentValue
+}) => {
   // const { getTokenByAddress } = useToken()
   const { account } = useProfile()
   const { onCancelStake: onCancelAllocate } = useCancelStake(fund.detail.address)
@@ -244,14 +254,36 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                 </SectionItem>
 
                 <SectionItem label="Total Proprtion">
-                  <RoeShow value={formatNumber(fund.userDetail.roe * 100, 2, '0.00')} />
+                  {/* (beginningAUM * underlyingPrice) / sum(beginningAUM * underlyingPrice)  start price */}
+                  <RoeShow
+                    value={formatNumber(
+                      BN(fund.detail.beginningAUM)
+                        .times(fund.underlyingPrice)
+                        .div(beginningValue)
+                        .times(100)
+                        .toNumber(),
+                      2,
+                      '0.00'
+                    )}
+                  />
                 </SectionItem>
                 <SectionItem label="Current Proprtion">
-                  <RoeShow value={formatNumber(fund.userDetail.roe * 100, 2, '0.00')} />
+                  {/* (beginningAUM * underlyingPrice) / sum(beginningAUM * underlyingPrice) curr price */}
+                  <RoeShow
+                    value={formatNumber(
+                      BN(fund.detail.beginningAUM)
+                        .times(fund.underlyingPrice)
+                        .div(currentValue)
+                        .times(100)
+                        .toNumber(),
+                      2,
+                      '0.00'
+                    )}
+                  />
                 </SectionItem>
               </section>
               <footer>
-                <Button size="medium" to={`/vaults/detail/${fund.detail.address}`}>
+                <Button size="medium" to={`/vaults/group`}>
                   view details
                 </Button>
               </footer>

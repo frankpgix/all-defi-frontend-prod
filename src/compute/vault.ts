@@ -104,16 +104,18 @@ export const calcVaultDetail = (
   item: any,
   getTokenByAddress: GetTokenFuncType
 ): VaultDetailProps => {
-  // console.log(item.stage, 'item.stage')
+  // console.log(item, 'item.stage')
   const epochStartTime = Number(safeInterceptionValues(item.epochStartTime, 0, 0)) * 1000
   const underlyingToken = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlyingToken.decimals
   const status = Number(safeInterceptionValues(item.stage, 0, 0))
   const { hash } = calcVaultHash(item.vaultAddress ?? '0x')
   const sharePrice = Number(safeInterceptionValues(item.sharePrice, 18, 18))
+  const totalShares = Number(safeInterceptionValues(item.totalShares, 18, 18))
   const custodianBalance = Number(safeInterceptionValues(item.custodianBalance ?? 0, 18, 18))
   const beginningAUM = Number(safeInterceptionValues(item.beginningAUM, decimals, decimals))
-  const beginningSharePrice = beginningAUM === 0 ? 1 : BN(sharePrice).div(beginningAUM).toNumber()
+  const beginningSharePrice = beginningAUM === 0 ? 1 : BN(totalShares).div(beginningAUM).toNumber()
+  const aum = Number(safeInterceptionValues(item.aum, decimals, decimals))
   // console.log(beginningAUM, sharePrice, beginningSharePrice, 'beginningSharePrice')
   return {
     underlyingToken,
@@ -129,19 +131,20 @@ export const calcVaultDetail = (
     zeroSubscribeEndTime:
       epochStartTime + Number(safeInterceptionValues(item.stageDurations[0], 0, 0)) * 1000,
     subscribeRedeemEndTime:
-      epochStartTime + Number(safeInterceptionValues(item.stageDurations[1], 0, 0)) * 1000,
+      epochStartTime + Number(safeInterceptionValues(item.stageDurations[0], 0, 0)) * 1000,
     subscribeEndTime:
-      epochStartTime + Number(safeInterceptionValues(item.stageDurations[2], 0, 0)) * 1000,
+      epochStartTime + Number(safeInterceptionValues(item.stageDurations[1], 0, 0)) * 1000,
     preSettleEndTime:
-      epochStartTime + Number(safeInterceptionValues(item.stageDurations[3] ?? 0, 0, 0)) * 1000,
+      epochStartTime + Number(safeInterceptionValues(item.stageDurations[2] ?? 0, 0, 0)) * 1000,
     settleEndTime:
       epochStartTime +
-      Number(safeInterceptionValues(item.stageDurations[3], 0, 0)) * 1000 +
+      Number(safeInterceptionValues(item.stageDurations[2], 0, 0)) * 1000 +
       10 * 60 * 1000,
 
     beginningAUM,
+    totalShares,
     beginningSharePrice,
-    aum: Number(safeInterceptionValues(item.aum, decimals, decimals)),
+    aum,
     epochStartBlock: item.epochStartBlock,
 
     cashBalance: Number(safeInterceptionValues(item.cashBalance, decimals, decimals)),
@@ -155,7 +158,10 @@ export const calcVaultDetail = (
     pendingUnstake: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
     unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
 
+    // 净收益
     roe: BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber(),
+    // 毛收益
+    grossRoe: BN(aum).minus(beginningAUM).div(beginningAUM).toNumber(),
     // roe: BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber(),
     historicalReturn: Number(safeInterceptionValues(item.historicalReturn, decimals, decimals)),
 
