@@ -161,7 +161,7 @@ export const calcVaultDetail = (
     // 净收益
     roe: BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber(),
     // 毛收益
-    grossRoe: BN(aum).minus(beginningAUM).div(beginningAUM).toNumber(),
+    grossRoe: beginningAUM === 0 ? 0 : BN(aum).minus(beginningAUM).div(beginningAUM).toNumber(),
     // roe: BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber(),
     historicalReturn: Number(safeInterceptionValues(item.historicalReturn, decimals, decimals)),
 

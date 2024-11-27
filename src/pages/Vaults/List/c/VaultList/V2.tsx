@@ -86,7 +86,7 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
         <VaultName name={'AllDeFi Vault'} managerName={'Kevin'} status={list[0]?.status ?? 0} />
         <span>{formatNumber(aum, 2, '$0,0.00')}</span>
         <FlexBox center gap={5}>
-          <RoeShow value={11} />
+          <RoeShow value={list[0].grossRoe} />
         </FlexBox>
         <span>{list[0].epochIndex}</span>
         <FlexBox center gap={5}>
