@@ -27,21 +27,11 @@ interface Props {
   active: boolean
   isInit: boolean
   fund: VaultUserListDataProps
-  beginningValue: number
-  currentValue: number
   onChange: () => void
   callback: () => void
 }
 
-const VaultItem: FC<Props> = ({
-  active,
-  isInit,
-  onChange,
-  fund,
-  callback,
-  beginningValue,
-  currentValue
-}) => {
+const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
   // const { getTokenByAddress } = useToken()
   const { account } = useProfile()
   const { onCancelStake: onCancelAllocate } = useCancelStake(fund.detail.address)
@@ -259,7 +249,7 @@ const VaultItem: FC<Props> = ({
                     value={formatNumber(
                       BN(fund.detail.beginningAUM)
                         .times(fund.underlyingPrice)
-                        .div(beginningValue)
+                        .div(fund.beginningAUMinUSD)
                         .times(100)
                         .toNumber(),
                       2,
@@ -273,7 +263,7 @@ const VaultItem: FC<Props> = ({
                     value={formatNumber(
                       BN(fund.detail.beginningAUM)
                         .times(fund.underlyingPrice)
-                        .div(currentValue)
+                        .div(fund.currentAUMinUSD)
                         .times(100)
                         .toNumber(),
                       2,

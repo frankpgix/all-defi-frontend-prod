@@ -146,6 +146,8 @@ export interface VaultUserListDataProps {
   userDetail: VaultUserDetailProps
   underlyingPrice: number
   underlyingbeginningPrice: number
+  beginningAUMinUSD: number
+  currentAUMinUSD: number
 }
 
 export interface ShareCompositionProps {

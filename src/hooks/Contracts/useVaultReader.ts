@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import BN from 'bignumber.js'
 import { isNaN, sum } from 'lodash'
 // import { base } from 'viem/chains'
@@ -192,6 +194,29 @@ export const useUserVaultList = () => {
   } = useAssetLatestPrices([...underlyingTokens, chainToken], vaultList[0]?.epochStartBlock)
   // console.log('baseList', underlyingTokens, price, priceSuccess, priceLoading)
   // console.log(beginningPrice)
+
+  const beginningAUMinUSD = useMemo(
+    () =>
+      BN.sum(
+        ...vaultList.map((item) =>
+          BN(item.beginningAUM)
+            .times(beginningPrice[item.underlyingToken.address] ?? 1)
+            .toNumber()
+        )
+      ).toNumber(),
+    [vaultList]
+  )
+  const currentAUMinUSD = useMemo(
+    () =>
+      BN.sum(
+        ...vaultList.map((item) =>
+          BN(item.beginningAUM)
+            .times(price[item.underlyingToken.address] ?? 1)
+            .toNumber()
+        )
+      ).toNumber(),
+    [vaultList]
+  )
   const {
     data: sData,
     isSuccess,
@@ -229,10 +254,18 @@ export const useUserVaultList = () => {
       const detail = vaultLists.find((vault) => vault.address === item.vaultAddress)
       // console.log(fund, detail)
       const underlyingPrice = price[base.underlying.address] ?? 1
-      const underlyingbeginningPrice = beginningPrice[base.underlying.address] ?? 1
+      const underlyingBeginningPrice = beginningPrice[base.underlying.address] ?? 1
       const userDetail = calcVaultUserDetail(item, getTokenByAddress, underlyingPrice)
       // console.log(base, detail, userDetail)
-      return { base, detail, userDetail, underlyingPrice, underlyingbeginningPrice }
+      return {
+        base,
+        detail,
+        userDetail,
+        underlyingPrice,
+        underlyingBeginningPrice,
+        beginningAUMinUSD,
+        currentAUMinUSD
+      }
     })
 
     return { data, isSuccess, isLoading, refetch }
