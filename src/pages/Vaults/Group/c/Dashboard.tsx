@@ -2,6 +2,7 @@ import { FC, ReactNode, useMemo, useState } from 'react'
 // import { floor } from 'lodash'
 import ContentLoader from 'react-content-loader'
 
+import BN from 'bignumber.js'
 import dayjs from 'dayjs'
 
 import { useAssetLatestPrices } from '@/hooks/Contracts/usePriceAggregator'
@@ -69,6 +70,17 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
       }, 0) || 0,
     [price, underlyingToken.address]
   )
+  const totalRoe = useMemo(() => {
+    const totalProfit = list
+      .map((item) =>
+        BN(item.beginningAUM)
+          .times(item.grossRoe)
+          .times(price[item.underlyingToken.address] ?? 1)
+          .toNumber()
+      )
+      .reduce((acc, cur) => BN(acc).plus(cur).toNumber(), 0)
+    return BN(totalProfit).div(totalAum).times(100).toNumber()
+  }, [list, price])
   // console.log(data.historicalReturn, historicalReturn, 'data.historicalReturn')
   return (
     <>
@@ -109,24 +121,12 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
             <DashboardItem label="Vault Inception Date" loading={loading}>
               {dayjs(data.createTime).format('MMM DD, YYYY')}
             </DashboardItem>
-            {/* <DashboardItem label="Capacity Available" loading={loading}>
-              <TokenValue
-                value={Math.max(
-                  BN(data.aum).minus(data.beginningAUM).minus(data.stakingACToken).toNumber(),
-                  0
-                )}
-                token={underlyingToken}
-                size="mini"
-                format="0,0.00"
-              />
-            </DashboardItem> */}
             <DashboardItem
               label="Current Epoch return %"
               popper="The vault's profit and loss on real-time basis, which will be reset to zero after the end of each epoch"
               loading={loading}
             >
-              {/* demo */}
-              <RoeShow value={data.grossRoe} subArrow />
+              <RoeShow value={totalRoe} subArrow />
             </DashboardItem>
             <DashboardItem
               label="Historical return"

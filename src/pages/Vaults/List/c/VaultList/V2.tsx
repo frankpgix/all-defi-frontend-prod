@@ -1,5 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
+import BN from 'bignumber.js'
 import classNames from 'classnames'
 
 import { useAssetLatestPrices } from '@/hooks/Contracts/usePriceAggregator'
@@ -71,12 +72,23 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
   const assetTokenList = useMemo(() => list.map((item) => item.underlyingToken), [list])
   // const { data: price } = useAssetLatestPrices(assetTokenList, list[0]?.epochStartBlock)
   const { data: price } = useAssetLatestPrices(assetTokenList)
-  const aum = useMemo(() => {
+  const totalAum = useMemo(() => {
     return list
       .map((item) => item.aum * (price[item.underlyingToken.address] ?? 1))
       .reduce((acc, cur) => acc + cur, 0)
   }, [list, price])
-  // console.log(price, isLoading, isSuccess)
+
+  const totalRoe = useMemo(() => {
+    const totalProfit = list
+      .map((item) =>
+        BN(item.beginningAUM)
+          .times(item.grossRoe)
+          .times(price[item.underlyingToken.address] ?? 1)
+          .toNumber()
+      )
+      .reduce((acc, cur) => BN(acc).plus(cur).toNumber(), 0)
+    return BN(totalProfit).div(totalAum).times(100).toNumber()
+  }, [list, price])
   // 单个子基金, 有自己的 begninAUM * roe = 利润 * 当前资产价格 = usd 利润
   // 所有子基金, usd 利润 求和 = 总利润
   // 总利润 / 总aum = 总收益率
@@ -85,9 +97,9 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
     <dl>
       <dt>
         <VaultName name={'AllDeFi Vault'} managerName={'Kevin'} status={list[0]?.status ?? 0} />
-        <strong>{formatNumber(aum, 2, '$0,0.00')}</strong>
+        <strong>{formatNumber(totalAum, 2, '$0,0.00')}</strong>
         <FlexBox center gap={5}>
-          <RoeShow value={list[0].grossRoe} />
+          <RoeShow value={totalRoe} />
         </FlexBox>
         <span>{list[0].epochIndex}</span>
         <FlexBox center gap={5}>
