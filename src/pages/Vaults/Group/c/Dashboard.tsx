@@ -2,7 +2,6 @@ import { FC, ReactNode, useMemo, useState } from 'react'
 // import { floor } from 'lodash'
 import ContentLoader from 'react-content-loader'
 
-import BN from 'bignumber.js'
 import dayjs from 'dayjs'
 
 import { useAssetLatestPrices } from '@/hooks/Contracts/usePriceAggregator'
@@ -11,8 +10,8 @@ import { useChainToken, useUnderlyingTokens } from '@/hooks/useToken'
 // import { FundBaseProps, FundDetailProps } from '@/class/help'
 import { VaultDetailProps } from '@/types/vault'
 
-import { calcVaultDetailChartGQL } from '@/graphql/calcGql'
-import { useVaultDetailChartData } from '@/graphql/useData'
+import { calcVaultGroupChartGQL } from '@/graphql/calcGql'
+import { useVaultGroupChartData } from '@/graphql/useData'
 // import Loading from '@@/common/Loading'
 import { AreaChart } from '@@/common/Chart'
 import TimeSelect from '@@/common/Chart/TimeSelect'
@@ -32,11 +31,7 @@ type optionProps = 'current epoch' | '3 Epochs' | 'all'
 const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
   const { chainToken } = useChainToken()
   const assetTokenList = useUnderlyingTokens()
-  const {
-    data: price,
-    isLoading,
-    isSuccess
-  } = useAssetLatestPrices([...assetTokenList, chainToken])
+  const { data: price } = useAssetLatestPrices([...assetTokenList, chainToken])
 
   const data = list[0]
   const [timeType, setTimeType] = useState<optionProps>('all')
@@ -44,13 +39,19 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
   const underlyingToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
   // console.log(timeType, 'timeType')
   const chartType = 'aum'
-
   const gql = useMemo(
-    () => calcVaultDetailChartGQL(fundAddress, data.epochIndex, timeType),
+    () =>
+      calcVaultGroupChartGQL(
+        list.map((item) => item.address.toLocaleLowerCase()),
+        data.epochIndex,
+        timeType
+      ),
     [fundAddress, data.epochIndex, timeType]
   )
+
+  const { loading: chartLoading, data: chartData } = useVaultGroupChartData(gql)
   // console.log(JSON.stringify(gql), 'gql')
-  const { loading: chartLoading, data: chartData } = useVaultDetailChartData(gql, underlyingToken)
+  // const { loading: chartLoading, data: chartData } = useVaultGroupChartData(gql, underlyingToken)
   // console.log(data.roe, 'data.data.roe')
 
   const totalAum = useMemo(
@@ -174,11 +175,10 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
               data={chartData}
               loading={chartLoading || loading}
               xKey="time"
-              yKey={chartType === 'aum' ? 'aum' : 'value'}
+              yKey="value"
               chartId="defi"
-              valueFormatStr={`0,0.0000`}
+              valueFormatStr={`$0,0.00`}
               valueDecimal={4}
-              valueSuffix={underlyingToken.name}
               yLabel={chartType === 'aum' ? 'AUM' : 'Price'}
             />
           </section>

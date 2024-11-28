@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import BN from 'bignumber.js'
 import dayjs from 'dayjs'
-import { last, uniq } from 'lodash'
+import { last, sortBy, uniq } from 'lodash'
 
 import { useLazyQuery, useQuery } from '@apollo/client'
 
@@ -95,6 +95,56 @@ export const useVaultDetailChartData = (gql: any, underlying: TokenTypes) => {
     }))
     .reverse()
 
+  return { loading, error, data }
+}
+export const useVaultGroupChartData = (gql: any) => {
+  const { getTokenByAddress } = useToken()
+  const {
+    loading,
+    error,
+    data: sData
+  } = useQuery(gql) as {
+    loading: boolean
+    error: any
+    data: {
+      vaultIntervalDatas: {
+        aum: string
+        intervalType: string
+        periodStartUnix: 1732773600
+        underlying: `0x${string}`
+        underlyingPriceInUSD: string
+      }[]
+    }
+  }
+  console.log(sData, 'sData')
+  const list = sData?.vaultIntervalDatas ?? []
+  const times = sortBy(uniq(list.map((item) => item.periodStartUnix)))
+  const data = times.map((time) => {
+    const o: any = {
+      time: time * 1000,
+      value: 0
+    }
+    const ss = list.filter((item) => item.periodStartUnix === time)
+    ss.forEach((item) => {
+      const { decimals } = getTokenByAddress(item.underlying)
+      o.value = BN(safeInterceptionValues(String(item.aum), decimals, 18))
+        .times(safeInterceptionValues(item.underlyingPriceInUSD, 18, 18))
+        .plus(o.value)
+        .toNumber()
+    })
+    return o
+    // {time: time * 1000, value: Number(safeInterceptionValues())}
+  })
+  console.log(times, data, 'data')
+  // const data = (sData?.vaultIntervalDatas ?? [])
+  //   .map((item: any) => ({
+  //     time: item.periodStartUnix * 1000,
+  //     value: Number(safeInterceptionValues(String(item.sharePrice), 6, 18)),
+  //     aum: Number(
+  //       safeInterceptionValues(String(item.aum), underlying.precision, underlying.decimals)
+  //     )
+  //   }))
+  //   .reverse()
   return { loading, error, data }
 }
 

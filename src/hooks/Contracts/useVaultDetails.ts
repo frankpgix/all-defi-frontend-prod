@@ -164,7 +164,7 @@ export const useVaultDetails = (vaultAddress: AddressType, account: AddressType)
     //   vaultUserDetail,
     //   'baseInfo, vaultDetail, vaultUserDetail'
     // )
-    console.log(111111, data, 'baseInfo, vaultDetail, vaultUserDetail')
+    // console.log(111111, data, 'baseInfo, vaultDetail, vaultUserDetail')
     return {
       data: { baseInfo, vaultDetail, vaultUserDetail },
       isLoading: isLoading || isRefetching,

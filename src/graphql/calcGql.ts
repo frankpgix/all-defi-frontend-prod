@@ -89,6 +89,41 @@ export const calcVaultDetailChartGQL = (vaultAddress: string, epoch: number, tim
     }
   `
 }
+export const calcVaultGroupChartGQL = (vaultAddress: string[], epoch: number, timeType: string) => {
+  let dataType = '1h'
+  const calcEpochs = (): number[] => {
+    if (timeType === 'current epoch') return [epoch]
+    if (timeType === '3 Epochs') {
+      dataType = '1h'
+      return Array.from(new Set([Math.max(epoch - 2, 0), Math.max(epoch - 1, 0), epoch]))
+    }
+    dataType = '6h'
+    return createArrayByNumber(epoch)
+  }
+
+  const epochs = calcEpochs()
+
+  return gql`
+    query {
+      vaultIntervalDatas(
+        orderBy: periodStartUnix
+        orderDirection: desc
+        first: 1000
+        where: {
+          vaultAddress_in: ${JSON.stringify(vaultAddress)}
+          intervalType: "${dataType}"
+          epochIndex_in: ${JSON.stringify(epochs)}
+        }
+      ) {
+        intervalType
+        periodStartUnix
+        aum
+        underlying
+        underlyingPriceInUSD
+      }
+    }
+  `
+}
 
 export const calcVaultListGQL = () => gql`
   query {
