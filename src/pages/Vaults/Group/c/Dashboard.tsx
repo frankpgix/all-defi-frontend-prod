@@ -5,6 +5,9 @@ import ContentLoader from 'react-content-loader'
 import BN from 'bignumber.js'
 import dayjs from 'dayjs'
 
+import { useAssetLatestPrices } from '@/hooks/Contracts/usePriceAggregator'
+import { useChainToken, useUnderlyingTokens } from '@/hooks/useToken'
+
 // import { FundBaseProps, FundDetailProps } from '@/class/help'
 import { VaultDetailProps } from '@/types/vault'
 
@@ -20,13 +23,22 @@ import RoeShow from '@@/common/RoeShow'
 import TokenValue from '@@/common/TokenValue'
 
 interface Props {
-  data: VaultDetailProps
+  data: VaultDetailProps[]
   loading: boolean
   fundAddress: string
 }
 
 type optionProps = 'current epoch' | '3 Epochs' | 'all'
-const Dashboard: FC<Props> = ({ data, loading, fundAddress }) => {
+const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
+  const { chainToken } = useChainToken()
+  const assetTokenList = useUnderlyingTokens()
+  const {
+    data: price,
+    isLoading,
+    isSuccess
+  } = useAssetLatestPrices([...assetTokenList, chainToken])
+
+  const data = list[0]
   const [timeType, setTimeType] = useState<optionProps>('all')
   const timeOptions: optionProps[] = ['current epoch', '3 Epochs', 'all']
   const underlyingToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
@@ -40,16 +52,23 @@ const Dashboard: FC<Props> = ({ data, loading, fundAddress }) => {
   // console.log(JSON.stringify(gql), 'gql')
   const { loading: chartLoading, data: chartData } = useVaultDetailChartData(gql, underlyingToken)
   // console.log(data.roe, 'data.data.roe')
-  const currentEpochReturn = useMemo(
-    () => (data.roe > 0 ? BN(data.roe).times(10).div(7).toNumber() : data.roe) * 100,
-    [data.roe]
+
+  const totalAum = useMemo(
+    () =>
+      list?.reduce((acc, item) => {
+        return acc + price[item.underlyingToken.address] * item.aum
+      }, 0) || 0,
+    [price, underlyingToken.address]
   )
-  // data.historicalReturn + data.platFee + data.managerFee
-  // console.log(currentEpochReturn, data.roe)
-  const historicalReturn = useMemo(
-    () => BN(data.historicalReturn).toNumber(),
-    [data.historicalReturn]
+
+  const totalHistoricalReturn = useMemo(
+    () =>
+      list?.reduce((acc, item) => {
+        return acc + price[item.underlyingToken.address] * item.historicalReturn
+      }, 0) || 0,
+    [price, underlyingToken.address]
   )
+  // console.log(data.historicalReturn, historicalReturn, 'data.historicalReturn')
   return (
     <>
       <header className="web-fund-detail-header">Vault Overview</header>
@@ -81,32 +100,10 @@ const Dashboard: FC<Props> = ({ data, loading, fundAddress }) => {
               <Image src={`/products/BRINGTRADE.svg`} alt={'BRINGTRADE'} />
             </main>
           </section>
-          {/* <section>
-            <h5>Protocols Allowed</h5>
-            {loading ? (
-              <ContentLoader
-                width={530}
-                height={56}
-                viewBox="0 0 530 56"
-                backgroundColor="#eaeced"
-                foregroundColor="#ffffff"
-              >
-                <rect x="0" y="0" rx="8" ry="8" width="56" height="56" />
-                <rect x="66" y="0" rx="8" ry="8" width="56" height="56" />
-                <rect x="132" y="0" rx="8" ry="8" width="56" height="56" />
-                <rect x="198" y="0" rx="8" ry="8" width="56" height="56" />
-              </ContentLoader>
-            ) : (
-              <main>
-                {base.derivativesInfo.map(({ name }, index: number) => (
-                  <Image key={index} src={`/products/${name}.png`} alt={name} />
-                ))}
-              </main>
-            )}
-          </section> */}
+
           <footer>
             <DashboardItem label="AUM" loading={loading}>
-              <TokenValue value={data.aum} token={underlyingToken} size="mini" format="0,0.00" />
+              <TokenValue value={totalAum} size="mini" format="$0,0.00" noUnit />
             </DashboardItem>
             <DashboardItem label="Vault Inception Date" loading={loading}>
               {dayjs(data.createTime).format('MMM DD, YYYY')}
@@ -128,7 +125,7 @@ const Dashboard: FC<Props> = ({ data, loading, fundAddress }) => {
               loading={loading}
             >
               {/* demo */}
-              <RoeShow value={currentEpochReturn} subArrow />
+              <RoeShow value={data.grossRoe} subArrow />
             </DashboardItem>
             <DashboardItem
               label="Historical return"
@@ -136,12 +133,7 @@ const Dashboard: FC<Props> = ({ data, loading, fundAddress }) => {
               loading={loading}
             >
               {/* demo */}
-              <TokenValue
-                value={historicalReturn}
-                format="0,0.00"
-                token={underlyingToken}
-                size="mini"
-              />
+              <TokenValue value={totalHistoricalReturn} format="$0,0.00" noUnit size="mini" />
             </DashboardItem>
 
             {/* <DashboardItem label="Denomination Asset" loading={loading}>

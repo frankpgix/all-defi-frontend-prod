@@ -36,11 +36,11 @@ const TokenValue: FC<Props> = ({
   )
   const valueShow = useMemo(() => {
     if (formatString) {
-      return formatNumber(value, precisionNumber, formatString)
+      const t = formatNumber(value, precisionNumber, formatString)
+      return t === 'NAN' ? '0' : t
     }
     return value
   }, [value, precisionNumber, formatString])
-  // console.log(value, formatString)
 
   return (
     <span className="c-token-value" title={`${valueShow} ${name}`}>

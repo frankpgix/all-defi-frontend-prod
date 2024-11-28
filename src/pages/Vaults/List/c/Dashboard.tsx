@@ -28,7 +28,6 @@ const Dashboard: FC = () => {
   const AUM = useMemo(() => {
     return (
       data?.reduce((acc, item) => {
-        console.log(price[item.underlyingToken.address], item.aum)
         return acc + price[item.underlyingToken.address] * item.aum
       }, 0) || 0
     )

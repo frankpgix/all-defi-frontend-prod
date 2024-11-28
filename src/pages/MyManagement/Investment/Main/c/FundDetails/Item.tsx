@@ -135,7 +135,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                 <h5>protocol allowed</h5>
                 <main>
                   <p>
-                    <Image src={`/symbol/bnb.svg`} alt={'BNB'} />
+                    <Image src={`/products/BRINGTRADE.svg`} alt={'BRINGTRADE'} />
                   </p>
                   {/* {fund.derivativesInfo.map((item, index) => (
                     <p key={index} title={item?.name}>
@@ -247,7 +247,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   {/* (beginningAUM * underlyingPrice) / sum(beginningAUM * underlyingPrice)  start price */}
                   <RoeShow
                     value={formatNumber(
-                      BN(fund.detail.beginningAUM)
+                      BN(fund.userDetail.aum)
                         .times(fund.underlyingPrice)
                         .div(fund.beginningAUMinUSD)
                         .times(100)
@@ -261,7 +261,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   {/* (beginningAUM * underlyingPrice) / sum(beginningAUM * underlyingPrice) curr price */}
                   <RoeShow
                     value={formatNumber(
-                      BN(fund.detail.beginningAUM)
+                      BN(fund.userDetail.aum)
                         .times(fund.underlyingPrice)
                         .div(fund.currentAUMinUSD)
                         .times(100)
