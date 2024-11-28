@@ -12,6 +12,7 @@ import StakeButton from '@@/Vaults/StakeButton'
 import Button from '@@/common/Button'
 import Image from '@@/common/Image'
 import RoeShow from '@@/common/RoeShow'
+import TokenValue from '@@/common/TokenValue'
 import { FlexBox } from '@@/core/Box'
 import Tag from '@@/core/Tag'
 import { VaultName } from '@@/core/VaultName'
@@ -38,7 +39,7 @@ const VaultList: FC = () => {
         <header className="table-header">
           <strong>Name</strong>
           <strong>Asset Under Management</strong>
-          <strong>APY</strong>
+          <strong>Current Epoch return %</strong>
           <strong>Epoch</strong>
           <strong>Active</strong>
         </header>
@@ -84,7 +85,7 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
     <dl>
       <dt>
         <VaultName name={'AllDeFi Vault'} managerName={'Kevin'} status={list[0]?.status ?? 0} />
-        <span>{formatNumber(aum, 2, '$0,0.00')}</span>
+        <strong>{formatNumber(aum, 2, '$0,0.00')}</strong>
         <FlexBox center gap={5}>
           <RoeShow value={list[0].grossRoe} />
         </FlexBox>
@@ -109,9 +110,12 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
               name={item.underlyingToken.name}
               size="mini"
             />
-            <span>
-              {formatNumber(item.aum * (price[item.underlyingToken.address] ?? 1), 2, '$0,0.00')}
-            </span>
+            <FlexBox center gap={5} className="vault-item-aum">
+              <TokenValue value={item.aum} token={item.underlyingToken} size="mini" />
+              <small>
+                {formatNumber(item.aum * (price[item.underlyingToken.address] ?? 1), 2, '$0,0.00')}
+              </small>
+            </FlexBox>
             <FlexBox center gap={5}>
               <Tag name="Bring +++" />
             </FlexBox>

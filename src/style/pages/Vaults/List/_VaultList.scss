@@ -76,6 +76,14 @@
             gap: 20px;
             grid-template-columns: 330px auto 240px 100px 150px;
             align-items: center;
+
+            &-aum {
+              font-weight: bold;
+              small {
+                font-weight: normal;
+                color: #999;
+              }
+            }
           }
 
           &.show {

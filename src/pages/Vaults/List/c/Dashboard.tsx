@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react'
 import { useAssetLatestPrices } from '@/hooks/Contracts/usePriceAggregator'
 // import { useGlobalAssetStats } from '@/hooks/Contracts/useAUMStats'
 import { useVaultList } from '@/hooks/Contracts/useVaultReader'
-import { useUnderlyingTokens } from '@/hooks/useToken'
+import { useChainToken, useUnderlyingTokens } from '@/hooks/useToken'
 
 // import { useRequest } from 'ahooks'
 // import { formatNumber } from '@/utils/tools'
@@ -14,24 +14,26 @@ import { CountItem, CountLayout } from '@@/core/Sestion'
 const Dashboard: FC = () => {
   // const { assetsPrice, update } = useAssetsPriceStore((i) => ({ ...i }))
   const { data, isLoading } = useVaultList()
-
+  // console.log(data)
   // const AUM = data?.reduce((acc, item) => acc + item.aum, 0) || 0
   // const GP = data?.reduce((acc, item) => acc + item.historicalReturn, 0) || 0
+  const { chainToken } = useChainToken()
   const underlyingTokens = useUnderlyingTokens()
   const {
     data: price,
     isSuccess: priceSuccess,
     isLoading: priceLoading
-  } = useAssetLatestPrices(underlyingTokens)
+  } = useAssetLatestPrices([...underlyingTokens, chainToken])
 
   const AUM = useMemo(() => {
     return (
       data?.reduce((acc, item) => {
+        console.log(price[item.underlyingToken.address], item.aum)
         return acc + price[item.underlyingToken.address] * item.aum
       }, 0) || 0
     )
   }, [data, price, priceSuccess, priceLoading])
-
+  // console.log(price, AUM, 'AUM')
   const GP = useMemo(() => {
     return (
       data?.reduce((acc, item) => {
@@ -64,7 +66,7 @@ const Dashboard: FC = () => {
           <CountItem
             label="Number of vaults"
             popper="Total value of AC DAO, update after settlement"
-            countUp={{ value: data.length, prefix: '', decimals: 0 }}
+            countUp={{ value: 1, prefix: '', decimals: 0 }}
             loading={isLoading}
           />
         </CountLayout>
