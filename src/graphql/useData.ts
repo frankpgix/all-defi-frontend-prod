@@ -127,7 +127,7 @@ export const useVaultGroupChartData = (gql: any) => {
     const ss = list.filter((item) => item.periodStartUnix === time)
     ss.forEach((item) => {
       const { decimals } = getTokenByAddress(item.underlying)
-      o.value = BN(safeInterceptionValues(String(item.aum), decimals, 18))
+      o.value = BN(safeInterceptionValues(String(item.aum), decimals, decimals))
         .times(safeInterceptionValues(item.underlyingPriceInUSD, 18, 18))
         .plus(o.value)
         .toNumber()
