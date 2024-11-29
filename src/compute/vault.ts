@@ -112,7 +112,9 @@ export const calcVaultDetail = (
   const { hash } = calcVaultHash(item.vaultAddress ?? '0x')
   const sharePrice = Number(safeInterceptionValues(item.sharePrice, 18, 18))
   const totalShares = Number(safeInterceptionValues(item.totalShares, 18, 18))
-  const custodianBalance = Number(safeInterceptionValues(item.custodianBalance ?? 0, 18, 18))
+  const custodianBalance = Number(
+    safeInterceptionValues(item.custodianBalance ?? 0, decimals, decimals)
+  )
   const beginningAUM = Number(safeInterceptionValues(item.beginningAUM, decimals, decimals))
   const beginningSharePrice = beginningAUM === 0 ? 1 : BN(totalShares).div(beginningAUM).toNumber()
   const aum = Number(safeInterceptionValues(item.aum, decimals, decimals))
@@ -210,17 +212,6 @@ export const calcVaultUserDetail = (
   // const nav = BN(shares).times(sharePrice).plus(pendingStake).plus(unclaimedUnderlying).toNumber()
   // const
 
-  const beginningSharePrice = Number(safeInterceptionValues(item.beginningSharePrice, 18, 18))
-
-  const roe =
-    beginningSharePrice === 0
-      ? 0
-      : BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber()
-
-  // const underlyingTokenPriceInUSD = 1
-  const beginSharePrice = BN(safeInterceptionValues(item.sharePrice, 18, 18))
-    .div(BN(roe).plus(1))
-    .toNumber()
   const { hash } = calcVaultHash(item.vaultAddress ?? '0x')
 
   return {
@@ -228,8 +219,6 @@ export const calcVaultUserDetail = (
     hash,
     underlying,
     status: Number(safeInterceptionValues(item.stage, 0, 0)),
-    aum: Number(BN(beginSharePrice).times(safeInterceptionValues(item.shares, 18, 18))),
-    beginSharePrice,
     nav,
     navInUSD: BN(nav).times(underlyingTokenPriceInUSD).toNumber(),
     underlyingTokenPriceInUSD,
@@ -240,8 +229,7 @@ export const calcVaultUserDetail = (
     // stakingACToken: Number(safeInterceptionValues(item.stakingACToken, precision, decimals)),
     unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
     // unclaimedACToken: Number(safeInterceptionValues(item.unclaimedACToken, precision, decimals)),
-    historicalReturn: Number(safeInterceptionValues(item.historicalReturn, decimals, decimals)),
-    roe
+    historicalReturn: Number(safeInterceptionValues(item.historicalReturn, decimals, decimals))
   }
 }
 

@@ -46,7 +46,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
     // () => BN(fund.data.roe).times(fund.data.aum).div(100).toNumber(),
     // () => BN(fund.data.roe).times(fund.data.aum).div(100).toNumber(),
     () =>
-      BN(fund.userDetail.roe)
+      BN(fund.detail.roe)
         .times(fund.detail.beginningSharePrice)
         .times(fund.userDetail.shares)
         // .div(100)
@@ -213,7 +213,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
               </SectionItem> */}
               <section>
                 <SectionItem label="Current Epoch return %">
-                  <RoeShow value={formatNumber(fund.userDetail.roe * 100, 2, '0.00')} subArrow />
+                  <RoeShow value={formatNumber(fund.detail.roe * 100, 2, '0.00')} subArrow />
                 </SectionItem>
                 <SectionItem label="Current Epoch return">
                   <TokenValue

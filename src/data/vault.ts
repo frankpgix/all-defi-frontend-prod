@@ -107,6 +107,9 @@ export const VaultDetailDefault: VaultDetailProps = {
   cashBalance: 0,
 
   sharePrice: 0,
+  totalShares: 0,
+  beginningSharePrice: 0,
+  grossRoe: 0,
   epochStartBlock: 0n,
   unstakingShare: 0,
 
@@ -146,7 +149,6 @@ export const VaultUserDetailDefault: VaultUserDetailProps = {
   underlying: UNKNOWN as any,
   status: 1,
   shares: 0,
-  aum: 0,
   sharePrice: 0,
   pendingStake: 0,
   unstakingShare: 0,
@@ -154,9 +156,7 @@ export const VaultUserDetailDefault: VaultUserDetailProps = {
   nav: 0,
   navInUSD: 0,
   underlyingTokenPriceInUSD: 0,
-  historicalReturn: 0,
-  roe: 0,
-  beginSharePrice: 0
+  historicalReturn: 0
 }
 
 export const ShareCompositionDefault: ShareCompositionProps = {

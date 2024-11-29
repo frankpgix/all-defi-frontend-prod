@@ -120,7 +120,6 @@ export interface VaultUserDetailProps {
   underlying: UnderlyingTokenTypes
   underlyingTokenPriceInUSD: number
   status: number
-  aum: number
   nav: number
   navInUSD: number
   shares: number
@@ -129,8 +128,6 @@ export interface VaultUserDetailProps {
   unstakingShare: number
   unclaimedUnderlying: number
   historicalReturn: number
-  roe: number
-  beginSharePrice: number
 }
 
 export interface VaultProps extends VaultBaseInfoProps {
