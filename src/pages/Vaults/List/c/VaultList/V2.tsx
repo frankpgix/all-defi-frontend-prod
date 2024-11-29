@@ -97,7 +97,7 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
   return (
     <dl>
       <dt>
-        <VaultName name={'AllDeFi Vault'} managerName={'Kevin'} status={list[0]?.status ?? 0} />
+        <VaultName name={'Core Crypto Index'} managerName={'James'} status={list[0]?.status ?? 0} />
         <strong>{formatNumber(totalAum, 2, '$0,0.00')}</strong>
         <FlexBox center gap={5}>
           <RoeShow value={totalRoe} />

@@ -103,9 +103,14 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
             </ContentLoader>
           ) : (
             <article>
-              <FundIcon name="AllDeFi Vault" size="large" />
-              <h4>AllDeFi Vault</h4>
-              <p>AllDeFi Vault, Let's Be Rich</p>
+              <FundIcon name="Core Crypto Index" size="large" />
+              <h4>Core Crypto Index</h4>
+              <p>
+                This vault will use a very safe capital preservation strategy to bring benefits to
+                users, mainly based on the BTC price to sell high and buy low strategy,welcome to
+                experience the experience.If you have any questions, please feel free to contact the
+                CCI team. Our email: cciteam@gmail.com Our Telegram: cciteam@tel
+              </p>
             </article>
           )}
           <section>
