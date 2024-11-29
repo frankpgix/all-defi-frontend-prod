@@ -77,8 +77,8 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
       .map((item) => item.aum * (price[item.underlyingToken.address] ?? 1))
       .reduce((acc, cur) => acc + cur, 0)
   }, [list, price])
-
   const totalRoe = useMemo(() => {
+    if (totalAum === 0) return 0
     const totalProfit = list
       .map((item) =>
         BN(item.beginningAUM)
@@ -88,7 +88,7 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
       )
       .reduce((acc, cur) => BN(acc).plus(cur).toNumber(), 0)
     return BN(totalProfit).div(totalAum).times(100).toNumber()
-  }, [list, price])
+  }, [list, price, totalAum])
   // 单个子基金, 有自己的 begninAUM * roe = 利润 * 当前资产价格 = usd 利润
   // 所有子基金, usd 利润 求和 = 总利润
   // 总利润 / 总aum = 总收益率
@@ -117,11 +117,7 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
       <dd className={classNames({ show })}>
         {list.map((item) => (
           <div className="vault-item" key={item.address}>
-            <VaultName
-              icon={item.underlyingToken.icon}
-              name={item.underlyingToken.name}
-              size="mini"
-            />
+            <VaultName icon={item.underlyingToken.icon} name={item.name} size="mini" />
             <FlexBox center gap={5} className="vault-item-aum">
               <TokenValue value={item.aum} token={item.underlyingToken} size="mini" />
               <small>

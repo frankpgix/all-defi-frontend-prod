@@ -82,9 +82,13 @@ export const useVaultBaseList = () => {
   // console.log(11122, data, isSuccess, isLoading)
   if (!isLoading && isSuccess && !loading && success) {
     // console.log(data, 1234, isSuccess, isLoading)
-    const res = data.map((item, index) =>
-      calcVaultBaseInfo(item.result, getTokenByAddress, contracts[index].address)
-    )
+    const res = data
+      .map((item, index) =>
+        item.result
+          ? calcVaultBaseInfo(item.result, getTokenByAddress, contracts[index].address)
+          : null
+      )
+      .filter((item) => item != null)
     // console.log(res)
     return { data: res, isLoading, isSuccess }
   }

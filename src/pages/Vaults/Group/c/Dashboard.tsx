@@ -71,6 +71,7 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
     [price, underlyingToken.address]
   )
   const totalRoe = useMemo(() => {
+    if (totalAum === 0) return 0
     const totalProfit = list
       .map((item) =>
         BN(item.beginningAUM)
@@ -80,7 +81,7 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
       )
       .reduce((acc, cur) => BN(acc).plus(cur).toNumber(), 0)
     return BN(totalProfit).div(totalAum).times(100).toNumber()
-  }, [list, price])
+  }, [list, price, totalAum])
   // console.log(data.historicalReturn, historicalReturn, 'data.historicalReturn')
   return (
     <>

@@ -106,7 +106,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
       >
         <div ref={ref} className="web-manage-investment-fund-item-position"></div>
         <header onClick={onChange}>
-          <h3>{fund.base.underlying.name}</h3>
+          <h3>{fund.base.name}</h3>
         </header>
 
         <div className="web-manage-investment-fund-item-detail">
@@ -123,11 +123,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
           <main>
             <div className="web-manage-investment-fund-item-base">
               <article>
-                <VaultIcon
-                  icon={fund.base.underlying.icon}
-                  name={fund.base.underlying.name}
-                  size="large"
-                />
+                <VaultIcon icon={fund.base.underlying.icon} name={fund.base.name} size="large" />
                 <h4>{fund.base.managerName}</h4>
                 <p>{fund.base.desc}</p>
               </article>
