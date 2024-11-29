@@ -48,7 +48,6 @@ export const useVaultDetail = (vaultAddress: AddressType) => {
     functionName: 'vaultDetail',
     args: [vaultAddress]
   })
-  console.log(data, 'useVaultDetail')
   if (!isLoading && isSuccess) {
     return { data: calcVaultDetail(data, getTokenByAddress), isLoading, isSuccess, refetch }
   }
@@ -78,17 +77,13 @@ export const useVaultBaseList = () => {
     functionName: 'baseInfo'
   }))
   // console.log(11122, contracts)
-  const { data, isSuccess, isLoading } = useReadContracts({ contracts })
-  // console.log(11122, data, isSuccess, isLoading)
+  const { data, isSuccess, isLoading, error } = useReadContracts({ contracts })
+  console.log(11122, isSuccess, address, data, error)
   if (!isLoading && isSuccess && !loading && success) {
     // console.log(data, 1234, isSuccess, isLoading)
-    const res = data
-      .map((item, index) =>
-        item.result
-          ? calcVaultBaseInfo(item.result, getTokenByAddress, contracts[index].address)
-          : null
-      )
-      .filter((item) => item != null)
+    const res = data.map((item, index) =>
+      calcVaultBaseInfo(item.result, getTokenByAddress, contracts[index].address)
+    )
     // console.log(res)
     return { data: res, isLoading, isSuccess }
   }
@@ -181,10 +176,11 @@ export const useUserVaultList = () => {
   const underlyingTokens = useUnderlyingTokens()
   const { chainToken } = useChainToken()
   const { data: baseList, isLoading: baseLoading, isSuccess: baseSuccess } = useVaultBaseList()
-  // console.log('baseList', baseList)
+  console.log('baseList', baseList)
   const { account } = useProfile()
   // const { vaultList } = useVaultListHook()
   const { data: vaultList, isLoading: isListLoading } = useVaultList()
+  console.log(vaultList, 'vaultList')
   const vaultLists = vaultList.filter((item) => item.status !== -1)
   const {
     data: price,
@@ -195,7 +191,10 @@ export const useUserVaultList = () => {
     data: beginningPrice,
     isSuccess: beginningPriceSuccess,
     isLoading: beginningPriceLoading
-  } = useAssetLatestPrices([...underlyingTokens, chainToken], vaultList[0]?.epochStartBlock)
+  } = useAssetLatestPrices(
+    [...underlyingTokens, chainToken],
+    vaultList && vaultList[0]?.epochIndex === 0 ? undefined : vaultList[0]?.epochStartBlock
+  )
   // console.log('baseList', underlyingTokens, price, priceSuccess, priceLoading)
   // console.log(beginningPrice)
 

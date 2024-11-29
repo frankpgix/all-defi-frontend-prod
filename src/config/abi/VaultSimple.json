@@ -21,14 +21,14 @@
             "type": "string"
           },
           {
-            "internalType": "address",
-            "name": "manager",
-            "type": "address"
-          },
-          {
             "internalType": "string",
             "name": "managerName",
             "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
           },
           {
             "internalType": "uint64",

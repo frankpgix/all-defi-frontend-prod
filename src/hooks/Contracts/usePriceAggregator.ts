@@ -23,6 +23,7 @@ export const useAssetLatestPrice = (assetAddress: AddressType | '', blockNumber?
 export const useAssetLatestPrices = (AssetTokens: UnderlyingTokenTypes[], blockNumber?: bigint) => {
   const PriceAggregatorContract = usePriceAggregatorContract()
   const assetAddress: AddressType[] = AssetTokens.map((asset) => asset.address)
+  console.log(111, 'assetAddress', assetAddress)
   const { isLoading, isSuccess, data, refetch, error } = useReadContract({
     ...PriceAggregatorContract,
     functionName: 'latestPrices',

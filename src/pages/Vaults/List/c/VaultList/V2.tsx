@@ -72,6 +72,7 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
   const assetTokenList = useMemo(() => list.map((item) => item.underlyingToken), [list])
   // const { data: price } = useAssetLatestPrices(assetTokenList, list[0]?.epochStartBlock)
   const { data: price } = useAssetLatestPrices(assetTokenList)
+  console.log(price, 'price')
   const totalAum = useMemo(() => {
     return list
       .map((item) => item.aum * (price[item.underlyingToken.address] ?? 1))
