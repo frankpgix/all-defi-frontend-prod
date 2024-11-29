@@ -5,7 +5,7 @@ import { isNaN, sum } from 'lodash'
 // import { base } from 'viem/chains'
 import { useReadContract, useReadContracts } from 'wagmi'
 
-import VaultABI from '@/config/abi/VaultSimple.json'
+import VaultBaseInfoABI from '@/config/abi/VaultBaseInfo'
 
 import { useVaultReaderContract } from '@/hooks/Contracts/useContract'
 import { useAssetLatestPrices } from '@/hooks/Contracts/usePriceAggregator'
@@ -40,6 +40,8 @@ import {
   VaultUserDetailDefault
 } from '@/data/vault'
 
+console.log('VaultReaderContract', VaultBaseInfoABI)
+
 export const useVaultDetail = (vaultAddress: AddressType) => {
   const VaultReaderContract = useVaultReaderContract()
   const { getTokenByAddress } = useToken()
@@ -73,7 +75,7 @@ export const useVaultBaseList = () => {
   const { getTokenByAddress } = useToken()
   const contracts = address.map((item) => ({
     address: item,
-    abi: VaultABI as any,
+    abi: VaultBaseInfoABI as any,
     functionName: 'baseInfo'
   }))
   // console.log(11122, contracts)

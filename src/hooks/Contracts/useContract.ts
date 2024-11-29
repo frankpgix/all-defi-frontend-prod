@@ -1,15 +1,9 @@
 import { erc20Abi } from 'viem'
 
 import PriceAggregatorAbi from '@/config/abi/PriceAggregator.json'
-// import ACProtocolAbi from '@/config/abi/ACProtocol.json'
-// import AUMStatsAbi from '@/config/abi/AUMStats.json'
-// import AllProtocolAbi from '@/config/abi/AllProtocol.json'
-// import RewardTrackerAbi from '@/config/abi/RewardTracker.json'
-// import UniV3ACLAbi from '@/config/abi/UniV3ACL.json'
 import VaultAbi from '@/config/abi/Vault.json'
 import VaultFactoryAbi from '@/config/abi/VaultFactory.json'
 import VaultReaderAbi from '@/config/abi/VaultReader.json'
-// import ERC20Abi from '@/config/abi/erc20.json';
 import { contracts } from '@/config/contract'
 
 import { useCurrChainID } from '@/hooks/useToken'
