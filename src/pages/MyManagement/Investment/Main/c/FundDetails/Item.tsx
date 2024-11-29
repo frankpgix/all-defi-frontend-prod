@@ -51,7 +51,12 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
         .times(fund.userDetail.shares)
         // .div(100)
         .toNumber(),
-    [fund.userDetail.roe, fund.detail.beginningSharePrice, fund.userDetail.shares]
+    [fund.detail.roe, fund.detail.beginningSharePrice, fund.userDetail.shares]
+  )
+
+  const userAum = useMemo(
+    () => BN(fund.userDetail.shares).times(fund.detail.beginningSharePrice).toNumber(),
+    [fund.detail.beginningSharePrice, fund.userDetail.shares]
   )
 
   // console.log(
@@ -249,7 +254,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   {/* (beginningAUM * underlyingPrice) / sum(beginningAUM * underlyingPrice)  start price */}
                   <RoeShow
                     value={formatNumber(
-                      BN(fund.userDetail.aum)
+                      BN(userAum)
                         .times(fund.underlyingPrice)
                         .div(fund.beginningAUMinUSD)
                         .times(100)
@@ -263,7 +268,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   {/* (beginningAUM * underlyingPrice) / sum(beginningAUM * underlyingPrice) curr price */}
                   <RoeShow
                     value={formatNumber(
-                      BN(fund.userDetail.aum)
+                      BN(userAum)
                         .times(fund.underlyingPrice)
                         .div(fund.currentAUMinUSD)
                         .times(100)
