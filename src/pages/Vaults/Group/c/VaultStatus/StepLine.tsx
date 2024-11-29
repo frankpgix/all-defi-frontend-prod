@@ -16,7 +16,7 @@ interface Props {
 const StepLine: FC<Props> = ({ data, loading }) => {
   let activeIndex = data.status
   // console.log(activeIndex)
-  // console.log(data.status, ' data.status', data)
+  console.log(data.status, ' data.status', data)
   const now = +new Date()
   if (now > data.settleEndTime && data.status === 3) {
     activeIndex = 4
@@ -33,7 +33,7 @@ const StepLine: FC<Props> = ({ data, loading }) => {
     {
       label: 'Open Period',
       popper: step1Popper,
-      time: data.epochIndex === 0 ? data.subscribeRedeemEndTime : data.epochStartTime,
+      time: data.epochIndex === 0 ? data.createTime : data.epochStartTime,
       status: 0
     },
     {
