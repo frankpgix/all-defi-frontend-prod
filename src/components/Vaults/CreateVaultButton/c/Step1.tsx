@@ -54,7 +54,7 @@ const Step1: FC<Props> = ({ onConfirm, show }) => {
             value={name}
             onChange={(val) => setName(val)}
             label="Vault name"
-            maxLength={20}
+            maxLength={50}
             placeholder="Enter Vault Name"
             error={nameError}
           >
