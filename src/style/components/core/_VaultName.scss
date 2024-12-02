@@ -7,6 +7,7 @@
   font-weight: bold;
   text-transform: uppercase;
   background: center/cover no-repeat;
+  position: relative;
   // background:radial-gradient($red,$red,$cff);
   &-size {
     &-default {
@@ -17,6 +18,12 @@
         border-radius: 8px;
         font-size: 32px;
         padding-top: 3px;
+        &.chain-icon {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          font-size: 10px;
+        }
       }
     }
     &-big {
@@ -70,6 +77,15 @@
   }
   &.icon {
     background-image: none;
+  }
+
+  .chain-icon {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    @include yd(-33%, 33%);
+    box-shadow: 0 0 3px #fff inset;
+    display: block;
   }
 }
 

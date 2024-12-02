@@ -97,7 +97,13 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
   return (
     <dl>
       <dt>
-        <VaultName name={'Core Crypto Index'} managerName={'James'} status={list[0]?.status ?? 0} />
+        <VaultName
+          name={'Core Crypto Index'}
+          chain
+          showFee
+          managerName={'James'}
+          status={list[0]?.status ?? 0}
+        />
         <strong>{formatNumber(totalAum, 2, '$0,0.00')}</strong>
         <FlexBox center gap={5}>
           <RoeShow value={totalRoe} />
@@ -119,14 +125,19 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
         {list.map((item) => (
           <div className="vault-item" key={item.address}>
             <VaultName icon={item.underlyingToken.icon} name={item.name} size="mini" />
-            <FlexBox center gap={5} className="vault-item-aum">
-              <TokenValue value={item.aum} token={item.underlyingToken} size="mini" />
+            <FlexBox gap={5} className="vault-item-aum" vertical>
+              <TokenValue
+                value={item.aum}
+                token={item.underlyingToken}
+                format={'0,0.00'}
+                size="mini"
+              />
               <small>
                 {formatNumber(item.aum * (price[item.underlyingToken.address] ?? 1), 2, '$0,0.00')}
               </small>
             </FlexBox>
             <FlexBox center gap={5}>
-              <Tag name="Bring +++" />
+              <Tag type="warning" icon="icon/rocket.svg" name="Bring +++" />
             </FlexBox>
             <span></span>
             <span>

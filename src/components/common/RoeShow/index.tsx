@@ -1,6 +1,10 @@
 import { FC, useMemo } from 'react'
+
 import classNames from 'classnames'
 import { floor } from 'lodash'
+
+import { formatNumber } from '@/utils/tools'
+
 interface Props {
   value: number | string
   preArrow?: boolean
@@ -9,6 +13,7 @@ interface Props {
 
 const RoeShow: FC<Props> = ({ value, preArrow, subArrow }) => {
   const val = floor(Number(value), 2)
+  const valShow = formatNumber(val, 2, '0,0.00')
   const className = useMemo(
     () =>
       classNames(
@@ -22,7 +27,7 @@ const RoeShow: FC<Props> = ({ value, preArrow, subArrow }) => {
   return (
     <span className={className}>
       {val >= 0 ? '+' : ''}
-      {val}%
+      {valShow}%
     </span>
   )
 }

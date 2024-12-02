@@ -3,8 +3,34 @@
   align-items: center;
   border: 1px solid $rise;
   padding: 3px 5px;
-  background: #fff;
+  background: $rise;
   font-size: 12px;
   border-radius: 5px;
-  color: $rise;
+  color: $cff;
+  gap: 5px;
+
+  &-type-warning {
+    border-color: $orange;
+    background: $orange;
+  }
+  &.dot {
+    &::after {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50px;
+      background: $cff;
+      animation: blink 1s infinite;
+    }
+  }
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
