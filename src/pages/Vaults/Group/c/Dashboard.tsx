@@ -109,7 +109,9 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
                 This vault will use a very safe capital preservation strategy to bring benefits to
                 users, mainly based on the BTC price to sell high and buy low strategy,welcome to
                 experience the experience.If you have any questions, please feel free to contact the
-                CCI team. Our email: cciteam@gmail.com Our Telegram: cciteam@tel
+                CCI team. <br />
+                Our email: cciteam@gmail.com <br />
+                Our Telegram: cciteam@tel
               </p>
             </article>
           )}
