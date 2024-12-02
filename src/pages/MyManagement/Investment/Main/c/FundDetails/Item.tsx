@@ -250,7 +250,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                   {/*{formatNumber(fund.data.unclaimedACToken, 2, '$0,0.00')}*/}
                 </SectionItem>
 
-                <SectionItem label="Total Proprtion">
+                <SectionItem label="Total Proportion">
                   {/* (beginningAUM * underlyingPrice) / sum(beginningAUM * underlyingPrice)  start price */}
                   <RoeShow
                     value={formatNumber(
@@ -264,7 +264,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                     )}
                   />
                 </SectionItem>
-                <SectionItem label="Current Proprtion">
+                <SectionItem label="Current Proportion">
                   {/* (beginningAUM * underlyingPrice) / sum(beginningAUM * underlyingPrice) curr price */}
                   <RoeShow
                     value={formatNumber(

@@ -17,13 +17,13 @@ const Detail: FC = () => {
   const fundAddress = '0x754daE540B475dD3d6C4Bf3B3e57a83012308F0A'
 
   // console.log(12345, isLoading, isSuccess, price)
-  const { data: vaultDetails, isLoading: vaultDetailsLoading } = useVaultList()
+  const { data: vaultDetails, isLoading: vaultDetailsLoading, refetch } = useVaultList()
   // console.log(12345, vaultDetails, vaultDetailsLoading)
 
   const loading = useMemo(() => vaultDetailsLoading, [vaultDetailsLoading])
   useInterval(() => {
     console.log('1分钟更新数据')
-    // getData()
+    refetch()
   }, 60000)
   // console.log(123, fundAddress, baseInfo, vaultDetail)
   if (!vaultDetails[0]) return null
