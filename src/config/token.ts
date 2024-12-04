@@ -59,23 +59,23 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
   //   precision: 4,
   //   icon: 'symbol/sbitu.svg'
   // },
-  // {
-  //   name: 'wstETH',
-  //   symbol: 'wstETH',
-  //   address: {
-  //     [ChainId.MAINNET]: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
-  //     [ChainId.BSC]: zeroAddress,
-  //     [ChainId.BSCTEST]: '0xa7A6C0ec6bBE4ceb8F0E2f2244FFd1ac63e98B07'
-  //   },
-  //   decimals: 18,
-  //   precision: 4,
-  //   icon: 'symbol/steth.svg'
-  // },
+  {
+    name: 'wstETH',
+    symbol: 'wstETH',
+    address: {
+      [ChainId.MAINNET]: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
+      [ChainId.BSC]: zeroAddress,
+      [ChainId.BSCTEST]: zeroAddress
+    },
+    decimals: 18,
+    precision: 4,
+    icon: 'symbol/steth.svg'
+  },
   {
     name: 'USDT',
     symbol: 'USDT',
     address: {
-      [ChainId.MAINNET]: zeroAddress,
+      [ChainId.MAINNET]: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
       [ChainId.BSC]: zeroAddress,
       [ChainId.BSCTEST]: '0x951A9cB20960F36d7Ead415043252Eb33Df8C100'
     },
@@ -87,7 +87,7 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
     name: 'sUSDe',
     symbol: 'sUSDe',
     address: {
-      [ChainId.MAINNET]: '0x9D39A5DE30e57443BfF2A8307A4256c8797A3497',
+      [ChainId.MAINNET]: zeroAddress,
       [ChainId.BSC]: zeroAddress,
       [ChainId.BSCTEST]: '0x8794957E5506780664e94ad6475c05DF8c6fE55D'
     },
