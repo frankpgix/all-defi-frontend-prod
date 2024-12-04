@@ -150,6 +150,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data }) => {
     [rawData]
   )
   const activeData = useMemo(() => data[activeIndex]?.userDetail, [data, activeIndex])
+  const activeDetail = useMemo(() => data[activeIndex]?.detail, [data, activeIndex])
   const baseToken = useMemo(() => activeData?.underlying, [activeData])
   // console.log(data, rawData)
   const pieData = useMemo(
@@ -276,7 +277,7 @@ const CountDetail: FC<CountDetailProps> = ({ loading, data }) => {
           <SectionItem label="Epoch Beginning Share Price">
             <TokenValue
               // value={BN(activeData.aum).div(activeData.shares).toNumber()}
-              value={activeData.beginSharePrice}
+              value={activeDetail.beginningSharePrice}
               // value={BN(activeData.aum).div(activeData.shares).toNumber()}
               token={baseToken}
               size="mini"
