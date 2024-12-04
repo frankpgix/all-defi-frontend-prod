@@ -116,7 +116,7 @@ export const calcVaultDetail = (
     safeInterceptionValues(item.custodianBalance ?? 0, decimals, decimals)
   )
   const beginningAUM = Number(safeInterceptionValues(item.beginningAUM, decimals, decimals))
-  const beginningSharePrice = beginningAUM === 0 ? 1 : BN(totalShares).div(beginningAUM).toNumber()
+  const beginningSharePrice = totalShares === 0 ? 1 : BN(beginningAUM).div(totalShares).toNumber()
   const aum = Number(safeInterceptionValues(item.aum, decimals, decimals))
   // console.log(beginningAUM, sharePrice, beginningSharePrice, 'beginningSharePrice')
   return {
