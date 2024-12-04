@@ -191,13 +191,14 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
                     </Popper> */}
                   </label>
                   <em>
-                    {formatNumber(fund.detail.unstakingShare, 4, '0,0.0000')}
+                    {formatNumber(fund.userDetail.unstakingShare, 4, '0,0.0000')}
                     {/*<TokenValue value={fund.data.redeemingShares} token={underlyingToken} size="mini" format="0,0.00" />*/}
                   </em>
                   <Button
                     disabled={
-                      !(fund.detail.unstakingShare > 0 && [0, 1].includes(fund.detail.status)) ||
-                      onCancelcWithholdingStatus
+                      !(
+                        fund.userDetail.unstakingShare > 0 && [0, 1].includes(fund.detail.status)
+                      ) || onCancelcWithholdingStatus
                     }
                     size="mini"
                     onClick={() => setInfoStatus2(true)}
