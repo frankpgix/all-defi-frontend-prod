@@ -100,10 +100,10 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
   }, [
     data.pendingUnstake,
     data.sharePrice,
-    data.pendingStake,
-    data.epochIndex,
     data.platFee,
-    data.managerFee
+    data.managerFee,
+    data.pendingStake,
+    data.underlyingToken.precision
   ])
   // const nextRoundCashNewCalc = useMemo(() => {
   //   const temp1 = BN(data.managerFee).plus(data.platFee)
@@ -122,10 +122,10 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
 
   // 下轮赎回减去下轮申购减去FEE ？？ 大于现金余额
   const isShowCashBalanceLess = useMemo(
-    () => BN(nextRoundCash).toNumber() > BN(data.underlyingBalance).toNumber(),
-    [nextRoundCash, data.pendingStake, data.underlyingBalance]
+    () => BN(nextRoundCash).toNumber() > BN(data.cashBalance).toNumber(),
+    [nextRoundCash, data.cashBalance]
   )
-  console.log(nextRoundCash, data.pendingStake, data.underlyingBalance)
+  console.log(nextRoundCash, data.pendingStake, data.cashBalance)
   return (
     <>
       <CountLayout>
@@ -147,7 +147,7 @@ const ManageDetail: FC<Props> = ({ base, data, stake, vaultAddress, breach, getD
           loading={loading}
           value={
             <TokenValue
-              value={data.underlyingBalance}
+              value={data.cashBalance}
               token={baseToken}
               size="small"
               format="0,0.00"

@@ -47,7 +47,7 @@ const FundList: FC = () => {
     },
     {
       title: 'Cash Balance',
-      dataIndex: 'underlyingBalance',
+      dataIndex: 'cashBalance',
       width: 120,
       render: (value: number, row: VaultDetailProps) => (
         <TokenValue value={value} token={row.underlyingToken} size="mini" format="0,0.00" />

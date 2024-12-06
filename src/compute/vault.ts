@@ -104,7 +104,7 @@ export const calcVaultDetail = (
   item: any,
   getTokenByAddress: GetTokenFuncType
 ): VaultDetailProps => {
-  console.log(item, 'item.stage')
+  // console.log(item, 'item.stage')
   const epochStartTime = Number(safeInterceptionValues(item.epochStartTime, 0, 0)) * 1000
   const underlyingToken = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlyingToken.decimals
@@ -279,7 +279,7 @@ export const calcVaultBreachDetail = (item: any): VaultBreachDetailProps => {
   }
 }
 
-export const calcVaultUpdatingData = (data: [AddressType, BigInt], underlyingToken: TokenTypes) => {
+export const calcVaultUpdatingData = (data: [AddressType, bigint], underlyingToken: TokenTypes) => {
   const { precision, decimals } = underlyingToken
   const [sData, verifyStatus] = data
   const types = [
