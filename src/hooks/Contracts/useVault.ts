@@ -244,6 +244,7 @@ export const useClaim = (vaultAddress: AddressType) => {
   const { onWaitReceipt } = useWaitReceipt()
 
   const onClaim = async (account: AddressType, callback?: (isError?: boolean) => void) => {
+    console.log(11122)
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Claim Asset' })
 

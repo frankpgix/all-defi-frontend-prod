@@ -100,7 +100,6 @@ const Unstake: FC<Props> = ({
           depends on the Share price at the time of settlement.
         </p>
       </div> */}
-      {data.address}
       <div className="c-vault-stake-input">
         <DropdownSelect
           value={currentToken}

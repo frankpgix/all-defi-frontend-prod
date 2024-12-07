@@ -1,5 +1,4 @@
 import { FC, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { useBoolean } from 'ahooks'
 
@@ -21,7 +20,6 @@ interface Props {
 
 const Claim: FC<Props> = ({ userData, getData }) => {
   const { onClaim } = useClaim(userData.address)
-  const { fundAddress } = useParams()
   const { account } = useProfile()
 
   const [submiting, { toggle: toggleSubmiting }] = useBoolean(false)
@@ -30,7 +28,7 @@ const Claim: FC<Props> = ({ userData, getData }) => {
   const acToken = useMemo(() => userData.underlying, [userData.underlying])
 
   const onRedeem = async () => {
-    if (account && fundAddress) {
+    if (account) {
       toggleSubmiting()
       await onClaim(account, (isError) => {
         getData()
