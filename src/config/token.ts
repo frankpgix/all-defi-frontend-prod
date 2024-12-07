@@ -65,7 +65,7 @@ export const underlyingTokens: UnderlyingTokenConfigTypes[] = [
     address: {
       [ChainId.MAINNET]: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
       [ChainId.BSC]: zeroAddress,
-      [ChainId.BSCTEST]: zeroAddress
+      [ChainId.BSCTEST]: '0xa7A6C0ec6bBE4ceb8F0E2f2244FFd1ac63e98B07'
     },
     decimals: 18,
     precision: 4,
