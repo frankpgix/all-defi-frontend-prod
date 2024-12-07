@@ -15,8 +15,8 @@
     justify-content: space-between;
     &-base {
       width: 590px;
-      height: 430px;
-      padding: 30px;
+      min-height: 430px;
+      padding: 30px 30px 20px;
       border-radius: 8px;
       position: relative;
       // @include jb(#82B6FF, #207DFF, 135);color: $white;
@@ -106,6 +106,9 @@
       background: $white;
       position: relative;
       box-shadow: 0px 2px 20px rgba(225, 225, 225, 0.25);
+      display: flex;
+      flex-flow: column;
+      justify-content: space-between;
       header {
         height: 110px;
         position: relative;
