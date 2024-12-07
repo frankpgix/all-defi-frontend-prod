@@ -157,7 +157,7 @@ export const calcVaultDetail = (
     custodianBalance,
     // stakingACToken: Number(safeInterceptionValues(item.stakingACToken, decimals, decimals)),
     pendingStake: Number(safeInterceptionValues(item.pendingStake, decimals, decimals)),
-    pendingUnstake: Number(safeInterceptionValues(item.pendingUnstake, decimals, decimals)),
+    pendingUnstake: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
     unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
 
     // 净收益
