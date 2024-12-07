@@ -82,7 +82,7 @@ const FundList: FC = () => {
       dataIndex: 'address',
       width: 180,
       render: (_: string, record: VaultDetailProps) => {
-        console.log(record, 'record')
+        // console.log(record, 'record')
         return (
           <div className="web-buy-table-action">
             {record.status === -1 ? (

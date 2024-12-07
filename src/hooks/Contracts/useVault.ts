@@ -82,7 +82,7 @@ export const useStake = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, {
               title: 'Operation failed',
               type: 'error',
-              content: error.shortMessage
+              content: error.metaMessages[0] ?? error.shortMessage
             })
           }
         }
@@ -126,7 +126,7 @@ export const useCancelStake = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, {
               title: 'Operation failed',
               type: 'error',
-              content: error.shortMessage
+              content: error.metaMessages[0] ?? error.shortMessage
             })
           }
         }
@@ -182,7 +182,7 @@ export const useUnstake = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, {
               title: 'Operation failed',
               type: 'error',
-              content: error.shortMessage
+              content: error.metaMessages[0] ?? error.shortMessage
             })
           }
         }
@@ -226,7 +226,7 @@ export const useCancelUnstake = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, {
               title: 'Operation failed',
               type: 'error',
-              content: error.shortMessage
+              content: error.metaMessages[0] ?? error.shortMessage
             })
           }
         }
@@ -271,7 +271,7 @@ export const useClaim = (vaultAddress: AddressType) => {
             updateNotifyItem(notifyId, {
               title: 'Operation failed',
               type: 'error',
-              content: error.shortMessage
+              content: error.metaMessages[0] ?? error.shortMessage
             })
           }
         }

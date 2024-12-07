@@ -48,10 +48,11 @@ export const useCreateVault = () => {
           })
         },
         onError: (error: any) => {
+          console.error('error', error)
           updateNotifyItem(notifyId, {
             title: 'Operation failed',
             type: 'error',
-            content: error.shortMessage
+            content: error.metaMessages[0] ?? error.shortMessage
           })
         }
       }
