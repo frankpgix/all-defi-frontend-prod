@@ -104,7 +104,7 @@ export const calcVaultDetail = (
   item: any,
   getTokenByAddress: GetTokenFuncType
 ): VaultDetailProps => {
-  // console.log(item, 'item.stage')
+  console.log(item, 'item.stage')
   const epochStartTime = Number(safeInterceptionValues(item.epochStartTime, 0, 0)) * 1000
   const underlyingToken = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlyingToken.decimals
@@ -156,8 +156,8 @@ export const calcVaultDetail = (
     sharePrice,
     custodianBalance,
     // stakingACToken: Number(safeInterceptionValues(item.stakingACToken, decimals, decimals)),
-    pendingStake: Number(safeInterceptionValues(item.pendingStake, 18, 18)),
-    pendingUnstake: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
+    pendingStake: Number(safeInterceptionValues(item.pendingStake, decimals, decimals)),
+    pendingUnstake: Number(safeInterceptionValues(item.pendingUnstake, decimals, decimals)),
     unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
 
     // 净收益
