@@ -33,7 +33,7 @@ export const useAllowance = () => {
       const hash = await writeContract(config, {
         ...ERC20Contract,
         functionName: 'approve',
-        args: [contractAddress, 1000000n]
+        args: [contractAddress, maxUint256]
       }).catch((error) => {
         console.error(error)
         if (notifyId) {
