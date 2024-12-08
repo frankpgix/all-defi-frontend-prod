@@ -116,7 +116,7 @@ export const useVaultGroupChartData = (gql: any) => {
       }[]
     }
   }
-  console.log(sData, 'sData')
+  // console.log(sData, 'sData')
   const list = sData?.vaultIntervalDatas ?? []
   const times = sortBy(uniq(list.map((item) => item.periodStartUnix)))
   const data = times.map((time) => {
@@ -135,7 +135,7 @@ export const useVaultGroupChartData = (gql: any) => {
     return o
     // {time: time * 1000, value: Number(safeInterceptionValues())}
   })
-  console.log(times, data, 'data')
+  // console.log(times, data, 'data')
   // const data = (sData?.vaultIntervalDatas ?? [])
   //   .map((item: any) => ({
   //     time: item.periodStartUnix * 1000,

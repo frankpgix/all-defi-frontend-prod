@@ -47,7 +47,7 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
         data.epochIndex,
         timeType
       ),
-    [fundAddress, data.epochIndex, timeType]
+    [list, data.epochIndex, timeType]
   )
 
   const { loading: chartLoading, data: chartData } = useVaultGroupChartData(gql)
@@ -60,7 +60,7 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
       list?.reduce((acc, item) => {
         return acc + price[item.underlyingToken.address] * item.aum
       }, 0) || 0,
-    [price, underlyingToken.address]
+    [list, price]
   )
 
   const totalHistoricalReturn = useMemo(
@@ -68,10 +68,16 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
       list?.reduce((acc, item) => {
         return acc + price[item.underlyingToken.address] * item.historicalReturn
       }, 0) || 0,
-    [price, underlyingToken.address]
+    [list, price]
   )
+
   const totalRoe = useMemo(() => {
-    if (totalAum === 0) return 0
+    const totalBeginningAUM =
+      list?.reduce((acc, item) => {
+        return acc + price[item.underlyingToken.address] * item.beginningAUM
+      }, 0) || 0
+
+    if (totalBeginningAUM === 0) return 0
     const totalProfit = list
       .map((item) =>
         BN(item.beginningAUM)
@@ -80,8 +86,19 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
           .toNumber()
       )
       .reduce((acc, cur) => BN(acc).plus(cur).toNumber(), 0)
-    return BN(totalProfit).div(totalAum).times(100).toNumber()
-  }, [list, price, totalAum])
+    // console.log('totalProfit', totalProfit, 'totalAum', totalBeginningAUM)
+    return BN(totalProfit).div(totalBeginningAUM).times(100).toNumber()
+  }, [list, price])
+  // console.log('list, price, totalAum', list, price, totalAum)
+  console.log(
+    'beginningAUM,grossRoe,price',
+    list.map((item) => ({
+      beginningAUM: item.beginningAUM,
+      Aum: item.aum,
+      grossRoe: item.grossRoe,
+      price: price[item.underlyingToken.address]
+    }))
+  )
   // console.log(data.historicalReturn, historicalReturn, 'data.historicalReturn')
   return (
     <>
