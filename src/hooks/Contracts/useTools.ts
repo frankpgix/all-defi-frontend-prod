@@ -29,6 +29,7 @@ export const useAllowance = () => {
       functionName: 'allowance',
       args: [account ?? '', contractAddress]
     })) as bigint
+    console.log(allowance, amount, 'allowance')
     if (allowance < amount) {
       const hash = await writeContract(config, {
         ...ERC20Contract,
