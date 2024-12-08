@@ -79,7 +79,12 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
       .reduce((acc, cur) => acc + cur, 0)
   }, [list, price])
   const totalRoe = useMemo(() => {
-    if (totalAum === 0) return 0
+    const totalBeginningAUM =
+      list?.reduce((acc, item) => {
+        return acc + price[item.underlyingToken.address] * item.beginningAUM
+      }, 0) || 0
+
+    if (totalBeginningAUM === 0) return 0
     const totalProfit = list
       .map((item) =>
         BN(item.beginningAUM)
@@ -88,8 +93,9 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
           .toNumber()
       )
       .reduce((acc, cur) => BN(acc).plus(cur).toNumber(), 0)
-    return BN(totalProfit).div(totalAum).times(100).toNumber()
-  }, [list, price, totalAum])
+    // console.log('totalProfit', totalProfit, 'totalAum', totalBeginningAUM)
+    return BN(totalProfit).div(totalBeginningAUM).times(100).toNumber()
+  }, [list, price])
   // 单个子基金, 有自己的 begninAUM * roe = 利润 * 当前资产价格 = usd 利润
   // 所有子基金, usd 利润 求和 = 总利润
   // 总利润 / 总aum = 总收益率
