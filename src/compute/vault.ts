@@ -51,13 +51,18 @@ export const calcVaultBaseInfo = (
   const decimals = underlying.decimals
   const precision = underlying.precision
   const { hash } = calcVaultHash(vaultAddress ?? '0x')
+  const nameTemp =
+    vaultAddress === '0x07481704aA55200cEBdDaFdC10243455dECD772f'
+      ? item.name.replace('USDT', 'wstETH')
+      : item.name
+  const name = nameTemp.replace('Republic', '')
   return {
     hash,
     underlying,
     // acToken: item.acToken,
     address: vaultAddress ?? '0x',
     createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
-    name: item.name,
+    name,
     symbol: item.symbol,
     desc: '',
     // desc: item.desc,
@@ -119,11 +124,16 @@ export const calcVaultDetail = (
   const beginningSharePrice = totalShares === 0 ? 1 : BN(beginningAUM).div(totalShares).toNumber()
   const aum = Number(safeInterceptionValues(item.aum, decimals, decimals))
   // console.log(beginningAUM, sharePrice, beginningSharePrice, 'beginningSharePrice')
+  const nameTemp =
+    item.vaultAddress === '0x07481704aA55200cEBdDaFdC10243455dECD772f'
+      ? item.name.replace('USDT', 'wstETH')
+      : item.name
+  const name = nameTemp.replace('Republic', '')
   return {
     underlyingToken,
     hash,
     address: item.vaultAddress,
-    name: item.name,
+    name,
     manager: item.manager,
     createTime: Number(safeInterceptionValues(item.createTime, 0, 0)) * 1000,
     epochIndex: Number(safeInterceptionValues(item.epochIndex, 0, 0)),
