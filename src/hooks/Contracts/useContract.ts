@@ -25,9 +25,7 @@ export const useERC20Contract = (address: AddressType) => {
 }
 
 export const useGetErc20Contract = () => {
-  const getErc20Contract = (address: AddressType) => {
-    return useContract(address, erc20Abi)
-  }
+  const getErc20Contract = (address: AddressType) => ({ address, abi: erc20Abi })
   return { getErc20Contract }
 }
 

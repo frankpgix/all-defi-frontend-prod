@@ -1,6 +1,6 @@
 import { toLower } from 'lodash'
 import { erc20Abi, zeroAddress } from 'viem'
-import { useAccount, useBalance, useReadContracts } from 'wagmi'
+import { useAccount, useBalance, useChainId, useReadContracts } from 'wagmi'
 
 // import { UNKNOWN, chainTokens, tokens, underlyingTokens } from '@/config/tokens'
 import { UNKNOWN, chainTokens, tokens, underlyingTokens } from '@/config/token'
@@ -19,9 +19,9 @@ import { DEFAULT_CHAIN_ID } from '@/config'
 import { formatUnits } from '@/utils/tools'
 
 export const useCurrChainID = (): ChainIdTypes => {
-  const { chainId } = useAccount()
-  // console.log(Object.values(ChainIds).includes(chainId ?? DEFAULT_CHAIN_ID))
-  // console.log(chainId)
+  const { chainId: userChainId } = useAccount()
+  const walletChainId = useChainId()
+  const chainId = userChainId ?? walletChainId
   if (chainId && Object.values(ChainIds).includes(chainId)) return chainId
   return DEFAULT_CHAIN_ID
 }

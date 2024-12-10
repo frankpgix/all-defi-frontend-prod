@@ -209,7 +209,7 @@ export const useUserVaultList = () => {
             .toNumber()
         )
       ).toNumber(),
-    [vaultList]
+    [vaultList, beginningPrice]
   )
   const currentAUMinUSD = useMemo(
     () =>
@@ -220,7 +220,7 @@ export const useUserVaultList = () => {
             .toNumber()
         )
       ).toNumber(),
-    [vaultList]
+    [vaultList, price]
   )
   const {
     data: sData,
@@ -365,7 +365,7 @@ export const useVaultUpdatingData = (vaultAddress: AddressType, underlyingToken:
     ...VaultReaderContract,
     functionName: 'vaultUpdatingData',
     args: [vaultAddress]
-  }) as { data: [AddressType, BigInt]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
+  }) as { data: [AddressType, bigint]; isSuccess: boolean; isLoading: boolean; refetch: () => void }
   if (!isLoading && isSuccess) {
     // console.log(data, 'data')
     return { data: calcVaultUpdatingData(data, underlyingToken), isSuccess, isLoading, refetch }
