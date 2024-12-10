@@ -8,7 +8,7 @@ interface Props {
   name: string
   dot?: boolean
   icon?: string
-  type?: 'success' | 'warning' | 'danger' | 'info' | 'primary' | 'default'
+  type?: 'success' | 'warning' | 'danger' | 'info' | 'primary' | 'default' | 'dark'
   size?: 'large' | 'default' | 'small' | 'mini' | 'tiny' | 'super'
 }
 

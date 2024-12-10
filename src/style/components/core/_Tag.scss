@@ -9,9 +9,15 @@
   color: $cff;
   gap: 5px;
 
-  &-type-warning {
-    border-color: $orange;
-    background: $orange;
+  &-type {
+    &-warning {
+      border-color: $orange;
+      background: $orange;
+    }
+    &-dark {
+      border-color: $c00;
+      background: $c00;
+    }
   }
   &.dot {
     &::after {
