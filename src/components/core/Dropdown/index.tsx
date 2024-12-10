@@ -144,7 +144,8 @@ export const Dropdown: FC<DropdownProps> = ({
         className,
         {
           show: menuShow,
-          input
+          input,
+          disabled
         }
       )}
     >

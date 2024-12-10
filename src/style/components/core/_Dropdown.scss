@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     position: relative;
-    padding: 0 12px 0 12px;
+    padding: 0 50px 0 12px;
     border: 2px solid $lBlue;
     border-radius: 8px;
     background: none;
@@ -17,7 +17,7 @@
     &-arrow {
       position: absolute;
       right: 12px;
-      background: url($res + 'icon/select-arrow.svg') center/contain no-repeat;
+      background: url($res + 'icon/arrow-down-blue.svg') center/contain no-repeat;
       @include dz();
     }
     img {
@@ -44,8 +44,8 @@
       width: 40px;
     }
     &-arrow {
-      width: 10px;
-      height: 10px;
+      width: 30px;
+      height: 30px;
     }
   }
   &-size-small &-label {
@@ -173,6 +173,12 @@
   }
   &.input &-menu {
     top: 48px;
+  }
+  &.disabled &-label {
+    border: none;
+    &-arrow {
+      display: none;
+    }
   }
 }
 
