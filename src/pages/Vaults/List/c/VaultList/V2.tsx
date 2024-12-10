@@ -143,7 +143,7 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
               </small>
             </FlexBox>
             <FlexBox center gap={5}>
-              <Tag type="warning" icon="icon/rocket.svg" name="Bring +++" />
+              <Tag type="warning" icon="icon/rocket.svg" name="BRINGTRADE" />
             </FlexBox>
             <span></span>
             <span>
