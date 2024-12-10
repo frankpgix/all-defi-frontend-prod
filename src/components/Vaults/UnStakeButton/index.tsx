@@ -45,7 +45,7 @@ const StakeButton: FC<Props> = ({ data: list }) => {
 
   return (
     <>
-      <Button onClick={setRight} size="mini">
+      <Button onClick={setRight} size="mini" disabled={Boolean(!account)}>
         UnStake & Claim
       </Button>
       <Modal show={show} onClose={setLeft} title="Unstake from Vault" width={1000}>
