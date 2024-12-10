@@ -29,9 +29,9 @@ const Detail: FC = () => {
   if (!vaultDetails[0]) return null
   return (
     <>
-      <Dashboard fundAddress={fundAddress} data={vaultDetails} loading={loading} />
+      <Dashboard data={vaultDetails} loading={loading} />
       <RoeHistory fundAddress={fundAddress} />
-      <VaultStatus data={vaultDetails[0]} loading={loading}>
+      <VaultStatus data={vaultDetails[1] ?? vaultDetails[0]} loading={loading}>
         <StakeButton data={vaultDetails} />
         <UnStakeButton data={vaultDetails} />
       </VaultStatus>

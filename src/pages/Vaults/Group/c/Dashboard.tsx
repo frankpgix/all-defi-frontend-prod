@@ -25,11 +25,10 @@ import TokenValue from '@@/common/TokenValue'
 interface Props {
   data: VaultDetailProps[]
   loading: boolean
-  fundAddress: string
 }
 
 type optionProps = 'current epoch' | '3 Epochs' | 'all'
-const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
+const Dashboard: FC<Props> = ({ data: list, loading }) => {
   const { chainToken } = useChainToken()
   const assetTokenList = useUnderlyingTokens()
   const { data: price } = useAssetLatestPrices([...assetTokenList, chainToken])
@@ -37,7 +36,6 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
   const data = list[0]
   const [timeType, setTimeType] = useState<optionProps>('all')
   const timeOptions: optionProps[] = ['current epoch', '3 Epochs', 'all']
-  const underlyingToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
   // console.log(timeType, 'timeType')
   const chartType = 'aum'
   const gql = useMemo(
@@ -121,7 +119,7 @@ const Dashboard: FC<Props> = ({ data: list, loading, fundAddress }) => {
           ) : (
             <article>
               <FundIcon name="Core Crypto Index" size="large" />
-              <h4>Core Crypto Index</h4>
+              <h4>Crypto Republic Alpha Fund</h4>
               <p>
                 This vault will use a very safe capital preservation strategy to bring benefits to
                 users, mainly based on the BTC price to sell high and buy low strategy,welcome to
