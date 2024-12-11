@@ -33,7 +33,7 @@ const Dashboard: FC<Props> = ({ data: list, loading }) => {
   const assetTokenList = useUnderlyingTokens()
   const { data: price } = useAssetLatestPrices([...assetTokenList, chainToken])
 
-  const data = list[0]
+  const data = list[1] ?? list[0]
   const [timeType, setTimeType] = useState<optionProps>('all')
   const timeOptions: optionProps[] = ['current epoch', '3 Epochs', 'all']
   // console.log(timeType, 'timeType')
