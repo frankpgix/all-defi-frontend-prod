@@ -128,10 +128,14 @@
       border-radius: 10px;
       @include dz();
       // position: relative;top: 0;
-      label,
-      span {
+      &.short {
+        padding: 12px 20px;
+      }
+      & > label,
+      & > span {
         display: flex;
         align-items: center;
+        gap: 10px;
       }
       label {
         font-size: 14px;

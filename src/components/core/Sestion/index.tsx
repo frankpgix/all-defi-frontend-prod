@@ -2,6 +2,8 @@ import { FC, ReactNode } from 'react'
 import ContentLoader from 'react-content-loader'
 import CountUp from 'react-countup'
 
+import classNames from 'classnames'
+
 import PercentageLine from '@@/common/PercentageLine'
 import Popper from '@@/common/Popper'
 
@@ -73,9 +75,10 @@ export const SectionItem: FC<{
   popper?: string
   popperWidth?: string
   loading?: boolean
-}> = ({ label, value, children, popper, popperWidth, loading }) => {
+  short?: boolean
+}> = ({ label, value, children, popper, popperWidth, loading, short }) => {
   return (
-    <div className="c-section-section-item">
+    <div className={classNames('c-section-section-item', { short })}>
       <label>
         {/* {label}
         {popper && <Popper size="mini" content={popper} width={popperWidth}></Popper>} */}

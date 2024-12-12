@@ -8,9 +8,11 @@ import { Cell, Pie, PieChart, Sector } from 'recharts'
 
 import { VaultUserListDataProps } from '@/types/vault'
 
-import { SectionItem } from '@/pages/MyManagement/Manager/VaultDetail/c/ManageDetail/C'
+import Tag from '@/components/core/Tag'
 import { formatNumber } from '@/utils/tools'
+import Blank from '@@/common/Blank'
 import TokenValue from '@@/common/TokenValue'
+import { SectionItem } from '@@/core/Sestion'
 
 const renderActiveShape = (props: any) => {
   const { cx, cy, outerRadius, innerRadius, startAngle, endAngle, fill } = props
@@ -241,11 +243,11 @@ const CountDetail: FC<CountProps> = ({ loading, data }) => {
         </article>
         <h3>{data[activeIndex].base.underlying.name}</h3>
         <section>
-          <SectionItem label="Staking Value" loading={loading}>
+          <SectionItem label="Staking Value" loading={loading} short>
             <TokenValue value={activeData.nav} token={baseToken} size="mini" format="0,0.00" />
             {/*{formatNumber(data[activeIndex].data.nav, 2, '$0,0.00')}*/}
           </SectionItem>
-          <SectionItem label="Current Share Price">
+          <SectionItem label="Current Share Price" short>
             <TokenValue
               value={activeData.sharePrice}
               token={baseToken}
@@ -260,6 +262,7 @@ const CountDetail: FC<CountProps> = ({ loading, data }) => {
           </SectionItem> */}
           <SectionItem
             label="Shares Holding"
+            short
             popper="Shares Holding includes a total of  Shares in your wallet, Unstaking from vaults."
           >
             <TokenValue
@@ -272,7 +275,7 @@ const CountDetail: FC<CountProps> = ({ loading, data }) => {
             />
             {/* {formatNumber(activeData.shares, 2, '0,0.00')} */}
           </SectionItem>
-          <SectionItem label="Epoch Beginning Share Price">
+          <SectionItem label="Epoch Beginning Share Price" short>
             <TokenValue
               // value={BN(activeData.aum).div(activeData.shares).toNumber()}
               value={activeDetail.beginningSharePrice}
@@ -281,6 +284,19 @@ const CountDetail: FC<CountProps> = ({ loading, data }) => {
               size="mini"
               format="0,0.00"
             />
+          </SectionItem>
+        </section>
+        <Blank size="medium" />
+        <h3>Additional Rewards</h3>
+        <section>
+          <SectionItem
+            label="Rings earned"
+            loading={loading}
+            popper="Staking this vault can earn Rings"
+            short
+          >
+            <Tag type="dark" icon="icon/bring.svg" name="Rings" />
+            <TokenValue value={activeData.nav} size="mini" noUnit format="0,0.00" />
           </SectionItem>
         </section>
       </div>
