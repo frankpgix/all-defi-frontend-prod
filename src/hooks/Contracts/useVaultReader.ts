@@ -215,7 +215,7 @@ export const useUserVaultList = () => {
     () =>
       BN.sum(
         ...vaultList.map((item) =>
-          BN(item.beginningAUM)
+          BN(item.aum)
             .times(price[item.underlyingToken.address] ?? 1)
             .toNumber()
         )

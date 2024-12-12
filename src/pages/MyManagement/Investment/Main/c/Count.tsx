@@ -130,9 +130,7 @@ const Count: FC<CountProps> = ({ loading, data }) => {
   )
 }
 
-interface CountDetailProps extends CountProps {}
-
-const CountDetail: FC<CountDetailProps> = ({ loading, data }) => {
+const CountDetail: FC<CountProps> = ({ loading, data }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const rawData = useMemo(
     () =>
