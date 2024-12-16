@@ -141,7 +141,7 @@ export const useUnstake = (vaultAddress: AddressType) => {
 
   const { writeContract } = useWriteContract()
   const { createNotify, updateNotifyItem } = useNotify()
-  const { onAllowance } = useAllowance()
+  // const { onAllowance } = useAllowance()
   const { onWaitReceipt } = useWaitReceipt()
 
   const onUnstake = async (
@@ -154,10 +154,10 @@ export const useUnstake = (vaultAddress: AddressType) => {
 
     if (account) {
       const notifyId = await createNotify({ type: 'loading', content: 'Unstake from vault' })
-      if (acToken.address !== nativeAddress) {
-        const allowance = await onAllowance(acToken.address, vaultAddress, _amount, notifyId)
-        if (!allowance) return
-      }
+      // if (acToken.address !== nativeAddress) {
+      //   const allowance = await onAllowance(acToken.address, vaultAddress, _amount, notifyId)
+      //   if (!allowance) return
+      // }
 
       writeContract(
         {

@@ -13,7 +13,7 @@ export default function Global(): null {
   const { data: maxFundLimit, isLoading } = useVaultCountLimit(address ?? '')
   useEffect(() => {
     updateProfile(address, Boolean(maxFundLimit), maxFundLimit, isLoading)
-  }, [address, maxFundLimit, isLoading])
+  }, [address, maxFundLimit, isLoading, updateProfile])
 
   useGetVaultList()
   useGetVaultHashList()

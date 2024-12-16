@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import { ToastContainer, toast as toastFn, Id, TypeOptions } from 'react-toastify'
+import { Id, ToastContainer, TypeOptions, toast as toastFn } from 'react-toastify'
 
 // Toast
 const toastOption = (autoClose?: number | false): Record<string, any> => ({
