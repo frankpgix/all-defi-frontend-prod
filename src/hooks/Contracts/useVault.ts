@@ -169,13 +169,13 @@ export const useUnstake = (vaultAddress: AddressType) => {
         {
           onSuccess: async (hash: AddressType) => {
             await onWaitReceipt(hash)
-            callback?.()
             updateNotifyItem(notifyId, {
               title: 'Operation successful',
               content: 'Unstake from vault',
               type: 'success',
               hash
             })
+            callback?.()
           },
           onError: (error: any) => {
             callback?.(true)
