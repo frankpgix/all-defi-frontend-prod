@@ -7,9 +7,9 @@ const Banner: FC = () => {
   return (
     <section className="web-home-banner">
       <main>
-        <h2>Amplify Passive DeFi Yield with Active CeFi Strategy</h2>
-        <p>Stake Yield-Bearing Tokens in Expert-Managed Vaults for additional return</p>
-        <Button to="/vaults">STAKE TO VAULT</Button>
+        <h2>Unlock Passive Income: stake your holding and get a yield</h2>
+        <p>Stake any token in institutional grade strategy Vaults for additional return</p>
+        <Button to="/vaults">Start Now</Button>
       </main>
       <div className="web-home-banner-video-layout">
         <div className="web-home-banner-video">

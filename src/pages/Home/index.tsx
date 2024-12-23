@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
+import About from './c/About'
 import Banner from './c/Banner'
 import Feature from './c/Feature'
 import Guide from './c/Guide'
-import About from './c/About'
 
 const Home: FC = () => {
   return (
