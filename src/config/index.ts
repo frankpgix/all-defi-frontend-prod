@@ -10,7 +10,7 @@ export const DEFAULT_CHAIN_ID = 56
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 export const IS_DEV = process.env.NODE_ENV === 'development'
 
-export const RESOURCES_URL = 'https://all-defi-static.pages.dev/'
+export const RESOURCES_URL = 'https://static.alldefi.finance/'
 export const STATIC_RESOURCES_URL = RESOURCES_URL + 'image/'
 export const VIDEO_RESOURCES_URL = RESOURCES_URL + 'video/'
 export const WEBSITE_URL = 'https://alldefi.finance/'

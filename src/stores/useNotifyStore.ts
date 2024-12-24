@@ -1,11 +1,11 @@
 import { create } from 'zustand'
-// import { persist } from 'zustand/middleware'
 
+// import { persist } from 'zustand/middleware'
 import type {
-  NotifyStoreItemType,
-  NotifyStoreType,
   NotifyItemStatusType,
-  NotifyItemType
+  NotifyItemType,
+  NotifyStoreItemType,
+  NotifyStoreType
 } from '@/types/notify'
 
 import { makeUUID } from '@/utils/tools'

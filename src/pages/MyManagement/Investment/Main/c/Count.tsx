@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import ContentLoader from 'react-content-loader'
 
 import BN from 'bignumber.js'
@@ -6,8 +6,11 @@ import classNames from 'classnames'
 import { isNaN } from 'lodash'
 import { Cell, Pie, PieChart, Sector } from 'recharts'
 
+import { useProfile } from '@/hooks/useProfile'
+
 import { VaultUserListDataProps } from '@/types/vault'
 
+import { getUserPoint } from '@/api/vault'
 import Tag from '@/components/core/Tag'
 import { formatNumber } from '@/utils/tools'
 import Blank from '@@/common/Blank'
@@ -134,6 +137,7 @@ const Count: FC<CountProps> = ({ loading, data }) => {
 
 const CountDetail: FC<CountProps> = ({ loading, data }) => {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [userPoint, setUserPoint] = useState(0)
   const rawData = useMemo(
     () =>
       data.map(({ base, userDetail }) => ({
@@ -190,6 +194,16 @@ const CountDetail: FC<CountProps> = ({ loading, data }) => {
       return '< $0.01'
     }
   }, [data, activeIndex])
+
+  const { account } = useProfile()
+  const getUserPointData = useCallback(async () => {
+    const vid = data[activeIndex].detail.address
+    const res = await getUserPoint(account ?? '', vid)
+    setUserPoint(res.points ?? 0)
+  }, [activeIndex, account, data])
+  useEffect(() => {
+    getUserPointData()
+  }, [getUserPointData])
   return (
     <div className="web-manage-investment-count">
       <div className="web-manage-investment-count-chart">
@@ -296,7 +310,7 @@ const CountDetail: FC<CountProps> = ({ loading, data }) => {
             short
           >
             <Tag type="dark" icon="icon/bring.svg" name="Rings" />
-            <TokenValue value={activeData.nav} size="mini" noUnit format="0,0.00" />
+            <TokenValue value={userPoint} size="mini" noUnit format="0,0.00" />
           </SectionItem>
         </section>
       </div>

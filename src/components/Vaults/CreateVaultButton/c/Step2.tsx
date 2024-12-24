@@ -23,7 +23,10 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
   const baseTokenOptions = useUnderlyingTokenOptions()
   const [minAmount, setMinAmount] = useState<string | number>('')
   const [underlyingAddress, setUnderlyingAddress] = useState(baseTokenOptions[0].value)
-  const underlyingToken = useMemo(() => getTokenByAddress(underlyingAddress), [underlyingAddress])
+  const underlyingToken = useMemo(
+    () => getTokenByAddress(underlyingAddress),
+    [getTokenByAddress, underlyingAddress]
+  )
 
   const onNext = () => {
     onConfirm({
