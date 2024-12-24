@@ -47,8 +47,6 @@ const Stake: FC<Props> = ({ data: list }) => {
   const [submiting, { toggle: toggleSubmiting }] = useBoolean(false)
   const [infoStatus, setInfoStatus] = useState<boolean>(false)
 
-  // console.log(underlyingTokenOptions)
-
   const acToken = useMemo(() => data.underlyingToken, [data.underlyingToken])
 
   const acTokenBalance = useMemo(() => balances[acToken.name], [balances, acToken.name])

@@ -85,7 +85,7 @@ export interface VaultDetailProps {
   pendingUnstake: number
   unstakingShare: number
 
-  roe: number
+  roe: number | string
   grossRoe: number
   historicalReturn: number
 

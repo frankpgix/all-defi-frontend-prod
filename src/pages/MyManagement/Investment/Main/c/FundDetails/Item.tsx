@@ -96,7 +96,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
 
   const underlyingToken = useMemo(() => fund.base.underlying, [fund.base.underlying])
   const ivFinish = useMemo(() => fund.detail.status === 6, [fund.detail.status])
-  console.log(fund, 'fund')
+  // console.log(fund, 'fund')
   useEffect(() => {
     void inView()
   }, [inView])
@@ -221,7 +221,10 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
               </SectionItem> */}
               <section>
                 <SectionItem label="Current Epoch return %">
-                  <RoeShow value={formatNumber(fund.detail.roe * 100, 2, '0.00')} subArrow />
+                  <RoeShow
+                    value={formatNumber(Number(fund.detail.roe) * 100, 2, '0.00')}
+                    subArrow
+                  />
                 </SectionItem>
                 <SectionItem label="Current Epoch return">
                   <TokenValue

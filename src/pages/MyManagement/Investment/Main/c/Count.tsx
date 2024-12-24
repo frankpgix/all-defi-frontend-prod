@@ -143,7 +143,7 @@ const CountDetail: FC<CountProps> = ({ loading, data }) => {
       data.map(({ base, userDetail }) => ({
         name: base.underlying.name,
         // value: data.shares || data.navInUSD,
-        value: userDetail.navInUSD,
+        value: userDetail.navInUSD === 0 ? 0.0001 : userDetail.navInUSD, // 使用非常小的值代替 0
         nav: userDetail.navInUSD
       })),
     [data]
@@ -220,7 +220,7 @@ const CountDetail: FC<CountProps> = ({ loading, data }) => {
               nameKey="name"
               startAngle={90}
               endAngle={450}
-              minAngle={3}
+              minAngle={5}
               labelLine={false}
               // label={renderCustomizedLabel}
               onClick={onPieClick}

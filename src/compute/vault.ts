@@ -169,7 +169,7 @@ export const calcVaultDetail = (
     unstakingShare: Number(safeInterceptionValues(item.pendingUnstake, 18, 18)),
 
     // 净收益
-    roe: BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber(),
+    roe: BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber().toFixed(16),
     // 毛收益
     grossRoe: beginningAUM === 0 ? 0 : BN(aum).minus(beginningAUM).div(beginningAUM).toNumber(),
     // roe: BN(sharePrice).minus(beginningSharePrice).div(beginningSharePrice).toNumber(),
