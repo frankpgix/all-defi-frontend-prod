@@ -28,7 +28,9 @@ export const config = createConfig({
   chains: [mainnet, bscTestnet],
   connectors,
   transports: {
-    [mainnet.id]: http('https://eth.drpc.org'),
+    // [mainnet.id]: http('https://eth.drpc.org'),
+    [mainnet.id]: http('https://eth.llamarpc.com'),
+    // [mainnet.id]: http(),
     // [bsc.id]: http(),
     [bscTestnet.id]: http('https://bnb-testnet.g.alchemy.com/v2/1GPvRmtzSoeMkS_HKx-bPKEegF4BkODX')
     // [bscTestnet.id]: http()

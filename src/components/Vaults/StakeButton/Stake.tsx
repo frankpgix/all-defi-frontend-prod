@@ -41,6 +41,7 @@ const Stake: FC<Props> = ({ data: list }) => {
     () => list.find((item) => item.underlyingToken.address === currentToken.value) ?? list[0],
     [list, currentToken.value]
   )
+  const TokenPrecision = useMemo(() => data.underlyingToken.precision, [data.underlyingToken])
   const { balances, refetch: reBalances } = useUserBalances()
   const { onStake } = useStake(data.address)
   const [accredit, { toggle }] = useBoolean(false)
@@ -55,7 +56,8 @@ const Stake: FC<Props> = ({ data: list }) => {
   const [sliderValue, setSliderValue] = useState(0)
 
   const maxValue = useMemo(() => Math.min(acTokenBalance), [acTokenBalance])
-  const minimumStake = 0.01
+  const minimumStake = useMemo(() => BN(10).pow(-TokenPrecision).toNumber(), [TokenPrecision])
+  console.log(minimumStake, 'data')
   const isInAllocate = useMemo(() => [0, 1].includes(data.status), [data.status])
 
   const onSliderChange = (val: number) => {
