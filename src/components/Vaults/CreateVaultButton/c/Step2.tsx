@@ -40,7 +40,11 @@ const Step2: FC<Props> = ({ onConfirm, show, onBack }) => {
   }, [underlyingToken.precision])
 
   const minAmountError = useMemo(
-    () => Number(minAmount) < minAmountNumber && minAmount !== '',
+    () =>
+      Number(minAmount) < minAmountNumber &&
+      minAmount !== '' &&
+      Number(minAmount) === 0 &&
+      String(minAmount).length === String(minAmountNumber).length,
     [minAmount, minAmountNumber]
   )
   const isDisabled = useMemo(

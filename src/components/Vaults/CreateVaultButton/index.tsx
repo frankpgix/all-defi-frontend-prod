@@ -36,6 +36,7 @@ const CreateVaultButton: FC<Props> = ({ large, children, text }) => {
     setLeft()
     window.location.reload()
   }
+  // return <ALink onClick={setRight}>{children || 'Create a Vault'}</ALink>
   if (loading) {
     if (text) {
       return <ALink disabled>Create Vaults</ALink>

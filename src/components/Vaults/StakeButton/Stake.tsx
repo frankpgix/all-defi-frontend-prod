@@ -57,6 +57,7 @@ const Stake: FC<Props> = ({ data: list }) => {
 
   const maxValue = useMemo(() => Math.min(acTokenBalance), [acTokenBalance])
   const minimumStake = useMemo(() => BN(10).pow(-TokenPrecision).toNumber(), [TokenPrecision])
+  // const minimumStake = 0.02
   console.log(minimumStake, 'data')
   const isInAllocate = useMemo(() => [0, 1].includes(data.status), [data.status])
 
