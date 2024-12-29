@@ -1,5 +1,7 @@
-import VaultAbi from './Vault.json'
+import { VaultAbi } from './Vault'
 
-export const VaultBaseAbi = [VaultAbi.find((item) => item.name === 'baseInfo')]
+export const VaultBaseAbi = [
+  VaultAbi.find((item) => item && 'name' in item && item.name === 'baseInfo')
+] as const
 
 export default VaultBaseAbi

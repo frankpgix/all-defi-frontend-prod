@@ -1,9 +1,9 @@
 import { erc20Abi } from 'viem'
 
-import PriceAggregatorAbi from '@/config/abi/PriceAggregator.json'
-import VaultAbi from '@/config/abi/Vault.json'
-import VaultFactoryAbi from '@/config/abi/VaultFactory.json'
-import VaultReaderAbi from '@/config/abi/VaultReader.json'
+import PriceAggregatorAbi from '@/config/abi/PriceAggregator'
+import VaultAbi from '@/config/abi/Vault'
+import VaultFactoryAbi from '@/config/abi/VaultFactory'
+import VaultReaderAbi from '@/config/abi/VaultReader'
 import { contracts } from '@/config/contract'
 
 import { useCurrChainID } from '@/hooks/useToken'

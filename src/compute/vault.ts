@@ -16,6 +16,7 @@ import {
 } from '@/types/vault'
 
 import { VaultUpdatingDataDefault } from '@/data/vault'
+import { getTokenByAddress } from '@/support/token'
 import { safeInterceptionValues } from '@/utils/tools'
 
 export const calcGlobalAssetStatistic = (item: any): GlobalAssetStatisticProps => {
@@ -41,11 +42,7 @@ export const calcGlobalAssetStatistic = (item: any): GlobalAssetStatisticProps =
 //     address custodian;
 // }
 
-export const calcVaultBaseInfo = (
-  item: any,
-  getTokenByAddress: GetTokenFuncType,
-  vaultAddress?: AddressType
-): VaultBaseInfoProps => {
+export const calcVaultBaseInfo = (item: any, vaultAddress?: AddressType): VaultBaseInfoProps => {
   console.log(item, 112)
   const underlying = getTokenByAddress(item.underlying) as UnderlyingTokenTypes
   const decimals = underlying.decimals

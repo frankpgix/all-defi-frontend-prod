@@ -72,7 +72,7 @@ export const useVaultBaseAddressList = () => {
 export const useVaultBaseList = () => {
   // vaultList
   const { data: address, isLoading: loading, isSuccess: success } = useVaultBaseAddressList()
-  const { getTokenByAddress } = useToken()
+  // const { getTokenByAddress } = useToken()
   const contracts = address.map((item) => ({
     address: item,
     abi: VaultBaseInfoABI as any,
@@ -83,9 +83,7 @@ export const useVaultBaseList = () => {
   console.log(11122, isSuccess, address, data, error)
   if (!isLoading && isSuccess && !loading && success) {
     // console.log(data, 1234, isSuccess, isLoading)
-    const res = data.map((item, index) =>
-      calcVaultBaseInfo(item.result, getTokenByAddress, contracts[index].address)
-    )
+    const res = data.map((item, index) => calcVaultBaseInfo(item.result, contracts[index].address))
     // console.log(res)
     return { data: res, isLoading, isSuccess }
   }

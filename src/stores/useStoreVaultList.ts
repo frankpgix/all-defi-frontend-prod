@@ -1,8 +1,11 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+import { StoreVaultBaseListType } from '@/types/store'
 // import { FundDetailProps, FundUserListDataProps } from '@/class/help'
 import { VaultDetailProps, VaultHashTypes, VaultUserListDataProps } from '@/types/vault'
+
+import { getVaultBaseList } from '@/support/vaultContract'
 
 export const useStoreVaultList = create((set) => ({
   vaultList: [],
@@ -54,3 +57,30 @@ export const useStoreVaultHashList = create((set) => ({
   loading: true,
   update: (vaultHashList: VaultHashTypes[], loading: boolean) => set({ vaultHashList, loading })
 }))
+
+export const useStoreVaultBaseListBase = create<StoreVaultBaseListType>()(
+  persist(
+    (set, get) => ({
+      vaultBaseList: [],
+      vaultBaseListLoading: true,
+      vaultBaseListInit: false,
+      updateVaultBaseList: async () => {
+        set({ vaultBaseListLoading: true })
+        const vaultBaseList = await getVaultBaseList()
+        set({ vaultBaseList, vaultBaseListLoading: false })
+        if (!get().vaultBaseListInit) {
+          set({ vaultBaseListInit: true })
+        }
+      }
+    }),
+    {
+      name: 'vault-base-list'
+    }
+  )
+)
+
+export const useStoreVaultBaseList = () => {
+  const stores = useStoreVaultBaseListBase((e) => e)
+  console.log(22)
+  return { ...stores }
+}

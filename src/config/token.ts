@@ -11,6 +11,7 @@ import { ChainId } from '@/config'
 
 // export const nativeAddress = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
 export const nativeAddress = zeroAddress
+export const NULL_ADDRESS = '0x'
 export const UNKNOWN = {
   decimals: 18,
   icon: 'symbol/bnb.svg',
