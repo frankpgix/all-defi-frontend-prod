@@ -53,7 +53,7 @@ const VaultItem: FC<Props> = ({ active, isInit, onChange, fund, callback }) => {
         .toNumber(),
     [fund.detail.roe, fund.detail.beginningSharePrice, fund.userDetail.shares]
   )
-
+  // console.log(currReturn, 'currReturn')
   const userAum = useMemo(
     () => BN(fund.userDetail.shares).times(fund.detail.beginningSharePrice).toNumber(),
     [fund.detail.beginningSharePrice, fund.userDetail.shares]
