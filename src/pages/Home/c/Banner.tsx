@@ -7,7 +7,9 @@ const Banner: FC = () => {
   return (
     <section className="web-home-banner">
       <main>
-        <h2>Unlock Passive Income: stake your holding and get a yield</h2>
+        <h2>
+          Unlock Passive Income <br /> Stake your holding and get a yield
+        </h2>
         <p>Stake any token in institutional grade strategy Vaults for additional return</p>
         <Button to="/vaults">Start Now</Button>
       </main>
