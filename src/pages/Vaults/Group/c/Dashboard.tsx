@@ -121,12 +121,12 @@ const Dashboard: FC<Props> = ({ data: list, loading }) => {
               <FundIcon name="Core Crypto Index" size="large" />
               <h4>Crypto Republic Alpha Fund</h4>
               <p>
-                This vault will use a very safe capital preservation strategy to bring benefits to
-                users, mainly based on the BTC price to sell high and buy low strategy,welcome to
-                experience the experience.If you have any questions, please feel free to contact the
-                CCI team. <br />
-                Our email: cciteam@gmail.com <br />
-                Our Telegram: cciteam@tel
+                The Crypto Republic Alpha Fund is a diversified investment vehicle employing a blend
+                of strategies, such as arbitrage, cross-sectional long/short, and momentum
+                strategies. By integrating multiple approaches, the fund aims to capitalize on
+                diverse market opportunities while minimizing overall drawdown risk through strategy
+                balancing. The fund targets a 40% annualized return with a 10% drawdown and strives
+                for a Sharpe ratio exceeding 2.5
               </p>
             </article>
           )}
