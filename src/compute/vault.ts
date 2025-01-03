@@ -332,9 +332,10 @@ export const calcVaultDerivativesInfo = (data: AddressType[]) => {
 }
 
 export const calcVaultHash = (address: AddressType): VaultHashTypes => {
+  console.log(address, 'address')
   return {
     address,
-    hash: md5(address.toLocaleLowerCase())
+    hash: md5(String(address).toLocaleLowerCase())
   }
 }
 
