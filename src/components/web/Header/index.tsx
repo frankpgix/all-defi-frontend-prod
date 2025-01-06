@@ -23,7 +23,7 @@ const Header: FC = () => {
             {/* <NavLink to="/buy">Buy AC Token</NavLink> */}
             <NavLink to="/vaults">Vaults</NavLink>
             <NavLink to="/manage">My Management</NavLink>
-            <NavLink to="/tasks">Tasks</NavLink>
+            {/* <NavLink to="/tasks">Tasks</NavLink> */}
             {/* <NavLink to="/all-mining">ALL MINING</NavLink> */}
             {/* <NavLink to="/">global data</NavLink> */}
           </nav>

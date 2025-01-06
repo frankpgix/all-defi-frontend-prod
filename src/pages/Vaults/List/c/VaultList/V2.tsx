@@ -108,13 +108,13 @@ const VaultGroup: FC<VaultGroupProps> = ({ onRollChange, show, rollIndex, list }
           chain
           showFee
           managerName={'James'}
-          status={list[1]?.status ?? list[0]?.status ?? 0}
+          status={list[0]?.status ?? 0}
         />
         <strong>{formatNumber(totalAum, 2, '$0,0.00')}</strong>
         <FlexBox center gap={5}>
           <RoeShow value={totalRoe} />
         </FlexBox>
-        <span>{list[1].epochIndex ?? list[0].epochIndex}</span>
+        <span>{list[0].epochIndex}</span>
         <FlexBox center gap={5}>
           <Button size="mini" to="/vaults/group">
             Details
