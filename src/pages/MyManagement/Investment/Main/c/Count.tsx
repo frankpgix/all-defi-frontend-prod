@@ -165,7 +165,7 @@ const CountDetail: FC<CountProps> = ({ loading, data }) => {
           const p = Math.round(BN(item.value).div(totalAsset).times(100).toNumber())
           return {
             ...item,
-            percent: `${isNaN(p) ? 0 : p}%`
+            percent: `${isNaN(p) || p === Infinity || p === -Infinity ? 0 : p}%`
           }
         }),
     [rawData, totalAsset]

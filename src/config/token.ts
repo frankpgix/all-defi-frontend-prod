@@ -14,7 +14,7 @@ export const nativeAddress = zeroAddress
 export const NULL_ADDRESS = '0x'
 export const UNKNOWN = {
   decimals: 18,
-  icon: 'symbol/bnb.svg',
+  icon: 'symbol/unknown.svg',
   name: 'UNKNOWN',
   precision: 4,
   symbol: '',
