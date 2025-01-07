@@ -10,6 +10,7 @@ import { useStoreVaultBaseList } from '@/stores/useStoreVaultList'
 
 export default function Global(): null {
   const { address } = useAccount()
+  // const address = '0x8aa89c5bc40e92040506f4c7975657b320e08a01'
   const chainId = useChainId()
 
   const { update: updateProfile } = useProfile()
